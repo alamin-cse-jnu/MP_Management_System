@@ -424,3 +424,29 @@ class ProficiencyLevel(models.Model):
 
     def __str__(self):
         return f"{self.name_bn} ({self.name_en})"
+
+
+class VaccineName(models.Model):
+    name_bn = models.CharField(max_length=200)
+    name_en = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering', 'name_bn']
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"
+
+
+class SpecialRoleType(models.Model):
+    name_bn = models.CharField(max_length=200)
+    name_en = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering', 'name_bn']
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"

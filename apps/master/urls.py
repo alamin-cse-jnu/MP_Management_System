@@ -11,6 +11,9 @@ urlpatterns = [
     # HTMX cascade endpoints
     path('htmx/district-options/', views.district_options, name='district_options'),
     path('htmx/upazila-options/', views.upazila_options, name='upazila_options'),
+    path('htmx/education-level-cascade/', views.education_level_cascade, name='education_level_cascade'),
+    path('htmx/subject-options/', views.subject_options, name='subject_options'),
+    path('htmx/result-fields/', views.result_fields, name='result_fields'),
 ]
 
 # Dynamically register CRUD URLs for every master model

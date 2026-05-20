@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 4,
+    "fields": {
+      "name_bn": "সংসদ সদস্য",
+      "name_en": "Members of Parliament",
+      "icon": "bi-people",
+      "url_name": "",
+      "ordering": 20,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 400,
+    "fields": {
+      "menu": 4,
+      "name_bn": "সংসদ সদস্য তালিকা",
+      "name_en": "MP List",
+      "url_name": "mp:mp_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 401,
+    "fields": {
+      "menu": 4,
+      "name_bn": "নতুন সংসদ সদস্য যোগ করুন",
+      "name_en": "Add New MP",
+      "url_name": "mp:mp_create",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

@@ -1,0 +1,64 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <div class="fw-medium">শিক্ষাগত যোগ্যতা</div>
+    <small class="text-muted">Educational Qualifications</small>
+  </div>
+  <a href="{% url 'mp:education_create' mp.pk %}" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+  </a>
+</div>
+
+{% if educations %}
+<div class="mp-card p-0">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:40px;">#</th>
+        <th>পরীক্ষা/ডিগ্রি</th>
+        <th>বিষয়</th>
+        <th style="width:90px; text-align:center;">পাসের সন</th>
+        <th>ফলাফল</th>
+        <th>প্রতিষ্ঠান</th>
+        <th style="width:110px; text-align:center;">অ্যাকশন</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for edu in educations %}
+      <tr>
+        <td class="text-muted">{{ forloop.counter }}</td>
+        <td class="fw-medium">{{ edu.degree_title|default:edu.education_level|default:"—" }}</td>
+        <td class="text-muted">{{ edu.major_subject|default:"—" }}</td>
+        <td class="text-center text-muted">{{ edu.passing_year|default:"—" }}</td>
+        <td class="text-muted">{{ edu.result_display }}</td>
+        <td class="text-muted" style="font-size:0.85rem;">
+          {% if edu.institution %}{{ edu.institution.name_bn }}
+          {% elif edu.institution_other_bn %}{{ edu.institution_other_bn }}
+          {% else %}—{% endif %}
+        </td>
+        <td class="text-center">
+          <a href="{% url 'mp:education_update' mp.pk edu.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <form method="post" action="{% url 'mp:education_delete' mp.pk edu.pk %}"
+                class="d-inline"
+                onsubmit="return confirm('এই তথ্য মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-icon btn-sm btn-outline-danger" title="মুছুন">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="text-center text-muted py-4">
+  <i class="bi bi-mortarboard fs-3 d-block mb-2" style="opacity:0.4;"></i>
+  কোনো শিক্ষাগত তথ্য নেই।
+  <a href="{% url 'mp:education_create' mp.pk %}">যোগ করুন</a>।
+</div>
+{% endif %}

@@ -1,0 +1,59 @@
+{% load static %}
+<!-- Sub-tab nav for 3 address types -->
+<ul class="nav nav-pills mb-3" id="addrTabs" role="tablist">
+  <li class="nav-item">
+    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#addr-present"
+            type="button">বর্তমান ঠিকানা</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addr-permanent"
+            type="button">স্থায়ী ঠিকানা</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addr-dhaka"
+            type="button">ঢাকাস্থ ঠিকানা</button>
+  </li>
+</ul>
+
+<div class="tab-content">
+
+  <!-- ── বর্তমান ঠিকানা ── -->
+  <div class="tab-pane fade show active" id="addr-present">
+    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'present' %}" novalidate>
+      {% csrf_token %}
+      {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True %}
+      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-check-lg me-1"></i>বর্তমান ঠিকানা সংরক্ষণ
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ── স্থায়ী ঠিকানা ── -->
+  <div class="tab-pane fade" id="addr-permanent">
+    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'permanent' %}" novalidate>
+      {% csrf_token %}
+      {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False %}
+      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-check-lg me-1"></i>স্থায়ী ঠিকানা সংরক্ষণ
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ── ঢাকাস্থ ঠিকানা ── -->
+  <div class="tab-pane fade" id="addr-dhaka">
+    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'dhaka' %}" novalidate>
+      {% csrf_token %}
+      {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False %}
+      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-check-lg me-1"></i>ঢাকাস্থ ঠিকানা সংরক্ষণ
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

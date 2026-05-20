@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 8,
+    "fields": {
+      "name_bn": "বিদেশ ভ্রমণ",
+      "name_en": "Foreign Travel",
+      "icon": "bi-airplane",
+      "url_name": "",
+      "ordering": 60,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 800,
+    "fields": {
+      "menu": 8,
+      "name_bn": "ভ্রমণ তালিকা",
+      "name_en": "Tour List",
+      "url_name": "travel:tour_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 801,
+    "fields": {
+      "menu": 8,
+      "name_bn": "নতুন ভ্রমণ GO",
+      "name_en": "Add Tour GO",
+      "url_name": "travel:tour_create",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

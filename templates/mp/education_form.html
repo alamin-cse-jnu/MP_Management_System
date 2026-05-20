@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{{ title_bn }}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-education">{{ mp.name_bn }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ title_bn }}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    <small class="text-muted">{{ mp.name_bn }}</small>
+  </div>
+  <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-education"
+     class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-9 col-md-11">
+    <div class="mp-card">
+      <div class="mp-card-header">
+        <i class="bi bi-mortarboard icon"></i> {{ title_bn }}
+      </div>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="row">
+
+          <!-- Education Level (triggers group + degree cascade) -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">শিক্ষার স্তর</label>
+            {{ form.education_level }}
+            {% if form.education_level.errors %}
+            <div class="invalid-feedback d-block">{{ form.education_level.errors }}</div>
+            {% endif %}
+          </div>
+          <div class="col-md-6"></div>
+
+          <!-- HTMX cascade block: Group + Degree Title -->
+          <div class="col-12">
+            <div class="row" id="edu-cascade-block">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">গ্রুপ</label>
+                {{ form.group }}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">পরীক্ষা/ডিগ্রির নাম</label>
+                {{ form.degree_title }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Subject (updated by group cascade) -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">বিষয় (Subject)</label>
+            {{ form.major_subject }}
+          </div>
+
+          <!-- Institution -->
+          <div class="col-md-8 mb-3">
+            <label class="form-label fw-medium">প্রতিষ্ঠান (Institution/Board)</label>
+            {{ form.institution }}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-medium">পাসের সন</label>
+            {{ form.passing_year }}
+          </div>
+
+          <!-- Other Institution -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">অন্য প্রতিষ্ঠান (বাংলায়)
+              <span class="text-muted" style="font-size:0.75rem;">(তালিকায় না থাকলে)</span>
+            </label>
+            {{ form.institution_other_bn }}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">Other Institution (English)</label>
+            {{ form.institution_other_en }}
+          </div>
+
+          <!-- Board Affiliation -->
+          <div class="col-md-8 mb-3">
+            <label class="form-label fw-medium">শিক্ষাবোর্ড/বিশ্ববিদ্যালয় (Board Affiliation)</label>
+            {{ form.board_affiliation }}
+          </div>
+
+          <!-- Result section header -->
+          <div class="col-12 mt-2">
+            <div class="fw-medium mb-2 text-muted"
+                 style="font-size:0.875rem; border-top:1px dashed #e2e8f0; padding-top:12px;">
+              ফলাফল সংক্রান্ত তথ্য
+            </div>
+          </div>
+
+          <!-- Result Type (triggers result field swap) -->
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-medium">ফলাফলের ধরন</label>
+            {{ form.result_type }}
+          </div>
+
+          <!-- Dynamic result fields (replaced by HTMX on result_type change) -->
+          <div class="col-12">
+            <div class="row" id="result-fields-block">
+              {% if form.instance.pk and form.instance.result_type_id %}
+                {% with fmt=form.instance.result_type.result_format %}
+                  {% if fmt == 'division' %}
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-medium">বিভাগ (Division)</label>
+                    {{ form.division_result }}
+                  </div>
+                  {% elif fmt == 'gpa' or fmt == 'cgpa' %}
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label fw-medium">জিপিএ/সিজিপিএ</label>
+                    {{ form.gpa_value }}
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label fw-medium">মোট (Out of)</label>
+                    {{ form.gpa_out_of }}
+                  </div>
+                  {% elif fmt == 'percentage' %}
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label fw-medium">শতকরা (%)</label>
+                    {{ form.percentage }}
+                  </div>
+                  {% elif fmt == 'class' %}
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label fw-medium">শ্রেণী (Class)</label>
+                    {{ form.class_result }}
+                  </div>
+                  {% elif fmt == 'pass_fail' %}
+                  <div class="col-12 mb-2">
+                    <p class="text-success mb-0" style="font-size:0.875rem;">
+                      <i class="bi bi-check-circle me-1"></i>পাস/ফেল — কোনো অতিরিক্ত মান প্রয়োজন নেই
+                    </p>
+                  </div>
+                  {% else %}
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-medium">ফলাফল (অন্যান্য)</label>
+                    {{ form.result_text }}
+                  </div>
+                  {% endif %}
+                {% endwith %}
+              {% else %}
+              <div class="col-12 mb-2">
+                <p class="text-muted mb-0" style="font-size:0.875rem;">
+                  <i class="bi bi-arrow-up-left me-1"></i>ফলাফলের ধরন নির্বাচন করলে প্রযোজ্য ক্ষেত্র দেখা যাবে
+                </p>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Ordering -->
+          <div class="col-md-2 mb-3 mt-2">
+            <label class="form-label fw-medium">ক্রম</label>
+            {{ form.ordering }}
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+          <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-education"
+             class="btn btn-outline-secondary">
+            <i class="bi bi-x-lg me-1"></i>বাতিল
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>
+            {% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

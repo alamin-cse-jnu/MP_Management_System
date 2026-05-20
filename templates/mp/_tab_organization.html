@@ -1,0 +1,44 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">সংগঠন</h6>
+  <a href="{% url 'mp:organization_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+{% if organizations %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>সংগঠনের নাম</th>
+        <th>ভূমিকা</th>
+        <th>শুরু</th>
+        <th>শেষ</th>
+        <th style="width:100px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for org in organizations %}
+      <tr>
+        <td>{{ org.name_bn }}</td>
+        <td>{{ org.role_bn|default:"—" }}</td>
+        <td>{{ org.from_date|default:"—" }}</td>
+        <td>{{ org.to_date|default:"—" }}</td>
+        <td>
+          <a href="{% url 'mp:organization_update' mp.pk org.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:organization_delete' mp.pk org.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো সংগঠনের তথ্য নেই।</p>
+{% endif %}

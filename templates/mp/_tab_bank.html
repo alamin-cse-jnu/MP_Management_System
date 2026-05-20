@@ -1,0 +1,51 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">ব্যাংক হিসাব</h6>
+  <a href="{% url 'mp:bank_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+<div class="alert alert-warning mb-3" style="font-size:0.8125rem;">
+  <i class="bi bi-shield-lock me-1"></i>
+  নোট: ব্যাংক হিসাবের নমুনা স্বাক্ষর ফর্মে সংযুক্ত করুন। ডিজিটাল স্বাক্ষর সংরক্ষণ করা হয় না।
+</div>
+
+{% if bank_accounts %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>হিসাব নম্বর</th>
+        <th>ব্যাংকের নাম</th>
+        <th>শাখা</th>
+        <th>রাউটিং নম্বর</th>
+        <th>ধরন</th>
+        <th style="width:100px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for acct in bank_accounts %}
+      <tr>
+        <td>{{ acct.account_number }}</td>
+        <td>{{ acct.bank_name_bn }}</td>
+        <td>{{ acct.branch_name_bn|default:"—" }}</td>
+        <td>{{ acct.routing_number|default:"—" }}</td>
+        <td>{{ acct.get_account_type_display }}</td>
+        <td>
+          <a href="{% url 'mp:bank_update' mp.pk acct.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:bank_delete' mp.pk acct.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো ব্যাংক হিসাবের তথ্য নেই।</p>
+{% endif %}

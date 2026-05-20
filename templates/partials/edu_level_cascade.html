@@ -1,0 +1,26 @@
+{% if show_group %}
+<div class="col-md-6 mb-3">
+  <label class="form-label fw-medium">গ্রুপ</label>
+  <select id="id_group" name="group" class="form-select"
+          hx-get="/master/htmx/subject-options/"
+          hx-trigger="change"
+          hx-target="#id_major_subject"
+          hx-swap="innerHTML">
+    <option value="">--- নির্বাচন করুন ---</option>
+    {% for g in groups %}
+    <option value="{{ g.pk }}">{{ g }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% else %}
+<div class="col-md-6 mb-3"></div>
+{% endif %}
+<div class="col-md-6 mb-3">
+  <label class="form-label fw-medium">পরীক্ষা/ডিগ্রির নাম</label>
+  <select id="id_degree_title" name="degree_title" class="form-select">
+    <option value="">--- নির্বাচন করুন ---</option>
+    {% for d in degrees %}
+    <option value="{{ d.pk }}">{{ d }}</option>
+    {% endfor %}
+  </select>
+</div>

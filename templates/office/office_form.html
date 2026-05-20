@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ title_bn }}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_detail' mp.pk %}">{{ mp.name_bn }}</a></li>
+      <li class="breadcrumb-item active">{{ title_bn }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    <small class="text-muted">{{ mp.name_bn }}</small>
+  </div>
+  <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-building-fill icon"></i> {{ title_bn }}</div>
+    <form method="post" novalidate>{% csrf_token %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="row">
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">কক্ষ নম্বর</label>{{ form.room_number }}</div>
+        <div class="col-md-5 mb-3"><label class="form-label fw-medium">ভবন (বাংলায়)</label>{{ form.building_bn }}</div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">Building (English)</label>{{ form.building_en }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">ঠিকানা (বাংলায়)</label>{{ form.address_bn }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">Address (English)</label>{{ form.address_en }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">টেলিফোন</label>{{ form.telephone }}</div>
+        <div class="col-md-2 mb-3"><label class="form-label fw-medium">এক্সটেনশন</label>{{ form.extension }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">ফ্যাক্স</label>{{ form.fax }}</div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">অফিসিয়াল ইমেইল</label>{{ form.official_email }}</div>
+        <div class="col-12"><hr class="my-2"><p class="fw-medium mb-2" style="font-size:0.9rem;">সচিবের তথ্য</p></div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">সচিবের নাম (বাংলায়)</label>{{ form.secretary_name_bn }}</div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">Secretary Name (English)</label>{{ form.secretary_name_en }}</div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">সচিবের মোবাইল</label>{{ form.secretary_mobile }}</div>
+        <div class="col-md-3 mb-3 d-flex align-items-end">
+          <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">সক্রিয়</label></div>
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

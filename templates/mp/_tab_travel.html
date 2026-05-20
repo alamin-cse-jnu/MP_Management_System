@@ -1,0 +1,46 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">বিদেশ ভ্রমণ</h6>
+  <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-box-arrow-up-right me-1"></i>ভ্রমণ মডিউল
+  </a>
+</div>
+
+{% if travel_participations %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>GO নম্বর</th>
+        <th>GO তারিখ</th>
+        <th>ধরন</th>
+        <th>উদ্দেশ্য</th>
+        <th>দেশসমূহ</th>
+        <th>যাওয়া</th>
+        <th>ফেরা</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in travel_participations %}
+      <tr>
+        <td>
+          <a href="{% url 'travel:tour_detail' p.tour_id %}" class="text-decoration-none fw-medium">{{ p.tour.go_number }}</a>
+        </td>
+        <td>{{ p.tour.go_date|date:"d/m/Y" }}</td>
+        <td><span class="badge bg-primary-subtle text-primary">{{ p.tour.tour_type.name_bn }}</span></td>
+        <td>{{ p.tour.purpose.name_bn }}</td>
+        <td>
+          {% for tc in p.tour.countries.all %}
+            {{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}
+          {% empty %}—{% endfor %}
+        </td>
+        <td>{{ p.departure_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ p.return_date|date:"d/m/Y"|default:"—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো বিদেশ ভ্রমণের তথ্য নেই।</p>
+{% endif %}

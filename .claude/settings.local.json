@@ -5,7 +5,10 @@
       "Bash(py *)",
       "PowerShell(py *)",
       "Bash(docker compose *)",
-      "Bash(python manage.py makemigrations master)"
+      "Bash(python manage.py makemigrations master)",
+      "Bash(dir E:projectsMP_Management_Systemtemplates *)",
+      "Bash(Get-ChildItem \"E:\\\\projects\\\\MP_Management_System\\\\templates\" -Directory)",
+      "Bash(Select-Object Name)"
     ]
   }
 }

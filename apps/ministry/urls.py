@@ -4,4 +4,9 @@ from . import views
 app_name = 'ministry'
 
 urlpatterns = [
+    path('',                              views.assignment_list,   name='assignment_list'),
+    path('create/',                       views.assignment_create, name='assignment_create'),
+    path('<int:pk>/edit/',                views.assignment_update, name='assignment_update'),
+    path('<int:pk>/delete/',              views.assignment_delete, name='assignment_delete'),
+    path('<int:pk>/toggle/',              views.assignment_toggle, name='assignment_toggle'),
 ]

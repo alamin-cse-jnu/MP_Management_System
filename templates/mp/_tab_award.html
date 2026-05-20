@@ -1,0 +1,42 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">পুরস্কার ও সম্মাননা</h6>
+  <a href="{% url 'mp:award_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+{% if awards %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>পুরস্কারের নাম</th>
+        <th>সাল</th>
+        <th>প্রদানকারী সংস্থা</th>
+        <th style="width:100px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for award in awards %}
+      <tr>
+        <td>{{ award.name_bn }}</td>
+        <td>{{ award.year|default:"—" }}</td>
+        <td>{{ award.awarded_by_bn|default:"—" }}</td>
+        <td>
+          <a href="{% url 'mp:award_update' mp.pk award.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:award_delete' mp.pk award.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো পুরস্কারের তথ্য নেই।</p>
+{% endif %}

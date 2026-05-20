@@ -17,6 +17,7 @@ from .forms import (
     ProfessionForm, ProfessionalQualificationForm, ProficiencyLevelForm,
     ReligionForm, ResultTypeForm, StandingCommitteeForm,
     TravelPurposeForm, TravelTypeForm, UpazilaForm,
+    VaccineNameForm, SpecialRoleTypeForm,
 )
 from .models import (
     BloodGroup, CommitteePosition, Country,
@@ -28,6 +29,7 @@ from .models import (
     Profession, ProfessionalQualification, ProficiencyLevel,
     Religion, ResultType, StandingCommittee,
     TravelPurpose, TravelType, Upazila,
+    VaccineName, SpecialRoleType,
 )
 
 # ── MASTER_SPECS ─────────────────────────────────────────────────────────────
@@ -270,6 +272,24 @@ MASTER_SPECS = [
         'title_en': 'Proficiency Levels',
         'extra_cols': [],
     },
+    # COVID
+    {
+        'key': 'vaccine-name',
+        'model': VaccineName,
+        'form': VaccineNameForm,
+        'title_bn': 'টিকার নাম',
+        'title_en': 'Vaccine Names',
+        'extra_cols': [],
+    },
+    # Special Positions
+    {
+        'key': 'special-role-type',
+        'model': SpecialRoleType,
+        'form': SpecialRoleTypeForm,
+        'title_bn': 'বিশেষ পদের ধরন',
+        'title_en': 'Special Role Types',
+        'extra_cols': [],
+    },
 ]
 
 # Quick lookup by key
@@ -510,3 +530,78 @@ def upazila_options(request):
             district_id=district_id, is_active=True
         ).order_by('name_bn')
     return render(request, 'partials/options.html', {'items': qs})
+
+
+_LEVEL_GROUP_MAP = {
+    'primary':    [],
+    'secondary':  ['secondary', 'all'],
+    'higher_sec': ['higher_sec', 'all'],
+    'diploma':    ['all'],
+    'bachelor':   ['university', 'all'],
+    'masters':    ['university', 'all'],
+    'phd':        ['university', 'all'],
+    'other':      ['all'],
+}
+
+
+def education_level_cascade(request):
+    """HTMX: education level changes → return filtered group + degree_title selects."""
+    level_id = request.GET.get('education_level', '')
+
+    show_group = True
+    groups = EducationGroup.objects.filter(is_active=True).order_by('ordering', 'name_bn')
+    degrees = DegreeName.objects.none()
+
+    if level_id:
+        try:
+            level = EducationLevel.objects.get(pk=level_id)
+            applicable = _LEVEL_GROUP_MAP.get(level.level_type, ['all'])
+            show_group = bool(applicable) and level.level_type != 'primary'
+            if applicable:
+                groups = EducationGroup.objects.filter(
+                    applicable_to__in=applicable, is_active=True
+                ).order_by('ordering', 'name_bn')
+            else:
+                groups = EducationGroup.objects.none()
+            degrees = DegreeName.objects.filter(
+                education_level_id=level_id, is_active=True
+            ).order_by('ordering', 'name_bn')
+        except EducationLevel.DoesNotExist:
+            pass
+
+    return render(request, 'partials/edu_level_cascade.html', {
+        'groups': groups,
+        'degrees': degrees,
+        'show_group': show_group,
+    })
+
+
+def subject_options(request):
+    """HTMX: group changes → return filtered subject options."""
+    group_id = request.GET.get('group', '')
+    qs = EducationSubject.objects.none()
+    if group_id:
+        qs = EducationSubject.objects.filter(
+            group_id=group_id, is_active=True
+        ).order_by('ordering', 'name_bn')
+    return render(request, 'partials/subject_options.html', {'items': qs})
+
+
+def result_fields(request):
+    """HTMX: result_type changes → return relevant result input fields."""
+    result_type_id = request.GET.get('result_type', '')
+    result_format = None
+
+    if result_type_id:
+        try:
+            rt = ResultType.objects.get(pk=result_type_id)
+            result_format = rt.result_format
+        except ResultType.DoesNotExist:
+            pass
+
+    division_results = DivisionResult.objects.all().order_by('ordering')
+
+    return render(request, 'partials/education_result_fields.html', {
+        'result_format': result_format,
+        'division_results': division_results,
+    })

@@ -1,0 +1,44 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">বই ও প্রকাশনা</h6>
+  <a href="{% url 'mp:publication_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+{% if publications %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>শিরোনাম</th>
+        <th>প্রকাশক</th>
+        <th>সাল</th>
+        <th>ধরন</th>
+        <th style="width:100px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pub in publications %}
+      <tr>
+        <td>{{ pub.title_bn }}</td>
+        <td>{{ pub.publisher_bn|default:"—" }}</td>
+        <td>{{ pub.pub_year|default:"—" }}</td>
+        <td>{{ pub.get_pub_type_display }}</td>
+        <td>
+          <a href="{% url 'mp:publication_update' mp.pk pub.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:publication_delete' mp.pk pub.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো প্রকাশনার তথ্য নেই।</p>
+{% endif %}

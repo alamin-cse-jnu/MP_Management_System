@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ title_bn }}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      {% if mp %}
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-ministry">{{ mp.name_bn }}</a></li>
+      {% else %}
+      <li class="breadcrumb-item"><a href="{% url 'ministry:assignment_list' %}">মন্ত্রণালয় নিয়োগ</a></li>
+      {% endif %}
+      <li class="breadcrumb-item active">{{ title_bn }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    {% if mp %}<small class="text-muted">{{ mp.name_bn }}</small>{% endif %}
+  </div>
+  {% if mp %}
+  <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-ministry" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+  {% else %}
+  <a href="{% url 'ministry:assignment_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+  {% endif %}
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-building icon"></i> {{ title_bn }}</div>
+    <form method="post" novalidate>{% csrf_token %}
+      {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
+      {% if not is_create %}<input type="hidden" name="from_mp" value="{{ from_mp }}">{% endif %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      {% if not mp %}
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-medium">সংসদ সদস্য <span class="text-primary">*</span></label>
+          <p class="text-muted small">দয়া করে এমপি প্রোফাইল থেকে নিয়োগ দিন অথবা নিচের তালিকা থেকে সদস্য নির্বাচন করুন।</p>
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">সংসদ <span class="text-primary">*</span></label>{{ form.parliament }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">মন্ত্রণালয় <span class="text-primary">*</span></label>{{ form.ministry }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">ধরন <span class="text-primary">*</span></label>{{ form.minister_type }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">শুরুর তারিখ <span class="text-primary">*</span></label>{{ form.start_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">শেষ তারিখ</label>{{ form.end_date }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">GO নম্বর</label>{{ form.go_number }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">GO তারিখ</label>{{ form.go_date }}</div>
+        <div class="col-md-3 mb-3 d-flex align-items-end">
+          <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">সক্রিয়</label></div>
+        </div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">মন্তব্য (বাংলায়)</label>{{ form.remarks_bn }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">Remarks (English)</label>{{ form.remarks_en }}</div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        {% if mp %}
+        <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-ministry" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
+        {% else %}
+        <a href="{% url 'ministry:assignment_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

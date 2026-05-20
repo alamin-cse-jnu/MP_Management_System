@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ title_bn }}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">বিদেশ ভ্রমণ</a></li>
+      {% if tour %}<li class="breadcrumb-item"><a href="{% url 'travel:tour_detail' tour.pk %}">{{ tour.go_number }}</a></li>{% endif %}
+      <li class="breadcrumb-item active">{{ title_bn }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+  </div>
+  {% if tour %}
+  <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+  {% else %}
+  <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+  </a>
+  {% endif %}
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-airplane icon"></i> {{ title_bn }}</div>
+    <form method="post" novalidate>{% csrf_token %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="row">
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">GO নম্বর <span class="text-primary">*</span></label>{{ form.go_number }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">GO তারিখ <span class="text-primary">*</span></label>{{ form.go_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">সংসদ <span class="text-primary">*</span></label>{{ form.parliament }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">ভ্রমণের ধরন <span class="text-primary">*</span></label>{{ form.tour_type }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">উদ্দেশ্য <span class="text-primary">*</span></label>{{ form.purpose }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">উদ্দেশ্যের বিবরণ (বাংলায়)</label>{{ form.purpose_detail_bn }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">Purpose Details (English)</label>{{ form.purpose_detail_en }}</div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        {% if tour %}
+        <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
+        {% else %}
+        <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

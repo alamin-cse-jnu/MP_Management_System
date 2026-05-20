@@ -1,0 +1,74 @@
+{% load static %}
+{# Reusable address fields block. Template vars: form, show_contact #}
+
+{% if form.non_field_errors %}
+<div class="alert alert-danger">{{ form.non_field_errors }}</div>
+{% endif %}
+
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <label class="form-label fw-medium">বিভাগ</label>
+    {{ form.division }}
+  </div>
+  <div class="col-md-4 mb-3">
+    <label class="form-label fw-medium">জেলা</label>
+    {{ form.district }}
+  </div>
+  <div class="col-md-4 mb-3">
+    <label class="form-label fw-medium">উপজেলা/থানা</label>
+    {{ form.upazila }}
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <label class="form-label fw-medium">পৌরসভা/ইউনিয়ন (বাংলায়)</label>
+    {{ form.pouroshova_union_bn }}
+  </div>
+  <div class="col-md-6 mb-3">
+    <label class="form-label fw-medium">Pouroshova/Union</label>
+    {{ form.pouroshova_union_en }}
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <label class="form-label fw-medium">বাড়ি/রাস্তা/গ্রাম/ডাকঘর (বাংলায়)</label>
+    {{ form.address_detail_bn }}
+  </div>
+  <div class="col-md-6 mb-3">
+    <label class="form-label fw-medium">Address Details (English)</label>
+    {{ form.address_detail_en }}
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <label class="form-label fw-medium">পোস্টাল কোড</label>
+    {{ form.postal_code }}
+  </div>
+</div>
+
+{% if show_contact %}
+<div class="mt-2 pt-3 border-top">
+  <div class="fw-medium mb-3 text-muted" style="font-size:0.875rem;">
+    যোগাযোগ তথ্য (বর্তমান ঠিকানায় প্রযোজ্য)
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label class="form-label fw-medium">টেলিফোন</label>
+      {{ form.telephone }}
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label fw-medium">মোবাইল</label>
+      {{ form.mobile }}
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label fw-medium">বিকল্প মোবাইল</label>
+      {{ form.alt_mobile }}
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label fw-medium">হোয়াটসঅ্যাপ</label>
+      {{ form.whatsapp }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label fw-medium">ই-মেইল</label>
+      {{ form.email }}
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 5,
+    "fields": {
+      "name_bn": "মন্ত্রণালয়",
+      "name_en": "Ministry",
+      "icon": "bi-building",
+      "url_name": "",
+      "ordering": 30,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 500,
+    "fields": {
+      "menu": 5,
+      "name_bn": "মন্ত্রণালয় নিয়োগ তালিকা",
+      "name_en": "Ministry Assignments",
+      "url_name": "ministry:assignment_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 501,
+    "fields": {
+      "menu": 5,
+      "name_bn": "নতুন নিয়োগ",
+      "name_en": "Add Assignment",
+      "url_name": "ministry:assignment_create",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

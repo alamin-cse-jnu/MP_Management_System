@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 7,
+    "fields": {
+      "name_bn": "প্রতিষ্ঠান",
+      "name_en": "Institution",
+      "icon": "bi-bank",
+      "url_name": "",
+      "ordering": 50,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 700,
+    "fields": {
+      "menu": 7,
+      "name_bn": "প্রতিষ্ঠান নিয়োগ তালিকা",
+      "name_en": "Institution Assignments",
+      "url_name": "institution:assignment_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 701,
+    "fields": {
+      "menu": 7,
+      "name_bn": "নতুন নিয়োগ",
+      "name_en": "Add Assignment",
+      "url_name": "institution:assignment_create",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

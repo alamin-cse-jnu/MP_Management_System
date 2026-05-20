@@ -1,0 +1,57 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">কমিটির সদস্যপদ</h6>
+  <a href="{% url 'committee:assignment_create' %}?mp={{ mp.pk }}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+{% if committee_assignments %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>সংসদ</th>
+        <th>কমিটির নাম</th>
+        <th>পদবী</th>
+        <th>শুরু</th>
+        <th>শেষ</th>
+        <th>GO নং</th>
+        <th>অবস্থা</th>
+        <th style="width:90px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in committee_assignments %}
+      <tr>
+        <td>{{ obj.parliament.name_bn }}</td>
+        <td>{{ obj.committee.name_bn }}</td>
+        <td><span class="badge bg-primary-subtle text-primary">{{ obj.position.name_bn }}</span></td>
+        <td>{{ obj.start_date|date:"d/m/Y" }}</td>
+        <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ obj.go_number|default:"—" }}</td>
+        <td>
+          {% if obj.is_active %}
+            <span class="badge bg-success-subtle text-success">সক্রিয়</span>
+          {% else %}
+            <span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'committee:assignment_update' obj.pk %}?from_mp=1"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'committee:assignment_delete' obj.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <input type="hidden" name="from_mp" value="1">
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো কমিটির তথ্য নেই।</p>
+{% endif %}

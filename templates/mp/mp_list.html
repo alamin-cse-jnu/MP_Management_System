@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}সংসদ সদস্য তালিকা{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item active">সংসদ সদস্য</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">সংসদ সদস্য তালিকা</h4>
+    <small class="text-muted">Members of Parliament</small>
+  </div>
+  <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন সদস্য
+  </a>
+</div>
+
+<!-- Filters -->
+<div class="mp-card mb-3 p-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control"
+               placeholder="নাম বা এমপি আইডি…">
+        {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">সংসদ</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব সংসদ</option>
+        {% for p in parliaments %}
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>
+          {{ p.name_bn }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">ধরন</label>
+      <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব</option>
+        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>সরাসরি</option>
+        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>সংরক্ষিত</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অবস্থা</label>
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="active"   {% if status == 'active' %}selected{% endif %}>সক্রিয়</option>
+        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>নিষ্ক্রিয়</option>
+        <option value="all"      {% if status == 'all' %}selected{% endif %}>সব</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-outline-primary btn-sm w-100">
+        <i class="bi bi-funnel"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="mp-card p-0">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">#</th>
+        <th style="width:52px;">ছবি</th>
+        <th>নাম</th>
+        <th style="width:120px;">এমপি আইডি</th>
+        <th>নির্বাচনী এলাকা</th>
+        <th>দল</th>
+        <th style="width:110px; text-align:center;">ধরন</th>
+        <th style="width:110px; text-align:center;">অবস্থা</th>
+        <th style="width:120px; text-align:center;">অ্যাকশন</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mp in page_obj %}
+      {% with ei=mp.election_infos.first %}
+      <tr>
+        <td class="text-muted">{{ forloop.counter }}</td>
+        <td>
+          {% if mp.photo %}
+          <img src="{{ mp.photo.url }}" alt="" width="36" height="45"
+               style="object-fit:cover; border-radius:4px; border:1px solid #e2e8f0;">
+          {% else %}
+          <div class="d-flex align-items-center justify-content-center bg-light rounded"
+               style="width:36px;height:45px;font-size:1.2rem;color:#94a3b8;">
+            <i class="bi bi-person"></i>
+          </div>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'mp:mp_detail' mp.pk %}" class="fw-medium text-decoration-none">
+            {{ mp.name_bn }}
+          </a>
+          <div class="text-muted" style="font-size:0.8rem;">{{ mp.name_en }}</div>
+        </td>
+        <td class="text-muted" style="font-family:monospace;">{{ mp.mp_id }}</td>
+        <td class="text-muted" style="font-size:0.875rem;">
+          {{ ei.constituency|default:"—" }}
+        </td>
+        <td class="text-muted" style="font-size:0.875rem;">
+          {% if ei.party %}
+          <span class="badge badge-primary" style="font-size:0.7rem;">{{ ei.party.abbreviation|default:ei.party.name_bn }}</span>
+          {% else %}—{% endif %}
+        </td>
+        <td class="text-center">
+          <span class="badge {% if mp.member_type == 'direct' %}badge-primary{% else %}badge-active{% endif %}"
+                style="font-size:0.7rem;">
+            {{ mp.get_member_type_display }}
+          </span>
+        </td>
+        <td class="text-center">
+          {% if mp.is_active %}
+          <span class="badge badge-active">সক্রিয়</span>
+          {% else %}
+          <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          <a href="{% url 'mp:mp_detail' mp.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="বিস্তারিত">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <form method="post" action="{% url 'mp:mp_toggle' mp.pk %}"
+                class="d-inline"
+                onsubmit="return confirm('{% if mp.is_active %}নিষ্ক্রিয়{% else %}সক্রিয়{% endif %} করবেন?')">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn btn-sm {% if mp.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
+                    title="{% if mp.is_active %}নিষ্ক্রিয় করুন{% else %}সক্রিয় করুন{% endif %}">
+              <i class="bi {% if mp.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endwith %}
+      {% empty %}
+      <tr>
+        <td colspan="9" class="text-center text-muted py-5">
+          <i class="bi bi-people fs-2 d-block mb-2"></i>
+          {% if q %}
+          "<strong>{{ q }}</strong>" এর জন্য কোনো সদস্য পাওয়া যায়নি।
+          {% else %}
+          এই সংসদে কোনো সদস্য নেই।
+          <a href="{% url 'mp:mp_create' %}">প্রথম সদস্য যোগ করুন</a>।
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav class="mt-3">
+  <ul class="pagination pagination-sm justify-content-center mb-0">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?q={{ q }}&parliament={{ parliament_id }}&member_type={{ member_type }}&status={{ status }}&page={{ page_obj.previous_page_number }}">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+      <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ q }}&parliament={{ parliament_id }}&member_type={{ member_type }}&status={{ status }}&page={{ num }}">{{ num }}</a>
+      </li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?q={{ q }}&parliament={{ parliament_id }}&member_type={{ member_type }}&status={{ status }}&page={{ page_obj.next_page_number }}">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% if page_obj %}
+<div class="text-muted text-center mt-2" style="font-size:0.8rem;">
+  মোট {{ page_obj.paginator.count }} জন সদস্য
+  (পৃষ্ঠা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }})
+</div>
+{% endif %}
+{% endblock %}

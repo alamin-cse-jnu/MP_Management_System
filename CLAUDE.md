@@ -131,11 +131,11 @@ mp_management/
 | 2 | master/ — all reference models + CRUD UI | ✅ |
 | 3 | accounts/ — Role + Permission + Middleware | ✅ |
 | 4 | parliament/ — Parliament + Constituency CRUD | ✅ |
-| 5 | mp/ — MP entry form sections 1–6 with HTMX | ⬜ |
-| 6 | mp/ — Education sub-form (dynamic result fields) | ⬜ |
-| 7 | mp/ — Sections 7–19 remaining sub-models | ⬜ |
-| 8 | ministry/ + committee/ modules | ⬜ |
-| 9 | institution/ + travel/ + office/ modules | ⬜ |
+| 5 | mp/ — MP entry form sections 1–6 with HTMX | ✅ |
+| 6 | mp/ — Education sub-form (dynamic result fields) | ✅ |
+| 7 | mp/ — Sections 7–19 remaining sub-models | ✅ |
+| 8 | ministry/ + committee/ modules | ✅ |
+| 9 | institution/ + travel/ + office/ modules | ✅ |
 | 10 | reports/ — all standard reports | ⬜ |
 | 11 | PDF biodata Bangla + English (WeasyPrint) | ⬜ |
 | 12 | Excel/CSV exports + Dashboard KPIs | ⬜ |
@@ -156,6 +156,11 @@ python manage.py loaddata fixtures/initial/upazilas.json
 python manage.py loaddata fixtures/initial/menu_data.json
 python manage.py loaddata fixtures/initial/parliament_menu.json
 python manage.py loaddata fixtures/initial/parliament_data.json
+python manage.py loaddata fixtures/initial/mp_menu.json
+python manage.py loaddata fixtures/initial/ministry_menu.json
+python manage.py loaddata fixtures/initial/committee_menu.json
+python manage.py loaddata fixtures/initial/institution_menu.json
+python manage.py loaddata fixtures/initial/travel_menu.json
 python manage.py createsuperuser
 python manage.py makemessages -l bn && python manage.py compilemessages
 python manage.py test apps/

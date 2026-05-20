@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}ভ্রমণ বিবরণ — {{ tour.go_number }}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">বিদেশ ভ্রমণ</a></li>
+      <li class="breadcrumb-item active">{{ tour.go_number }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">ভ্রমণ বিবরণ</h4>
+    <small class="text-muted">GO: {{ tour.go_number }} | {{ tour.go_date|date:"d/m/Y" }}</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'travel:tour_update' tour.pk %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-pencil me-1"></i>সম্পাদনা
+    </a>
+    <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    </a>
+  </div>
+</div>
+
+<!-- Tour header info -->
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-info-circle icon"></i> ভ্রমণ তথ্য</div>
+  <div class="row g-3 p-2">
+    <div class="col-md-3"><small class="text-muted d-block">GO নম্বর</small><strong>{{ tour.go_number }}</strong></div>
+    <div class="col-md-2"><small class="text-muted d-block">GO তারিখ</small><strong>{{ tour.go_date|date:"d/m/Y" }}</strong></div>
+    <div class="col-md-3"><small class="text-muted d-block">সংসদ</small>{{ tour.parliament.name_bn }}</div>
+    <div class="col-md-2"><small class="text-muted d-block">ধরন</small><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type.name_bn }}</span></div>
+    <div class="col-md-2"><small class="text-muted d-block">উদ্দেশ্য</small>{{ tour.purpose.name_bn }}</div>
+    {% if tour.purpose_detail_bn %}
+    <div class="col-md-6"><small class="text-muted d-block">বিবরণ (বাংলায়)</small>{{ tour.purpose_detail_bn }}</div>
+    {% endif %}
+    {% if tour.purpose_detail_en %}
+    <div class="col-md-6"><small class="text-muted d-block">Details (English)</small>{{ tour.purpose_detail_en }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row g-3">
+  <!-- Participants -->
+  <div class="col-md-7">
+    <div class="mp-card h-100">
+      <div class="mp-card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-people icon"></i> অংশগ্রহণকারী সদস্য ({{ participants|length }})</span>
+      </div>
+
+      <!-- Add participant form -->
+      <div class="p-3 border-bottom bg-light">
+        <form method="post" action="{% url 'travel:participant_add' tour.pk %}" class="row g-2 align-items-end">
+          {% csrf_token %}
+          <div class="col-md-5">
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">সদস্য নির্বাচন <span class="text-primary">*</span></label>
+            {{ participant_form.mp }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">যাওয়ার তারিখ</label>
+            {{ participant_form.departure_date }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">ফেরার তারিখ</label>
+            {{ participant_form.return_date }}
+          </div>
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-primary btn-sm w-100"><i class="bi bi-plus-lg"></i></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Participant list -->
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
+          <thead class="table-light">
+            <tr>
+              <th>সদস্যের নাম</th>
+              <th>যাওয়া</th>
+              <th>ফেরা</th>
+              <th style="width:3rem;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in participants %}
+            <tr>
+              <td>
+                <a href="{% url 'mp:mp_detail' p.mp_id %}?active=tab-travel" class="text-decoration-none fw-medium">{{ p.mp.name_bn }}</a>
+              </td>
+              <td>{{ p.departure_date|date:"d/m/Y"|default:"—" }}</td>
+              <td>{{ p.return_date|date:"d/m/Y"|default:"—" }}</td>
+              <td>
+                <form method="post" action="{% url 'travel:participant_remove' tour.pk p.pk %}" class="d-inline"
+                      onsubmit="return confirm('এই সদস্য বাদ দেবেন?')">
+                  {% csrf_token %}<button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center text-muted py-3">কোনো সদস্য যোগ করা হয়নি।</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Countries -->
+  <div class="col-md-5">
+    <div class="mp-card h-100">
+      <div class="mp-card-header">
+        <span><i class="bi bi-globe icon"></i> গন্তব্য দেশসমূহ ({{ countries|length }})</span>
+      </div>
+
+      <!-- Add country form -->
+      <div class="p-3 border-bottom bg-light">
+        <form method="post" action="{% url 'travel:country_add' tour.pk %}" class="row g-2 align-items-end">
+          {% csrf_token %}
+          <div class="col-md-7">
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">দেশ নির্বাচন <span class="text-primary">*</span></label>
+            {{ country_form.country }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">ক্রম</label>
+            {{ country_form.ordering }}
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-sm w-100"><i class="bi bi-plus-lg"></i></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Country list -->
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
+          <thead class="table-light">
+            <tr>
+              <th>ক্রম</th>
+              <th>দেশের নাম</th>
+              <th style="width:3rem;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in countries %}
+            <tr>
+              <td>{{ c.ordering }}</td>
+              <td>{{ c.country.name_bn }} <span class="text-muted">({{ c.country.name_en }})</span></td>
+              <td>
+                <form method="post" action="{% url 'travel:country_remove' tour.pk c.pk %}" class="d-inline"
+                      onsubmit="return confirm('এই দেশ বাদ দেবেন?')">
+                  {% csrf_token %}<button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-muted py-3">কোনো দেশ যোগ করা হয়নি।</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

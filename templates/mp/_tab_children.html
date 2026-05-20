@@ -1,0 +1,59 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="fw-medium">সন্তানদের তথ্য</div>
+  <a href="{% url 'mp:child_create' mp.pk %}" class="btn btn-outline-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+  </a>
+</div>
+
+{% if children %}
+<div class="mp-card p-0">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">ক্রম</th>
+        <th>নাম (বাংলায়)</th>
+        <th>Name</th>
+        <th style="width:110px;">জন্ম তারিখ</th>
+        <th>লিঙ্গ</th>
+        <th>পেশা</th>
+        <th>এনআইডি/জন্ম নিবন্ধন</th>
+        <th style="width:110px; text-align:center;">অ্যাকশন</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ch in children %}
+      <tr>
+        <td class="text-center text-muted">{{ ch.serial }}</td>
+        <td class="fw-medium">{{ ch.name_bn }}</td>
+        <td class="text-muted">{{ ch.name_en|default:"—" }}</td>
+        <td class="text-muted">{{ ch.dob|default:"—" }}</td>
+        <td class="text-muted">{{ ch.gender|default:"—" }}</td>
+        <td class="text-muted">{{ ch.profession|default:"—" }}</td>
+        <td class="text-muted" style="font-size:0.85rem;">{{ ch.nid_or_birth_reg|default:"—" }}</td>
+        <td class="text-center">
+          <a href="{% url 'mp:child_update' mp.pk ch.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <form method="post" action="{% url 'mp:child_delete' mp.pk ch.pk %}"
+                class="d-inline"
+                onsubmit="return confirm('এই তথ্য মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-icon btn-sm btn-outline-danger" title="মুছুন">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="text-center text-muted py-4">
+  <i class="bi bi-people fs-3 d-block mb-2" style="opacity:0.4;"></i>
+  কোনো সন্তানের তথ্য নেই।
+  <a href="{% url 'mp:child_create' mp.pk %}">যোগ করুন</a>।
+</div>
+{% endif %}

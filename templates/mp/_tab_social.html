@@ -1,0 +1,22 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">সমাজ সেবা</h6>
+  <a href="{% url 'mp:social_service_save' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-pencil me-1"></i>{% if social_service %}সম্পাদনা{% else %}যোগ করুন{% endif %}
+  </a>
+</div>
+
+{% if social_service %}
+<div class="row">
+  <div class="col-md-6">
+    <h6 class="text-muted" style="font-size:0.8125rem;">বাংলায়</h6>
+    <p style="white-space:pre-wrap;">{{ social_service.description_bn|default:"—" }}</p>
+  </div>
+  <div class="col-md-6">
+    <h6 class="text-muted" style="font-size:0.8125rem;">English</h6>
+    <p style="white-space:pre-wrap;">{{ social_service.description_en|default:"—" }}</p>
+  </div>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো সমাজ সেবার তথ্য নেই।</p>
+{% endif %}

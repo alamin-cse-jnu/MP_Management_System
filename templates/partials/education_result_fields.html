@@ -1,0 +1,52 @@
+{% if not result_format %}
+<div class="col-12 mb-2">
+  <p class="text-muted mb-0" style="font-size:0.875rem;">
+    <i class="bi bi-arrow-up-left me-1"></i>ফলাফলের ধরন নির্বাচন করলে প্রযোজ্য ক্ষেত্র দেখা যাবে
+  </p>
+</div>
+{% elif result_format == 'division' %}
+<div class="col-md-6 mb-3">
+  <label class="form-label fw-medium">বিভাগ (Division)</label>
+  <select name="division_result" id="id_division_result" class="form-select">
+    <option value="">--- নির্বাচন করুন ---</option>
+    {% for dr in division_results %}
+    <option value="{{ dr.pk }}">{{ dr }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% elif result_format == 'gpa' or result_format == 'cgpa' %}
+<div class="col-md-3 mb-3">
+  <label class="form-label fw-medium">জিপিএ/সিজিপিএ</label>
+  <input type="number" name="gpa_value" id="id_gpa_value" class="form-control"
+         step="0.01" min="0" max="10" placeholder="যেমন: 5.00">
+</div>
+<div class="col-md-3 mb-3">
+  <label class="form-label fw-medium">মোট (Out of)</label>
+  <input type="number" name="gpa_out_of" id="id_gpa_out_of" class="form-control"
+         step="0.01" min="0" max="10" placeholder="যেমন: 5.00">
+</div>
+{% elif result_format == 'percentage' %}
+<div class="col-md-4 mb-3">
+  <label class="form-label fw-medium">শতকরা (%)</label>
+  <input type="number" name="percentage" id="id_percentage" class="form-control"
+         step="0.01" min="0" max="100" placeholder="যেমন: 75.50">
+</div>
+{% elif result_format == 'class' %}
+<div class="col-md-4 mb-3">
+  <label class="form-label fw-medium">শ্রেণী (Class)</label>
+  <input type="text" name="class_result" id="id_class_result" class="form-control"
+         placeholder="যেমন: 1st Class">
+</div>
+{% elif result_format == 'pass_fail' %}
+<div class="col-12 mb-2">
+  <p class="text-success mb-0" style="font-size:0.875rem;">
+    <i class="bi bi-check-circle me-1"></i>পাস/ফেল — কোনো অতিরিক্ত মান প্রয়োজন নেই
+  </p>
+</div>
+{% else %}
+<div class="col-md-6 mb-3">
+  <label class="form-label fw-medium">ফলাফল (অন্যান্য)</label>
+  <input type="text" name="result_text" id="id_result_text" class="form-control"
+         placeholder="ফলাফল লিখুন">
+</div>
+{% endif %}

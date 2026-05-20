@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 6,
+    "fields": {
+      "name_bn": "কমিটি",
+      "name_en": "Committee",
+      "icon": "bi-people-fill",
+      "url_name": "",
+      "ordering": 40,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 600,
+    "fields": {
+      "menu": 6,
+      "name_bn": "কমিটি নিয়োগ তালিকা",
+      "name_en": "Committee Assignments",
+      "url_name": "committee:assignment_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 601,
+    "fields": {
+      "menu": 6,
+      "name_bn": "নতুন নিয়োগ",
+      "name_en": "Add Assignment",
+      "url_name": "committee:assignment_create",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

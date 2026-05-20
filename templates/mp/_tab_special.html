@@ -1,0 +1,44 @@
+{% load static %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">বিশেষ পদের দায়িত্ব</h6>
+  <a href="{% url 'mp:special_position_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+  </a>
+</div>
+
+{% if special_positions %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>সংসদ</th>
+        <th>পদের নাম</th>
+        <th>শুরুর তারিখ</th>
+        <th>শেষ তারিখ</th>
+        <th style="width:100px;">কার্যক্রম</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sp in special_positions %}
+      <tr>
+        <td>{{ sp.parliament.name_bn }}</td>
+        <td>{{ sp.role }}</td>
+        <td>{{ sp.from_date|default:"—" }}</td>
+        <td>{{ sp.to_date|default:"—" }}</td>
+        <td>
+          <a href="{% url 'mp:special_position_update' mp.pk sp.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:special_position_delete' mp.pk sp.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">কোনো বিশেষ পদের তথ্য নেই।</p>
+{% endif %}

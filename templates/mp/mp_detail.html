@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{{ mp.name_bn }}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
+      <li class="breadcrumb-item active">{{ mp.name_bn }}</li>
+    </ol>
+  </nav>
+  <div class="d-flex gap-2">
+    <a href="{% url 'office:office_edit' mp.pk %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-building-fill me-1"></i>অফিস ঠিকানা
+    </a>
+    <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    </a>
+  </div>
+</div>
+
+<!-- ── PROFILE HEADER ──────────────────────────────────────────────────────── -->
+<div class="mp-card mb-0" style="border-radius:12px 12px 0 0; border-bottom:none; padding:20px 24px;">
+  <div class="d-flex gap-4 align-items-start">
+    <!-- Photo -->
+    <div style="flex-shrink:0;">
+      {% if mp.photo %}
+      <img src="{{ mp.photo.url }}" alt="{{ mp.name_bn }}"
+           style="width:90px;height:113px;object-fit:cover;border-radius:8px;border:2px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      {% else %}
+      <div class="d-flex align-items-center justify-content-center bg-light"
+           style="width:90px;height:113px;border-radius:8px;border:2px solid #e2e8f0;font-size:2.5rem;color:#94a3b8;">
+        <i class="bi bi-person"></i>
+      </div>
+      {% endif %}
+    </div>
+    <!-- Info -->
+    <div class="flex-grow-1">
+      <h4 class="fw-bold mb-0">{{ mp.name_bn }}</h4>
+      <div class="text-muted mb-2">{{ mp.name_en }}</div>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge badge-primary" style="font-size:0.75rem;">
+          <i class="bi bi-hash me-1"></i>{{ mp.mp_id }}
+        </span>
+        <span class="badge badge-primary" style="font-size:0.75rem;">
+          <i class="bi bi-building me-1"></i>{{ mp.parliament.name_bn }}
+        </span>
+        <span class="badge badge-primary" style="font-size:0.75rem;">
+          {{ mp.get_member_type_display }}
+        </span>
+        {% if election_info %}
+        {% if election_info.constituency %}
+        <span class="badge" style="background:#f1f5f9;color:#475569;font-size:0.75rem;">
+          <i class="bi bi-geo-alt me-1"></i>{{ election_info.constituency.display_bn }}
+        </span>
+        {% endif %}
+        {% if election_info.party %}
+        <span class="badge" style="background:#f1f5f9;color:#475569;font-size:0.75rem;">
+          <i class="bi bi-flag me-1"></i>{{ election_info.party.abbreviation|default:election_info.party.name_bn }}
+        </span>
+        {% endif %}
+        {% endif %}
+        {% if mp.is_active %}
+        <span class="badge badge-active" style="font-size:0.75rem;">সক্রিয়</span>
+        {% else %}
+        <span class="badge badge-inactive" style="font-size:0.75rem;">নিষ্ক্রিয়</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TAB NAVIGATION ─────────────────────────────────────────────────────── -->
+<div class="mp-card p-0" style="border-radius:0; border-top:none; border-bottom:none;">
+  <ul class="nav nav-tabs flex-wrap px-3 pt-2" id="mpTabs" role="tablist"
+      style="border-bottom:1px solid #e2e8f0; gap:2px;">
+    {% for tab_id, tab_label in tab_list %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link py-2 px-3" style="font-size:0.8rem;"
+              id="{{ tab_id }}-btn"
+              data-bs-toggle="tab"
+              data-bs-target="#{{ tab_id }}"
+              type="button" role="tab">
+        {{ tab_label }}
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- ── TAB CONTENT ────────────────────────────────────────────────────────── -->
+<div class="mp-card" style="border-radius:0 0 12px 12px; border-top:none;">
+  <div class="tab-content" id="mpTabsContent">
+
+    <div class="tab-pane fade" id="tab-general" role="tabpanel">
+      {% include "mp/_tab_general.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-election" role="tabpanel">
+      {% include "mp/_tab_election.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-spouse" role="tabpanel">
+      {% include "mp/_tab_spouse.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-children" role="tabpanel">
+      {% include "mp/_tab_children.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-education" role="tabpanel">
+      {% include "mp/_tab_education.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-address" role="tabpanel">
+      {% include "mp/_tab_address.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-language" role="tabpanel">
+      {% include "mp/_tab_language.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-bank" role="tabpanel">
+      {% include "mp/_tab_bank.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-covid" role="tabpanel">
+      {% include "mp/_tab_covid.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-ministry" role="tabpanel">
+      {% include "mp/_tab_ministry.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-committee" role="tabpanel">
+      {% include "mp/_tab_committee.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-history" role="tabpanel">
+      {% include "mp/_tab_history.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-organization" role="tabpanel">
+      {% include "mp/_tab_organization.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-award" role="tabpanel">
+      {% include "mp/_tab_award.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-social" role="tabpanel">
+      {% include "mp/_tab_social.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-special" role="tabpanel">
+      {% include "mp/_tab_special.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-publication" role="tabpanel">
+      {% include "mp/_tab_publication.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="tab-travel" role="tabpanel">
+      {% include "mp/_tab_travel.html" %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Activate tab from URL query param
+document.addEventListener('DOMContentLoaded', function () {
+  const activeId = '{{ active_tab }}' || 'tab-general';
+  const triggerEl = document.querySelector('[data-bs-target="#' + activeId + '"]');
+  if (triggerEl) {
+    bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+  }
+});
+
+// Address cascade helpers (using fetch + master HTMX endpoints)
+function cascadeDistricts(divId, prefix) {
+  const dist = document.getElementById('id_' + prefix + '-district');
+  const upaz = document.getElementById('id_' + prefix + '-upazila');
+  if (!dist) return;
+  if (!divId) {
+    dist.innerHTML = '<option value="">-- জেলা নির্বাচন করুন --</option>';
+    if (upaz) upaz.innerHTML = '<option value="">-- উপজেলা --</option>';
+    return;
+  }
+  fetch('/master/htmx/district-options/?division_id=' + divId)
+    .then(r => r.text())
+    .then(html => {
+      dist.innerHTML = '<option value="">-- জেলা নির্বাচন করুন --</option>' + html;
+      if (upaz) upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>';
+    });
+}
+
+function cascadeUpazilas(distId, prefix) {
+  const upaz = document.getElementById('id_' + prefix + '-upazila');
+  if (!upaz) return;
+  if (!distId) {
+    upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>';
+    return;
+  }
+  fetch('/master/htmx/upazila-options/?district_id=' + distId)
+    .then(r => r.text())
+    .then(html => {
+      upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>' + html;
+    });
+}
+</script>
+{% endblock %}

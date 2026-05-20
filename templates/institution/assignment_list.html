@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}প্রতিষ্ঠান নিয়োগ তালিকা{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item active">প্রতিষ্ঠান নিয়োগ</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">প্রতিষ্ঠান নিয়োগ তালিকা</h4>
+    <small class="text-muted">Institution Assignments</small>
+  </div>
+  <a href="{% url 'institution:assignment_create' %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন নিয়োগ
+  </a>
+</div>
+
+<div class="mp-card mb-3 p-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম বা প্রতিষ্ঠান…">
+        {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">সংসদ</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব সংসদ</option>
+        {% for p in parliaments %}
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">প্রতিষ্ঠান</label>
+      <select name="institution" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব প্রতিষ্ঠান</option>
+        {% for inst in institutions %}
+        <option value="{{ inst.pk }}" {% if inst.pk|stringformat:"s" == institution_id %}selected{% endif %}>{{ inst.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অবস্থা</label>
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="active"   {% if status == 'active' %}selected{% endif %}>সক্রিয়</option>
+        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>নিষ্ক্রিয়</option>
+        <option value="all"      {% if status == 'all' %}selected{% endif %}>সব</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary btn-sm w-100">খুঁজুন</button>
+    </div>
+  </form>
+</div>
+
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:0.9rem;">
+      <thead class="table-light">
+        <tr>
+          <th style="width:3rem;">#</th>
+          <th>সদস্যের নাম</th>
+          <th>প্রতিষ্ঠান</th>
+          <th>পদবী</th>
+          <th>শুরু</th>
+          <th>শেষ</th>
+          <th>GO নং</th>
+          <th style="width:7rem;">অবস্থা</th>
+          <th style="width:8rem;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in page_obj %}
+        <tr>
+          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td>
+            <a href="{% url 'mp:mp_detail' obj.mp_id %}" class="text-decoration-none fw-medium">{{ obj.mp.name_bn }}</a>
+            <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
+          </td>
+          <td>{{ obj.institution.name_bn }}</td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ obj.role.name_bn }}</span></td>
+          <td>{{ obj.start_date|date:"d/m/Y" }}</td>
+          <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ obj.go_number|default:"—" }}</td>
+          <td>
+            {% if obj.is_active %}<span class="badge bg-success-subtle text-success">সক্রিয়</span>
+            {% else %}<span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>{% endif %}
+          </td>
+          <td class="text-end">
+            <a href="{% url 'institution:assignment_update' obj.pk %}" class="btn btn-outline-secondary btn-sm me-1"><i class="bi bi-pencil"></i></a>
+            <form method="post" action="{% url 'institution:assignment_toggle' obj.pk %}" class="d-inline">
+              {% csrf_token %}<button class="btn btn-outline-warning btn-sm me-1"><i class="bi bi-arrow-repeat"></i></button>
+            </form>
+            <form method="post" action="{% url 'institution:assignment_delete' obj.pk %}" class="d-inline"
+                  onsubmit="return confirm('এই নিয়োগ মুছে ফেলবেন?')">
+              {% csrf_token %}<button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="9" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between align-items-center">
+    <small class="text-muted">মোট {{ page_obj.paginator.count }} টি | পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
