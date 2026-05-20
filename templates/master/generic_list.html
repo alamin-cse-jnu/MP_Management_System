@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static lang_tags master_tags %}
+
+{% block title %}{{ title_bn }}{% endblock %}
+
+{% block content %}
+<!-- Page header -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item active">{{ title_bn }}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    <small class="text-muted">{{ title_en }}</small>
+  </div>
+  <a href="{% url create_url_name %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+  </a>
+</div>
+
+<!-- Filter bar -->
+<div class="mp-card mb-3 py-2 px-3">
+  <form method="get" class="d-flex flex-wrap gap-2 align-items-center">
+    <div class="flex-grow-1" style="min-width:200px; max-width:320px;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search text-muted"></i>
+        </span>
+        <input type="text" name="q" value="{{ q }}"
+               class="form-control border-start-0"
+               placeholder="বাংলা বা ইংরেজিতে খুঁজুন…">
+      </div>
+    </div>
+
+    <div class="btn-group btn-group-sm" role="group">
+      <a href="?status=active{% if q %}&q={{ q }}{% endif %}"
+         class="btn {% if status == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+        সক্রিয়
+      </a>
+      <a href="?status=inactive{% if q %}&q={{ q }}{% endif %}"
+         class="btn {% if status == 'inactive' %}btn-danger{% else %}btn-outline-secondary{% endif %}">
+        নিষ্ক্রিয়
+      </a>
+      <a href="?status=all{% if q %}&q={{ q }}{% endif %}"
+         class="btn {% if status == 'all' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
+        সব
+      </a>
+    </div>
+
+    {% if q %}
+    <a href="?status={{ status }}" class="btn btn-sm btn-outline-secondary">
+      <i class="bi bi-x-lg"></i> ক্লিয়ার
+    </a>
+    {% endif %}
+
+    <button type="submit" class="btn btn-sm btn-outline-primary">
+      <i class="bi bi-funnel me-1"></i>ফিল্টার
+    </button>
+  </form>
+</div>
+
+<!-- Table card -->
+<div class="mp-card p-0">
+  <div class="table-responsive">
+    <table class="mp-table">
+      <thead>
+        <tr>
+          <th style="width:50px;">#</th>
+          {% for col in extra_cols %}
+          <th>{{ col.label }}</th>
+          {% endfor %}
+          <th>বাংলা নাম</th>
+          <th>English Name</th>
+          <th style="width:110px;">অবস্থা</th>
+          <th style="width:110px; text-align:center;">অ্যাকশন</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in object_list %}
+        <tr>
+          <td class="text-muted">{{ forloop.counter|add:page_obj.start_index|add:-1 }}</td>
+          {% for col in extra_cols %}
+          <td>{{ obj|get_attr:col.attr }}</td>
+          {% endfor %}
+          <td class="fw-medium">{{ obj.name_bn }}</td>
+          <td class="text-muted">{{ obj.name_en }}</td>
+          <td>
+            {% if obj.is_active %}
+            <span class="badge badge-active">সক্রিয়</span>
+            {% else %}
+            <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <a href="{% url update_url_name obj.pk %}"
+               class="btn btn-icon btn-outline-primary btn-sm me-1"
+               title="সম্পাদনা">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <form method="post"
+                  action="{% url toggle_url_name obj.pk %}"
+                  class="d-inline"
+                  onsubmit="return confirm('অবস্থা পরিবর্তন করবেন?')">
+              {% csrf_token %}
+              <button type="submit"
+                      class="btn btn-icon btn-sm {% if obj.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
+                      title="{% if obj.is_active %}নিষ্ক্রিয় করুন{% else %}সক্রিয় করুন{% endif %}">
+                <i class="bi {% if obj.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="{{ extra_cols|length|add:5 }}" class="text-center text-muted py-4">
+            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+            কোনো তথ্য পাওয়া যায়নি।
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+  <div class="d-flex align-items-center justify-content-between px-3 py-2 border-top">
+    <small class="text-muted">
+      মোট {{ paginator.count }} টি — পৃষ্ঠা {{ page_obj.number }} / {{ paginator.num_pages }}
+    </small>
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}&status={{ status }}">
+            ‹ পূর্ববর্তী
+          </a>
+        </li>
+        {% endif %}
+
+        {% for num in paginator.page_range %}
+          {% if page_obj.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}{% if q %}&q={{ q }}{% endif %}&status={{ status }}">{{ num }}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}&status={{ status }}">
+            পরবর্তী ›
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

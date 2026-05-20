@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 3,
+    "fields": {
+      "name_bn": "সংসদ",
+      "name_en": "Parliament",
+      "icon": "bi-building",
+      "url_name": "",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 300,
+    "fields": {
+      "menu": 3,
+      "name_bn": "জাতীয় সংসদ",
+      "name_en": "Parliaments",
+      "url_name": "parliament:parliament_list",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 301,
+    "fields": {
+      "menu": 3,
+      "name_bn": "নির্বাচনী এলাকা",
+      "name_en": "Constituencies",
+      "url_name": "parliament:constituency_list",
+      "ordering": 20,
+      "is_active": true
+    }
+  }
+]

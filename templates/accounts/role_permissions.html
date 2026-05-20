@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}অনুমতি — {{ role.name_bn }}{% endblock %}
+
+{% block extra_css %}
+<style>
+  .perm-table th, .perm-table td { padding: 8px 14px; vertical-align: middle; }
+  .perm-table thead th {
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #64748b; background: #f8fafc;
+    text-align: center;
+  }
+  .perm-table thead th:first-child { text-align: left; }
+  .perm-table .menu-header td {
+    background: #f1f5f9; font-weight: 600; font-size: 0.82rem;
+    color: #0d9488; padding: 7px 14px;
+  }
+  .perm-table tbody tr:hover { background: #fafcff; }
+  .perm-table .form-check-input { width: 1.1em; height: 1.1em; cursor: pointer; margin: 0 auto; display: block; }
+  .col-header { cursor: pointer; }
+  .col-header:hover { color: #0d9488; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:role_list' %}">ভূমিকা</a></li>
+        <li class="breadcrumb-item active">অনুমতি</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">অনুমতি — {{ role.name_bn }}</h4>
+    <small class="text-muted">{{ role.name_en }} — Role Permissions Matrix</small>
+  </div>
+  <a href="{% url 'accounts:role_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+  </a>
+</div>
+
+<form method="post" id="permForm">
+  {% csrf_token %}
+
+  <div class="mp-card p-0 mb-3">
+    <div class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+      <span class="fw-semibold">{{ role.name_bn }} — সাব-মেনু অনুযায়ী অনুমতি</span>
+      <button type="submit" class="btn btn-primary btn-sm">
+        <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="mp-table perm-table">
+        <thead>
+          <tr>
+            <th style="min-width:220px; text-align:left;">সাব-মেনু</th>
+            <th class="col-header" onclick="toggleCol('view')"   title="সব দেখা টগল">দেখা<br><span style="font-weight:400;color:#94a3b8;">(view)</span></th>
+            <th class="col-header" onclick="toggleCol('add')"    title="সব যোগ টগল">যোগ<br><span style="font-weight:400;color:#94a3b8;">(add)</span></th>
+            <th class="col-header" onclick="toggleCol('edit')"   title="সব সম্পাদনা টগল">সম্পাদনা<br><span style="font-weight:400;color:#94a3b8;">(edit)</span></th>
+            <th class="col-header" onclick="toggleCol('delete')" title="সব মুছা টগল">মুছা<br><span style="font-weight:400;color:#94a3b8;">(delete)</span></th>
+            <th class="col-header" onclick="toggleCol('export')" title="সব এক্সপোর্ট টগল">এক্সপোর্ট<br><span style="font-weight:400;color:#94a3b8;">(export)</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for menu in menus %}
+          {% with subs=menu.submenus.all %}
+          {% if subs %}
+          <tr class="menu-header">
+            <td colspan="6">
+              <i class="bi {{ menu.icon|default:'bi-circle' }} me-1"></i>{{ menu.name_bn }}
+              <small class="text-muted ms-2">{{ menu.name_en }}</small>
+            </td>
+          </tr>
+          {% for sub in subs %}
+          <tr>
+            <td>
+              {{ sub.name_bn }}
+              <small class="text-muted d-block" style="font-size:0.78rem;">{{ sub.name_en }}</small>
+            </td>
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input perm-view"
+                     name="view_{{ sub.pk }}"
+                     {% if sub.pk in perm_sets.view %}checked{% endif %}>
+            </td>
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input perm-add"
+                     name="add_{{ sub.pk }}"
+                     {% if sub.pk in perm_sets.add %}checked{% endif %}>
+            </td>
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input perm-edit"
+                     name="edit_{{ sub.pk }}"
+                     {% if sub.pk in perm_sets.edit %}checked{% endif %}>
+            </td>
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input perm-delete"
+                     name="delete_{{ sub.pk }}"
+                     {% if sub.pk in perm_sets.delete %}checked{% endif %}>
+            </td>
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input perm-export"
+                     name="export_{{ sub.pk }}"
+                     {% if sub.pk in perm_sets.export %}checked{% endif %}>
+            </td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 pb-3">
+    <a href="{% url 'accounts:role_list' %}" class="btn btn-outline-secondary">বাতিল</a>
+    <button type="submit" class="btn btn-primary">
+      <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+    </button>
+  </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleCol(name) {
+  const cbs = document.querySelectorAll(`.perm-${name}`);
+  const allChecked = [...cbs].every(cb => cb.checked);
+  cbs.forEach(cb => cb.checked = !allChecked);
+}
+</script>
+{% endblock %}

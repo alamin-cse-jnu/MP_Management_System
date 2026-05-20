@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}সংসদ তালিকা{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item active">জাতীয় সংসদ</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">জাতীয় সংসদ তালিকা</h4>
+    <small class="text-muted">National Parliament Tenures</small>
+  </div>
+  <a href="{% url 'parliament:parliament_create' %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন সংসদ
+  </a>
+</div>
+
+<div class="mp-card p-0">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">#</th>
+        <th>বাংলা নাম</th>
+        <th>English Name</th>
+        <th style="width:80px; text-align:center;">ক্রম</th>
+        <th style="width:120px;">শুরুর তারিখ</th>
+        <th style="width:120px;">শেষের তারিখ</th>
+        <th style="width:130px; text-align:center;">অবস্থা</th>
+        <th style="width:150px; text-align:center;">অ্যাকশন</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in parliaments %}
+      <tr {% if p.is_active %}style="background:#f0fdf4;"{% endif %}>
+        <td class="text-muted">{{ forloop.counter }}</td>
+        <td class="fw-medium">{{ p.name_bn }}</td>
+        <td class="text-muted">{{ p.name_en }}</td>
+        <td class="text-center text-muted">{{ p.ordinal }}</td>
+        <td class="text-muted">{{ p.start_date|default:"—" }}</td>
+        <td class="text-muted">{{ p.end_date|default:"চলমান" }}</td>
+        <td class="text-center">
+          {% if p.is_active %}
+          <span class="badge badge-active" style="background:#bbf7d0; color:#15803d; padding:5px 10px;">
+            <i class="bi bi-check-circle-fill me-1"></i>বর্তমান সক্রিয়
+          </span>
+          {% else %}
+          <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          <a href="{% url 'parliament:parliament_update' p.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          {% if not p.is_active %}
+          <form method="post" action="{% url 'parliament:parliament_activate' p.pk %}"
+                class="d-inline"
+                onsubmit="return confirm('এই সংসদকে বর্তমান সক্রিয় সংসদ হিসেবে নির্ধারণ করবেন? অন্য সব সংসদ নিষ্ক্রিয় হয়ে যাবে।')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-success" title="সক্রিয় করুন">
+              <i class="bi bi-check-circle me-1"></i>সক্রিয় করুন
+            </button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="text-center text-muted py-4">
+          <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+          কোনো সংসদ তথ্য নেই। <a href="{% url 'parliament:parliament_create' %}">প্রথম সংসদ যোগ করুন</a>।
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if parliaments %}
+<div class="alert alert-info mt-3" style="font-size:0.85rem;">
+  <i class="bi bi-info-circle me-1"></i>
+  <strong>নিয়ম:</strong> একসাথে শুধুমাত্র একটি সংসদ সক্রিয় থাকতে পারে।
+  নতুন সংসদ সক্রিয় করলে বাকি সব স্বয়ংক্রিয়ভাবে নিষ্ক্রিয় হবে।
+</div>
+{% endif %}
+{% endblock %}

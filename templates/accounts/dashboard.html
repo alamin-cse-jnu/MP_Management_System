@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load lang_tags %}
+
+{% block title %}ড্যাশবোর্ড{% endblock %}
+
+{% block content %}
+<!-- Page header -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h4 class="mb-0 fw-bold">ড্যাশবোর্ড</h4>
+    <small class="text-muted">১৩তম জাতীয় সংসদ — সার্বিক চিত্র</small>
+  </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-value">{{ total_mps|default:"০" }}</div>
+      <div class="stat-label">মোট সংসদ সদস্য</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div>
+      <div class="stat-value">{{ total_ministers|default:"০" }}</div>
+      <div class="stat-label">মন্ত্রী/প্রতিমন্ত্রী/উপমন্ত্রী</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+      <div class="stat-value">{{ total_committees|default:"০" }}</div>
+      <div class="stat-label">স্থায়ী কমিটি</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-globe"></i></div>
+      <div class="stat-value">{{ total_tours|default:"০" }}</div>
+      <div class="stat-label">বিদেশ সফর</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick links -->
+<div class="row g-3">
+  <div class="col-md-6 col-xl-4">
+    <div class="mp-card h-100">
+      <div class="mp-card-header">
+        <i class="bi bi-people-fill icon"></i> সংসদ সদস্য
+      </div>
+      <p class="text-muted small mb-3">সংসদ সদস্যদের তথ্য যোগ, সম্পাদনা ও দেখুন।</p>
+      <a href="#" class="btn btn-primary btn-sm">
+        <i class="bi bi-arrow-right me-1"></i>তালিকা দেখুন
+      </a>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-4">
+    <div class="mp-card h-100">
+      <div class="mp-card-header">
+        <i class="bi bi-journal-text icon"></i> রিপোর্ট
+      </div>
+      <p class="text-muted small mb-3">বিভিন্ন প্রতিবেদন তৈরি ও ডাউনলোড করুন।</p>
+      <a href="#" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-arrow-right me-1"></i>রিপোর্ট দেখুন
+      </a>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-4">
+    <div class="mp-card h-100">
+      <div class="mp-card-header">
+        <i class="bi bi-sliders icon"></i> মাস্টার ডেটা
+      </div>
+      <p class="text-muted small mb-3">ড্রপডাউনের তথ্য ও রেফারেন্স ডেটা পরিচালনা করুন।</p>
+      <a href="#" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-arrow-right me-1"></i>পরিচালনা করুন
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

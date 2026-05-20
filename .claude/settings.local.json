@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import pdfplumber; pdf = pdfplumber.open\\(r'E:\\\\projects\\\\MP_Management_System\\\\docs\\\\MP-Form.pdf'\\); print\\(f'Pages: {len\\(pdf.pages\\)}'\\); [print\\(f'--- PAGE {i+1} ---\\\\n{p.extract_text\\(\\)}'\\) for i, p in enumerate\\(pdf.pages\\)]\")",
+      "Bash(py *)",
+      "PowerShell(py *)",
+      "Bash(docker compose *)",
+      "Bash(python manage.py makemigrations master)"
+    ]
+  }
+}

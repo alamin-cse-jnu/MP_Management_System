@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.py[cod]
+*.pyo
+.git/
+.gitignore
+docs/
+*.md
+static_collected/
+media/
+*.log
+.DS_Store
+Thumbs.db

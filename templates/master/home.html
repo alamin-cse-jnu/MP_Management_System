@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}মাস্টার ডেটা{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item active">মাস্টার ডেটা</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">মাস্টার ডেটা</h4>
+    <small class="text-muted">Reference / Dropdown Data Management</small>
+  </div>
+</div>
+
+<div class="row g-3">
+  {% for section in sections %}
+  <div class="col-md-6 col-xl-4">
+    <div class="mp-card h-100">
+      <div class="mp-card-header">
+        <i class="bi {{ section.icon }} icon"></i>
+        {{ section.title_bn }}
+        <small class="text-muted ms-auto fw-normal" style="font-size:0.8rem;">{{ section.title_en }}</small>
+      </div>
+      <ul class="list-unstyled mb-0">
+        {% for item in section.items %}
+        <li class="d-flex align-items-center justify-content-between py-1"
+            style="border-bottom:1px solid #f1f5f9;">
+          <span>
+            {{ item.name_bn }}
+            <small class="text-muted">/ {{ item.name_en }}</small>
+          </span>
+          <a href="{{ item.url }}" class="btn btn-sm btn-outline-primary py-0 px-2"
+             style="font-size:0.78rem;">
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

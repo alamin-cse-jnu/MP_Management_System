@@ -1,0 +1,171 @@
+[
+  {
+    "model": "parliament.parliament",
+    "pk": 1,
+    "fields": {
+      "name_bn": "প্রথম জাতীয় সংসদ",
+      "name_en": "1st National Parliament",
+      "ordinal": 1,
+      "start_date": "1973-03-07",
+      "end_date": "1975-11-06",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 2,
+    "fields": {
+      "name_bn": "দ্বিতীয় জাতীয় সংসদ",
+      "name_en": "2nd National Parliament",
+      "ordinal": 2,
+      "start_date": "1979-04-02",
+      "end_date": "1982-03-24",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 3,
+    "fields": {
+      "name_bn": "তৃতীয় জাতীয় সংসদ",
+      "name_en": "3rd National Parliament",
+      "ordinal": 3,
+      "start_date": "1986-07-10",
+      "end_date": "1987-12-06",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 4,
+    "fields": {
+      "name_bn": "চতুর্থ জাতীয় সংসদ",
+      "name_en": "4th National Parliament",
+      "ordinal": 4,
+      "start_date": "1988-04-25",
+      "end_date": "1990-12-06",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 5,
+    "fields": {
+      "name_bn": "পঞ্চম জাতীয় সংসদ",
+      "name_en": "5th National Parliament",
+      "ordinal": 5,
+      "start_date": "1991-04-05",
+      "end_date": "1995-11-24",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 6,
+    "fields": {
+      "name_bn": "ষষ্ঠ জাতীয় সংসদ",
+      "name_en": "6th National Parliament",
+      "ordinal": 6,
+      "start_date": "1996-03-19",
+      "end_date": "1996-03-30",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 7,
+    "fields": {
+      "name_bn": "সপ্তম জাতীয় সংসদ",
+      "name_en": "7th National Parliament",
+      "ordinal": 7,
+      "start_date": "1996-07-14",
+      "end_date": "2001-07-13",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 8,
+    "fields": {
+      "name_bn": "অষ্টম জাতীয় সংসদ",
+      "name_en": "8th National Parliament",
+      "ordinal": 8,
+      "start_date": "2001-10-01",
+      "end_date": "2006-10-27",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 9,
+    "fields": {
+      "name_bn": "নবম জাতীয় সংসদ",
+      "name_en": "9th National Parliament",
+      "ordinal": 9,
+      "start_date": "2009-01-25",
+      "end_date": "2013-12-24",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 10,
+    "fields": {
+      "name_bn": "দশম জাতীয় সংসদ",
+      "name_en": "10th National Parliament",
+      "ordinal": 10,
+      "start_date": "2014-01-29",
+      "end_date": "2018-12-30",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 11,
+    "fields": {
+      "name_bn": "একাদশ জাতীয় সংসদ",
+      "name_en": "11th National Parliament",
+      "ordinal": 11,
+      "start_date": "2019-01-30",
+      "end_date": "2024-01-29",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 12,
+    "fields": {
+      "name_bn": "দ্বাদশ জাতীয় সংসদ",
+      "name_en": "12th National Parliament",
+      "ordinal": 12,
+      "start_date": "2024-01-30",
+      "end_date": "2024-08-05",
+      "is_active": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "parliament.parliament",
+    "pk": 13,
+    "fields": {
+      "name_bn": "ত্রয়োদশ জাতীয় সংসদ",
+      "name_en": "13th National Parliament",
+      "ordinal": 13,
+      "start_date": "2024-11-04",
+      "end_date": null,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

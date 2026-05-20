@@ -1,0 +1,22 @@
+# Core
+Django==5.2.1
+python-decouple==3.8
+
+# Database
+psycopg2-binary==2.9.10
+
+# Static files
+whitenoise==6.8.2
+
+# Frontend helpers
+django-htmx==1.21.0
+
+# Images
+Pillow==11.2.1
+
+# Exports
+openpyxl==3.1.5
+WeasyPrint>=68.0
+
+# Local dev only (Python 3.14 — no psycopg2/Pillow wheels):
+# pip install "psycopg[binary]" Pillow  (run manually outside Docker)

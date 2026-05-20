@@ -1,0 +1,64 @@
+{% load static lang_tags %}
+<!DOCTYPE html>
+<html lang="bn" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}প্রিন্ট{% endblock %} | জাতীয় সংসদ</title>
+  <style>
+    @font-face {
+      font-family: 'SolaimanLipi';
+      src: url('{% static "fonts/SolaimanLipi.ttf" %}') format('truetype');
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'SolaimanLipi', 'Noto Serif Bengali', serif;
+      font-size: 12pt;
+      color: #000;
+      background: #fff;
+      line-height: 1.5;
+    }
+    .print-header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .print-header img { height: 60px; margin-bottom: 6px; }
+    .print-header h1 { font-size: 14pt; font-weight: bold; }
+    .print-header h2 { font-size: 12pt; font-weight: bold; margin-top: 4px; }
+    .print-header p  { font-size: 10pt; color: #333; margin-top: 2px; }
+    .print-meta { font-size: 9pt; color: #555; text-align: right; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+    th { background: #e5e7eb; font-weight: bold; }
+    th, td { border: 1px solid #999; padding: 5px 7px; font-size: 10pt; vertical-align: top; }
+    h3 { font-size: 11pt; font-weight: bold; margin: 12px 0 6px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
+    .no-print { display: none !important; }
+    @media print {
+      @page { size: A4; margin: 15mm 12mm; }
+      body { font-size: 11pt; }
+    }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="print-header">
+  <img src="{% static 'img/parliament-logo.png' %}" alt="Parliament Logo"
+       onerror="this.style.display='none'">
+  <h1>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h1>
+  <h2>বাংলাদেশ জাতীয় সংসদ সচিবালয়</h2>
+  <p>Bangladesh National Parliament Secretariat</p>
+</div>
+
+<div class="print-meta">
+  মুদ্রণের তারিখ: {% now "j F Y" %}
+</div>
+
+{% block content %}{% endblock %}
+
+<script>
+  window.onload = function() { window.print(); };
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

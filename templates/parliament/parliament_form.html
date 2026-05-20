@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{{ title_bn }}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'parliament:parliament_list' %}">জাতীয় সংসদ</a></li>
+        <li class="breadcrumb-item active">{{ title_bn }}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+  </div>
+  <a href="{% url 'parliament:parliament_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+  </a>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-7 col-md-9">
+    <div class="mp-card">
+      <div class="mp-card-header">
+        <i class="bi bi-building icon"></i> {{ title_bn }}
+      </div>
+
+      {% if not is_create %}
+      <div class="alert alert-info mb-3" style="font-size:0.85rem;">
+        <i class="bi bi-info-circle me-1"></i>
+        সংসদ সক্রিয়/নিষ্ক্রিয় পরিবর্তন করতে তালিকা পাতার
+        <strong>"সক্রিয় করুন"</strong> বাটন ব্যবহার করুন।
+      </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label class="form-label fw-medium">বাংলা নাম <span class="text-primary">*</span></label>
+            {{ form.name_bn }}
+            {% if form.name_bn.errors %}<div class="invalid-feedback d-block">{{ form.name_bn.errors }}</div>{% endif %}
+          </div>
+          <div class="col-12 mb-3">
+            <label class="form-label fw-medium">English Name <span class="text-primary">*</span></label>
+            {{ form.name_en }}
+            {% if form.name_en.errors %}<div class="invalid-feedback d-block">{{ form.name_en.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-medium">ক্রম (Ordinal) <span class="text-primary">*</span></label>
+            {{ form.ordinal }}
+            <div class="form-text">১৩তম সংসদের জন্য ১৩ লিখুন</div>
+            {% if form.ordinal.errors %}<div class="invalid-feedback d-block">{{ form.ordinal.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-medium">শুরুর তারিখ</label>
+            {{ form.start_date }}
+            {% if form.start_date.errors %}<div class="invalid-feedback d-block">{{ form.start_date.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-medium">শেষের তারিখ</label>
+            {{ form.end_date }}
+            <div class="form-text">চলমান সংসদের জন্য ফাঁকা রাখুন</div>
+            {% if form.end_date.errors %}<div class="invalid-feedback d-block">{{ form.end_date.errors }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+          <a href="{% url 'parliament:parliament_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-x-lg me-1"></i>বাতিল
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>
+            {% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

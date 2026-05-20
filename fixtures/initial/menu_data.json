@@ -1,0 +1,48 @@
+[
+  {"model": "accounts.menu", "pk": 1, "fields": {"name_bn": "মাস্টার ডেটা", "name_en": "Master Data", "icon": "bi-sliders", "url_name": "", "ordering": 50, "is_active": true}},
+  {"model": "accounts.menu", "pk": 2, "fields": {"name_bn": "একাউন্টস", "name_en": "Accounts", "icon": "bi-gear-fill", "url_name": "", "ordering": 90, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 1, "fields": {"menu": 1, "name_bn": "মাস্টার ডেটা ওভারভিউ", "name_en": "Master Data Overview", "url_name": "master:home", "ordering": 10, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 10, "fields": {"menu": 1, "name_bn": "বিভাগ", "name_en": "Divisions", "url_name": "master:division_list", "ordering": 20, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 11, "fields": {"menu": 1, "name_bn": "জেলা", "name_en": "Districts", "url_name": "master:district_list", "ordering": 21, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 12, "fields": {"menu": 1, "name_bn": "উপজেলা", "name_en": "Upazilas", "url_name": "master:upazila_list", "ordering": 22, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 20, "fields": {"menu": 1, "name_bn": "ধর্ম", "name_en": "Religions", "url_name": "master:religion_list", "ordering": 30, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 21, "fields": {"menu": 1, "name_bn": "রক্তের গ্রুপ", "name_en": "Blood Groups", "url_name": "master:blood_group_list", "ordering": 31, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 22, "fields": {"menu": 1, "name_bn": "বৈবাহিক অবস্থা", "name_en": "Marital Status", "url_name": "master:marital_status_list", "ordering": 32, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 23, "fields": {"menu": 1, "name_bn": "লিঙ্গ", "name_en": "Genders", "url_name": "master:gender_list", "ordering": 33, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 30, "fields": {"menu": 1, "name_bn": "পেশা", "name_en": "Professions", "url_name": "master:profession_list", "ordering": 40, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 31, "fields": {"menu": 1, "name_bn": "পেশাদার যোগ্যতা", "name_en": "Professional Qualifications", "url_name": "master:professional_qualification_list", "ordering": 41, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 40, "fields": {"menu": 1, "name_bn": "শিক্ষাগত স্তর", "name_en": "Education Levels", "url_name": "master:education_level_list", "ordering": 50, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 41, "fields": {"menu": 1, "name_bn": "শিক্ষা গ্রুপ", "name_en": "Education Groups", "url_name": "master:education_group_list", "ordering": 51, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 42, "fields": {"menu": 1, "name_bn": "বিষয়", "name_en": "Subjects", "url_name": "master:education_subject_list", "ordering": 52, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 43, "fields": {"menu": 1, "name_bn": "ডিগ্রির নাম", "name_en": "Degree Names", "url_name": "master:degree_name_list", "ordering": 53, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 44, "fields": {"menu": 1, "name_bn": "শিক্ষা প্রতিষ্ঠান", "name_en": "Education Institutions", "url_name": "master:education_institution_list", "ordering": 54, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 45, "fields": {"menu": 1, "name_bn": "ফলাফলের ধরন", "name_en": "Result Types", "url_name": "master:result_type_list", "ordering": 55, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 46, "fields": {"menu": 1, "name_bn": "বিভাগ ভিত্তিক ফলাফল", "name_en": "Division Results", "url_name": "master:division_result_list", "ordering": 56, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 50, "fields": {"menu": 1, "name_bn": "রাজনৈতিক দল", "name_en": "Political Parties", "url_name": "master:political_party_list", "ordering": 60, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 60, "fields": {"menu": 1, "name_bn": "মন্ত্রণালয়", "name_en": "Ministries", "url_name": "master:ministry_list", "ordering": 70, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 61, "fields": {"menu": 1, "name_bn": "মন্ত্রীর ধরন", "name_en": "Minister Types", "url_name": "master:minister_type_list", "ordering": 71, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 70, "fields": {"menu": 1, "name_bn": "স্থায়ী কমিটি", "name_en": "Standing Committees", "url_name": "master:standing_committee_list", "ordering": 80, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 71, "fields": {"menu": 1, "name_bn": "কমিটির পদ", "name_en": "Committee Positions", "url_name": "master:committee_position_list", "ordering": 81, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 80, "fields": {"menu": 1, "name_bn": "প্রতিষ্ঠান", "name_en": "Institutions", "url_name": "master:government_institution_list", "ordering": 90, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 81, "fields": {"menu": 1, "name_bn": "প্রতিষ্ঠানের ভূমিকা", "name_en": "Institution Roles", "url_name": "master:institution_role_list", "ordering": 91, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 90, "fields": {"menu": 1, "name_bn": "দেশ", "name_en": "Countries", "url_name": "master:country_list", "ordering": 100, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 91, "fields": {"menu": 1, "name_bn": "ভ্রমণের ধরন", "name_en": "Travel Types", "url_name": "master:travel_type_list", "ordering": 101, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 92, "fields": {"menu": 1, "name_bn": "ভ্রমণের উদ্দেশ্য", "name_en": "Travel Purposes", "url_name": "master:travel_purpose_list", "ordering": 102, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 100, "fields": {"menu": 1, "name_bn": "বিদেশি ভাষা", "name_en": "Foreign Languages", "url_name": "master:foreign_language_list", "ordering": 110, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 101, "fields": {"menu": 1, "name_bn": "দক্ষতার মাত্রা", "name_en": "Proficiency Levels", "url_name": "master:proficiency_level_list", "ordering": 111, "is_active": true}},
+
+  {"model": "accounts.submenu", "pk": 200, "fields": {"menu": 2, "name_bn": "ব্যবহারকারী", "name_en": "Users", "url_name": "accounts:user_list", "ordering": 10, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 201, "fields": {"menu": 2, "name_bn": "ভূমিকা", "name_en": "Roles", "url_name": "accounts:role_list", "ordering": 20, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 202, "fields": {"menu": 2, "name_bn": "মেনু পরিচালনা", "name_en": "Menus", "url_name": "accounts:menu_list", "ordering": 30, "is_active": true}}
+]

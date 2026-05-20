@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}ভূমিকা তালিকা{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item active">ভূমিকা</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">ভূমিকা তালিকা</h4>
+    <small class="text-muted">Roles</small>
+  </div>
+  <a href="{% url 'accounts:role_create' %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>নতুন ভূমিকা
+  </a>
+</div>
+
+<!-- Filter -->
+<div class="mp-card mb-3 py-2 px-3">
+  <form method="get" class="d-flex flex-wrap gap-2 align-items-center">
+    <div class="flex-grow-1" style="min-width:200px;max-width:320px;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control border-start-0" placeholder="খুঁজুন…">
+      </div>
+    </div>
+    <div class="btn-group btn-group-sm">
+      <a href="?status=active{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">সক্রিয়</a>
+      <a href="?status=inactive{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'inactive' %}btn-danger{% else %}btn-outline-secondary{% endif %}">নিষ্ক্রিয়</a>
+      <a href="?status=all{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'all' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">সব</a>
+    </div>
+    <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-funnel me-1"></i>ফিল্টার</button>
+  </form>
+</div>
+
+<div class="mp-card p-0">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">#</th>
+        <th>বাংলা নাম</th>
+        <th>English Name</th>
+        <th>বিবরণ</th>
+        <th style="width:110px;">অবস্থা</th>
+        <th style="width:160px; text-align:center;">অ্যাকশন</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for role in page_obj %}
+      <tr>
+        <td class="text-muted">{{ forloop.counter|add:page_obj.start_index|add:-1 }}</td>
+        <td class="fw-medium">{{ role.name_bn }}</td>
+        <td class="text-muted">{{ role.name_en }}</td>
+        <td class="text-muted" style="font-size:0.85rem;">{{ role.description_bn|truncatewords:8 }}</td>
+        <td>
+          {% if role.is_active %}<span class="badge badge-active">সক্রিয়</span>
+          {% else %}<span class="badge badge-inactive">নিষ্ক্রিয়</span>{% endif %}
+        </td>
+        <td class="text-center">
+          <a href="{% url 'accounts:role_permissions' role.pk %}"
+             class="btn btn-icon btn-sm btn-outline-secondary me-1" title="অনুমতি">
+            <i class="bi bi-shield-check"></i>
+          </a>
+          <a href="{% url 'accounts:role_update' role.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <form method="post" action="{% url 'accounts:role_toggle' role.pk %}" class="d-inline"
+                onsubmit="return confirm('অবস্থা পরিবর্তন করবেন?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-icon btn-sm {% if role.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
+                    title="{% if role.is_active %}নিষ্ক্রিয়{% else %}সক্রিয়{% endif %} করুন">
+              <i class="bi {% if role.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center text-muted py-4">
+          <i class="bi bi-inbox fs-3 d-block mb-2"></i>কোনো ভূমিকা পাওয়া যায়নি।
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if page_obj.has_other_pages %}
+  <div class="d-flex align-items-center justify-content-between px-3 py-2 border-top">
+    <small class="text-muted">মোট {{ page_obj.paginator.count }} টি</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&status={{ status }}{% if q %}&q={{ q }}{% endif %}">‹</a></li>
+      {% endif %}
+      <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&status={{ status }}{% if q %}&q={{ q }}{% endif %}">›</a></li>
+      {% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
