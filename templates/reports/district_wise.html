@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}জেলা/বিভাগ ভিত্তিক তালিকা{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+    <li class="breadcrumb-item active">জেলা/বিভাগ ভিত্তিক</li>
+  </ol></nav>
+  <h4 class="mb-0 fw-bold">জেলা/বিভাগ ভিত্তিক সংসদ সদস্য তালিকা</h4>
+</div>
+
+<form method="get">
+<div class="mp-card mb-3 p-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">অনুসন্ধান</label>
+      <div class="input-group input-group-sm"><span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম…"></div></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">সংসদ</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব সংসদ</option>
+        {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">বিভাগ</label>
+      <select name="division" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব বিভাগ</option>
+        {% for d in divisions %}<option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == division_id %}selected{% endif %}>{{ d.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">জেলা</label>
+      <select name="district" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব জেলা</option>
+        {% for d in districts %}<option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == district_id %}selected{% endif %}>{{ d.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">খুঁজুন</button></div>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+  <small class="text-muted">মোট: <strong>{{ total_count }}</strong> টি</small>
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>প্রিন্ট</button>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+  </div>
+</div>
+</form>
+
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
+      <thead class="table-light">
+        <tr><th>#</th><th>এমপি আইডি</th><th>নাম (বাংলায়)</th><th>Name</th><th>বিভাগ</th><th>জেলা</th><th>নির্বাচনী এলাকা</th><th>দল</th><th class="no-print"></th></tr>
+      </thead>
+      <tbody>
+        {% for mp in page_obj %}
+        {% with ei=mp.election_infos.all.0 dist=mp.home_district %}
+        <tr>
+          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td><code>{{ mp.mp_id }}</code></td>
+          <td><a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none fw-medium">{{ mp.name_bn }}</a></td>
+          <td class="text-muted">{{ mp.name_en }}</td>
+          <td>{{ dist.division.name_bn|default:"—" }}</td>
+          <td>{{ dist.name_bn|default:"—" }}</td>
+          <td>{{ ei.constituency.display_bn|default:"—" }}</td>
+          <td>{% if ei.party %}<span class="badge bg-primary-subtle text-primary">{{ ei.party.name_bn }}</span>{% else %}—{% endif %}</td>
+          <td class="text-end no-print"><a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+        </tr>
+        {% endwith %}
+        {% empty %}
+        <tr><td colspan="9" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between">
+    <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

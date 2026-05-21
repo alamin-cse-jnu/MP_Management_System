@@ -43,6 +43,14 @@ def safe_url(url_name):
         return '#'
 
 
+@register.filter
+def get_item(dictionary, key):
+    """Template filter to access dict values: {{ my_dict|get_item:key }}"""
+    if dictionary is None:
+        return None
+    return dictionary.get(key)
+
+
 @register.simple_tag(takes_context=True)
 def active(context, url_name):
     """Return 'active' css class if current URL matches url_name."""

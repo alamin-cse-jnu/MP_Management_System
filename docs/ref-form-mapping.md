@@ -1,5 +1,5 @@
 # ref-form-mapping.md — PDF Form ↔ System Field Mapping
-# Source: MP-Form.pdf (Bangladesh National Parliament Secretariat / BAIT Division)
+# Source: MP-Form.pdf (Bangladesh Parliament Secretariat / BAIT Division)
 #
 # PURPOSE: Every data-entry screen must present fields in the SAME ORDER
 # as the printed form so staff can transcribe without hunting.

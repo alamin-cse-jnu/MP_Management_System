@@ -1,0 +1,390 @@
+{% load lang_tags %}<!DOCTYPE html>
+<html lang="bn" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Biodata — {{ mp.name_bn }}</title>
+<style>
+@font-face {
+  font-family: SolaimanLipi;
+  src: url("{{ font_data_uri }}");
+}
+@page {
+  size: A4;
+  margin: 18mm 14mm 16mm 14mm;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: SolaimanLipi, serif;
+  font-size: 10pt;
+  color: #111;
+  line-height: 1.55;
+}
+.lh { text-align: center; border-bottom: 2.5px solid #000; padding-bottom: 8px; margin-bottom: 10px; }
+.lh img { height: 54px; margin-bottom: 4px; }
+.lh h1 { font-size: 12.5pt; font-weight: bold; margin-bottom: 1px; }
+.lh h2 { font-size: 11pt; font-weight: bold; margin-bottom: 1px; }
+.lh p  { font-size: 9pt; color: #444; }
+.doc-title {
+  text-align: center; font-size: 11.5pt; font-weight: bold;
+  margin: 8px 0; border: 1.5px solid #000; padding: 5px;
+  background: #f5f5f5;
+}
+/* identity strip via table */
+table.id-strip { width: 100%; border-collapse: collapse; margin-bottom: 10px; border: 1px solid #aaa; background: #fafafa; }
+table.id-strip td { vertical-align: top; padding: 6px; border: none; }
+table.id-strip .ph { width: 95px; }
+table.id-strip .ph img { width: 85px; height: 106px; object-fit: cover; border: 1px solid #999; }
+.name-bn { font-size: 13pt; font-weight: bold; margin-bottom: 2px; }
+.name-en { font-size: 10.5pt; color: #333; margin-bottom: 4px; }
+table.id-info { width: auto; border-collapse: collapse; }
+table.id-info td { border: none; padding: 1px 10px 1px 0; font-size: 9pt; }
+table.id-info td:first-child { font-weight: bold; }
+.sec {
+  font-size: 10pt; font-weight: bold; background: #e2e8f0;
+  padding: 3px 8px; margin-top: 10px; margin-bottom: 4px;
+  border-left: 4px solid #2563eb;
+}
+table.kv { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+table.kv th {
+  background: #f1f5f9; font-weight: bold; width: 22%;
+  border: 1px solid #bbb; padding: 3px 6px; font-size: 9.5pt; vertical-align: top;
+}
+table.kv td {
+  border: 1px solid #bbb; padding: 3px 6px; font-size: 9.5pt;
+  vertical-align: top; width: 28%;
+}
+table.dt { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+table.dt thead tr { background: #e5e7eb; }
+table.dt th, table.dt td {
+  border: 1px solid #bbb; padding: 3px 6px; font-size: 9pt; vertical-align: top;
+}
+table.dt th { font-weight: bold; }
+.sub { font-size: 9.5pt; font-weight: bold; color: #1e40af; margin: 6px 0 3px; }
+.text-block {
+  border: 1px solid #bbb; padding: 5px 8px; font-size: 9.5pt;
+  margin-bottom: 4px; background: #fdfdfd;
+}
+.print-meta { font-size: 8pt; color: #666; text-align: right; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="lh">
+  {% if logo_data %}<img src="{{ logo_data }}" alt="">{% endif %}
+  <h1>Bangladesh Parliament Secretariat</h1>
+  <h2>Member of Parliament Biodata</h2>
+</div>
+
+<div class="doc-title">Sangsad Sadasyer Byaktigato Tatthyer Form</div>
+
+<div class="print-meta">Date: {% now "j F Y" %}</div>
+
+{% with ei=mp.election_infos.all.0 %}
+<table class="id-strip">
+  <tr>
+    <td class="ph">
+      {% if photo_data %}<img src="{{ photo_data }}" alt="">{% endif %}
+    </td>
+    <td>
+      <div class="name-bn">{{ mp.name_bn }}</div>
+      <div class="name-en">{{ mp.name_en }}</div>
+      <table class="id-info">
+        <tr><td>MP ID:</td><td>{{ mp.mp_id }}</td></tr>
+        <tr><td>Parliament:</td><td>{{ mp.parliament.name_bn }}</td></tr>
+        {% if ei.constituency %}<tr><td>Constituency:</td><td>{{ ei.constituency.display_bn }}</td></tr>{% endif %}
+        {% if ei.party %}<tr><td>Party:</td><td>{{ ei.party.name_bn }}</td></tr>{% endif %}
+      </table>
+    </td>
+  </tr>
+</table>
+{% endwith %}
+
+<div class="sec">1. General Information</div>
+<table class="kv">
+  <tr>
+    <th>Name (Bangla)</th><td>{{ mp.name_bn }}</td>
+    <th>Name (English)</th><td>{{ mp.name_en }}</td>
+  </tr>
+  <tr>
+    <th>Father's Name (Bn)</th><td>{{ mp.father_name_bn|default:"" }}</td>
+    <th>Father's Name (En)</th><td>{{ mp.father_name_en|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Mother's Name (Bn)</th><td>{{ mp.mother_name_bn|default:"" }}</td>
+    <th>Mother's Name (En)</th><td>{{ mp.mother_name_en|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Date of Birth</th><td>{{ mp.dob|date:"d F Y"|default:"" }}</td>
+    <th>NID No.</th><td>{{ mp.nid|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Birth District</th><td>{{ mp.birth_district.name_bn|default:"" }}</td>
+    <th>Gender</th><td>{{ mp.gender.name_bn|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Home District</th><td>{{ mp.home_district.name_bn|default:"" }}</td>
+    <th>Marital Status</th><td>{{ mp.marital_status.name_bn|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Nationality</th><td>{{ mp.nationality|default:"" }}</td>
+    <th>Religion</th><td>{{ mp.religion.name_bn|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Blood Group</th><td>{{ mp.blood_group.name_bn|default:"" }}</td>
+    <th>TIN</th><td>{{ mp.tin|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Current Profession</th>
+    <td>{% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+    <th>Previous Profession</th>
+    <td>{% for p in mp.professions_previous.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+  </tr>
+  <tr>
+    <th>Passport No.</th><td>{{ mp.passport_number|default:"" }}</td>
+    <th>Expiry Date</th><td>{{ mp.passport_expiry_date|date:"d/m/Y"|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Freedom Fighter</th><td>{% if mp.is_freedom_fighter %}Yes{% else %}No{% endif %}</td>
+    <th>FF Child</th><td>{% if mp.is_ff_child %}Yes{% else %}No{% endif %}</td>
+  </tr>
+  {% if mp.hobbies_bn %}<tr><th>Hobbies</th><td colspan="3">{{ mp.hobbies_bn }}</td></tr>{% endif %}
+  {% if mp.other_info_bn %}<tr><th>Other Info</th><td colspan="3">{{ mp.other_info_bn }}</td></tr>{% endif %}
+</table>
+
+{% with ei=mp.election_infos.all.0 %}{% if ei %}
+<div class="sec">2. Election Information</div>
+<table class="kv">
+  <tr>
+    <th>Constituency</th><td>{{ ei.constituency.display_bn|default:"" }}</td>
+    <th>Parliament</th><td>{{ ei.parliament.name_bn }}</td>
+  </tr>
+  <tr>
+    <th>Election Date</th><td>{{ ei.election_date|date:"d/m/Y"|default:"" }}</td>
+    <th>Oath Date</th><td>{{ ei.oath_date|date:"d/m/Y"|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Times Elected</th><td>{{ ei.times_elected }}</td>
+    <th>Party</th><td>{{ ei.party.name_bn|default:"" }}</td>
+  </tr>
+</table>
+{% endif %}{% endwith %}
+
+{% if mp.spouses.all %}
+<div class="sec">3. Spouse Information</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Name (Bn)</th><th>Name (En)</th><th>DOB</th><th>Marriage Date</th><th>Profession</th></tr></thead>
+  <tbody>
+    {% for sp in mp.spouses.all %}
+    <tr>
+      <td>{{ forloop.counter }}</td><td>{{ sp.name_bn }}</td><td>{{ sp.name_en|default:"" }}</td>
+      <td>{{ sp.dob|date:"d/m/Y"|default:"" }}</td><td>{{ sp.marriage_date|date:"d/m/Y"|default:"" }}</td>
+      <td>{{ sp.profession.name_bn|default:"" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.children.all %}
+<div class="sec">4. Children</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Name (Bn)</th><th>Name (En)</th><th>DOB</th><th>Gender</th><th>Profession</th></tr></thead>
+  <tbody>
+    {% for ch in mp.children.all %}
+    <tr>
+      <td>{{ forloop.counter }}</td><td>{{ ch.name_bn }}</td><td>{{ ch.name_en|default:"" }}</td>
+      <td>{{ ch.dob|date:"d/m/Y"|default:"" }}</td><td>{{ ch.gender.name_bn|default:"" }}</td>
+      <td>{{ ch.profession.name_bn|default:"" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.educations.all %}
+<div class="sec">5. Education</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Degree</th><th>Subject</th><th>Year</th><th>Result</th><th>Institution</th></tr></thead>
+  <tbody>
+    {% for edu in mp.educations.all %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"" }}</td>
+      <td>{{ edu.major_subject.name_bn|default:"" }}</td>
+      <td>{{ edu.passing_year|default:"" }}</td>
+      <td>{{ edu.result_display }}</td>
+      <td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.addresses.all %}
+<div class="sec">6. Contact Address</div>
+{% for addr in mp.addresses.all %}
+<div class="sub">{{ addr.get_address_type_display }}</div>
+<table class="kv">
+  <tr>
+    <th>Division</th><td>{{ addr.division.name_bn|default:"" }}</td>
+    <th>District</th><td>{{ addr.district.name_bn|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Upazila</th><td>{{ addr.upazila.name_bn|default:"" }}</td>
+    <th>Pouroshova/Union</th><td>{{ addr.pouroshova_union_bn|default:"" }}</td>
+  </tr>
+  <tr><th>Address Detail</th><td colspan="3">{{ addr.address_detail_bn|default:"" }}</td></tr>
+  {% if addr.address_type == 'present' %}
+  <tr>
+    <th>Mobile</th><td>{{ addr.mobile|default:"" }}</td>
+    <th>Telephone</th><td>{{ addr.telephone|default:"" }}</td>
+  </tr>
+  <tr>
+    <th>Email</th><td colspan="3">{{ addr.email|default:"" }}</td>
+  </tr>
+  {% endif %}
+</table>
+{% endfor %}
+{% endif %}
+
+{% if mp.language_skills.all %}
+<div class="sec">7. Foreign Language Skills</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Language</th><th>Proficiency</th></tr></thead>
+  <tbody>
+    {% for ls in mp.language_skills.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ ls.language.name_bn }}</td><td>{{ ls.proficiency.name_bn|default:"" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.bank_accounts.all %}
+<div class="sec">8. Bank Accounts</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Account No.</th><th>Bank Name</th><th>Branch</th><th>Type</th></tr></thead>
+  <tbody>
+    {% for ba in mp.bank_accounts.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba.bank_name_bn }}</td><td>{{ ba.branch_name_bn|default:"" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.ministry_assignments.all %}
+<div class="sec">10. Ministry Assignments</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Ministry</th><th>Type</th><th>Start</th><th>End</th><th>Parliament</th></tr></thead>
+  <tbody>
+    {% for ma in mp.ministry_assignments.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ ma.ministry.name_bn }}</td><td>{{ ma.minister_type.name_bn }}</td><td>{{ ma.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"Ongoing" }}</td><td>{{ ma.parliament.name_bn }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.committee_assignments.all %}
+<div class="sec">11. Committee Assignments</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Parliament</th><th>Committee</th><th>Position</th><th>Start</th><th>End</th></tr></thead>
+  <tbody>
+    {% for ca in mp.committee_assignments.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ ca.parliament.name_bn }}</td><td>{{ ca.committee.name_bn }}</td><td>{{ ca.position.name_bn }}</td><td>{{ ca.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"Ongoing" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.parliamentary_histories.all %}
+<div class="sec">12. Previous Parliamentary History</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Assembly</th><th>Constituency</th><th>From</th><th>To</th><th>Remarks</th></tr></thead>
+  <tbody>
+    {% for h in mp.parliamentary_histories.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ h.assembly_name_bn|default:"" }}</td><td>{{ h.constituency_bn|default:"" }}</td><td>{{ h.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ h.to_date|date:"d/m/Y"|default:"" }}</td><td>{{ h.remarks_bn|default:"" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.organizations.all %}
+<div class="sec">13. Organizations</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Name</th><th>Role</th><th>From</th><th>To</th></tr></thead>
+  <tbody>
+    {% for org in mp.organizations.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ org.name_bn }}</td><td>{{ org.role_bn|default:"" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.awards.all %}
+<div class="sec">14. Awards</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Award Name</th><th>Year</th><th>Awarded By</th></tr></thead>
+  <tbody>
+    {% for aw in mp.awards.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ aw.name_bn }}</td><td>{{ aw.year|default:"" }}</td><td>{{ aw.awarded_by_bn|default:"" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if social_service %}
+<div class="sec">15. Social Service</div>
+<div class="text-block">{{ social_service.description_bn|default:"" }}</div>
+{% endif %}
+
+{% if mp.special_positions.all %}
+<div class="sec">16. Special Positions</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Parliament</th><th>Position</th><th>From</th><th>To</th></tr></thead>
+  <tbody>
+    {% for sp in mp.special_positions.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament.name_bn }}</td><td>{{ sp.role.name_bn }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"" }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.publications.all %}
+<div class="sec">17. Publications</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Title</th><th>Publisher</th><th>Year</th><th>Type</th></tr></thead>
+  <tbody>
+    {% for pub in mp.publications.all %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ pub.title_bn }}</td><td>{{ pub.publisher_bn|default:"" }}</td><td>{{ pub.pub_year|default:"" }}</td><td>{{ pub.get_pub_type_display }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if mp.travel_participations.all %}
+<div class="sec">18. Foreign Travel</div>
+<table class="dt">
+  <thead><tr><th>#</th><th>Countries</th><th>Purpose</th><th>Departure</th><th>Return</th></tr></thead>
+  <tbody>
+    {% for tp in mp.travel_participations.all %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{% for tc in tp.tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+      <td>{{ tp.tour.purpose.name_bn|default:"" }}</td>
+      <td>{{ tp.departure_date|date:"d/m/Y"|default:"" }}</td>
+      <td>{{ tp.return_date|date:"d/m/Y"|default:"" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if office %}
+<div class="sec">Parliament Office Address</div>
+<table class="kv">
+  <tr><th>Room No.</th><td>{{ office.room_number|default:"" }}</td><th>Telephone</th><td>{{ office.telephone|default:"" }}</td></tr>
+  <tr><th>Official Email</th><td colspan="3">{{ office.official_email|default:"" }}</td></tr>
+</table>
+{% endif %}
+
+</body>
+</html>

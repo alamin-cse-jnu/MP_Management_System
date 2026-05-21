@@ -1,83 +1,275 @@
 {% extends 'base.html' %}
-{% load lang_tags %}
+{% load static lang_tags %}
 
 {% block title %}ড্যাশবোর্ড{% endblock %}
 
 {% block content %}
+
 <!-- Page header -->
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <h4 class="mb-0 fw-bold">ড্যাশবোর্ড</h4>
-    <small class="text-muted">১৩তম জাতীয় সংসদ — সার্বিক চিত্র</small>
+    <small class="text-muted">
+      {{ active_parliament.name_bn|default:"জাতীয় সংসদ" }} — সার্বিক চিত্র
+    </small>
+  </div>
+  <div class="d-flex gap-2 flex-wrap">
+    <a href="{% url 'reports:index' %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-journal-text me-1"></i>রিপোর্ট সেন্টার
+    </a>
+    <a href="{% url 'mp:mp_list' %}" class="btn btn-primary btn-sm">
+      <i class="bi bi-people-fill me-1"></i>সকল সংসদ সদস্য
+    </a>
   </div>
 </div>
 
-<!-- KPI Cards -->
+<!-- ══ ROW 1: KPI CARDS ══════════════════════════════════════════════════════ -->
 <div class="row g-3 mb-4">
-  <div class="col-sm-6 col-xl-3">
-    <div class="stat-card">
-      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
-      <div class="stat-value">{{ total_mps|default:"০" }}</div>
-      <div class="stat-label">মোট সংসদ সদস্য</div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <a href="{% url 'mp:mp_list' %}" class="text-decoration-none">
+      <div class="stat-card text-center">
+        <div class="stat-icon mx-auto"><i class="bi bi-people-fill"></i></div>
+        <div class="stat-value">{{ total_mps }}</div>
+        <div class="stat-label">মোট সংসদ সদস্য</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <div class="stat-card text-center">
+      <div class="stat-icon mx-auto" style="background:rgba(16,185,129,.12);color:#059669;">
+        <i class="bi bi-person-check-fill"></i>
+      </div>
+      <div class="stat-value">{{ direct_mps }}</div>
+      <div class="stat-label">সরাসরি নির্বাচিত</div>
     </div>
   </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="stat-card">
-      <div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div>
-      <div class="stat-value">{{ total_ministers|default:"০" }}</div>
-      <div class="stat-label">মন্ত্রী/প্রতিমন্ত্রী/উপমন্ত্রী</div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <div class="stat-card text-center">
+      <div class="stat-icon mx-auto" style="background:rgba(168,85,247,.12);color:#9333ea;">
+        <i class="bi bi-gender-female"></i>
+      </div>
+      <div class="stat-value">{{ women_mps }}</div>
+      <div class="stat-label">মহিলা সদস্য (সংরক্ষিত)</div>
     </div>
   </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="stat-card">
-      <div class="stat-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
-      <div class="stat-value">{{ total_committees|default:"০" }}</div>
-      <div class="stat-label">স্থায়ী কমিটি</div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <a href="{% url 'ministry:assignment_list' %}" class="text-decoration-none">
+      <div class="stat-card text-center">
+        <div class="stat-icon mx-auto" style="background:rgba(245,158,11,.12);color:#d97706;">
+          <i class="bi bi-briefcase-fill"></i>
+        </div>
+        <div class="stat-value">{{ total_ministers }}</div>
+        <div class="stat-label">মন্ত্রী/প্রতিমন্ত্রী</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <a href="{% url 'committee:assignment_list' %}" class="text-decoration-none">
+      <div class="stat-card text-center">
+        <div class="stat-icon mx-auto" style="background:rgba(59,130,246,.12);color:#2563eb;">
+          <i class="bi bi-clipboard2-check-fill"></i>
+        </div>
+        <div class="stat-value">{{ total_com_assigns }}</div>
+        <div class="stat-label">কমিটি সদস্যপদ</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6 col-sm-4 col-xl-2">
+    <a href="{% url 'travel:tour_list' %}" class="text-decoration-none">
+      <div class="stat-card text-center">
+        <div class="stat-icon mx-auto" style="background:rgba(239,68,68,.12);color:#dc2626;">
+          <i class="bi bi-airplane-fill"></i>
+        </div>
+        <div class="stat-value">{{ total_tours }}</div>
+        <div class="stat-label">বিদেশ সফর GO</div>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<!-- ══ ROW 2: STATS + QUICK LINKS ════════════════════════════════════════════ -->
+<div class="row g-3 mb-4">
+
+  <!-- Party Distribution -->
+  <div class="col-lg-7">
+    <div class="mp-card h-100">
+      <div class="mp-card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-flag-fill icon"></i>দল ভিত্তিক বিতরণ</span>
+        <a href="{% url 'reports:party_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
+          বিস্তারিত <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="p-3">
+        {% if party_stats %}
+        {% for row in party_stats %}
+        {% with pct=row.count|stringformat:"s" %}
+        <div class="mb-2">
+          <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
+            <span>{{ row.party__name_bn|default:"দল নেই" }}</span>
+            <strong>{{ row.count }}</strong>
+          </div>
+          <div class="progress" style="height:8px;border-radius:4px;">
+            {% if total_mps > 0 %}
+            <div class="progress-bar" role="progressbar"
+                 style="width:{% widthratio row.count total_mps 100 %}%;background:#0d9488;">
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+        {% else %}
+        <p class="text-muted small mb-0">কোনো তথ্য নেই।</p>
+        {% endif %}
+      </div>
     </div>
   </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="stat-card">
-      <div class="stat-icon"><i class="bi bi-globe"></i></div>
-      <div class="stat-value">{{ total_tours|default:"০" }}</div>
-      <div class="stat-label">বিদেশ সফর</div>
+
+  <!-- Right column: Division stats + secondary KPIs -->
+  <div class="col-lg-5">
+
+    <!-- Data completeness -->
+    <div class="mp-card mb-3">
+      <div class="mp-card-header"><i class="bi bi-bar-chart-fill icon"></i>তথ্য সম্পূর্ণতা</div>
+      <div class="p-3">
+        <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
+          <span>ছবি আপলোড</span>
+          <strong>{{ with_photo }} / {{ total_mps }}</strong>
+        </div>
+        <div class="progress mb-2" style="height:8px;border-radius:4px;">
+          {% if total_mps > 0 %}
+          <div class="progress-bar bg-success" role="progressbar"
+               style="width:{% widthratio with_photo total_mps 100 %}%"></div>
+          {% endif %}
+        </div>
+        <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
+          <span>প্রতিষ্ঠান নিয়োগ</span>
+          <strong>{{ total_institutions }}</strong>
+        </div>
+      </div>
     </div>
+
+    <!-- Division breakdown -->
+    <div class="mp-card">
+      <div class="mp-card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-geo-alt-fill icon"></i>বিভাগ ভিত্তিক বিতরণ</span>
+        <a href="{% url 'reports:district_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
+          বিস্তারিত <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="p-3">
+        {% for row in division_stats %}
+        <div class="d-flex justify-content-between align-items-center py-1 border-bottom" style="font-size:.83rem;">
+          <span>{{ row.home_district__division__name_bn|default:"অজ্ঞাত" }}</span>
+          <span class="badge rounded-pill" style="background:#ccfbf1;color:#0d9488;font-size:.78rem;">{{ row.count }}</span>
+        </div>
+        {% empty %}
+        <p class="text-muted small mb-0">তথ্য নেই।</p>
+        {% endfor %}
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- Quick links -->
+<!-- ══ ROW 3: RECENT MPs + QUICK EXPORTS ════════════════════════════════════ -->
 <div class="row g-3">
-  <div class="col-md-6 col-xl-4">
-    <div class="mp-card h-100">
-      <div class="mp-card-header">
-        <i class="bi bi-people-fill icon"></i> সংসদ সদস্য
+
+  <!-- Recent MPs -->
+  <div class="col-lg-7">
+    <div class="mp-card">
+      <div class="mp-card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-clock-history icon"></i>সর্বশেষ যোগ হওয়া সংসদ সদস্য</span>
+        <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary btn-xs" style="font-size:.75rem;padding:2px 8px;">
+          সব দেখুন <i class="bi bi-arrow-right"></i>
+        </a>
       </div>
-      <p class="text-muted small mb-3">সংসদ সদস্যদের তথ্য যোগ, সম্পাদনা ও দেখুন।</p>
-      <a href="#" class="btn btn-primary btn-sm">
-        <i class="bi bi-arrow-right me-1"></i>তালিকা দেখুন
-      </a>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle" style="font-size:.85rem;">
+          <thead class="table-light">
+            <tr><th>#</th><th>নাম</th><th>নির্বাচনী এলাকা / দল</th><th></th></tr>
+          </thead>
+          <tbody>
+            {% for mp in recent_mps %}
+            {% with ei=mp.election_infos.all.0 %}
+            <tr>
+              <td>
+                {% if mp.photo %}
+                <img src="{{ mp.photo.url }}" style="width:32px;height:40px;object-fit:cover;border-radius:4px;">
+                {% else %}
+                <div style="width:32px;height:40px;border-radius:4px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;"><i class="bi bi-person-fill text-muted" style="font-size:.9rem;"></i></div>
+                {% endif %}
+              </td>
+              <td>
+                <div class="fw-medium">{{ mp.name_bn }}</div>
+                <small class="text-muted">{{ mp.mp_id }}</small>
+              </td>
+              <td>
+                {% if ei.constituency %}<div class="text-truncate" style="max-width:160px;font-size:.82rem;">{{ ei.constituency.display_bn }}</div>{% endif %}
+                {% if ei.party %}<span class="badge bg-primary-subtle text-primary" style="font-size:.75rem;">{{ ei.party.name_bn }}</span>{% endif %}
+              </td>
+              <td class="text-end">
+                <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm">
+                  <i class="bi bi-eye"></i>
+                </a>
+              </td>
+            </tr>
+            {% endwith %}
+            {% empty %}
+            <tr><td colspan="4" class="text-center text-muted py-3">কোনো তথ্য নেই।</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div class="col-md-6 col-xl-4">
-    <div class="mp-card h-100">
-      <div class="mp-card-header">
-        <i class="bi bi-journal-text icon"></i> রিপোর্ট
+
+  <!-- Quick Actions + Export links -->
+  <div class="col-lg-5">
+    <div class="mp-card mb-3">
+      <div class="mp-card-header"><i class="bi bi-lightning-fill icon"></i>দ্রুত অ্যাকশন</div>
+      <div class="p-3 d-flex flex-column gap-2">
+        <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm text-start">
+          <i class="bi bi-plus-circle me-2"></i>নতুন সংসদ সদস্য যোগ করুন
+        </a>
+        <a href="{% url 'ministry:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-briefcase me-2"></i>মন্ত্রণালয় নিয়োগ দিন
+        </a>
+        <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-clipboard2-check me-2"></i>কমিটি সদস্য নিয়োগ দিন
+        </a>
+        <a href="{% url 'travel:tour_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-airplane me-2"></i>বিদেশ সফর GO যোগ করুন
+        </a>
       </div>
-      <p class="text-muted small mb-3">বিভিন্ন প্রতিবেদন তৈরি ও ডাউনলোড করুন।</p>
-      <a href="#" class="btn btn-outline-primary btn-sm">
-        <i class="bi bi-arrow-right me-1"></i>রিপোর্ট দেখুন
-      </a>
+    </div>
+
+    <div class="mp-card">
+      <div class="mp-card-header"><i class="bi bi-download icon"></i>দ্রুত ডাউনলোড</div>
+      <div class="p-3 d-flex flex-column gap-2">
+        <a href="{% url 'reports:all_mp' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>সকল এমপি তালিকা (Excel)
+        </a>
+        <a href="{% url 'reports:contact_list' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>যোগাযোগ তালিকা (Excel)
+        </a>
+        <a href="{% url 'reports:party_wise' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>দল ভিত্তিক তালিকা (Excel)
+        </a>
+        <a href="{% url 'reports:all_mp' %}?format=csv" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-filetype-csv me-2"></i>সকল এমপি তালিকা (CSV)
+        </a>
+      </div>
     </div>
   </div>
-  <div class="col-md-6 col-xl-4">
-    <div class="mp-card h-100">
-      <div class="mp-card-header">
-        <i class="bi bi-sliders icon"></i> মাস্টার ডেটা
-      </div>
-      <p class="text-muted small mb-3">ড্রপডাউনের তথ্য ও রেফারেন্স ডেটা পরিচালনা করুন।</p>
-      <a href="#" class="btn btn-outline-primary btn-sm">
-        <i class="bi bi-arrow-right me-1"></i>পরিচালনা করুন
-      </a>
-    </div>
-  </div>
+
 </div>
+
 {% endblock %}

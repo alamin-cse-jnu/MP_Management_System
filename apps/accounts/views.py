@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -43,7 +43,83 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    from apps.committee.models import CommitteeAssignment
+    from apps.institution.models import InstitutionAssignment
+    from apps.ministry.models import MinistryAssignment
+    from apps.mp.models import MP, ElectionInfo
+    from apps.parliament.models import Parliament
+    from apps.travel.models import ForeignTour
+
+    active_parliament = Parliament.objects.filter(is_active=True).first()
+
+    mp_qs = MP.objects.filter(is_active=True)
+    if active_parliament:
+        mp_qs = mp_qs.filter(parliament=active_parliament)
+
+    total_mps  = mp_qs.count()
+    women_mps  = mp_qs.filter(member_type='reserved').count()
+    direct_mps = mp_qs.filter(member_type='direct').count()
+
+    min_qs  = MinistryAssignment.objects.filter(is_active=True)
+    com_qs  = CommitteeAssignment.objects.filter(is_active=True)
+    ins_qs  = InstitutionAssignment.objects.filter(is_active=True)
+    tour_qs = ForeignTour.objects.all()
+    if active_parliament:
+        min_qs  = min_qs.filter(parliament=active_parliament)
+        com_qs  = com_qs.filter(parliament=active_parliament)
+        ins_qs  = ins_qs.filter(parliament=active_parliament)
+        tour_qs = tour_qs.filter(parliament=active_parliament)
+
+    total_ministers   = min_qs.count()
+    total_com_assigns = com_qs.count()
+    total_institutions = ins_qs.count()
+    total_tours       = tour_qs.count()
+    with_photo        = mp_qs.exclude(photo='').exclude(photo__isnull=True).count()
+
+    # Party distribution
+    party_stats = []
+    if active_parliament:
+        party_stats = list(
+            ElectionInfo.objects
+            .filter(parliament=active_parliament, mp__is_active=True, party__isnull=False)
+            .values('party__name_bn')
+            .annotate(count=Count('id'))
+            .order_by('-count')[:12]
+        )
+
+    # Division distribution
+    division_stats = list(
+        mp_qs
+        .filter(home_district__division__isnull=False)
+        .values('home_district__division__name_bn')
+        .annotate(count=Count('id'))
+        .order_by('-count')
+    )
+
+    # Recent MPs (last 6 added)
+    recent_mps = list(
+        mp_qs.select_related('home_district')
+        .prefetch_related(
+            'election_infos__party',
+            'election_infos__constituency',
+        )
+        .order_by('-created_at')[:6]
+    )
+
+    return render(request, 'accounts/dashboard.html', {
+        'active_parliament':  active_parliament,
+        'total_mps':          total_mps,
+        'women_mps':          women_mps,
+        'direct_mps':         direct_mps,
+        'total_ministers':    total_ministers,
+        'total_com_assigns':  total_com_assigns,
+        'total_institutions': total_institutions,
+        'total_tours':        total_tours,
+        'with_photo':         with_photo,
+        'party_stats':        party_stats,
+        'division_stats':     division_stats,
+        'recent_mps':         recent_mps,
+    })
 
 
 @require_POST

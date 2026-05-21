@@ -1,0 +1,22 @@
+{% extends "base_print.html" %}
+{% block title %}বিদেশ সফর তালিকা{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:4px;">বিদেশ সফর তালিকা</h2>
+<table>
+  <thead><tr><th>#</th><th>GO নং</th><th>GO তারিখ</th><th>ধরন</th><th>উদ্দেশ্য</th><th>দেশসমূহ</th><th>সদস্যবৃন্দ</th></tr></thead>
+  <tbody>
+    {% for tour in object_list %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ tour.go_number }}</td>
+      <td>{{ tour.go_date|date:"d/m/Y" }}</td>
+      <td>{{ tour.tour_type.name_bn }}</td>
+      <td>{{ tour.purpose.name_bn }}</td>
+      <td>{% for tc in tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+      <td>{% for p in tour.participants.all %}{{ p.mp.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+    </tr>
+    {% empty %}<tr><td colspan="7" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>{% endfor %}
+  </tbody>
+</table>
+<p style="font-size:9pt;color:#777;margin-top:8px;">মোট: {{ total_count }} টি GO</p>
+{% endblock %}

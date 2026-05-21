@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}সকল সংসদ সদস্য তালিকা{% endblock %}
+
+{% block extra_css %}
+<style>
+@media print {
+  .no-print { display: none !important; }
+  .mp-topbar, .mp-sidebar { display: none !important; }
+  .main-content { margin-left: 0 !important; padding: 10px !important; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+      <li class="breadcrumb-item active">সকল সংসদ সদস্য</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">সকল সংসদ সদস্য তালিকা</h4>
+    <small class="text-muted">All Members of Parliament</small>
+  </div>
+</div>
+
+<!-- Filters -->
+<form method="get" id="filterForm">
+<div class="mp-card mb-3 p-3 no-print">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">অনুসন্ধান</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম / এমপি আইডি…">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">সংসদ</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব সংসদ</option>
+        {% for p in parliaments %}
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">দল</label>
+      <select name="party" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব দল</option>
+        {% for p in parties %}
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == party_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">লিঙ্গ</label>
+      <select name="gender" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব</option>
+        {% for g in genders %}
+        <option value="{{ g.pk }}" {% if g.pk|stringformat:"s" == gender_id %}selected{% endif %}>{{ g.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">সদস্যের ধরন</label>
+      <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব</option>
+        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>সরাসরি নির্বাচিত</option>
+        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>সংরক্ষিত (মহিলা)</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary btn-sm w-100">খুঁজুন</button>
+    </div>
+  </div>
+  <div class="row g-2 mt-1 align-items-end">
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">বিভাগ</label>
+      <select name="division" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব বিভাগ</option>
+        {% for d in divisions %}
+        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == division_id %}selected{% endif %}>{{ d.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">জেলা</label>
+      <select name="district" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব জেলা</option>
+        {% for d in districts %}
+        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == district_id %}selected{% endif %}>{{ d.name_bn }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <!-- Column selector -->
+    <div class="col-md-8">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">কলাম নির্বাচন করুন</label>
+      <div class="d-flex flex-wrap gap-2">
+        {% for col_key, col_label in ALL_COLS %}
+        <div class="form-check form-check-inline mb-0">
+          <input class="form-check-input col-check" type="checkbox" name="col" value="{{ col_key }}"
+                 id="col_{{ col_key }}"
+                 {% if col_key in selected_cols %}checked{% endif %}
+                 onchange="this.form.submit()">
+          <label class="form-check-label" style="font-size:.82rem;" for="col_{{ col_key }}">{{ col_label }}</label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Export bar -->
+{% with base_url="?parliament="|add:parliament_id|add:"&party="|add:party_id|add:"&gender="|add:gender_id|add:"&district="|add:district_id|add:"&division="|add:division_id|add:"&member_type="|add:member_type|add:"&q="|add:q %}
+<div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2 no-print">
+  <small class="text-muted">মোট ফলাফল: <strong>{{ total_count }}</strong> টি</small>
+  <div class="d-flex gap-2 flex-wrap">
+    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
+      <i class="bi bi-printer-fill me-1"></i>প্রিন্ট
+    </button>
+    <a href="{{ base_url }}{% for c in selected_cols %}&col={{ c }}{% endfor %}&format=print" target="_blank" class="btn btn-outline-danger btn-sm">
+      <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+    </a>
+    <a href="{{ base_url }}{% for c in selected_cols %}&col={{ c }}{% endfor %}&format=excel" class="btn btn-outline-success btn-sm">
+      <i class="bi bi-file-earmark-excel me-1"></i>Excel
+    </a>
+    <a href="{{ base_url }}{% for c in selected_cols %}&col={{ c }}{% endfor %}&format=csv" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-filetype-csv me-1"></i>CSV
+    </a>
+  </div>
+</div>
+{% endwith %}
+</form>
+
+<!-- Table -->
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
+      <thead class="table-light">
+        <tr>
+          <th style="width:3rem;">#</th>
+          {% for col_key, col_label in ALL_COLS %}
+            {% if col_key in selected_cols %}
+            <th data-col="{{ col_key }}">{{ col_label }}</th>
+            {% endif %}
+          {% endfor %}
+          <th class="no-print" style="width:5rem;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mp in page_obj %}
+        {% with ei=mp.election_infos.all.0 %}
+        <tr>
+          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+          {% if "photo" in selected_cols %}
+          <td data-col="photo">
+            {% if mp.photo %}
+            <img src="{{ mp.photo.url }}" alt="" style="width:36px;height:46px;object-fit:cover;border-radius:4px;">
+            {% else %}<span class="text-muted">—</span>{% endif %}
+          </td>
+          {% endif %}
+          {% if "mp_id" in selected_cols %}<td data-col="mp_id"><code>{{ mp.mp_id }}</code></td>{% endif %}
+          {% if "name_bn" in selected_cols %}
+          <td data-col="name_bn">
+            <a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none fw-medium">{{ mp.name_bn }}</a>
+          </td>
+          {% endif %}
+          {% if "name_en" in selected_cols %}<td data-col="name_en" class="text-muted">{{ mp.name_en }}</td>{% endif %}
+          {% if "constituency" in selected_cols %}<td data-col="constituency">{{ ei.constituency.display_bn|default:"—" }}</td>{% endif %}
+          {% if "party" in selected_cols %}<td data-col="party">{% if ei.party %}<span class="badge bg-primary-subtle text-primary">{{ ei.party.name_bn }}</span>{% else %}—{% endif %}</td>{% endif %}
+          {% if "gender" in selected_cols %}<td data-col="gender">{{ mp.gender.name_bn|default:"—" }}</td>{% endif %}
+          {% if "dob" in selected_cols %}<td data-col="dob">{{ mp.dob|date:"d/m/Y"|default:"—" }}</td>{% endif %}
+          {% if "religion" in selected_cols %}<td data-col="religion">{{ mp.religion.name_bn|default:"—" }}</td>{% endif %}
+          {% if "blood_group" in selected_cols %}<td data-col="blood_group">{{ mp.blood_group.name_bn|default:"—" }}</td>{% endif %}
+          {% if "district" in selected_cols %}<td data-col="district">{{ mp.home_district.name_bn|default:"—" }}</td>{% endif %}
+          {% if "professions" in selected_cols %}
+          <td data-col="professions">
+            {% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}
+          </td>
+          {% endif %}
+          <td class="text-end no-print">
+            <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm" title="বিস্তারিত">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+        </tr>
+        {% endwith %}
+        {% empty %}
+        <tr><td colspan="20" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between align-items-center no-print">
+    <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&district={{ district_id }}&division={{ division_id }}&member_type={{ member_type }}&q={{ q }}{% for c in selected_cols %}&col={{ c }}{% endfor %}"><i class="bi bi-chevron-left"></i></a></li>
+      {% endif %}
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&district={{ district_id }}&division={{ division_id }}&member_type={{ member_type }}&q={{ q }}{% for c in selected_cols %}&col={{ c }}{% endfor %}"><i class="bi bi-chevron-right"></i></a></li>
+      {% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

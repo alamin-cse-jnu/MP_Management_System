@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}এমপি কমিটি সারসংক্ষেপ{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+    <li class="breadcrumb-item active">এমপি কমিটি সারসংক্ষেপ</li>
+  </ol></nav>
+  <h4 class="mb-0 fw-bold">এমপি কমিটি সারসংক্ষেপ</h4>
+</div>
+
+<form method="get" class="mb-3">
+<div class="mp-card p-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">এমপি আইডি</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+        <input type="text" name="mp_id" value="{{ mp_id }}" class="form-control" placeholder="যেমন: 013000101">
+      </div>
+    </div>
+    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">খুঁজুন</button></div>
+  </div>
+</div>
+</form>
+
+{% if mp %}
+<div class="mp-card mb-3 p-3 d-flex align-items-center gap-3">
+  {% if mp.photo %}<img src="{{ mp.photo.url }}" style="width:60px;height:75px;object-fit:cover;border-radius:8px;">{% endif %}
+  <div>
+    <div class="fw-bold fs-5">{{ mp.name_bn }}</div>
+    <div class="text-muted">{{ mp.name_en }} &mdash; <code>{{ mp.mp_id }}</code></div>
+  </div>
+  <div class="ms-auto d-flex gap-2">
+    <a href="?mp_id={{ mp_id }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?mp_id={{ mp_id }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?mp_id={{ mp_id }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+  </div>
+</div>
+
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
+      <thead class="table-light">
+        <tr><th>#</th><th>কমিটি</th><th>পদ</th><th>সংসদ</th><th>শুরু</th><th>শেষ</th><th>অবস্থা</th></tr>
+      </thead>
+      <tbody>
+        {% for obj in object_list %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ obj.committee.name_bn }}<div class="text-muted" style="font-size:.78rem;">{{ obj.committee.name_en }}</div></td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ obj.position.name_bn }}</span></td>
+          <td>{{ obj.parliament.name_bn }}</td>
+          <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{% if obj.is_active %}<span class="badge bg-success-subtle text-success">সক্রিয়</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>{% endif %}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-4">কোনো কমিটি সদস্যপদ পাওয়া যায়নি।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% elif mp_id %}
+<div class="alert alert-warning">এমপি আইডি "{{ mp_id }}" দিয়ে কোনো সংসদ সদস্য পাওয়া যায়নি।</div>
+{% else %}
+<div class="mp-card p-4 text-center text-muted"><i class="bi bi-person-lines-fill fs-1 d-block mb-2"></i>একটি এমপি আইডি লিখুন এবং খুঁজুন বাটন চাপুন।</div>
+{% endif %}
+{% endblock %}

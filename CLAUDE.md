@@ -7,7 +7,7 @@
 ## PROJECT OVERVIEW
 
 A bilingual (Bangla + English) Django-based web application for managing
-Members of Parliament (MP) information for Bangladesh National Parliament.
+Members of Parliament (MP) information for Bangladesh Parliament.
 
 - **350 MPs** per parliament tenure
   - Seats 1–300 : Directly elected
@@ -136,9 +136,9 @@ mp_management/
 | 7 | mp/ — Sections 7–19 remaining sub-models | ✅ |
 | 8 | ministry/ + committee/ modules | ✅ |
 | 9 | institution/ + travel/ + office/ modules | ✅ |
-| 10 | reports/ — all standard reports | ⬜ |
-| 11 | PDF biodata Bangla + English (WeasyPrint) | ⬜ |
-| 12 | Excel/CSV exports + Dashboard KPIs | ⬜ |
+| 10 | reports/ — all standard reports | ✅ |
+| 11 | PDF biodata Bangla + English (WeasyPrint) | ✅ | 
+| 12 | Excel/CSV exports + Dashboard KPIs | ✅ |
 | 13 | Audit log + activity monitoring | ⬜ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
@@ -161,6 +161,7 @@ python manage.py loaddata fixtures/initial/ministry_menu.json
 python manage.py loaddata fixtures/initial/committee_menu.json
 python manage.py loaddata fixtures/initial/institution_menu.json
 python manage.py loaddata fixtures/initial/travel_menu.json
+python manage.py loaddata fixtures/initial/reports_menu.json
 python manage.py createsuperuser
 python manage.py makemessages -l bn && python manage.py compilemessages
 python manage.py test apps/

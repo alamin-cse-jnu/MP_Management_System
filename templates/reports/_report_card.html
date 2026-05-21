@@ -1,0 +1,16 @@
+<div class="col-sm-6 col-lg-4">
+  <a href="{% url url %}" class="text-decoration-none">
+    <div class="mp-card p-3 h-100 d-flex align-items-start gap-3" style="transition:box-shadow .15s;"
+         onmouseover="this.style.boxShadow='0 4px 12px rgba(13,148,136,.15)'"
+         onmouseout="this.style.boxShadow=''">
+      <div class="stat-icon flex-shrink-0">
+        <i class="bi {{ icon }} fs-5"></i>
+      </div>
+      <div>
+        <div class="fw-semibold text-dark" style="font-size:.9rem;">{{ title }}</div>
+        <div class="text-muted" style="font-size:.78rem;">{{ subtitle }}</div>
+      </div>
+      <i class="bi bi-arrow-right-circle ms-auto text-muted align-self-center"></i>
+    </div>
+  </a>
+</div>

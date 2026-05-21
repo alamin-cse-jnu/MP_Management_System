@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}বিদেশ সফর তালিকা{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+    <li class="breadcrumb-item active">বিদেশ সফর</li>
+  </ol></nav>
+  <h4 class="mb-0 fw-bold">বিদেশ সফর তালিকা</h4>
+</div>
+
+<form method="get">
+<div class="mp-card mb-3 p-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">অনুসন্ধান (GO/নাম)</label>
+      <div class="input-group input-group-sm"><span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="GO নম্বর / এমপি নাম…"></div></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">সংসদ</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব সংসদ</option>
+        {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">ধরন</label>
+      <select name="tour_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব ধরন</option>
+        {% for tt in tour_types %}<option value="{{ tt.pk }}" {% if tt.pk|stringformat:"s" == tour_type_id %}selected{% endif %}>{{ tt.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">দেশ</label>
+      <select name="country" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব দেশ</option>
+        {% for c in countries %}<option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == country_id %}selected{% endif %}>{{ c.name_bn }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">বছর</label>
+      <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব বছর</option>
+        {% for y in years %}<option value="{{ y }}" {% if y|stringformat:"s" == year %}selected{% endif %}>{{ y }}</option>{% endfor %}
+      </select></div>
+    <div class="col-md-1"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">খুঁজুন</button></div>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+  <small class="text-muted">মোট: <strong>{{ total_count }}</strong> টি GO</small>
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>প্রিন্ট</button>
+    <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+  </div>
+</div>
+</form>
+
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
+      <thead class="table-light">
+        <tr><th>#</th><th>GO নং</th><th>GO তারিখ</th><th>ধরন</th><th>উদ্দেশ্য</th><th>দেশসমূহ</th><th>সদস্যবৃন্দ</th><th>যাত্রা</th><th>প্রত্যাবর্তন</th><th class="no-print"></th></tr>
+      </thead>
+      <tbody>
+        {% for tour in page_obj %}
+        {% with first_p=tour.participants.all.0 %}
+        <tr>
+          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td><code>{{ tour.go_number }}</code></td>
+          <td>{{ tour.go_date|date:"d/m/Y" }}</td>
+          <td>{{ tour.tour_type.name_bn }}</td>
+          <td>{{ tour.purpose.name_bn }}</td>
+          <td>{% for tc in tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+          <td>
+            {% for p in tour.participants.all %}
+            <div><a href="{% url 'mp:mp_detail' p.mp_id %}" class="text-decoration-none small">{{ p.mp.name_bn }}</a></div>
+            {% empty %}—{% endfor %}
+          </td>
+          <td>{{ first_p.departure_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ first_p.return_date|date:"d/m/Y"|default:"—" }}</td>
+          <td class="text-end no-print"><a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+        </tr>
+        {% endwith %}
+        {% empty %}
+        <tr><td colspan="10" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between">
+    <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

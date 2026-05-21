@@ -1,0 +1,14 @@
+{% extends "base_print.html" %}
+{% block title %}{{ mp.name_bn }} — কমিটি সারসংক্ষেপ{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:4px;">কমিটি সারসংক্ষেপ</h2>
+<p style="text-align:center;">{{ mp.name_bn }} ({{ mp.mp_id }})</p>
+<table>
+  <thead><tr><th>#</th><th>কমিটি</th><th>পদ</th><th>সংসদ</th><th>শুরু</th><th>শেষ</th><th>অবস্থা</th></tr></thead>
+  <tbody>
+    {% for obj in object_list %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ obj.committee.name_bn }}</td><td>{{ obj.position.name_bn }}</td><td>{{ obj.parliament.name_bn }}</td><td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td><td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td><td>{% if obj.is_active %}সক্রিয়{% else %}নিষ্ক্রিয়{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="7" style="text-align:center;">কোনো কমিটি সদস্যপদ নেই।</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}এমপি বায়োডাটা{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+    <li class="breadcrumb-item active">এমপি বায়োডাটা</li>
+  </ol></nav>
+  <h4 class="mb-0 fw-bold">এমপি বায়োডাটা (একক)</h4>
+  <small class="text-muted">Single MP — Full Biodata Preview</small>
+</div>
+
+<form method="get" class="mb-3">
+<div class="mp-card p-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">এমপি আইডি লিখুন</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-person"></i></span>
+        <input type="text" name="mp_id" value="{{ mp_id }}" class="form-control" placeholder="যেমন: 013000101" list="mp_list">
+        <datalist id="mp_list">
+          {% for m in all_mps %}<option value="{{ m.mp_id }}">{{ m.name_bn }}</option>{% endfor %}
+        </datalist>
+      </div>
+    </div>
+    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm mt-3">বায়োডাটা দেখুন</button></div>
+  </div>
+</div>
+</form>
+
+{% if mp %}
+<!-- Action bar -->
+<div class="d-flex gap-2 mb-3 flex-wrap">
+  <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>প্রোফাইলে যান</a>
+  <a href="?mp_id={{ mp.mp_id }}&format=pdf" class="btn btn-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF বায়োডাটা ডাউনলোড</a>
+  <a href="?mp_id={{ mp.mp_id }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-printer me-1"></i>প্রিন্ট</a>
+</div>
+
+{% with ei=mp.election_infos.all.0 %}
+<!-- Header card -->
+<div class="mp-card mb-3" style="border-top:4px solid #0d9488;">
+  <div class="p-3 d-flex align-items-start gap-4">
+    <div class="flex-shrink-0">
+      {% if mp.photo %}
+      <img src="{{ mp.photo.url }}" style="width:100px;height:125px;object-fit:cover;border-radius:8px;border:2px solid #e2e8f0;">
+      {% else %}
+      <div style="width:100px;height:125px;border-radius:8px;background:#f1f5f9;border:2px solid #e2e8f0;display:flex;align-items:center;justify-content:center;"><i class="bi bi-person-fill fs-1 text-muted"></i></div>
+      {% endif %}
+    </div>
+    <div>
+      <h3 class="fw-bold mb-1">{{ mp.name_bn }}</h3>
+      <p class="text-muted mb-2">{{ mp.name_en }}</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge bg-primary-subtle text-primary">{{ mp.mp_id }}</span>
+        {% if ei.constituency %}<span class="badge bg-info-subtle text-info">{{ ei.constituency.display_bn }}</span>{% endif %}
+        {% if ei.party %}<span class="badge bg-success-subtle text-success">{{ ei.party.name_bn }}</span>{% endif %}
+        <span class="badge bg-secondary-subtle text-secondary">{{ mp.parliament.name_bn }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 1: General -->
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-person-fill icon"></i>সাধারণ তথ্য</div>
+  <div class="row g-2" style="font-size:.9rem;">
+    {% include "reports/_biodata_row.html" with label="পিতার নাম" value=mp.father_name_bn %}
+    {% include "reports/_biodata_row.html" with label="মাতার নাম" value=mp.mother_name_bn %}
+    {% include "reports/_biodata_row.html" with label="জন্ম তারিখ" value=mp.dob|date:"d F Y" %}
+    {% include "reports/_biodata_row.html" with label="জন্মস্থান" value=mp.birth_district.name_bn %}
+    {% include "reports/_biodata_row.html" with label="নিজ জেলা" value=mp.home_district.name_bn %}
+    {% include "reports/_biodata_row.html" with label="লিঙ্গ" value=mp.gender.name_bn %}
+    {% include "reports/_biodata_row.html" with label="বৈবাহিক অবস্থা" value=mp.marital_status.name_bn %}
+    {% include "reports/_biodata_row.html" with label="ধর্ম" value=mp.religion.name_bn %}
+    {% include "reports/_biodata_row.html" with label="রক্তের গ্রুপ" value=mp.blood_group.name_bn %}
+    {% include "reports/_biodata_row.html" with label="জাতীয়তা" value=mp.nationality %}
+    {% include "reports/_biodata_row.html" with label="জাতীয় পরিচয়পত্র নং" value=mp.nid %}
+    {% include "reports/_biodata_row.html" with label="টিআইএন" value=mp.tin %}
+    {% include "reports/_biodata_row.html" with label="পাসপোর্ট নং" value=mp.passport_number %}
+  </div>
+</div>
+
+<!-- Section 2: Election -->
+{% if ei %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-ballot-fill icon"></i>নির্বাচন সংক্রান্ত তথ্য</div>
+  <div class="row g-2" style="font-size:.9rem;">
+    {% include "reports/_biodata_row.html" with label="নির্বাচনী এলাকা" value=ei.constituency.display_bn %}
+    {% include "reports/_biodata_row.html" with label="রাজনৈতিক দল" value=ei.party.name_bn %}
+    {% include "reports/_biodata_row.html" with label="কতবার নির্বাচিত" value=ei.times_elected %}
+    {% include "reports/_biodata_row.html" with label="নির্বাচনের তারিখ" value=ei.election_date|date:"d/m/Y" %}
+    {% include "reports/_biodata_row.html" with label="শপথের তারিখ" value=ei.oath_date|date:"d/m/Y" %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Education -->
+{% if mp.educations.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-mortarboard-fill icon"></i>শিক্ষাগত যোগ্যতা</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>ডিগ্রি</th><th>প্রতিষ্ঠান</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
+      <tbody>
+        {% for edu in mp.educations.all %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"—" }}</td>
+          <td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"—" }}</td>
+          <td>{{ edu.passing_year|default:"—" }}</td>
+          <td>{{ edu.result_display }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Spouses -->
+{% if mp.spouses.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-people-fill icon"></i>স্বামী/স্ত্রী</div>
+  {% for sp in mp.spouses.all %}
+  <div class="row g-2 mb-2" style="font-size:.9rem;">
+    {% include "reports/_biodata_row.html" with label="নাম" value=sp.name_bn %}
+    {% include "reports/_biodata_row.html" with label="পেশা" value=sp.profession.name_bn %}
+    {% include "reports/_biodata_row.html" with label="জন্ম তারিখ" value=sp.dob|date:"d/m/Y" %}
+  </div>
+  {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Ministry -->
+{% if mp.ministry_assignments.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-briefcase-fill icon"></i>মন্ত্রণালয়</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>মন্ত্রণালয়</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <tbody>
+        {% for ma in mp.ministry_assignments.all %}
+        <tr><td>{{ ma.ministry.name_bn }}</td><td>{{ ma.minister_type.name_bn }}</td><td>{{ ma.start_date|date:"d/m/Y" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Committee -->
+{% if mp.committee_assignments.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-people-fill icon"></i>কমিটি সদস্যপদ</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>কমিটি</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <tbody>
+        {% for ca in mp.committee_assignments.all %}
+        <tr><td>{{ ca.committee.name_bn }}</td><td>{{ ca.position.name_bn }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Addresses -->
+{% if mp.addresses.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-house-fill icon"></i>যোগাযোগের ঠিকানা</div>
+  {% for addr in mp.addresses.all %}
+  <div class="px-3 pt-2 pb-1">
+    <div class="fw-bold text-primary mb-1" style="font-size:.85rem;">{{ addr.get_address_type_display }}</div>
+    <div class="row g-2" style="font-size:.88rem;">
+      {% include "reports/_biodata_row.html" with label="বিভাগ" value=addr.division.name_bn %}
+      {% include "reports/_biodata_row.html" with label="জেলা" value=addr.district.name_bn %}
+      {% include "reports/_biodata_row.html" with label="উপজেলা/থানা" value=addr.upazila.name_bn %}
+      {% include "reports/_biodata_row.html" with label="বাড়ি/রাস্তা/গ্রাম/ডাকঘর" value=addr.address_detail_bn %}
+      {% if addr.address_type == 'present' %}
+      {% include "reports/_biodata_row.html" with label="মোবাইল" value=addr.mobile %}
+      {% include "reports/_biodata_row.html" with label="টেলিফোন" value=addr.telephone %}
+      {% include "reports/_biodata_row.html" with label="হোয়াটসঅ্যাপ" value=addr.whatsapp %}
+      {% include "reports/_biodata_row.html" with label="ই-মেইল" value=addr.email %}
+      {% endif %}
+    </div>
+  </div>
+  {% if not forloop.last %}<hr class="my-1">{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Languages -->
+{% if mp.language_skills.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-translate icon"></i>বিদেশি ভাষায় দক্ষতা</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>ভাষা</th><th>দক্ষতার মাত্রা</th></tr></thead>
+      <tbody>
+        {% for ls in mp.language_skills.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ ls.language.name_bn }}</td><td>{{ ls.proficiency.name_bn|default:"—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Bank Accounts -->
+{% if mp.bank_accounts.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-bank icon"></i>ব্যাংক হিসাব</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>হিসাব নম্বর</th><th>ব্যাংকের নাম</th><th>শাখা</th><th>ধরন</th></tr></thead>
+      <tbody>
+        {% for ba in mp.bank_accounts.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba.bank_name_bn }}</td><td>{{ ba.branch_name_bn|default:"—" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Parliamentary History -->
+{% if mp.parliamentary_histories.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-clock-history icon"></i>পূর্ববর্তী সংসদ ইতিহাস</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>সংসদের নাম</th><th>নির্বাচনী এলাকা</th><th>শুরু</th><th>শেষ</th><th>মন্তব্য</th></tr></thead>
+      <tbody>
+        {% for h in mp.parliamentary_histories.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ h.assembly_name_bn|default:"—" }}</td><td>{{ h.constituency_bn|default:"—" }}</td><td>{{ h.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ h.to_date|date:"d/m/Y"|default:"—" }}</td><td>{{ h.remarks_bn|default:"—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Organizations -->
+{% if mp.organizations.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-diagram-3-fill icon"></i>সংগঠন</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>নাম</th><th>ভূমিকা</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <tbody>
+        {% for org in mp.organizations.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ org.name_bn }}</td><td>{{ org.role_bn|default:"—" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Awards -->
+{% if mp.awards.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-trophy-fill icon"></i>পুরস্কার</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>পুরস্কারের নাম</th><th>সাল</th><th>প্রদানকারী সংস্থা</th></tr></thead>
+      <tbody>
+        {% for aw in mp.awards.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ aw.name_bn }}</td><td>{{ aw.year|default:"—" }}</td><td>{{ aw.awarded_by_bn|default:"—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Social Service -->
+{% if social_service %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-heart-fill icon"></i>সমাজ সেবা</div>
+  <div class="p-3" style="font-size:.9rem;white-space:pre-wrap;">{{ social_service.description_bn|default:"—" }}</div>
+</div>
+{% endif %}
+
+<!-- Special Positions -->
+{% if mp.special_positions.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-star-fill icon"></i>বিশেষ পদের দায়িত্ব</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>সংসদ</th><th>পদের নাম</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <tbody>
+        {% for sp in mp.special_positions.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament.name_bn }}</td><td>{{ sp.role.name_bn }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Publications -->
+{% if mp.publications.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-book-fill icon"></i>পুস্তক ও প্রকাশনা</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>শিরোনাম</th><th>প্রকাশক</th><th>সাল</th><th>ধরন</th></tr></thead>
+      <tbody>
+        {% for pub in mp.publications.all %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ pub.title_bn }}</td><td>{{ pub.publisher_bn|default:"—" }}</td><td>{{ pub.pub_year|default:"—" }}</td><td>{{ pub.get_pub_type_display }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Foreign Travel -->
+{% if mp.travel_participations.all %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-airplane icon"></i>বিদেশ ভ্রমণ</div>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0" style="font-size:.88rem;">
+      <thead class="table-light"><tr><th>#</th><th>দেশ</th><th>উদ্দেশ্য</th><th>যাত্রা</th><th>প্রত্যাবর্তন</th></tr></thead>
+      <tbody>
+        {% for tp in mp.travel_participations.all %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{% for tc in tp.tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+          <td>{{ tp.tour.purpose.name_bn|default:"—" }}</td>
+          <td>{{ tp.departure_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ tp.return_date|date:"d/m/Y"|default:"—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Office -->
+{% if office %}
+<div class="mp-card mb-3">
+  <div class="mp-card-header"><i class="bi bi-building icon"></i>সংসদ অফিস ঠিকানা</div>
+  <div class="row g-2" style="font-size:.9rem;">
+    {% include "reports/_biodata_row.html" with label="কক্ষ নং" value=office.room_number %}
+    {% include "reports/_biodata_row.html" with label="টেলিফোন" value=office.telephone %}
+    {% include "reports/_biodata_row.html" with label="ই-মেইল" value=office.official_email %}
+  </div>
+</div>
+{% endif %}
+{% endwith %}
+
+{% elif mp_id %}
+<div class="alert alert-warning">এমপি আইডি "{{ mp_id }}" দিয়ে কোনো সংসদ সদস্য পাওয়া যায়নি।</div>
+{% else %}
+<div class="mp-card p-5 text-center text-muted"><i class="bi bi-person-vcard-fill fs-1 d-block mb-2"></i>একটি এমপি আইডি লিখুন এবং বায়োডাটা দেখুন।</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base_print.html" %}
+{% block title %}পেশাদার যোগ্যতা ভিত্তিক{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:4px;">পেশাদার যোগ্যতা ভিত্তিক তালিকা</h2>
+<table>
+  <thead><tr><th>#</th><th>এমপি আইডি</th><th>নাম (বাংলায়)</th><th>পেশাদার যোগ্যতা</th><th>নির্বাচনী এলাকা</th><th>দল</th></tr></thead>
+  <tbody>
+    {% for mp in object_list %}{% with ei=mp.election_infos.all.0 %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ mp.mp_id }}</td><td>{{ mp.name_bn }}</td><td>{% for pq in mp.professional_qualifications.all %}{{ pq.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td><td>{{ ei.constituency.display_bn|default:"—" }}</td><td>{{ ei.party.name_bn|default:"—" }}</td></tr>
+    {% endwith %}{% empty %}<tr><td colspan="6" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>{% endfor %}
+  </tbody>
+</table>
+<p style="font-size:9pt;color:#777;margin-top:8px;">মোট: {{ total_count }} জন</p>
+{% endblock %}

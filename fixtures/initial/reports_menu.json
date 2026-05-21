@@ -1,0 +1,170 @@
+[
+  {
+    "model": "accounts.menu",
+    "pk": 9,
+    "fields": {
+      "name_bn": "রিপোর্ট",
+      "name_en": "Reports",
+      "icon": "bi-journal-text",
+      "url_name": "",
+      "ordering": 70,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 900,
+    "fields": {
+      "menu": 9,
+      "name_bn": "রিপোর্ট কেন্দ্র",
+      "name_en": "Report Centre",
+      "url_name": "reports:index",
+      "ordering": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 901,
+    "fields": {
+      "menu": 9,
+      "name_bn": "সকল সংসদ সদস্য তালিকা",
+      "name_en": "All MP List",
+      "url_name": "reports:all_mp",
+      "ordering": 20,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 902,
+    "fields": {
+      "menu": 9,
+      "name_bn": "মহিলা সদস্য তালিকা",
+      "name_en": "Women MP List",
+      "url_name": "reports:women_mp",
+      "ordering": 30,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 903,
+    "fields": {
+      "menu": 9,
+      "name_bn": "দল ভিত্তিক তালিকা",
+      "name_en": "Party-wise List",
+      "url_name": "reports:party_wise",
+      "ordering": 40,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 904,
+    "fields": {
+      "menu": 9,
+      "name_bn": "জেলা/বিভাগ ভিত্তিক",
+      "name_en": "District/Division-wise",
+      "url_name": "reports:district_wise",
+      "ordering": 50,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 905,
+    "fields": {
+      "menu": 9,
+      "name_bn": "পেশাদার যোগ্যতা ভিত্তিক",
+      "name_en": "Qualification-wise",
+      "url_name": "reports:qualification_wise",
+      "ordering": 60,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 906,
+    "fields": {
+      "menu": 9,
+      "name_bn": "মন্ত্রিসভা তালিকা",
+      "name_en": "Cabinet List",
+      "url_name": "reports:cabinet",
+      "ordering": 70,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 907,
+    "fields": {
+      "menu": 9,
+      "name_bn": "কমিটি সদস্য তালিকা",
+      "name_en": "Committee Members",
+      "url_name": "reports:committee_members",
+      "ordering": 80,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 908,
+    "fields": {
+      "menu": 9,
+      "name_bn": "এমপি কমিটি সারসংক্ষেপ",
+      "name_en": "MP Committee Summary",
+      "url_name": "reports:mp_committee_summary",
+      "ordering": 90,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 909,
+    "fields": {
+      "menu": 9,
+      "name_bn": "প্রতিষ্ঠান নিয়োগ তালিকা",
+      "name_en": "Institution Assignments",
+      "url_name": "reports:institution_assignments",
+      "ordering": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 910,
+    "fields": {
+      "menu": 9,
+      "name_bn": "বিদেশ সফর তালিকা",
+      "name_en": "Foreign Tour List",
+      "url_name": "reports:foreign_tours",
+      "ordering": 110,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 911,
+    "fields": {
+      "menu": 9,
+      "name_bn": "এমপি বায়োডাটা (একক)",
+      "name_en": "MP Biodata",
+      "url_name": "reports:mp_biodata",
+      "ordering": 120,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 912,
+    "fields": {
+      "menu": 9,
+      "name_bn": "যোগাযোগ তালিকা",
+      "name_en": "Contact List",
+      "url_name": "reports:contact_list",
+      "ordering": 130,
+      "is_active": true
+    }
+  }
+]

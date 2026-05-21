@@ -6,9 +6,11 @@
 
 Every report has: **[প্রিন্ট]  [PDF]  [Excel]  [CSV]**
 
+every report will be column selected facilities with image column also.
+
 | Report | Base Model | Key Filters |
 |--------|-----------|-------------|
-| সকল সংসদ সদস্য তালিকা | MP | Parliament, Party, District, Gender |
+| সকল সংসদ সদস্য তালিকা | MP | all possible fieilds |
 | মহিলা সদস্য তালিকা | MP | Parliament |
 | দল ভিত্তিক তালিকা | MP | Parliament, Party |
 | জেলা/বিভাগ ভিত্তিক | MP | District, Division |
@@ -19,7 +21,7 @@ Every report has: **[প্রিন্ট]  [PDF]  [Excel]  [CSV]**
 | প্রতিষ্ঠান নিয়োগ তালিকা | InstitutionAssignment | Institution |
 | বিদেশ সফর তালিকা | ForeignTour | Type, Country, Year |
 | এমপি বায়োডাটা (একক) | MP + all related | MP ID |
-| যোগাযোগ তালিকা | MP + Office | District, Party |
+| যোগাযোগ তালিকা | MP + Office |
 
 ---
 
