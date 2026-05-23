@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 {% load static lang_tags %}
 
-{% block title %}{{ title_bn }}{% endblock %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "Members of Parliament" %}</a></li>
         <li class="breadcrumb-item">
-          <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-spouse">{{ mp.name_bn }}</a>
+          <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-spouse">{{ mp|tr:"name" }}</a>
         </li>
-        <li class="breadcrumb-item active">{{ title_bn }}</li>
+        <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
-    <small class="text-muted">{{ mp.name_bn }}</small>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    <small class="text-muted">{{ mp|tr:"name" }}</small>
   </div>
   <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-spouse"
      class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
   </a>
 </div>
 
@@ -29,7 +29,7 @@
   <div class="col-lg-8 col-md-10">
     <div class="mp-card">
       <div class="mp-card-header">
-        <i class="bi bi-person-heart icon"></i> {{ title_bn }}
+        <i class="bi bi-person-heart icon"></i> {% ui title_bn title_en %}
       </div>
 
       <form method="post" novalidate>
@@ -40,7 +40,7 @@
 
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label class="form-label fw-medium">নাম (বাংলায়) <span class="text-primary">*</span></label>
+            <label class="form-label fw-medium">{% ui "নাম (বাংলায়)" "Name (Bangla)" %} <span class="text-primary">*</span></label>
             {{ form.name_bn }}
             {% if form.name_bn.errors %}<div class="invalid-feedback d-block">{{ form.name_bn.errors }}</div>{% endif %}
           </div>
@@ -49,7 +49,7 @@
             {{ form.name_en }}
           </div>
           <div class="col-md-6 mb-3">
-            <label class="form-label fw-medium">জন্ম তারিখ</label>
+            <label class="form-label fw-medium">{% ui "জন্ম তারিখ" "Date of Birth" %}</label>
             {{ form.dob }}
           </div>
           <div class="col-md-6 mb-3">
@@ -65,7 +65,7 @@
             {{ form.tin }}
           </div>
           <div class="col-md-4 mb-3">
-            <label class="form-label fw-medium">পেশা</label>
+            <label class="form-label fw-medium">{% ui "পেশা" "Profession" %}</label>
             {{ form.profession }}
           </div>
           <div class="col-md-4 mb-3">
@@ -73,7 +73,7 @@
             {{ form.home_district }}
           </div>
           <div class="col-md-4 mb-3">
-            <label class="form-label fw-medium">লিঙ্গ</label>
+            <label class="form-label fw-medium">{% ui "লিঙ্গ" "Gender" %}</label>
             {{ form.gender }}
           </div>
           <div class="col-md-6 mb-3">
@@ -89,11 +89,11 @@
         <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
           <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-spouse"
              class="btn btn-outline-secondary">
-            <i class="bi bi-x-lg me-1"></i>বাতিল
+            <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
           </a>
           <button type="submit" class="btn btn-primary">
             <i class="bi bi-check-lg me-1"></i>
-            {% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}
+            {% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "আপডেট করুন" "Update" %}{% endif %}
           </button>
         </div>
       </form>

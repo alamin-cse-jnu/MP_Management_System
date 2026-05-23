@@ -8,15 +8,15 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">ভূমিকা</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "ভূমিকা" "Role" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">ভূমিকা তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "ভূমিকা তালিকা" "Role List" %}</h4>
     <small class="text-muted">Roles</small>
   </div>
   <a href="{% url 'accounts:role_create' %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন ভূমিকা
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন ভূমিকা" "New Role" %}
   </a>
 </div>
 
@@ -30,11 +30,11 @@
       </div>
     </div>
     <div class="btn-group btn-group-sm">
-      <a href="?status=active{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">সক্রিয়</a>
-      <a href="?status=inactive{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'inactive' %}btn-danger{% else %}btn-outline-secondary{% endif %}">নিষ্ক্রিয়</a>
-      <a href="?status=all{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'all' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">সব</a>
+      <a href="?status=active{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">{% ui "সক্রিয়" "Active" %}</a>
+      <a href="?status=inactive{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'inactive' %}btn-danger{% else %}btn-outline-secondary{% endif %}">{% ui "নিষ্ক্রিয়" "Inactive" %}</a>
+      <a href="?status=all{% if q %}&q={{ q }}{% endif %}" class="btn {% if status == 'all' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">{% ui "সব" "All" %}</a>
     </div>
-    <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-funnel me-1"></i>ফিল্টার</button>
+    <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-funnel me-1"></i>{% ui "ফিল্টার" "Filters" %}</button>
   </form>
 </div>
 
@@ -43,31 +43,31 @@
     <thead>
       <tr>
         <th style="width:50px;">#</th>
-        <th>বাংলা নাম</th>
+        <th>{% ui "বাংলা নাম" "Name" %}</th>
         <th>English Name</th>
-        <th>বিবরণ</th>
-        <th style="width:110px;">অবস্থা</th>
-        <th style="width:160px; text-align:center;">অ্যাকশন</th>
+        <th>{% ui "বিবরণ" "Description" %}</th>
+        <th style="width:110px;">{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:160px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for role in page_obj %}
       <tr>
         <td class="text-muted">{{ forloop.counter|add:page_obj.start_index|add:-1 }}</td>
-        <td class="fw-medium">{{ role.name_bn }}</td>
+        <td class="fw-medium">{{ role|tr:"name" }}</td>
         <td class="text-muted">{{ role.name_en }}</td>
         <td class="text-muted" style="font-size:0.85rem;">{{ role.description_bn|truncatewords:8 }}</td>
         <td>
-          {% if role.is_active %}<span class="badge badge-active">সক্রিয়</span>
-          {% else %}<span class="badge badge-inactive">নিষ্ক্রিয়</span>{% endif %}
+          {% if role.is_active %}<span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
+          {% else %}<span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}
         </td>
         <td class="text-center">
           <a href="{% url 'accounts:role_permissions' role.pk %}"
-             class="btn btn-icon btn-sm btn-outline-secondary me-1" title="অনুমতি">
+             class="btn btn-icon btn-sm btn-outline-secondary me-1" title="{% ui "অনুমতি" "Permissions" %}">
             <i class="bi bi-shield-check"></i>
           </a>
           <a href="{% url 'accounts:role_update' role.pk %}"
-             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="{% ui "সম্পাদনা" "Edit" %}">
             <i class="bi bi-pencil-square"></i>
           </a>
           <form method="post" action="{% url 'accounts:role_toggle' role.pk %}" class="d-inline"
@@ -83,7 +83,7 @@
       {% empty %}
       <tr>
         <td colspan="6" class="text-center text-muted py-4">
-          <i class="bi bi-inbox fs-3 d-block mb-2"></i>কোনো ভূমিকা পাওয়া যায়নি।
+          <i class="bi bi-inbox fs-3 d-block mb-2"></i>{% ui "কোনো ভূমিকা পাওয়া যায়নি।" "No roles found." %}
         </td>
       </tr>
       {% endfor %}

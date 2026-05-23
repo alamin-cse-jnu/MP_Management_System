@@ -142,12 +142,6 @@ def set_language(request):
 
     if lang in ('bn', 'en'):
         request.session['LANGUAGE'] = lang
-        try:
-            from django.utils import translation
-            translation.activate(lang)
-            request.session[translation.LANGUAGE_SESSION_KEY] = lang
-        except Exception:
-            pass
     return JsonResponse({'ok': True})
 
 
@@ -188,6 +182,7 @@ def role_create(request):
     return render(request, 'accounts/role_form.html', {
         'form': form,
         'title_bn': 'নতুন ভূমিকা',
+        'title_en':  'New Role',
         'is_create': True,
     })
 
@@ -203,6 +198,7 @@ def role_update(request, pk):
     return render(request, 'accounts/role_form.html', {
         'form': form,
         'title_bn': 'ভূমিকা সম্পাদনা',
+        'title_en':  'Edit Role',
         'is_create': False,
         'object': role,
     })
@@ -297,6 +293,7 @@ def user_create(request):
     return render(request, 'accounts/user_form.html', {
         'form': form,
         'title_bn': 'নতুন ব্যবহারকারী',
+        'title_en':  'New User',
         'is_create': True,
     })
 
@@ -312,6 +309,7 @@ def user_update(request, pk):
     return render(request, 'accounts/user_form.html', {
         'form': form,
         'title_bn': 'ব্যবহারকারী সম্পাদনা',
+        'title_en':  'Edit User',
         'is_create': False,
         'object': user_obj,
     })
@@ -349,6 +347,7 @@ def menu_create(request):
     return render(request, 'accounts/menu_form.html', {
         'form': form,
         'title_bn': 'নতুন মেনু',
+        'title_en':  'New Menu',
         'is_create': True,
     })
 
@@ -364,6 +363,7 @@ def menu_update(request, pk):
     return render(request, 'accounts/menu_form.html', {
         'form': form,
         'title_bn': 'মেনু সম্পাদনা',
+        'title_en':  'Edit Menu',
         'is_create': False,
         'object': menu,
     })
@@ -396,6 +396,7 @@ def submenu_create(request):
     return render(request, 'accounts/submenu_form.html', {
         'form': form,
         'title_bn': 'নতুন সাব-মেনু',
+        'title_en':  'New Sub-menu',
         'is_create': True,
     })
 
@@ -411,6 +412,7 @@ def submenu_update(request, pk):
     return render(request, 'accounts/submenu_form.html', {
         'form': form,
         'title_bn': 'সাব-মেনু সম্পাদনা',
+        'title_en':  'Edit Sub-menu',
         'is_create': False,
         'object': sub,
     })

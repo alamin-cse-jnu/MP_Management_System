@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static lang_tags %}
 {% block title %}এমপি কমিটি সারসংক্ষেপ{% endblock %}
 {% block content %}
 <div class="mb-3">
   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% ui "রিপোর্ট" "Reports" %}</a></li>
     <li class="breadcrumb-item active">এমপি কমিটি সারসংক্ষেপ</li>
   </ol></nav>
   <h4 class="mb-0 fw-bold">এমপি কমিটি সারসংক্ষেপ</h4>
@@ -15,13 +15,13 @@
 <div class="mp-card p-3">
   <div class="row g-2 align-items-end">
     <div class="col-md-4">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">এমপি আইডি</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "এমপি আইডি" "MP ID" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
         <input type="text" name="mp_id" value="{{ mp_id }}" class="form-control" placeholder="যেমন: 013000101">
       </div>
     </div>
-    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">খুঁজুন</button></div>
+    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">{% ui "খুঁজুন" "Search" %}</button></div>
   </div>
 </div>
 </form>
@@ -30,7 +30,7 @@
 <div class="mp-card mb-3 p-3 d-flex align-items-center gap-3">
   {% if mp.photo %}<img src="{{ mp.photo.url }}" style="width:60px;height:75px;object-fit:cover;border-radius:8px;">{% endif %}
   <div>
-    <div class="fw-bold fs-5">{{ mp.name_bn }}</div>
+    <div class="fw-bold fs-5">{{ mp|tr:"name" }}</div>
     <div class="text-muted">{{ mp.name_en }} &mdash; <code>{{ mp.mp_id }}</code></div>
   </div>
   <div class="ms-auto d-flex gap-2">
@@ -44,18 +44,18 @@
   <div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
       <thead class="table-light">
-        <tr><th>#</th><th>কমিটি</th><th>পদ</th><th>সংসদ</th><th>শুরু</th><th>শেষ</th><th>অবস্থা</th></tr>
+        <tr><th>#</th><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "সংসদ" "Parliament" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "অবস্থা" "Status" %}</th></tr>
       </thead>
       <tbody>
         {% for obj in object_list %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ obj.committee.name_bn }}<div class="text-muted" style="font-size:.78rem;">{{ obj.committee.name_en }}</div></td>
-          <td><span class="badge bg-primary-subtle text-primary">{{ obj.position.name_bn }}</span></td>
-          <td>{{ obj.parliament.name_bn }}</td>
+          <td>{{ obj.committee|tr:"name" }}<div class="text-muted" style="font-size:.78rem;">{{ obj.committee.name_en }}</div></td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ obj.position|tr:"name" }}</span></td>
+          <td>{{ obj.parliament|tr:"name" }}</td>
           <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
-          <td>{% if obj.is_active %}<span class="badge bg-success-subtle text-success">সক্রিয়</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>{% endif %}</td>
+          <td>{% if obj.is_active %}<span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}</td>
         </tr>
         {% empty %}
         <tr><td colspan="7" class="text-center text-muted py-4">কোনো কমিটি সদস্যপদ পাওয়া যায়নি।</td></tr>

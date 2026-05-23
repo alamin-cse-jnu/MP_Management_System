@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <div class="fw-medium">সন্তানদের তথ্য</div>
+  <div class="fw-medium">{% ui "সন্তানদের তথ্য" "Children Information" %}</div>
   <a href="{% url 'mp:child_create' mp.pk %}" class="btn btn-outline-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন যোগ করুন" "Add New" %}
   </a>
 </div>
 
@@ -11,21 +11,21 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th style="width:50px;">ক্রম</th>
-        <th>নাম (বাংলায়)</th>
+        <th style="width:50px;">{% ui "ক্রম" "#" %}</th>
+        <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th>
         <th>Name</th>
-        <th style="width:110px;">জন্ম তারিখ</th>
-        <th>লিঙ্গ</th>
-        <th>পেশা</th>
-        <th>এনআইডি/জন্ম নিবন্ধন</th>
-        <th style="width:110px; text-align:center;">অ্যাকশন</th>
+        <th style="width:110px;">{% ui "জন্ম তারিখ" "Date of Birth" %}</th>
+        <th>{% ui "লিঙ্গ" "Gender" %}</th>
+        <th>{% ui "পেশা" "Profession" %}</th>
+        <th>{% ui "এনআইডি/জন্ম নিবন্ধন" "NID/Birth Reg." %}</th>
+        <th style="width:110px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for ch in children %}
       <tr>
         <td class="text-center text-muted">{{ ch.serial }}</td>
-        <td class="fw-medium">{{ ch.name_bn }}</td>
+        <td class="fw-medium">{{ ch|tr:"name" }}</td>
         <td class="text-muted">{{ ch.name_en|default:"—" }}</td>
         <td class="text-muted">{{ ch.dob|default:"—" }}</td>
         <td class="text-muted">{{ ch.gender|default:"—" }}</td>
@@ -53,7 +53,7 @@
 {% else %}
 <div class="text-center text-muted py-4">
   <i class="bi bi-people fs-3 d-block mb-2" style="opacity:0.4;"></i>
-  কোনো সন্তানের তথ্য নেই।
-  <a href="{% url 'mp:child_create' mp.pk %}">যোগ করুন</a>।
+  {% ui "কোনো সন্তানের তথ্য নেই।" "No children information." %}
+  <a href="{% url 'mp:child_create' mp.pk %}">{% ui "যোগ করুন" "Add" %}</a>।
 </div>
 {% endif %}

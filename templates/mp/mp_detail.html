@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% load static lang_tags %}
 
-{% block title %}{{ mp.name_bn }}{% endblock %}
+{% block title %}{{ mp|tr:"name" }}{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb mb-0" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
-      <li class="breadcrumb-item active">{{ mp.name_bn }}</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "MP List" %}</a></li>
+      <li class="breadcrumb-item active">{{ mp|tr:"name" }}</li>
     </ol>
   </nav>
   <div class="d-flex gap-2">
     <a href="{% url 'office:office_edit' mp.pk %}" class="btn btn-outline-primary btn-sm">
-      <i class="bi bi-building-fill me-1"></i>অফিস ঠিকানা
+      <i class="bi bi-building-fill me-1"></i>{% ui "অফিস ঠিকানা" "Office Address" %}
     </a>
     <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary btn-sm">
-      <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+      <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
     </a>
   </div>
 </div>
@@ -28,7 +28,7 @@
     <!-- Photo -->
     <div style="flex-shrink:0;">
       {% if mp.photo %}
-      <img src="{{ mp.photo.url }}" alt="{{ mp.name_bn }}"
+      <img src="{{ mp.photo.url }}" alt="{{ mp|tr:"name" }}"
            style="width:90px;height:113px;object-fit:cover;border-radius:8px;border:2px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
       {% else %}
       <div class="d-flex align-items-center justify-content-center bg-light"
@@ -39,14 +39,14 @@
     </div>
     <!-- Info -->
     <div class="flex-grow-1">
-      <h4 class="fw-bold mb-0">{{ mp.name_bn }}</h4>
+      <h4 class="fw-bold mb-0">{{ mp|tr:"name" }}</h4>
       <div class="text-muted mb-2">{{ mp.name_en }}</div>
       <div class="d-flex flex-wrap gap-2">
         <span class="badge badge-primary" style="font-size:0.75rem;">
           <i class="bi bi-hash me-1"></i>{{ mp.mp_id }}
         </span>
         <span class="badge badge-primary" style="font-size:0.75rem;">
-          <i class="bi bi-building me-1"></i>{{ mp.parliament.name_bn }}
+          <i class="bi bi-building me-1"></i>{{ mp.parliament|tr:"name" }}
         </span>
         <span class="badge badge-primary" style="font-size:0.75rem;">
           {{ mp.get_member_type_display }}
@@ -54,7 +54,7 @@
         {% if election_info %}
         {% if election_info.constituency %}
         <span class="badge" style="background:#f1f5f9;color:#475569;font-size:0.75rem;">
-          <i class="bi bi-geo-alt me-1"></i>{{ election_info.constituency.display_bn }}
+          <i class="bi bi-geo-alt me-1"></i>{{ election_info.constituency|tr:"display" }}
         </span>
         {% endif %}
         {% if election_info.party %}
@@ -64,9 +64,9 @@
         {% endif %}
         {% endif %}
         {% if mp.is_active %}
-        <span class="badge badge-active" style="font-size:0.75rem;">সক্রিয়</span>
+        <span class="badge badge-active" style="font-size:0.75rem;">{% ui "সক্রিয়" "Active" %}</span>
         {% else %}
-        <span class="badge badge-inactive" style="font-size:0.75rem;">নিষ্ক্রিয়</span>
+        <span class="badge badge-inactive" style="font-size:0.75rem;">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
         {% endif %}
       </div>
     </div>
@@ -183,20 +183,23 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Address cascade helpers (using fetch + master HTMX endpoints)
+const _distLabel = '{% ui "-- জেলা নির্বাচন করুন --" "-- Select District --" %}';
+const _upazLabel = '{% ui "-- উপজেলা নির্বাচন করুন --" "-- Select Upazila --" %}';
+
 function cascadeDistricts(divId, prefix) {
   const dist = document.getElementById('id_' + prefix + '-district');
   const upaz = document.getElementById('id_' + prefix + '-upazila');
   if (!dist) return;
   if (!divId) {
-    dist.innerHTML = '<option value="">-- জেলা নির্বাচন করুন --</option>';
-    if (upaz) upaz.innerHTML = '<option value="">-- উপজেলা --</option>';
+    dist.innerHTML = '<option value="">' + _distLabel + '</option>';
+    if (upaz) upaz.innerHTML = '<option value="">' + _upazLabel + '</option>';
     return;
   }
   fetch('/master/htmx/district-options/?division_id=' + divId)
     .then(r => r.text())
     .then(html => {
-      dist.innerHTML = '<option value="">-- জেলা নির্বাচন করুন --</option>' + html;
-      if (upaz) upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>';
+      dist.innerHTML = '<option value="">' + _distLabel + '</option>' + html;
+      if (upaz) upaz.innerHTML = '<option value="">' + _upazLabel + '</option>';
     });
 }
 
@@ -204,13 +207,13 @@ function cascadeUpazilas(distId, prefix) {
   const upaz = document.getElementById('id_' + prefix + '-upazila');
   if (!upaz) return;
   if (!distId) {
-    upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>';
+    upaz.innerHTML = '<option value="">' + _upazLabel + '</option>';
     return;
   }
   fetch('/master/htmx/upazila-options/?district_id=' + distId)
     .then(r => r.text())
     .then(html => {
-      upaz.innerHTML = '<option value="">-- উপজেলা নির্বাচন করুন --</option>' + html;
+      upaz.innerHTML = '<option value="">' + _upazLabel + '</option>' + html;
     });
 }
 </script>

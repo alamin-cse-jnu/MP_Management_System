@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">বিদেশি ভাষায় দক্ষতা</h6>
+  <h6 class="fw-bold mb-0">{% ui "বিদেশি ভাষায় দক্ষতা" "Foreign Language Proficiency" %}</h6>
   <a href="{% url 'mp:language_create' mp.pk %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
 
@@ -11,10 +11,10 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th style="width:50px;">ক্রম</th>
-        <th>ভাষা</th>
-        <th>দক্ষতার মাত্রা</th>
-        <th style="width:100px;">কার্যক্রম</th>
+        <th style="width:50px;">{% ui "ক্রম" "#" %}</th>
+        <th>{% ui "ভাষা" "Language" %}</th>
+        <th>{% ui "দক্ষতার মাত্রা" "Proficiency Level" %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -38,5 +38,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো ভাষার তথ্য নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো ভাষার তথ্য নেই।" "No language information." %}</p>
 {% endif %}

@@ -37,4 +37,14 @@ def get_custom_cell(mp, col):
         return ', '.join(p.name_bn for p in mp.professions_current.all()) or '—'
     if col == 'member_type':
         return 'সরাসরি নির্বাচিত' if mp.member_type == 'direct' else 'সংরক্ষিত (মহিলা)'
+    if col in ('highest_edu_level', 'highest_degree', 'highest_subject'):
+        edu = next((e for e in mp.educations.all() if e.education_level), None)
+        if col == 'highest_edu_level':
+            return edu.education_level.name_bn if edu else '—'
+        if col == 'highest_degree':
+            return edu.degree_title.name_bn if edu and edu.degree_title else '—'
+        if col == 'highest_subject':
+            return edu.major_subject.name_bn if edu and edu.major_subject else '—'
+    if col == 'prof_qual':
+        return ', '.join(pq.name_bn for pq in mp.professional_qualifications.all()) or '—'
     return '—'

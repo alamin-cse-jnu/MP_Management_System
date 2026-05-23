@@ -8,15 +8,15 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">সংসদ সদস্য</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "সংসদ সদস্য" "Members of Parliament" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">সংসদ সদস্য তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "সংসদ সদস্য তালিকা" "Members of Parliament" %}</h4>
     <small class="text-muted">Members of Parliament</small>
   </div>
   <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন সদস্য
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন সদস্য" "New MP" %}
   </a>
 </div>
 
@@ -24,39 +24,39 @@
 <div class="mp-card mb-3 p-3">
   <form method="get" class="row g-2 align-items-end">
     <div class="col-md-4">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control"
-               placeholder="নাম বা এমপি আইডি…">
+               placeholder="{% ui "নাম বা এমপি আইডি…" "Name or MP ID…" %}">
         {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">সংসদ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব সংসদ</option>
+        <option value="">{% ui "সব সংসদ" "All" %}</option>
         {% for p in parliaments %}
         <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>
-          {{ p.name_bn }}
+          {{ p|tr:"name" }}
         </option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">ধরন</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ধরন" "Type" %}</label>
       <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব</option>
-        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>সরাসরি</option>
-        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>সংরক্ষিত</option>
+        <option value="">{% ui "সব" "All" %}</option>
+        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>{% ui "সরাসরি" "Directly Elected" %}</option>
+        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত" "Reserved" %}</option>
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অবস্থা</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
       <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="active"   {% if status == 'active' %}selected{% endif %}>সক্রিয়</option>
-        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>নিষ্ক্রিয়</option>
-        <option value="all"      {% if status == 'all' %}selected{% endif %}>সব</option>
+        <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
+        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Inactive" %}</option>
+        <option value="all"      {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
       </select>
     </div>
     <div class="col-md-1">
@@ -72,14 +72,14 @@
     <thead>
       <tr>
         <th style="width:50px;">#</th>
-        <th style="width:52px;">ছবি</th>
-        <th>নাম</th>
-        <th style="width:120px;">এমপি আইডি</th>
-        <th>নির্বাচনী এলাকা</th>
-        <th>দল</th>
-        <th style="width:110px; text-align:center;">ধরন</th>
-        <th style="width:110px; text-align:center;">অবস্থা</th>
-        <th style="width:120px; text-align:center;">অ্যাকশন</th>
+        <th style="width:52px;">{% ui "ছবি" "Photo" %}</th>
+        <th>{% ui "নাম" "Name" %}</th>
+        <th style="width:120px;">{% ui "এমপি আইডি" "MP ID" %}</th>
+        <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+        <th>{% ui "দল" "Party" %}</th>
+        <th style="width:110px; text-align:center;">{% ui "ধরন" "Type" %}</th>
+        <th style="width:110px; text-align:center;">{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:120px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -100,7 +100,7 @@
         </td>
         <td>
           <a href="{% url 'mp:mp_detail' mp.pk %}" class="fw-medium text-decoration-none">
-            {{ mp.name_bn }}
+            {{ mp|tr:"name" }}
           </a>
           <div class="text-muted" style="font-size:0.8rem;">{{ mp.name_en }}</div>
         </td>
@@ -121,23 +121,23 @@
         </td>
         <td class="text-center">
           {% if mp.is_active %}
-          <span class="badge badge-active">সক্রিয়</span>
+          <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
           {% else %}
-          <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+          <span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
           {% endif %}
         </td>
         <td class="text-center">
           <a href="{% url 'mp:mp_detail' mp.pk %}"
-             class="btn btn-icon btn-sm btn-outline-primary me-1" title="বিস্তারিত">
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="{% ui "বিস্তারিত" "Details" %}">
             <i class="bi bi-pencil-square"></i>
           </a>
           <form method="post" action="{% url 'mp:mp_toggle' mp.pk %}"
                 class="d-inline"
-                onsubmit="return confirm('{% if mp.is_active %}নিষ্ক্রিয়{% else %}সক্রিয়{% endif %} করবেন?')">
+                onsubmit="return confirm('{% if mp.is_active %}{% ui "নিষ্ক্রিয়" "Deactivate" %}{% else %}{% ui "সক্রিয়" "Activate" %}{% endif %}?')">
             {% csrf_token %}
             <button type="submit"
                     class="btn btn-sm {% if mp.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
-                    title="{% if mp.is_active %}নিষ্ক্রিয় করুন{% else %}সক্রিয় করুন{% endif %}">
+                    title="{% if mp.is_active %}{% ui "নিষ্ক্রিয় করুন" "Deactivate" %}{% else %}{% ui "সক্রিয় করুন" "Activate" %}{% endif %}">
               <i class="bi {% if mp.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
             </button>
           </form>
@@ -149,10 +149,10 @@
         <td colspan="9" class="text-center text-muted py-5">
           <i class="bi bi-people fs-2 d-block mb-2"></i>
           {% if q %}
-          "<strong>{{ q }}</strong>" এর জন্য কোনো সদস্য পাওয়া যায়নি।
+          "<strong>{{ q }}</strong>" {% ui "এর জন্য কোনো সদস্য পাওয়া যায়নি।" "— no members found." %}
           {% else %}
-          এই সংসদে কোনো সদস্য নেই।
-          <a href="{% url 'mp:mp_create' %}">প্রথম সদস্য যোগ করুন</a>।
+          {% ui "এই সংসদে কোনো সদস্য নেই।" "No members in this parliament." %}
+          <a href="{% url 'mp:mp_create' %}">{% ui "প্রথম সদস্য যোগ করুন" "Add the first member" %}</a>.
           {% endif %}
         </td>
       </tr>
@@ -194,8 +194,8 @@
 
 {% if page_obj %}
 <div class="text-muted text-center mt-2" style="font-size:0.8rem;">
-  মোট {{ page_obj.paginator.count }} জন সদস্য
-  (পৃষ্ঠা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }})
+  {% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "জন সদস্য" "members" %}
+  ({% ui "পৃষ্ঠা" "Page" %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }})
 </div>
 {% endif %}
 {% endblock %}

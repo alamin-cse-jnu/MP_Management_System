@@ -17,10 +17,10 @@
     <tr>
       <td>{{ forloop.counter }}</td>
       {% if "mp_id" in selected_cols %}<td>{{ mp.mp_id }}</td>{% endif %}
-      {% if "name_bn" in selected_cols %}<td>{{ mp.name_bn }}</td>{% endif %}
+      {% if "name_bn" in selected_cols %}<td>{{ mp|tr:"name" }}</td>{% endif %}
       {% if "name_en" in selected_cols %}<td>{{ mp.name_en }}</td>{% endif %}
-      {% if "constituency" in selected_cols %}<td>{{ ei.constituency.display_bn|default:"—" }}</td>{% endif %}
-      {% if "party" in selected_cols %}<td>{{ ei.party.name_bn|default:"—" }}</td>{% endif %}
+      {% if "constituency" in selected_cols %}<td>{{ ei.constituency|tr:"display"|default:"—"  }}</td>{% endif %}
+      {% if "party" in selected_cols %}<td>{{ ei.party|tr:"name"|default:"—"  }}</td>{% endif %}
       {% if "mobile" in selected_cols %}<td>{{ addr.mobile|default:"—" }}</td>{% endif %}
       {% if "telephone" in selected_cols %}<td>{{ addr.telephone|default:"—" }}</td>{% endif %}
       {% if "email" in selected_cols %}<td>{{ addr.email|default:"—" }}</td>{% endif %}
@@ -29,7 +29,7 @@
       {% if "office_email" in selected_cols %}<td>{{ office.official_email|default:"—" }}</td>{% endif %}
     </tr>
     {% endwith %}
-    {% empty %}<tr><td colspan="12" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>{% endfor %}
+    {% empty %}<tr><td colspan="12" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>{% endfor %}
   </tbody>
 </table>
 <p style="font-size:9pt;color:#777;margin-top:8px;">মোট: {{ total_count }} জন</p>

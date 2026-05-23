@@ -2,7 +2,7 @@
 <html lang="bn" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>বায়োডাটা — {{ mp.name_bn }}</title>
+<title>বায়োডাটা — {{ mp|tr:"name" }}</title>
 <style>
 @font-face {
   font-family: 'SolaimanLipi';
@@ -115,19 +115,19 @@ table.dt th { font-weight: bold; }
 <div class="mp-id-strip">
   <div class="photo">
     {% if photo_data %}
-    <img src="{{ photo_data }}" alt="{{ mp.name_bn }}">
+    <img src="{{ photo_data }}" alt="{{ mp|tr:"name" }}">
     {% else %}
     <div class="no-photo">ছবি নেই</div>
     {% endif %}
   </div>
   <div class="info">
-    <div class="name-bn">{{ mp.name_bn }}</div>
+    <div class="name-bn">{{ mp|tr:"name" }}</div>
     <div class="name-en">{{ mp.name_en }}</div>
     <table>
       <tr><td>এমপি আইডি:</td><td>{{ mp.mp_id }}</td></tr>
-      <tr><td>সংসদ:</td><td>{{ mp.parliament.name_bn }}</td></tr>
-      {% if ei.constituency %}<tr><td>নির্বাচনী এলাকা:</td><td>{{ ei.constituency.display_bn }}</td></tr>{% endif %}
-      {% if ei.party %}<tr><td>রাজনৈতিক দল:</td><td>{{ ei.party.name_bn }}</td></tr>{% endif %}
+      <tr><td>সংসদ:</td><td>{{ mp.parliament|tr:"name" }}</td></tr>
+      {% if ei.constituency %}<tr><td>নির্বাচনী এলাকা:</td><td>{{ ei.constituency|tr:"display" }}</td></tr>{% endif %}
+      {% if ei.party %}<tr><td>রাজনৈতিক দল:</td><td>{{ ei.party|tr:"name" }}</td></tr>{% endif %}
       <tr><td>সদস্যের ধরন:</td><td>{{ mp.get_member_type_display }}</td></tr>
     </table>
   </div>
@@ -138,7 +138,7 @@ table.dt th { font-weight: bold; }
 <div class="sec">১। সাধারণ তথ্য</div>
 <table class="kv">
   <tr>
-    <th>নাম (বাংলায়)</th><td>{{ mp.name_bn }}</td>
+    <th>নাম (বাংলায়)</th><td>{{ mp|tr:"name" }}</td>
     <th>নাম (ইংরেজি)</th><td>{{ mp.name_en }}</td>
   </tr>
   <tr>
@@ -154,30 +154,30 @@ table.dt th { font-weight: bold; }
     <th>জাতীয় পরিচয়পত্র নং</th><td>{{ mp.nid|default:"—" }}</td>
   </tr>
   <tr>
-    <th>জন্মস্থান (জেলা)</th><td>{{ mp.birth_district.name_bn|default:"—" }}</td>
-    <th>লিঙ্গ</th><td>{{ mp.gender.name_bn|default:"—" }}</td>
+    <th>জন্মস্থান (জেলা)</th><td>{{ mp.birth_district|tr:"name"|default:"—"  }}</td>
+    <th>লিঙ্গ</th><td>{{ mp.gender|tr:"name"|default:"—"  }}</td>
   </tr>
   <tr>
-    <th>নিজ জেলা</th><td>{{ mp.home_district.name_bn|default:"—" }}</td>
-    <th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status.name_bn|default:"—" }}</td>
+    <th>নিজ জেলা</th><td>{{ mp.home_district|tr:"name"|default:"—"  }}</td>
+    <th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status|tr:"name"|default:"—"  }}</td>
   </tr>
   <tr>
     <th>জাতীয়তা</th><td>{{ mp.nationality|default:"—" }}</td>
-    <th>ধর্ম</th><td>{{ mp.religion.name_bn|default:"—" }}</td>
+    <th>ধর্ম</th><td>{{ mp.religion|tr:"name"|default:"—"  }}</td>
   </tr>
   <tr>
-    <th>রক্তের গ্রুপ</th><td>{{ mp.blood_group.name_bn|default:"—" }}</td>
+    <th>রক্তের গ্রুপ</th><td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td>
     <th>পেশা (বর্তমান)</th>
-    <td>{% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+    <td>{% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
   </tr>
   <tr>
     <th>পেশা (পূর্বের)</th>
-    <td>{% for p in mp.professions_previous.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+    <td>{% for p in mp.professions_previous.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
     <th>টিআইএন</th><td>{{ mp.tin|default:"—" }}</td>
   </tr>
   <tr>
     <th>পেশাদার যোগ্যতা</th>
-    <td colspan="3">{% for q in mp.professional_qualifications.all %}{{ q.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+    <td colspan="3">{% for q in mp.professional_qualifications.all %}{{ q|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
   </tr>
   <tr>
     <th>পাসপোর্ট নং</th><td>{{ mp.passport_number|default:"—" }}</td>
@@ -204,8 +204,8 @@ table.dt th { font-weight: bold; }
 <div class="sec nob">২। নির্বাচন সংক্রান্ত তথ্য</div>
 <table class="kv nob">
   <tr>
-    <th>নির্বাচনী এলাকা</th><td>{{ ei.constituency.display_bn|default:"—" }}</td>
-    <th>সংসদ নম্বর</th><td>{{ ei.parliament.name_bn }}</td>
+    <th>নির্বাচনী এলাকা</th><td>{{ ei.constituency|tr:"display"|default:"—"  }}</td>
+    <th>সংসদ নম্বর</th><td>{{ ei.parliament|tr:"name" }}</td>
   </tr>
   <tr>
     <th>নির্বাচনের তারিখ</th><td>{{ ei.election_date|date:"d/m/Y"|default:"—" }}</td>
@@ -216,7 +216,7 @@ table.dt th { font-weight: bold; }
     <th>কতবার নির্বাচিত</th><td>{{ ei.times_elected }}</td>
   </tr>
   <tr>
-    <th>দলগত পরিচয়</th><td>{{ ei.party.name_bn|default:"—" }}</td>
+    <th>দলগত পরিচয়</th><td>{{ ei.party|tr:"name"|default:"—"  }}</td>
     <th>সদস্যের ধরন</th><td>{{ mp.get_member_type_display }}</td>
   </tr>
 </table>
@@ -231,12 +231,12 @@ table.dt th { font-weight: bold; }
     {% for sp in mp.spouses.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ sp.name_bn }}</td>
+      <td>{{ sp|tr:"name" }}</td>
       <td>{{ sp.name_en|default:"—" }}</td>
       <td>{{ sp.dob|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ sp.marriage_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ sp.profession.name_bn|default:"—" }}</td>
-      <td>{{ sp.home_district.name_bn|default:"—" }}</td>
+      <td>{{ sp.profession|tr:"name"|default:"—"  }}</td>
+      <td>{{ sp.home_district|tr:"name"|default:"—"  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -252,11 +252,11 @@ table.dt th { font-weight: bold; }
     {% for ch in mp.children.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ ch.name_bn }}</td>
+      <td>{{ ch|tr:"name" }}</td>
       <td>{{ ch.name_en|default:"—" }}</td>
       <td>{{ ch.dob|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ ch.gender.name_bn|default:"—" }}</td>
-      <td>{{ ch.profession.name_bn|default:"—" }}</td>
+      <td>{{ ch.gender|tr:"name"|default:"—"  }}</td>
+      <td>{{ ch.profession|tr:"name"|default:"—"  }}</td>
       <td>{{ ch.nid_or_birth_reg|default:"—" }}</td>
     </tr>
     {% endfor %}
@@ -273,11 +273,11 @@ table.dt th { font-weight: bold; }
     {% for edu in mp.educations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"—" }}</td>
-      <td>{{ edu.major_subject.name_bn|default:"—" }}</td>
+      <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td>
+      <td>{{ edu.major_subject|tr:"name"|default:"—"  }}</td>
       <td>{{ edu.passing_year|default:"—" }}</td>
       <td>{{ edu.result_display }}</td>
-      <td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"—" }}</td>
+      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -291,11 +291,11 @@ table.dt th { font-weight: bold; }
 <div class="sub nob">{{ addr.get_address_type_display }}</div>
 <table class="kv nob">
   <tr>
-    <th>বিভাগ</th><td>{{ addr.division.name_bn|default:"—" }}</td>
-    <th>জেলা</th><td>{{ addr.district.name_bn|default:"—" }}</td>
+    <th>বিভাগ</th><td>{{ addr.division|tr:"name"|default:"—"  }}</td>
+    <th>জেলা</th><td>{{ addr.district|tr:"name"|default:"—"  }}</td>
   </tr>
   <tr>
-    <th>উপজেলা/থানা</th><td>{{ addr.upazila.name_bn|default:"—" }}</td>
+    <th>উপজেলা/থানা</th><td>{{ addr.upazila|tr:"name"|default:"—"  }}</td>
     <th>পৌরসভা/ইউনিয়ন</th><td>{{ addr.pouroshova_union_bn|default:"—" }}</td>
   </tr>
   <tr>
@@ -327,8 +327,8 @@ table.dt th { font-weight: bold; }
     {% for ls in mp.language_skills.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ ls.language.name_bn }}</td>
-      <td>{{ ls.proficiency.name_bn|default:"—" }}</td>
+      <td>{{ ls.language|tr:"name" }}</td>
+      <td>{{ ls.proficiency|tr:"name"|default:"—"  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -370,7 +370,7 @@ table.dt th { font-weight: bold; }
       <td>{{ cv.dose_number }}</td>
       <td>{{ cv.date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ cv.center_name|default:"—" }}</td>
-      <td>{{ cv.vaccine_name.name_bn|default:"—" }}</td>
+      <td>{{ cv.vaccine_name|tr:"name"|default:"—"  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -381,16 +381,16 @@ table.dt th { font-weight: bold; }
 {% if mp.ministry_assignments.all %}
 <div class="sec nob">১০। মন্ত্রণালয়ের দায়িত্ব</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>মন্ত্রণালয়ের নাম</th><th>মন্ত্রিত্বের ধরন</th><th>শুরুর তারিখ</th><th>শেষ তারিখ</th><th>সংসদ নম্বর</th></tr></thead>
+  <thead><tr><th>#</th><th>মন্ত্রণালয়ের নাম</th><th>মন্ত্রিত্বের ধরন</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th><th>সংসদ নম্বর</th></tr></thead>
   <tbody>
     {% for ma in mp.ministry_assignments.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ ma.ministry.name_bn }}</td>
-      <td>{{ ma.minister_type.name_bn }}</td>
+      <td>{{ ma.ministry|tr:"name" }}</td>
+      <td>{{ ma.minister_type|tr:"name" }}</td>
       <td>{{ ma.start_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td>
-      <td>{{ ma.parliament.name_bn }}</td>
+      <td>{{ ma.parliament|tr:"name" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -401,14 +401,14 @@ table.dt th { font-weight: bold; }
 {% if mp.committee_assignments.all %}
 <div class="sec nob">১১। স্থায়ী কমিটির দায়িত্ব</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>সংসদ নম্বর</th><th>স্থায়ী কমিটির নাম</th><th>পদবী</th><th>শুরুর তারিখ</th><th>শেষ তারিখ</th></tr></thead>
+  <thead><tr><th>#</th><th>সংসদ নম্বর</th><th>স্থায়ী কমিটির নাম</th><th>{% ui "পদবী" "Designation" %}</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
   <tbody>
     {% for ca in mp.committee_assignments.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ ca.parliament.name_bn }}</td>
-      <td>{{ ca.committee.name_bn }}</td>
-      <td>{{ ca.position.name_bn }}</td>
+      <td>{{ ca.parliament|tr:"name" }}</td>
+      <td>{{ ca.committee|tr:"name" }}</td>
+      <td>{{ ca.position|tr:"name" }}</td>
       <td>{{ ca.start_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td>
     </tr>
@@ -441,12 +441,12 @@ table.dt th { font-weight: bold; }
 {% if mp.organizations.all %}
 <div class="sec nob">১৩। সংগঠন</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>নাম</th><th>ভূমিকা</th><th>শুরুর তারিখ</th><th>শেষ তারিখ</th></tr></thead>
+  <thead><tr><th>#</th><th>নাম</th><th>ভূমিকা</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
   <tbody>
     {% for org in mp.organizations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ org.name_bn }}</td>
+      <td>{{ org|tr:"name" }}</td>
       <td>{{ org.role_bn|default:"—" }}</td>
       <td>{{ org.from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ org.to_date|date:"d/m/Y"|default:"—" }}</td>
@@ -465,7 +465,7 @@ table.dt th { font-weight: bold; }
     {% for aw in mp.awards.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ aw.name_bn }}</td>
+      <td>{{ aw|tr:"name" }}</td>
       <td>{{ aw.year|default:"—" }}</td>
       <td>{{ aw.awarded_by_bn|default:"—" }}</td>
     </tr>
@@ -484,13 +484,13 @@ table.dt th { font-weight: bold; }
 {% if mp.special_positions.all %}
 <div class="sec nob">১৬। বিশেষ পদের দায়িত্ব</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>সংসদের নাম</th><th>পদের নাম</th><th>শুরুর তারিখ</th><th>শেষ তারিখ</th></tr></thead>
+  <thead><tr><th>#</th><th>সংসদের নাম</th><th>পদের নাম</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
   <tbody>
     {% for sp in mp.special_positions.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ sp.parliament.name_bn }}</td>
-      <td>{{ sp.role.name_bn }}</td>
+      <td>{{ sp.parliament|tr:"name" }}</td>
+      <td>{{ sp.role|tr:"name" }}</td>
       <td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td>
     </tr>
@@ -527,8 +527,8 @@ table.dt th { font-weight: bold; }
     {% for tp in mp.travel_participations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{% for tc in tp.tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
-      <td>{{ tp.tour.purpose.name_bn|default:"—" }}</td>
+      <td>{% for tc in tp.tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+      <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
       <td>{{ tp.departure_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ tp.return_date|date:"d/m/Y"|default:"—" }}</td>
     </tr>

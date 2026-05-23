@@ -132,8 +132,20 @@ body {
   margin-top: var(--mp-topbar-h);
   min-height: calc(100vh - var(--mp-topbar-h));
   transition: margin-left .2s ease;
+  display: flex;
+  flex-direction: column;
 }
-.mp-content { padding: 24px; }
+.mp-content { padding: 24px; flex: 1; }
+
+/* ── Footer ───────────────────────────────────── */
+.mp-footer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--mp-muted);
+  padding: 12px 24px;
+  border-top: 1px solid var(--mp-border);
+  background: var(--mp-surface);
+}
 
 /* ── Collapsed sidebar ────────────────────────── */
 body.sidebar-collapsed .mp-sidebar { width: 64px; }

@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static lang_tags %}
 {% block title %}বিদেশ সফর তালিকা{% endblock %}
 {% block content %}
 <div class="mb-3">
   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
-    <li class="breadcrumb-item active">বিদেশ সফর</li>
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% ui "রিপোর্ট" "Reports" %}</a></li>
+    <li class="breadcrumb-item active">{% ui "বিদেশ সফর" "Foreign Travel" %}</li>
   </ol></nav>
   <h4 class="mb-0 fw-bold">বিদেশ সফর তালিকা</h4>
 </div>
@@ -17,33 +17,33 @@
     <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">অনুসন্ধান (GO/নাম)</label>
       <div class="input-group input-group-sm"><span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="GO নম্বর / এমপি নাম…"></div></div>
-    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">সংসদ</label>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব সংসদ</option>
-        {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>{% endfor %}
+        <option value="">{% ui "সব সংসদ" "All" %}</option>
+        {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>{% endfor %}
       </select></div>
-    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">ধরন</label>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "ধরন" "Type" %}</label>
       <select name="tour_type" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব ধরন</option>
-        {% for tt in tour_types %}<option value="{{ tt.pk }}" {% if tt.pk|stringformat:"s" == tour_type_id %}selected{% endif %}>{{ tt.name_bn }}</option>{% endfor %}
+        <option value="">{% ui "সব ধরন" "All" %}</option>
+        {% for tt in tour_types %}<option value="{{ tt.pk }}" {% if tt.pk|stringformat:"s" == tour_type_id %}selected{% endif %}>{{ tt|tr:"name" }}</option>{% endfor %}
       </select></div>
-    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">দেশ</label>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "দেশ" "Country" %}</label>
       <select name="country" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব দেশ</option>
-        {% for c in countries %}<option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == country_id %}selected{% endif %}>{{ c.name_bn }}</option>{% endfor %}
+        <option value="">{% ui "সব দেশ" "All" %}</option>
+        {% for c in countries %}<option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == country_id %}selected{% endif %}>{{ c|tr:"name" }}</option>{% endfor %}
       </select></div>
-    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">বছর</label>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "বছর" "Year" %}</label>
       <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব বছর</option>
+        <option value="">{% ui "সব বছর" "All Years" %}</option>
         {% for y in years %}<option value="{{ y }}" {% if y|stringformat:"s" == year %}selected{% endif %}>{{ y }}</option>{% endfor %}
       </select></div>
-    <div class="col-md-1"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">খুঁজুন</button></div>
+    <div class="col-md-1"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">{% ui "খুঁজুন" "Search" %}</button></div>
   </div>
 </div>
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
-  <small class="text-muted">মোট: <strong>{{ total_count }}</strong> টি GO</small>
+  <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি GO</small>
   <div class="d-flex gap-2">
-    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>প্রিন্ট</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}</button>
     <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
     <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
     <a href="?parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&country={{ country_id }}&year={{ year }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
@@ -55,7 +55,7 @@
   <div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
       <thead class="table-light">
-        <tr><th>#</th><th>GO নং</th><th>GO তারিখ</th><th>ধরন</th><th>উদ্দেশ্য</th><th>দেশসমূহ</th><th>সদস্যবৃন্দ</th><th>যাত্রা</th><th>প্রত্যাবর্তন</th><th class="no-print"></th></tr>
+        <tr><th>#</th><th>{% ui "GO নং" "GO No." %}</th><th>{% ui "GO তারিখ" "GO Date" %}</th><th>{% ui "ধরন" "Type" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "দেশসমূহ" "Countries" %}</th><th>{% ui "সদস্যবৃন্দ" "Members" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th><th class="no-print"></th></tr>
       </thead>
       <tbody>
         {% for tour in page_obj %}
@@ -64,12 +64,12 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ tour.go_number }}</code></td>
           <td>{{ tour.go_date|date:"d/m/Y" }}</td>
-          <td>{{ tour.tour_type.name_bn }}</td>
-          <td>{{ tour.purpose.name_bn }}</td>
-          <td>{% for tc in tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+          <td>{{ tour.tour_type|tr:"name" }}</td>
+          <td>{{ tour.purpose|tr:"name" }}</td>
+          <td>{% for tc in tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
           <td>
             {% for p in tour.participants.all %}
-            <div><a href="{% url 'mp:mp_detail' p.mp_id %}" class="text-decoration-none small">{{ p.mp.name_bn }}</a></div>
+            <div><a href="{% url 'mp:mp_detail' p.mp_id %}" class="text-decoration-none small">{{ p.mp|tr:"name" }}</a></div>
             {% empty %}—{% endfor %}
           </td>
           <td>{{ first_p.departure_date|date:"d/m/Y"|default:"—" }}</td>
@@ -78,7 +78,7 @@
         </tr>
         {% endwith %}
         {% empty %}
-        <tr><td colspan="10" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

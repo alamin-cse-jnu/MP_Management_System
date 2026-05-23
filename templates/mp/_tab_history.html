@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">পূর্ববর্তী সংসদ ইতিহাস</h6>
+  <h6 class="fw-bold mb-0">{% ui "পূর্ববর্তী সংসদ ইতিহাস" "Previous Parliamentary History" %}</h6>
   <a href="{% url 'mp:history_create' mp.pk %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
 
@@ -11,12 +11,12 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th>সংসদের নাম</th>
-        <th>নির্বাচনী এলাকা</th>
-        <th>শুরু</th>
-        <th>শেষ</th>
-        <th>মন্তব্য</th>
-        <th style="width:100px;">কার্যক্রম</th>
+        <th>{% ui "সংসদের নাম" "Parliament Name" %}</th>
+        <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+        <th>{% ui "শুরু" "Start" %}</th>
+        <th>{% ui "শেষ" "End" %}</th>
+        <th>{% ui "মন্তব্য" "Remarks" %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -42,5 +42,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো সংসদ ইতিহাস নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো সংসদ ইতিহাস নেই।" "No parliamentary history." %}</p>
 {% endif %}

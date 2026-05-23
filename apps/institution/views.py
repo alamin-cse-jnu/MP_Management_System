@@ -85,6 +85,7 @@ def assignment_create(request):
         'mp':        mp,
         'is_create': True,
         'title_bn':  'নতুন প্রতিষ্ঠান নিয়োগ',
+        'title_en':  'New Institution Assignment',
     })
 
 
@@ -102,6 +103,7 @@ def assignment_update(request, pk):
         'obj':       obj,
         'is_create': False,
         'title_bn':  'প্রতিষ্ঠান নিয়োগ সম্পাদনা',
+        'title_en':  'Edit Institution Assignment',
     })
 
 

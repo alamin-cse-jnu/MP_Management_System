@@ -8,15 +8,15 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">নির্বাচনী এলাকা</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "নির্বাচনী এলাকা" "Constituency" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">নির্বাচনী এলাকা তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "নির্বাচনী এলাকা তালিকা" "Constituency List" %}</h4>
     <small class="text-muted">Parliamentary Constituencies</small>
   </div>
   <a href="{% url 'parliament:constituency_create' %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন নির্বাচনী এলাকা
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন নির্বাচনী এলাকা" "New Constituency" %}
   </a>
 </div>
 
@@ -24,7 +24,7 @@
 <div class="mp-card mb-3 p-3">
   <form method="get" class="row g-2 align-items-end">
     <div class="col-md-6">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control"
@@ -34,11 +34,11 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অবস্থা</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
       <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="active"    {% if status == 'active' %}selected{% endif %}>সক্রিয়</option>
-        <option value="inactive"  {% if status == 'inactive' %}selected{% endif %}>নিষ্ক্রিয়</option>
-        <option value="all"       {% if status == 'all' %}selected{% endif %}>সব</option>
+        <option value="active"    {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
+        <option value="inactive"  {% if status == 'inactive' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Inactive" %}</option>
+        <option value="all"       {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
       </select>
     </div>
     <div class="col-md-3">
@@ -56,8 +56,8 @@
         <th style="width:50px;">#</th>
         <th>বাংলা নাম</th>
         <th>English Name</th>
-        <th style="width:80px; text-align:center;">ক্রম</th>
-        <th style="width:120px; text-align:center;">অবস্থা</th>
+        <th style="width:80px; text-align:center;">{% ui "ক্রম" "#" %}</th>
+        <th style="width:120px; text-align:center;">{% ui "অবস্থা" "Status" %}</th>
         <th style="width:130px; text-align:center;">অ্যাকশন</th>
       </tr>
     </thead>
@@ -65,14 +65,14 @@
       {% for c in page_obj %}
       <tr>
         <td class="text-muted">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ c.display_bn }}</td>
+        <td class="fw-medium">{{ c|tr:"display" }}</td>
         <td class="text-muted">{{ c.display_en }}</td>
         <td class="text-center text-muted">{{ c.ordering }}</td>
         <td class="text-center">
           {% if c.is_active %}
-          <span class="badge badge-active">সক্রিয়</span>
+          <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
           {% else %}
-          <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+          <span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
           {% endif %}
         </td>
         <td class="text-center">

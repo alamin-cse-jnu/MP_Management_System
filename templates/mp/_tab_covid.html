@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">কোভিড-১৯ টিকার তথ্য</h6>
+  <h6 class="fw-bold mb-0">{% ui "কোভিড-১৯ টিকার তথ্য" "Covid-19 Vaccination" %}</h6>
   <a href="{% url 'mp:covid_create' mp.pk %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>ডোজ যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "ডোজ যোগ করুন" "Add Dose" %}
   </a>
 </div>
 
@@ -11,12 +11,12 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th>ডোজ নম্বর</th>
-        <th>তারিখ</th>
-        <th>টিকার নাম</th>
-        <th>টিকা কেন্দ্র</th>
-        <th>সার্টিফিকেট নম্বর</th>
-        <th style="width:100px;">কার্যক্রম</th>
+        <th>{% ui "ডোজ নম্বর" "Dose No." %}</th>
+        <th>{% ui "তারিখ" "Date" %}</th>
+        <th>{% ui "টিকার নাম" "Vaccine Name" %}</th>
+        <th>{% ui "টিকা কেন্দ্র" "Vaccination Center" %}</th>
+        <th>{% ui "সার্টিফিকেট নম্বর" "Certificate No." %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>

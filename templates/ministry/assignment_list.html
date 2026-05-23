@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}মন্ত্রণালয় নিয়োগ তালিকা{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui "মন্ত্রণালয় নিয়োগ তালিকা" "Ministry Assignment List" %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item active">মন্ত্রণালয় নিয়োগ</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "মন্ত্রণালয় নিয়োগ" "Ministry Assignment" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">মন্ত্রণালয় নিয়োগ তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "মন্ত্রণালয় নিয়োগ তালিকা" "Ministry Assignment List" %}</h4>
     <small class="text-muted">Ministry Assignments</small>
   </div>
   <a href="{% url 'ministry:assignment_create' %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন নিয়োগ
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন নিয়োগ" "New Assignment" %}
   </a>
 </div>
 
@@ -20,7 +20,7 @@
 <div class="mp-card mb-3 p-3">
   <form method="get" class="row g-2 align-items-end">
     <div class="col-md-4">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম বা মন্ত্রণালয়…">
@@ -28,33 +28,33 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">সংসদ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব সংসদ</option>
+        <option value="">{% ui "সব সংসদ" "All" %}</option>
         {% for p in parliaments %}
-        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">ধরন</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ধরন" "Type" %}</label>
       <select name="minister_type" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব ধরন</option>
+        <option value="">{% ui "সব ধরন" "All" %}</option>
         {% for mt in minister_types %}
-        <option value="{{ mt.pk }}" {% if mt.pk|stringformat:"s" == minister_type_id %}selected{% endif %}>{{ mt.name_bn }}</option>
+        <option value="{{ mt.pk }}" {% if mt.pk|stringformat:"s" == minister_type_id %}selected{% endif %}>{{ mt|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অবস্থা</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
       <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="active"   {% if status == 'active' %}selected{% endif %}>সক্রিয়</option>
-        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>নিষ্ক্রিয়</option>
-        <option value="all"      {% if status == 'all' %}selected{% endif %}>সব</option>
+        <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
+        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Inactive" %}</option>
+        <option value="all"      {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
       </select>
     </div>
     <div class="col-md-1">
-      <button type="submit" class="btn btn-primary btn-sm w-100">খুঁজুন</button>
+      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "খুঁজুন" "Search" %}</button>
     </div>
   </form>
 </div>
@@ -66,13 +66,13 @@
       <thead class="table-light">
         <tr>
           <th style="width:3rem;">#</th>
-          <th>সদস্যের নাম</th>
-          <th>মন্ত্রণালয়</th>
-          <th>ধরন</th>
-          <th>শুরু</th>
-          <th>শেষ</th>
-          <th>GO নং</th>
-          <th style="width:7rem;">অবস্থা</th>
+          <th>{% ui "সদস্যের নাম" "MP Name" %}</th>
+          <th>{% ui "মন্ত্রণালয়" "Ministry" %}</th>
+          <th>{% ui "ধরন" "Type" %}</th>
+          <th>{% ui "শুরু" "Start" %}</th>
+          <th>{% ui "শেষ" "End" %}</th>
+          <th>{% ui "GO নং" "GO No." %}</th>
+          <th style="width:7rem;">{% ui "অবস্থা" "Status" %}</th>
           <th style="width:8rem;"></th>
         </tr>
       </thead>
@@ -82,46 +82,46 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td>
             <a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="text-decoration-none fw-medium">
-              {{ obj.mp.name_bn }}
+              {{ obj.mp|tr:"name" }}
             </a>
             <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
           </td>
           <td>
-            {{ obj.ministry.name_bn }}
+            {{ obj.ministry|tr:"name" }}
             <div class="text-muted" style="font-size:0.8rem;">{{ obj.ministry.name_en }}</div>
           </td>
-          <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type.name_bn }}</span></td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.go_number|default:"—" }}</td>
           <td>
             {% if obj.is_active %}
-              <span class="badge bg-success-subtle text-success">সক্রিয়</span>
+              <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
             {% else %}
-              <span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>
+              <span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
             {% endif %}
           </td>
           <td class="text-end">
-            <a href="{% url 'ministry:assignment_update' obj.pk %}" class="btn btn-outline-secondary btn-sm me-1" title="সম্পাদনা">
+            <a href="{% url 'ministry:assignment_update' obj.pk %}" class="btn btn-outline-secondary btn-sm me-1" title="{% ui "সম্পাদনা" "Edit" %}">
               <i class="bi bi-pencil"></i>
             </a>
             <form method="post" action="{% url 'ministry:assignment_toggle' obj.pk %}" class="d-inline">
               {% csrf_token %}
-              <button class="btn btn-outline-warning btn-sm me-1" title="স্ট্যাটাস পরিবর্তন">
+              <button class="btn btn-outline-warning btn-sm me-1" title="{% ui "স্ট্যাটাস পরিবর্তন" "Toggle Status" %}">
                 <i class="bi bi-arrow-repeat"></i>
               </button>
             </form>
             <form method="post" action="{% url 'ministry:assignment_delete' obj.pk %}" class="d-inline"
-                  onsubmit="return confirm('এই নিয়োগ মুছে ফেলবেন?')">
+                  onsubmit="return confirm('{% ui "এই নিয়োগ মুছে ফেলবেন?" "Delete this assignment?" %}')">
               {% csrf_token %}
-              <button class="btn btn-outline-danger btn-sm" title="মুছুন">
+              <button class="btn btn-outline-danger btn-sm" title="{% ui "মুছুন" "Delete" %}">
                 <i class="bi bi-trash"></i>
               </button>
             </form>
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="9" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -129,7 +129,7 @@
 
   {% if page_obj.has_other_pages %}
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
-    <small class="text-muted">মোট {{ page_obj.paginator.count }} টি | পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
       {% if page_obj.has_previous %}
       <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>

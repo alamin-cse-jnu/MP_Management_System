@@ -40,7 +40,7 @@
       <img src="{% static 'img/parliament-logo.png' %}" alt="Parliament" height="36"
            onerror="this.style.display='none'">
       <div class="lh-1">
-        <div class="fw-bold text-dark" style="font-size:0.95rem;">সংসদ সদস্য তথ্য ব্যবস্থাপনা</div>
+        <div class="fw-bold text-dark" style="font-size:0.95rem;">{% ui "সংসদ সদস্য তথ্য ব্যবস্থাপনা" "MP Information Management" %}</div>
         <div class="text-muted" style="font-size:0.7rem;">MP Information Management System</div>
       </div>
     </a>
@@ -60,19 +60,19 @@
               data-bs-toggle="dropdown">
         <div class="mp-avatar">{{ request.user.username|first|upper }}</div>
         <div class="d-none d-md-block text-start lh-1">
-          <div style="font-size:0.85rem; font-weight:600;">{{ request.user.full_name_bn|default:request.user.username }}</div>
+          <div style="font-size:0.85rem; font-weight:600;">{% ui request.user.full_name_bn|default:request.user.username request.user.full_name_en|default:request.user.username %}</div>
           <div class="text-muted" style="font-size:0.7rem;">{{ request.user.role|default:"Admin" }}</div>
         </div>
         <i class="bi bi-chevron-down" style="font-size:0.7rem;"></i>
       </button>
       <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>প্রোফাইল</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>{% ui "প্রোফাইল" "Profile" %}</a></li>
         <li><hr class="dropdown-divider"></li>
         <li>
           <form method="post" action="{% url 'accounts:logout' %}">
             {% csrf_token %}
             <button type="submit" class="dropdown-item text-danger">
-              <i class="bi bi-box-arrow-right me-2"></i>লগআউট
+              <i class="bi bi-box-arrow-right me-2"></i>{% ui "লগআউট" "Logout" %}
             </button>
           </form>
         </li>
@@ -88,7 +88,7 @@
     <a href="{% url 'accounts:dashboard' %}"
        class="mp-nav-item {% active 'dashboard' %}">
       <i class="bi bi-grid-1x2-fill mp-nav-icon"></i>
-      <span class="mp-nav-label">ড্যাশবোর্ড</span>
+      <span class="mp-nav-label">{% ui "ড্যাশবোর্ড" "Dashboard" %}</span>
     </a>
 
     <!-- Dynamic menus from DB -->
@@ -99,7 +99,7 @@
         {% if sub_href != '#' %}
         <a href="{{ sub_href }}" class="mp-nav-item">
           <i class="bi {{ menu.icon|default:'bi-circle' }} mp-nav-icon"></i>
-          <span class="mp-nav-label">{{ menu.name_bn }}</span>
+          <span class="mp-nav-label">{{ menu|tr:"name" }}</span>
         </a>
         {% endif %}
         {% endwith %}
@@ -109,7 +109,7 @@
                   data-bs-toggle="collapse"
                   data-bs-target="#menu-{{ menu.pk }}">
             <i class="bi {{ menu.icon|default:'bi-circle' }} mp-nav-icon"></i>
-            <span class="mp-nav-label">{{ menu.name_bn }}</span>
+            <span class="mp-nav-label">{{ menu|tr:"name" }}</span>
             <i class="bi bi-chevron-down mp-nav-arrow"></i>
           </button>
           <div class="collapse mp-submenu" id="menu-{{ menu.pk }}">
@@ -118,7 +118,7 @@
               {% safe_url sub.url_name as sub_href %}
               {% if sub_href != '#' %}
               <a href="{{ sub_href }}" class="mp-nav-sub">
-                <i class="bi bi-dash"></i> {{ sub.name_bn }}
+                <i class="bi bi-dash"></i> {{ sub|tr:"name" }}
               </a>
               {% endif %}
               {% endif %}
@@ -131,15 +131,15 @@
       <div class="mp-nav-section-label">তথ্য ব্যবস্থাপনা</div>
       <a href="#" class="mp-nav-item">
         <i class="bi bi-people-fill mp-nav-icon"></i>
-        <span class="mp-nav-label">সংসদ সদস্য</span>
+        <span class="mp-nav-label">{% ui "সংসদ সদস্য" "Members of Parliament" %}</span>
       </a>
       <a href="#" class="mp-nav-item">
         <i class="bi bi-building mp-nav-icon"></i>
-        <span class="mp-nav-label">মন্ত্রণালয়</span>
+        <span class="mp-nav-label">{% ui "মন্ত্রণালয়" "Ministry" %}</span>
       </a>
       <a href="#" class="mp-nav-item">
         <i class="bi bi-clipboard2-check mp-nav-icon"></i>
-        <span class="mp-nav-label">কমিটি</span>
+        <span class="mp-nav-label">{% ui "কমিটি" "Committee" %}</span>
       </a>
       <a href="#" class="mp-nav-item">
         <i class="bi bi-globe mp-nav-icon"></i>
@@ -153,7 +153,7 @@
       <div class="mp-nav-section-label">সেটিংস</div>
       <a href="#" class="mp-nav-item">
         <i class="bi bi-sliders mp-nav-icon"></i>
-        <span class="mp-nav-label">মাস্টার ডেটা</span>
+        <span class="mp-nav-label">{% ui "মাস্টার ডেটা" "Master Data" %}</span>
       </a>
     {% endfor %}
   </nav>
@@ -162,7 +162,7 @@
   <div class="mp-sidebar-footer">
     <div class="mp-avatar mp-avatar-sm">{{ request.user.username|first|upper }}</div>
     <div class="mp-nav-label lh-1">
-      <div style="font-size:0.8rem;">{{ request.user.full_name_bn|default:request.user.username }}</div>
+      <div style="font-size:0.8rem;">{% ui request.user.full_name_bn|default:request.user.username request.user.full_name_en|default:request.user.username %}</div>
     </div>
   </div>
 </div>
@@ -184,6 +184,10 @@
   <div class="mp-content">
     {% block content %}{% endblock %}
   </div>
+
+  <footer class="mp-footer">
+    Design &amp; Developed by <strong>Md. Al-Amin Hossain</strong>
+  </footer>
 </main>
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
@@ -215,8 +219,9 @@
   document.querySelectorAll('.mp-lang-toggle a').forEach(function(a) {
     a.addEventListener('click', function(e) {
       e.preventDefault();
-      const lang = new URL(this.href).searchParams.get('lang');
-      fetch('/accounts/set-language/', {
+      if (this.classList.contains('active')) return;
+      const lang = new URL(this.href, location.href).searchParams.get('lang');
+      fetch('{% url "accounts:set_language" %}', {
         method: 'POST',
         headers: {'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json'},
         body: JSON.stringify({language: lang})

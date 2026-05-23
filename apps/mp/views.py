@@ -257,6 +257,7 @@ def spouse_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-spouse')
     return render(request, 'mp/spouse_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন স্বামী/স্ত্রী',
+        'title_en':  'New Spouse',
     })
 
 
@@ -272,6 +273,7 @@ def spouse_update(request, pk, spk):
     return render(request, 'mp/spouse_form.html', {
         'form': form, 'mp': mp, 'spouse': spouse,
         'is_create': False, 'title_bn': 'স্বামী/স্ত্রীর তথ্য সম্পাদনা',
+        'title_en':  'Edit Spouse',
     })
 
 
@@ -299,6 +301,7 @@ def child_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-children')
     return render(request, 'mp/child_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন সন্তান',
+        'title_en':  'New Child',
     })
 
 
@@ -314,6 +317,7 @@ def child_update(request, pk, ck):
     return render(request, 'mp/child_form.html', {
         'form': form, 'mp': mp, 'child': child,
         'is_create': False, 'title_bn': 'সন্তানের তথ্য সম্পাদনা',
+        'title_en':  'Edit Child',
     })
 
 
@@ -340,6 +344,7 @@ def education_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
     return render(request, 'mp/education_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন শিক্ষাগত তথ্য',
+        'title_en':  'New Education',
     })
 
 
@@ -355,6 +360,7 @@ def education_update(request, pk, ek):
     return render(request, 'mp/education_form.html', {
         'form': form, 'mp': mp, 'edu': edu,
         'is_create': False, 'title_bn': 'শিক্ষাগত তথ্য সম্পাদনা',
+        'title_en':  'Edit Education',
     })
 
 
@@ -382,6 +388,7 @@ def language_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-language')
     return render(request, 'mp/language_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন বিদেশি ভাষা',
+        'title_en':  'New Language',
     })
 
 
@@ -397,6 +404,7 @@ def language_update(request, pk, lk):
     return render(request, 'mp/language_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'ভাষার তথ্য সম্পাদনা',
+        'title_en':  'Edit Language',
     })
 
 
@@ -423,6 +431,7 @@ def bank_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-bank')
     return render(request, 'mp/bank_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন ব্যাংক হিসাব',
+        'title_en':  'New Bank Account',
     })
 
 
@@ -438,6 +447,7 @@ def bank_update(request, pk, bk):
     return render(request, 'mp/bank_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'ব্যাংক হিসাব সম্পাদনা',
+        'title_en':  'Edit Bank Account',
     })
 
 
@@ -465,6 +475,7 @@ def covid_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-covid')
     return render(request, 'mp/covid_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন কোভিড টিকার তথ্য',
+        'title_en':  'New Covid Vaccination',
     })
 
 
@@ -480,6 +491,7 @@ def covid_update(request, pk, ck):
     return render(request, 'mp/covid_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'টিকার তথ্য সম্পাদনা',
+        'title_en':  'Edit Vaccination',
     })
 
 
@@ -507,6 +519,7 @@ def history_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-history')
     return render(request, 'mp/history_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন সংসদ ইতিহাস',
+        'title_en':  'New Parliamentary History',
     })
 
 
@@ -522,6 +535,7 @@ def history_update(request, pk, hk):
     return render(request, 'mp/history_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'সংসদ ইতিহাস সম্পাদনা',
+        'title_en':  'Edit Parliamentary History',
     })
 
 
@@ -549,6 +563,7 @@ def organization_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-organization')
     return render(request, 'mp/organization_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন সংগঠন',
+        'title_en':  'New Organization',
     })
 
 
@@ -564,6 +579,7 @@ def organization_update(request, pk, ok):
     return render(request, 'mp/organization_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'সংগঠন সম্পাদনা',
+        'title_en':  'Edit Organization',
     })
 
 
@@ -590,6 +606,7 @@ def award_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-award')
     return render(request, 'mp/award_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন পুরস্কার',
+        'title_en':  'New Award',
     })
 
 
@@ -605,6 +622,7 @@ def award_update(request, pk, ak):
     return render(request, 'mp/award_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'পুরস্কার সম্পাদনা',
+        'title_en':  'Edit Award',
     })
 
 
@@ -630,6 +648,7 @@ def social_service_save(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-social')
     return render(request, 'mp/social_service_form.html', {
         'form': form, 'mp': mp, 'title_bn': 'সমাজ সেবা',
+        'title_en':  'Social Service',
     })
 
 
@@ -648,6 +667,7 @@ def special_position_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-special')
     return render(request, 'mp/special_position_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন বিশেষ পদ',
+        'title_en':  'New Special Position',
     })
 
 
@@ -663,6 +683,7 @@ def special_position_update(request, pk, spk):
     return render(request, 'mp/special_position_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'বিশেষ পদ সম্পাদনা',
+        'title_en':  'Edit Special Position',
     })
 
 
@@ -690,6 +711,7 @@ def publication_create(request, pk):
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-publication')
     return render(request, 'mp/publication_form.html', {
         'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন প্রকাশনা',
+        'title_en':  'New Publication',
     })
 
 
@@ -705,6 +727,7 @@ def publication_update(request, pk, pubk):
     return render(request, 'mp/publication_form.html', {
         'form': form, 'mp': mp, 'obj': obj,
         'is_create': False, 'title_bn': 'প্রকাশনা সম্পাদনা',
+        'title_en':  'Edit Publication',
     })
 
 

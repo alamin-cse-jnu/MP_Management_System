@@ -29,6 +29,7 @@ def parliament_create(request):
     return render(request, 'parliament/parliament_form.html', {
         'form': form,
         'title_bn': 'নতুন সংসদ যোগ করুন',
+        'title_en':  'Add New Parliament',
         'is_create': True,
     })
 
@@ -44,6 +45,7 @@ def parliament_update(request, pk):
     return render(request, 'parliament/parliament_form.html', {
         'form': form,
         'title_bn': 'সংসদ সম্পাদনা',
+        'title_en':  'Edit Parliament',
         'is_create': False,
         'object': parliament,
     })
@@ -99,6 +101,7 @@ def constituency_create(request):
     return render(request, 'parliament/constituency_form.html', {
         'form': form,
         'title_bn': 'নতুন নির্বাচনী এলাকা',
+        'title_en':  'New Constituency',
         'is_create': True,
     })
 
@@ -114,6 +117,7 @@ def constituency_update(request, pk):
     return render(request, 'parliament/constituency_form.html', {
         'form': form,
         'title_bn': 'নির্বাচনী এলাকা সম্পাদনা',
+        'title_en':  'Edit Constituency',
         'is_create': False,
         'object': constituency,
     })

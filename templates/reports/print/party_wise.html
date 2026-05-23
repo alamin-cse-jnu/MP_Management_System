@@ -1,13 +1,14 @@
 {% extends "base_print.html" %}
+{% load lang_tags %}
 {% block title %}দল ভিত্তিক তালিকা{% endblock %}
 {% block content %}
 <h2 style="text-align:center;margin-bottom:4px;">দল ভিত্তিক সংসদ সদস্য তালিকা</h2>
 <table>
-  <thead><tr><th>#</th><th>এমপি আইডি</th><th>নাম (বাংলায়)</th><th>Name</th><th>নির্বাচনী এলাকা</th><th>রাজনৈতিক দল</th><th>কতবার</th></tr></thead>
+  <thead><tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th><th>Name</th><th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th><th>{% ui "রাজনৈতিক দল" "Party" %}</th><th>কতবার</th></tr></thead>
   <tbody>
     {% for mp in object_list %}{% with ei=mp.election_infos.all.0 %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ mp.mp_id }}</td><td>{{ mp.name_bn }}</td><td>{{ mp.name_en }}</td><td>{{ ei.constituency.display_bn|default:"—" }}</td><td>{{ ei.party.name_bn|default:"—" }}</td><td>{{ ei.times_elected|default:"—" }}</td></tr>
-    {% endwith %}{% empty %}<tr><td colspan="7" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>{% endfor %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ mp.mp_id }}</td><td>{{ mp|tr:"name" }}</td><td>{{ mp.name_en }}</td><td>{{ ei.constituency|tr:"display"|default:"—"  }}</td><td>{{ ei.party|tr:"name"|default:"—"  }}</td><td>{{ ei.times_elected|default:"—" }}</td></tr>
+    {% endwith %}{% empty %}<tr><td colspan="7" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>{% endfor %}
   </tbody>
 </table>
 <p style="font-size:9pt;color:#777;margin-top:8px;">মোট: {{ total_count }} জন</p>

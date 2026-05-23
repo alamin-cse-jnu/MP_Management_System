@@ -1,13 +1,14 @@
 {% extends "base_print.html" %}
+{% load lang_tags %}
 {% block title %}কমিটি সদস্য তালিকা{% endblock %}
 {% block content %}
 <h2 style="text-align:center;margin-bottom:4px;">কমিটি সদস্য তালিকা</h2>
 <table>
-  <thead><tr><th>#</th><th>এমপি আইডি</th><th>নাম</th><th>কমিটি</th><th>পদ</th><th>শুরু</th><th>শেষ</th><th>অবস্থা</th></tr></thead>
+  <thead><tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "অবস্থা" "Status" %}</th></tr></thead>
   <tbody>
     {% for obj in object_list %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ obj.mp.mp_id }}</td><td>{{ obj.mp.name_bn }}</td><td>{{ obj.committee.name_bn }}</td><td>{{ obj.position.name_bn }}</td><td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td><td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td><td>{% if obj.is_active %}সক্রিয়{% else %}নিষ্ক্রিয়{% endif %}</td></tr>
-    {% empty %}<tr><td colspan="8" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>{% endfor %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ obj.mp.mp_id }}</td><td>{{ obj.mp|tr:"name" }}</td><td>{{ obj.committee|tr:"name" }}</td><td>{{ obj.position|tr:"name" }}</td><td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td><td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td><td>{% if obj.is_active %}সক্রিয়{% else %}নিষ্ক্রিয়{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="8" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>{% endfor %}
   </tbody>
 </table>
 <p style="font-size:9pt;color:#777;margin-top:8px;">মোট: {{ total_count }} টি</p>

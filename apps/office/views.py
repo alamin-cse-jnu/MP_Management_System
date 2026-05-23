@@ -27,5 +27,6 @@ def office_edit(request, mp_pk):
         'form':      form,
         'mp':        mp,
         'obj':       obj,
-        'title_bn':  'সংসদ অফিস ঠিকানা',
+        'title_bn': 'সংসদ অফিস ঠিকানা',
+        'title_en':  'Parliament Office Address',
     })

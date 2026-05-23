@@ -1,5 +1,5 @@
 {% extends "base_print.html" %}
-{% load static %}
+{% load static lang_tags %}
 {% block title %}সকল সংসদ সদস্য তালিকা{% endblock %}
 {% block content %}
 <h2 style="text-align:center;margin-bottom:8px;">সকল সংসদ সদস্য তালিকা</h2>
@@ -17,20 +17,20 @@
     <tr>
       <td>{{ forloop.counter }}</td>
       {% if "mp_id" in selected_cols %}<td>{{ mp.mp_id }}</td>{% endif %}
-      {% if "name_bn" in selected_cols %}<td>{{ mp.name_bn }}</td>{% endif %}
+      {% if "name_bn" in selected_cols %}<td>{{ mp|tr:"name" }}</td>{% endif %}
       {% if "name_en" in selected_cols %}<td>{{ mp.name_en }}</td>{% endif %}
-      {% if "constituency" in selected_cols %}<td>{{ ei.constituency.display_bn|default:"—" }}</td>{% endif %}
-      {% if "party" in selected_cols %}<td>{{ ei.party.name_bn|default:"—" }}</td>{% endif %}
-      {% if "gender" in selected_cols %}<td>{{ mp.gender.name_bn|default:"—" }}</td>{% endif %}
+      {% if "constituency" in selected_cols %}<td>{{ ei.constituency|tr:"display"|default:"—"  }}</td>{% endif %}
+      {% if "party" in selected_cols %}<td>{{ ei.party|tr:"name"|default:"—"  }}</td>{% endif %}
+      {% if "gender" in selected_cols %}<td>{{ mp.gender|tr:"name"|default:"—"  }}</td>{% endif %}
       {% if "dob" in selected_cols %}<td>{{ mp.dob|date:"d/m/Y"|default:"—" }}</td>{% endif %}
-      {% if "religion" in selected_cols %}<td>{{ mp.religion.name_bn|default:"—" }}</td>{% endif %}
-      {% if "blood_group" in selected_cols %}<td>{{ mp.blood_group.name_bn|default:"—" }}</td>{% endif %}
-      {% if "district" in selected_cols %}<td>{{ mp.home_district.name_bn|default:"—" }}</td>{% endif %}
-      {% if "professions" in selected_cols %}<td>{% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>{% endif %}
+      {% if "religion" in selected_cols %}<td>{{ mp.religion|tr:"name"|default:"—"  }}</td>{% endif %}
+      {% if "blood_group" in selected_cols %}<td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td>{% endif %}
+      {% if "district" in selected_cols %}<td>{{ mp.home_district|tr:"name"|default:"—"  }}</td>{% endif %}
+      {% if "professions" in selected_cols %}<td>{% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>{% endif %}
     </tr>
     {% endwith %}
     {% empty %}
-    <tr><td colspan="15" style="text-align:center;">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+    <tr><td colspan="15" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
     {% endfor %}
   </tbody>
 </table>

@@ -8,11 +8,11 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">মাস্টার ডেটা</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "মাস্টার ডেটা" "Master Data" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">মাস্টার ডেটা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "মাস্টার ডেটা" "Master Data" %}</h4>
     <small class="text-muted">Reference / Dropdown Data Management</small>
   </div>
 </div>
@@ -31,7 +31,7 @@
         <li class="d-flex align-items-center justify-content-between py-1"
             style="border-bottom:1px solid #f1f5f9;">
           <span>
-            {{ item.name_bn }}
+            {{ item|tr:"name" }}
             <small class="text-muted">/ {{ item.name_en }}</small>
           </span>
           <a href="{{ item.url }}" class="btn btn-sm btn-outline-primary py-0 px-2"

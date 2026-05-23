@@ -85,6 +85,7 @@ def assignment_create(request):
         'mp':        mp,
         'is_create': True,
         'title_bn':  'নতুন মন্ত্রণালয় নিয়োগ',
+        'title_en':  'New Ministry Assignment',
     })
 
 
@@ -104,6 +105,7 @@ def assignment_update(request, pk):
         'obj':       obj,
         'is_create': False,
         'title_bn':  'মন্ত্রণালয় নিয়োগ সম্পাদনা',
+        'title_en':  'Edit Ministry Assignment',
         'from_mp':   request.GET.get('from_mp', ''),
     })
 

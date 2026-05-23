@@ -34,6 +34,13 @@ class RolePermissionMiddleware:
 
     def __call__(self, request):
         _thread_locals.request = request
+
+        # Activate language from session so get_language() reflects user's choice
+        # (Django 4+ LocaleMiddleware no longer reads from session)
+        lang = request.session.get('LANGUAGE', 'bn')
+        from django.utils import translation
+        translation.activate(lang)
+
         try:
             if request.user.is_authenticated and not getattr(request.user, 'is_superadmin', False):
                 try:

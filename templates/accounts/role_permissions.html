@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static lang_tags %}
 
-{% block title %}অনুমতি — {{ role.name_bn }}{% endblock %}
+{% block title %}অনুমতি — {{ role|tr:"name" }}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -28,16 +28,16 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'accounts:role_list' %}">ভূমিকা</a></li>
-        <li class="breadcrumb-item active">অনুমতি</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:role_list' %}">{% ui "ভূমিকা" "Role" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "অনুমতি" "Permissions" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">অনুমতি — {{ role.name_bn }}</h4>
+    <h4 class="mb-0 fw-bold">অনুমতি — {{ role|tr:"name" }}</h4>
     <small class="text-muted">{{ role.name_en }} — Role Permissions Matrix</small>
   </div>
   <a href="{% url 'accounts:role_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
   </a>
 </div>
 
@@ -46,9 +46,9 @@
 
   <div class="mp-card p-0 mb-3">
     <div class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-      <span class="fw-semibold">{{ role.name_bn }} — সাব-মেনু অনুযায়ী অনুমতি</span>
+      <span class="fw-semibold">{{ role|tr:"name" }} — সাব-মেনু অনুযায়ী অনুমতি</span>
       <button type="submit" class="btn btn-primary btn-sm">
-        <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+        <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
       </button>
     </div>
 
@@ -56,7 +56,7 @@
       <table class="mp-table perm-table">
         <thead>
           <tr>
-            <th style="min-width:220px; text-align:left;">সাব-মেনু</th>
+            <th style="min-width:220px; text-align:left;">{% ui "সাব-মেনু" "Sub-menu" %}</th>
             <th class="col-header" onclick="toggleCol('view')"   title="সব দেখা টগল">দেখা<br><span style="font-weight:400;color:#94a3b8;">(view)</span></th>
             <th class="col-header" onclick="toggleCol('add')"    title="সব যোগ টগল">যোগ<br><span style="font-weight:400;color:#94a3b8;">(add)</span></th>
             <th class="col-header" onclick="toggleCol('edit')"   title="সব সম্পাদনা টগল">সম্পাদনা<br><span style="font-weight:400;color:#94a3b8;">(edit)</span></th>
@@ -70,14 +70,14 @@
           {% if subs %}
           <tr class="menu-header">
             <td colspan="6">
-              <i class="bi {{ menu.icon|default:'bi-circle' }} me-1"></i>{{ menu.name_bn }}
+              <i class="bi {{ menu.icon|default:'bi-circle' }} me-1"></i>{{ menu|tr:"name" }}
               <small class="text-muted ms-2">{{ menu.name_en }}</small>
             </td>
           </tr>
           {% for sub in subs %}
           <tr>
             <td>
-              {{ sub.name_bn }}
+              {{ sub|tr:"name" }}
               <small class="text-muted d-block" style="font-size:0.78rem;">{{ sub.name_en }}</small>
             </td>
             <td class="text-center">
@@ -116,9 +116,9 @@
   </div>
 
   <div class="d-flex justify-content-end gap-2 pb-3">
-    <a href="{% url 'accounts:role_list' %}" class="btn btn-outline-secondary">বাতিল</a>
+    <a href="{% url 'accounts:role_list' %}" class="btn btn-outline-secondary">{% ui "বাতিল" "Clear" %}</a>
     <button type="submit" class="btn btn-primary">
-      <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+      <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
     </button>
   </div>
 </form>

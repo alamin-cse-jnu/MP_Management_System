@@ -1,4 +1,4 @@
-{% load static %}
+{% load static lang_tags %}
 {# Reusable address fields block. Template vars: form, show_contact #}
 
 {% if form.non_field_errors %}
@@ -7,20 +7,20 @@
 
 <div class="row">
   <div class="col-md-4 mb-3">
-    <label class="form-label fw-medium">বিভাগ</label>
+    <label class="form-label fw-medium">{% ui "বিভাগ" "Division" %}</label>
     {{ form.division }}
   </div>
   <div class="col-md-4 mb-3">
-    <label class="form-label fw-medium">জেলা</label>
+    <label class="form-label fw-medium">{% ui "জেলা" "District" %}</label>
     {{ form.district }}
   </div>
   <div class="col-md-4 mb-3">
-    <label class="form-label fw-medium">উপজেলা/থানা</label>
+    <label class="form-label fw-medium">{% ui "উপজেলা/থানা" "Upazila/Thana" %}</label>
     {{ form.upazila }}
   </div>
 
   <div class="col-md-6 mb-3">
-    <label class="form-label fw-medium">পৌরসভা/ইউনিয়ন (বাংলায়)</label>
+    <label class="form-label fw-medium">{% ui "পৌরসভা/ইউনিয়ন (বাংলায়)" "Municipality/Union (Bangla)" %}</label>
     {{ form.pouroshova_union_bn }}
   </div>
   <div class="col-md-6 mb-3">
@@ -29,7 +29,7 @@
   </div>
 
   <div class="col-md-6 mb-3">
-    <label class="form-label fw-medium">বাড়ি/রাস্তা/গ্রাম/ডাকঘর (বাংলায়)</label>
+    <label class="form-label fw-medium">{% ui "বাড়ি/রাস্তা/গ্রাম/ডাকঘর (বাংলায়)" "House/Road/Village/PO (Bangla)" %}</label>
     {{ form.address_detail_bn }}
   </div>
   <div class="col-md-6 mb-3">
@@ -38,7 +38,7 @@
   </div>
 
   <div class="col-md-4 mb-3">
-    <label class="form-label fw-medium">পোস্টাল কোড</label>
+    <label class="form-label fw-medium">{% ui "পোস্টাল কোড" "Postal Code" %}</label>
     {{ form.postal_code }}
   </div>
 </div>
@@ -46,19 +46,19 @@
 {% if show_contact %}
 <div class="mt-2 pt-3 border-top">
   <div class="fw-medium mb-3 text-muted" style="font-size:0.875rem;">
-    যোগাযোগ তথ্য (বর্তমান ঠিকানায় প্রযোজ্য)
+    {% ui "যোগাযোগ তথ্য (বর্তমান ঠিকানায় প্রযোজ্য)" "Contact Information (for Present Address)" %}
   </div>
   <div class="row">
     <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">টেলিফোন</label>
+      <label class="form-label fw-medium">{% ui "টেলিফোন" "Telephone" %}</label>
       {{ form.telephone }}
     </div>
     <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">মোবাইল</label>
+      <label class="form-label fw-medium">{% ui "মোবাইল" "Mobile" %}</label>
       {{ form.mobile }}
     </div>
     <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">বিকল্প মোবাইল</label>
+      <label class="form-label fw-medium">{% ui "বিকল্প মোবাইল" "Alternative Mobile" %}</label>
       {{ form.alt_mobile }}
     </div>
     <div class="col-md-4 mb-3">

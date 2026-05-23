@@ -23,6 +23,33 @@ from .utils import export_csv, export_excel
 PAGE_SIZE = 25
 
 
+# ── language-aware field helper (mirrors the `tr` template filter) ─────────────
+
+def _lang():
+    """Return 'en' or 'bn' based on Django's active language."""
+    from django.utils.translation import get_language
+    try:
+        return 'en' if (get_language() or '').startswith('en') else 'bn'
+    except Exception:
+        return 'bn'
+
+
+def _tr(obj, field='name'):
+    """Return bn or en field value based on Django's active language."""
+    lang   = _lang()
+    bn_val = getattr(obj, f'{field}_bn', None)
+    en_val = getattr(obj, f'{field}_en', None)
+    if lang == 'en':
+        return en_val or bn_val or ''
+    return bn_val or en_val or ''
+
+
+def _active_label(is_active):
+    if _lang() == 'en':
+        return 'Active' if is_active else 'Inactive'
+    return 'সক্রিয়' if is_active else 'নিষ্ক্রিয়'
+
+
 # ── helpers ────────────────────────────────────────────────────────────────────
 
 def _active_parliament_id(request):
@@ -162,14 +189,14 @@ def _all_mp_get_cell(mp, col):
     if col == 'mp_id':        return mp.mp_id
     if col == 'name_bn':      return mp.name_bn
     if col == 'name_en':      return mp.name_en
-    if col == 'constituency': return (ei.constituency.display_bn if ei and ei.constituency else '—')
-    if col == 'party':        return (ei.party.name_bn if ei and ei.party else '—')
-    if col == 'gender':       return (mp.gender.name_bn if mp.gender else '—')
+    if col == 'constituency': return (_tr(ei.constituency, 'display') if ei and ei.constituency else '—')
+    if col == 'party':        return (_tr(ei.party) if ei and ei.party else '—')
+    if col == 'gender':       return (_tr(mp.gender) if mp.gender else '—')
     if col == 'dob':          return (mp.dob.strftime('%d/%m/%Y') if mp.dob else '—')
-    if col == 'religion':     return (mp.religion.name_bn if mp.religion else '—')
-    if col == 'blood_group':  return (mp.blood_group.name_bn if mp.blood_group else '—')
-    if col == 'district':     return (mp.home_district.name_bn if mp.home_district else '—')
-    if col == 'professions':  return ', '.join(p.name_bn for p in mp.professions_current.all()) or '—'
+    if col == 'religion':     return (_tr(mp.religion) if mp.religion else '—')
+    if col == 'blood_group':  return (_tr(mp.blood_group) if mp.blood_group else '—')
+    if col == 'district':     return (_tr(mp.home_district) if mp.home_district else '—')
+    if col == 'professions':  return ', '.join(_tr(p) for p in mp.professions_current.all()) or '—'
     return '—'
 
 
@@ -213,8 +240,8 @@ def women_mp(request):
                 mp.mp_id,
                 mp.name_bn,
                 mp.name_en,
-                ei.party.name_bn if ei and ei.party else '—',
-                mp.home_district.name_bn if mp.home_district else '—',
+                _tr(ei.party) if ei and ei.party else '—',
+                _tr(mp.home_district) if mp.home_district else '—',
                 mp.dob.strftime('%d/%m/%Y') if mp.dob else '—',
             ])
         return out
@@ -263,8 +290,8 @@ def party_wise(request):
             ei = next(iter(mp.election_infos.all()), None)
             out.append([
                 i + 1, mp.mp_id, mp.name_bn, mp.name_en,
-                ei.constituency.display_bn if ei and ei.constituency else '—',
-                ei.party.name_bn if ei and ei.party else '—',
+                _tr(ei.constituency, 'display') if ei and ei.constituency else '—',
+                _tr(ei.party) if ei and ei.party else '—',
                 ei.times_elected if ei else '—',
             ])
         return out
@@ -319,10 +346,10 @@ def district_wise(request):
             dist = mp.home_district
             out.append([
                 i + 1, mp.mp_id, mp.name_bn, mp.name_en,
-                dist.division.name_bn if dist and dist.division else '—',
-                dist.name_bn if dist else '—',
-                ei.constituency.display_bn if ei and ei.constituency else '—',
-                ei.party.name_bn if ei and ei.party else '—',
+                _tr(dist.division) if dist and dist.division else '—',
+                _tr(dist) if dist else '—',
+                _tr(ei.constituency, 'display') if ei and ei.constituency else '—',
+                _tr(ei.party) if ei and ei.party else '—',
             ])
         return out
 
@@ -372,11 +399,11 @@ def qualification_wise(request):
         out = []
         for i, mp in enumerate(queryset):
             ei = next(iter(mp.election_infos.all()), None)
-            quals = ', '.join(q.name_bn for q in mp.professional_qualifications.all()) or '—'
+            quals = ', '.join(_tr(q) for q in mp.professional_qualifications.all()) or '—'
             out.append([
                 i + 1, mp.mp_id, mp.name_bn, mp.name_en, quals,
-                ei.constituency.display_bn if ei and ei.constituency else '—',
-                ei.party.name_bn if ei and ei.party else '—',
+                _tr(ei.constituency, 'display') if ei and ei.constituency else '—',
+                _tr(ei.party) if ei and ei.party else '—',
             ])
         return out
 
@@ -437,13 +464,13 @@ def cabinet(request):
             out.append([
                 i + 1,
                 obj.mp.mp_id,
-                obj.mp.name_bn,
-                obj.ministry.name_bn,
-                obj.minister_type.name_bn,
+                _tr(obj.mp),
+                _tr(obj.ministry),
+                _tr(obj.minister_type),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
                 obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
                 obj.go_number or '—',
-                'সক্রিয়' if obj.is_active else 'নিষ্ক্রিয়',
+                _active_label(obj.is_active),
             ])
         return out
 
@@ -508,12 +535,12 @@ def committee_members(request):
             out.append([
                 i + 1,
                 obj.mp.mp_id,
-                obj.mp.name_bn,
-                obj.committee.name_bn,
-                obj.position.name_bn,
+                _tr(obj.mp),
+                _tr(obj.committee),
+                _tr(obj.position),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
                 obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                'সক্রিয়' if obj.is_active else 'নিষ্ক্রিয়',
+                _active_label(obj.is_active),
             ])
         return out
 
@@ -565,12 +592,12 @@ def mp_committee_summary(request):
         for i, obj in enumerate(queryset):
             out.append([
                 i + 1,
-                obj.committee.name_bn,
-                obj.position.name_bn,
-                obj.parliament.name_bn,
+                _tr(obj.committee),
+                _tr(obj.position),
+                _tr(obj.parliament),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
                 obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                'সক্রিয়' if obj.is_active else 'নিষ্ক্রিয়',
+                _active_label(obj.is_active),
             ])
         return out
 
@@ -624,12 +651,12 @@ def institution_assignments(request):
             out.append([
                 i + 1,
                 obj.mp.mp_id,
-                obj.mp.name_bn,
-                obj.institution.name_bn,
-                obj.role.name_bn,
+                _tr(obj.mp),
+                _tr(obj.institution),
+                _tr(obj.role),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
                 obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                'সক্রিয়' if obj.is_active else 'নিষ্ক্রিয়',
+                _active_label(obj.is_active),
             ])
         return out
 
@@ -692,15 +719,15 @@ def foreign_tours(request):
     def rows_fn(queryset):
         out = []
         for i, tour in enumerate(queryset):
-            countries = ', '.join(tc.country.name_bn for tc in tour.countries.all()) or '—'
-            mps       = ', '.join(p.mp.name_bn for p in tour.participants.all()) or '—'
+            countries = ', '.join(_tr(tc.country) for tc in tour.countries.all()) or '—'
+            mps       = ', '.join(_tr(p.mp) for p in tour.participants.all()) or '—'
             first_p   = tour.participants.first()
             out.append([
                 i + 1,
                 tour.go_number,
                 tour.go_date.strftime('%d/%m/%Y') if tour.go_date else '—',
-                tour.tour_type.name_bn,
-                tour.purpose.name_bn,
+                _tr(tour.tour_type),
+                _tr(tour.purpose),
                 countries,
                 mps,
                 first_p.departure_date.strftime('%d/%m/%Y') if first_p and first_p.departure_date else '—',
@@ -993,8 +1020,8 @@ def contact_list(request):
         if col == 'mp_id':        return mp.mp_id
         if col == 'name_bn':      return mp.name_bn
         if col == 'name_en':      return mp.name_en
-        if col == 'constituency': return ei.constituency.display_bn if ei and ei.constituency else '—'
-        if col == 'party':        return ei.party.name_bn if ei and ei.party else '—'
+        if col == 'constituency': return _tr(ei.constituency, 'display') if ei and ei.constituency else '—'
+        if col == 'party':        return _tr(ei.party) if ei and ei.party else '—'
         if col == 'mobile':       return addr.mobile if addr else '—'
         if col == 'telephone':    return addr.telephone if addr else '—'
         if col == 'email':        return addr.email if addr else '—'
@@ -1091,23 +1118,27 @@ def audit_log_list(request):
 # ── Custom Report ─────────────────────────────────────────────────────────────
 
 CUSTOM_REPORT_COLS = [
-    ('photo',         'ছবি'),
-    ('mp_id',         'এমপি আইডি'),
-    ('name_bn',       'নাম (বাংলায়)'),
-    ('name_en',       'Name (English)'),
-    ('constituency',  'নির্বাচনী এলাকা'),
-    ('party',         'রাজনৈতিক দল'),
-    ('age',           'বয়স'),
-    ('blood_group',   'রক্তের গ্রুপ'),
-    ('gender',        'লিঙ্গ'),
-    ('religion',      'ধর্ম'),
-    ('division',      'বিভাগ'),
-    ('district',      'জেলা'),
-    ('times_elected', 'নির্বাচনের সংখ্যা'),
-    ('committee',     'স্থায়ী কমিটি'),
-    ('ministry',      'মন্ত্রণালয়'),
-    ('profession',    'পেশা'),
-    ('member_type',   'সদস্যের ধরন'),
+    ('photo',             'ছবি'),
+    ('mp_id',             'এমপি আইডি'),
+    ('name_bn',           'নাম (বাংলায়)'),
+    ('name_en',           'Name (English)'),
+    ('constituency',      'নির্বাচনী এলাকা'),
+    ('party',             'রাজনৈতিক দল'),
+    ('age',               'বয়স'),
+    ('blood_group',       'রক্তের গ্রুপ'),
+    ('gender',            'লিঙ্গ'),
+    ('religion',          'ধর্ম'),
+    ('division',          'বিভাগ'),
+    ('district',          'জেলা'),
+    ('times_elected',     'নির্বাচনের সংখ্যা'),
+    ('committee',         'স্থায়ী কমিটি'),
+    ('ministry',          'মন্ত্রণালয়'),
+    ('profession',        'পেশা'),
+    ('member_type',       'সদস্যের ধরন'),
+    ('highest_edu_level', 'সর্বোচ্চ শিক্ষার স্তর'),
+    ('highest_degree',    'সর্বোচ্চ ডিগ্রির নাম'),
+    ('highest_subject',   'সর্বোচ্চ বিষয়'),
+    ('prof_qual',         'পেশাদার যোগ্যতা'),
 ]
 CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
 
@@ -1120,28 +1151,40 @@ def _custom_cell(mp, col, today=None):
     if col == 'mp_id':        return mp.mp_id
     if col == 'name_bn':      return mp.name_bn
     if col == 'name_en':      return mp.name_en
-    if col == 'constituency': return ei.constituency.display_bn if ei and ei.constituency else '—'
-    if col == 'party':        return ei.party.name_bn if ei and ei.party else '—'
+    if col == 'constituency': return _tr(ei.constituency, 'display') if ei and ei.constituency else '—'
+    if col == 'party':        return _tr(ei.party) if ei and ei.party else '—'
     if col == 'age':
         if mp.dob:
             age = today.year - mp.dob.year - ((today.month, today.day) < (mp.dob.month, mp.dob.day))
             return str(age)
         return '—'
-    if col == 'blood_group':   return mp.blood_group.name_bn if mp.blood_group else '—'
-    if col == 'gender':        return mp.gender.name_bn if mp.gender else '—'
-    if col == 'religion':      return mp.religion.name_bn if mp.religion else '—'
+    if col == 'blood_group':   return _tr(mp.blood_group) if mp.blood_group else '—'
+    if col == 'gender':        return _tr(mp.gender) if mp.gender else '—'
+    if col == 'religion':      return _tr(mp.religion) if mp.religion else '—'
     if col == 'division':
-        return mp.home_district.division.name_bn if mp.home_district and mp.home_district.division else '—'
-    if col == 'district':      return mp.home_district.name_bn if mp.home_district else '—'
+        return _tr(mp.home_district.division) if mp.home_district and mp.home_district.division else '—'
+    if col == 'district':      return _tr(mp.home_district) if mp.home_district else '—'
     if col == 'times_elected': return str(ei.times_elected) if ei else '—'
     if col == 'committee':
-        return ', '.join(ca.committee.name_bn for ca in mp.committee_assignments.all()) or '—'
+        return ', '.join(_tr(ca.committee) for ca in mp.committee_assignments.all()) or '—'
     if col == 'ministry':
-        return ', '.join(ma.ministry.name_bn for ma in mp.ministry_assignments.all()) or '—'
+        return ', '.join(_tr(ma.ministry) for ma in mp.ministry_assignments.all()) or '—'
     if col == 'profession':
-        return ', '.join(p.name_bn for p in mp.professions_current.all()) or '—'
+        return ', '.join(_tr(p) for p in mp.professions_current.all()) or '—'
     if col == 'member_type':
+        if _lang() == 'en':
+            return 'Directly Elected' if mp.member_type == 'direct' else 'Reserved (Women)'
         return 'সরাসরি নির্বাচিত' if mp.member_type == 'direct' else 'সংরক্ষিত (মহিলা)'
+    if col in ('highest_edu_level', 'highest_degree', 'highest_subject'):
+        edu = next((e for e in mp.educations.all() if e.education_level), None)
+        if col == 'highest_edu_level':
+            return _tr(edu.education_level) if edu else '—'
+        if col == 'highest_degree':
+            return _tr(edu.degree_title) if edu and edu.degree_title else '—'
+        if col == 'highest_subject':
+            return _tr(edu.major_subject) if edu and edu.major_subject else '—'
+    if col == 'prof_qual':
+        return ', '.join(_tr(pq) for pq in mp.professional_qualifications.all()) or '—'
     return '—'
 
 
@@ -1152,17 +1195,23 @@ def _build_custom_qs(get, parliament_id):
     from django.db.models import Prefetch
     from apps.committee.models import CommitteeAssignment
     from apps.ministry.models import MinistryAssignment
-    from apps.mp.models import MP, ElectionInfo
+    from apps.mp.models import MP, ElectionInfo, Education
 
     ei_qs = ElectionInfo.objects.select_related('constituency', 'party')
     if parliament_id:
         ei_qs = ei_qs.filter(parliament_id=parliament_id)
+
+    edu_qs = Education.objects.select_related(
+        'education_level', 'degree_title', 'major_subject',
+    ).order_by('-education_level__degree_order')
 
     qs = MP.objects.select_related(
         'parliament', 'gender', 'religion', 'blood_group',
         'home_district__division',
     ).prefetch_related(
         Prefetch('election_infos', queryset=ei_qs),
+        Prefetch('educations', queryset=edu_qs),
+        'professional_qualifications',
         'professions_current',
         Prefetch('committee_assignments',
                  queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
@@ -1178,18 +1227,15 @@ def _build_custom_qs(get, parliament_id):
 
     # ── MP ID ─────────────────────────────────────────────────────────────────
     if 'enable_mp_id' in get:
-        val = get.get('mp_id', '').strip()
-        if val:
-            qs = qs.filter(mp_id__icontains=val)
+        ids = [v for v in get.getlist('mp_id') if v]
+        if ids:
+            qs = qs.filter(mp_id__in=ids)
 
     # ── Constituency ──────────────────────────────────────────────────────────
     if 'enable_constituency' in get:
-        val = get.get('constituency', '').strip()
-        if val:
-            qs = qs.filter(
-                Q(election_infos__constituency__display_bn__icontains=val) |
-                Q(election_infos__constituency__display_en__icontains=val)
-            )
+        ids = [v for v in get.getlist('constituency') if v]
+        if ids:
+            qs = qs.filter(election_infos__constituency__in=ids)
             needs_distinct = True
 
     # ── Age Range ─────────────────────────────────────────────────────────────
@@ -1265,6 +1311,20 @@ def _build_custom_qs(get, parliament_id):
             qs = qs.filter(ministry_assignments__ministry__in=ids)
             needs_distinct = True
 
+    # ── Education Level ───────────────────────────────────────────────────────
+    if 'enable_education_level' in get:
+        ids = [v for v in get.getlist('education_level') if v]
+        if ids:
+            qs = qs.filter(educations__education_level__in=ids)
+            needs_distinct = True
+
+    # ── Professional Qualifications ───────────────────────────────────────────
+    if 'enable_prof_qual' in get:
+        ids = [v for v in get.getlist('prof_qual') if v]
+        if ids:
+            qs = qs.filter(professional_qualifications__in=ids)
+            needs_distinct = True
+
     if needs_distinct:
         qs = qs.distinct()
 
@@ -1276,7 +1336,10 @@ def custom_report(request):
     from apps.master.models import (
         BloodGroup, Gender, Religion, Division, District,
         PoliticalParty, StandingCommittee, Ministry,
+        EducationLevel, ProfessionalQualification,
     )
+    from apps.parliament.models import Constituency
+    from apps.mp.models import MP
 
     fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -1292,17 +1355,25 @@ def custom_report(request):
     parties         = PoliticalParty.objects.filter(is_active=True)
     committees      = StandingCommittee.objects.filter(is_active=True)
     ministries      = Ministry.objects.filter(is_active=True)
+    education_levels = EducationLevel.objects.filter(is_active=True).order_by('degree_order')
+    prof_quals      = ProfessionalQualification.objects.filter(is_active=True).order_by('name_bn')
+    mp_list         = MP.objects.filter(is_active=True).order_by('mp_id').values('mp_id', 'name_bn')
+    constituencies  = Constituency.objects.order_by('ordering', 'display_bn')
 
     # Pre-selected values (restore filter state after search)
     sel = {
-        'blood_group':  request.GET.getlist('blood_group'),
-        'gender':       request.GET.getlist('gender'),
-        'religion':     request.GET.getlist('religion'),
-        'division':     request.GET.getlist('division'),
-        'district':     request.GET.getlist('district'),
-        'party':        request.GET.getlist('party'),
-        'committee':    request.GET.getlist('committee'),
-        'ministry':     request.GET.getlist('ministry'),
+        'blood_group':     request.GET.getlist('blood_group'),
+        'gender':          request.GET.getlist('gender'),
+        'religion':        request.GET.getlist('religion'),
+        'division':        request.GET.getlist('division'),
+        'district':        request.GET.getlist('district'),
+        'party':           request.GET.getlist('party'),
+        'committee':       request.GET.getlist('committee'),
+        'ministry':        request.GET.getlist('ministry'),
+        'mp_id':           request.GET.getlist('mp_id'),
+        'constituency':    request.GET.getlist('constituency'),
+        'education_level': request.GET.getlist('education_level'),
+        'prof_qual':       request.GET.getlist('prof_qual'),
     }
 
     ctx = {
@@ -1318,6 +1389,10 @@ def custom_report(request):
         'parties':            parties,
         'committees':         committees,
         'ministries':         ministries,
+        'education_levels':   education_levels,
+        'prof_quals':         prof_quals,
+        'mp_list':            mp_list,
+        'constituencies':     constituencies,
         'sel':                sel,
         'searched':           searched,
         'GET':                request.GET,
@@ -1357,6 +1432,109 @@ def custom_report(request):
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     ctx['today']    = today
     return render(request, 'reports/custom_report.html', ctx)
+
+
+@login_required
+def family_report(request):
+    import datetime
+    from django.db.models import Prefetch
+    from apps.mp.models import MP, Spouse, Child
+
+    fmt        = request.GET.get('format', '')
+    searched   = 'search' in request.GET
+    sel_mp_ids = request.GET.getlist('mp_id')
+    lang       = request.session.get('LANGUAGE', 'bn')
+
+    mp_list = MP.objects.filter(is_active=True).order_by('mp_id').values('mp_id', 'name_bn', 'name_en')
+
+    ctx = {
+        'mp_list':    mp_list,
+        'sel_mp_ids': sel_mp_ids,
+        'searched':   searched,
+        'GET':        request.GET,
+    }
+
+    if not searched:
+        return render(request, 'reports/family_report.html', ctx)
+
+    qs = MP.objects.filter(is_active=True).prefetch_related(
+        Prefetch('spouses',  queryset=Spouse.objects.select_related('gender')),
+        Prefetch('children', queryset=Child.objects.select_related('gender')),
+    ).order_by('mp_id')
+
+    if sel_mp_ids:
+        qs = qs.filter(mp_id__in=sel_mp_ids)
+
+    today = datetime.date.today()
+
+    def _age(dob):
+        if not dob:
+            return '—'
+        return str(today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day)))
+
+    def _n(obj, field='name'):
+        bn = getattr(obj, f'{field}_bn', '') or ''
+        en = getattr(obj, f'{field}_en', '') or ''
+        return (en or bn) if lang == 'en' else (bn or en)
+
+    rows = []
+    for mp in qs:
+        for spouse in mp.spouses.all():
+            rows.append({
+                'mp':          mp,
+                'member':      spouse,
+                'relation_bn': 'স্বামী/স্ত্রী',
+                'relation_en': 'Spouse',
+                'age':         _age(spouse.dob),
+            })
+        for child in mp.children.all():
+            rows.append({
+                'mp':          mp,
+                'member':      child,
+                'relation_bn': 'সন্তান',
+                'relation_en': 'Child',
+                'age':         _age(child.dob),
+            })
+
+    ctx['total_count'] = len(rows)
+    ctx['mp_count']    = qs.count()
+
+    if fmt in ('excel', 'csv'):
+        mp_name_h  = 'এমপির নাম' if lang == 'bn' else 'MP Name'
+        rel_h      = 'সম্পর্ক'   if lang == 'bn' else 'Relation'
+        name_h     = 'নাম'        if lang == 'bn' else 'Name'
+        gender_h   = 'লিঙ্গ'      if lang == 'bn' else 'Gender'
+        age_h      = 'বয়স'       if lang == 'bn' else 'Age'
+        headers = ['ক্রম', mp_name_h, 'এমপি আইডি', rel_h, name_h, 'Name (English)', gender_h, age_h]
+        data = [
+            [
+                i + 1,
+                _n(r['mp']),
+                r['mp'].mp_id,
+                r['relation_en'] if lang == 'en' else r['relation_bn'],
+                _n(r['member']),
+                r['member'].name_en or '',
+                _n(r['member'].gender) if r['member'].gender else '—',
+                r['age'],
+            ]
+            for i, r in enumerate(rows)
+        ]
+        if fmt == 'excel':
+            title = 'Family Members Report' if lang == 'en' else 'পরিবার সদস্য রিপোর্ট'
+            return export_excel('family_report', headers, data, title)
+        return export_csv('family_report', headers, data)
+
+    if fmt == 'print':
+        ctx['rows']  = rows
+        ctx['today'] = today
+        ctx['lang']  = lang
+        return render(request, 'reports/print/family_report.html', ctx)
+
+    paginator       = Paginator(rows, PAGE_SIZE)
+    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    ctx['today']    = today
+    ctx['lang']     = lang
+    return render(request, 'reports/family_report.html', ctx)
 
 
 @login_required

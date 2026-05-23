@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}অডিট লগ{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui "অডিট লগ" "Audit Log" %}{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
-      <li class="breadcrumb-item active">অডিট লগ</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% ui "রিপোর্ট" "Reports" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "অডিট লগ" "Audit Log" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">অডিট লগ</h4>
-    <small class="text-muted">Audit Log — সিস্টেম কার্যক্রম পর্যবেক্ষণ</small>
+    <h4 class="mb-0 fw-bold">{% ui "অডিট লগ" "Audit Log" %}</h4>
+    <small class="text-muted">{% ui "Audit Log — সিস্টেম কার্যক্রম পর্যবেক্ষণ" "Audit Log — System Activity Monitor" %}</small>
   </div>
   <div class="d-flex gap-2">
-    <span class="badge bg-secondary fs-6">মোট: {{ total_count }}</span>
+    <span class="badge bg-secondary fs-6">{% ui "মোট" "Total" %}: {{ total_count }}</span>
   </div>
 </div>
 
@@ -24,9 +24,9 @@
   <div class="row g-2 align-items-end">
 
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">ব্যবহারকারী</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "ব্যবহারকারী" "User" %}</label>
       <select name="user" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সবাই</option>
+        <option value="">{% ui "সবাই" "All" %}</option>
         {% for u in users %}
         <option value="{{ u.pk }}" {% if u.pk|stringformat:"s" == user_id %}selected{% endif %}>
           {{ u.username }}{% if u.full_name_bn %} — {{ u.full_name_bn }}{% endif %}
@@ -36,19 +36,19 @@
     </div>
 
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">কার্যক্রম</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "কার্যক্রম" "Action" %}</label>
       <select name="action" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব ধরন</option>
-        <option value="CREATE"  {% if action == 'CREATE'  %}selected{% endif %}>তৈরি (CREATE)</option>
-        <option value="UPDATE"  {% if action == 'UPDATE'  %}selected{% endif %}>পরিবর্তন (UPDATE)</option>
-        <option value="DELETE"  {% if action == 'DELETE'  %}selected{% endif %}>মুছে ফেলা (DELETE)</option>
+        <option value="">{% ui "সব ধরন" "All" %}</option>
+        <option value="CREATE"  {% if action == 'CREATE'  %}selected{% endif %}>{% ui "তৈরি (CREATE)" "Create (CREATE)" %}</option>
+        <option value="UPDATE"  {% if action == 'UPDATE'  %}selected{% endif %}>{% ui "পরিবর্তন (UPDATE)" "Update (UPDATE)" %}</option>
+        <option value="DELETE"  {% if action == 'DELETE'  %}selected{% endif %}>{% ui "মুছে ফেলা (DELETE)" "Delete (DELETE)" %}</option>
       </select>
     </div>
 
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">মডেল</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "মডেল" "Model" %}</label>
       <select name="model" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব মডেল</option>
+        <option value="">{% ui "সব মডেল" "All Models" %}</option>
         {% for m in model_names %}
         <option value="{{ m }}" {% if m == model_name %}selected{% endif %}>{{ m }}</option>
         {% endfor %}
@@ -56,20 +56,20 @@
     </div>
 
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">তারিখ (শুরু)</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "তারিখ (শুরু)" "Date (From)" %}</label>
       <input type="date" name="date_from" value="{{ date_from }}" class="form-control form-control-sm">
     </div>
 
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">তারিখ (শেষ)</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "তারিখ (শেষ)" "Date (To)" %}</label>
       <input type="date" name="date_to" value="{{ date_to }}" class="form-control form-control-sm">
     </div>
 
     <div class="col-md-1">
-      <button type="submit" class="btn btn-primary btn-sm w-100">ফিল্টার</button>
+      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "ফিল্টার" "Filters" %}</button>
     </div>
     <div class="col-md-1">
-      <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-sm w-100">রিসেট</a>
+      <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-sm w-100">{% ui "রিসেট" "Reset" %}</a>
     </div>
 
   </div>
@@ -82,13 +82,13 @@
     <table class="table table-hover table-sm mb-0" style="font-size:.85rem;">
       <thead class="table-dark">
         <tr>
-          <th style="width:160px;">সময়</th>
-          <th style="width:130px;">ব্যবহারকারী</th>
-          <th style="width:85px;">কার্যক্রম</th>
-          <th style="width:120px;">মডেল</th>
-          <th style="width:70px;">আইডি</th>
-          <th>রেকর্ড</th>
-          <th style="width:110px;">আইপি</th>
+          <th style="width:160px;">{% ui "সময়" "Time" %}</th>
+          <th style="width:130px;">{% ui "ব্যবহারকারী" "User" %}</th>
+          <th style="width:85px;">{% ui "কার্যক্রম" "Action" %}</th>
+          <th style="width:120px;">{% ui "মডেল" "Model" %}</th>
+          <th style="width:70px;">{% ui "আইডি" "ID" %}</th>
+          <th>{% ui "রেকর্ড" "Record" %}</th>
+          <th style="width:110px;">{% ui "আইপি" "IP" %}</th>
           <th style="width:60px;"></th>
         </tr>
       </thead>
@@ -108,11 +108,11 @@
           </td>
           <td>
             {% if log.action == 'CREATE' %}
-              <span class="badge bg-success">তৈরি</span>
+              <span class="badge bg-success">{% ui "তৈরি" "Create" %}</span>
             {% elif log.action == 'UPDATE' %}
-              <span class="badge bg-warning text-dark">পরিবর্তন</span>
+              <span class="badge bg-warning text-dark">{% ui "পরিবর্তন" "Update" %}</span>
             {% elif log.action == 'DELETE' %}
-              <span class="badge bg-danger">মুছে ফেলা</span>
+              <span class="badge bg-danger">{% ui "মুছে ফেলা" "Delete" %}</span>
             {% else %}
               <span class="badge bg-secondary">{{ log.action }}</span>
             {% endif %}
@@ -128,14 +128,14 @@
           <td class="text-center">
             {% if log.changes %}
             <a href="{% url 'reports:audit_log_detail' log.pk %}" class="btn btn-outline-primary btn-xs"
-               style="font-size:.72rem;padding:1px 6px;" title="পরিবর্তন দেখুন">
+               style="font-size:.72rem;padding:1px 6px;" title="{% ui "পরিবর্তন দেখুন" "View changes" %}">
               <i class="bi bi-eye"></i>
             </a>
             {% endif %}
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="8" class="text-center text-muted py-4">কোনো লগ নেই।</td></tr>
+        <tr><td colspan="8" class="text-center text-muted py-4">{% ui "কোনো লগ নেই।" "No log entries found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -145,8 +145,8 @@
   {% if page_obj.has_other_pages %}
   <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
     <small class="text-muted">
-      পাতা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-      — মোট {{ total_count }} রেকর্ড
+      {% ui "পাতা" "Page" %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+      — {% ui "মোট" "Total" %} {{ total_count }} {% ui "রেকর্ড" "records" %}
     </small>
     <nav>
       <ul class="pagination pagination-sm mb-0">

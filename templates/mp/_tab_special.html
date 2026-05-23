@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">বিশেষ পদের দায়িত্ব</h6>
+  <h6 class="fw-bold mb-0">{% ui "বিশেষ পদের দায়িত্ব" "Special Position Responsibilities" %}</h6>
   <a href="{% url 'mp:special_position_create' mp.pk %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
 
@@ -11,17 +11,17 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th>সংসদ</th>
-        <th>পদের নাম</th>
-        <th>শুরুর তারিখ</th>
-        <th>শেষ তারিখ</th>
-        <th style="width:100px;">কার্যক্রম</th>
+        <th>{% ui "সংসদ" "Parliament" %}</th>
+        <th>{% ui "পদের নাম" "Position Name" %}</th>
+        <th>{% ui "শুরুর তারিখ" "Start Date" %}</th>
+        <th>{% ui "শেষ তারিখ" "End Date" %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for sp in special_positions %}
       <tr>
-        <td>{{ sp.parliament.name_bn }}</td>
+        <td>{{ sp.parliament|tr:"name" }}</td>
         <td>{{ sp.role }}</td>
         <td>{{ sp.from_date|default:"—" }}</td>
         <td>{{ sp.to_date|default:"—" }}</td>
@@ -40,5 +40,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো বিশেষ পদের তথ্য নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো বিশেষ পদের তথ্য নেই।" "No special position information." %}</p>
 {% endif %}

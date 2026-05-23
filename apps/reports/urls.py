@@ -18,6 +18,7 @@ urlpatterns = [
     path('mp-biodata/',             views.mp_biodata,             name='mp_biodata'),
     path('contact-list/',           views.contact_list,           name='contact_list'),
     path('custom-report/',           views.custom_report,          name='custom_report'),
+    path('family-report/',           views.family_report,          name='family_report'),
     path('audit-log/',              views.audit_log_list,         name='audit_log_list'),
     path('audit-log/<int:pk>/',     views.audit_log_detail,       name='audit_log_detail'),
 ]

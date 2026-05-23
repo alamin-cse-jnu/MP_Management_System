@@ -1,3 +1,4 @@
+{% load lang_tags %}
 <div class="col-sm-6 col-lg-4">
   <a href="{% url url %}" class="text-decoration-none">
     <div class="mp-card p-3 h-100 d-flex align-items-start gap-3" style="transition:box-shadow .15s;"
@@ -7,7 +8,7 @@
         <i class="bi {{ icon }} fs-5"></i>
       </div>
       <div>
-        <div class="fw-semibold text-dark" style="font-size:.9rem;">{{ title }}</div>
+        <div class="fw-semibold text-dark" style="font-size:.9rem;">{% if title_bn %}{% ui title_bn title_en %}{% else %}{{ title }}{% endif %}</div>
         <div class="text-muted" style="font-size:.78rem;">{{ subtitle }}</div>
       </div>
       <i class="bi bi-arrow-right-circle ms-auto text-muted align-self-center"></i>

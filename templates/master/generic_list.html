@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static lang_tags master_tags %}
 
-{% block title %}{{ title_bn }}{% endblock %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
 
 {% block content %}
 <!-- Page header -->
@@ -9,15 +9,15 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">{{ title_bn }}</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
     <small class="text-muted">{{ title_en }}</small>
   </div>
   <a href="{% url create_url_name %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন যোগ করুন" "Add New" %}
   </a>
 </div>
 
@@ -31,18 +31,18 @@
         </span>
         <input type="text" name="q" value="{{ q }}"
                class="form-control border-start-0"
-               placeholder="বাংলা বা ইংরেজিতে খুঁজুন…">
+               placeholder="{% ui "বাংলা বা ইংরেজিতে খুঁজুন…" "Search in Bangla or English…" %}">
       </div>
     </div>
 
     <div class="btn-group btn-group-sm" role="group">
       <a href="?status=active{% if q %}&q={{ q }}{% endif %}"
          class="btn {% if status == 'active' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
-        সক্রিয়
+        {% ui "সক্রিয়" "Active" %}
       </a>
       <a href="?status=inactive{% if q %}&q={{ q }}{% endif %}"
          class="btn {% if status == 'inactive' %}btn-danger{% else %}btn-outline-secondary{% endif %}">
-        নিষ্ক্রিয়
+        {% ui "নিষ্ক্রিয়" "Inactive" %}
       </a>
       <a href="?status=all{% if q %}&q={{ q }}{% endif %}"
          class="btn {% if status == 'all' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
@@ -52,12 +52,12 @@
 
     {% if q %}
     <a href="?status={{ status }}" class="btn btn-sm btn-outline-secondary">
-      <i class="bi bi-x-lg"></i> ক্লিয়ার
+      <i class="bi bi-x-lg"></i>{% ui "ক্লিয়ার" "Clear" %}
     </a>
     {% endif %}
 
     <button type="submit" class="btn btn-sm btn-outline-primary">
-      <i class="bi bi-funnel me-1"></i>ফিল্টার
+      <i class="bi bi-funnel me-1"></i>{% ui "ফিল্টার" "Filter" %}
     </button>
   </form>
 </div>
@@ -72,10 +72,10 @@
           {% for col in extra_cols %}
           <th>{{ col.label }}</th>
           {% endfor %}
-          <th>বাংলা নাম</th>
+          <th>{% ui "বাংলা নাম" "Bengali Name" %}</th>
           <th>English Name</th>
-          <th style="width:110px;">অবস্থা</th>
-          <th style="width:110px; text-align:center;">অ্যাকশন</th>
+          <th style="width:110px;">{% ui "অবস্থা" "Status" %}</th>
+          <th style="width:110px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -85,29 +85,29 @@
           {% for col in extra_cols %}
           <td>{{ obj|get_attr:col.attr }}</td>
           {% endfor %}
-          <td class="fw-medium">{{ obj.name_bn }}</td>
+          <td class="fw-medium">{{ obj|tr:"name" }}</td>
           <td class="text-muted">{{ obj.name_en }}</td>
           <td>
             {% if obj.is_active %}
-            <span class="badge badge-active">সক্রিয়</span>
+            <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
             {% else %}
-            <span class="badge badge-inactive">নিষ্ক্রিয়</span>
+            <span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
             {% endif %}
           </td>
           <td class="text-center">
             <a href="{% url update_url_name obj.pk %}"
                class="btn btn-icon btn-outline-primary btn-sm me-1"
-               title="সম্পাদনা">
+               title="{% ui "সম্পাদনা" "Edit" %}">
               <i class="bi bi-pencil-square"></i>
             </a>
             <form method="post"
                   action="{% url toggle_url_name obj.pk %}"
                   class="d-inline"
-                  onsubmit="return confirm('অবস্থা পরিবর্তন করবেন?')">
+                  onsubmit="return confirm('{% ui "অবস্থা পরিবর্তন করবেন?" "Change status?" %}')">
               {% csrf_token %}
               <button type="submit"
                       class="btn btn-icon btn-sm {% if obj.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
-                      title="{% if obj.is_active %}নিষ্ক্রিয় করুন{% else %}সক্রিয় করুন{% endif %}">
+                      title="{% if obj.is_active %}{% ui "নিষ্ক্রিয়" "Inactive" %} করুন{% else %}{% ui "সক্রিয়" "Active" %} করুন{% endif %}">
                 <i class="bi {% if obj.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
               </button>
             </form>
@@ -117,7 +117,7 @@
         <tr>
           <td colspan="{{ extra_cols|length|add:5 }}" class="text-center text-muted py-4">
             <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-            কোনো তথ্য পাওয়া যায়নি।
+            {% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}
           </td>
         </tr>
         {% endfor %}
@@ -129,7 +129,7 @@
   {% if is_paginated %}
   <div class="d-flex align-items-center justify-content-between px-3 py-2 border-top">
     <small class="text-muted">
-      মোট {{ paginator.count }} টি — পৃষ্ঠা {{ page_obj.number }} / {{ paginator.num_pages }}
+      মোট {{ paginator.count }} {% ui "টি — পৃষ্ঠা" "records — Page" %} {{ page_obj.number }} / {{ paginator.num_pages }}
     </small>
     <nav>
       <ul class="pagination pagination-sm mb-0">

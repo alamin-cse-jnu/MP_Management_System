@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}বিদেশ ভ্রমণ তালিকা{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui "বিদেশ ভ্রমণ তালিকা" "Foreign Travel List" %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item active">বিদেশ ভ্রমণ</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">বিদেশ ভ্রমণ তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "বিদেশ ভ্রমণ তালিকা" "Foreign Travel List" %}</h4>
     <small class="text-muted">Foreign Tours</small>
   </div>
   <a href="{% url 'travel:tour_create' %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন ভ্রমণ GO
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন ভ্রমণ GO" "New Tour GO" %}
   </a>
 </div>
 
 <div class="mp-card mb-3 p-3">
   <form method="get" class="row g-2 align-items-end">
     <div class="col-md-4">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">অনুসন্ধান</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="GO নং বা সদস্যের নাম…">
@@ -27,25 +27,25 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">সংসদ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব সংসদ</option>
+        <option value="">{% ui "সব সংসদ" "All" %}</option>
         {% for p in parliaments %}
-        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">ভ্রমণের ধরন</label>
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ভ্রমণের ধরন" "Tour Type" %}</label>
       <select name="tour_type" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব ধরন</option>
+        <option value="">{% ui "সব ধরন" "All" %}</option>
         {% for tt in tour_types %}
-        <option value="{{ tt.pk }}" {% if tt.pk|stringformat:"s" == tour_type_id %}selected{% endif %}>{{ tt.name_bn }}</option>
+        <option value="{{ tt.pk }}" {% if tt.pk|stringformat:"s" == tour_type_id %}selected{% endif %}>{{ tt|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <button type="submit" class="btn btn-primary btn-sm w-100">খুঁজুন</button>
+      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "খুঁজুন" "Search" %}</button>
     </div>
   </form>
 </div>
@@ -56,12 +56,12 @@
       <thead class="table-light">
         <tr>
           <th style="width:3rem;">#</th>
-          <th>GO নম্বর</th>
-          <th>GO তারিখ</th>
-          <th>ধরন</th>
-          <th>উদ্দেশ্য</th>
-          <th style="width:6rem;">সদস্য</th>
-          <th style="width:6rem;">দেশ</th>
+          <th>{% ui "GO নম্বর" "GO Number" %}</th>
+          <th>{% ui "GO তারিখ" "GO Date" %}</th>
+          <th>{% ui "ধরন" "Type" %}</th>
+          <th>{% ui "উদ্দেশ্য" "Purpose" %}</th>
+          <th style="width:6rem;">{% ui "সদস্য" "Members" %}</th>
+          <th style="width:6rem;">{% ui "দেশ" "Country" %}</th>
           <th style="width:7rem;"></th>
         </tr>
       </thead>
@@ -71,32 +71,32 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><a href="{% url 'travel:tour_detail' tour.pk %}" class="text-decoration-none fw-medium">{{ tour.go_number }}</a></td>
           <td>{{ tour.go_date|date:"d/m/Y" }}</td>
-          <td><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type.name_bn }}</span></td>
-          <td>{{ tour.purpose.name_bn }}</td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type|tr:"name" }}</span></td>
+          <td>{{ tour.purpose|tr:"name" }}</td>
           <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">{{ tour.mp_count }}</span></td>
           <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">{{ tour.country_count }}</span></td>
           <td class="text-end">
-            <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-primary btn-sm me-1" title="বিবরণ">
+            <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-primary btn-sm me-1" title="{% ui "বিবরণ" "Details" %}">
               <i class="bi bi-eye"></i>
             </a>
-            <a href="{% url 'travel:tour_update' tour.pk %}" class="btn btn-outline-secondary btn-sm me-1" title="সম্পাদনা">
+            <a href="{% url 'travel:tour_update' tour.pk %}" class="btn btn-outline-secondary btn-sm me-1" title="{% ui "সম্পাদনা" "Edit" %}">
               <i class="bi bi-pencil"></i>
             </a>
             <form method="post" action="{% url 'travel:tour_delete' tour.pk %}" class="d-inline"
-                  onsubmit="return confirm('এই ভ্রমণ GO মুছে ফেলবেন?')">
+                  onsubmit="return confirm('{% ui "এই ভ্রমণ GO মুছে ফেলবেন?" "Delete this tour GO?" %}')">
               {% csrf_token %}<button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
             </form>
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="8" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        <tr><td colspan="8" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   {% if page_obj.has_other_pages %}
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
-    <small class="text-muted">মোট {{ page_obj.paginator.count }} টি | পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
       {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
       {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&tour_type={{ tour_type_id }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}

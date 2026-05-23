@@ -1,4 +1,5 @@
 {% extends "base_print.html" %}
+{% load lang_tags %}
 {% load static report_tags %}
 {% block title %}কাস্টম রিপোর্ট{% endblock %}
 
@@ -11,7 +12,7 @@
 <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
   <thead>
     <tr style="background:#0d9488;color:#fff;">
-      <th style="padding:5px 8px;border:1px solid #999;">ক্রম</th>
+      <th style="padding:5px 8px;border:1px solid #999;">{% ui "ক্রম" "#" %}</th>
       {% for key, label in CUSTOM_REPORT_COLS %}
         {% if key in selected_cols and key != 'photo' %}
           <th style="padding:5px 8px;border:1px solid #999;">{{ label }}</th>
@@ -27,7 +28,7 @@
         {% if key in selected_cols and key != 'photo' %}
           <td style="padding:4px 8px;border:1px solid #ddd;">
             {% if key == 'mp_id' %}{{ mp.mp_id }}
-            {% elif key == 'name_bn' %}{{ mp.name_bn }}
+            {% elif key == 'name_bn' %}{{ mp|tr:"name" }}
             {% else %}{{ mp|get_custom_cell:key }}
             {% endif %}
           </td>

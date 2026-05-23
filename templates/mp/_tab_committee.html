@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">কমিটির সদস্যপদ</h6>
+  <h6 class="fw-bold mb-0">{% ui "কমিটির সদস্যপদ" "Committee Membership" %}</h6>
   <a href="{% url 'committee:assignment_create' %}?mp={{ mp.pk }}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
 
@@ -11,30 +11,30 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th>সংসদ</th>
-        <th>কমিটির নাম</th>
-        <th>পদবী</th>
-        <th>শুরু</th>
-        <th>শেষ</th>
-        <th>GO নং</th>
-        <th>অবস্থা</th>
-        <th style="width:90px;">কার্যক্রম</th>
+        <th>{% ui "সংসদ" "Parliament" %}</th>
+        <th>{% ui "কমিটির নাম" "Committee Name" %}</th>
+        <th>{% ui "পদবী" "Designation" %}</th>
+        <th>{% ui "শুরু" "Start" %}</th>
+        <th>{% ui "শেষ" "End" %}</th>
+        <th>{% ui "GO নং" "GO No." %}</th>
+        <th>{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:90px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for obj in committee_assignments %}
       <tr>
-        <td>{{ obj.parliament.name_bn }}</td>
-        <td>{{ obj.committee.name_bn }}</td>
-        <td><span class="badge bg-primary-subtle text-primary">{{ obj.position.name_bn }}</span></td>
+        <td>{{ obj.parliament|tr:"name" }}</td>
+        <td>{{ obj.committee|tr:"name" }}</td>
+        <td><span class="badge bg-primary-subtle text-primary">{{ obj.position|tr:"name" }}</span></td>
         <td>{{ obj.start_date|date:"d/m/Y" }}</td>
         <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
         <td>{{ obj.go_number|default:"—" }}</td>
         <td>
           {% if obj.is_active %}
-            <span class="badge bg-success-subtle text-success">সক্রিয়</span>
+            <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
           {% else %}
-            <span class="badge bg-secondary-subtle text-secondary">নিষ্ক্রিয়</span>
+            <span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
           {% endif %}
         </td>
         <td>
@@ -53,5 +53,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো কমিটির তথ্য নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো কমিটির তথ্য নেই।" "No committee information." %}</p>
 {% endif %}

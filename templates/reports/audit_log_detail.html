@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static lang_tags %}
 {% block title %}অডিট লগ বিস্তারিত{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
       <li class="breadcrumb-item"><a href="{% url 'reports:audit_log_list' %}">অডিট লগ</a></li>
       <li class="breadcrumb-item active">#{{ log.pk }}</li>
     </ol></nav>
@@ -14,7 +14,7 @@
     <small class="text-muted">Audit Log Detail — #{{ log.pk }}</small>
   </div>
   <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
   </a>
 </div>
 

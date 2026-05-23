@@ -1,0 +1,50 @@
+{% extends "base_print.html" %}
+{% load static lang_tags %}
+{% block title %}{% if lang == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}{% endblock %}
+
+{% block content %}
+{% with is_en=lang %}
+<div style="text-align:center;margin-bottom:12px;">
+  <div style="font-size:1.1rem;font-weight:bold;">
+    {% if is_en == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}
+  </div>
+  <div style="font-size:.85rem;color:#666;">
+    {% if is_en == 'en' %}Spouse & Children — name, gender, age{% else %}স্বামী/স্ত্রী ও সন্তান — নাম, লিঙ্গ, বয়স{% endif %}
+  </div>
+</div>
+
+<table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+  <thead>
+    <tr style="background:#0d9488;color:#fff;">
+      <th style="padding:5px 8px;border:1px solid #999;width:40px;">{% if is_en == 'en' %}#{% else %}ক্রম{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;">{% if is_en == 'en' %}MP Name{% else %}এমপির নাম{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;width:110px;">{% if is_en == 'en' %}MP ID{% else %}এমপি আইডি{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;width:100px;">{% if is_en == 'en' %}Relation{% else %}সম্পর্ক{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;">{% if is_en == 'en' %}Name{% else %}নাম{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;width:80px;">{% if is_en == 'en' %}Gender{% else %}লিঙ্গ{% endif %}</th>
+      <th style="padding:5px 8px;border:1px solid #999;width:55px;">{% if is_en == 'en' %}Age{% else %}বয়স{% endif %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr style="{% cycle 'background:#fff;' 'background:#f0fdfa;' %}">
+      <td style="padding:4px 8px;border:1px solid #ddd;text-align:center;">{{ forloop.counter }}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;font-weight:500;">{{ row.mp|tr:"name" }}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;font-family:monospace;color:#555;font-size:.78rem;">{{ row.mp.mp_id }}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;">{% if is_en == 'en' %}{{ row.relation_en }}{% else %}{{ row.relation_bn }}{% endif %}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;">{{ row.member|tr:"name" }}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;">{{ row.member.gender|tr:"name"|default:"—" }}</td>
+      <td style="padding:4px 8px;border:1px solid #ddd;text-align:center;">{{ row.age }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7" style="padding:12px;text-align:center;">{% if is_en == 'en' %}No records found.{% else %}কোনো তথ্য নেই।{% endif %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div style="margin-top:16px;font-size:.78rem;color:#666;text-align:right;">
+  {% if is_en == 'en' %}Total: {{ rows|length }} members | Printed: {% now "d M Y" %}
+  {% else %}মোট: {{ rows|length }} জন | মুদ্রণের তারিখ: {% now "d M Y" %}{% endif %}
+</div>
+{% endwith %}
+{% endblock %}

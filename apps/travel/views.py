@@ -70,6 +70,7 @@ def tour_create(request):
         'form':      form,
         'is_create': True,
         'title_bn':  'নতুন বিদেশ ভ্রমণ GO',
+        'title_en':  'New Foreign Tour GO',
     })
 
 
@@ -102,6 +103,7 @@ def tour_update(request, pk):
         'tour':      tour,
         'is_create': False,
         'title_bn':  'বিদেশ ভ্রমণ সম্পাদনা',
+        'title_en':  'Edit Foreign Tour',
     })
 
 

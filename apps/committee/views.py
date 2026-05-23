@@ -90,6 +90,7 @@ def assignment_create(request):
         'mp':        mp,
         'is_create': True,
         'title_bn':  'নতুন কমিটি নিয়োগ',
+        'title_en':  'New Committee Assignment',
     })
 
 
@@ -109,6 +110,7 @@ def assignment_update(request, pk):
         'obj':       obj,
         'is_create': False,
         'title_bn':  'কমিটি নিয়োগ সম্পাদনা',
+        'title_en':  'Edit Committee Assignment',
         'from_mp':   request.GET.get('from_mp', ''),
     })
 

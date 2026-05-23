@@ -8,19 +8,19 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item active">মেনু পরিচালনা</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "মেনু পরিচালনা" "Menu Management" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">মেনু পরিচালনা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "মেনু পরিচালনা" "Menu Management" %}</h4>
     <small class="text-muted">Navigation Menu Management</small>
   </div>
   <div class="d-flex gap-2">
     <a href="{% url 'accounts:submenu_create' %}" class="btn btn-outline-primary btn-sm">
-      <i class="bi bi-plus-lg me-1"></i>নতুন সাব-মেনু
+      <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন সাব-মেনু" "New Sub-menu" %}
     </a>
     <a href="{% url 'accounts:menu_create' %}" class="btn btn-primary btn-sm">
-      <i class="bi bi-plus-lg me-1"></i>নতুন মেনু
+      <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন মেনু" "New Menu" %}
     </a>
   </div>
 </div>
@@ -32,18 +32,18 @@
     <div class="d-flex align-items-center gap-2">
       <i class="bi {{ menu.icon|default:'bi-circle' }} text-primary fs-5"></i>
       <div>
-        <span class="fw-semibold">{{ menu.name_bn }}</span>
+        <span class="fw-semibold">{{ menu|tr:"name" }}</span>
         <small class="text-muted ms-2">{{ menu.name_en }}</small>
-        {% if not menu.is_active %}<span class="badge badge-inactive ms-2">নিষ্ক্রিয়</span>{% endif %}
+        {% if not menu.is_active %}<span class="badge badge-inactive ms-2">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}
       </div>
     </div>
     <div class="d-flex gap-1">
       <a href="{% url 'accounts:submenu_create' %}?menu={{ menu.pk }}"
          class="btn btn-sm btn-outline-secondary" title="সাব-মেনু যোগ করুন">
-        <i class="bi bi-plus-lg"></i> সাব-মেনু
+        <i class="bi bi-plus-lg"></i> {% ui "সাব-মেনু" "Sub-menu" %}
       </a>
       <a href="{% url 'accounts:menu_update' menu.pk %}"
-         class="btn btn-icon btn-sm btn-outline-primary" title="সম্পাদনা">
+         class="btn btn-icon btn-sm btn-outline-primary" title="{% ui "সম্পাদনা" "Edit" %}">
         <i class="bi bi-pencil-square"></i>
       </a>
       <form method="post" action="{% url 'accounts:menu_toggle' menu.pk %}" class="d-inline"
@@ -65,29 +65,29 @@
     <thead>
       <tr>
         <th style="width:40px; padding-left:36px;">#</th>
-        <th>বাংলা নাম</th>
+        <th>{% ui "বাংলা নাম" "Name" %}</th>
         <th>English Name</th>
         <th>URL Name</th>
-        <th style="width:90px;">ক্রম</th>
-        <th style="width:100px;">অবস্থা</th>
-        <th style="width:100px; text-align:center;">অ্যাকশন</th>
+        <th style="width:90px;">{% ui "ক্রম" "#" %}</th>
+        <th style="width:100px;">{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:100px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for sub in subs %}
       <tr>
         <td class="text-muted" style="padding-left:36px;">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ sub.name_bn }}</td>
+        <td class="fw-medium">{{ sub|tr:"name" }}</td>
         <td class="text-muted">{{ sub.name_en }}</td>
         <td><code style="font-size:0.8rem;">{{ sub.url_name }}</code></td>
         <td class="text-muted">{{ sub.ordering }}</td>
         <td>
-          {% if sub.is_active %}<span class="badge badge-active">সক্রিয়</span>
-          {% else %}<span class="badge badge-inactive">নিষ্ক্রিয়</span>{% endif %}
+          {% if sub.is_active %}<span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
+          {% else %}<span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}
         </td>
         <td class="text-center">
           <a href="{% url 'accounts:submenu_update' sub.pk %}"
-             class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="{% ui "সম্পাদনা" "Edit" %}">
             <i class="bi bi-pencil-square"></i>
           </a>
           <form method="post" action="{% url 'accounts:submenu_toggle' sub.pk %}" class="d-inline"
@@ -105,8 +105,8 @@
     </tbody>
   </table>
   {% else %}
-  <p class="text-muted px-3 py-2 mb-0" style="font-size:0.85rem;">কোনো সাব-মেনু নেই।
-    <a href="{% url 'accounts:submenu_create' %}?menu={{ menu.pk }}">যোগ করুন</a>
+  <p class="text-muted px-3 py-2 mb-0" style="font-size:0.85rem;">{% ui "কোনো সাব-মেনু নেই।" "No sub-menus." %}
+    <a href="{% url 'accounts:submenu_create' %}?menu={{ menu.pk }}">{% ui "যোগ করুন" "Add" %}</a>
   </p>
   {% endif %}
   {% endwith %}

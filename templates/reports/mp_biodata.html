@@ -4,7 +4,7 @@
 {% block content %}
 <div class="mb-3">
   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
     <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
     <li class="breadcrumb-item active">এমপি বায়োডাটা</li>
   </ol></nav>
@@ -21,7 +21,7 @@
         <span class="input-group-text"><i class="bi bi-person"></i></span>
         <input type="text" name="mp_id" value="{{ mp_id }}" class="form-control" placeholder="যেমন: 013000101" list="mp_list">
         <datalist id="mp_list">
-          {% for m in all_mps %}<option value="{{ m.mp_id }}">{{ m.name_bn }}</option>{% endfor %}
+          {% for m in all_mps %}<option value="{{ m.mp_id }}">{{ m|tr:"name" }}</option>{% endfor %}
         </datalist>
       </div>
     </div>
@@ -35,7 +35,7 @@
 <div class="d-flex gap-2 mb-3 flex-wrap">
   <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>প্রোফাইলে যান</a>
   <a href="?mp_id={{ mp.mp_id }}&format=pdf" class="btn btn-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF বায়োডাটা ডাউনলোড</a>
-  <a href="?mp_id={{ mp.mp_id }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-printer me-1"></i>প্রিন্ট</a>
+  <a href="?mp_id={{ mp.mp_id }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-printer me-1"></i>{% ui "প্রিন্ট" "Print" %}</a>
 </div>
 
 {% with ei=mp.election_infos.all.0 %}
@@ -50,13 +50,13 @@
       {% endif %}
     </div>
     <div>
-      <h3 class="fw-bold mb-1">{{ mp.name_bn }}</h3>
+      <h3 class="fw-bold mb-1">{{ mp|tr:"name" }}</h3>
       <p class="text-muted mb-2">{{ mp.name_en }}</p>
       <div class="d-flex flex-wrap gap-2">
         <span class="badge bg-primary-subtle text-primary">{{ mp.mp_id }}</span>
-        {% if ei.constituency %}<span class="badge bg-info-subtle text-info">{{ ei.constituency.display_bn }}</span>{% endif %}
-        {% if ei.party %}<span class="badge bg-success-subtle text-success">{{ ei.party.name_bn }}</span>{% endif %}
-        <span class="badge bg-secondary-subtle text-secondary">{{ mp.parliament.name_bn }}</span>
+        {% if ei.constituency %}<span class="badge bg-info-subtle text-info">{{ ei.constituency|tr:"display" }}</span>{% endif %}
+        {% if ei.party %}<span class="badge bg-success-subtle text-success">{{ ei.party|tr:"name" }}</span>{% endif %}
+        <span class="badge bg-secondary-subtle text-secondary">{{ mp.parliament|tr:"name" }}</span>
       </div>
     </div>
   </div>
@@ -102,13 +102,13 @@
   <div class="mp-card-header"><i class="bi bi-mortarboard-fill icon"></i>শিক্ষাগত যোগ্যতা</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>ডিগ্রি</th><th>প্রতিষ্ঠান</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>ডিগ্রি</th><th>{% ui "প্রতিষ্ঠান" "Institution" %}</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
       <tbody>
         {% for edu in mp.educations.all %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"—" }}</td>
-          <td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"—" }}</td>
+          <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td>
+          <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td>
           <td>{{ edu.passing_year|default:"—" }}</td>
           <td>{{ edu.result_display }}</td>
         </tr>
@@ -137,13 +137,13 @@
 <!-- Ministry -->
 {% if mp.ministry_assignments.all %}
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-briefcase-fill icon"></i>মন্ত্রণালয়</div>
+  <div class="mp-card-header"><i class="bi bi-briefcase-fill icon"></i>{% ui "মন্ত্রণালয়" "Ministry" %}</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>মন্ত্রণালয়</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <thead class="table-light"><tr><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
       <tbody>
         {% for ma in mp.ministry_assignments.all %}
-        <tr><td>{{ ma.ministry.name_bn }}</td><td>{{ ma.minister_type.name_bn }}</td><td>{{ ma.start_date|date:"d/m/Y" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
+        <tr><td>{{ ma.ministry|tr:"name" }}</td><td>{{ ma.minister_type|tr:"name" }}</td><td>{{ ma.start_date|date:"d/m/Y" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -157,10 +157,10 @@
   <div class="mp-card-header"><i class="bi bi-people-fill icon"></i>কমিটি সদস্যপদ</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>কমিটি</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <thead class="table-light"><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
       <tbody>
         {% for ca in mp.committee_assignments.all %}
-        <tr><td>{{ ca.committee.name_bn }}</td><td>{{ ca.position.name_bn }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
+        <tr><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -202,7 +202,7 @@
       <thead class="table-light"><tr><th>#</th><th>ভাষা</th><th>দক্ষতার মাত্রা</th></tr></thead>
       <tbody>
         {% for ls in mp.language_skills.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ ls.language.name_bn }}</td><td>{{ ls.proficiency.name_bn|default:"—" }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ ls.language|tr:"name" }}</td><td>{{ ls.proficiency|tr:"name"|default:"—"  }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -213,10 +213,10 @@
 <!-- Bank Accounts -->
 {% if mp.bank_accounts.all %}
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-bank icon"></i>ব্যাংক হিসাব</div>
+  <div class="mp-card-header"><i class="bi bi-bank icon"></i>{% ui "ব্যাংক হিসাব" "Bank Account" %}</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>হিসাব নম্বর</th><th>ব্যাংকের নাম</th><th>শাখা</th><th>ধরন</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>হিসাব নম্বর</th><th>ব্যাংকের নাম</th><th>শাখা</th><th>{% ui "ধরন" "Type" %}</th></tr></thead>
       <tbody>
         {% for ba in mp.bank_accounts.all %}
         <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba.bank_name_bn }}</td><td>{{ ba.branch_name_bn|default:"—" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
@@ -233,7 +233,7 @@
   <div class="mp-card-header"><i class="bi bi-clock-history icon"></i>পূর্ববর্তী সংসদ ইতিহাস</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>সংসদের নাম</th><th>নির্বাচনী এলাকা</th><th>শুরু</th><th>শেষ</th><th>মন্তব্য</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>সংসদের নাম</th><th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>মন্তব্য</th></tr></thead>
       <tbody>
         {% for h in mp.parliamentary_histories.all %}
         <tr><td>{{ forloop.counter }}</td><td>{{ h.assembly_name_bn|default:"—" }}</td><td>{{ h.constituency_bn|default:"—" }}</td><td>{{ h.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ h.to_date|date:"d/m/Y"|default:"—" }}</td><td>{{ h.remarks_bn|default:"—" }}</td></tr>
@@ -247,13 +247,13 @@
 <!-- Organizations -->
 {% if mp.organizations.all %}
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-diagram-3-fill icon"></i>সংগঠন</div>
+  <div class="mp-card-header"><i class="bi bi-diagram-3-fill icon"></i>{% ui "সংগঠন" "Organizations" %}</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>নাম</th><th>ভূমিকা</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>নাম</th><th>{% ui "ভূমিকা" "Role" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
       <tbody>
         {% for org in mp.organizations.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ org.name_bn }}</td><td>{{ org.role_bn|default:"—" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ org|tr:"name" }}</td><td>{{ org.role_bn|default:"—" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -264,13 +264,13 @@
 <!-- Awards -->
 {% if mp.awards.all %}
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-trophy-fill icon"></i>পুরস্কার</div>
+  <div class="mp-card-header"><i class="bi bi-trophy-fill icon"></i>{% ui "পুরস্কার" "Awards" %}</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
       <thead class="table-light"><tr><th>#</th><th>পুরস্কারের নাম</th><th>সাল</th><th>প্রদানকারী সংস্থা</th></tr></thead>
       <tbody>
         {% for aw in mp.awards.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ aw.name_bn }}</td><td>{{ aw.year|default:"—" }}</td><td>{{ aw.awarded_by_bn|default:"—" }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ aw|tr:"name" }}</td><td>{{ aw.year|default:"—" }}</td><td>{{ aw.awarded_by_bn|default:"—" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -292,10 +292,10 @@
   <div class="mp-card-header"><i class="bi bi-star-fill icon"></i>বিশেষ পদের দায়িত্ব</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>সংসদ</th><th>পদের নাম</th><th>শুরু</th><th>শেষ</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "সংসদ" "Parliament" %}</th><th>পদের নাম</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
       <tbody>
         {% for sp in mp.special_positions.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament.name_bn }}</td><td>{{ sp.role.name_bn }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -309,7 +309,7 @@
   <div class="mp-card-header"><i class="bi bi-book-fill icon"></i>পুস্তক ও প্রকাশনা</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>শিরোনাম</th><th>প্রকাশক</th><th>সাল</th><th>ধরন</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>শিরোনাম</th><th>প্রকাশক</th><th>সাল</th><th>{% ui "ধরন" "Type" %}</th></tr></thead>
       <tbody>
         {% for pub in mp.publications.all %}
         <tr><td>{{ forloop.counter }}</td><td>{{ pub.title_bn }}</td><td>{{ pub.publisher_bn|default:"—" }}</td><td>{{ pub.pub_year|default:"—" }}</td><td>{{ pub.get_pub_type_display }}</td></tr>
@@ -326,13 +326,13 @@
   <div class="mp-card-header"><i class="bi bi-airplane icon"></i>বিদেশ ভ্রমণ</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>দেশ</th><th>উদ্দেশ্য</th><th>যাত্রা</th><th>প্রত্যাবর্তন</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "দেশ" "Country" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th></tr></thead>
       <tbody>
         {% for tp in mp.travel_participations.all %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{% for tc in tp.tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
-          <td>{{ tp.tour.purpose.name_bn|default:"—" }}</td>
+          <td>{% for tc in tp.tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
+          <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
           <td>{{ tp.departure_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ tp.return_date|date:"d/m/Y"|default:"—" }}</td>
         </tr>

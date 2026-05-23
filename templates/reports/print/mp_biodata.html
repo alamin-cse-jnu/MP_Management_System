@@ -1,6 +1,6 @@
 {% extends "base_print.html" %}
-{% load static %}
-{% block title %}বায়োডাটা — {{ mp.name_bn }}{% endblock %}
+{% load static lang_tags %}
+{% block title %}বায়োডাটা — {{ mp|tr:"name" }}{% endblock %}
 {% block content %}
 <h2 style="text-align:center;margin-bottom:4px;">সংসদ সদস্যের বায়োডাটা</h2>
 <p style="text-align:center;font-size:10pt;color:#555;">Biodata of Member of Parliament</p>
@@ -15,11 +15,11 @@
       {% endif %}
     </td>
     <td style="border:none;padding:0 12px;vertical-align:top;">
-      <strong style="font-size:14pt;">{{ mp.name_bn }}</strong><br>
+      <strong style="font-size:14pt;">{{ mp|tr:"name" }}</strong><br>
       <span style="font-size:11pt;">{{ mp.name_en }}</span><br>
-      <span style="font-size:9pt;">এমপি আইডি: {{ mp.mp_id }} | {{ mp.parliament.name_bn }}</span><br>
-      {% if ei.constituency %}<span style="font-size:9pt;">নির্বাচনী এলাকা: {{ ei.constituency.display_bn }}</span><br>{% endif %}
-      {% if ei.party %}<span style="font-size:9pt;">দল: {{ ei.party.name_bn }}</span>{% endif %}
+      <span style="font-size:9pt;">এমপি আইডি: {{ mp.mp_id }} | {{ mp.parliament|tr:"name" }}</span><br>
+      {% if ei.constituency %}<span style="font-size:9pt;">নির্বাচনী এলাকা: {{ ei.constituency|tr:"display" }}</span><br>{% endif %}
+      {% if ei.party %}<span style="font-size:9pt;">দল: {{ ei.party|tr:"name" }}</span>{% endif %}
     </td>
   </tr>
 </table>
@@ -27,10 +27,10 @@
 <h3>সাধারণ তথ্য</h3>
 <table>
   <tr><th style="width:35%">পিতার নাম</th><td>{{ mp.father_name_bn|default:"—" }}</td><th style="width:35%">মাতার নাম</th><td>{{ mp.mother_name_bn|default:"—" }}</td></tr>
-  <tr><th>জন্ম তারিখ</th><td>{{ mp.dob|date:"d F Y"|default:"—" }}</td><th>জন্মস্থান</th><td>{{ mp.birth_district.name_bn|default:"—" }}</td></tr>
-  <tr><th>নিজ জেলা</th><td>{{ mp.home_district.name_bn|default:"—" }}</td><th>লিঙ্গ</th><td>{{ mp.gender.name_bn|default:"—" }}</td></tr>
-  <tr><th>ধর্ম</th><td>{{ mp.religion.name_bn|default:"—" }}</td><th>রক্তের গ্রুপ</th><td>{{ mp.blood_group.name_bn|default:"—" }}</td></tr>
-  <tr><th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status.name_bn|default:"—" }}</td><th>জাতীয়তা</th><td>{{ mp.nationality|default:"—" }}</td></tr>
+  <tr><th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th><td>{{ mp.dob|date:"d F Y"|default:"—" }}</td><th>জন্মস্থান</th><td>{{ mp.birth_district|tr:"name"|default:"—"  }}</td></tr>
+  <tr><th>নিজ জেলা</th><td>{{ mp.home_district|tr:"name"|default:"—"  }}</td><th>{% ui "লিঙ্গ" "Gender" %}</th><td>{{ mp.gender|tr:"name"|default:"—"  }}</td></tr>
+  <tr><th>{% ui "ধর্ম" "Religion" %}</th><td>{{ mp.religion|tr:"name"|default:"—"  }}</td><th>{% ui "রক্তের গ্রুপ" "Blood Group" %}</th><td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td></tr>
+  <tr><th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status|tr:"name"|default:"—"  }}</td><th>জাতীয়তা</th><td>{{ mp.nationality|default:"—" }}</td></tr>
   <tr><th>জাতীয় পরিচয়পত্র নং</th><td>{{ mp.nid|default:"—" }}</td><th>টিআইএন</th><td>{{ mp.tin|default:"—" }}</td></tr>
   <tr><th>পাসপোর্ট নং</th><td>{{ mp.passport_number|default:"—" }}</td><th>পাসপোর্ট মেয়াদ</th><td>{{ mp.passport_expiry_date|date:"d/m/Y"|default:"—" }}</td></tr>
   <tr><th>মুক্তিযোদ্ধা</th><td>{% if mp.is_freedom_fighter %}হ্যাঁ{% else %}না{% endif %}</td><th>মুক্তিযোদ্ধার সন্তান</th><td>{% if mp.is_ff_child %}হ্যাঁ{% else %}না{% endif %}</td></tr>
@@ -39,10 +39,10 @@
 {% if mp.educations.all %}
 <h3>শিক্ষাগত যোগ্যতা</h3>
 <table>
-  <thead><tr><th>#</th><th>ডিগ্রি</th><th>প্রতিষ্ঠান</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
+  <thead><tr><th>#</th><th>ডিগ্রি</th><th>{% ui "প্রতিষ্ঠান" "Institution" %}</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
   <tbody>
     {% for edu in mp.educations.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"—" }}</td><td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"—" }}</td><td>{{ edu.passing_year|default:"—" }}</td><td>{{ edu.result_display }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td><td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td><td>{{ edu.passing_year|default:"—" }}</td><td>{{ edu.result_display }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -51,24 +51,24 @@
 {% if mp.spouses.all %}
 <h3>স্বামী/স্ত্রীর তথ্য</h3>
 <table>
-  <thead><tr><th>#</th><th>নাম</th><th>পেশা</th><th>জন্ম তারিখ</th></tr></thead>
-  <tbody>{% for sp in mp.spouses.all %}<tr><td>{{ forloop.counter }}</td><td>{{ sp.name_bn }}</td><td>{{ sp.profession.name_bn|default:"—" }}</td><td>{{ sp.dob|date:"d/m/Y"|default:"—" }}</td></tr>{% endfor %}</tbody>
+  <thead><tr><th>#</th><th>নাম</th><th>{% ui "পেশা" "Profession" %}</th><th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th></tr></thead>
+  <tbody>{% for sp in mp.spouses.all %}<tr><td>{{ forloop.counter }}</td><td>{{ sp|tr:"name" }}</td><td>{{ sp.profession|tr:"name"|default:"—"  }}</td><td>{{ sp.dob|date:"d/m/Y"|default:"—" }}</td></tr>{% endfor %}</tbody>
 </table>
 {% endif %}
 
 {% if mp.ministry_assignments.all %}
-<h3>মন্ত্রণালয়</h3>
+<h3>{% ui "মন্ত্রণালয়" "Ministry" %}</h3>
 <table>
-  <thead><tr><th>মন্ত্রণালয়</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
-  <tbody>{% for ma in mp.ministry_assignments.all %}<tr><td>{{ ma.ministry.name_bn }}</td><td>{{ ma.minister_type.name_bn }}</td><td>{{ ma.start_date|date:"d/m/Y" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
+  <thead><tr><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
+  <tbody>{% for ma in mp.ministry_assignments.all %}<tr><td>{{ ma.ministry|tr:"name" }}</td><td>{{ ma.minister_type|tr:"name" }}</td><td>{{ ma.start_date|date:"d/m/Y" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
 </table>
 {% endif %}
 
 {% if mp.committee_assignments.all %}
 <h3>কমিটি সদস্যপদ</h3>
 <table>
-  <thead><tr><th>কমিটি</th><th>পদ</th><th>শুরু</th><th>শেষ</th></tr></thead>
-  <tbody>{% for ca in mp.committee_assignments.all %}<tr><td>{{ ca.committee.name_bn }}</td><td>{{ ca.position.name_bn }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
+  <thead><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
+  <tbody>{% for ca in mp.committee_assignments.all %}<tr><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
 </table>
 {% endif %}
 

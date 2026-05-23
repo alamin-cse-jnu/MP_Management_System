@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <div class="fw-medium">স্বামী/স্ত্রীর তথ্য</div>
+  <div class="fw-medium">{% ui "স্বামী/স্ত্রীর তথ্য" "Spouse Information" %}</div>
   <a href="{% url 'mp:spouse_create' mp.pk %}" class="btn btn-outline-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>নতুন যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন যোগ করুন" "Add New" %}
   </a>
 </div>
 
@@ -12,19 +12,19 @@
     <thead>
       <tr>
         <th style="width:40px;">#</th>
-        <th>নাম (বাংলায়)</th>
+        <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th>
         <th>Name</th>
-        <th style="width:110px;">জন্ম তারিখ</th>
-        <th>পেশা</th>
-        <th style="width:110px;">বিবাহের তারিখ</th>
-        <th style="width:110px; text-align:center;">অ্যাকশন</th>
+        <th style="width:110px;">{% ui "জন্ম তারিখ" "Date of Birth" %}</th>
+        <th>{% ui "পেশা" "Profession" %}</th>
+        <th style="width:110px;">{% ui "বিবাহের তারিখ" "Marriage Date" %}</th>
+        <th style="width:110px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for sp in spouses %}
       <tr>
         <td class="text-muted">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ sp.name_bn }}</td>
+        <td class="fw-medium">{{ sp|tr:"name" }}</td>
         <td class="text-muted">{{ sp.name_en|default:"—" }}</td>
         <td class="text-muted">{{ sp.dob|default:"—" }}</td>
         <td class="text-muted">{{ sp.profession|default:"—" }}</td>
@@ -51,7 +51,7 @@
 {% else %}
 <div class="text-center text-muted py-4">
   <i class="bi bi-people fs-3 d-block mb-2" style="opacity:0.4;"></i>
-  কোনো স্বামী/স্ত্রীর তথ্য নেই।
-  <a href="{% url 'mp:spouse_create' mp.pk %}">যোগ করুন</a>।
+  {% ui "কোনো স্বামী/স্ত্রীর তথ্য নেই।" "No spouse information." %}
+  <a href="{% url 'mp:spouse_create' mp.pk %}">{% ui "যোগ করুন" "Add" %}</a>।
 </div>
 {% endif %}

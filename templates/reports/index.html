@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}রিপোর্ট{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui "রিপোর্ট" "Reports" %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item active">রিপোর্ট</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "রিপোর্ট" "Reports" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">রিপোর্ট কেন্দ্র</h4>
-    <small class="text-muted">Report Centre — {{ active_parliament.name_bn|default:"" }}</small>
+    <h4 class="mb-0 fw-bold">{% ui "রিপোর্ট কেন্দ্র" "Report Centre" %}</h4>
+    <small class="text-muted">Report Centre — {{ active_parliament|tr:"name"|default:""  }}</small>
   </div>
 </div>
 
@@ -18,25 +18,25 @@
   <div class="col-6 col-md-3">
     <div class="stat-card flex-row align-items-center gap-3">
       <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
-      <div><div class="stat-value">{{ stats.total_mp }}</div><div class="stat-label">মোট সংসদ সদস্য</div></div>
+      <div><div class="stat-value">{{ stats.total_mp }}</div><div class="stat-label">{% ui "মোট সংসদ সদস্য" "Total MPs" %}</div></div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="stat-card flex-row align-items-center gap-3">
       <div class="stat-icon"><i class="bi bi-gender-female"></i></div>
-      <div><div class="stat-value">{{ stats.women_mp }}</div><div class="stat-label">মহিলা সদস্য</div></div>
+      <div><div class="stat-value">{{ stats.women_mp }}</div><div class="stat-label">{% ui "মহিলা সদস্য" "Women MPs" %}</div></div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="stat-card flex-row align-items-center gap-3">
       <div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div>
-      <div><div class="stat-value">{{ stats.cabinet }}</div><div class="stat-label">মন্ত্রিসভা সদস্য</div></div>
+      <div><div class="stat-value">{{ stats.cabinet }}</div><div class="stat-label">{% ui "মন্ত্রিসভা সদস্য" "Cabinet Members" %}</div></div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="stat-card flex-row align-items-center gap-3">
       <div class="stat-icon"><i class="bi bi-airplane"></i></div>
-      <div><div class="stat-value">{{ stats.tours }}</div><div class="stat-label">বিদেশ সফর GO</div></div>
+      <div><div class="stat-value">{{ stats.tours }}</div><div class="stat-label">{% ui "বিদেশ সফর GO" "Foreign Tour GOs" %}</div></div>
     </div>
   </div>
 </div>
@@ -45,33 +45,34 @@
 <div class="row g-3">
 
   <!-- Group: MP Reports -->
-  <div class="col-12"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">সংসদ সদস্য রিপোর্ট</h6></div>
+  <div class="col-12"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">{% ui "সংসদ সদস্য রিপোর্ট" "MP Reports" %}</h6></div>
 
-  {% include "reports/_report_card.html" with url="reports:all_mp" icon="bi-list-ul" title="সকল সংসদ সদস্য তালিকা" subtitle="All MPs — filterable by parliament, party, district" %}
-  {% include "reports/_report_card.html" with url="reports:women_mp" icon="bi-gender-female" title="মহিলা সদস্য তালিকা" subtitle="Reserved seat MPs (seats 301–350)" %}
-  {% include "reports/_report_card.html" with url="reports:party_wise" icon="bi-flag-fill" title="দল ভিত্তিক তালিকা" subtitle="MP list grouped by political party" %}
-  {% include "reports/_report_card.html" with url="reports:district_wise" icon="bi-geo-alt-fill" title="জেলা/বিভাগ ভিত্তিক তালিকা" subtitle="MPs by home district or division" %}
-  {% include "reports/_report_card.html" with url="reports:qualification_wise" icon="bi-mortarboard-fill" title="পেশাদার যোগ্যতা ভিত্তিক" subtitle="Doctors, Engineers, Lawyers etc." %}
-  {% include "reports/_report_card.html" with url="reports:contact_list" icon="bi-telephone-fill" title="যোগাযোগ তালিকা" subtitle="Mobile, email, office contact info" %}
+  {% include "reports/_report_card.html" with url="reports:all_mp" icon="bi-list-ul" title_bn="সকল সংসদ সদস্য তালিকা" title_en="All MPs List" subtitle="All MPs — filterable by parliament, party, district" %}
+  {% include "reports/_report_card.html" with url="reports:women_mp" icon="bi-gender-female" title_bn="মহিলা সদস্য তালিকা" title_en="Women MPs List" subtitle="Reserved seat MPs (seats 301–350)" %}
+  {% include "reports/_report_card.html" with url="reports:party_wise" icon="bi-flag-fill" title_bn="দল ভিত্তিক তালিকা" title_en="Party-wise List" subtitle="MP list grouped by political party" %}
+  {% include "reports/_report_card.html" with url="reports:district_wise" icon="bi-geo-alt-fill" title_bn="জেলা/বিভাগ ভিত্তিক তালিকা" title_en="District/Division-wise List" subtitle="MPs by home district or division" %}
+  {% include "reports/_report_card.html" with url="reports:qualification_wise" icon="bi-mortarboard-fill" title_bn="পেশাদার যোগ্যতা ভিত্তিক" title_en="Professional Qualification" subtitle="Doctors, Engineers, Lawyers etc." %}
+  {% include "reports/_report_card.html" with url="reports:contact_list" icon="bi-telephone-fill" title_bn="যোগাযোগ তালিকা" title_en="Contact List" subtitle="Mobile, email, office contact info" %}
+  {% include "reports/_report_card.html" with url="reports:family_report" icon="bi-people-fill" title_bn="পরিবার সদস্য রিপোর্ট" title_en="Family Members Report" subtitle="Spouse & children — name, gender, age" %}
 
   <!-- Group: Assignment Reports -->
-  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">নিয়োগ রিপোর্ট</h6></div>
+  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">{% ui "নিয়োগ রিপোর্ট" "Assignment Reports" %}</h6></div>
 
-  {% include "reports/_report_card.html" with url="reports:cabinet" icon="bi-briefcase-fill" title="মন্ত্রিসভা তালিকা" subtitle="Cabinet — minister type, parliament filter" %}
-  {% include "reports/_report_card.html" with url="reports:committee_members" icon="bi-people-fill" title="কমিটি সদস্য তালিকা" subtitle="Standing committee assignments" %}
-  {% include "reports/_report_card.html" with url="reports:mp_committee_summary" icon="bi-person-lines-fill" title="এমপি কমিটি সারসংক্ষেপ" subtitle="All committees for a single MP" %}
-  {% include "reports/_report_card.html" with url="reports:institution_assignments" icon="bi-building" title="প্রতিষ্ঠান নিয়োগ তালিকা" subtitle="Government institution assignments" %}
+  {% include "reports/_report_card.html" with url="reports:cabinet" icon="bi-briefcase-fill" title_bn="মন্ত্রিসভা তালিকা" title_en="Cabinet List" subtitle="Cabinet — minister type, parliament filter" %}
+  {% include "reports/_report_card.html" with url="reports:committee_members" icon="bi-people-fill" title_bn="কমিটি সদস্য তালিকা" title_en="Committee Members List" subtitle="Standing committee assignments" %}
+  {% include "reports/_report_card.html" with url="reports:mp_committee_summary" icon="bi-person-lines-fill" title_bn="এমপি কমিটি সারসংক্ষেপ" title_en="MP Committee Summary" subtitle="All committees for a single MP" %}
+  {% include "reports/_report_card.html" with url="reports:institution_assignments" icon="bi-building" title_bn="প্রতিষ্ঠান নিয়োগ তালিকা" title_en="Institution Assignments" subtitle="Government institution assignments" %}
 
   <!-- Group: Other -->
-  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">অন্যান্য রিপোর্ট</h6></div>
+  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">{% ui "অন্যান্য রিপোর্ট" "Other Reports" %}</h6></div>
 
-  {% include "reports/_report_card.html" with url="reports:foreign_tours" icon="bi-airplane" title="বিদেশ সফর তালিকা" subtitle="Foreign tour GOs — by type, country, year" %}
-  {% include "reports/_report_card.html" with url="reports:mp_biodata" icon="bi-person-vcard-fill" title="এমপি বায়োডাটা (একক)" subtitle="Full biodata preview for a single MP" %}
+  {% include "reports/_report_card.html" with url="reports:foreign_tours" icon="bi-airplane" title_bn="বিদেশ সফর তালিকা" title_en="Foreign Tour List" subtitle="Foreign tour GOs — by type, country, year" %}
+  {% include "reports/_report_card.html" with url="reports:mp_biodata" icon="bi-person-vcard-fill" title_bn="এমপি বায়োডাটা (একক)" title_en="MP Biodata (Single)" subtitle="Full biodata preview for a single MP" %}
 
   <!-- Group: Custom Report -->
-  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">কাস্টম রিপোর্ট</h6></div>
+  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">{% ui "কাস্টম রিপোর্ট" "Custom Report" %}</h6></div>
 
-  {% include "reports/_report_card.html" with url="reports:custom_report" icon="bi-sliders" title="কাস্টম রিপোর্ট তৈরি করুন" subtitle="নিজস্ব ফিল্টার ও কলাম বেছে কাস্টম রিপোর্ট তৈরি করুন" %}
+  {% include "reports/_report_card.html" with url="reports:custom_report" icon="bi-sliders" title_bn="কাস্টম রিপোর্ট তৈরি করুন" title_en="Build Custom Report" subtitle="Create custom report with your own filters and columns" %}
 
 </div>
 {% endblock %}

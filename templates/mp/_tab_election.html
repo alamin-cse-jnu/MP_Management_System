@@ -1,4 +1,4 @@
-{% load static %}
+{% load static lang_tags %}
 <form method="post" action="{% url 'mp:mp_section_election' mp.pk %}" novalidate>
   {% csrf_token %}
   {% if election_form.non_field_errors %}
@@ -8,43 +8,43 @@
   <div class="row">
     <!-- Row 1: Constituency + Parliament -->
     <div class="col-md-8 mb-3">
-      <label class="form-label fw-medium">নির্বাচনী এলাকার নাম ও নম্বর</label>
+      <label class="form-label fw-medium">{% ui "নির্বাচনী এলাকার নাম ও নম্বর" "Constituency Name & Number" %}</label>
       {{ election_form.constituency }}
       {% if election_form.constituency.errors %}<div class="invalid-feedback d-block">{{ election_form.constituency.errors }}</div>{% endif %}
     </div>
     <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">সংসদ নম্বর</label>
+      <label class="form-label fw-medium">{% ui "সংসদ নম্বর" "Parliament Number" %}</label>
       {{ election_form.parliament }}
       {% if election_form.parliament.errors %}<div class="invalid-feedback d-block">{{ election_form.parliament.errors }}</div>{% endif %}
     </div>
 
     <!-- Row 2: Election Date + Oath Date -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">নির্বাচনের তারিখ</label>
+      <label class="form-label fw-medium">{% ui "নির্বাচনের তারিখ" "Election Date" %}</label>
       {{ election_form.election_date }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">শপথের তারিখ</label>
+      <label class="form-label fw-medium">{% ui "শপথের তারিখ" "Oath Date" %}</label>
       {{ election_form.oath_date }}
     </div>
 
     <!-- Row 3: Gazette Date + Times Elected -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">গেজেটের তারিখ</label>
+      <label class="form-label fw-medium">{% ui "গেজেটের তারিখ" "Gazette Date" %}</label>
       {{ election_form.gazette_date }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">কতবার নির্বাচিত</label>
+      <label class="form-label fw-medium">{% ui "কতবার নির্বাচিত" "Times Elected" %}</label>
       {{ election_form.times_elected }}
     </div>
 
     <!-- Row 4: Party + Member Type (info only) -->
     <div class="col-md-8 mb-3">
-      <label class="form-label fw-medium">দলগত পরিচয় (রাজনৈতিক দল)</label>
+      <label class="form-label fw-medium">{% ui "দলগত পরিচয় (রাজনৈতিক দল)" "Political Party Affiliation" %}</label>
       {{ election_form.party }}
     </div>
     <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">সংসদ সদস্যের ধরন</label>
+      <label class="form-label fw-medium">{% ui "সংসদ সদস্যের ধরন" "Member Type" %}</label>
       <div class="form-control-plaintext fw-medium" style="padding-left:0.75rem;">
         {{ mp.get_member_type_display }}
         <div class="form-text">পরিবর্তন করতে প্রশাসকের সাথে যোগাযোগ করুন।</div>
@@ -58,22 +58,22 @@
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">মনোনয়নের তারিখ</label>
+      <label class="form-label fw-medium">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</label>
       {{ election_form.nomination_date }}
     </div>
     <div class="col-md-3 mb-3">
-      <label class="form-label fw-medium">GO নম্বর</label>
+      <label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>
       {{ election_form.go_number }}
     </div>
     <div class="col-md-3 mb-3">
-      <label class="form-label fw-medium">GO তারিখ</label>
+      <label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>
       {{ election_form.go_date }}
     </div>
   </div>
 
   <div class="d-flex justify-content-end mt-3 pt-3 border-top">
     <button type="submit" class="btn btn-primary">
-      <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+      <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
     </button>
   </div>
 </form>

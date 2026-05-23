@@ -4,24 +4,39 @@ from django.urls import NoReverseMatch, reverse
 register = template.Library()
 
 
-@register.filter
-def tr(obj, field='name'):
-    """Return the bn or en field value based on session language."""
-    request = None
-    lang = 'bn'
+def _active_lang():
+    """Return 'en' or 'bn' based on Django's active language."""
     try:
         from django.utils.translation import get_language
         current = get_language()
         if current and current.startswith('en'):
-            lang = 'en'
+            return 'en'
     except Exception:
         pass
+    return 'bn'
 
+
+@register.filter
+def tr(obj, field='name'):
+    """Return the bn or en field value based on active language.
+    Usage: {{ obj|tr:"name" }}  {{ obj|tr:"display" }}
+    """
+    lang = _active_lang()
     bn_val = getattr(obj, f'{field}_bn', None)
     en_val = getattr(obj, f'{field}_en', None)
     if lang == 'en':
         return en_val or bn_val or ''
     return bn_val or en_val or ''
+
+
+@register.simple_tag
+def ui(bn_text, en_text=''):
+    """Return Bangla or English static UI label based on active language.
+    Usage: {% ui "নাম" "Name" %}
+    """
+    if _active_lang() == 'en' and en_text:
+        return en_text
+    return bn_text
 
 
 @register.filter

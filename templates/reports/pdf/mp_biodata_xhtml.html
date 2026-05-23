@@ -2,7 +2,7 @@
 <html lang="bn" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>Biodata — {{ mp.name_bn }}</title>
+<title>Biodata — {{ mp|tr:"name" }}</title>
 <style>
 @font-face {
   font-family: SolaimanLipi;
@@ -86,13 +86,13 @@ table.dt th { font-weight: bold; }
       {% if photo_data %}<img src="{{ photo_data }}" alt="">{% endif %}
     </td>
     <td>
-      <div class="name-bn">{{ mp.name_bn }}</div>
+      <div class="name-bn">{{ mp|tr:"name" }}</div>
       <div class="name-en">{{ mp.name_en }}</div>
       <table class="id-info">
         <tr><td>MP ID:</td><td>{{ mp.mp_id }}</td></tr>
-        <tr><td>Parliament:</td><td>{{ mp.parliament.name_bn }}</td></tr>
-        {% if ei.constituency %}<tr><td>Constituency:</td><td>{{ ei.constituency.display_bn }}</td></tr>{% endif %}
-        {% if ei.party %}<tr><td>Party:</td><td>{{ ei.party.name_bn }}</td></tr>{% endif %}
+        <tr><td>Parliament:</td><td>{{ mp.parliament|tr:"name" }}</td></tr>
+        {% if ei.constituency %}<tr><td>Constituency:</td><td>{{ ei.constituency|tr:"display" }}</td></tr>{% endif %}
+        {% if ei.party %}<tr><td>Party:</td><td>{{ ei.party|tr:"name" }}</td></tr>{% endif %}
       </table>
     </td>
   </tr>
@@ -102,7 +102,7 @@ table.dt th { font-weight: bold; }
 <div class="sec">1. General Information</div>
 <table class="kv">
   <tr>
-    <th>Name (Bangla)</th><td>{{ mp.name_bn }}</td>
+    <th>Name (Bangla)</th><td>{{ mp|tr:"name" }}</td>
     <th>Name (English)</th><td>{{ mp.name_en }}</td>
   </tr>
   <tr>
@@ -118,26 +118,26 @@ table.dt th { font-weight: bold; }
     <th>NID No.</th><td>{{ mp.nid|default:"" }}</td>
   </tr>
   <tr>
-    <th>Birth District</th><td>{{ mp.birth_district.name_bn|default:"" }}</td>
-    <th>Gender</th><td>{{ mp.gender.name_bn|default:"" }}</td>
+    <th>Birth District</th><td>{{ mp.birth_district|tr:"name"|default:""  }}</td>
+    <th>Gender</th><td>{{ mp.gender|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
-    <th>Home District</th><td>{{ mp.home_district.name_bn|default:"" }}</td>
-    <th>Marital Status</th><td>{{ mp.marital_status.name_bn|default:"" }}</td>
+    <th>Home District</th><td>{{ mp.home_district|tr:"name"|default:""  }}</td>
+    <th>Marital Status</th><td>{{ mp.marital_status|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
     <th>Nationality</th><td>{{ mp.nationality|default:"" }}</td>
-    <th>Religion</th><td>{{ mp.religion.name_bn|default:"" }}</td>
+    <th>Religion</th><td>{{ mp.religion|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
-    <th>Blood Group</th><td>{{ mp.blood_group.name_bn|default:"" }}</td>
+    <th>Blood Group</th><td>{{ mp.blood_group|tr:"name"|default:""  }}</td>
     <th>TIN</th><td>{{ mp.tin|default:"" }}</td>
   </tr>
   <tr>
     <th>Current Profession</th>
-    <td>{% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+    <td>{% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
     <th>Previous Profession</th>
-    <td>{% for p in mp.professions_previous.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+    <td>{% for p in mp.professions_previous.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
   </tr>
   <tr>
     <th>Passport No.</th><td>{{ mp.passport_number|default:"" }}</td>
@@ -155,8 +155,8 @@ table.dt th { font-weight: bold; }
 <div class="sec">2. Election Information</div>
 <table class="kv">
   <tr>
-    <th>Constituency</th><td>{{ ei.constituency.display_bn|default:"" }}</td>
-    <th>Parliament</th><td>{{ ei.parliament.name_bn }}</td>
+    <th>Constituency</th><td>{{ ei.constituency|tr:"display"|default:""  }}</td>
+    <th>Parliament</th><td>{{ ei.parliament|tr:"name" }}</td>
   </tr>
   <tr>
     <th>Election Date</th><td>{{ ei.election_date|date:"d/m/Y"|default:"" }}</td>
@@ -164,7 +164,7 @@ table.dt th { font-weight: bold; }
   </tr>
   <tr>
     <th>Times Elected</th><td>{{ ei.times_elected }}</td>
-    <th>Party</th><td>{{ ei.party.name_bn|default:"" }}</td>
+    <th>Party</th><td>{{ ei.party|tr:"name"|default:""  }}</td>
   </tr>
 </table>
 {% endif %}{% endwith %}
@@ -176,9 +176,9 @@ table.dt th { font-weight: bold; }
   <tbody>
     {% for sp in mp.spouses.all %}
     <tr>
-      <td>{{ forloop.counter }}</td><td>{{ sp.name_bn }}</td><td>{{ sp.name_en|default:"" }}</td>
+      <td>{{ forloop.counter }}</td><td>{{ sp|tr:"name" }}</td><td>{{ sp.name_en|default:"" }}</td>
       <td>{{ sp.dob|date:"d/m/Y"|default:"" }}</td><td>{{ sp.marriage_date|date:"d/m/Y"|default:"" }}</td>
-      <td>{{ sp.profession.name_bn|default:"" }}</td>
+      <td>{{ sp.profession|tr:"name"|default:""  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -192,9 +192,9 @@ table.dt th { font-weight: bold; }
   <tbody>
     {% for ch in mp.children.all %}
     <tr>
-      <td>{{ forloop.counter }}</td><td>{{ ch.name_bn }}</td><td>{{ ch.name_en|default:"" }}</td>
-      <td>{{ ch.dob|date:"d/m/Y"|default:"" }}</td><td>{{ ch.gender.name_bn|default:"" }}</td>
-      <td>{{ ch.profession.name_bn|default:"" }}</td>
+      <td>{{ forloop.counter }}</td><td>{{ ch|tr:"name" }}</td><td>{{ ch.name_en|default:"" }}</td>
+      <td>{{ ch.dob|date:"d/m/Y"|default:"" }}</td><td>{{ ch.gender|tr:"name"|default:""  }}</td>
+      <td>{{ ch.profession|tr:"name"|default:""  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -209,11 +209,11 @@ table.dt th { font-weight: bold; }
     {% for edu in mp.educations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ edu.degree_title.name_bn|default:edu.education_level.name_bn|default:"" }}</td>
-      <td>{{ edu.major_subject.name_bn|default:"" }}</td>
+      <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:""  }}</td>
+      <td>{{ edu.major_subject|tr:"name"|default:""  }}</td>
       <td>{{ edu.passing_year|default:"" }}</td>
       <td>{{ edu.result_display }}</td>
-      <td>{{ edu.institution.name_bn|default:edu.institution_other_bn|default:"" }}</td>
+      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:""  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -226,11 +226,11 @@ table.dt th { font-weight: bold; }
 <div class="sub">{{ addr.get_address_type_display }}</div>
 <table class="kv">
   <tr>
-    <th>Division</th><td>{{ addr.division.name_bn|default:"" }}</td>
-    <th>District</th><td>{{ addr.district.name_bn|default:"" }}</td>
+    <th>Division</th><td>{{ addr.division|tr:"name"|default:""  }}</td>
+    <th>District</th><td>{{ addr.district|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
-    <th>Upazila</th><td>{{ addr.upazila.name_bn|default:"" }}</td>
+    <th>Upazila</th><td>{{ addr.upazila|tr:"name"|default:""  }}</td>
     <th>Pouroshova/Union</th><td>{{ addr.pouroshova_union_bn|default:"" }}</td>
   </tr>
   <tr><th>Address Detail</th><td colspan="3">{{ addr.address_detail_bn|default:"" }}</td></tr>
@@ -253,7 +253,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Language</th><th>Proficiency</th></tr></thead>
   <tbody>
     {% for ls in mp.language_skills.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ ls.language.name_bn }}</td><td>{{ ls.proficiency.name_bn|default:"" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ ls.language|tr:"name" }}</td><td>{{ ls.proficiency|tr:"name"|default:""  }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -277,7 +277,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Ministry</th><th>Type</th><th>Start</th><th>End</th><th>Parliament</th></tr></thead>
   <tbody>
     {% for ma in mp.ministry_assignments.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ ma.ministry.name_bn }}</td><td>{{ ma.minister_type.name_bn }}</td><td>{{ ma.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"Ongoing" }}</td><td>{{ ma.parliament.name_bn }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ ma.ministry|tr:"name" }}</td><td>{{ ma.minister_type|tr:"name" }}</td><td>{{ ma.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ma.end_date|date:"d/m/Y"|default:"Ongoing" }}</td><td>{{ ma.parliament|tr:"name" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -289,7 +289,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Parliament</th><th>Committee</th><th>Position</th><th>Start</th><th>End</th></tr></thead>
   <tbody>
     {% for ca in mp.committee_assignments.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ ca.parliament.name_bn }}</td><td>{{ ca.committee.name_bn }}</td><td>{{ ca.position.name_bn }}</td><td>{{ ca.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"Ongoing" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ ca.parliament|tr:"name" }}</td><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"Ongoing" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -313,7 +313,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Name</th><th>Role</th><th>From</th><th>To</th></tr></thead>
   <tbody>
     {% for org in mp.organizations.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ org.name_bn }}</td><td>{{ org.role_bn|default:"" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ org|tr:"name" }}</td><td>{{ org.role_bn|default:"" }}</td><td>{{ org.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ org.to_date|date:"d/m/Y"|default:"" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -325,7 +325,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Award Name</th><th>Year</th><th>Awarded By</th></tr></thead>
   <tbody>
     {% for aw in mp.awards.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ aw.name_bn }}</td><td>{{ aw.year|default:"" }}</td><td>{{ aw.awarded_by_bn|default:"" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ aw|tr:"name" }}</td><td>{{ aw.year|default:"" }}</td><td>{{ aw.awarded_by_bn|default:"" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -342,7 +342,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Parliament</th><th>Position</th><th>From</th><th>To</th></tr></thead>
   <tbody>
     {% for sp in mp.special_positions.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament.name_bn }}</td><td>{{ sp.role.name_bn }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -368,8 +368,8 @@ table.dt th { font-weight: bold; }
     {% for tp in mp.travel_participations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{% for tc in tp.tour.countries.all %}{{ tc.country.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
-      <td>{{ tp.tour.purpose.name_bn|default:"" }}</td>
+      <td>{% for tc in tp.tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}{% endfor %}</td>
+      <td>{{ tp.tour.purpose|tr:"name"|default:""  }}</td>
       <td>{{ tp.departure_date|date:"d/m/Y"|default:"" }}</td>
       <td>{{ tp.return_date|date:"d/m/Y"|default:"" }}</td>
     </tr>

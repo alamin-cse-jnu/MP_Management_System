@@ -1,8 +1,8 @@
-{% load static %}
+{% load static lang_tags %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">বই ও প্রকাশনা</h6>
+  <h6 class="fw-bold mb-0">{% ui "বই ও প্রকাশনা" "Books & Publications" %}</h6>
   <a href="{% url 'mp:publication_create' mp.pk %}" class="btn btn-primary btn-sm">
-    <i class="bi bi-plus-lg me-1"></i>যোগ করুন
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
 
@@ -11,11 +11,11 @@
   <table class="mp-table">
     <thead>
       <tr>
-        <th>শিরোনাম</th>
-        <th>প্রকাশক</th>
-        <th>সাল</th>
-        <th>ধরন</th>
-        <th style="width:100px;">কার্যক্রম</th>
+        <th>{% ui "শিরোনাম" "Title" %}</th>
+        <th>{% ui "প্রকাশক" "Publisher" %}</th>
+        <th>{% ui "সাল" "Year" %}</th>
+        <th>{% ui "ধরন" "Type" %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -40,5 +40,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো প্রকাশনার তথ্য নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো প্রকাশনার তথ্য নেই।" "No publication information." %}</p>
 {% endif %}

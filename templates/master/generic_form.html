@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static lang_tags %}
 
-{% block title %}{{ title_bn }}{% endblock %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
 
 {% block content %}
 <!-- Page header -->
@@ -9,18 +9,18 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
         <li class="breadcrumb-item"><a href="{{ list_url }}">{{ title_en }}</a></li>
         <li class="breadcrumb-item active">
-          {% if is_create %}যোগ করুন{% else %}সম্পাদনা{% endif %}
+          {% if is_create %}{% ui "যোগ করুন" "Add" %}{% else %}{% ui "সম্পাদনা" "Edit" %}{% endif %}
         </li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
     <small class="text-muted">{{ title_en }}</small>
   </div>
   <a href="{{ list_url }}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
   </a>
 </div>
 
@@ -30,7 +30,7 @@
     <div class="mp-card">
       <div class="mp-card-header">
         <i class="bi {% if is_create %}bi-plus-circle{% else %}bi-pencil-square{% endif %} icon"></i>
-        {{ title_bn }}
+        {% ui title_bn title_en %}
       </div>
 
       <form method="post" novalidate>
@@ -66,11 +66,11 @@
 
         <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
           <a href="{{ list_url }}" class="btn btn-outline-secondary">
-            <i class="bi bi-x-lg me-1"></i>বাতিল
+            <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
           </a>
           <button type="submit" class="btn btn-primary">
             <i class="bi bi-check-lg me-1"></i>
-            {% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}
+            {% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "আপডেট করুন" "Update" %}{% endif %}
           </button>
         </div>
       </form>

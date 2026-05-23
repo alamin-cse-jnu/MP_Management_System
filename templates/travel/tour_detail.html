@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static lang_tags %}
 {% block title %}ভ্রমণ বিবরণ — {{ tour.go_number }}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
       <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">বিদেশ ভ্রমণ</a></li>
       <li class="breadcrumb-item active">{{ tour.go_number }}</li>
     </ol></nav>
@@ -17,20 +17,20 @@
       <i class="bi bi-pencil me-1"></i>সম্পাদনা
     </a>
     <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
-      <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+      <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
     </a>
   </div>
 </div>
 
 <!-- Tour header info -->
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-info-circle icon"></i> ভ্রমণ তথ্য</div>
+  <div class="mp-card-header"><i class="bi bi-info-circle icon"></i> {% ui "ভ্রমণ তথ্য" "Travel Information" %}</div>
   <div class="row g-3 p-2">
-    <div class="col-md-3"><small class="text-muted d-block">GO নম্বর</small><strong>{{ tour.go_number }}</strong></div>
-    <div class="col-md-2"><small class="text-muted d-block">GO তারিখ</small><strong>{{ tour.go_date|date:"d/m/Y" }}</strong></div>
-    <div class="col-md-3"><small class="text-muted d-block">সংসদ</small>{{ tour.parliament.name_bn }}</div>
-    <div class="col-md-2"><small class="text-muted d-block">ধরন</small><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type.name_bn }}</span></div>
-    <div class="col-md-2"><small class="text-muted d-block">উদ্দেশ্য</small>{{ tour.purpose.name_bn }}</div>
+    <div class="col-md-3"><small class="text-muted d-block">{% ui "GO নম্বর" "GO Number" %}</small><strong>{{ tour.go_number }}</strong></div>
+    <div class="col-md-2"><small class="text-muted d-block">{% ui "GO তারিখ" "GO Date" %}</small><strong>{{ tour.go_date|date:"d/m/Y" }}</strong></div>
+    <div class="col-md-3"><small class="text-muted d-block">{% ui "সংসদ" "Parliament" %}</small>{{ tour.parliament|tr:"name" }}</div>
+    <div class="col-md-2"><small class="text-muted d-block">{% ui "ধরন" "Type" %}</small><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type|tr:"name" }}</span></div>
+    <div class="col-md-2"><small class="text-muted d-block">{% ui "উদ্দেশ্য" "Purpose" %}</small>{{ tour.purpose|tr:"name" }}</div>
     {% if tour.purpose_detail_bn %}
     <div class="col-md-6"><small class="text-muted d-block">বিবরণ (বাংলায়)</small>{{ tour.purpose_detail_bn }}</div>
     {% endif %}
@@ -85,7 +85,7 @@
             {% for p in participants %}
             <tr>
               <td>
-                <a href="{% url 'mp:mp_detail' p.mp_id %}?active=tab-travel" class="text-decoration-none fw-medium">{{ p.mp.name_bn }}</a>
+                <a href="{% url 'mp:mp_detail' p.mp_id %}?active=tab-travel" class="text-decoration-none fw-medium">{{ p.mp|tr:"name" }}</a>
               </td>
               <td>{{ p.departure_date|date:"d/m/Y"|default:"—" }}</td>
               <td>{{ p.return_date|date:"d/m/Y"|default:"—" }}</td>
@@ -121,7 +121,7 @@
             {{ country_form.country }}
           </div>
           <div class="col-md-3">
-            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">ক্রম</label>
+            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "ক্রম" "#" %}</label>
             {{ country_form.ordering }}
           </div>
           <div class="col-md-2">
@@ -135,7 +135,7 @@
         <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
           <thead class="table-light">
             <tr>
-              <th>ক্রম</th>
+              <th>{% ui "ক্রম" "#" %}</th>
               <th>দেশের নাম</th>
               <th style="width:3rem;"></th>
             </tr>
@@ -144,7 +144,7 @@
             {% for c in countries %}
             <tr>
               <td>{{ c.ordering }}</td>
-              <td>{{ c.country.name_bn }} <span class="text-muted">({{ c.country.name_en }})</span></td>
+              <td>{{ c.country|tr:"name" }} <span class="text-muted">({{ c.country.name_en }})</span></td>
               <td>
                 <form method="post" action="{% url 'travel:country_remove' tour.pk c.pk %}" class="d-inline"
                       onsubmit="return confirm('এই দেশ বাদ দেবেন?')">

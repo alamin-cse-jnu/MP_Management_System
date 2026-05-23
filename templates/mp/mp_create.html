@@ -8,15 +8,15 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">সংসদ সদস্য</a></li>
-        <li class="breadcrumb-item active">নতুন সদস্য</li>
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "Members of Parliament" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "নতুন সদস্য" "New MP" %}</li>
       </ol>
     </nav>
-    <h4 class="mb-0 fw-bold">নতুন সংসদ সদস্য যোগ করুন</h4>
+    <h4 class="mb-0 fw-bold">{% ui "নতুন সংসদ সদস্য যোগ করুন" "Add New Member of Parliament" %}</h4>
   </div>
   <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>তালিকায় ফিরুন
+    <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
   </a>
 </div>
 
@@ -24,12 +24,12 @@
   <div class="col-lg-7 col-md-9">
     <div class="mp-card">
       <div class="mp-card-header">
-        <i class="bi bi-person-plus icon"></i> মৌলিক তথ্য
+        <i class="bi bi-person-plus icon"></i> {% ui "মৌলিক তথ্য" "Basic Information" %}
       </div>
 
       <div class="alert alert-info mb-3" style="font-size:0.85rem;">
         <i class="bi bi-info-circle me-1"></i>
-        শুধু মৌলিক তথ্য এখানে দিন। সংরক্ষণের পরে বিস্তারিত সব তথ্য ট্যাবগুলো থেকে পূরণ করুন।
+        {% ui "শুধু মৌলিক তথ্য এখানে দিন। সংরক্ষণের পরে বিস্তারিত সব তথ্য ট্যাবগুলো থেকে পূরণ করুন।" "Enter basic information here. Fill in detailed info from the tabs after saving." %}
       </div>
 
       <form method="post" novalidate>
@@ -40,23 +40,26 @@
 
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label class="form-label fw-medium">এমপি আইডি <span class="text-primary">*</span></label>
+            <label class="form-label fw-medium">{% ui "এমপি আইডি" "MP ID" %} <span class="text-primary">*</span></label>
             {{ form.mp_id }}
-            <div class="form-text">যেমন: 013000101 (সংসদ-আসন-ক্রম)</div>
+            <div class="form-text">{% ui "যেমন: 013000101 (সংসদ-আসন-ক্রম)" "e.g. 013000101 (Parliament-Seat-Seq)" %}</div>
             {% if form.mp_id.errors %}<div class="invalid-feedback d-block">{{ form.mp_id.errors }}</div>{% endif %}
           </div>
           <div class="col-md-6 mb-3">
-            <label class="form-label fw-medium">সংসদ <span class="text-primary">*</span></label>
+            <label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>
             {{ form.parliament }}
             {% if form.parliament.errors %}<div class="invalid-feedback d-block">{{ form.parliament.errors }}</div>{% endif %}
           </div>
           <div class="col-12 mb-3">
-            <label class="form-label fw-medium">সদস্যের ধরন <span class="text-primary">*</span></label>
-            {{ form.member_type }}
+            <label class="form-label fw-medium">{% ui "সদস্যের ধরন" "Member Type" %} <span class="text-primary">*</span></label>
+            <select name="member_type" class="form-select" id="id_member_type">
+              <option value="direct"   {% if form.member_type.value == 'direct'   or not form.member_type.value %}selected{% endif %}>{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</option>
+              <option value="reserved" {% if form.member_type.value == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত আসন (মহিলা)" "Reserved Seat (Women)" %}</option>
+            </select>
             {% if form.member_type.errors %}<div class="invalid-feedback d-block">{{ form.member_type.errors }}</div>{% endif %}
           </div>
           <div class="col-12 mb-3">
-            <label class="form-label fw-medium">নাম (বাংলায়) <span class="text-primary">*</span></label>
+            <label class="form-label fw-medium">{% ui "নাম (বাংলায়)" "Name (Bangla)" %} <span class="text-primary">*</span></label>
             {{ form.name_bn }}
             {% if form.name_bn.errors %}<div class="invalid-feedback d-block">{{ form.name_bn.errors }}</div>{% endif %}
           </div>
@@ -69,10 +72,10 @@
 
         <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
           <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary">
-            <i class="bi bi-x-lg me-1"></i>বাতিল
+            <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
           </a>
           <button type="submit" class="btn btn-primary">
-            <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+            <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
           </button>
         </div>
       </form>

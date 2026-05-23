@@ -1,17 +1,17 @@
-{% load static %}
+{% load static lang_tags %}
 <!-- Sub-tab nav for 3 address types -->
 <ul class="nav nav-pills mb-3" id="addrTabs" role="tablist">
   <li class="nav-item">
     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#addr-present"
-            type="button">বর্তমান ঠিকানা</button>
+            type="button">{% ui "বর্তমান ঠিকানা" "Present Address" %}</button>
   </li>
   <li class="nav-item">
     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addr-permanent"
-            type="button">স্থায়ী ঠিকানা</button>
+            type="button">{% ui "স্থায়ী ঠিকানা" "Permanent Address" %}</button>
   </li>
   <li class="nav-item">
     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addr-dhaka"
-            type="button">ঢাকাস্থ ঠিকানা</button>
+            type="button">{% ui "ঢাকাস্থ ঠিকানা" "Dhaka Address" %}</button>
   </li>
 </ul>
 
@@ -24,7 +24,7 @@
       {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True %}
       <div class="d-flex justify-content-end mt-3 pt-3 border-top">
         <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>বর্তমান ঠিকানা সংরক্ষণ
+          <i class="bi bi-check-lg me-1"></i>{% ui "বর্তমান ঠিকানা সংরক্ষণ" "Save Present Address" %}
         </button>
       </div>
     </form>
@@ -37,7 +37,7 @@
       {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False %}
       <div class="d-flex justify-content-end mt-3 pt-3 border-top">
         <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>স্থায়ী ঠিকানা সংরক্ষণ
+          <i class="bi bi-check-lg me-1"></i>{% ui "স্থায়ী ঠিকানা সংরক্ষণ" "Save Permanent Address" %}
         </button>
       </div>
     </form>
@@ -50,7 +50,7 @@
       {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False %}
       <div class="d-flex justify-content-end mt-3 pt-3 border-top">
         <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>ঢাকাস্থ ঠিকানা সংরক্ষণ
+          <i class="bi bi-check-lg me-1"></i>{% ui "ঢাকাস্থ ঠিকানা সংরক্ষণ" "Save Dhaka Address" %}
         </button>
       </div>
     </form>

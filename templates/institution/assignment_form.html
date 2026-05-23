@@ -1,45 +1,45 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}{{ title_bn }}{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'institution:assignment_list' %}">প্রতিষ্ঠান নিয়োগ</a></li>
-      <li class="breadcrumb-item active">{{ title_bn }}</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'institution:assignment_list' %}">{% ui "প্রতিষ্ঠান নিয়োগ" "Institution Assignment" %}</a></li>
+      <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">{{ title_bn }}</h4>
-    {% if mp %}<small class="text-muted">{{ mp.name_bn }}</small>{% endif %}
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    {% if mp %}<small class="text-muted">{{ mp|tr:"name" }}</small>{% endif %}
   </div>
   <a href="{% url 'institution:assignment_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>ফিরে যান
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
   </a>
 </div>
 <div class="row justify-content-center"><div class="col-lg-8 col-md-10">
   <div class="mp-card">
-    <div class="mp-card-header"><i class="bi bi-bank icon"></i> {{ title_bn }}</div>
+    <div class="mp-card-header"><i class="bi bi-bank icon"></i> {% ui title_bn title_en %}</div>
     <form method="post" novalidate>{% csrf_token %}
       {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
       <div class="row">
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">সংসদ <span class="text-primary">*</span></label>{{ form.parliament }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">প্রতিষ্ঠান <span class="text-primary">*</span></label>{{ form.institution }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">পদবী <span class="text-primary">*</span></label>{{ form.role }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">শুরুর তারিখ <span class="text-primary">*</span></label>{{ form.start_date }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">শেষ তারিখ</label>{{ form.end_date }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">GO নম্বর</label>{{ form.go_number }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">GO তারিখ</label>{{ form.go_date }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">মনোনয়নের তারিখ</label>{{ form.nomination_date }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "প্রতিষ্ঠান" "Institution" %} <span class="text-primary">*</span></label>{{ form.institution }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "পদবী" "Designation" %} <span class="text-primary">*</span></label>{{ form.role }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শুরুর তারিখ" "Start Date" %} <span class="text-primary">*</span></label>{{ form.start_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শেষ তারিখ" "End Date" %}</label>{{ form.end_date }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>{{ form.go_number }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</label>{{ form.nomination_date }}</div>
         <div class="col-md-3 mb-3 d-flex align-items-end">
-          <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">সক্রিয়</label></div>
+          <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">{% ui "সক্রিয়" "Active" %}</label></div>
         </div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">মন্তব্য (বাংলায়)</label>{{ form.remarks_bn }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "মন্তব্য (বাংলায়)" "Remarks (Bangla)" %}</label>{{ form.remarks_bn }}</div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">Remarks (English)</label>{{ form.remarks_en }}</div>
       </div>
       <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
-        <a href="{% url 'institution:assignment_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>বাতিল</a>
-        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}সংরক্ষণ করুন{% else %}আপডেট করুন{% endif %}</button>
+        <a href="{% url 'institution:assignment_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Clear" %}</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "আপডেট করুন" "Update" %}{% endif %}</button>
       </div>
     </form>
   </div>

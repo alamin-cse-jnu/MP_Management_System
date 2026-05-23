@@ -1,11 +1,12 @@
+{% load lang_tags %}
 {% comment %}
 Params: total_count, print_url, excel_url, csv_url
 {% endcomment %}
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
-  <small class="text-muted">মোট ফলাফল: <strong>{{ total_count }}</strong> টি</small>
+  <small class="text-muted">{% ui "মোট ফলাফল:" "Total results:" %} <strong>{{ total_count }}</strong> টি</small>
   <div class="d-flex gap-2 flex-wrap">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-      <i class="bi bi-printer-fill me-1"></i>প্রিন্ট
+      <i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}
     </button>
     <a href="{{ print_url }}" target="_blank" class="btn btn-outline-danger btn-sm">
       <i class="bi bi-file-earmark-pdf me-1"></i>PDF

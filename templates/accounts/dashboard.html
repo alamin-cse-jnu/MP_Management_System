@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 {% load static lang_tags %}
 
-{% block title %}ড্যাশবোর্ড{% endblock %}
+{% block title %}{% ui "ড্যাশবোর্ড" "Dashboard" %}{% endblock %}
 
 {% block content %}
 
 <!-- Page header -->
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
-    <h4 class="mb-0 fw-bold">ড্যাশবোর্ড</h4>
+    <h4 class="mb-0 fw-bold">{% ui "ড্যাশবোর্ড" "Dashboard" %}</h4>
     <small class="text-muted">
-      {{ active_parliament.name_bn|default:"জাতীয় সংসদ" }} — সার্বিক চিত্র
+      {{ active_parliament|tr:"name"|default:"জাতীয় সংসদ"  }} — {% ui "সার্বিক চিত্র" "Overview" %}
     </small>
   </div>
   <div class="d-flex gap-2 flex-wrap">
     <a href="{% url 'reports:index' %}" class="btn btn-outline-primary btn-sm">
-      <i class="bi bi-journal-text me-1"></i>রিপোর্ট সেন্টার
+      <i class="bi bi-journal-text me-1"></i>{% ui "রিপোর্ট সেন্টার" "Report Center" %}
     </a>
     <a href="{% url 'mp:mp_list' %}" class="btn btn-primary btn-sm">
-      <i class="bi bi-people-fill me-1"></i>সকল সংসদ সদস্য
+      <i class="bi bi-people-fill me-1"></i>{% ui "সকল সংসদ সদস্য" "All Members of Parliament" %}
     </a>
   </div>
 </div>
@@ -31,7 +31,7 @@
       <div class="stat-card text-center">
         <div class="stat-icon mx-auto"><i class="bi bi-people-fill"></i></div>
         <div class="stat-value">{{ total_mps }}</div>
-        <div class="stat-label">মোট সংসদ সদস্য</div>
+        <div class="stat-label">{% ui "মোট সংসদ সদস্য" "Total MPs" %}</div>
       </div>
     </a>
   </div>
@@ -42,7 +42,7 @@
         <i class="bi bi-person-check-fill"></i>
       </div>
       <div class="stat-value">{{ direct_mps }}</div>
-      <div class="stat-label">সরাসরি নির্বাচিত</div>
+      <div class="stat-label">{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</div>
     </div>
   </div>
 
@@ -52,7 +52,7 @@
         <i class="bi bi-gender-female"></i>
       </div>
       <div class="stat-value">{{ women_mps }}</div>
-      <div class="stat-label">মহিলা সদস্য (সংরক্ষিত)</div>
+      <div class="stat-label">{% ui "মহিলা সদস্য (সংরক্ষিত)" "Women MPs (Reserved)" %}</div>
     </div>
   </div>
 
@@ -63,7 +63,7 @@
           <i class="bi bi-briefcase-fill"></i>
         </div>
         <div class="stat-value">{{ total_ministers }}</div>
-        <div class="stat-label">মন্ত্রী/প্রতিমন্ত্রী</div>
+        <div class="stat-label">{% ui "মন্ত্রী/প্রতিমন্ত্রী" "Ministers" %}</div>
       </div>
     </a>
   </div>
@@ -75,7 +75,7 @@
           <i class="bi bi-clipboard2-check-fill"></i>
         </div>
         <div class="stat-value">{{ total_com_assigns }}</div>
-        <div class="stat-label">কমিটি সদস্যপদ</div>
+        <div class="stat-label">{% ui "কমিটি সদস্যপদ" "Committee Memberships" %}</div>
       </div>
     </a>
   </div>
@@ -87,7 +87,7 @@
           <i class="bi bi-airplane-fill"></i>
         </div>
         <div class="stat-value">{{ total_tours }}</div>
-        <div class="stat-label">বিদেশ সফর GO</div>
+        <div class="stat-label">{% ui "বিদেশ সফর GO" "Foreign Tour GOs" %}</div>
       </div>
     </a>
   </div>
@@ -101,9 +101,9 @@
   <div class="col-lg-7">
     <div class="mp-card h-100">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-flag-fill icon"></i>দল ভিত্তিক বিতরণ</span>
+        <span><i class="bi bi-flag-fill icon"></i>{% ui "দল ভিত্তিক বিতরণ" "Party-wise Distribution" %}</span>
         <a href="{% url 'reports:party_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
-          বিস্তারিত <i class="bi bi-arrow-right"></i>
+          {% ui "বিস্তারিত" "Details" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
       <div class="p-3">
@@ -126,7 +126,7 @@
         {% endwith %}
         {% endfor %}
         {% else %}
-        <p class="text-muted small mb-0">কোনো তথ্য নেই।</p>
+        <p class="text-muted small mb-0">{% ui "কোনো তথ্য নেই।" "No data available." %}</p>
         {% endif %}
       </div>
     </div>
@@ -137,10 +137,10 @@
 
     <!-- Data completeness -->
     <div class="mp-card mb-3">
-      <div class="mp-card-header"><i class="bi bi-bar-chart-fill icon"></i>তথ্য সম্পূর্ণতা</div>
+      <div class="mp-card-header"><i class="bi bi-bar-chart-fill icon"></i>{% ui "তথ্য সম্পূর্ণতা" "Data Completeness" %}</div>
       <div class="p-3">
         <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
-          <span>ছবি আপলোড</span>
+          <span>{% ui "ছবি আপলোড" "Photo Upload" %}</span>
           <strong>{{ with_photo }} / {{ total_mps }}</strong>
         </div>
         <div class="progress mb-2" style="height:8px;border-radius:4px;">
@@ -150,7 +150,7 @@
           {% endif %}
         </div>
         <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
-          <span>প্রতিষ্ঠান নিয়োগ</span>
+          <span>{% ui "প্রতিষ্ঠান নিয়োগ" "Institution Assignment" %}</span>
           <strong>{{ total_institutions }}</strong>
         </div>
       </div>
@@ -159,9 +159,9 @@
     <!-- Division breakdown -->
     <div class="mp-card">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-geo-alt-fill icon"></i>বিভাগ ভিত্তিক বিতরণ</span>
+        <span><i class="bi bi-geo-alt-fill icon"></i>{% ui "বিভাগ ভিত্তিক বিতরণ" "Division-wise Distribution" %}</span>
         <a href="{% url 'reports:district_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
-          বিস্তারিত <i class="bi bi-arrow-right"></i>
+          {% ui "বিস্তারিত" "Details" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
       <div class="p-3">
@@ -171,7 +171,7 @@
           <span class="badge rounded-pill" style="background:#ccfbf1;color:#0d9488;font-size:.78rem;">{{ row.count }}</span>
         </div>
         {% empty %}
-        <p class="text-muted small mb-0">তথ্য নেই।</p>
+        <p class="text-muted small mb-0">{% ui "তথ্য নেই।" "No data." %}</p>
         {% endfor %}
       </div>
     </div>
@@ -186,15 +186,15 @@
   <div class="col-lg-7">
     <div class="mp-card">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-clock-history icon"></i>সর্বশেষ যোগ হওয়া সংসদ সদস্য</span>
+        <span><i class="bi bi-clock-history icon"></i>{% ui "সর্বশেষ যোগ হওয়া সংসদ সদস্য" "Recently Added MPs" %}</span>
         <a href="{% url 'mp:mp_list' %}" class="btn btn-outline-secondary btn-xs" style="font-size:.75rem;padding:2px 8px;">
-          সব দেখুন <i class="bi bi-arrow-right"></i>
+          {% ui "সব দেখুন" "View All" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover mb-0 align-middle" style="font-size:.85rem;">
           <thead class="table-light">
-            <tr><th>#</th><th>নাম</th><th>নির্বাচনী এলাকা / দল</th><th></th></tr>
+            <tr><th>#</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "নির্বাচনী এলাকা / দল" "Constituency / Party" %}</th><th></th></tr>
           </thead>
           <tbody>
             {% for mp in recent_mps %}
@@ -208,12 +208,12 @@
                 {% endif %}
               </td>
               <td>
-                <div class="fw-medium">{{ mp.name_bn }}</div>
+                <div class="fw-medium">{{ mp|tr:"name" }}</div>
                 <small class="text-muted">{{ mp.mp_id }}</small>
               </td>
               <td>
-                {% if ei.constituency %}<div class="text-truncate" style="max-width:160px;font-size:.82rem;">{{ ei.constituency.display_bn }}</div>{% endif %}
-                {% if ei.party %}<span class="badge bg-primary-subtle text-primary" style="font-size:.75rem;">{{ ei.party.name_bn }}</span>{% endif %}
+                {% if ei.constituency %}<div class="text-truncate" style="max-width:160px;font-size:.82rem;">{{ ei.constituency|tr:"display" }}</div>{% endif %}
+                {% if ei.party %}<span class="badge bg-primary-subtle text-primary" style="font-size:.75rem;">{{ ei.party|tr:"name" }}</span>{% endif %}
               </td>
               <td class="text-end">
                 <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm">
@@ -223,7 +223,7 @@
             </tr>
             {% endwith %}
             {% empty %}
-            <tr><td colspan="4" class="text-center text-muted py-3">কোনো তথ্য নেই।</td></tr>
+            <tr><td colspan="4" class="text-center text-muted py-3">{% ui "কোনো তথ্য নেই।" "No data available." %}</td></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -234,37 +234,37 @@
   <!-- Quick Actions + Export links -->
   <div class="col-lg-5">
     <div class="mp-card mb-3">
-      <div class="mp-card-header"><i class="bi bi-lightning-fill icon"></i>দ্রুত অ্যাকশন</div>
+      <div class="mp-card-header"><i class="bi bi-lightning-fill icon"></i>{% ui "দ্রুত অ্যাকশন" "Quick Actions" %}</div>
       <div class="p-3 d-flex flex-column gap-2">
         <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm text-start">
-          <i class="bi bi-plus-circle me-2"></i>নতুন সংসদ সদস্য যোগ করুন
+          <i class="bi bi-plus-circle me-2"></i>{% ui "নতুন সংসদ সদস্য যোগ করুন" "Add New Member of Parliament" %}
         </a>
         <a href="{% url 'ministry:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-briefcase me-2"></i>মন্ত্রণালয় নিয়োগ দিন
+          <i class="bi bi-briefcase me-2"></i>{% ui "মন্ত্রণালয় নিয়োগ দিন" "Assign Ministry" %}
         </a>
         <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-clipboard2-check me-2"></i>কমিটি সদস্য নিয়োগ দিন
+          <i class="bi bi-clipboard2-check me-2"></i>{% ui "কমিটি সদস্য নিয়োগ দিন" "Assign Committee Member" %}
         </a>
         <a href="{% url 'travel:tour_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-airplane me-2"></i>বিদেশ সফর GO যোগ করুন
+          <i class="bi bi-airplane me-2"></i>{% ui "বিদেশ সফর GO যোগ করুন" "Add Foreign Tour GO" %}
         </a>
       </div>
     </div>
 
     <div class="mp-card">
-      <div class="mp-card-header"><i class="bi bi-download icon"></i>দ্রুত ডাউনলোড</div>
+      <div class="mp-card-header"><i class="bi bi-download icon"></i>{% ui "দ্রুত ডাউনলোড" "Quick Downloads" %}</div>
       <div class="p-3 d-flex flex-column gap-2">
         <a href="{% url 'reports:all_mp' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>সকল এমপি তালিকা (Excel)
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "সকল এমপি তালিকা (Excel)" "All MP List (Excel)" %}
         </a>
         <a href="{% url 'reports:contact_list' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>যোগাযোগ তালিকা (Excel)
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "যোগাযোগ তালিকা (Excel)" "Contact List (Excel)" %}
         </a>
         <a href="{% url 'reports:party_wise' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>দল ভিত্তিক তালিকা (Excel)
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "দল ভিত্তিক তালিকা (Excel)" "Party-wise List (Excel)" %}
         </a>
         <a href="{% url 'reports:all_mp' %}?format=csv" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-filetype-csv me-2"></i>সকল এমপি তালিকা (CSV)
+          <i class="bi bi-filetype-csv me-2"></i>{% ui "সকল এমপি তালিকা (CSV)" "All MP List (CSV)" %}
         </a>
       </div>
     </div>
@@ -278,20 +278,20 @@
   <div class="col-12">
     <div class="mp-card">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-activity icon"></i>সাম্প্রতিক কার্যক্রম</span>
+        <span><i class="bi bi-activity icon"></i>{% ui "সাম্প্রতিক কার্যক্রম" "Recent Activity" %}</span>
         <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-xs" style="font-size:.75rem;padding:2px 8px;">
-          সম্পূর্ণ লগ <i class="bi bi-arrow-right"></i>
+          {% ui "সম্পূর্ণ লগ" "Full Log" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
       <div class="table-responsive">
         <table class="table table-hover table-sm mb-0 align-middle" style="font-size:.83rem;">
           <thead class="table-light">
             <tr>
-              <th style="width:150px;">সময়</th>
-              <th style="width:120px;">ব্যবহারকারী</th>
-              <th style="width:90px;">কার্যক্রম</th>
-              <th style="width:110px;">মডেল</th>
-              <th>রেকর্ড</th>
+              <th style="width:150px;">{% ui "সময়" "Time" %}</th>
+              <th style="width:120px;">{% ui "ব্যবহারকারী" "User" %}</th>
+              <th style="width:90px;">{% ui "কার্যক্রম" "Action" %}</th>
+              <th style="width:110px;">{% ui "মডেল" "Model" %}</th>
+              <th>{% ui "রেকর্ড" "Record" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -301,11 +301,11 @@
               <td>{{ log.user.username|default:"—" }}</td>
               <td>
                 {% if log.action == 'CREATE' %}
-                  <span class="badge bg-success">তৈরি</span>
+                  <span class="badge bg-success">{% ui "তৈরি" "Create" %}</span>
                 {% elif log.action == 'UPDATE' %}
-                  <span class="badge bg-warning text-dark">পরিবর্তন</span>
+                  <span class="badge bg-warning text-dark">{% ui "পরিবর্তন" "Update" %}</span>
                 {% elif log.action == 'DELETE' %}
-                  <span class="badge bg-danger">মুছে ফেলা</span>
+                  <span class="badge bg-danger">{% ui "মুছে ফেলা" "Delete" %}</span>
                 {% endif %}
               </td>
               <td><code style="font-size:.78rem;">{{ log.model_name }}</code></td>
@@ -314,7 +314,7 @@
                   {{ log.object_repr|default:"—" }}
                 </span>
                 {% if log.changes %}
-                <a href="{% url 'reports:audit_log_detail' log.pk %}" class="ms-1 text-muted" title="পরিবর্তন দেখুন">
+                <a href="{% url 'reports:audit_log_detail' log.pk %}" class="ms-1 text-muted" title="{% ui "পরিবর্তন দেখুন" "View changes" %}">
                   <i class="bi bi-eye" style="font-size:.8rem;"></i>
                 </a>
                 {% endif %}

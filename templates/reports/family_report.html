@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% if request.session.LANGUAGE == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.filter-row {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+.filter-label {
+  min-width: 190px;
+  font-size: .875rem;
+}
+@media print {
+  .no-print { display: none !important; }
+  .mp-topbar, .mp-sidebar { display: none !important; }
+  .main-content { margin-left: 0 !important; padding: 10px !important; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{% with is_en=request.session.LANGUAGE %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% if is_en == 'en' %}Home{% else %}হোম{% endif %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% if is_en == 'en' %}Reports{% else %}রিপোর্ট{% endif %}</a></li>
+      <li class="breadcrumb-item active">{% if is_en == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% if is_en == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}</h4>
+    <small class="text-muted">{% if is_en == 'en' %}Spouse & Children — name, gender, age{% else %}স্বামী/স্ত্রী ও সন্তানদের তালিকা — নাম, লিঙ্গ, বয়স{% endif %}</small>
+  </div>
+</div>
+
+<form method="get" id="familyReportForm">
+<input type="hidden" name="search" value="1">
+
+<!-- ══ FILTER PANEL ══════════════════════════════════════════════════════════ -->
+<div class="mp-card mb-3 no-print">
+  <div class="mp-card-header d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-funnel-fill icon"></i>{% if is_en == 'en' %}Select MP(s){% else %}সংসদ সদস্য নির্বাচন করুন{% endif %}</span>
+    <small class="text-muted">{% if is_en == 'en' %}Leave blank to include all MPs{% else %}কোনো নির্বাচন না করলে সকল এমপির পরিবার দেখাবে{% endif %}</small>
+  </div>
+  <div class="p-3">
+    <div class="d-flex align-items-start gap-3">
+      <div style="min-width:190px;font-size:.875rem;padding-top:6px;">
+        <i class="bi bi-people-fill text-muted me-1"></i>
+        <span class="fw-semibold">{% if is_en == 'en' %}Member of Parliament{% else %}সংসদ সদস্য{% endif %}</span>
+      </div>
+      <div style="flex:1;">
+        <div class="d-flex gap-2 align-items-start">
+          <select name="mp_id" multiple id="mp_id_select"
+                  class="form-select form-select-sm" style="flex:1;max-width:560px;"
+                  data-placeholder="{% if is_en == 'en' %}All MPs (leave blank for all)…{% else %}সকল এমপি (ফাঁকা রাখলে সবার তথ্য আসবে)…{% endif %}">
+            {% for mp in mp_list %}
+            <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel_mp_ids %}selected{% endif %}>
+              {{ mp.mp_id }} — {% if is_en == 'en' %}{{ mp.name_en|default:mp.name_bn }}{% else %}{{ mp|tr:"name" }}{% endif %}
+            </option>
+            {% endfor %}
+          </select>
+          <button type="button" id="selectAllMp" class="btn btn-outline-secondary btn-sm">{% if is_en == 'en' %}All{% else %}সব{% endif %}</button>
+          <button type="button" id="clearAllMp" class="btn btn-outline-secondary btn-sm">{% if is_en == 'en' %}Clear{% else %}বাতিল{% endif %}</button>
+        </div>
+        <div class="mt-1 text-muted" style="font-size:.78rem;">
+          <i class="bi bi-info-circle me-1"></i>{% if is_en == 'en' %}Select one, multiple, or none (= all MPs).{% else %}একজন, একাধিক বা কোনো নির্বাচন না করলে সকলের তথ্য আসবে।{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ACTION BUTTONS ════════════════════════════════════════════════════════ -->
+<div class="d-flex align-items-center gap-3 mb-3 no-print">
+  <button type="submit" class="btn btn-primary px-4">
+    <i class="bi bi-search me-1"></i>{% if is_en == 'en' %}Search{% else %}অনুসন্ধান করুন{% endif %}
+  </button>
+  <a href="{% url 'reports:family_report' %}" class="btn btn-outline-secondary">
+    <i class="bi bi-x-circle me-1"></i>{% if is_en == 'en' %}Reset{% else %}রিসেট{% endif %}
+  </a>
+  {% if searched and total_count %}
+  <div class="ms-auto d-flex gap-2">
+    <button type="submit" name="format" value="print" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-printer-fill me-1"></i>{% if is_en == 'en' %}Print{% else %}প্রিন্ট{% endif %}
+    </button>
+    <button type="submit" name="format" value="excel" class="btn btn-outline-success btn-sm">
+      <i class="bi bi-file-earmark-excel me-1"></i>Excel
+    </button>
+    <button type="submit" name="format" value="csv" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-filetype-csv me-1"></i>CSV
+    </button>
+  </div>
+  {% endif %}
+</div>
+
+</form>
+
+<!-- ══ RESULTS ══════════════════════════════════════════════════════════════ -->
+{% if searched %}
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <span class="text-muted" style="font-size:.875rem;">
+    {% if is_en == 'en' %}
+      Total family members: <strong>{{ total_count }}</strong>
+      (from <strong>{{ mp_count }}</strong> MPs)
+    {% else %}
+      মোট পরিবার সদস্য: <strong>{{ total_count }}</strong> জন
+      (<strong>{{ mp_count }}</strong> জন এমপির পরিবার)
+    {% endif %}
+    {% if total_count == 0 %}— {% if is_en == 'en' %}No records found.{% else %}কোনো তথ্য পাওয়া যায়নি।{% endif %}{% endif %}
+  </span>
+</div>
+
+{% if page_obj %}
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover table-sm mb-0 align-middle" style="font-size:.84rem;">
+      <thead class="table-dark">
+        <tr>
+          <th style="width:42px;">{% if is_en == 'en' %}#{% else %}ক্রম{% endif %}</th>
+          <th>{% if is_en == 'en' %}MP Name{% else %}এমপির নাম{% endif %}</th>
+          <th style="width:110px;">{% if is_en == 'en' %}MP ID{% else %}এমপি আইডি{% endif %}</th>
+          <th style="width:110px;">{% if is_en == 'en' %}Relation{% else %}সম্পর্ক{% endif %}</th>
+          <th>{% if is_en == 'en' %}Name{% else %}নাম{% endif %}</th>
+          <th style="width:90px;">{% if is_en == 'en' %}Gender{% else %}লিঙ্গ{% endif %}</th>
+          <th style="width:70px;">{% if is_en == 'en' %}Age{% else %}বয়স{% endif %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in page_obj %}
+        <tr>
+          <td class="text-center text-muted">{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td>
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}" class="text-decoration-none fw-medium">
+              {{ row.mp|tr:"name" }}
+            </a>
+          </td>
+          <td class="font-monospace text-muted" style="font-size:.8rem;">{{ row.mp.mp_id }}</td>
+          <td>
+            {% if row.relation_bn == 'স্বামী/স্ত্রী' %}
+            <span class="badge" style="background:#e0f2fe;color:#0369a1;font-weight:500;">
+              {% if is_en == 'en' %}{{ row.relation_en }}{% else %}{{ row.relation_bn }}{% endif %}
+            </span>
+            {% else %}
+            <span class="badge" style="background:#f0fdf4;color:#166534;font-weight:500;">
+              {% if is_en == 'en' %}{{ row.relation_en }}{% else %}{{ row.relation_bn }}{% endif %}
+            </span>
+            {% endif %}
+          </td>
+          <td class="fw-medium">{{ row.member|tr:"name" }}</td>
+          <td>{{ row.member.gender|tr:"name"|default:"—" }}</td>
+          <td class="text-center">{{ row.age }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-5">
+          {% if is_en == 'en' %}No family member records found.{% else %}কোনো পরিবার সদস্যের তথ্য পাওয়া যায়নি।{% endif %}
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if page_obj.has_other_pages %}
+  <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+    <small class="text-muted">
+      {% if is_en == 'en' %}Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} — Total {{ total_count }}
+      {% else %}পাতা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} — মোট {{ total_count }}{% endif %}
+    </small>
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">&laquo;</a>
+        </li>
+        {% endif %}
+        <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">&raquo;</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+  $('#mp_id_select').select2({
+    theme: 'bootstrap-5',
+    placeholder: $('#mp_id_select').data('placeholder'),
+    allowClear: true,
+    width: '100%',
+  });
+  $('#selectAllMp').on('click', function() {
+    $('#mp_id_select option').prop('selected', true);
+    $('#mp_id_select').trigger('change');
+  });
+  $('#clearAllMp').on('click', function() {
+    $('#mp_id_select').val(null).trigger('change');
+  });
+});
+</script>
+{% endblock %}

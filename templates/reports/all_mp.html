@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}সকল সংসদ সদস্য তালিকা{% endblock %}
+{% load static lang_tags %}
+{% block title %}{% ui "সকল সংসদ সদস্য তালিকা" "All MPs List" %}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -16,11 +16,11 @@
 <div class="d-flex align-items-center justify-content-between mb-3">
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
-      <li class="breadcrumb-item active">সকল সংসদ সদস্য</li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% ui "রিপোর্ট" "Reports" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "সকল সংসদ সদস্য" "All Members of Parliament" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">সকল সংসদ সদস্য তালিকা</h4>
+    <h4 class="mb-0 fw-bold">{% ui "সকল সংসদ সদস্য তালিকা" "All MPs List" %}</h4>
     <small class="text-muted">All Members of Parliament</small>
   </div>
 </div>
@@ -30,67 +30,67 @@
 <div class="mp-card mb-3 p-3 no-print">
   <div class="row g-2 align-items-end">
     <div class="col-md-3">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">অনুসন্ধান</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম / এমপি আইডি…">
       </div>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">সংসদ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব সংসদ</option>
+        <option value="">{% ui "সব সংসদ" "All" %}</option>
         {% for p in parliaments %}
-        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
       <label class="form-label fw-medium mb-1" style="font-size:.85rem;">দল</label>
       <select name="party" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব দল</option>
+        <option value="">{% ui "সব দল" "All" %}</option>
         {% for p in parties %}
-        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == party_id %}selected{% endif %}>{{ p.name_bn }}</option>
+        <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == party_id %}selected{% endif %}>{{ p|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">লিঙ্গ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "লিঙ্গ" "Gender" %}</label>
       <select name="gender" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব</option>
+        <option value="">{% ui "সব" "All" %}</option>
         {% for g in genders %}
-        <option value="{{ g.pk }}" {% if g.pk|stringformat:"s" == gender_id %}selected{% endif %}>{{ g.name_bn }}</option>
+        <option value="{{ g.pk }}" {% if g.pk|stringformat:"s" == gender_id %}selected{% endif %}>{{ g|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">সদস্যের ধরন</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সদস্যের ধরন" "Member Type" %}</label>
       <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব</option>
-        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>সরাসরি নির্বাচিত</option>
-        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>সংরক্ষিত (মহিলা)</option>
+        <option value="">{% ui "সব" "All" %}</option>
+        <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>{% ui "সরাসরি নির্বাচিত" "Direct" %}</option>
+        <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত (মহিলা)" "Reserved (Women)" %}</option>
       </select>
     </div>
     <div class="col-md-1">
-      <button type="submit" class="btn btn-primary btn-sm w-100">খুঁজুন</button>
+      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "খুঁজুন" "Search" %}</button>
     </div>
   </div>
   <div class="row g-2 mt-1 align-items-end">
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">বিভাগ</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "বিভাগ" "Division" %}</label>
       <select name="division" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব বিভাগ</option>
+        <option value="">{% ui "সব বিভাগ" "All" %}</option>
         {% for d in divisions %}
-        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == division_id %}selected{% endif %}>{{ d.name_bn }}</option>
+        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == division_id %}selected{% endif %}>{{ d|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">জেলা</label>
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "জেলা" "District" %}</label>
       <select name="district" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">সব জেলা</option>
+        <option value="">{% ui "সব জেলা" "All" %}</option>
         {% for d in districts %}
-        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == district_id %}selected{% endif %}>{{ d.name_bn }}</option>
+        <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" == district_id %}selected{% endif %}>{{ d|tr:"name" }}</option>
         {% endfor %}
       </select>
     </div>
@@ -115,7 +115,7 @@
 <!-- Export bar -->
 {% with base_url="?parliament="|add:parliament_id|add:"&party="|add:party_id|add:"&gender="|add:gender_id|add:"&district="|add:district_id|add:"&division="|add:division_id|add:"&member_type="|add:member_type|add:"&q="|add:q %}
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2 no-print">
-  <small class="text-muted">মোট ফলাফল: <strong>{{ total_count }}</strong> টি</small>
+  <small class="text-muted">{% ui "মোট ফলাফল:" "Total results:" %} <strong>{{ total_count }}</strong> টি</small>
   <div class="d-flex gap-2 flex-wrap">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
       <i class="bi bi-printer-fill me-1"></i>প্রিন্ট
@@ -164,20 +164,20 @@
           {% if "mp_id" in selected_cols %}<td data-col="mp_id"><code>{{ mp.mp_id }}</code></td>{% endif %}
           {% if "name_bn" in selected_cols %}
           <td data-col="name_bn">
-            <a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none fw-medium">{{ mp.name_bn }}</a>
+            <a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none fw-medium">{{ mp|tr:"name" }}</a>
           </td>
           {% endif %}
           {% if "name_en" in selected_cols %}<td data-col="name_en" class="text-muted">{{ mp.name_en }}</td>{% endif %}
-          {% if "constituency" in selected_cols %}<td data-col="constituency">{{ ei.constituency.display_bn|default:"—" }}</td>{% endif %}
-          {% if "party" in selected_cols %}<td data-col="party">{% if ei.party %}<span class="badge bg-primary-subtle text-primary">{{ ei.party.name_bn }}</span>{% else %}—{% endif %}</td>{% endif %}
-          {% if "gender" in selected_cols %}<td data-col="gender">{{ mp.gender.name_bn|default:"—" }}</td>{% endif %}
+          {% if "constituency" in selected_cols %}<td data-col="constituency">{{ ei.constituency|tr:"display"|default:"—"  }}</td>{% endif %}
+          {% if "party" in selected_cols %}<td data-col="party">{% if ei.party %}<span class="badge bg-primary-subtle text-primary">{{ ei.party|tr:"name" }}</span>{% else %}—{% endif %}</td>{% endif %}
+          {% if "gender" in selected_cols %}<td data-col="gender">{{ mp.gender|tr:"name"|default:"—"  }}</td>{% endif %}
           {% if "dob" in selected_cols %}<td data-col="dob">{{ mp.dob|date:"d/m/Y"|default:"—" }}</td>{% endif %}
-          {% if "religion" in selected_cols %}<td data-col="religion">{{ mp.religion.name_bn|default:"—" }}</td>{% endif %}
-          {% if "blood_group" in selected_cols %}<td data-col="blood_group">{{ mp.blood_group.name_bn|default:"—" }}</td>{% endif %}
-          {% if "district" in selected_cols %}<td data-col="district">{{ mp.home_district.name_bn|default:"—" }}</td>{% endif %}
+          {% if "religion" in selected_cols %}<td data-col="religion">{{ mp.religion|tr:"name"|default:"—"  }}</td>{% endif %}
+          {% if "blood_group" in selected_cols %}<td data-col="blood_group">{{ mp.blood_group|tr:"name"|default:"—"  }}</td>{% endif %}
+          {% if "district" in selected_cols %}<td data-col="district">{{ mp.home_district|tr:"name"|default:"—"  }}</td>{% endif %}
           {% if "professions" in selected_cols %}
           <td data-col="professions">
-            {% for p in mp.professions_current.all %}{{ p.name_bn }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}
+            {% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}
           </td>
           {% endif %}
           <td class="text-end no-print">
@@ -188,7 +188,7 @@
         </tr>
         {% endwith %}
         {% empty %}
-        <tr><td colspan="20" class="text-center text-muted py-4">কোনো তথ্য পাওয়া যায়নি।</td></tr>
+        <tr><td colspan="20" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

@@ -1,4 +1,4 @@
-{% load static %}
+{% load static lang_tags %}
 <form method="post" enctype="multipart/form-data"
       action="{% url 'mp:mp_section_general' mp.pk %}" novalidate>
   {% csrf_token %}
@@ -9,7 +9,7 @@
   <div class="row">
     <!-- ── নাম ── -->
     <div class="col-12 mb-3">
-      <label class="form-label fw-medium">নাম (বাংলায়) <span class="text-primary">*</span></label>
+      <label class="form-label fw-medium">{% ui "নাম (বাংলায়)" "Name (Bangla)" %} <span class="text-primary">*</span></label>
       {{ general_form.name_bn }}
       {% if general_form.name_bn.errors %}<div class="invalid-feedback d-block">{{ general_form.name_bn.errors }}</div>{% endif %}
     </div>
@@ -19,7 +19,7 @@
       {% if general_form.name_en.errors %}<div class="invalid-feedback d-block">{{ general_form.name_en.errors }}</div>{% endif %}
     </div>
     <div class="col-12 mb-3">
-      <label class="form-label fw-medium">পিতার নাম (বাংলায়)</label>
+      <label class="form-label fw-medium">{% ui "পিতার নাম (বাংলায়)" "Father's Name (Bangla)" %}</label>
       {{ general_form.father_name_bn }}
     </div>
     <div class="col-12 mb-3">
@@ -27,7 +27,7 @@
       {{ general_form.father_name_en }}
     </div>
     <div class="col-12 mb-3">
-      <label class="form-label fw-medium">মাতার নাম (বাংলায়)</label>
+      <label class="form-label fw-medium">{% ui "মাতার নাম (বাংলায়)" "Mother's Name (Bangla)" %}</label>
       {{ general_form.mother_name_bn }}
     </div>
     <div class="col-12 mb-3">
@@ -37,96 +37,96 @@
 
     <!-- ── Row 7: DOB + NID ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">জন্ম তারিখ</label>
+      <label class="form-label fw-medium">{% ui "জন্ম তারিখ" "Date of Birth" %}</label>
       {{ general_form.dob }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">জাতীয় পরিচয়পত্র নং</label>
+      <label class="form-label fw-medium">{% ui "জাতীয় পরিচয়পত্র নং" "National ID No." %}</label>
       {{ general_form.nid }}
       {% if general_form.nid.errors %}<div class="invalid-feedback d-block">{{ general_form.nid.errors }}</div>{% endif %}
     </div>
 
     <!-- ── Row 8: Birth District + Gender ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">জন্মস্থান (জেলা)</label>
+      <label class="form-label fw-medium">{% ui "জন্মস্থান (জেলা)" "Birthplace (District)" %}</label>
       {{ general_form.birth_district }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">লিঙ্গ</label>
+      <label class="form-label fw-medium">{% ui "লিঙ্গ" "Gender" %}</label>
       {{ general_form.gender }}
     </div>
 
     <!-- ── Row 9: Home District + Marital Status ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">নিজ জেলা</label>
+      <label class="form-label fw-medium">{% ui "নিজ জেলা" "Home District" %}</label>
       {{ general_form.home_district }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">বৈবাহিক অবস্থা</label>
+      <label class="form-label fw-medium">{% ui "বৈবাহিক অবস্থা" "Marital Status" %}</label>
       {{ general_form.marital_status }}
     </div>
 
     <!-- ── Row 10: Nationality + Religion ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">জাতীয়তা</label>
+      <label class="form-label fw-medium">{% ui "জাতীয়তা" "Nationality" %}</label>
       {{ general_form.nationality }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">ধর্ম</label>
+      <label class="form-label fw-medium">{% ui "ধর্ম" "Religion" %}</label>
       {{ general_form.religion }}
     </div>
 
     <!-- ── Row 11: Blood Group + Current Profession ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">রক্তের গ্রুপ</label>
+      <label class="form-label fw-medium">{% ui "রক্তের গ্রুপ" "Blood Group" %}</label>
       {{ general_form.blood_group }}
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">পেশা (বর্তমান)</label>
+      <label class="form-label fw-medium">{% ui "পেশা (বর্তমান)" "Profession (Current)" %}</label>
       {{ general_form.professions_current }}
-      <div class="form-text">একাধিক নির্বাচন করা যাবে</div>
+      <div class="form-text">{% ui "একাধিক নির্বাচন করা যাবে" "Multiple selections allowed" %}</div>
     </div>
 
     <!-- ── Row 12: Previous Profession + TIN ── -->
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">পেশা (পূর্বের)</label>
+      <label class="form-label fw-medium">{% ui "পেশা (পূর্বের)" "Profession (Previous)" %}</label>
       {{ general_form.professions_previous }}
-      <div class="form-text">একাধিক নির্বাচন করা যাবে</div>
+      <div class="form-text">{% ui "একাধিক নির্বাচন করা যাবে" "Multiple selections allowed" %}</div>
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">টিআইএন</label>
+      <label class="form-label fw-medium">{% ui "টিআইএন" "TIN" %}</label>
       {{ general_form.tin }}
     </div>
 
     <!-- ── Professional Qualification (System addition) ── -->
     <div class="col-12 mb-3">
-      <label class="form-label fw-medium">পেশাদার যোগ্যতা
+      <label class="form-label fw-medium">{% ui "পেশাদার যোগ্যতা" "Professional Qualification" %}
         <span class="text-muted" style="font-size:0.75rem;">(চিকিৎসক / প্রকৌশলী / আইনজীবী ইত্যাদি)</span>
       </label>
       {{ general_form.professional_qualifications }}
-      <div class="form-text">একাধিক নির্বাচন করা যাবে</div>
+      <div class="form-text">{% ui "একাধিক নির্বাচন করা যাবে" "Multiple selections allowed" %}</div>
     </div>
 
     <!-- ── Passport + Freedom Fighter (2-column) ── -->
     <div class="col-md-6">
       <div class="p-3 rounded mb-3" style="background:#f8fafc; border:1px solid #e2e8f0;">
-        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">পাসপোর্ট তথ্য</div>
+        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">{% ui "পাসপোর্ট তথ্য" "Passport Information" %}</div>
         <div class="mb-2">
-          <label class="form-label fw-medium" style="font-size:0.85rem;">পাসপোর্ট নং</label>
+          <label class="form-label fw-medium" style="font-size:0.85rem;">{% ui "পাসপোর্ট নং" "Passport No." %}</label>
           {{ general_form.passport_number }}
         </div>
         <div class="row">
           <div class="col-6 mb-2">
-            <label class="form-label fw-medium" style="font-size:0.85rem;">ইস্যুর তারিখ</label>
+            <label class="form-label fw-medium" style="font-size:0.85rem;">{% ui "ইস্যুর তারিখ" "Issue Date" %}</label>
             {{ general_form.passport_issue_date }}
           </div>
           <div class="col-6 mb-2">
-            <label class="form-label fw-medium" style="font-size:0.85rem;">মেয়াদোত্তীর্ণ</label>
+            <label class="form-label fw-medium" style="font-size:0.85rem;">{% ui "মেয়াদোত্তীর্ণ" "Expiry Date" %}</label>
             {{ general_form.passport_expiry_date }}
           </div>
         </div>
         <div>
-          <label class="form-label fw-medium" style="font-size:0.85rem;">ইস্যুর স্থান</label>
+          <label class="form-label fw-medium" style="font-size:0.85rem;">{% ui "ইস্যুর স্থান" "Issue Place" %}</label>
           {{ general_form.passport_issue_place }}
         </div>
       </div>
@@ -134,24 +134,24 @@
 
     <div class="col-md-6">
       <div class="p-3 rounded mb-3" style="background:#f8fafc; border:1px solid #e2e8f0;">
-        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">মুক্তিযুদ্ধ সংক্রান্ত</div>
+        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">{% ui "মুক্তিযুদ্ধ সংক্রান্ত" "Freedom Fighter Related" %}</div>
         <div class="form-check mb-2">
           {{ general_form.is_freedom_fighter }}
-          <label class="form-check-label">মুক্তিযোদ্ধা</label>
+          <label class="form-check-label">{% ui "মুক্তিযোদ্ধা" "Freedom Fighter" %}</label>
         </div>
         <div class="form-check mb-2">
           {{ general_form.is_ff_child }}
-          <label class="form-check-label">মুক্তিযোদ্ধার সন্তান</label>
+          <label class="form-check-label">{% ui "মুক্তিযোদ্ধার সন্তান" "Child of Freedom Fighter" %}</label>
         </div>
         <div class="form-check">
           {{ general_form.is_ff_grandchild }}
-          <label class="form-check-label">মুক্তিযোদ্ধার নাতি-নাতনি</label>
+          <label class="form-check-label">{% ui "মুক্তিযোদ্ধার নাতি-নাতনি" "Grandchild of Freedom Fighter" %}</label>
         </div>
       </div>
 
       <!-- Photo -->
       <div class="p-3 rounded" style="background:#f8fafc; border:1px solid #e2e8f0;">
-        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">ছবি আপলোড</div>
+        <div class="fw-medium mb-2" style="font-size:0.9rem; color:#475569;">{% ui "ছবি আপলোড" "Photo Upload" %}</div>
         {% if mp.photo %}
         <div class="mb-2">
           <img src="{{ mp.photo.url }}" alt="" height="80"
@@ -159,7 +159,7 @@
         </div>
         {% endif %}
         {{ general_form.photo }}
-        <div class="form-text">JPG/PNG, সর্বোচ্চ 2MB</div>
+        <div class="form-text">JPG/PNG, {% ui "সর্বোচ্চ 2MB" "max 2MB" %}</div>
       </div>
     </div>
 
@@ -170,7 +170,7 @@
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">শখ (বাংলায়)</label>
+      <label class="form-label fw-medium">{% ui "শখ (বাংলায়)" "Hobbies (Bangla)" %}</label>
       {{ general_form.hobbies_bn }}
     </div>
     <div class="col-md-6 mb-3">
@@ -185,7 +185,7 @@
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">অন্যান্য তথ্য (বাংলায়)</label>
+      <label class="form-label fw-medium">{% ui "অন্যান্য তথ্য (বাংলায়)" "Other Info (Bangla)" %}</label>
       {{ general_form.other_info_bn }}
     </div>
     <div class="col-md-6 mb-3">
@@ -196,7 +196,7 @@
 
   <div class="d-flex justify-content-end mt-3 pt-3 border-top">
     <button type="submit" class="btn btn-primary">
-      <i class="bi bi-check-lg me-1"></i>সংরক্ষণ করুন
+      <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
     </button>
   </div>
 </form>
