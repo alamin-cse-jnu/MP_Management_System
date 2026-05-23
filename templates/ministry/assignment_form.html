@@ -38,7 +38,8 @@
       <div class="row">
         <div class="col-md-12 mb-3">
           <label class="form-label fw-medium">{% ui "সংসদ সদস্য" "Members of Parliament" %} <span class="text-primary">*</span></label>
-          <p class="text-muted small">{% ui "দয়া করে এমপি প্রোফাইল থেকে নিয়োগ দিন অথবা নিচের তালিকা থেকে সদস্য নির্বাচন করুন।" "Please assign from the MP profile or select a member from the list below." %}</p>
+          {{ form.mp }}
+          {% if form.mp.errors %}<div class="text-danger small mt-1">{{ form.mp.errors }}</div>{% endif %}
         </div>
       </div>
       {% endif %}

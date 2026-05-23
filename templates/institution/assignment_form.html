@@ -22,6 +22,15 @@
     <form method="post" novalidate>{% csrf_token %}
       {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      {% if not mp %}
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-medium">{% ui "সংসদ সদস্য" "Members of Parliament" %} <span class="text-primary">*</span></label>
+          {{ form.mp }}
+          {% if form.mp.errors %}<div class="text-danger small mt-1">{{ form.mp.errors }}</div>{% endif %}
+        </div>
+      </div>
+      {% endif %}
       <div class="row">
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "প্রতিষ্ঠান" "Institution" %} <span class="text-primary">*</span></label>{{ form.institution }}</div>

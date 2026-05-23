@@ -74,7 +74,7 @@ def assignment_create(request):
     elif active_p:
         initial['parliament'] = active_p
 
-    form = CommitteeAssignmentForm(request.POST or None, initial=initial)
+    form = CommitteeAssignmentForm(request.POST or None, initial=initial, mp_preset=bool(mp))
     if form.is_valid():
         obj = form.save(commit=False)
         if mp:
@@ -97,7 +97,7 @@ def assignment_create(request):
 @login_required
 def assignment_update(request, pk):
     obj  = get_object_or_404(CommitteeAssignment, pk=pk)
-    form = CommitteeAssignmentForm(request.POST or None, instance=obj)
+    form = CommitteeAssignmentForm(request.POST or None, instance=obj, mp_preset=True)
     if form.is_valid():
         form.save()
         messages.success(request, 'কমিটির তথ্য আপডেট হয়েছে।')

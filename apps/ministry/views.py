@@ -69,7 +69,7 @@ def assignment_create(request):
     elif active_p:
         initial['parliament'] = active_p
 
-    form = MinistryAssignmentForm(request.POST or None, initial=initial)
+    form = MinistryAssignmentForm(request.POST or None, initial=initial, mp_preset=bool(mp))
     if form.is_valid():
         obj = form.save(commit=False)
         if mp:
@@ -92,7 +92,7 @@ def assignment_create(request):
 @login_required
 def assignment_update(request, pk):
     obj = get_object_or_404(MinistryAssignment, pk=pk)
-    form = MinistryAssignmentForm(request.POST or None, instance=obj)
+    form = MinistryAssignmentForm(request.POST or None, instance=obj, mp_preset=True)
     if form.is_valid():
         form.save()
         messages.success(request, 'মন্ত্রণালয়ের তথ্য আপডেট হয়েছে।')
