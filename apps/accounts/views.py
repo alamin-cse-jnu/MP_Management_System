@@ -106,6 +106,15 @@ def dashboard(request):
         .order_by('-created_at')[:6]
     )
 
+    # Recent audit activity
+    try:
+        from apps.reports.models import AuditLog
+        recent_activity = list(
+            AuditLog.objects.select_related('user').order_by('-timestamp')[:10]
+        )
+    except Exception:
+        recent_activity = []
+
     return render(request, 'accounts/dashboard.html', {
         'active_parliament':  active_parliament,
         'total_mps':          total_mps,
@@ -119,6 +128,7 @@ def dashboard(request):
         'party_stats':        party_stats,
         'division_stats':     division_stats,
         'recent_mps':         recent_mps,
+        'recent_activity':    recent_activity,
     })
 
 

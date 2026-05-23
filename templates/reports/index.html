@@ -68,5 +68,10 @@
   {% include "reports/_report_card.html" with url="reports:foreign_tours" icon="bi-airplane" title="বিদেশ সফর তালিকা" subtitle="Foreign tour GOs — by type, country, year" %}
   {% include "reports/_report_card.html" with url="reports:mp_biodata" icon="bi-person-vcard-fill" title="এমপি বায়োডাটা (একক)" subtitle="Full biodata preview for a single MP" %}
 
+  <!-- Group: Custom Report -->
+  <div class="col-12 mt-2"><h6 class="text-uppercase text-muted fw-semibold" style="font-size:0.75rem;letter-spacing:.06em;">কাস্টম রিপোর্ট</h6></div>
+
+  {% include "reports/_report_card.html" with url="reports:custom_report" icon="bi-sliders" title="কাস্টম রিপোর্ট তৈরি করুন" subtitle="নিজস্ব ফিল্টার ও কলাম বেছে কাস্টম রিপোর্ট তৈরি করুন" %}
+
 </div>
 {% endblock %}

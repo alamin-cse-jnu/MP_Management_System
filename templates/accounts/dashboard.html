@@ -272,4 +272,61 @@
 
 </div>
 
+<!-- ══ ROW 4: RECENT ACTIVITY ════════════════════════════════════════════════ -->
+{% if recent_activity %}
+<div class="row g-3 mt-1">
+  <div class="col-12">
+    <div class="mp-card">
+      <div class="mp-card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-activity icon"></i>সাম্প্রতিক কার্যক্রম</span>
+        <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-xs" style="font-size:.75rem;padding:2px 8px;">
+          সম্পূর্ণ লগ <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-sm mb-0 align-middle" style="font-size:.83rem;">
+          <thead class="table-light">
+            <tr>
+              <th style="width:150px;">সময়</th>
+              <th style="width:120px;">ব্যবহারকারী</th>
+              <th style="width:90px;">কার্যক্রম</th>
+              <th style="width:110px;">মডেল</th>
+              <th>রেকর্ড</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for log in recent_activity %}
+            <tr>
+              <td class="text-muted text-nowrap">{{ log.timestamp|date:"d M Y H:i" }}</td>
+              <td>{{ log.user.username|default:"—" }}</td>
+              <td>
+                {% if log.action == 'CREATE' %}
+                  <span class="badge bg-success">তৈরি</span>
+                {% elif log.action == 'UPDATE' %}
+                  <span class="badge bg-warning text-dark">পরিবর্তন</span>
+                {% elif log.action == 'DELETE' %}
+                  <span class="badge bg-danger">মুছে ফেলা</span>
+                {% endif %}
+              </td>
+              <td><code style="font-size:.78rem;">{{ log.model_name }}</code></td>
+              <td>
+                <span class="text-truncate d-inline-block" style="max-width:300px;">
+                  {{ log.object_repr|default:"—" }}
+                </span>
+                {% if log.changes %}
+                <a href="{% url 'reports:audit_log_detail' log.pk %}" class="ms-1 text-muted" title="পরিবর্তন দেখুন">
+                  <i class="bi bi-eye" style="font-size:.8rem;"></i>
+                </a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base_print.html" %}
+{% load static report_tags %}
+{% block title %}কাস্টম রিপোর্ট{% endblock %}
+
+{% block content %}
+<div style="text-align:center;margin-bottom:12px;">
+  <div style="font-size:1.1rem;font-weight:bold;">কাস্টম রিপোর্ট</div>
+  <div style="font-size:.85rem;color:#666;">Custom Report</div>
+</div>
+
+<table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+  <thead>
+    <tr style="background:#0d9488;color:#fff;">
+      <th style="padding:5px 8px;border:1px solid #999;">ক্রম</th>
+      {% for key, label in CUSTOM_REPORT_COLS %}
+        {% if key in selected_cols and key != 'photo' %}
+          <th style="padding:5px 8px;border:1px solid #999;">{{ label }}</th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for mp in object_list %}
+    <tr style="{% cycle 'background:#fff;' 'background:#f0fdfa;' %}">
+      <td style="padding:4px 8px;border:1px solid #ddd;text-align:center;">{{ forloop.counter }}</td>
+      {% for key, label in CUSTOM_REPORT_COLS %}
+        {% if key in selected_cols and key != 'photo' %}
+          <td style="padding:4px 8px;border:1px solid #ddd;">
+            {% if key == 'mp_id' %}{{ mp.mp_id }}
+            {% elif key == 'name_bn' %}{{ mp.name_bn }}
+            {% else %}{{ mp|get_custom_cell:key }}
+            {% endif %}
+          </td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% empty %}
+    <tr><td colspan="20" style="padding:12px;text-align:center;">কোনো ফলাফল নেই।</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div style="margin-top:16px;font-size:.78rem;color:#666;text-align:right;">
+  মোট: {{ object_list|length }} জন | মুদ্রণের তারিখ: {% now "d M Y" %}
+</div>
+{% endblock %}

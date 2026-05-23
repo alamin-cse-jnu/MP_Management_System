@@ -1033,3 +1033,334 @@ def contact_list(request):
     paginator = Paginator(qs, PAGE_SIZE)
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/contact_list.html', ctx)
+
+
+# ── Audit Log ─────────────────────────────────────────────────────────────────
+
+AUDIT_PAGE_SIZE = 50
+
+
+@login_required
+def audit_log_list(request):
+    from apps.accounts.models import CustomUser
+    from .models import AuditLog
+
+    qs = AuditLog.objects.select_related('user')
+
+    user_id    = request.GET.get('user', '')
+    action     = request.GET.get('action', '')
+    model_name = request.GET.get('model', '')
+    date_from  = request.GET.get('date_from', '')
+    date_to    = request.GET.get('date_to', '')
+
+    if user_id:
+        qs = qs.filter(user_id=user_id)
+    if action:
+        qs = qs.filter(action=action)
+    if model_name:
+        qs = qs.filter(model_name=model_name)
+    if date_from:
+        qs = qs.filter(timestamp__date__gte=date_from)
+    if date_to:
+        qs = qs.filter(timestamp__date__lte=date_to)
+
+    total_count  = qs.count()
+    paginator    = Paginator(qs, AUDIT_PAGE_SIZE)
+    page_obj     = paginator.get_page(request.GET.get('page'))
+
+    # Distinct model names for filter dropdown
+    model_names = (
+        AuditLog.objects.values_list('model_name', flat=True)
+        .distinct().order_by('model_name')
+    )
+    users = CustomUser.objects.filter(is_active=True).order_by('username')
+
+    return render(request, 'reports/audit_log_list.html', {
+        'page_obj':    page_obj,
+        'total_count': total_count,
+        'users':       users,
+        'model_names': model_names,
+        'user_id':     user_id,
+        'action':      action,
+        'model_name':  model_name,
+        'date_from':   date_from,
+        'date_to':     date_to,
+    })
+
+
+# ── Custom Report ─────────────────────────────────────────────────────────────
+
+CUSTOM_REPORT_COLS = [
+    ('photo',         'ছবি'),
+    ('mp_id',         'এমপি আইডি'),
+    ('name_bn',       'নাম (বাংলায়)'),
+    ('name_en',       'Name (English)'),
+    ('constituency',  'নির্বাচনী এলাকা'),
+    ('party',         'রাজনৈতিক দল'),
+    ('age',           'বয়স'),
+    ('blood_group',   'রক্তের গ্রুপ'),
+    ('gender',        'লিঙ্গ'),
+    ('religion',      'ধর্ম'),
+    ('division',      'বিভাগ'),
+    ('district',      'জেলা'),
+    ('times_elected', 'নির্বাচনের সংখ্যা'),
+    ('committee',     'স্থায়ী কমিটি'),
+    ('ministry',      'মন্ত্রণালয়'),
+    ('profession',    'পেশা'),
+    ('member_type',   'সদস্যের ধরন'),
+]
+CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
+
+
+def _custom_cell(mp, col, today=None):
+    import datetime
+    if today is None:
+        today = datetime.date.today()
+    ei = next(iter(mp.election_infos.all()), None)
+    if col == 'mp_id':        return mp.mp_id
+    if col == 'name_bn':      return mp.name_bn
+    if col == 'name_en':      return mp.name_en
+    if col == 'constituency': return ei.constituency.display_bn if ei and ei.constituency else '—'
+    if col == 'party':        return ei.party.name_bn if ei and ei.party else '—'
+    if col == 'age':
+        if mp.dob:
+            age = today.year - mp.dob.year - ((today.month, today.day) < (mp.dob.month, mp.dob.day))
+            return str(age)
+        return '—'
+    if col == 'blood_group':   return mp.blood_group.name_bn if mp.blood_group else '—'
+    if col == 'gender':        return mp.gender.name_bn if mp.gender else '—'
+    if col == 'religion':      return mp.religion.name_bn if mp.religion else '—'
+    if col == 'division':
+        return mp.home_district.division.name_bn if mp.home_district and mp.home_district.division else '—'
+    if col == 'district':      return mp.home_district.name_bn if mp.home_district else '—'
+    if col == 'times_elected': return str(ei.times_elected) if ei else '—'
+    if col == 'committee':
+        return ', '.join(ca.committee.name_bn for ca in mp.committee_assignments.all()) or '—'
+    if col == 'ministry':
+        return ', '.join(ma.ministry.name_bn for ma in mp.ministry_assignments.all()) or '—'
+    if col == 'profession':
+        return ', '.join(p.name_bn for p in mp.professions_current.all()) or '—'
+    if col == 'member_type':
+        return 'সরাসরি নির্বাচিত' if mp.member_type == 'direct' else 'সংরক্ষিত (মহিলা)'
+    return '—'
+
+
+def _build_custom_qs(get, parliament_id):
+    """Dynamically build queryset from enabled filters."""
+    import datetime
+
+    from django.db.models import Prefetch
+    from apps.committee.models import CommitteeAssignment
+    from apps.ministry.models import MinistryAssignment
+    from apps.mp.models import MP, ElectionInfo
+
+    ei_qs = ElectionInfo.objects.select_related('constituency', 'party')
+    if parliament_id:
+        ei_qs = ei_qs.filter(parliament_id=parliament_id)
+
+    qs = MP.objects.select_related(
+        'parliament', 'gender', 'religion', 'blood_group',
+        'home_district__division',
+    ).prefetch_related(
+        Prefetch('election_infos', queryset=ei_qs),
+        'professions_current',
+        Prefetch('committee_assignments',
+                 queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
+        Prefetch('ministry_assignments',
+                 queryset=MinistryAssignment.objects.select_related('ministry').filter(is_active=True)),
+    ).filter(is_active=True)
+
+    if parliament_id:
+        qs = qs.filter(parliament_id=parliament_id)
+
+    today = datetime.date.today()
+    needs_distinct = False
+
+    # ── MP ID ─────────────────────────────────────────────────────────────────
+    if 'enable_mp_id' in get:
+        val = get.get('mp_id', '').strip()
+        if val:
+            qs = qs.filter(mp_id__icontains=val)
+
+    # ── Constituency ──────────────────────────────────────────────────────────
+    if 'enable_constituency' in get:
+        val = get.get('constituency', '').strip()
+        if val:
+            qs = qs.filter(
+                Q(election_infos__constituency__display_bn__icontains=val) |
+                Q(election_infos__constituency__display_en__icontains=val)
+            )
+            needs_distinct = True
+
+    # ── Age Range ─────────────────────────────────────────────────────────────
+    if 'enable_age' in get:
+        age_min = get.get('age_min', '').strip()
+        age_max = get.get('age_max', '').strip()
+        if age_min and age_min.isdigit():
+            max_dob = datetime.date(today.year - int(age_min), today.month, today.day)
+            qs = qs.filter(dob__lte=max_dob)
+        if age_max and age_max.isdigit():
+            min_dob = datetime.date(today.year - int(age_max), today.month, today.day)
+            qs = qs.filter(dob__gte=min_dob)
+
+    # ── Blood Group ───────────────────────────────────────────────────────────
+    if 'enable_blood_group' in get:
+        ids = [v for v in get.getlist('blood_group') if v]
+        if ids:
+            qs = qs.filter(blood_group__in=ids)
+
+    # ── Political Party ───────────────────────────────────────────────────────
+    if 'enable_party' in get:
+        ids = [v for v in get.getlist('party') if v]
+        if ids:
+            qs = qs.filter(election_infos__party__in=ids)
+            needs_distinct = True
+
+    # ── Division ──────────────────────────────────────────────────────────────
+    if 'enable_division' in get:
+        ids = [v for v in get.getlist('division') if v]
+        if ids:
+            qs = qs.filter(home_district__division__in=ids)
+
+    # ── District ──────────────────────────────────────────────────────────────
+    if 'enable_district' in get:
+        ids = [v for v in get.getlist('district') if v]
+        if ids:
+            qs = qs.filter(home_district__in=ids)
+
+    # ── Gender ────────────────────────────────────────────────────────────────
+    if 'enable_gender' in get:
+        ids = [v for v in get.getlist('gender') if v]
+        if ids:
+            qs = qs.filter(gender__in=ids)
+
+    # ── Religion ──────────────────────────────────────────────────────────────
+    if 'enable_religion' in get:
+        ids = [v for v in get.getlist('religion') if v]
+        if ids:
+            qs = qs.filter(religion__in=ids)
+
+    # ── Times Elected ─────────────────────────────────────────────────────────
+    if 'enable_times_elected' in get:
+        t_min = get.get('times_min', '').strip()
+        t_max = get.get('times_max', '').strip()
+        if t_min and t_min.isdigit():
+            qs = qs.filter(election_infos__times_elected__gte=int(t_min))
+            needs_distinct = True
+        if t_max and t_max.isdigit():
+            qs = qs.filter(election_infos__times_elected__lte=int(t_max))
+            needs_distinct = True
+
+    # ── Standing Committee ────────────────────────────────────────────────────
+    if 'enable_committee' in get:
+        ids = [v for v in get.getlist('committee') if v]
+        if ids:
+            qs = qs.filter(committee_assignments__committee__in=ids)
+            needs_distinct = True
+
+    # ── Ministry ──────────────────────────────────────────────────────────────
+    if 'enable_ministry' in get:
+        ids = [v for v in get.getlist('ministry') if v]
+        if ids:
+            qs = qs.filter(ministry_assignments__ministry__in=ids)
+            needs_distinct = True
+
+    if needs_distinct:
+        qs = qs.distinct()
+
+    return qs
+
+
+@login_required
+def custom_report(request):
+    from apps.master.models import (
+        BloodGroup, Gender, Religion, Division, District,
+        PoliticalParty, StandingCommittee, Ministry,
+    )
+
+    fmt           = request.GET.get('format', '')
+    parliament_id = _active_parliament_id(request)
+    searched      = 'search' in request.GET
+    selected_cols = request.GET.getlist('col') or CUSTOM_REPORT_DEFAULT
+
+    # Master data for filter dropdowns (always loaded)
+    blood_groups    = BloodGroup.objects.filter(is_active=True)
+    genders         = Gender.objects.filter(is_active=True)
+    religions       = Religion.objects.filter(is_active=True)
+    divisions       = Division.objects.filter(is_active=True)
+    districts       = District.objects.filter(is_active=True).select_related('division')
+    parties         = PoliticalParty.objects.filter(is_active=True)
+    committees      = StandingCommittee.objects.filter(is_active=True)
+    ministries      = Ministry.objects.filter(is_active=True)
+
+    # Pre-selected values (restore filter state after search)
+    sel = {
+        'blood_group':  request.GET.getlist('blood_group'),
+        'gender':       request.GET.getlist('gender'),
+        'religion':     request.GET.getlist('religion'),
+        'division':     request.GET.getlist('division'),
+        'district':     request.GET.getlist('district'),
+        'party':        request.GET.getlist('party'),
+        'committee':    request.GET.getlist('committee'),
+        'ministry':     request.GET.getlist('ministry'),
+    }
+
+    ctx = {
+        'CUSTOM_REPORT_COLS': CUSTOM_REPORT_COLS,
+        'selected_cols':      selected_cols,
+        'parliament_id':      parliament_id,
+        'parliaments':        _parliament_qs(),
+        'blood_groups':       blood_groups,
+        'genders':            genders,
+        'religions':          religions,
+        'divisions':          divisions,
+        'districts':          districts,
+        'parties':            parties,
+        'committees':         committees,
+        'ministries':         ministries,
+        'sel':                sel,
+        'searched':           searched,
+        'GET':                request.GET,
+    }
+
+    if not searched:
+        return render(request, 'reports/custom_report.html', ctx)
+
+    qs = _build_custom_qs(request.GET, parliament_id)
+    total_count = qs.count()
+    ctx['total_count'] = total_count
+
+    import datetime
+    today = datetime.date.today()
+    data_cols = [c for c in selected_cols if c != 'photo']
+
+    if fmt == 'excel':
+        col_labels = {k: v for k, v in CUSTOM_REPORT_COLS}
+        headers    = ['ক্রম'] + [col_labels.get(c, c) for c in data_cols]
+        rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
+                      for i, mp in enumerate(qs)]
+        return export_excel('custom_report', headers, rows, 'কাস্টম রিপোর্ট')
+
+    if fmt == 'csv':
+        col_labels = {k: v for k, v in CUSTOM_REPORT_COLS}
+        headers    = ['ক্রম'] + [col_labels.get(c, c) for c in data_cols]
+        rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
+                      for i, mp in enumerate(qs)]
+        return export_csv('custom_report', headers, rows)
+
+    if fmt == 'print':
+        ctx['object_list'] = qs
+        ctx['today']       = today
+        return render(request, 'reports/print/custom_report.html', ctx)
+
+    paginator = Paginator(qs, PAGE_SIZE)
+    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    ctx['today']    = today
+    return render(request, 'reports/custom_report.html', ctx)
+
+
+@login_required
+def audit_log_detail(request, pk):
+    from .models import AuditLog
+    log = get_object_or_404(AuditLog.objects.select_related('user'), pk=pk)
+    return render(request, 'reports/audit_log_detail.html', {'log': log})

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 913,
+    "fields": {
+      "menu": 9,
+      "name_bn": "কাস্টম রিপোর্ট",
+      "name_en": "Custom Report",
+      "url_name": "reports:custom_report",
+      "ordering": 140,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 914,
+    "fields": {
+      "menu": 9,
+      "name_bn": "অডিট লগ",
+      "name_en": "Audit Log",
+      "url_name": "reports:audit_log_list",
+      "ordering": 150,
+      "is_active": true
+    }
+  }
+]

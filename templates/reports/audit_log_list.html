@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}অডিট লগ{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">হোম</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
+      <li class="breadcrumb-item active">অডিট লগ</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">অডিট লগ</h4>
+    <small class="text-muted">Audit Log — সিস্টেম কার্যক্রম পর্যবেক্ষণ</small>
+  </div>
+  <div class="d-flex gap-2">
+    <span class="badge bg-secondary fs-6">মোট: {{ total_count }}</span>
+  </div>
+</div>
+
+<!-- Filters -->
+<form method="get" id="filterForm">
+<div class="mp-card mb-3 p-3">
+  <div class="row g-2 align-items-end">
+
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">ব্যবহারকারী</label>
+      <select name="user" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সবাই</option>
+        {% for u in users %}
+        <option value="{{ u.pk }}" {% if u.pk|stringformat:"s" == user_id %}selected{% endif %}>
+          {{ u.username }}{% if u.full_name_bn %} — {{ u.full_name_bn }}{% endif %}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">কার্যক্রম</label>
+      <select name="action" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব ধরন</option>
+        <option value="CREATE"  {% if action == 'CREATE'  %}selected{% endif %}>তৈরি (CREATE)</option>
+        <option value="UPDATE"  {% if action == 'UPDATE'  %}selected{% endif %}>পরিবর্তন (UPDATE)</option>
+        <option value="DELETE"  {% if action == 'DELETE'  %}selected{% endif %}>মুছে ফেলা (DELETE)</option>
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">মডেল</label>
+      <select name="model" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">সব মডেল</option>
+        {% for m in model_names %}
+        <option value="{{ m }}" {% if m == model_name %}selected{% endif %}>{{ m }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">তারিখ (শুরু)</label>
+      <input type="date" name="date_from" value="{{ date_from }}" class="form-control form-control-sm">
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">তারিখ (শেষ)</label>
+      <input type="date" name="date_to" value="{{ date_to }}" class="form-control form-control-sm">
+    </div>
+
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary btn-sm w-100">ফিল্টার</button>
+    </div>
+    <div class="col-md-1">
+      <a href="{% url 'reports:audit_log_list' %}" class="btn btn-outline-secondary btn-sm w-100">রিসেট</a>
+    </div>
+
+  </div>
+</div>
+</form>
+
+<!-- Log table -->
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover table-sm mb-0" style="font-size:.85rem;">
+      <thead class="table-dark">
+        <tr>
+          <th style="width:160px;">সময়</th>
+          <th style="width:130px;">ব্যবহারকারী</th>
+          <th style="width:85px;">কার্যক্রম</th>
+          <th style="width:120px;">মডেল</th>
+          <th style="width:70px;">আইডি</th>
+          <th>রেকর্ড</th>
+          <th style="width:110px;">আইপি</th>
+          <th style="width:60px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in page_obj %}
+        <tr>
+          <td class="text-nowrap text-muted">{{ log.timestamp|date:"d M Y H:i:s" }}</td>
+          <td>
+            {% if log.user %}
+              <span class="fw-medium">{{ log.user.username }}</span>
+              {% if log.user.full_name_bn %}
+                <br><small class="text-muted">{{ log.user.full_name_bn }}</small>
+              {% endif %}
+            {% else %}
+              <span class="text-muted">—</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if log.action == 'CREATE' %}
+              <span class="badge bg-success">তৈরি</span>
+            {% elif log.action == 'UPDATE' %}
+              <span class="badge bg-warning text-dark">পরিবর্তন</span>
+            {% elif log.action == 'DELETE' %}
+              <span class="badge bg-danger">মুছে ফেলা</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ log.action }}</span>
+            {% endif %}
+          </td>
+          <td><code style="font-size:.8rem;">{{ log.model_name }}</code></td>
+          <td class="text-center"><small>{{ log.object_id }}</small></td>
+          <td>
+            <span class="text-truncate d-inline-block" style="max-width:260px;" title="{{ log.object_repr }}">
+              {{ log.object_repr|default:"—" }}
+            </span>
+          </td>
+          <td><small class="text-muted">{{ log.ip_address|default:"—" }}</small></td>
+          <td class="text-center">
+            {% if log.changes %}
+            <a href="{% url 'reports:audit_log_detail' log.pk %}" class="btn btn-outline-primary btn-xs"
+               style="font-size:.72rem;padding:1px 6px;" title="পরিবর্তন দেখুন">
+              <i class="bi bi-eye"></i>
+            </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">কোনো লগ নেই।</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if page_obj.has_other_pages %}
+  <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+    <small class="text-muted">
+      পাতা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+      — মোট {{ total_count }} রেকর্ড
+    </small>
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">
+            &laquo;
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item active">
+          <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">
+            &raquo;
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

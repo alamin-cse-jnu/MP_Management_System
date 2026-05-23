@@ -10,7 +10,11 @@
       "Bash(Get-ChildItem \"E:\\\\projects\\\\MP_Management_System\\\\templates\" -Directory)",
       "Bash(Select-Object Name)",
       "Bash(python manage.py check --deploy)",
-      "PowerShell(Get-Item *)"
+      "PowerShell(Get-Item *)",
+      "Bash(python manage.py migrate reports --settings=config.settings.development)",
+      "Bash(findstr \"audit\")",
+      "Bash(not exist *)",
+      "PowerShell(New-Item *)"
     ]
   }
 }
