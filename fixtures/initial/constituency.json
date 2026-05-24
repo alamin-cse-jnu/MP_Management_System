@@ -1,0 +1,3502 @@
+[
+  {
+    "model": "parliament.constituency",
+    "pk": 1,
+    "fields": {
+      "display_bn": "১ পঞ্চগড়-১",
+      "display_en": "1 Panchagarh-1",
+      "is_active": true,
+      "ordering": 1
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 2,
+    "fields": {
+      "display_bn": "২ পঞ্চগড়-২",
+      "display_en": "2 Panchagarh-2",
+      "is_active": true,
+      "ordering": 2
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 3,
+    "fields": {
+      "display_bn": "৩ ঠাকুরগাঁও-১",
+      "display_en": "3 Thakurgaon-1",
+      "is_active": true,
+      "ordering": 3
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 4,
+    "fields": {
+      "display_bn": "৪ ঠাকুরগাঁও-২",
+      "display_en": "4 Thakurgaon-2",
+      "is_active": true,
+      "ordering": 4
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 5,
+    "fields": {
+      "display_bn": "৫ ঠাকুরগাঁও-৩",
+      "display_en": "5 Thakurgaon-3",
+      "is_active": true,
+      "ordering": 5
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 6,
+    "fields": {
+      "display_bn": "৬ দিনাজপুর-১",
+      "display_en": "6 Dinajpur-1",
+      "is_active": true,
+      "ordering": 6
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 7,
+    "fields": {
+      "display_bn": "৭ দিনাজপুর-২",
+      "display_en": "7 Dinajpur-2",
+      "is_active": true,
+      "ordering": 7
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 8,
+    "fields": {
+      "display_bn": "৮ দিনাজপুর-৩",
+      "display_en": "8 Dinajpur-3",
+      "is_active": true,
+      "ordering": 8
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 9,
+    "fields": {
+      "display_bn": "৯ দিনাজপুর-৪",
+      "display_en": "9 Dinajpur-4",
+      "is_active": true,
+      "ordering": 9
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 10,
+    "fields": {
+      "display_bn": "১০ দিনাজপুর-৫",
+      "display_en": "10 Dinajpur-5",
+      "is_active": true,
+      "ordering": 10
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 11,
+    "fields": {
+      "display_bn": "১১ দিনাজপুর-৬",
+      "display_en": "11 Dinajpur-6",
+      "is_active": true,
+      "ordering": 11
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 12,
+    "fields": {
+      "display_bn": "১২ নীলফামারী-১",
+      "display_en": "12 Nilphamari-1",
+      "is_active": true,
+      "ordering": 12
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 13,
+    "fields": {
+      "display_bn": "১৩ নীলফামারী-২",
+      "display_en": "13 Nilphamari-2",
+      "is_active": true,
+      "ordering": 13
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 14,
+    "fields": {
+      "display_bn": "১৪ নীলফামারী-৩",
+      "display_en": "14 Nilphamari-3",
+      "is_active": true,
+      "ordering": 14
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 15,
+    "fields": {
+      "display_bn": "১৫ নীলফামারী-৪",
+      "display_en": "15 Nilphamari-4",
+      "is_active": true,
+      "ordering": 15
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 16,
+    "fields": {
+      "display_bn": "১৬ লালমনিরহাট-১",
+      "display_en": "16 Lalmonirhat-1",
+      "is_active": true,
+      "ordering": 16
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 17,
+    "fields": {
+      "display_bn": "১৭ লালমনিরহাট-২",
+      "display_en": "17 Lalmonirhat-2",
+      "is_active": true,
+      "ordering": 17
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 18,
+    "fields": {
+      "display_bn": "১৮ লালমনিরহাট-৩",
+      "display_en": "18 Lalmonirhat-3",
+      "is_active": true,
+      "ordering": 18
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 19,
+    "fields": {
+      "display_bn": "১৯ রংপুর-১",
+      "display_en": "19 Rangpur-1",
+      "is_active": true,
+      "ordering": 19
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 20,
+    "fields": {
+      "display_bn": "২০ রংপুর-২",
+      "display_en": "20 Rangpur-2",
+      "is_active": true,
+      "ordering": 20
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 21,
+    "fields": {
+      "display_bn": "২১ রংপুর-৩",
+      "display_en": "21 Rangpur-3",
+      "is_active": true,
+      "ordering": 21
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 22,
+    "fields": {
+      "display_bn": "২২ রংপুর-৪",
+      "display_en": "22 Rangpur-4",
+      "is_active": true,
+      "ordering": 22
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 23,
+    "fields": {
+      "display_bn": "২৩ রংপুর-৫",
+      "display_en": "23 Rangpur-5",
+      "is_active": true,
+      "ordering": 23
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 24,
+    "fields": {
+      "display_bn": "২৪ রংপুর-৬",
+      "display_en": "24 Rangpur-6",
+      "is_active": true,
+      "ordering": 24
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 25,
+    "fields": {
+      "display_bn": "২৫ কুড়িগ্রাম-১",
+      "display_en": "25 Kurigram-1",
+      "is_active": true,
+      "ordering": 25
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 26,
+    "fields": {
+      "display_bn": "২৬ কুড়িগ্রাম-২",
+      "display_en": "26 Kurigram-2",
+      "is_active": true,
+      "ordering": 26
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 27,
+    "fields": {
+      "display_bn": "২৭ কুড়িগ্রাম-৩",
+      "display_en": "27 Kurigram-3",
+      "is_active": true,
+      "ordering": 27
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 28,
+    "fields": {
+      "display_bn": "২৮ কুড়িগ্রাম-৪",
+      "display_en": "28 Kurigram-4",
+      "is_active": true,
+      "ordering": 28
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 29,
+    "fields": {
+      "display_bn": "২৯ গাইবান্ধা-১",
+      "display_en": "29 Gaibandha-1",
+      "is_active": true,
+      "ordering": 29
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 30,
+    "fields": {
+      "display_bn": "৩০ গাইবান্ধা-২",
+      "display_en": "30 Gaibandha-2",
+      "is_active": true,
+      "ordering": 30
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 31,
+    "fields": {
+      "display_bn": "৩১ গাইবান্ধা-৩",
+      "display_en": "31 Gaibandha-3",
+      "is_active": true,
+      "ordering": 31
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 32,
+    "fields": {
+      "display_bn": "৩২ গাইবান্ধা-৪",
+      "display_en": "32 Gaibandha-4",
+      "is_active": true,
+      "ordering": 32
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 33,
+    "fields": {
+      "display_bn": "৩৩ গাইবান্ধা-৫",
+      "display_en": "33 Gaibandha-5",
+      "is_active": true,
+      "ordering": 33
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 34,
+    "fields": {
+      "display_bn": "৩৪ জয়পুরহাট-১",
+      "display_en": "34 Jaipurhat-1",
+      "is_active": true,
+      "ordering": 34
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 35,
+    "fields": {
+      "display_bn": "৩৫ জয়পুরহাট-২",
+      "display_en": "35 Jaipurhat-2",
+      "is_active": true,
+      "ordering": 35
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 36,
+    "fields": {
+      "display_bn": "৩৬ বগুড়া-১",
+      "display_en": "36 Bogura-1",
+      "is_active": true,
+      "ordering": 36
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 37,
+    "fields": {
+      "display_bn": "৩৭ বগুড়া-২",
+      "display_en": "37 Bogura-2",
+      "is_active": true,
+      "ordering": 37
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 38,
+    "fields": {
+      "display_bn": "৩৮ বগুড়া-৩",
+      "display_en": "38 Bogura-3",
+      "is_active": true,
+      "ordering": 38
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 39,
+    "fields": {
+      "display_bn": "৩৯ বগুড়া-৪",
+      "display_en": "39 Bogura-4",
+      "is_active": true,
+      "ordering": 39
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 40,
+    "fields": {
+      "display_bn": "৪০ বগুড়া-৫",
+      "display_en": "40 Bogura-5",
+      "is_active": true,
+      "ordering": 40
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 41,
+    "fields": {
+      "display_bn": "৪১ বগুড়া-৬",
+      "display_en": "41 Bogura-6",
+      "is_active": true,
+      "ordering": 41
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 42,
+    "fields": {
+      "display_bn": "৪২ বগুড়া-৭",
+      "display_en": "42 Bogura-7",
+      "is_active": true,
+      "ordering": 42
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 43,
+    "fields": {
+      "display_bn": "৪৩ চাঁপাইনবাবগঞ্জ-১",
+      "display_en": "43 ChapaiNawabganj-1",
+      "is_active": true,
+      "ordering": 43
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 44,
+    "fields": {
+      "display_bn": "৪৪ চাঁপাইনবাবগঞ্জ-২",
+      "display_en": "44 ChapaiNawabganj-2",
+      "is_active": true,
+      "ordering": 44
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 45,
+    "fields": {
+      "display_bn": "৪৫ চাঁপাইনবাবগঞ্জ-৩",
+      "display_en": "45 ChapaiNawabganj-3",
+      "is_active": true,
+      "ordering": 45
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 46,
+    "fields": {
+      "display_bn": "৪৬ নওগাঁ-১",
+      "display_en": "46 Naogaon-1",
+      "is_active": true,
+      "ordering": 46
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 47,
+    "fields": {
+      "display_bn": "৪৭ নওগাঁ-২",
+      "display_en": "47 Naogaon-2",
+      "is_active": true,
+      "ordering": 47
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 48,
+    "fields": {
+      "display_bn": "৪৮ নওগাঁ-৩",
+      "display_en": "48 Naogaon-3",
+      "is_active": true,
+      "ordering": 48
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 49,
+    "fields": {
+      "display_bn": "৪৯ নওগাঁ-৪",
+      "display_en": "49 Naogaon-4",
+      "is_active": true,
+      "ordering": 49
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 50,
+    "fields": {
+      "display_bn": "৫০ নওগাঁ-৫",
+      "display_en": "50 Naogaon-5",
+      "is_active": true,
+      "ordering": 50
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 51,
+    "fields": {
+      "display_bn": "৫১ নওগাঁ-৬",
+      "display_en": "51 Naogaon-6",
+      "is_active": true,
+      "ordering": 51
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 52,
+    "fields": {
+      "display_bn": "৫২ রাজশাহী-১",
+      "display_en": "52 Rajshahi-1",
+      "is_active": true,
+      "ordering": 52
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 53,
+    "fields": {
+      "display_bn": "৫৩ রাজশাহী-২",
+      "display_en": "53 Rajshahi-2",
+      "is_active": true,
+      "ordering": 53
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 54,
+    "fields": {
+      "display_bn": "৫৪ রাজশাহী-৩",
+      "display_en": "54 Rajshahi-3",
+      "is_active": true,
+      "ordering": 54
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 55,
+    "fields": {
+      "display_bn": "৫৫ রাজশাহী-৪",
+      "display_en": "55 Rajshahi-4",
+      "is_active": true,
+      "ordering": 55
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 56,
+    "fields": {
+      "display_bn": "৫৬ রাজশাহী-৫",
+      "display_en": "56 Rajshahi-5",
+      "is_active": true,
+      "ordering": 56
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 57,
+    "fields": {
+      "display_bn": "৫৭ রাজশাহী-৬",
+      "display_en": "57 Rajshahi-6",
+      "is_active": true,
+      "ordering": 57
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 58,
+    "fields": {
+      "display_bn": "৫৮ নাটোর-১",
+      "display_en": "58 Natore-1",
+      "is_active": true,
+      "ordering": 58
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 59,
+    "fields": {
+      "display_bn": "৫৯ নাটোর-২",
+      "display_en": "59 Natore-2",
+      "is_active": true,
+      "ordering": 59
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 60,
+    "fields": {
+      "display_bn": "৬০ নাটোর-৩",
+      "display_en": "60 Natore-3",
+      "is_active": true,
+      "ordering": 60
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 61,
+    "fields": {
+      "display_bn": "৬১ নাটোর-৪",
+      "display_en": "61 Natore-4",
+      "is_active": true,
+      "ordering": 61
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 62,
+    "fields": {
+      "display_bn": "৬২ সিরাজগঞ্জ-১",
+      "display_en": "62 Sirajganj-1",
+      "is_active": true,
+      "ordering": 62
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 63,
+    "fields": {
+      "display_bn": "৬৩ সিরাজগঞ্জ-২",
+      "display_en": "63 Sirajganj-2",
+      "is_active": true,
+      "ordering": 63
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 64,
+    "fields": {
+      "display_bn": "৬৪ সিরাজগঞ্জ-৩",
+      "display_en": "64 Sirajganj-3",
+      "is_active": true,
+      "ordering": 64
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 65,
+    "fields": {
+      "display_bn": "৬৫ সিরাজগঞ্জ-৪",
+      "display_en": "65 Sirajganj-4",
+      "is_active": true,
+      "ordering": 65
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 66,
+    "fields": {
+      "display_bn": "৬৬ সিরাজগঞ্জ-৫",
+      "display_en": "66 Sirajganj-5",
+      "is_active": true,
+      "ordering": 66
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 67,
+    "fields": {
+      "display_bn": "৬৭ সিরাজগঞ্জ-৬",
+      "display_en": "67 Sirajganj-6",
+      "is_active": true,
+      "ordering": 67
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 68,
+    "fields": {
+      "display_bn": "৬৮ পাবনা-১",
+      "display_en": "68 Pabna-1",
+      "is_active": true,
+      "ordering": 68
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 69,
+    "fields": {
+      "display_bn": "৬৯ পাবনা-২",
+      "display_en": "69 Pabna-2",
+      "is_active": true,
+      "ordering": 69
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 70,
+    "fields": {
+      "display_bn": "৭০ পাবনা-৩",
+      "display_en": "70 Pabna-3",
+      "is_active": true,
+      "ordering": 70
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 71,
+    "fields": {
+      "display_bn": "৭১ পাবনা-৪",
+      "display_en": "71 Pabna-4",
+      "is_active": true,
+      "ordering": 71
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 72,
+    "fields": {
+      "display_bn": "৭২ পাবনা-৫",
+      "display_en": "72 Pabna 5",
+      "is_active": true,
+      "ordering": 72
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 73,
+    "fields": {
+      "display_bn": "৭৩ মেহেরপুর-১",
+      "display_en": "73 Meherpur-1",
+      "is_active": true,
+      "ordering": 73
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 74,
+    "fields": {
+      "display_bn": "৭৪ মেহেরপুর-২",
+      "display_en": "74 Meherpur-2",
+      "is_active": true,
+      "ordering": 74
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 75,
+    "fields": {
+      "display_bn": "৭৫ কুষ্টিয়া-১",
+      "display_en": "75 Kushtia-1",
+      "is_active": true,
+      "ordering": 75
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 76,
+    "fields": {
+      "display_bn": "৭৬ কুষ্টিয়া-২",
+      "display_en": "76 Kushtia-2",
+      "is_active": true,
+      "ordering": 76
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 77,
+    "fields": {
+      "display_bn": "৭৭ কুষ্টিয়া-৩",
+      "display_en": "77 Kushtia-3",
+      "is_active": true,
+      "ordering": 77
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 78,
+    "fields": {
+      "display_bn": "৭৮ কুষ্টিয়া-৪",
+      "display_en": "78 Kushtia-4",
+      "is_active": true,
+      "ordering": 78
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 79,
+    "fields": {
+      "display_bn": "৭৯ চুয়াডাঙ্গা-১",
+      "display_en": "79 Chuadanga-1",
+      "is_active": true,
+      "ordering": 79
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 80,
+    "fields": {
+      "display_bn": "৮০ চুয়াডাঙ্গা-২",
+      "display_en": "80 Chuadanga-2",
+      "is_active": true,
+      "ordering": 80
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 81,
+    "fields": {
+      "display_bn": "৮১ ঝিনাইদহ-১",
+      "display_en": "81 Jhenaidah-1",
+      "is_active": true,
+      "ordering": 81
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 82,
+    "fields": {
+      "display_bn": "৮২ ঝিনাইদহ-২",
+      "display_en": "82 Jhenaidah-2",
+      "is_active": true,
+      "ordering": 82
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 83,
+    "fields": {
+      "display_bn": "৮৩ ঝিনাইদহ-৩",
+      "display_en": "83 Jhenaidah-3",
+      "is_active": true,
+      "ordering": 83
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 84,
+    "fields": {
+      "display_bn": "৮৪ ঝিনাইদহ-৪",
+      "display_en": "84 Jhenaidah-4",
+      "is_active": true,
+      "ordering": 84
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 85,
+    "fields": {
+      "display_bn": "৮৫ যশোর-১",
+      "display_en": "85 Jashore-1",
+      "is_active": true,
+      "ordering": 85
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 86,
+    "fields": {
+      "display_bn": "৮৬ যশোর-২",
+      "display_en": "86 Jashore-2",
+      "is_active": true,
+      "ordering": 86
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 87,
+    "fields": {
+      "display_bn": "৮৭ যশোর-৩",
+      "display_en": "87 Jashore-3",
+      "is_active": true,
+      "ordering": 87
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 88,
+    "fields": {
+      "display_bn": "৮৮ যশোর-৪",
+      "display_en": "88 Jashore-4",
+      "is_active": true,
+      "ordering": 88
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 89,
+    "fields": {
+      "display_bn": "৮৯ যশোর-৫",
+      "display_en": "89 Jashore-5",
+      "is_active": true,
+      "ordering": 89
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 90,
+    "fields": {
+      "display_bn": "৯০ যশোর-৬",
+      "display_en": "90 Jashore-6",
+      "is_active": true,
+      "ordering": 90
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 91,
+    "fields": {
+      "display_bn": "৯১ মাগুরা-১",
+      "display_en": "91 Magura-1",
+      "is_active": true,
+      "ordering": 91
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 92,
+    "fields": {
+      "display_bn": "৯২ মাগুরা-২",
+      "display_en": "92 Magura-2",
+      "is_active": true,
+      "ordering": 92
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 93,
+    "fields": {
+      "display_bn": "৯৩ নড়াইল-১",
+      "display_en": "93 Narail-1",
+      "is_active": true,
+      "ordering": 93
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 94,
+    "fields": {
+      "display_bn": "৯৪ নড়াইল-২",
+      "display_en": "94 Narail-2",
+      "is_active": true,
+      "ordering": 94
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 95,
+    "fields": {
+      "display_bn": "৯৫ বাগেরহাট-১",
+      "display_en": "95 Bagerhat-1",
+      "is_active": true,
+      "ordering": 95
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 96,
+    "fields": {
+      "display_bn": "৯৬ বাগেরহাট-২",
+      "display_en": "96 Bagerhat-2",
+      "is_active": true,
+      "ordering": 96
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 97,
+    "fields": {
+      "display_bn": "৯৭ বাগেরহাট-৩",
+      "display_en": "97 Bagerhat-3",
+      "is_active": true,
+      "ordering": 97
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 98,
+    "fields": {
+      "display_bn": "৯৮ বাগেরহাট-৪",
+      "display_en": "98 Bagerhat-4",
+      "is_active": true,
+      "ordering": 98
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 99,
+    "fields": {
+      "display_bn": "৯৯ খুলনা-১",
+      "display_en": "99 Khulna-1",
+      "is_active": true,
+      "ordering": 99
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 100,
+    "fields": {
+      "display_bn": "১০০ খুলনা-২",
+      "display_en": "100 Khulna-2",
+      "is_active": true,
+      "ordering": 100
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 101,
+    "fields": {
+      "display_bn": "১০১ খুলনা-৩",
+      "display_en": "101 Khulna-3",
+      "is_active": true,
+      "ordering": 101
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 102,
+    "fields": {
+      "display_bn": "১০২ খুলনা-৪",
+      "display_en": "102 Khulna-4",
+      "is_active": true,
+      "ordering": 102
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 103,
+    "fields": {
+      "display_bn": "১০৩ খুলনা-৫",
+      "display_en": "103 Khulna-5",
+      "is_active": true,
+      "ordering": 103
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 104,
+    "fields": {
+      "display_bn": "১০৪ খুলনা-৬",
+      "display_en": "104 Khulna-6",
+      "is_active": true,
+      "ordering": 104
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 105,
+    "fields": {
+      "display_bn": "১০৫ সাতক্ষীরা-১",
+      "display_en": "105 Satkhira-1",
+      "is_active": true,
+      "ordering": 105
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 106,
+    "fields": {
+      "display_bn": "১০৬ সাতক্ষীরা-২",
+      "display_en": "106 Satkhira-2",
+      "is_active": true,
+      "ordering": 106
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 107,
+    "fields": {
+      "display_bn": "১০৭ সাতক্ষীরা-৩",
+      "display_en": "107 Satkhira-3",
+      "is_active": true,
+      "ordering": 107
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 108,
+    "fields": {
+      "display_bn": "১০৮ সাতক্ষীরা-৪",
+      "display_en": "108 Satkhira-4",
+      "is_active": true,
+      "ordering": 108
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 109,
+    "fields": {
+      "display_bn": "১০৯ বরগুনা-১",
+      "display_en": "109 Barguna-1",
+      "is_active": true,
+      "ordering": 109
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 110,
+    "fields": {
+      "display_bn": "১১০ বরগুনা-২",
+      "display_en": "110 Barguna-2",
+      "is_active": true,
+      "ordering": 110
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 111,
+    "fields": {
+      "display_bn": "১১১ পটুয়াখালি-১",
+      "display_en": "111 Patuakhali-1",
+      "is_active": true,
+      "ordering": 111
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 112,
+    "fields": {
+      "display_bn": "১১২ পটুয়াখালি-২",
+      "display_en": "112 Patuakhali-2",
+      "is_active": true,
+      "ordering": 112
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 113,
+    "fields": {
+      "display_bn": "১১৩ পটুয়াখালি-৩",
+      "display_en": "113 Patuakhali-3",
+      "is_active": true,
+      "ordering": 113
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 114,
+    "fields": {
+      "display_bn": "১১৪ পটুয়াখালি-৪",
+      "display_en": "114 Patuakhali-4",
+      "is_active": true,
+      "ordering": 114
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 115,
+    "fields": {
+      "display_bn": "১১৫ ভোলা-১",
+      "display_en": "115 Bhola-1",
+      "is_active": true,
+      "ordering": 115
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 116,
+    "fields": {
+      "display_bn": "১১৬ ভোলা-২",
+      "display_en": "116 Bhola-2",
+      "is_active": true,
+      "ordering": 116
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 117,
+    "fields": {
+      "display_bn": "১১৭ ভোলা-৩",
+      "display_en": "117 Bhola-3",
+      "is_active": true,
+      "ordering": 117
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 118,
+    "fields": {
+      "display_bn": "১১৮ ভোলা-৪",
+      "display_en": "118 Bhola-4",
+      "is_active": true,
+      "ordering": 118
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 119,
+    "fields": {
+      "display_bn": "১১৯ বরিশাল-১",
+      "display_en": "119 Barishal-1",
+      "is_active": true,
+      "ordering": 119
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 120,
+    "fields": {
+      "display_bn": "১২০ বরিশাল-২",
+      "display_en": "120 Barishal-2",
+      "is_active": true,
+      "ordering": 120
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 121,
+    "fields": {
+      "display_bn": "১২১ বরিশাল-৩",
+      "display_en": "121 Barishal-3",
+      "is_active": true,
+      "ordering": 121
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 122,
+    "fields": {
+      "display_bn": "১২২ বরিশাল-৪",
+      "display_en": "122 Barishal-4",
+      "is_active": true,
+      "ordering": 122
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 123,
+    "fields": {
+      "display_bn": "১২৩ বরিশাল-৫",
+      "display_en": "123 Barishal-5",
+      "is_active": true,
+      "ordering": 123
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 124,
+    "fields": {
+      "display_bn": "১২৪ বরিশাল-৬",
+      "display_en": "124 Barishal-6",
+      "is_active": true,
+      "ordering": 124
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 125,
+    "fields": {
+      "display_bn": "১২৫ ঝালকাঠি-১",
+      "display_en": "125 Jhalokathi-1",
+      "is_active": true,
+      "ordering": 125
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 126,
+    "fields": {
+      "display_bn": "১২৬ ঝালকাঠি-২",
+      "display_en": "126 Jhalokathi-2",
+      "is_active": true,
+      "ordering": 126
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 127,
+    "fields": {
+      "display_bn": "১২৭ পিরোজপুর-১",
+      "display_en": "127 Pirojpur-1",
+      "is_active": true,
+      "ordering": 127
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 128,
+    "fields": {
+      "display_bn": "১২৮ পিরোজপুর-২",
+      "display_en": "128 Pirojpur-2",
+      "is_active": true,
+      "ordering": 128
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 129,
+    "fields": {
+      "display_bn": "১২৯ পিরোজপুর-৩",
+      "display_en": "129 Pirojpur-3",
+      "is_active": true,
+      "ordering": 129
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 130,
+    "fields": {
+      "display_bn": "১৩০ টাঙ্গাইল-১",
+      "display_en": "130 Tangail-1",
+      "is_active": true,
+      "ordering": 130
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 131,
+    "fields": {
+      "display_bn": "১৩১ টাঙ্গাইল-২",
+      "display_en": "131 Tangail-2",
+      "is_active": true,
+      "ordering": 131
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 132,
+    "fields": {
+      "display_bn": "১৩২ টাঙ্গাইল-৩",
+      "display_en": "132 Tangail-3",
+      "is_active": true,
+      "ordering": 132
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 133,
+    "fields": {
+      "display_bn": "১৩৩ টাঙ্গাইল-৪",
+      "display_en": "133 Tangail-4",
+      "is_active": true,
+      "ordering": 133
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 134,
+    "fields": {
+      "display_bn": "১৩৪ টাঙ্গাইল-৫",
+      "display_en": "134 Tangail-5",
+      "is_active": true,
+      "ordering": 134
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 135,
+    "fields": {
+      "display_bn": "১৩৫ টাঙ্গাইল-৬",
+      "display_en": "135 Tangail-6",
+      "is_active": true,
+      "ordering": 135
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 136,
+    "fields": {
+      "display_bn": "১৩৬ টাঙ্গাইল-৭",
+      "display_en": "136 Tangail-7",
+      "is_active": true,
+      "ordering": 136
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 137,
+    "fields": {
+      "display_bn": "১৩৭ টাঙ্গাইল-৮",
+      "display_en": "137 Tangail-8",
+      "is_active": true,
+      "ordering": 137
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 138,
+    "fields": {
+      "display_bn": "১৩৮ জামালপুর-১",
+      "display_en": "138 Jamalpur-1",
+      "is_active": true,
+      "ordering": 138
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 139,
+    "fields": {
+      "display_bn": "১৩৯ জামালপুর-২",
+      "display_en": "139 Jamalpur-2",
+      "is_active": true,
+      "ordering": 139
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 140,
+    "fields": {
+      "display_bn": "১৪০ জামালপুর-৩",
+      "display_en": "140 Jamalpur-3",
+      "is_active": true,
+      "ordering": 140
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 141,
+    "fields": {
+      "display_bn": "১৪১ জামালপুর-৪",
+      "display_en": "141 Jamalpur-4",
+      "is_active": true,
+      "ordering": 141
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 142,
+    "fields": {
+      "display_bn": "১৪২ জামালপুর-৫",
+      "display_en": "142 Jamalpur-5",
+      "is_active": true,
+      "ordering": 142
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 143,
+    "fields": {
+      "display_bn": "১৪৩ শেরপুর-১",
+      "display_en": "143 Sherpur-1",
+      "is_active": true,
+      "ordering": 143
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 144,
+    "fields": {
+      "display_bn": "১৪৪ শেরপুর-২",
+      "display_en": "144 Sherpur-2",
+      "is_active": true,
+      "ordering": 144
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 145,
+    "fields": {
+      "display_bn": "১৪৫ শেরপুর-৩",
+      "display_en": "145 Sherpur-3",
+      "is_active": true,
+      "ordering": 145
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 146,
+    "fields": {
+      "display_bn": "১৪৬ ময়মনসিংহ-১",
+      "display_en": "146 Mymensingh-1",
+      "is_active": true,
+      "ordering": 146
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 147,
+    "fields": {
+      "display_bn": "১৪৭ ময়মনসিংহ-২",
+      "display_en": "147 Mymensingh-2",
+      "is_active": true,
+      "ordering": 147
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 148,
+    "fields": {
+      "display_bn": "১৪৮ ময়মনসিংহ-৩",
+      "display_en": "148 Mymensingh-3",
+      "is_active": true,
+      "ordering": 148
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 149,
+    "fields": {
+      "display_bn": "১৪৯ ময়মনসিংহ-৪",
+      "display_en": "149 Mymensingh-4",
+      "is_active": true,
+      "ordering": 149
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 150,
+    "fields": {
+      "display_bn": "১৫০ ময়মনসিংহ-৫",
+      "display_en": "150 Mymensingh-5",
+      "is_active": true,
+      "ordering": 150
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 151,
+    "fields": {
+      "display_bn": "১৫১ ময়মনসিংহ-৬",
+      "display_en": "151 Mymensingh-6",
+      "is_active": true,
+      "ordering": 151
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 152,
+    "fields": {
+      "display_bn": "১৫২ ময়মনসিংহ-৭",
+      "display_en": "152 Mymensingh-7",
+      "is_active": true,
+      "ordering": 152
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 153,
+    "fields": {
+      "display_bn": "১৫৩ ময়মনসিংহ-৮",
+      "display_en": "153 Mymensingh-8",
+      "is_active": true,
+      "ordering": 153
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 154,
+    "fields": {
+      "display_bn": "১৫৪ ময়মনসিংহ-৯",
+      "display_en": "154 Mymensingh-9",
+      "is_active": true,
+      "ordering": 154
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 155,
+    "fields": {
+      "display_bn": "১৫৫ ময়মনসিংহ-১০",
+      "display_en": "155 Mymensingh-10",
+      "is_active": true,
+      "ordering": 155
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 156,
+    "fields": {
+      "display_bn": "১৫৬ ময়মনসিংহ-১১",
+      "display_en": "156 Mymensingh-11",
+      "is_active": true,
+      "ordering": 156
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 157,
+    "fields": {
+      "display_bn": "১৫৭ নেত্রকোনা-১",
+      "display_en": "157 Netrokona-1",
+      "is_active": true,
+      "ordering": 157
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 158,
+    "fields": {
+      "display_bn": "১৫৮ নেত্রকোনা-২",
+      "display_en": "158 Netrokona-2",
+      "is_active": true,
+      "ordering": 158
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 159,
+    "fields": {
+      "display_bn": "১৫৯ নেত্রকোনা-৩",
+      "display_en": "159 Netrokona-3",
+      "is_active": true,
+      "ordering": 159
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 160,
+    "fields": {
+      "display_bn": "১৬০ নেত্রকোনা-৪",
+      "display_en": "160 Netrokona-4",
+      "is_active": true,
+      "ordering": 160
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 161,
+    "fields": {
+      "display_bn": "১৬১ নেত্রকোনা-৫",
+      "display_en": "161 Netrokona-5",
+      "is_active": true,
+      "ordering": 161
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 162,
+    "fields": {
+      "display_bn": "১৬২ কিশোরগঞ্জ-১",
+      "display_en": "162 Kishoreganj-1",
+      "is_active": true,
+      "ordering": 162
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 163,
+    "fields": {
+      "display_bn": "১৬৩ কিশোরগঞ্জ-২",
+      "display_en": "163 Kishoreganj-2",
+      "is_active": true,
+      "ordering": 163
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 164,
+    "fields": {
+      "display_bn": "১৬৪ কিশোরগঞ্জ-৩",
+      "display_en": "164 Kishoreganj-3",
+      "is_active": true,
+      "ordering": 164
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 165,
+    "fields": {
+      "display_bn": "১৬৫ কিশোরগঞ্জ-৪",
+      "display_en": "165 Kishoreganj-4",
+      "is_active": true,
+      "ordering": 165
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 166,
+    "fields": {
+      "display_bn": "১৬৬ কিশোরগঞ্জ-৫",
+      "display_en": "166 Kishoreganj-5",
+      "is_active": true,
+      "ordering": 166
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 167,
+    "fields": {
+      "display_bn": "১৬৭ কিশোরগঞ্জ-৬",
+      "display_en": "167 Kishoreganj-6",
+      "is_active": true,
+      "ordering": 167
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 168,
+    "fields": {
+      "display_bn": "১৬৮ মানিকগঞ্জ-১",
+      "display_en": "168 Manikganj-1",
+      "is_active": true,
+      "ordering": 168
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 169,
+    "fields": {
+      "display_bn": "১৬৯ মানিকগঞ্জ-২",
+      "display_en": "169 Manikganj-2",
+      "is_active": true,
+      "ordering": 169
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 170,
+    "fields": {
+      "display_bn": "১৭০ মানিকগঞ্জ-৩",
+      "display_en": "170 Manikganj-3",
+      "is_active": true,
+      "ordering": 170
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 171,
+    "fields": {
+      "display_bn": "১৭১ মুন্সিগঞ্জ-১",
+      "display_en": "171 Munshiganj-1",
+      "is_active": true,
+      "ordering": 171
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 172,
+    "fields": {
+      "display_bn": "১৭২ মুন্সিগঞ্জ-২",
+      "display_en": "172 Munshiganj-2",
+      "is_active": true,
+      "ordering": 172
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 173,
+    "fields": {
+      "display_bn": "১৭৩ মুন্সিগঞ্জ-৩",
+      "display_en": "173 Munshiganj-3",
+      "is_active": true,
+      "ordering": 173
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 174,
+    "fields": {
+      "display_bn": "১৭৪ ঢাকা-১",
+      "display_en": "174 Dhaka-1",
+      "is_active": true,
+      "ordering": 174
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 175,
+    "fields": {
+      "display_bn": "১৭৫ ঢাকা-২",
+      "display_en": "175 Dhaka-2",
+      "is_active": true,
+      "ordering": 175
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 176,
+    "fields": {
+      "display_bn": "১৭৬ ঢাকা-৩",
+      "display_en": "176 Dhaka-3",
+      "is_active": true,
+      "ordering": 176
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 177,
+    "fields": {
+      "display_bn": "১৭৭ ঢাকা-৪",
+      "display_en": "177 Dhaka-4",
+      "is_active": true,
+      "ordering": 177
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 178,
+    "fields": {
+      "display_bn": "১৭৮ ঢাকা-৫",
+      "display_en": "178 Dhaka-5",
+      "is_active": true,
+      "ordering": 178
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 179,
+    "fields": {
+      "display_bn": "১৭৯ ঢাকা-৬",
+      "display_en": "179 Dhaka-6",
+      "is_active": true,
+      "ordering": 179
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 180,
+    "fields": {
+      "display_bn": "১৮০ ঢাকা-৭",
+      "display_en": "180 Dhaka-7",
+      "is_active": true,
+      "ordering": 180
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 181,
+    "fields": {
+      "display_bn": "১৮১ ঢাকা-৮",
+      "display_en": "181 Dhaka-8",
+      "is_active": true,
+      "ordering": 181
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 182,
+    "fields": {
+      "display_bn": "১৮২ ঢাকা-৯",
+      "display_en": "182 Dhaka-9",
+      "is_active": true,
+      "ordering": 182
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 183,
+    "fields": {
+      "display_bn": "১৮৩ ঢাকা-১০",
+      "display_en": "183 Dhaka-10",
+      "is_active": true,
+      "ordering": 183
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 184,
+    "fields": {
+      "display_bn": "১৮৪ ঢাকা-১১",
+      "display_en": "184 Dhaka-11",
+      "is_active": true,
+      "ordering": 184
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 185,
+    "fields": {
+      "display_bn": "১৮৫ ঢাকা-১২",
+      "display_en": "185 Dhaka-12",
+      "is_active": true,
+      "ordering": 185
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 186,
+    "fields": {
+      "display_bn": "১৮৬ ঢাকা-১৩",
+      "display_en": "186 Dhaka-13",
+      "is_active": true,
+      "ordering": 186
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 187,
+    "fields": {
+      "display_bn": "১৮৭ ঢাকা-১৪",
+      "display_en": "187 Dhaka-14",
+      "is_active": true,
+      "ordering": 187
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 188,
+    "fields": {
+      "display_bn": "১৮৮ ঢাকা-১৫",
+      "display_en": "188 Dhaka-15",
+      "is_active": true,
+      "ordering": 188
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 189,
+    "fields": {
+      "display_bn": "১৮৯ ঢাকা-১৬",
+      "display_en": "189 Dhaka-16",
+      "is_active": true,
+      "ordering": 189
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 190,
+    "fields": {
+      "display_bn": "১৯০ ঢাকা-১৭",
+      "display_en": "190 Dhaka-17",
+      "is_active": true,
+      "ordering": 190
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 191,
+    "fields": {
+      "display_bn": "১৯১ ঢাকা-১৮",
+      "display_en": "191 Dhaka-18",
+      "is_active": true,
+      "ordering": 191
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 192,
+    "fields": {
+      "display_bn": "১৯২ ঢাকা-১৯",
+      "display_en": "192 Dhaka-19",
+      "is_active": true,
+      "ordering": 192
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 193,
+    "fields": {
+      "display_bn": "১৯৩ ঢাকা-২০",
+      "display_en": "193 Dhaka-20",
+      "is_active": true,
+      "ordering": 193
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 194,
+    "fields": {
+      "display_bn": "১৯৪ গাজীপুর-১",
+      "display_en": "194 Gazipur-1",
+      "is_active": true,
+      "ordering": 194
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 195,
+    "fields": {
+      "display_bn": "১৯৫ গাজীপুর-২",
+      "display_en": "195 Gazipur-2",
+      "is_active": true,
+      "ordering": 195
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 196,
+    "fields": {
+      "display_bn": "১৯৬ গাজীপুর-৩",
+      "display_en": "196 Gazipur-3",
+      "is_active": true,
+      "ordering": 196
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 197,
+    "fields": {
+      "display_bn": "১৯৭ গাজীপুর-৪",
+      "display_en": "197 Gazipur-4",
+      "is_active": true,
+      "ordering": 197
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 198,
+    "fields": {
+      "display_bn": "১৯৮ গাজীপুর-৫",
+      "display_en": "198 Gazipur-5",
+      "is_active": true,
+      "ordering": 198
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 199,
+    "fields": {
+      "display_bn": "১৯৯ নরসিংদী-১",
+      "display_en": "199 Narsingdi-1",
+      "is_active": true,
+      "ordering": 199
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 200,
+    "fields": {
+      "display_bn": "২০০ নরসিংদী-২",
+      "display_en": "200 Narsingdi-2",
+      "is_active": true,
+      "ordering": 200
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 201,
+    "fields": {
+      "display_bn": "২০১ নরসিংদী-৩",
+      "display_en": "201 Narsingdi-3",
+      "is_active": true,
+      "ordering": 201
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 202,
+    "fields": {
+      "display_bn": "২০২ নরসিংদী-৪",
+      "display_en": "202 Narsingdi-4",
+      "is_active": true,
+      "ordering": 202
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 203,
+    "fields": {
+      "display_bn": "২০৩ নরসিংদী-৫",
+      "display_en": "203 Narsingdi-5",
+      "is_active": true,
+      "ordering": 203
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 204,
+    "fields": {
+      "display_bn": "২০৪ নারায়ণগঞ্জ-১",
+      "display_en": "204 Narayanganj-1",
+      "is_active": true,
+      "ordering": 204
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 205,
+    "fields": {
+      "display_bn": "২০৫ নারায়ণগঞ্জ-২",
+      "display_en": "205 Narayanganj-2",
+      "is_active": true,
+      "ordering": 205
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 206,
+    "fields": {
+      "display_bn": "২০৬ নারায়ণগঞ্জ-৩",
+      "display_en": "206 Narayanganj-3",
+      "is_active": true,
+      "ordering": 206
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 207,
+    "fields": {
+      "display_bn": "২০৭ নারায়ণগঞ্জ-৪",
+      "display_en": "207 Narayanganj-4",
+      "is_active": true,
+      "ordering": 207
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 208,
+    "fields": {
+      "display_bn": "২০৮ নারায়ণগঞ্জ-৫",
+      "display_en": "208 Narayanganj-5",
+      "is_active": true,
+      "ordering": 208
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 209,
+    "fields": {
+      "display_bn": "২০৯ রাজবাড়ী-১",
+      "display_en": "209 Rajbari-1",
+      "is_active": true,
+      "ordering": 209
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 210,
+    "fields": {
+      "display_bn": "২১০ রাজবাড়ী-২",
+      "display_en": "210 Rajbari-2",
+      "is_active": true,
+      "ordering": 210
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 211,
+    "fields": {
+      "display_bn": "২১১ ফরিদপুর-১",
+      "display_en": "211 Faridpur-1",
+      "is_active": true,
+      "ordering": 211
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 212,
+    "fields": {
+      "display_bn": "২১২ ফরিদপুর-২",
+      "display_en": "212 Faridpur-2",
+      "is_active": true,
+      "ordering": 212
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 213,
+    "fields": {
+      "display_bn": "২১৩ ফরিদপুর-৩",
+      "display_en": "213 Faridpur-3",
+      "is_active": true,
+      "ordering": 213
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 214,
+    "fields": {
+      "display_bn": "২১৪ ফরিদপুর-৪",
+      "display_en": "214 Faridpur-4",
+      "is_active": true,
+      "ordering": 214
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 215,
+    "fields": {
+      "display_bn": "২১৫ গোপালগঞ্জ-১",
+      "display_en": "215 Gopalgonj-1",
+      "is_active": true,
+      "ordering": 215
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 216,
+    "fields": {
+      "display_bn": "২১৬ গোপালগঞ্জ-২",
+      "display_en": "216 Gopalgonj-2",
+      "is_active": true,
+      "ordering": 216
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 217,
+    "fields": {
+      "display_bn": "২১৭ গোপালগঞ্জ-৩",
+      "display_en": "217 Gopalgonj-3",
+      "is_active": true,
+      "ordering": 217
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 218,
+    "fields": {
+      "display_bn": "২১৮ মাদারিপুর-১",
+      "display_en": "218 Madaripur-1",
+      "is_active": true,
+      "ordering": 218
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 219,
+    "fields": {
+      "display_bn": "২১৯ মাদারিপুর-২",
+      "display_en": "219 Madaripur-2",
+      "is_active": true,
+      "ordering": 219
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 220,
+    "fields": {
+      "display_bn": "২২০ মাদারিপুর-৩",
+      "display_en": "220 Madaripur-3",
+      "is_active": true,
+      "ordering": 220
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 221,
+    "fields": {
+      "display_bn": "২২১ শরিয়তপুর-১",
+      "display_en": "221 Shariatpur-1",
+      "is_active": true,
+      "ordering": 221
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 222,
+    "fields": {
+      "display_bn": "২২২ শরিয়তপুর-২",
+      "display_en": "222 Shariatpur-2",
+      "is_active": true,
+      "ordering": 222
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 223,
+    "fields": {
+      "display_bn": "২২৩ শরিয়তপুর-৩",
+      "display_en": "223 Shariatpur-3",
+      "is_active": true,
+      "ordering": 223
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 224,
+    "fields": {
+      "display_bn": "২২৪ সুনামগঞ্জ-১",
+      "display_en": "224 Sunamganj-1",
+      "is_active": true,
+      "ordering": 224
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 225,
+    "fields": {
+      "display_bn": "২২৫ সুনামগঞ্জ-২",
+      "display_en": "225 Sunamganj-2",
+      "is_active": true,
+      "ordering": 225
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 226,
+    "fields": {
+      "display_bn": "২২৬ সুনামগঞ্জ-৩",
+      "display_en": "226 Sunamganj-3",
+      "is_active": true,
+      "ordering": 226
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 227,
+    "fields": {
+      "display_bn": "২২৭ সুনামগঞ্জ-৪",
+      "display_en": "227 Sunamganj-4",
+      "is_active": true,
+      "ordering": 227
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 228,
+    "fields": {
+      "display_bn": "২২৮ সুনামগঞ্জ-৫",
+      "display_en": "228 Sunamganj-5",
+      "is_active": true,
+      "ordering": 228
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 229,
+    "fields": {
+      "display_bn": "২২৯ সিলেট-১",
+      "display_en": "229 Sylhet-1",
+      "is_active": true,
+      "ordering": 229
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 230,
+    "fields": {
+      "display_bn": "২৩০ সিলেট-২",
+      "display_en": "230 Sylhet-2",
+      "is_active": true,
+      "ordering": 230
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 231,
+    "fields": {
+      "display_bn": "২৩১ সিলেট-৩",
+      "display_en": "231 Sylhet-3",
+      "is_active": true,
+      "ordering": 231
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 232,
+    "fields": {
+      "display_bn": "২৩২ সিলেট-৪",
+      "display_en": "232 Sylhet-4",
+      "is_active": true,
+      "ordering": 232
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 233,
+    "fields": {
+      "display_bn": "২৩৩ সিলেট-৫",
+      "display_en": "233 Sylhet-5",
+      "is_active": true,
+      "ordering": 233
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 234,
+    "fields": {
+      "display_bn": "২৩৪ সিলেট-৬",
+      "display_en": "234 Sylhet-6",
+      "is_active": true,
+      "ordering": 234
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 235,
+    "fields": {
+      "display_bn": "২৩৫ মৌলভীবাজার-১",
+      "display_en": "235 Maulvibazar-1",
+      "is_active": true,
+      "ordering": 235
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 236,
+    "fields": {
+      "display_bn": "২৩৬ মৌলভীবাজার-২",
+      "display_en": "236 Maulvibazar-2",
+      "is_active": true,
+      "ordering": 236
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 237,
+    "fields": {
+      "display_bn": "২৩৭ মৌলভীবাজার-৩",
+      "display_en": "237 Maulvibazar-3",
+      "is_active": true,
+      "ordering": 237
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 238,
+    "fields": {
+      "display_bn": "২৩৮ মৌলভীবাজার-৪",
+      "display_en": "238 Maulvibazar-4",
+      "is_active": true,
+      "ordering": 238
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 239,
+    "fields": {
+      "display_bn": "২৩৯ হবিগঞ্জ-১",
+      "display_en": "239 Habiganj-1",
+      "is_active": true,
+      "ordering": 239
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 240,
+    "fields": {
+      "display_bn": "২৪০ হবিগঞ্জ-২",
+      "display_en": "240 Habiganj-2",
+      "is_active": true,
+      "ordering": 240
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 241,
+    "fields": {
+      "display_bn": "২৪১ হবিগঞ্জ-৩",
+      "display_en": "241 Habiganj-3",
+      "is_active": true,
+      "ordering": 241
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 242,
+    "fields": {
+      "display_bn": "২৪২ হবিগঞ্জ-৪",
+      "display_en": "242 Habiganj-4",
+      "is_active": true,
+      "ordering": 242
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 243,
+    "fields": {
+      "display_bn": "২৪৩ ব্রাহ্মণবাড়িয়া-১",
+      "display_en": "243 Brahmanbaria-1",
+      "is_active": true,
+      "ordering": 243
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 244,
+    "fields": {
+      "display_bn": "২৪৪ ব্রাহ্মণবাড়িয়া-২",
+      "display_en": "244 Brahmanbaria-2",
+      "is_active": true,
+      "ordering": 244
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 245,
+    "fields": {
+      "display_bn": "২৪৫ ব্রাহ্মণবাড়িয়া-৩",
+      "display_en": "245 Brahmanbaria-3",
+      "is_active": true,
+      "ordering": 245
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 246,
+    "fields": {
+      "display_bn": "২৪৬ ব্রাহ্মণবাড়িয়া-৪",
+      "display_en": "246 Brahmanbaria-4",
+      "is_active": true,
+      "ordering": 246
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 247,
+    "fields": {
+      "display_bn": "২৪৭ ব্রাহ্মণবাড়িয়া-৫",
+      "display_en": "247 Brahmanbaria-5",
+      "is_active": true,
+      "ordering": 247
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 248,
+    "fields": {
+      "display_bn": "২৪৮ ব্রাহ্মণবাড়িয়া-৬",
+      "display_en": "248 Brahmanbaria-6",
+      "is_active": true,
+      "ordering": 248
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 249,
+    "fields": {
+      "display_bn": "২৪৯ কুমিল্লা-১",
+      "display_en": "249 Cumilla-1",
+      "is_active": true,
+      "ordering": 249
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 250,
+    "fields": {
+      "display_bn": "২৫০ কুমিল্লা-২",
+      "display_en": "250 Cumilla-2",
+      "is_active": true,
+      "ordering": 250
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 251,
+    "fields": {
+      "display_bn": "২৫১ কুমিল্লা-৩",
+      "display_en": "251 Cumilla-3",
+      "is_active": true,
+      "ordering": 251
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 252,
+    "fields": {
+      "display_bn": "২৫২ কুমিল্লা-৪",
+      "display_en": "252 Cumilla-4",
+      "is_active": true,
+      "ordering": 252
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 253,
+    "fields": {
+      "display_bn": "২৫৩ কুমিল্লা-৫",
+      "display_en": "253 Cumilla-5",
+      "is_active": true,
+      "ordering": 253
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 254,
+    "fields": {
+      "display_bn": "২৫৪ কুমিল্লা-৬",
+      "display_en": "254 Cumilla-6",
+      "is_active": true,
+      "ordering": 254
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 255,
+    "fields": {
+      "display_bn": "২৫৫ কুমিল্লা-৭",
+      "display_en": "255 Cumilla-7",
+      "is_active": true,
+      "ordering": 255
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 256,
+    "fields": {
+      "display_bn": "২৫৬ কুমিল্লা-৮",
+      "display_en": "256 Cumilla-8",
+      "is_active": true,
+      "ordering": 256
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 257,
+    "fields": {
+      "display_bn": "২৫৭ কুমিল্লা-৯",
+      "display_en": "257 Cumilla-9",
+      "is_active": true,
+      "ordering": 257
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 258,
+    "fields": {
+      "display_bn": "২৫৮ কুমিল্লা-১০",
+      "display_en": "258 Cumilla-10",
+      "is_active": true,
+      "ordering": 258
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 259,
+    "fields": {
+      "display_bn": "২৫৯ কুমিল্লা-১১",
+      "display_en": "259 Cumilla-11",
+      "is_active": true,
+      "ordering": 259
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 260,
+    "fields": {
+      "display_bn": "২৬০ চাঁদপুর-১",
+      "display_en": "260 Chandpur-1",
+      "is_active": true,
+      "ordering": 260
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 261,
+    "fields": {
+      "display_bn": "২৬১ চাঁদপুর-২",
+      "display_en": "261 Chandpur-2",
+      "is_active": true,
+      "ordering": 261
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 262,
+    "fields": {
+      "display_bn": "২৬২ চাঁদপুর-৩",
+      "display_en": "262 Chandpur-3",
+      "is_active": true,
+      "ordering": 262
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 263,
+    "fields": {
+      "display_bn": "২৬৩ চাঁদপুর-৪",
+      "display_en": "263 Chandpur-4",
+      "is_active": true,
+      "ordering": 263
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 264,
+    "fields": {
+      "display_bn": "২৬৪ চাঁদপুর-৫",
+      "display_en": "264 Chandpur-5",
+      "is_active": true,
+      "ordering": 264
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 265,
+    "fields": {
+      "display_bn": "২৬৫ ফেনী-১",
+      "display_en": "265 Feni-1",
+      "is_active": true,
+      "ordering": 265
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 266,
+    "fields": {
+      "display_bn": "২৬৬ ফেনী-২",
+      "display_en": "266 Feni-2",
+      "is_active": true,
+      "ordering": 266
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 267,
+    "fields": {
+      "display_bn": "২৬৭ ফেনী-৩",
+      "display_en": "267 Feni-3",
+      "is_active": true,
+      "ordering": 267
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 268,
+    "fields": {
+      "display_bn": "২৬৮ নোয়াখালী-১",
+      "display_en": "268 Noakhali-1",
+      "is_active": true,
+      "ordering": 268
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 269,
+    "fields": {
+      "display_bn": "২৬৯ নোয়াখালী-২",
+      "display_en": "269 Noakhali-2",
+      "is_active": true,
+      "ordering": 269
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 270,
+    "fields": {
+      "display_bn": "২৭০ নোয়াখালী-৩",
+      "display_en": "270 Noakhali-3",
+      "is_active": true,
+      "ordering": 270
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 271,
+    "fields": {
+      "display_bn": "২৭১ নোয়াখালী-৪",
+      "display_en": "271 Noakhali-4",
+      "is_active": true,
+      "ordering": 271
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 272,
+    "fields": {
+      "display_bn": "২৭২ নোয়াখালী-৫",
+      "display_en": "272 Noakhali-5",
+      "is_active": true,
+      "ordering": 272
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 273,
+    "fields": {
+      "display_bn": "২৭৩ নোয়াখালী-৬",
+      "display_en": "273 Noakhali-6",
+      "is_active": true,
+      "ordering": 273
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 274,
+    "fields": {
+      "display_bn": "২৭৪ লক্ষ্মীপুর-১",
+      "display_en": "274 Laxmipur-1",
+      "is_active": true,
+      "ordering": 274
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 275,
+    "fields": {
+      "display_bn": "২৭৫ লক্ষ্মীপুর-২",
+      "display_en": "275 Laxmipur-2",
+      "is_active": true,
+      "ordering": 275
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 276,
+    "fields": {
+      "display_bn": "২৭৬ লক্ষ্মীপুর-৩",
+      "display_en": "276 Laxmipur-3",
+      "is_active": true,
+      "ordering": 276
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 277,
+    "fields": {
+      "display_bn": "২৭৭ লক্ষ্মীপুর-৪",
+      "display_en": "277 Laxmipur-4",
+      "is_active": true,
+      "ordering": 277
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 278,
+    "fields": {
+      "display_bn": "২৭৮ চট্টগ্রাম-১",
+      "display_en": "278 Chattogram-1",
+      "is_active": true,
+      "ordering": 278
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 279,
+    "fields": {
+      "display_bn": "২৭৯ চট্টগ্রাম-২",
+      "display_en": "279 Chattogram-2",
+      "is_active": true,
+      "ordering": 279
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 280,
+    "fields": {
+      "display_bn": "২৮০ চট্টগ্রাম-৩",
+      "display_en": "280 Chattogram-3",
+      "is_active": true,
+      "ordering": 280
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 281,
+    "fields": {
+      "display_bn": "২৮১ চট্টগ্রাম-৪",
+      "display_en": "281 Chattogram-4",
+      "is_active": true,
+      "ordering": 281
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 282,
+    "fields": {
+      "display_bn": "২৮২ চট্টগ্রাম-৫",
+      "display_en": "282 Chattogram-5",
+      "is_active": true,
+      "ordering": 282
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 283,
+    "fields": {
+      "display_bn": "২৮৩ চট্টগ্রাম-৬",
+      "display_en": "283 Chattogram-6",
+      "is_active": true,
+      "ordering": 283
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 284,
+    "fields": {
+      "display_bn": "২৮৪ চট্টগ্রাম-৭",
+      "display_en": "284 Chattogram-7",
+      "is_active": true,
+      "ordering": 284
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 285,
+    "fields": {
+      "display_bn": "২৮৫ চট্টগ্রাম-৮",
+      "display_en": "285 Chittagong-8",
+      "is_active": true,
+      "ordering": 285
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 286,
+    "fields": {
+      "display_bn": "২৮৬ চট্টগ্রাম-৯",
+      "display_en": "286 Chattogram-9",
+      "is_active": true,
+      "ordering": 286
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 287,
+    "fields": {
+      "display_bn": "২৮৭ চট্টগ্রাম-১০",
+      "display_en": "287 Chattogram-10",
+      "is_active": true,
+      "ordering": 287
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 288,
+    "fields": {
+      "display_bn": "২৮৮ চট্টগ্রাম-১১",
+      "display_en": "288 Chattogram-11",
+      "is_active": true,
+      "ordering": 288
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 289,
+    "fields": {
+      "display_bn": "২৮৯ চট্টগ্রাম-১২",
+      "display_en": "289 Chattogram-12",
+      "is_active": true,
+      "ordering": 289
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 290,
+    "fields": {
+      "display_bn": "২৯০ চট্টগ্রাম-১৩",
+      "display_en": "290 Chattogram-13",
+      "is_active": true,
+      "ordering": 290
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 291,
+    "fields": {
+      "display_bn": "২৯১ চট্টগ্রাম-১৪",
+      "display_en": "291 Chattogram-14",
+      "is_active": true,
+      "ordering": 291
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 292,
+    "fields": {
+      "display_bn": "২৯২ চট্টগ্রাম-১৫",
+      "display_en": "292 Chattogram-15",
+      "is_active": true,
+      "ordering": 292
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 293,
+    "fields": {
+      "display_bn": "২৯৩ চট্টগ্রাম-১৬",
+      "display_en": "293 Chattogram-16",
+      "is_active": true,
+      "ordering": 293
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 294,
+    "fields": {
+      "display_bn": "২৯৪ কক্সবাজার-১",
+      "display_en": "294 Cox'sBazar-1",
+      "is_active": true,
+      "ordering": 294
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 295,
+    "fields": {
+      "display_bn": "২৯৫ কক্সবাজার-২",
+      "display_en": "295 Cox'sBazar-2",
+      "is_active": true,
+      "ordering": 295
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 296,
+    "fields": {
+      "display_bn": "২৯৬ কক্সবাজার-৩",
+      "display_en": "296 Cox'sBazar-3",
+      "is_active": true,
+      "ordering": 296
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 297,
+    "fields": {
+      "display_bn": "২৯৭ কক্সবাজার-৪",
+      "display_en": "297 Cox'sBazar-4",
+      "is_active": true,
+      "ordering": 297
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 298,
+    "fields": {
+      "display_bn": "২৯৮ খাগড়াছড়ি",
+      "display_en": "298 Khagrachhari",
+      "is_active": true,
+      "ordering": 298
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 299,
+    "fields": {
+      "display_bn": "২৯৯ রাঙ্গামাটি",
+      "display_en": "299 Rangamati",
+      "is_active": true,
+      "ordering": 299
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 300,
+    "fields": {
+      "display_bn": "৩০০ বান্দরবন",
+      "display_en": "300 Bandarban",
+      "is_active": true,
+      "ordering": 300
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 301,
+    "fields": {
+      "display_bn": "৩০১ মহিলা আসন-১",
+      "display_en": "301 Women Seat-1",
+      "is_active": true,
+      "ordering": 301
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 302,
+    "fields": {
+      "display_bn": "৩০২ মহিলা আসন-২",
+      "display_en": "302 Women Seat-2",
+      "is_active": true,
+      "ordering": 302
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 303,
+    "fields": {
+      "display_bn": "৩০৩ মহিলা আসন-৩",
+      "display_en": "303 Women Seat-3",
+      "is_active": true,
+      "ordering": 303
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 304,
+    "fields": {
+      "display_bn": "৩০৪ মহিলা আসন-৪",
+      "display_en": "304 Women Seat-4",
+      "is_active": true,
+      "ordering": 304
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 305,
+    "fields": {
+      "display_bn": "৩০৫ মহিলা আসন-৫",
+      "display_en": "305 Women Seat-5",
+      "is_active": true,
+      "ordering": 305
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 306,
+    "fields": {
+      "display_bn": "৩০৬ মহিলা আসন-৬",
+      "display_en": "306 Women Seat-6",
+      "is_active": true,
+      "ordering": 306
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 307,
+    "fields": {
+      "display_bn": "৩০৭ মহিলা আসন-৭",
+      "display_en": "307 Women Seat-7",
+      "is_active": true,
+      "ordering": 307
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 308,
+    "fields": {
+      "display_bn": "৩০৮ মহিলা আসন-৮",
+      "display_en": "308 Women Seat-8",
+      "is_active": true,
+      "ordering": 308
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 309,
+    "fields": {
+      "display_bn": "৩০৯ মহিলা আসন-৯",
+      "display_en": "309 Women Seat-9",
+      "is_active": true,
+      "ordering": 309
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 310,
+    "fields": {
+      "display_bn": "৩১০ মহিলা আসন-১০",
+      "display_en": "310 Women Seat-10",
+      "is_active": true,
+      "ordering": 310
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 311,
+    "fields": {
+      "display_bn": "৩১১ মহিলা আসন-১১",
+      "display_en": "311 Women Seat-11",
+      "is_active": true,
+      "ordering": 311
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 312,
+    "fields": {
+      "display_bn": "৩১২ মহিলা আসন-১২",
+      "display_en": "312 Women Seat-12",
+      "is_active": true,
+      "ordering": 312
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 313,
+    "fields": {
+      "display_bn": "৩১৩ মহিলা আসন-১৩",
+      "display_en": "313 Women Seat-13",
+      "is_active": true,
+      "ordering": 313
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 314,
+    "fields": {
+      "display_bn": "৩১৪ মহিলা আসন-১৪",
+      "display_en": "314 Women Seat-14",
+      "is_active": true,
+      "ordering": 314
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 315,
+    "fields": {
+      "display_bn": "৩১৫ মহিলা আসন-১৫",
+      "display_en": "315 Women Seat-15",
+      "is_active": true,
+      "ordering": 315
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 316,
+    "fields": {
+      "display_bn": "৩১৬ মহিলা আসন-১৬",
+      "display_en": "316 Women Seat-16",
+      "is_active": true,
+      "ordering": 316
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 317,
+    "fields": {
+      "display_bn": "৩১৭ মহিলা আসন-১৭",
+      "display_en": "317 Women Seat-17",
+      "is_active": true,
+      "ordering": 317
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 318,
+    "fields": {
+      "display_bn": "৩১৮ মহিলা আসন-১৮",
+      "display_en": "318 Women Seat-18",
+      "is_active": true,
+      "ordering": 318
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 319,
+    "fields": {
+      "display_bn": "৩১৯ মহিলা আসন-১৯",
+      "display_en": "319 Women Seat-19",
+      "is_active": true,
+      "ordering": 319
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 320,
+    "fields": {
+      "display_bn": "৩২০ মহিলা আসন-২০",
+      "display_en": "320 Women Seat-20",
+      "is_active": true,
+      "ordering": 320
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 321,
+    "fields": {
+      "display_bn": "৩২১ মহিলা আসন-২১",
+      "display_en": "321 Women Seat-21",
+      "is_active": true,
+      "ordering": 321
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 322,
+    "fields": {
+      "display_bn": "৩২২ মহিলা আসন-২২",
+      "display_en": "322 Women Seat-22",
+      "is_active": true,
+      "ordering": 322
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 323,
+    "fields": {
+      "display_bn": "৩২৩ মহিলা আসন-২৩",
+      "display_en": "323 Women Seat-23",
+      "is_active": true,
+      "ordering": 323
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 324,
+    "fields": {
+      "display_bn": "৩২৪ মহিলা আসন-২৪",
+      "display_en": "324 Women Seat-24",
+      "is_active": true,
+      "ordering": 324
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 325,
+    "fields": {
+      "display_bn": "৩২৫ মহিলা আসন-২৫",
+      "display_en": "325 Women Seat-25",
+      "is_active": true,
+      "ordering": 325
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 326,
+    "fields": {
+      "display_bn": "৩২৬ মহিলা আসন-২৬",
+      "display_en": "326 Women Seat-26",
+      "is_active": true,
+      "ordering": 326
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 327,
+    "fields": {
+      "display_bn": "৩২৭ মহিলা আসন-২৭",
+      "display_en": "327 Women Seat-27",
+      "is_active": true,
+      "ordering": 327
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 328,
+    "fields": {
+      "display_bn": "৩২৮ মহিলা আসন-২৮",
+      "display_en": "328 Women Seat-28",
+      "is_active": true,
+      "ordering": 328
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 329,
+    "fields": {
+      "display_bn": "৩২৯ মহিলা আসন-২৯",
+      "display_en": "329 Women Seat-29",
+      "is_active": true,
+      "ordering": 329
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 330,
+    "fields": {
+      "display_bn": "৩৩০ মহিলা আসন-৩০",
+      "display_en": "330 Women Seat-30",
+      "is_active": true,
+      "ordering": 330
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 331,
+    "fields": {
+      "display_bn": "৩৩১ মহিলা আসন-৩১",
+      "display_en": "331 Women Seat-31",
+      "is_active": true,
+      "ordering": 331
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 332,
+    "fields": {
+      "display_bn": "৩৩২ মহিলা আসন-৩২",
+      "display_en": "332 Women Seat-32",
+      "is_active": true,
+      "ordering": 332
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 333,
+    "fields": {
+      "display_bn": "৩৩৩ মহিলা আসন-৩৩",
+      "display_en": "333 Women Seat-33",
+      "is_active": true,
+      "ordering": 333
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 334,
+    "fields": {
+      "display_bn": "৩৩৪ মহিলা আসন-৩৪",
+      "display_en": "334 Women Seat-34",
+      "is_active": true,
+      "ordering": 334
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 335,
+    "fields": {
+      "display_bn": "৩৩৫ মহিলা আসন-৩৫",
+      "display_en": "335 Women Seat-35",
+      "is_active": true,
+      "ordering": 335
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 336,
+    "fields": {
+      "display_bn": "৩৩৬ মহিলা আসন-৩৬",
+      "display_en": "336 Women Seat-36",
+      "is_active": true,
+      "ordering": 336
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 337,
+    "fields": {
+      "display_bn": "৩৩৭ মহিলা আসন-৩৭",
+      "display_en": "337 Women Seat-37",
+      "is_active": true,
+      "ordering": 337
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 338,
+    "fields": {
+      "display_bn": "৩৩৮ মহিলা আসন-৩৮",
+      "display_en": "338 Women Seat-38",
+      "is_active": true,
+      "ordering": 338
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 339,
+    "fields": {
+      "display_bn": "৩৩৯ মহিলা আসন-৩৯",
+      "display_en": "339 Women Seat-39",
+      "is_active": true,
+      "ordering": 339
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 340,
+    "fields": {
+      "display_bn": "৩৪০ মহিলা আসন-৪০",
+      "display_en": "340 Women Seat-40",
+      "is_active": true,
+      "ordering": 340
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 341,
+    "fields": {
+      "display_bn": "৩৪১ মহিলা আসন-৪১",
+      "display_en": "341 Women Seat-41",
+      "is_active": true,
+      "ordering": 341
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 342,
+    "fields": {
+      "display_bn": "৩৪২ মহিলা আসন-৪২",
+      "display_en": "342 Women Seat-42",
+      "is_active": true,
+      "ordering": 342
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 343,
+    "fields": {
+      "display_bn": "৩৪৩ মহিলা আসন-৪৩",
+      "display_en": "343 Women Seat-43",
+      "is_active": true,
+      "ordering": 343
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 344,
+    "fields": {
+      "display_bn": "৩৪৪ মহিলা আসন-৪৪",
+      "display_en": "344 Women Seat-44",
+      "is_active": true,
+      "ordering": 344
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 345,
+    "fields": {
+      "display_bn": "৩৪৫ মহিলা আসন-৪৫",
+      "display_en": "345 Women Seat-45",
+      "is_active": true,
+      "ordering": 345
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 346,
+    "fields": {
+      "display_bn": "৩৪৬ মহিলা আসন-৪৬",
+      "display_en": "346 Women Seat-46",
+      "is_active": true,
+      "ordering": 346
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 347,
+    "fields": {
+      "display_bn": "৩৪৭ মহিলা আসন-৪৭",
+      "display_en": "347 Women Seat-47",
+      "is_active": true,
+      "ordering": 347
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 348,
+    "fields": {
+      "display_bn": "৩৪৮ মহিলা আসন-৪৮",
+      "display_en": "348 Women Seat-48",
+      "is_active": true,
+      "ordering": 348
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 349,
+    "fields": {
+      "display_bn": "৩৪৯ মহিলা আসন-৪৯",
+      "display_en": "349 Women Seat-49",
+      "is_active": true,
+      "ordering": 349
+    }
+  },
+  {
+    "model": "parliament.constituency",
+    "pk": 350,
+    "fields": {
+      "display_bn": "৩৫০ মহিলা আসন-৫০",
+      "display_en": "350 Women Seat-50",
+      "is_active": true,
+      "ordering": 350
+    }
+  }
+]

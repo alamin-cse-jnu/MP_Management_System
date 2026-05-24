@@ -1,0 +1,82 @@
+[
+  {
+    "model": "master.division",
+    "pk": 1,
+    "fields": {
+      "name_bn": "ঢাকা",
+      "name_en": "Dhaka",
+      "is_active": true,
+      "ordering": 1
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 2,
+    "fields": {
+      "name_bn": "খুলনা",
+      "name_en": "Khulna",
+      "is_active": true,
+      "ordering": 2
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 3,
+    "fields": {
+      "name_bn": "চট্টগ্রাম",
+      "name_en": "Chattogram",
+      "is_active": true,
+      "ordering": 3
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 4,
+    "fields": {
+      "name_bn": "রাজশাহী",
+      "name_en": "Rajshahi",
+      "is_active": true,
+      "ordering": 4
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 5,
+    "fields": {
+      "name_bn": "সিলেট",
+      "name_en": "Sylhet",
+      "is_active": true,
+      "ordering": 5
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 6,
+    "fields": {
+      "name_bn": "রংপুর",
+      "name_en": "Rangpur",
+      "is_active": true,
+      "ordering": 6
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 7,
+    "fields": {
+      "name_bn": "ময়মনসিংহ",
+      "name_en": "Mymensingh",
+      "is_active": true,
+      "ordering": 7
+    }
+  },
+  {
+    "model": "master.division",
+    "pk": 8,
+    "fields": {
+      "name_bn": "বরিশাল",
+      "name_en": "Barishal",
+      "is_active": true,
+      "ordering": 8
+    }
+  }
+]

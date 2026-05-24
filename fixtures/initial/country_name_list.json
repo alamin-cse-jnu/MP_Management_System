@@ -1,0 +1,1972 @@
+[
+  {
+    "model": "master.country",
+    "pk": 1,
+    "fields": {
+      "name_bn": "বাংলাদেশ",
+      "name_en": "Bangladesh",
+      "is_active": true,
+      "ordering": 1
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 2,
+    "fields": {
+      "name_bn": "আফগানিস্তান",
+      "name_en": "Afghanistan",
+      "is_active": true,
+      "ordering": 2
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 3,
+    "fields": {
+      "name_bn": "আলবেনিয়া",
+      "name_en": "Albania",
+      "is_active": true,
+      "ordering": 3
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 4,
+    "fields": {
+      "name_bn": "আলজেরিয়া",
+      "name_en": "Algeria",
+      "is_active": true,
+      "ordering": 4
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 5,
+    "fields": {
+      "name_bn": "আন্দোরা",
+      "name_en": "Andorra",
+      "is_active": true,
+      "ordering": 5
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 6,
+    "fields": {
+      "name_bn": "অ্যাঙ্গোলা",
+      "name_en": "Angola",
+      "is_active": true,
+      "ordering": 6
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 7,
+    "fields": {
+      "name_bn": "অ্যান্টিগুয়া ও বার্বুডা",
+      "name_en": "Antigua and Barbuda",
+      "is_active": true,
+      "ordering": 7
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 8,
+    "fields": {
+      "name_bn": "আর্জেন্টিনা",
+      "name_en": "Argentina",
+      "is_active": true,
+      "ordering": 8
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 9,
+    "fields": {
+      "name_bn": "আর্মেনিয়া",
+      "name_en": "Armenia",
+      "is_active": true,
+      "ordering": 9
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 10,
+    "fields": {
+      "name_bn": "অস্ট্রেলিয়া",
+      "name_en": "Australia",
+      "is_active": true,
+      "ordering": 10
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 11,
+    "fields": {
+      "name_bn": "অস্ট্রিয়া",
+      "name_en": "Austria",
+      "is_active": true,
+      "ordering": 11
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 12,
+    "fields": {
+      "name_bn": "আজারবাইজান",
+      "name_en": "Azerbaijan",
+      "is_active": true,
+      "ordering": 12
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 13,
+    "fields": {
+      "name_bn": "বাহামাস",
+      "name_en": "Bahamas",
+      "is_active": true,
+      "ordering": 13
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 14,
+    "fields": {
+      "name_bn": "বাহরাইন",
+      "name_en": "Bahrain",
+      "is_active": true,
+      "ordering": 14
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 15,
+    "fields": {
+      "name_bn": "বার্বাডোস",
+      "name_en": "Barbados",
+      "is_active": true,
+      "ordering": 15
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 16,
+    "fields": {
+      "name_bn": "বেলারুশ",
+      "name_en": "Belarus",
+      "is_active": true,
+      "ordering": 16
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 17,
+    "fields": {
+      "name_bn": "বেলজিয়াম",
+      "name_en": "Belgium",
+      "is_active": true,
+      "ordering": 17
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 18,
+    "fields": {
+      "name_bn": "বেলিজ",
+      "name_en": "Belize",
+      "is_active": true,
+      "ordering": 18
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 19,
+    "fields": {
+      "name_bn": "বেনিন",
+      "name_en": "Benin",
+      "is_active": true,
+      "ordering": 19
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 20,
+    "fields": {
+      "name_bn": "ভুটান",
+      "name_en": "Bhutan",
+      "is_active": true,
+      "ordering": 20
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 21,
+    "fields": {
+      "name_bn": "বলিভিয়া",
+      "name_en": "Bolivia",
+      "is_active": true,
+      "ordering": 21
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 22,
+    "fields": {
+      "name_bn": "বসনিয়া ও হার্জেগোভিনা",
+      "name_en": "Bosnia and Herzegovina",
+      "is_active": true,
+      "ordering": 22
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 23,
+    "fields": {
+      "name_bn": "বোতসোয়ানা",
+      "name_en": "Botswana",
+      "is_active": true,
+      "ordering": 23
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 24,
+    "fields": {
+      "name_bn": "ব্রাজিল",
+      "name_en": "Brazil",
+      "is_active": true,
+      "ordering": 24
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 25,
+    "fields": {
+      "name_bn": "ব্রুনাই",
+      "name_en": "Brunei",
+      "is_active": true,
+      "ordering": 25
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 26,
+    "fields": {
+      "name_bn": "বুলগেরিয়া",
+      "name_en": "Bulgaria",
+      "is_active": true,
+      "ordering": 26
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 27,
+    "fields": {
+      "name_bn": "বুর্কিনা ফাসো",
+      "name_en": "Burkina Faso",
+      "is_active": true,
+      "ordering": 27
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 28,
+    "fields": {
+      "name_bn": "বুরুন্ডি",
+      "name_en": "Burundi",
+      "is_active": true,
+      "ordering": 28
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 29,
+    "fields": {
+      "name_bn": "কেপ ভার্দে",
+      "name_en": "Cabo Verde",
+      "is_active": true,
+      "ordering": 29
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 30,
+    "fields": {
+      "name_bn": "কম্বোডিয়া",
+      "name_en": "Cambodia",
+      "is_active": true,
+      "ordering": 30
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 31,
+    "fields": {
+      "name_bn": "ক্যামেরুন",
+      "name_en": "Cameroon",
+      "is_active": true,
+      "ordering": 31
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 32,
+    "fields": {
+      "name_bn": "কানাডা",
+      "name_en": "Canada",
+      "is_active": true,
+      "ordering": 32
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 33,
+    "fields": {
+      "name_bn": "মধ্য আফ্রিকান প্রজাতন্ত্র",
+      "name_en": "Central African Republic",
+      "is_active": true,
+      "ordering": 33
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 34,
+    "fields": {
+      "name_bn": "চাদ",
+      "name_en": "Chad",
+      "is_active": true,
+      "ordering": 34
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 35,
+    "fields": {
+      "name_bn": "চিলি",
+      "name_en": "Chile",
+      "is_active": true,
+      "ordering": 35
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 36,
+    "fields": {
+      "name_bn": "চীন",
+      "name_en": "China",
+      "is_active": true,
+      "ordering": 36
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 37,
+    "fields": {
+      "name_bn": "কলম্বিয়া",
+      "name_en": "Colombia",
+      "is_active": true,
+      "ordering": 37
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 38,
+    "fields": {
+      "name_bn": "কমোরোস",
+      "name_en": "Comoros",
+      "is_active": true,
+      "ordering": 38
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 39,
+    "fields": {
+      "name_bn": "কঙ্গো প্রজাতন্ত্র",
+      "name_en": "Congo (Republic)",
+      "is_active": true,
+      "ordering": 39
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 40,
+    "fields": {
+      "name_bn": "গণতান্ত্রিক কঙ্গো প্রজাতন্ত্র",
+      "name_en": "Congo (Democratic Republic)",
+      "is_active": true,
+      "ordering": 40
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 41,
+    "fields": {
+      "name_bn": "কোস্টারিকা",
+      "name_en": "Costa Rica",
+      "is_active": true,
+      "ordering": 41
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 42,
+    "fields": {
+      "name_bn": "ক্রোয়েশিয়া",
+      "name_en": "Croatia",
+      "is_active": true,
+      "ordering": 42
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 43,
+    "fields": {
+      "name_bn": "কিউবা",
+      "name_en": "Cuba",
+      "is_active": true,
+      "ordering": 43
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 44,
+    "fields": {
+      "name_bn": "সাইপ্রাস",
+      "name_en": "Cyprus",
+      "is_active": true,
+      "ordering": 44
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 45,
+    "fields": {
+      "name_bn": "চেক প্রজাতন্ত্র",
+      "name_en": "Czech Republic",
+      "is_active": true,
+      "ordering": 45
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 46,
+    "fields": {
+      "name_bn": "ডেনমার্ক",
+      "name_en": "Denmark",
+      "is_active": true,
+      "ordering": 46
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 47,
+    "fields": {
+      "name_bn": "জিবুতি",
+      "name_en": "Djibouti",
+      "is_active": true,
+      "ordering": 47
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 48,
+    "fields": {
+      "name_bn": "ডমিনিকা",
+      "name_en": "Dominica",
+      "is_active": true,
+      "ordering": 48
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 49,
+    "fields": {
+      "name_bn": "ডমিনিকান প্রজাতন্ত্র",
+      "name_en": "Dominican Republic",
+      "is_active": true,
+      "ordering": 49
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 50,
+    "fields": {
+      "name_bn": "ইকুয়েডর",
+      "name_en": "Ecuador",
+      "is_active": true,
+      "ordering": 50
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 51,
+    "fields": {
+      "name_bn": "মিশর",
+      "name_en": "Egypt",
+      "is_active": true,
+      "ordering": 51
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 52,
+    "fields": {
+      "name_bn": "এল সালভাদর",
+      "name_en": "El Salvador",
+      "is_active": true,
+      "ordering": 52
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 53,
+    "fields": {
+      "name_bn": "বিষুবীয় গিনি",
+      "name_en": "Equatorial Guinea",
+      "is_active": true,
+      "ordering": 53
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 54,
+    "fields": {
+      "name_bn": "ইরিত্রিয়া",
+      "name_en": "Eritrea",
+      "is_active": true,
+      "ordering": 54
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 55,
+    "fields": {
+      "name_bn": "এস্তোনিয়া",
+      "name_en": "Estonia",
+      "is_active": true,
+      "ordering": 55
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 56,
+    "fields": {
+      "name_bn": "ইসওয়াতিনি",
+      "name_en": "Eswatini",
+      "is_active": true,
+      "ordering": 56
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 57,
+    "fields": {
+      "name_bn": "ইথিওপিয়া",
+      "name_en": "Ethiopia",
+      "is_active": true,
+      "ordering": 57
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 58,
+    "fields": {
+      "name_bn": "ফিজি",
+      "name_en": "Fiji",
+      "is_active": true,
+      "ordering": 58
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 59,
+    "fields": {
+      "name_bn": "ফিনল্যান্ড",
+      "name_en": "Finland",
+      "is_active": true,
+      "ordering": 59
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 60,
+    "fields": {
+      "name_bn": "ফ্রান্স",
+      "name_en": "France",
+      "is_active": true,
+      "ordering": 60
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 61,
+    "fields": {
+      "name_bn": "গ্যাবন",
+      "name_en": "Gabon",
+      "is_active": true,
+      "ordering": 61
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 62,
+    "fields": {
+      "name_bn": "গাম্বিয়া",
+      "name_en": "Gambia",
+      "is_active": true,
+      "ordering": 62
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 63,
+    "fields": {
+      "name_bn": "জর্জিয়া",
+      "name_en": "Georgia",
+      "is_active": true,
+      "ordering": 63
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 64,
+    "fields": {
+      "name_bn": "জার্মানি",
+      "name_en": "Germany",
+      "is_active": true,
+      "ordering": 64
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 65,
+    "fields": {
+      "name_bn": "ঘানা",
+      "name_en": "Ghana",
+      "is_active": true,
+      "ordering": 65
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 66,
+    "fields": {
+      "name_bn": "গ্রিস",
+      "name_en": "Greece",
+      "is_active": true,
+      "ordering": 66
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 67,
+    "fields": {
+      "name_bn": "গ্রেনাডা",
+      "name_en": "Grenada",
+      "is_active": true,
+      "ordering": 67
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 68,
+    "fields": {
+      "name_bn": "গুয়াতেমালা",
+      "name_en": "Guatemala",
+      "is_active": true,
+      "ordering": 68
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 69,
+    "fields": {
+      "name_bn": "গিনি",
+      "name_en": "Guinea",
+      "is_active": true,
+      "ordering": 69
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 70,
+    "fields": {
+      "name_bn": "গিনি-বিসাউ",
+      "name_en": "Guinea-Bissau",
+      "is_active": true,
+      "ordering": 70
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 71,
+    "fields": {
+      "name_bn": "গায়ানা",
+      "name_en": "Guyana",
+      "is_active": true,
+      "ordering": 71
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 72,
+    "fields": {
+      "name_bn": "হাইতি",
+      "name_en": "Haiti",
+      "is_active": true,
+      "ordering": 72
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 73,
+    "fields": {
+      "name_bn": "হন্ডুরাস",
+      "name_en": "Honduras",
+      "is_active": true,
+      "ordering": 73
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 74,
+    "fields": {
+      "name_bn": "হাঙ্গেরি",
+      "name_en": "Hungary",
+      "is_active": true,
+      "ordering": 74
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 75,
+    "fields": {
+      "name_bn": "আইসল্যান্ড",
+      "name_en": "Iceland",
+      "is_active": true,
+      "ordering": 75
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 76,
+    "fields": {
+      "name_bn": "ভারত",
+      "name_en": "India",
+      "is_active": true,
+      "ordering": 76
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 77,
+    "fields": {
+      "name_bn": "ইন্দোনেশিয়া",
+      "name_en": "Indonesia",
+      "is_active": true,
+      "ordering": 77
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 78,
+    "fields": {
+      "name_bn": "ইরান",
+      "name_en": "Iran",
+      "is_active": true,
+      "ordering": 78
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 79,
+    "fields": {
+      "name_bn": "ইরাক",
+      "name_en": "Iraq",
+      "is_active": true,
+      "ordering": 79
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 80,
+    "fields": {
+      "name_bn": "আয়ারল্যান্ড",
+      "name_en": "Ireland",
+      "is_active": true,
+      "ordering": 80
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 81,
+    "fields": {
+      "name_bn": "ইসরায়েল",
+      "name_en": "Israel",
+      "is_active": true,
+      "ordering": 81
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 82,
+    "fields": {
+      "name_bn": "ইতালি",
+      "name_en": "Italy",
+      "is_active": true,
+      "ordering": 82
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 83,
+    "fields": {
+      "name_bn": "আইভরি কোস্ট",
+      "name_en": "Ivory Coast",
+      "is_active": true,
+      "ordering": 83
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 84,
+    "fields": {
+      "name_bn": "জামাইকা",
+      "name_en": "Jamaica",
+      "is_active": true,
+      "ordering": 84
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 85,
+    "fields": {
+      "name_bn": "জাপান",
+      "name_en": "Japan",
+      "is_active": true,
+      "ordering": 85
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 86,
+    "fields": {
+      "name_bn": "জর্ডান",
+      "name_en": "Jordan",
+      "is_active": true,
+      "ordering": 86
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 87,
+    "fields": {
+      "name_bn": "কাজাখস্তান",
+      "name_en": "Kazakhstan",
+      "is_active": true,
+      "ordering": 87
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 88,
+    "fields": {
+      "name_bn": "কেনিয়া",
+      "name_en": "Kenya",
+      "is_active": true,
+      "ordering": 88
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 89,
+    "fields": {
+      "name_bn": "কিরিবাতি",
+      "name_en": "Kiribati",
+      "is_active": true,
+      "ordering": 89
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 90,
+    "fields": {
+      "name_bn": "কসোভো",
+      "name_en": "Kosovo",
+      "is_active": true,
+      "ordering": 90
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 91,
+    "fields": {
+      "name_bn": "কুয়েত",
+      "name_en": "Kuwait",
+      "is_active": true,
+      "ordering": 91
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 92,
+    "fields": {
+      "name_bn": "কির্গিজস্তান",
+      "name_en": "Kyrgyzstan",
+      "is_active": true,
+      "ordering": 92
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 93,
+    "fields": {
+      "name_bn": "লাওস",
+      "name_en": "Laos",
+      "is_active": true,
+      "ordering": 93
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 94,
+    "fields": {
+      "name_bn": "লাটভিয়া",
+      "name_en": "Latvia",
+      "is_active": true,
+      "ordering": 94
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 95,
+    "fields": {
+      "name_bn": "লেবানন",
+      "name_en": "Lebanon",
+      "is_active": true,
+      "ordering": 95
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 96,
+    "fields": {
+      "name_bn": "লেসোথো",
+      "name_en": "Lesotho",
+      "is_active": true,
+      "ordering": 96
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 97,
+    "fields": {
+      "name_bn": "লাইবেরিয়া",
+      "name_en": "Liberia",
+      "is_active": true,
+      "ordering": 97
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 98,
+    "fields": {
+      "name_bn": "লিবিয়া",
+      "name_en": "Libya",
+      "is_active": true,
+      "ordering": 98
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 99,
+    "fields": {
+      "name_bn": "লিশটেনস্টাইন",
+      "name_en": "Liechtenstein",
+      "is_active": true,
+      "ordering": 99
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 100,
+    "fields": {
+      "name_bn": "লিথুয়ানিয়া",
+      "name_en": "Lithuania",
+      "is_active": true,
+      "ordering": 100
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 101,
+    "fields": {
+      "name_bn": "লুক্সেমবার্গ",
+      "name_en": "Luxembourg",
+      "is_active": true,
+      "ordering": 101
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 102,
+    "fields": {
+      "name_bn": "মাদাগাস্কার",
+      "name_en": "Madagascar",
+      "is_active": true,
+      "ordering": 102
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 103,
+    "fields": {
+      "name_bn": "মালাউই",
+      "name_en": "Malawi",
+      "is_active": true,
+      "ordering": 103
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 104,
+    "fields": {
+      "name_bn": "মালয়েশিয়া",
+      "name_en": "Malaysia",
+      "is_active": true,
+      "ordering": 104
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 105,
+    "fields": {
+      "name_bn": "মালদ্বীপ",
+      "name_en": "Maldives",
+      "is_active": true,
+      "ordering": 105
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 106,
+    "fields": {
+      "name_bn": "মালি",
+      "name_en": "Mali",
+      "is_active": true,
+      "ordering": 106
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 107,
+    "fields": {
+      "name_bn": "মালটা",
+      "name_en": "Malta",
+      "is_active": true,
+      "ordering": 107
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 108,
+    "fields": {
+      "name_bn": "মার্শাল দ্বীপপুঞ্জ",
+      "name_en": "Marshall Islands",
+      "is_active": true,
+      "ordering": 108
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 109,
+    "fields": {
+      "name_bn": "মৌরিতানিয়া",
+      "name_en": "Mauritania",
+      "is_active": true,
+      "ordering": 109
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 110,
+    "fields": {
+      "name_bn": "মরিশাস",
+      "name_en": "Mauritius",
+      "is_active": true,
+      "ordering": 110
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 111,
+    "fields": {
+      "name_bn": "মেক্সিকো",
+      "name_en": "Mexico",
+      "is_active": true,
+      "ordering": 111
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 112,
+    "fields": {
+      "name_bn": "মাইক্রোনেশিয়া",
+      "name_en": "Micronesia",
+      "is_active": true,
+      "ordering": 112
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 113,
+    "fields": {
+      "name_bn": "মলদোভা",
+      "name_en": "Moldova",
+      "is_active": true,
+      "ordering": 113
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 114,
+    "fields": {
+      "name_bn": "মোনাকো",
+      "name_en": "Monaco",
+      "is_active": true,
+      "ordering": 114
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 115,
+    "fields": {
+      "name_bn": "মঙ্গোলিয়া",
+      "name_en": "Mongolia",
+      "is_active": true,
+      "ordering": 115
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 116,
+    "fields": {
+      "name_bn": "মন্টেনেগ্রো",
+      "name_en": "Montenegro",
+      "is_active": true,
+      "ordering": 116
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 117,
+    "fields": {
+      "name_bn": "মরক্কো",
+      "name_en": "Morocco",
+      "is_active": true,
+      "ordering": 117
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 118,
+    "fields": {
+      "name_bn": "মোজাম্বিক",
+      "name_en": "Mozambique",
+      "is_active": true,
+      "ordering": 118
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 119,
+    "fields": {
+      "name_bn": "মিয়ানমার",
+      "name_en": "Myanmar",
+      "is_active": true,
+      "ordering": 119
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 120,
+    "fields": {
+      "name_bn": "নামিবিয়া",
+      "name_en": "Namibia",
+      "is_active": true,
+      "ordering": 120
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 121,
+    "fields": {
+      "name_bn": "নাউরু",
+      "name_en": "Nauru",
+      "is_active": true,
+      "ordering": 121
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 122,
+    "fields": {
+      "name_bn": "নেপাল",
+      "name_en": "Nepal",
+      "is_active": true,
+      "ordering": 122
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 123,
+    "fields": {
+      "name_bn": "নেদারল্যান্ডস",
+      "name_en": "Netherlands",
+      "is_active": true,
+      "ordering": 123
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 124,
+    "fields": {
+      "name_bn": "নিউজিল্যান্ড",
+      "name_en": "New Zealand",
+      "is_active": true,
+      "ordering": 124
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 125,
+    "fields": {
+      "name_bn": "নিকারাগুয়া",
+      "name_en": "Nicaragua",
+      "is_active": true,
+      "ordering": 125
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 126,
+    "fields": {
+      "name_bn": "নাইজার",
+      "name_en": "Niger",
+      "is_active": true,
+      "ordering": 126
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 127,
+    "fields": {
+      "name_bn": "নাইজেরিয়া",
+      "name_en": "Nigeria",
+      "is_active": true,
+      "ordering": 127
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 128,
+    "fields": {
+      "name_bn": "উত্তর কোরিয়া",
+      "name_en": "North Korea",
+      "is_active": true,
+      "ordering": 128
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 129,
+    "fields": {
+      "name_bn": "উত্তর মেসিডোনিয়া",
+      "name_en": "North Macedonia",
+      "is_active": true,
+      "ordering": 129
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 130,
+    "fields": {
+      "name_bn": "নরওয়ে",
+      "name_en": "Norway",
+      "is_active": true,
+      "ordering": 130
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 131,
+    "fields": {
+      "name_bn": "ওমান",
+      "name_en": "Oman",
+      "is_active": true,
+      "ordering": 131
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 132,
+    "fields": {
+      "name_bn": "পাকিস্তান",
+      "name_en": "Pakistan",
+      "is_active": true,
+      "ordering": 132
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 133,
+    "fields": {
+      "name_bn": "পালাউ",
+      "name_en": "Palau",
+      "is_active": true,
+      "ordering": 133
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 134,
+    "fields": {
+      "name_bn": "ফিলিস্তিন",
+      "name_en": "Palestine",
+      "is_active": true,
+      "ordering": 134
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 135,
+    "fields": {
+      "name_bn": "পানামা",
+      "name_en": "Panama",
+      "is_active": true,
+      "ordering": 135
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 136,
+    "fields": {
+      "name_bn": "পাপুয়া নিউ গিনি",
+      "name_en": "Papua New Guinea",
+      "is_active": true,
+      "ordering": 136
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 137,
+    "fields": {
+      "name_bn": "প্যারাগুয়ে",
+      "name_en": "Paraguay",
+      "is_active": true,
+      "ordering": 137
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 138,
+    "fields": {
+      "name_bn": "পেরু",
+      "name_en": "Peru",
+      "is_active": true,
+      "ordering": 138
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 139,
+    "fields": {
+      "name_bn": "ফিলিপাইন",
+      "name_en": "Philippines",
+      "is_active": true,
+      "ordering": 139
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 140,
+    "fields": {
+      "name_bn": "পোল্যান্ড",
+      "name_en": "Poland",
+      "is_active": true,
+      "ordering": 140
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 141,
+    "fields": {
+      "name_bn": "পর্তুগাল",
+      "name_en": "Portugal",
+      "is_active": true,
+      "ordering": 141
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 142,
+    "fields": {
+      "name_bn": "কাতার",
+      "name_en": "Qatar",
+      "is_active": true,
+      "ordering": 142
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 143,
+    "fields": {
+      "name_bn": "রোমানিয়া",
+      "name_en": "Romania",
+      "is_active": true,
+      "ordering": 143
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 144,
+    "fields": {
+      "name_bn": "রাশিয়া",
+      "name_en": "Russia",
+      "is_active": true,
+      "ordering": 144
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 145,
+    "fields": {
+      "name_bn": "রুয়ান্ডা",
+      "name_en": "Rwanda",
+      "is_active": true,
+      "ordering": 145
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 146,
+    "fields": {
+      "name_bn": "সেন্ট কিটস ও নেভিস",
+      "name_en": "Saint Kitts and Nevis",
+      "is_active": true,
+      "ordering": 146
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 147,
+    "fields": {
+      "name_bn": "সেন্ট লুসিয়া",
+      "name_en": "Saint Lucia",
+      "is_active": true,
+      "ordering": 147
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 148,
+    "fields": {
+      "name_bn": "সেন্ট ভিনসেন্ট ও গ্রেনাডাইনস",
+      "name_en": "Saint Vincent and the Grenadines",
+      "is_active": true,
+      "ordering": 148
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 149,
+    "fields": {
+      "name_bn": "সামোয়া",
+      "name_en": "Samoa",
+      "is_active": true,
+      "ordering": 149
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 150,
+    "fields": {
+      "name_bn": "সান মারিনো",
+      "name_en": "San Marino",
+      "is_active": true,
+      "ordering": 150
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 151,
+    "fields": {
+      "name_bn": "সাও তোমে ও প্রিন্সিপে",
+      "name_en": "Sao Tome and Principe",
+      "is_active": true,
+      "ordering": 151
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 152,
+    "fields": {
+      "name_bn": "সৌদি আরব",
+      "name_en": "Saudi Arabia",
+      "is_active": true,
+      "ordering": 152
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 153,
+    "fields": {
+      "name_bn": "সেনেগাল",
+      "name_en": "Senegal",
+      "is_active": true,
+      "ordering": 153
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 154,
+    "fields": {
+      "name_bn": "সার্বিয়া",
+      "name_en": "Serbia",
+      "is_active": true,
+      "ordering": 154
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 155,
+    "fields": {
+      "name_bn": "সেশেলস",
+      "name_en": "Seychelles",
+      "is_active": true,
+      "ordering": 155
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 156,
+    "fields": {
+      "name_bn": "সিয়েরা লিওন",
+      "name_en": "Sierra Leone",
+      "is_active": true,
+      "ordering": 156
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 157,
+    "fields": {
+      "name_bn": "সিঙ্গাপুর",
+      "name_en": "Singapore",
+      "is_active": true,
+      "ordering": 157
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 158,
+    "fields": {
+      "name_bn": "স্লোভাকিয়া",
+      "name_en": "Slovakia",
+      "is_active": true,
+      "ordering": 158
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 159,
+    "fields": {
+      "name_bn": "স্লোভেনিয়া",
+      "name_en": "Slovenia",
+      "is_active": true,
+      "ordering": 159
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 160,
+    "fields": {
+      "name_bn": "সলোমন দ্বীপপুঞ্জ",
+      "name_en": "Solomon Islands",
+      "is_active": true,
+      "ordering": 160
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 161,
+    "fields": {
+      "name_bn": "সোমালিয়া",
+      "name_en": "Somalia",
+      "is_active": true,
+      "ordering": 161
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 162,
+    "fields": {
+      "name_bn": "দক্ষিণ আফ্রিকা",
+      "name_en": "South Africa",
+      "is_active": true,
+      "ordering": 162
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 163,
+    "fields": {
+      "name_bn": "দক্ষিণ কোরিয়া",
+      "name_en": "South Korea",
+      "is_active": true,
+      "ordering": 163
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 164,
+    "fields": {
+      "name_bn": "দক্ষিণ সুদান",
+      "name_en": "South Sudan",
+      "is_active": true,
+      "ordering": 164
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 165,
+    "fields": {
+      "name_bn": "স্পেন",
+      "name_en": "Spain",
+      "is_active": true,
+      "ordering": 165
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 166,
+    "fields": {
+      "name_bn": "শ্রীলঙ্কা",
+      "name_en": "Sri Lanka",
+      "is_active": true,
+      "ordering": 166
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 167,
+    "fields": {
+      "name_bn": "সুদান",
+      "name_en": "Sudan",
+      "is_active": true,
+      "ordering": 167
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 168,
+    "fields": {
+      "name_bn": "সুরিনাম",
+      "name_en": "Suriname",
+      "is_active": true,
+      "ordering": 168
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 169,
+    "fields": {
+      "name_bn": "সুইডেন",
+      "name_en": "Sweden",
+      "is_active": true,
+      "ordering": 169
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 170,
+    "fields": {
+      "name_bn": "সুইজারল্যান্ড",
+      "name_en": "Switzerland",
+      "is_active": true,
+      "ordering": 170
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 171,
+    "fields": {
+      "name_bn": "সিরিয়া",
+      "name_en": "Syria",
+      "is_active": true,
+      "ordering": 171
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 172,
+    "fields": {
+      "name_bn": "তাইওয়ান",
+      "name_en": "Taiwan",
+      "is_active": true,
+      "ordering": 172
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 173,
+    "fields": {
+      "name_bn": "তাজিকিস্তান",
+      "name_en": "Tajikistan",
+      "is_active": true,
+      "ordering": 173
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 174,
+    "fields": {
+      "name_bn": "তানজানিয়া",
+      "name_en": "Tanzania",
+      "is_active": true,
+      "ordering": 174
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 175,
+    "fields": {
+      "name_bn": "থাইল্যান্ড",
+      "name_en": "Thailand",
+      "is_active": true,
+      "ordering": 175
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 176,
+    "fields": {
+      "name_bn": "তিমুর-লেস্তে",
+      "name_en": "Timor-Leste",
+      "is_active": true,
+      "ordering": 176
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 177,
+    "fields": {
+      "name_bn": "টোগো",
+      "name_en": "Togo",
+      "is_active": true,
+      "ordering": 177
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 178,
+    "fields": {
+      "name_bn": "টোঙ্গা",
+      "name_en": "Tonga",
+      "is_active": true,
+      "ordering": 178
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 179,
+    "fields": {
+      "name_bn": "ত্রিনিদাদ ও টোবাগো",
+      "name_en": "Trinidad and Tobago",
+      "is_active": true,
+      "ordering": 179
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 180,
+    "fields": {
+      "name_bn": "তিউনিসিয়া",
+      "name_en": "Tunisia",
+      "is_active": true,
+      "ordering": 180
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 181,
+    "fields": {
+      "name_bn": "তুরস্ক",
+      "name_en": "Turkey",
+      "is_active": true,
+      "ordering": 181
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 182,
+    "fields": {
+      "name_bn": "তুর্কমেনিস্তান",
+      "name_en": "Turkmenistan",
+      "is_active": true,
+      "ordering": 182
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 183,
+    "fields": {
+      "name_bn": "টুভালু",
+      "name_en": "Tuvalu",
+      "is_active": true,
+      "ordering": 183
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 184,
+    "fields": {
+      "name_bn": "উগান্ডা",
+      "name_en": "Uganda",
+      "is_active": true,
+      "ordering": 184
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 185,
+    "fields": {
+      "name_bn": "ইউক্রেন",
+      "name_en": "Ukraine",
+      "is_active": true,
+      "ordering": 185
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 186,
+    "fields": {
+      "name_bn": "সংযুক্ত আরব আমিরাত",
+      "name_en": "United Arab Emirates",
+      "is_active": true,
+      "ordering": 186
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 187,
+    "fields": {
+      "name_bn": "যুক্তরাজ্য",
+      "name_en": "United Kingdom",
+      "is_active": true,
+      "ordering": 187
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 188,
+    "fields": {
+      "name_bn": "যুক্তরাষ্ট্র",
+      "name_en": "United States",
+      "is_active": true,
+      "ordering": 188
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 189,
+    "fields": {
+      "name_bn": "উরুগুয়ে",
+      "name_en": "Uruguay",
+      "is_active": true,
+      "ordering": 189
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 190,
+    "fields": {
+      "name_bn": "উজবেকিস্তান",
+      "name_en": "Uzbekistan",
+      "is_active": true,
+      "ordering": 190
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 191,
+    "fields": {
+      "name_bn": "ভানুয়াতু",
+      "name_en": "Vanuatu",
+      "is_active": true,
+      "ordering": 191
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 192,
+    "fields": {
+      "name_bn": "ভ্যাটিকান সিটি",
+      "name_en": "Vatican City",
+      "is_active": true,
+      "ordering": 192
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 193,
+    "fields": {
+      "name_bn": "ভেনিজুয়েলা",
+      "name_en": "Venezuela",
+      "is_active": true,
+      "ordering": 193
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 194,
+    "fields": {
+      "name_bn": "ভিয়েতনাম",
+      "name_en": "Vietnam",
+      "is_active": true,
+      "ordering": 194
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 195,
+    "fields": {
+      "name_bn": "ইয়েমেন",
+      "name_en": "Yemen",
+      "is_active": true,
+      "ordering": 195
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 196,
+    "fields": {
+      "name_bn": "জাম্বিয়া",
+      "name_en": "Zambia",
+      "is_active": true,
+      "ordering": 196
+    }
+  },
+  {
+    "model": "master.country",
+    "pk": 197,
+    "fields": {
+      "name_bn": "জিম্বাবুয়ে",
+      "name_en": "Zimbabwe",
+      "is_active": true,
+      "ordering": 197
+    }
+  }
+]

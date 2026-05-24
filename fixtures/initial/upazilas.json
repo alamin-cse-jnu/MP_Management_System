@@ -1,0 +1,5469 @@
+[
+  {
+    "model": "master.upazila",
+    "pk": 1,
+    "fields": {
+      "district": 1,
+      "name_bn": "ধামরাই",
+      "name_en": "Dhamrai",
+      "is_active": true,
+      "ordering": 1
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 2,
+    "fields": {
+      "district": 1,
+      "name_bn": "দোহার",
+      "name_en": "Dohar",
+      "is_active": true,
+      "ordering": 2
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 3,
+    "fields": {
+      "district": 1,
+      "name_bn": "কেরাণীগঞ্জ",
+      "name_en": "Keraniganj",
+      "is_active": true,
+      "ordering": 3
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 4,
+    "fields": {
+      "district": 1,
+      "name_bn": "নবাবগঞ্জ",
+      "name_en": "Nawabganj",
+      "is_active": true,
+      "ordering": 4
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 5,
+    "fields": {
+      "district": 1,
+      "name_bn": "ঢাকা",
+      "name_en": "Dhaka",
+      "is_active": true,
+      "ordering": 5
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 6,
+    "fields": {
+      "district": 1,
+      "name_bn": "সাভার",
+      "name_en": "Savar",
+      "is_active": true,
+      "ordering": 6
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 7,
+    "fields": {
+      "district": 2,
+      "name_bn": "আলফাডাঙ্গা",
+      "name_en": "Alfadanga",
+      "is_active": true,
+      "ordering": 7
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 8,
+    "fields": {
+      "district": 2,
+      "name_bn": "ভাঙ্গা",
+      "name_en": "Bhanga",
+      "is_active": true,
+      "ordering": 8
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 9,
+    "fields": {
+      "district": 2,
+      "name_bn": "বোয়ালমারী",
+      "name_en": "Boalmari",
+      "is_active": true,
+      "ordering": 9
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 10,
+    "fields": {
+      "district": 2,
+      "name_bn": "চরভদ্রাসন",
+      "name_en": "Charbhadrasan",
+      "is_active": true,
+      "ordering": 10
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 11,
+    "fields": {
+      "district": 2,
+      "name_bn": "ফরিদপুর সদর",
+      "name_en": "Faridpur Sadar",
+      "is_active": true,
+      "ordering": 11
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 12,
+    "fields": {
+      "district": 2,
+      "name_bn": "মধুখালী",
+      "name_en": "Madhukhali",
+      "is_active": true,
+      "ordering": 12
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 13,
+    "fields": {
+      "district": 2,
+      "name_bn": "নগরকান্দা",
+      "name_en": "Nagarkanda",
+      "is_active": true,
+      "ordering": 13
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 14,
+    "fields": {
+      "district": 2,
+      "name_bn": "সদরপুর",
+      "name_en": "Sadarpur",
+      "is_active": true,
+      "ordering": 14
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 15,
+    "fields": {
+      "district": 2,
+      "name_bn": "সালথা",
+      "name_en": "Saltha",
+      "is_active": true,
+      "ordering": 15
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 16,
+    "fields": {
+      "district": 3,
+      "name_bn": "গাজীপুর সদর",
+      "name_en": "Gazipur Sadar",
+      "is_active": true,
+      "ordering": 16
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 17,
+    "fields": {
+      "district": 3,
+      "name_bn": "কালিয়াকৈর",
+      "name_en": "Kaliakair",
+      "is_active": true,
+      "ordering": 17
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 18,
+    "fields": {
+      "district": 3,
+      "name_bn": "কালীগঞ্জ",
+      "name_en": "Kaliganj",
+      "is_active": true,
+      "ordering": 18
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 19,
+    "fields": {
+      "district": 3,
+      "name_bn": "কাপাসিয়া",
+      "name_en": "Kapasia",
+      "is_active": true,
+      "ordering": 19
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 20,
+    "fields": {
+      "district": 3,
+      "name_bn": "শ্রীপুর",
+      "name_en": "Sreepur",
+      "is_active": true,
+      "ordering": 20
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 21,
+    "fields": {
+      "district": 4,
+      "name_bn": "গোপালগঞ্জ সদর",
+      "name_en": "Gopalganj Sadar",
+      "is_active": true,
+      "ordering": 21
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 22,
+    "fields": {
+      "district": 4,
+      "name_bn": "কাশিয়ানী",
+      "name_en": "Kashiani",
+      "is_active": true,
+      "ordering": 22
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 23,
+    "fields": {
+      "district": 4,
+      "name_bn": "কোটালীপাড়া",
+      "name_en": "Kotalipara",
+      "is_active": true,
+      "ordering": 23
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 24,
+    "fields": {
+      "district": 4,
+      "name_bn": "মুকসুদপুর",
+      "name_en": "Muksudpur",
+      "is_active": true,
+      "ordering": 24
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 25,
+    "fields": {
+      "district": 4,
+      "name_bn": "টুঙ্গিপাড়া",
+      "name_en": "Tungipara",
+      "is_active": true,
+      "ordering": 25
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 26,
+    "fields": {
+      "district": 5,
+      "name_bn": "অষ্টগ্রাম",
+      "name_en": "Austagram",
+      "is_active": true,
+      "ordering": 26
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 27,
+    "fields": {
+      "district": 5,
+      "name_bn": "বাজিতপুর",
+      "name_en": "Bajitpur",
+      "is_active": true,
+      "ordering": 27
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 28,
+    "fields": {
+      "district": 5,
+      "name_bn": "ভৈরব",
+      "name_en": "Bhairab",
+      "is_active": true,
+      "ordering": 28
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 29,
+    "fields": {
+      "district": 5,
+      "name_bn": "হোসেনপুর",
+      "name_en": "Hossainpur",
+      "is_active": true,
+      "ordering": 29
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 30,
+    "fields": {
+      "district": 5,
+      "name_bn": "ইটনা",
+      "name_en": "Itna",
+      "is_active": true,
+      "ordering": 30
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 31,
+    "fields": {
+      "district": 5,
+      "name_bn": "করিমগঞ্জ",
+      "name_en": "Karimgonj",
+      "is_active": true,
+      "ordering": 31
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 32,
+    "fields": {
+      "district": 5,
+      "name_bn": "কটিয়াদী",
+      "name_en": "Katiadi",
+      "is_active": true,
+      "ordering": 32
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 33,
+    "fields": {
+      "district": 5,
+      "name_bn": "কিশোরগঞ্জ সদর",
+      "name_en": "Kishoreganj Sadar",
+      "is_active": true,
+      "ordering": 33
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 34,
+    "fields": {
+      "district": 5,
+      "name_bn": "কুলিয়ারচর",
+      "name_en": "Kuliarchar",
+      "is_active": true,
+      "ordering": 34
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 35,
+    "fields": {
+      "district": 5,
+      "name_bn": "মিঠামইন",
+      "name_en": "Mithamoin",
+      "is_active": true,
+      "ordering": 35
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 36,
+    "fields": {
+      "district": 5,
+      "name_bn": "নিকলী",
+      "name_en": "Nikli",
+      "is_active": true,
+      "ordering": 36
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 37,
+    "fields": {
+      "district": 5,
+      "name_bn": "পাকুন্দিয়া",
+      "name_en": "Pakundia",
+      "is_active": true,
+      "ordering": 37
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 38,
+    "fields": {
+      "district": 5,
+      "name_bn": "তাড়াইল",
+      "name_en": "Tarail",
+      "is_active": true,
+      "ordering": 38
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 39,
+    "fields": {
+      "district": 6,
+      "name_bn": "কালকিনি",
+      "name_en": "Kalkini",
+      "is_active": true,
+      "ordering": 39
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 40,
+    "fields": {
+      "district": 6,
+      "name_bn": "মাদারীপুর সদর",
+      "name_en": "Madaripur Sadar",
+      "is_active": true,
+      "ordering": 40
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 41,
+    "fields": {
+      "district": 6,
+      "name_bn": "রাজৈর",
+      "name_en": "Rajoir",
+      "is_active": true,
+      "ordering": 41
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 42,
+    "fields": {
+      "district": 6,
+      "name_bn": "শিবচর",
+      "name_en": "Shibchar",
+      "is_active": true,
+      "ordering": 42
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 43,
+    "fields": {
+      "district": 6,
+      "name_bn": "ডাসার",
+      "name_en": "Dasar",
+      "is_active": true,
+      "ordering": 43
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 44,
+    "fields": {
+      "district": 7,
+      "name_bn": "দৌলতপুর",
+      "name_en": "Daulatpur",
+      "is_active": true,
+      "ordering": 44
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 45,
+    "fields": {
+      "district": 7,
+      "name_bn": "ঘিওর",
+      "name_en": "Gior",
+      "is_active": true,
+      "ordering": 45
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 46,
+    "fields": {
+      "district": 7,
+      "name_bn": "হরিরামপুর",
+      "name_en": "Harirampur",
+      "is_active": true,
+      "ordering": 46
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 47,
+    "fields": {
+      "district": 7,
+      "name_bn": "মানিকগঞ্জ সদর",
+      "name_en": "Manikganj Sadar",
+      "is_active": true,
+      "ordering": 47
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 48,
+    "fields": {
+      "district": 7,
+      "name_bn": "সাটুরিয়া",
+      "name_en": "Saturia",
+      "is_active": true,
+      "ordering": 48
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 49,
+    "fields": {
+      "district": 7,
+      "name_bn": "শিবালয়",
+      "name_en": "Shibaloy",
+      "is_active": true,
+      "ordering": 49
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 50,
+    "fields": {
+      "district": 7,
+      "name_bn": "সিংগাইর",
+      "name_en": "Singiar",
+      "is_active": true,
+      "ordering": 50
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 51,
+    "fields": {
+      "district": 8,
+      "name_bn": "গজারিয়া",
+      "name_en": "Gajaria",
+      "is_active": true,
+      "ordering": 51
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 52,
+    "fields": {
+      "district": 8,
+      "name_bn": "লৌহজং",
+      "name_en": "Louhajanj",
+      "is_active": true,
+      "ordering": 52
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 53,
+    "fields": {
+      "district": 8,
+      "name_bn": "মুন্সীগঞ্জ সদর",
+      "name_en": "Munshiganj Sadar",
+      "is_active": true,
+      "ordering": 53
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 54,
+    "fields": {
+      "district": 8,
+      "name_bn": "সিরাজদিখান",
+      "name_en": "Sirajdikhan",
+      "is_active": true,
+      "ordering": 54
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 55,
+    "fields": {
+      "district": 8,
+      "name_bn": "শ্রীনগর",
+      "name_en": "Sreenagar",
+      "is_active": true,
+      "ordering": 55
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 56,
+    "fields": {
+      "district": 8,
+      "name_bn": "টংগিবাড়ী",
+      "name_en": "Tongibari",
+      "is_active": true,
+      "ordering": 56
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 57,
+    "fields": {
+      "district": 9,
+      "name_bn": "আড়াইহাজার",
+      "name_en": "Araihazar",
+      "is_active": true,
+      "ordering": 57
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 58,
+    "fields": {
+      "district": 9,
+      "name_bn": "সোনারগাঁ",
+      "name_en": "Sonargaon",
+      "is_active": true,
+      "ordering": 58
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 59,
+    "fields": {
+      "district": 9,
+      "name_bn": "নারায়নগঞ্জ সদর",
+      "name_en": "Narayanganj Sadar",
+      "is_active": true,
+      "ordering": 59
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 60,
+    "fields": {
+      "district": 9,
+      "name_bn": "রূপগঞ্জ",
+      "name_en": "Rupganj",
+      "is_active": true,
+      "ordering": 60
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 61,
+    "fields": {
+      "district": 9,
+      "name_bn": "বন্দর",
+      "name_en": "Bandar",
+      "is_active": true,
+      "ordering": 61
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 62,
+    "fields": {
+      "district": 10,
+      "name_bn": "বেলাবো",
+      "name_en": "Belabo",
+      "is_active": true,
+      "ordering": 62
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 63,
+    "fields": {
+      "district": 10,
+      "name_bn": "মনোহরদী",
+      "name_en": "Monohardi",
+      "is_active": true,
+      "ordering": 63
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 64,
+    "fields": {
+      "district": 10,
+      "name_bn": "নরসিংদী সদর",
+      "name_en": "Narsingdi Sadar",
+      "is_active": true,
+      "ordering": 64
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 65,
+    "fields": {
+      "district": 10,
+      "name_bn": "পলাশ",
+      "name_en": "Palash",
+      "is_active": true,
+      "ordering": 65
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 66,
+    "fields": {
+      "district": 10,
+      "name_bn": "রায়পুরা",
+      "name_en": "Raipura",
+      "is_active": true,
+      "ordering": 66
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 67,
+    "fields": {
+      "district": 10,
+      "name_bn": "শিবপুর",
+      "name_en": "Shibpur",
+      "is_active": true,
+      "ordering": 67
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 68,
+    "fields": {
+      "district": 11,
+      "name_bn": "বালিয়াকান্দি",
+      "name_en": "Baliakandi",
+      "is_active": true,
+      "ordering": 68
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 69,
+    "fields": {
+      "district": 11,
+      "name_bn": "গোয়ালন্দ",
+      "name_en": "Goalanda",
+      "is_active": true,
+      "ordering": 69
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 70,
+    "fields": {
+      "district": 11,
+      "name_bn": "কালুখালী",
+      "name_en": "Kalukhali",
+      "is_active": true,
+      "ordering": 70
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 71,
+    "fields": {
+      "district": 11,
+      "name_bn": "পাংশা",
+      "name_en": "Pangsa",
+      "is_active": true,
+      "ordering": 71
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 72,
+    "fields": {
+      "district": 11,
+      "name_bn": "রাজবাড়ী সদর",
+      "name_en": "Rajbari Sadar",
+      "is_active": true,
+      "ordering": 72
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 73,
+    "fields": {
+      "district": 12,
+      "name_bn": "ভেদরগঞ্জ",
+      "name_en": "Bhedarganj",
+      "is_active": true,
+      "ordering": 73
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 74,
+    "fields": {
+      "district": 12,
+      "name_bn": "ডামুড্যা",
+      "name_en": "Damudya",
+      "is_active": true,
+      "ordering": 74
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 75,
+    "fields": {
+      "district": 12,
+      "name_bn": "গোসাইরহাট",
+      "name_en": "Gosairhat",
+      "is_active": true,
+      "ordering": 75
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 76,
+    "fields": {
+      "district": 12,
+      "name_bn": "নড়িয়া",
+      "name_en": "Naria",
+      "is_active": true,
+      "ordering": 76
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 77,
+    "fields": {
+      "district": 12,
+      "name_bn": "শরিয়তপুর সদর",
+      "name_en": "Shariatpur Sadar",
+      "is_active": true,
+      "ordering": 77
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 78,
+    "fields": {
+      "district": 12,
+      "name_bn": "জাজিরা",
+      "name_en": "Zajira",
+      "is_active": true,
+      "ordering": 78
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 79,
+    "fields": {
+      "district": 13,
+      "name_bn": "বাসাইল",
+      "name_en": "Basail",
+      "is_active": true,
+      "ordering": 79
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 80,
+    "fields": {
+      "district": 13,
+      "name_bn": "ভূঞাপুর",
+      "name_en": "Bhuapur",
+      "is_active": true,
+      "ordering": 80
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 81,
+    "fields": {
+      "district": 13,
+      "name_bn": "দেলদুয়ার",
+      "name_en": "Delduar",
+      "is_active": true,
+      "ordering": 81
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 82,
+    "fields": {
+      "district": 13,
+      "name_bn": "ধনবাড়ী",
+      "name_en": "Dhanbari",
+      "is_active": true,
+      "ordering": 82
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 83,
+    "fields": {
+      "district": 13,
+      "name_bn": "ঘাটাইল",
+      "name_en": "Ghatail",
+      "is_active": true,
+      "ordering": 83
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 84,
+    "fields": {
+      "district": 13,
+      "name_bn": "গোপালপুর",
+      "name_en": "Gopalpur",
+      "is_active": true,
+      "ordering": 84
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 85,
+    "fields": {
+      "district": 13,
+      "name_bn": "কালিহাতী",
+      "name_en": "Kalihati",
+      "is_active": true,
+      "ordering": 85
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 86,
+    "fields": {
+      "district": 13,
+      "name_bn": "মধুপুর",
+      "name_en": "Madhupur",
+      "is_active": true,
+      "ordering": 86
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 87,
+    "fields": {
+      "district": 13,
+      "name_bn": "মির্জাপুর",
+      "name_en": "Mirzapur",
+      "is_active": true,
+      "ordering": 87
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 88,
+    "fields": {
+      "district": 13,
+      "name_bn": "নাগরপুর",
+      "name_en": "Nagarpur",
+      "is_active": true,
+      "ordering": 88
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 89,
+    "fields": {
+      "district": 13,
+      "name_bn": "সখিপুর",
+      "name_en": "Sakhipur",
+      "is_active": true,
+      "ordering": 89
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 90,
+    "fields": {
+      "district": 13,
+      "name_bn": "টাঙ্গাইল সদর",
+      "name_en": "Tangail Sadar",
+      "is_active": true,
+      "ordering": 90
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 91,
+    "fields": {
+      "district": 14,
+      "name_bn": "চিতলমারী",
+      "name_en": "Chitalmari",
+      "is_active": true,
+      "ordering": 91
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 92,
+    "fields": {
+      "district": 14,
+      "name_bn": "ফকিরহাট",
+      "name_en": "Fakirhat",
+      "is_active": true,
+      "ordering": 92
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 93,
+    "fields": {
+      "district": 14,
+      "name_bn": "কচুয়া",
+      "name_en": "Kachua",
+      "is_active": true,
+      "ordering": 93
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 94,
+    "fields": {
+      "district": 14,
+      "name_bn": "মোল্লাহাট",
+      "name_en": "Mollahat",
+      "is_active": true,
+      "ordering": 94
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 95,
+    "fields": {
+      "district": 14,
+      "name_bn": "মোংলা",
+      "name_en": "Mongla",
+      "is_active": true,
+      "ordering": 95
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 96,
+    "fields": {
+      "district": 14,
+      "name_bn": "মোরেলগঞ্জ",
+      "name_en": "Morrelganj",
+      "is_active": true,
+      "ordering": 96
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 97,
+    "fields": {
+      "district": 14,
+      "name_bn": "রামপাল",
+      "name_en": "Rampal",
+      "is_active": true,
+      "ordering": 97
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 98,
+    "fields": {
+      "district": 14,
+      "name_bn": "শরণখোলা",
+      "name_en": "Sarankhola",
+      "is_active": true,
+      "ordering": 98
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 99,
+    "fields": {
+      "district": 14,
+      "name_bn": "বাগেরহাট সদর",
+      "name_en": "Bagerhat Sadar",
+      "is_active": true,
+      "ordering": 99
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 100,
+    "fields": {
+      "district": 15,
+      "name_bn": "আলমডাঙ্গা",
+      "name_en": "Alamdanga",
+      "is_active": true,
+      "ordering": 100
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 101,
+    "fields": {
+      "district": 15,
+      "name_bn": "চুয়াডাঙ্গা সদর",
+      "name_en": "Chuadanga Sadar",
+      "is_active": true,
+      "ordering": 101
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 102,
+    "fields": {
+      "district": 15,
+      "name_bn": "দামুড়হুদা",
+      "name_en": "Damurhuda",
+      "is_active": true,
+      "ordering": 102
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 103,
+    "fields": {
+      "district": 15,
+      "name_bn": "জীবননগর",
+      "name_en": "Jibannagar",
+      "is_active": true,
+      "ordering": 103
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 104,
+    "fields": {
+      "district": 16,
+      "name_bn": "অভয়নগর",
+      "name_en": "Abhaynagar",
+      "is_active": true,
+      "ordering": 104
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 105,
+    "fields": {
+      "district": 16,
+      "name_bn": "বাঘারপাড়া",
+      "name_en": "Bagherpara",
+      "is_active": true,
+      "ordering": 105
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 106,
+    "fields": {
+      "district": 16,
+      "name_bn": "চৌগাছা",
+      "name_en": "Chougachha",
+      "is_active": true,
+      "ordering": 106
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 107,
+    "fields": {
+      "district": 16,
+      "name_bn": "ঝিকরগাছা",
+      "name_en": "Jhikargacha",
+      "is_active": true,
+      "ordering": 107
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 108,
+    "fields": {
+      "district": 16,
+      "name_bn": "কেশবপুর",
+      "name_en": "Keshabpur",
+      "is_active": true,
+      "ordering": 108
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 109,
+    "fields": {
+      "district": 16,
+      "name_bn": "যশোর সদর",
+      "name_en": "Jessore Sadar",
+      "is_active": true,
+      "ordering": 109
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 110,
+    "fields": {
+      "district": 16,
+      "name_bn": "মণিরামপুর",
+      "name_en": "Manirampur",
+      "is_active": true,
+      "ordering": 110
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 111,
+    "fields": {
+      "district": 16,
+      "name_bn": "শার্শা",
+      "name_en": "Sharsha",
+      "is_active": true,
+      "ordering": 111
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 112,
+    "fields": {
+      "district": 17,
+      "name_bn": "হরিণাকুন্ডু",
+      "name_en": "Harinakundu",
+      "is_active": true,
+      "ordering": 112
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 113,
+    "fields": {
+      "district": 17,
+      "name_bn": "ঝিনাইদহ সদর",
+      "name_en": "Jhenaidah Sadar",
+      "is_active": true,
+      "ordering": 113
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 114,
+    "fields": {
+      "district": 17,
+      "name_bn": "কালীগঞ্জ",
+      "name_en": "Kaliganj",
+      "is_active": true,
+      "ordering": 114
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 115,
+    "fields": {
+      "district": 17,
+      "name_bn": "কোটচাঁদপুর",
+      "name_en": "Kotchandpur",
+      "is_active": true,
+      "ordering": 115
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 116,
+    "fields": {
+      "district": 17,
+      "name_bn": "মহেশপুর",
+      "name_en": "Moheshpur",
+      "is_active": true,
+      "ordering": 116
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 117,
+    "fields": {
+      "district": 17,
+      "name_bn": "শৈলকুপা",
+      "name_en": "Shailkupa",
+      "is_active": true,
+      "ordering": 117
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 118,
+    "fields": {
+      "district": 18,
+      "name_bn": "বটিয়াঘাটা",
+      "name_en": "Botiaghata",
+      "is_active": true,
+      "ordering": 118
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 119,
+    "fields": {
+      "district": 18,
+      "name_bn": "দাকোপ",
+      "name_en": "Dakop",
+      "is_active": true,
+      "ordering": 119
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 120,
+    "fields": {
+      "district": 18,
+      "name_bn": "ডুমুরিয়া",
+      "name_en": "Dumuria",
+      "is_active": true,
+      "ordering": 120
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 121,
+    "fields": {
+      "district": 18,
+      "name_bn": "কয়রা",
+      "name_en": "Koyra",
+      "is_active": true,
+      "ordering": 121
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 122,
+    "fields": {
+      "district": 18,
+      "name_bn": "পাইকগাছা",
+      "name_en": "Paikgasa",
+      "is_active": true,
+      "ordering": 122
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 123,
+    "fields": {
+      "district": 18,
+      "name_bn": "ফুলতলা",
+      "name_en": "Fultola",
+      "is_active": true,
+      "ordering": 123
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 124,
+    "fields": {
+      "district": 18,
+      "name_bn": "রূপসা",
+      "name_en": "Rupsha",
+      "is_active": true,
+      "ordering": 124
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 125,
+    "fields": {
+      "district": 18,
+      "name_bn": "তেরখাদা",
+      "name_en": "Terokhada",
+      "is_active": true,
+      "ordering": 125
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 126,
+    "fields": {
+      "district": 18,
+      "name_bn": "দিঘলিয়া",
+      "name_en": "Digholia",
+      "is_active": true,
+      "ordering": 126
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 127,
+    "fields": {
+      "district": 19,
+      "name_bn": "ভেড়ামারা",
+      "name_en": "Bheramara",
+      "is_active": true,
+      "ordering": 127
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 128,
+    "fields": {
+      "district": 19,
+      "name_bn": "দৌলতপুর",
+      "name_en": "Daulatpur",
+      "is_active": true,
+      "ordering": 128
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 129,
+    "fields": {
+      "district": 19,
+      "name_bn": "খোকসা",
+      "name_en": "Khoksa",
+      "is_active": true,
+      "ordering": 129
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 130,
+    "fields": {
+      "district": 19,
+      "name_bn": "কুমারখালী",
+      "name_en": "Kumarkhali",
+      "is_active": true,
+      "ordering": 130
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 131,
+    "fields": {
+      "district": 19,
+      "name_bn": "কুষ্টিয়া সদর",
+      "name_en": "Kushtia Sadar",
+      "is_active": true,
+      "ordering": 131
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 132,
+    "fields": {
+      "district": 19,
+      "name_bn": "মিরপুর",
+      "name_en": "Mirpur",
+      "is_active": true,
+      "ordering": 132
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 133,
+    "fields": {
+      "district": 20,
+      "name_bn": "মাগুরা সদর",
+      "name_en": "Magura Sadar",
+      "is_active": true,
+      "ordering": 133
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 134,
+    "fields": {
+      "district": 20,
+      "name_bn": "মহম্মদপুর",
+      "name_en": "Mohammadpur",
+      "is_active": true,
+      "ordering": 134
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 135,
+    "fields": {
+      "district": 20,
+      "name_bn": "শালিখা",
+      "name_en": "Shalikha",
+      "is_active": true,
+      "ordering": 135
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 136,
+    "fields": {
+      "district": 20,
+      "name_bn": "শ্রীপুর",
+      "name_en": "Sreepur",
+      "is_active": true,
+      "ordering": 136
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 137,
+    "fields": {
+      "district": 21,
+      "name_bn": "গাংনী",
+      "name_en": "Gangni",
+      "is_active": true,
+      "ordering": 137
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 138,
+    "fields": {
+      "district": 21,
+      "name_bn": "মুজিবনগর",
+      "name_en": "Mujibnagar",
+      "is_active": true,
+      "ordering": 138
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 139,
+    "fields": {
+      "district": 21,
+      "name_bn": "মেহেরপুর সদর",
+      "name_en": "Meherpur Sadar",
+      "is_active": true,
+      "ordering": 139
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 140,
+    "fields": {
+      "district": 22,
+      "name_bn": "কালিয়া",
+      "name_en": "Kalia",
+      "is_active": true,
+      "ordering": 140
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 141,
+    "fields": {
+      "district": 22,
+      "name_bn": "লোহাগড়া",
+      "name_en": "Lohagara",
+      "is_active": true,
+      "ordering": 141
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 142,
+    "fields": {
+      "district": 22,
+      "name_bn": "নড়াইল সদর",
+      "name_en": "Narail Sadar",
+      "is_active": true,
+      "ordering": 142
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 143,
+    "fields": {
+      "district": 23,
+      "name_bn": "আশাশুনি",
+      "name_en": "Assasuni",
+      "is_active": true,
+      "ordering": 143
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 144,
+    "fields": {
+      "district": 23,
+      "name_bn": "দেবহাটা",
+      "name_en": "Debhata",
+      "is_active": true,
+      "ordering": 144
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 145,
+    "fields": {
+      "district": 23,
+      "name_bn": "কলারোয়া",
+      "name_en": "Kalaroa",
+      "is_active": true,
+      "ordering": 145
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 146,
+    "fields": {
+      "district": 23,
+      "name_bn": "কালিগঞ্জ",
+      "name_en": "Kaliganj",
+      "is_active": true,
+      "ordering": 146
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 147,
+    "fields": {
+      "district": 23,
+      "name_bn": "সাতক্ষীরা সদর",
+      "name_en": "Satkhira Sadar",
+      "is_active": true,
+      "ordering": 147
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 148,
+    "fields": {
+      "district": 23,
+      "name_bn": "শ্যামনগর",
+      "name_en": "Shyamnagar",
+      "is_active": true,
+      "ordering": 148
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 149,
+    "fields": {
+      "district": 23,
+      "name_bn": "তালা",
+      "name_en": "Tala",
+      "is_active": true,
+      "ordering": 149
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 150,
+    "fields": {
+      "district": 24,
+      "name_bn": "আলীকদম",
+      "name_en": "Alikadam",
+      "is_active": true,
+      "ordering": 150
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 151,
+    "fields": {
+      "district": 24,
+      "name_bn": "বান্দরবান সদর",
+      "name_en": "Bandarban Sadar",
+      "is_active": true,
+      "ordering": 151
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 152,
+    "fields": {
+      "district": 24,
+      "name_bn": "লামা",
+      "name_en": "Lama",
+      "is_active": true,
+      "ordering": 152
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 153,
+    "fields": {
+      "district": 24,
+      "name_bn": "নাইক্ষ্যংছড়ি",
+      "name_en": "Naikhongchhari",
+      "is_active": true,
+      "ordering": 153
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 154,
+    "fields": {
+      "district": 24,
+      "name_bn": "রোয়াংছড়ি",
+      "name_en": "Rowangchhari",
+      "is_active": true,
+      "ordering": 154
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 155,
+    "fields": {
+      "district": 24,
+      "name_bn": "রুমা",
+      "name_en": "Ruma",
+      "is_active": true,
+      "ordering": 155
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 156,
+    "fields": {
+      "district": 24,
+      "name_bn": "থানচি",
+      "name_en": "Thanchi",
+      "is_active": true,
+      "ordering": 156
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 157,
+    "fields": {
+      "district": 25,
+      "name_bn": "আখাউড়া",
+      "name_en": "Akhaura",
+      "is_active": true,
+      "ordering": 157
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 158,
+    "fields": {
+      "district": 25,
+      "name_bn": "বাঞ্ছারামপুর",
+      "name_en": "Bancharampur",
+      "is_active": true,
+      "ordering": 158
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 159,
+    "fields": {
+      "district": 25,
+      "name_bn": "বিজয়নগর",
+      "name_en": "Bijoynagar",
+      "is_active": true,
+      "ordering": 159
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 160,
+    "fields": {
+      "district": 25,
+      "name_bn": "ব্রাহ্মণবাড়িয়া সদর",
+      "name_en": "Brahmanbaria Sadar",
+      "is_active": true,
+      "ordering": 160
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 161,
+    "fields": {
+      "district": 25,
+      "name_bn": "আশুগঞ্জ",
+      "name_en": "Ashuganj",
+      "is_active": true,
+      "ordering": 161
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 162,
+    "fields": {
+      "district": 25,
+      "name_bn": "কসবা",
+      "name_en": "Kasba",
+      "is_active": true,
+      "ordering": 162
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 163,
+    "fields": {
+      "district": 25,
+      "name_bn": "নবীনগর",
+      "name_en": "Nabinagar",
+      "is_active": true,
+      "ordering": 163
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 164,
+    "fields": {
+      "district": 25,
+      "name_bn": "নাসিরনগর",
+      "name_en": "Nasirnagar",
+      "is_active": true,
+      "ordering": 164
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 165,
+    "fields": {
+      "district": 25,
+      "name_bn": "সরাইল",
+      "name_en": "Sarail",
+      "is_active": true,
+      "ordering": 165
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 166,
+    "fields": {
+      "district": 26,
+      "name_bn": "চাঁদপুর সদর",
+      "name_en": "Chandpur Sadar",
+      "is_active": true,
+      "ordering": 166
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 167,
+    "fields": {
+      "district": 26,
+      "name_bn": "ফরিদগঞ্জ",
+      "name_en": "Faridgonj",
+      "is_active": true,
+      "ordering": 167
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 168,
+    "fields": {
+      "district": 26,
+      "name_bn": "হাইমচর",
+      "name_en": "Haimchar",
+      "is_active": true,
+      "ordering": 168
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 169,
+    "fields": {
+      "district": 26,
+      "name_bn": "হাজীগঞ্জ",
+      "name_en": "Hajiganj",
+      "is_active": true,
+      "ordering": 169
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 170,
+    "fields": {
+      "district": 26,
+      "name_bn": "কচুয়া",
+      "name_en": "Kachua",
+      "is_active": true,
+      "ordering": 170
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 171,
+    "fields": {
+      "district": 26,
+      "name_bn": "মতলব দক্ষিণ",
+      "name_en": "Matlab South",
+      "is_active": true,
+      "ordering": 171
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 172,
+    "fields": {
+      "district": 26,
+      "name_bn": "মতলব উত্তর",
+      "name_en": "Matlab North",
+      "is_active": true,
+      "ordering": 172
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 173,
+    "fields": {
+      "district": 26,
+      "name_bn": "শাহরাস্তি",
+      "name_en": "Shahrasti",
+      "is_active": true,
+      "ordering": 173
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 174,
+    "fields": {
+      "district": 27,
+      "name_bn": "আনোয়ারা",
+      "name_en": "Anwara",
+      "is_active": true,
+      "ordering": 174
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 175,
+    "fields": {
+      "district": 27,
+      "name_bn": "বাঁশখালী",
+      "name_en": "Banshkhali",
+      "is_active": true,
+      "ordering": 175
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 176,
+    "fields": {
+      "district": 27,
+      "name_bn": "বোয়ালখালী",
+      "name_en": "Boalkhali",
+      "is_active": true,
+      "ordering": 176
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 177,
+    "fields": {
+      "district": 27,
+      "name_bn": "চন্দনাইশ",
+      "name_en": "Chandanaish",
+      "is_active": true,
+      "ordering": 177
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 178,
+    "fields": {
+      "district": 27,
+      "name_bn": "ফটিকছড়ি",
+      "name_en": "Fatikchhari",
+      "is_active": true,
+      "ordering": 178
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 179,
+    "fields": {
+      "district": 27,
+      "name_bn": "হাটহাজারী",
+      "name_en": "Hathazari",
+      "is_active": true,
+      "ordering": 179
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 180,
+    "fields": {
+      "district": 27,
+      "name_bn": "লোহাগাড়া",
+      "name_en": "Lohagara",
+      "is_active": true,
+      "ordering": 180
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 181,
+    "fields": {
+      "district": 27,
+      "name_bn": "মীরসরাই",
+      "name_en": "Mirsharai",
+      "is_active": true,
+      "ordering": 181
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 182,
+    "fields": {
+      "district": 27,
+      "name_bn": "পটিয়া",
+      "name_en": "Patiya",
+      "is_active": true,
+      "ordering": 182
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 183,
+    "fields": {
+      "district": 27,
+      "name_bn": "রাঙ্গুনিয়া",
+      "name_en": "Rangunia",
+      "is_active": true,
+      "ordering": 183
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 184,
+    "fields": {
+      "district": 27,
+      "name_bn": "রাউজান",
+      "name_en": "Raozan",
+      "is_active": true,
+      "ordering": 184
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 185,
+    "fields": {
+      "district": 27,
+      "name_bn": "সন্দ্বীপ",
+      "name_en": "Sandwip",
+      "is_active": true,
+      "ordering": 185
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 186,
+    "fields": {
+      "district": 27,
+      "name_bn": "সাতকানিয়া",
+      "name_en": "Satkania",
+      "is_active": true,
+      "ordering": 186
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 187,
+    "fields": {
+      "district": 27,
+      "name_bn": "সীতাকুন্ড",
+      "name_en": "Sitakunda",
+      "is_active": true,
+      "ordering": 187
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 188,
+    "fields": {
+      "district": 27,
+      "name_bn": "কর্ণফুলী",
+      "name_en": "Karnafuli",
+      "is_active": true,
+      "ordering": 188
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 189,
+    "fields": {
+      "district": 28,
+      "name_bn": "বরুড়া",
+      "name_en": "Barura",
+      "is_active": true,
+      "ordering": 189
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 190,
+    "fields": {
+      "district": 28,
+      "name_bn": "ব্রাহ্মণপাড়া",
+      "name_en": "Brahmanpara",
+      "is_active": true,
+      "ordering": 190
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 191,
+    "fields": {
+      "district": 28,
+      "name_bn": "বুড়িচং",
+      "name_en": "Burichang",
+      "is_active": true,
+      "ordering": 191
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 192,
+    "fields": {
+      "district": 28,
+      "name_bn": "চান্দিনা",
+      "name_en": "Chandina",
+      "is_active": true,
+      "ordering": 192
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 193,
+    "fields": {
+      "district": 28,
+      "name_bn": "চৌদ্দগ্রাম",
+      "name_en": "Chauddagram",
+      "is_active": true,
+      "ordering": 193
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 194,
+    "fields": {
+      "district": 28,
+      "name_bn": "আদর্শ সদর",
+      "name_en": "Adarsha Sadar",
+      "is_active": true,
+      "ordering": 194
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 195,
+    "fields": {
+      "district": 28,
+      "name_bn": "সদর দক্ষিণ",
+      "name_en": "Sadar South",
+      "is_active": true,
+      "ordering": 195
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 196,
+    "fields": {
+      "district": 28,
+      "name_bn": "দাউদকান্দি",
+      "name_en": "Daudkandi",
+      "is_active": true,
+      "ordering": 196
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 197,
+    "fields": {
+      "district": 28,
+      "name_bn": "দেবিদ্বার",
+      "name_en": "Debidwar",
+      "is_active": true,
+      "ordering": 197
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 198,
+    "fields": {
+      "district": 28,
+      "name_bn": "হোমনা",
+      "name_en": "Homna",
+      "is_active": true,
+      "ordering": 198
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 199,
+    "fields": {
+      "district": 28,
+      "name_bn": "লাকসাম",
+      "name_en": "Laksam",
+      "is_active": true,
+      "ordering": 199
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 200,
+    "fields": {
+      "district": 28,
+      "name_bn": "মনোহরগঞ্জ",
+      "name_en": "Monohargonj",
+      "is_active": true,
+      "ordering": 200
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 201,
+    "fields": {
+      "district": 28,
+      "name_bn": "মেঘনা",
+      "name_en": "Meghna",
+      "is_active": true,
+      "ordering": 201
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 202,
+    "fields": {
+      "district": 28,
+      "name_bn": "মুরাদনগর",
+      "name_en": "Muradnagar",
+      "is_active": true,
+      "ordering": 202
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 203,
+    "fields": {
+      "district": 28,
+      "name_bn": "নাঙ্গলকোট",
+      "name_en": "Nangalkot",
+      "is_active": true,
+      "ordering": 203
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 204,
+    "fields": {
+      "district": 28,
+      "name_bn": "তিতাস",
+      "name_en": "Titas",
+      "is_active": true,
+      "ordering": 204
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 205,
+    "fields": {
+      "district": 28,
+      "name_bn": "লালমাই",
+      "name_en": "Lalmai",
+      "is_active": true,
+      "ordering": 205
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 206,
+    "fields": {
+      "district": 29,
+      "name_bn": "চকরিয়া",
+      "name_en": "Chakaria",
+      "is_active": true,
+      "ordering": 206
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 207,
+    "fields": {
+      "district": 29,
+      "name_bn": "কক্সবাজার সদর",
+      "name_en": "Coxsbazar Sadar",
+      "is_active": true,
+      "ordering": 207
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 208,
+    "fields": {
+      "district": 29,
+      "name_bn": "কুতুবদিয়া",
+      "name_en": "Kutubdia",
+      "is_active": true,
+      "ordering": 208
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 209,
+    "fields": {
+      "district": 29,
+      "name_bn": "মহেশখালী",
+      "name_en": "Moheshkhali",
+      "is_active": true,
+      "ordering": 209
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 210,
+    "fields": {
+      "district": 29,
+      "name_bn": "পেকুয়া",
+      "name_en": "Pekua",
+      "is_active": true,
+      "ordering": 210
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 211,
+    "fields": {
+      "district": 29,
+      "name_bn": "রামু",
+      "name_en": "Ramu",
+      "is_active": true,
+      "ordering": 211
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 212,
+    "fields": {
+      "district": 29,
+      "name_bn": "টেকনাফ",
+      "name_en": "Teknaf",
+      "is_active": true,
+      "ordering": 212
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 213,
+    "fields": {
+      "district": 29,
+      "name_bn": "উখিয়া",
+      "name_en": "Ukhiya",
+      "is_active": true,
+      "ordering": 213
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 214,
+    "fields": {
+      "district": 29,
+      "name_bn": "ঈদগাঁও",
+      "name_en": "Eidgaon",
+      "is_active": true,
+      "ordering": 214
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 215,
+    "fields": {
+      "district": 30,
+      "name_bn": "ছাগলনাইয়া",
+      "name_en": "Chhagalnaiya",
+      "is_active": true,
+      "ordering": 215
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 216,
+    "fields": {
+      "district": 30,
+      "name_bn": "দাগনভূঞা",
+      "name_en": "Daganbhuiyan",
+      "is_active": true,
+      "ordering": 216
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 217,
+    "fields": {
+      "district": 30,
+      "name_bn": "ফেনী সদর",
+      "name_en": "Feni Sadar",
+      "is_active": true,
+      "ordering": 217
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 218,
+    "fields": {
+      "district": 30,
+      "name_bn": "ফুলগাজী",
+      "name_en": "Fulgazi",
+      "is_active": true,
+      "ordering": 218
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 219,
+    "fields": {
+      "district": 30,
+      "name_bn": "পরশুরাম",
+      "name_en": "Parshuram",
+      "is_active": true,
+      "ordering": 219
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 220,
+    "fields": {
+      "district": 30,
+      "name_bn": "সোনাগাজী",
+      "name_en": "Sonagazi",
+      "is_active": true,
+      "ordering": 220
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 221,
+    "fields": {
+      "district": 31,
+      "name_bn": "দীঘিনালা",
+      "name_en": "Dighinala",
+      "is_active": true,
+      "ordering": 221
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 222,
+    "fields": {
+      "district": 31,
+      "name_bn": "মানিকছড়ি",
+      "name_en": "Manikchari",
+      "is_active": true,
+      "ordering": 222
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 223,
+    "fields": {
+      "district": 31,
+      "name_bn": "খাগড়াছড়ি সদর",
+      "name_en": "Khagrachhari Sadar",
+      "is_active": true,
+      "ordering": 223
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 224,
+    "fields": {
+      "district": 31,
+      "name_bn": "লক্ষীছড়ি",
+      "name_en": "Laxmichhari",
+      "is_active": true,
+      "ordering": 224
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 225,
+    "fields": {
+      "district": 31,
+      "name_bn": "মহালছড়ি",
+      "name_en": "Mohalchari",
+      "is_active": true,
+      "ordering": 225
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 226,
+    "fields": {
+      "district": 31,
+      "name_bn": "মাটিরাঙ্গা",
+      "name_en": "Matiranga",
+      "is_active": true,
+      "ordering": 226
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 227,
+    "fields": {
+      "district": 31,
+      "name_bn": "পানছড়ি",
+      "name_en": "Panchari",
+      "is_active": true,
+      "ordering": 227
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 228,
+    "fields": {
+      "district": 31,
+      "name_bn": "রামগড়",
+      "name_en": "Ramgarh",
+      "is_active": true,
+      "ordering": 228
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 229,
+    "fields": {
+      "district": 31,
+      "name_bn": "গুইমারা",
+      "name_en": "Guimara",
+      "is_active": true,
+      "ordering": 229
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 230,
+    "fields": {
+      "district": 32,
+      "name_bn": "কমলনগর",
+      "name_en": "Kamalnagar",
+      "is_active": true,
+      "ordering": 230
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 231,
+    "fields": {
+      "district": 32,
+      "name_bn": "লক্ষ্মীপুর সদর",
+      "name_en": "Lakshmipur Sadar",
+      "is_active": true,
+      "ordering": 231
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 232,
+    "fields": {
+      "district": 32,
+      "name_bn": "রায়পুর",
+      "name_en": "Raipur",
+      "is_active": true,
+      "ordering": 232
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 233,
+    "fields": {
+      "district": 32,
+      "name_bn": "রামগঞ্জ",
+      "name_en": "Ramganj",
+      "is_active": true,
+      "ordering": 233
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 234,
+    "fields": {
+      "district": 32,
+      "name_bn": "রামগতি",
+      "name_en": "Ramgati",
+      "is_active": true,
+      "ordering": 234
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 235,
+    "fields": {
+      "district": 33,
+      "name_bn": "বেগমগঞ্জ",
+      "name_en": "Begumganj",
+      "is_active": true,
+      "ordering": 235
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 236,
+    "fields": {
+      "district": 33,
+      "name_bn": "চাটখিল",
+      "name_en": "Chatkhil",
+      "is_active": true,
+      "ordering": 236
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 237,
+    "fields": {
+      "district": 33,
+      "name_bn": "কোম্পানীগঞ্জ",
+      "name_en": "Companiganj",
+      "is_active": true,
+      "ordering": 237
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 238,
+    "fields": {
+      "district": 33,
+      "name_bn": "হাতিয়া",
+      "name_en": "Hatia",
+      "is_active": true,
+      "ordering": 238
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 239,
+    "fields": {
+      "district": 33,
+      "name_bn": "সেনবাগ",
+      "name_en": "Senbug",
+      "is_active": true,
+      "ordering": 239
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 240,
+    "fields": {
+      "district": 33,
+      "name_bn": "সোনাইমুড়ী",
+      "name_en": "Sonaimuri",
+      "is_active": true,
+      "ordering": 240
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 241,
+    "fields": {
+      "district": 33,
+      "name_bn": "সুবর্ণচর",
+      "name_en": "Subarnachar",
+      "is_active": true,
+      "ordering": 241
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 242,
+    "fields": {
+      "district": 33,
+      "name_bn": "নোয়াখালী সদর",
+      "name_en": "Noakhali Sadar",
+      "is_active": true,
+      "ordering": 242
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 243,
+    "fields": {
+      "district": 33,
+      "name_bn": "কবিরহাট",
+      "name_en": "Kabirhat",
+      "is_active": true,
+      "ordering": 243
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 244,
+    "fields": {
+      "district": 34,
+      "name_bn": "বাঘাইছড়ি",
+      "name_en": "Baghaichari",
+      "is_active": true,
+      "ordering": 244
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 245,
+    "fields": {
+      "district": 34,
+      "name_bn": "বরকল",
+      "name_en": "Barkal",
+      "is_active": true,
+      "ordering": 245
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 246,
+    "fields": {
+      "district": 34,
+      "name_bn": "কাউখালী",
+      "name_en": "Kawkhali",
+      "is_active": true,
+      "ordering": 246
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 247,
+    "fields": {
+      "district": 34,
+      "name_bn": "কাপ্তাই",
+      "name_en": "Kaptai",
+      "is_active": true,
+      "ordering": 247
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 248,
+    "fields": {
+      "district": 34,
+      "name_bn": "জুরাছড়ি",
+      "name_en": "Juraichari",
+      "is_active": true,
+      "ordering": 248
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 249,
+    "fields": {
+      "district": 34,
+      "name_bn": "লংগদু",
+      "name_en": "Langadu",
+      "is_active": true,
+      "ordering": 249
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 250,
+    "fields": {
+      "district": 34,
+      "name_bn": "নানিয়ারচর",
+      "name_en": "Naniarchar",
+      "is_active": true,
+      "ordering": 250
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 251,
+    "fields": {
+      "district": 34,
+      "name_bn": "রাঙ্গামাটি সদর",
+      "name_en": "Rangamati Sadar",
+      "is_active": true,
+      "ordering": 251
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 252,
+    "fields": {
+      "district": 34,
+      "name_bn": "রাজস্থলী",
+      "name_en": "Rajasthali",
+      "is_active": true,
+      "ordering": 252
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 253,
+    "fields": {
+      "district": 34,
+      "name_bn": "বিলাইছড়ি",
+      "name_en": "Belaichari",
+      "is_active": true,
+      "ordering": 253
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 254,
+    "fields": {
+      "district": 35,
+      "name_bn": "আদমদিঘি",
+      "name_en": "Adamdighi",
+      "is_active": true,
+      "ordering": 254
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 255,
+    "fields": {
+      "district": 35,
+      "name_bn": "বগুড়া সদর",
+      "name_en": "Bogura Sadar",
+      "is_active": true,
+      "ordering": 255
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 256,
+    "fields": {
+      "district": 35,
+      "name_bn": "ধুনট",
+      "name_en": "Dhunot",
+      "is_active": true,
+      "ordering": 256
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 257,
+    "fields": {
+      "district": 35,
+      "name_bn": "দুপচাচিঁয়া",
+      "name_en": "Dupchanchia",
+      "is_active": true,
+      "ordering": 257
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 258,
+    "fields": {
+      "district": 35,
+      "name_bn": "গাবতলী",
+      "name_en": "Gabtali",
+      "is_active": true,
+      "ordering": 258
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 259,
+    "fields": {
+      "district": 35,
+      "name_bn": "কাহালু",
+      "name_en": "Kahaloo",
+      "is_active": true,
+      "ordering": 259
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 260,
+    "fields": {
+      "district": 35,
+      "name_bn": "নন্দিগ্রাম",
+      "name_en": "Nondigram",
+      "is_active": true,
+      "ordering": 260
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 261,
+    "fields": {
+      "district": 35,
+      "name_bn": "সারিয়াকান্দি",
+      "name_en": "Shariakandi",
+      "is_active": true,
+      "ordering": 261
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 262,
+    "fields": {
+      "district": 35,
+      "name_bn": "শাজাহানপুর",
+      "name_en": "Shajahanpur",
+      "is_active": true,
+      "ordering": 262
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 263,
+    "fields": {
+      "district": 35,
+      "name_bn": "শেরপুর",
+      "name_en": "Sherpur",
+      "is_active": true,
+      "ordering": 263
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 264,
+    "fields": {
+      "district": 35,
+      "name_bn": "শিবগঞ্জ",
+      "name_en": "Shibganj",
+      "is_active": true,
+      "ordering": 264
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 265,
+    "fields": {
+      "district": 35,
+      "name_bn": "সোনাতলা",
+      "name_en": "Sonatala",
+      "is_active": true,
+      "ordering": 265
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 266,
+    "fields": {
+      "district": 36,
+      "name_bn": "আক্কেলপুর",
+      "name_en": "Akkelpur",
+      "is_active": true,
+      "ordering": 266
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 267,
+    "fields": {
+      "district": 36,
+      "name_bn": "জয়পুরহাট সদর",
+      "name_en": "Joypurhat Sadar",
+      "is_active": true,
+      "ordering": 267
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 268,
+    "fields": {
+      "district": 36,
+      "name_bn": "কালাই",
+      "name_en": "Kalai",
+      "is_active": true,
+      "ordering": 268
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 269,
+    "fields": {
+      "district": 36,
+      "name_bn": "পাঁচবিবি",
+      "name_en": "Panchbibi",
+      "is_active": true,
+      "ordering": 269
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 270,
+    "fields": {
+      "district": 36,
+      "name_bn": "ক্ষেতলাল",
+      "name_en": "Khetlal",
+      "is_active": true,
+      "ordering": 270
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 271,
+    "fields": {
+      "district": 37,
+      "name_bn": "আত্রাই",
+      "name_en": "Atrai",
+      "is_active": true,
+      "ordering": 271
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 272,
+    "fields": {
+      "district": 37,
+      "name_bn": "ধামইরহাট",
+      "name_en": "Dhamoirhat",
+      "is_active": true,
+      "ordering": 272
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 273,
+    "fields": {
+      "district": 37,
+      "name_bn": "মান্দা",
+      "name_en": "Manda",
+      "is_active": true,
+      "ordering": 273
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 274,
+    "fields": {
+      "district": 37,
+      "name_bn": "মহাদেবপুর",
+      "name_en": "Mohadevpur",
+      "is_active": true,
+      "ordering": 274
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 275,
+    "fields": {
+      "district": 37,
+      "name_bn": "নওগাঁ সদর",
+      "name_en": "Naogaon Sadar",
+      "is_active": true,
+      "ordering": 275
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 276,
+    "fields": {
+      "district": 37,
+      "name_bn": "নিয়ামতপুর",
+      "name_en": "Niamatpur",
+      "is_active": true,
+      "ordering": 276
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 277,
+    "fields": {
+      "district": 37,
+      "name_bn": "পত্নীতলা",
+      "name_en": "Patnitala",
+      "is_active": true,
+      "ordering": 277
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 278,
+    "fields": {
+      "district": 37,
+      "name_bn": "রাণীনগর",
+      "name_en": "Raninagar",
+      "is_active": true,
+      "ordering": 278
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 279,
+    "fields": {
+      "district": 37,
+      "name_bn": "সাপাহার",
+      "name_en": "Sapahar",
+      "is_active": true,
+      "ordering": 279
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 280,
+    "fields": {
+      "district": 37,
+      "name_bn": "বদলগাছী",
+      "name_en": "Badalgachi",
+      "is_active": true,
+      "ordering": 280
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 281,
+    "fields": {
+      "district": 37,
+      "name_bn": "পোরশা",
+      "name_en": "Porsha",
+      "is_active": true,
+      "ordering": 281
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 282,
+    "fields": {
+      "district": 38,
+      "name_bn": "বাগাতিপাড়া",
+      "name_en": "Bagatipara",
+      "is_active": true,
+      "ordering": 282
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 283,
+    "fields": {
+      "district": 38,
+      "name_bn": "বড়াইগ্রাম",
+      "name_en": "Baraigram",
+      "is_active": true,
+      "ordering": 283
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 284,
+    "fields": {
+      "district": 38,
+      "name_bn": "গুরুদাসপুর",
+      "name_en": "Gurudaspur",
+      "is_active": true,
+      "ordering": 284
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 285,
+    "fields": {
+      "district": 38,
+      "name_bn": "লালপুর",
+      "name_en": "Lalpur",
+      "is_active": true,
+      "ordering": 285
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 286,
+    "fields": {
+      "district": 38,
+      "name_bn": "নাটোর সদর",
+      "name_en": "Natore Sadar",
+      "is_active": true,
+      "ordering": 286
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 287,
+    "fields": {
+      "district": 38,
+      "name_bn": "সিংড়া",
+      "name_en": "Singra",
+      "is_active": true,
+      "ordering": 287
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 288,
+    "fields": {
+      "district": 38,
+      "name_bn": "নলডাঙ্গা",
+      "name_en": "Naldanga",
+      "is_active": true,
+      "ordering": 288
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 289,
+    "fields": {
+      "district": 39,
+      "name_bn": "শিবগঞ্জ",
+      "name_en": "Shibganj",
+      "is_active": true,
+      "ordering": 289
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 290,
+    "fields": {
+      "district": 39,
+      "name_bn": "ভোলাহাট",
+      "name_en": "Bholahat",
+      "is_active": true,
+      "ordering": 290
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 291,
+    "fields": {
+      "district": 39,
+      "name_bn": "গোমস্তাপুর",
+      "name_en": "Gomostapur",
+      "is_active": true,
+      "ordering": 291
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 292,
+    "fields": {
+      "district": 39,
+      "name_bn": "নাচোল",
+      "name_en": "Nachol",
+      "is_active": true,
+      "ordering": 292
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 293,
+    "fields": {
+      "district": 39,
+      "name_bn": "চাঁপাইনবাবগঞ্জ সদর",
+      "name_en": "Chapainawabganj Sadar",
+      "is_active": true,
+      "ordering": 293
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 294,
+    "fields": {
+      "district": 40,
+      "name_bn": "আটঘরিয়া",
+      "name_en": "Atghoria",
+      "is_active": true,
+      "ordering": 294
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 295,
+    "fields": {
+      "district": 40,
+      "name_bn": "বেড়া",
+      "name_en": "Bera",
+      "is_active": true,
+      "ordering": 295
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 296,
+    "fields": {
+      "district": 40,
+      "name_bn": "ভাঙ্গুড়া",
+      "name_en": "Bhangura",
+      "is_active": true,
+      "ordering": 296
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 297,
+    "fields": {
+      "district": 40,
+      "name_bn": "চাটমোহর",
+      "name_en": "Chatmohar",
+      "is_active": true,
+      "ordering": 297
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 298,
+    "fields": {
+      "district": 40,
+      "name_bn": "ফরিদপুর",
+      "name_en": "Faridpur",
+      "is_active": true,
+      "ordering": 298
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 299,
+    "fields": {
+      "district": 40,
+      "name_bn": "ঈশ্বরদী",
+      "name_en": "Ishurdi",
+      "is_active": true,
+      "ordering": 299
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 300,
+    "fields": {
+      "district": 40,
+      "name_bn": "পাবনা সদর",
+      "name_en": "Pabna Sadar",
+      "is_active": true,
+      "ordering": 300
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 301,
+    "fields": {
+      "district": 40,
+      "name_bn": "সাঁথিয়া",
+      "name_en": "Santhia",
+      "is_active": true,
+      "ordering": 301
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 302,
+    "fields": {
+      "district": 40,
+      "name_bn": "সুজানগর",
+      "name_en": "Sujanagar",
+      "is_active": true,
+      "ordering": 302
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 303,
+    "fields": {
+      "district": 41,
+      "name_bn": "বাঘা",
+      "name_en": "Bagha",
+      "is_active": true,
+      "ordering": 303
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 304,
+    "fields": {
+      "district": 41,
+      "name_bn": "বাগমারা",
+      "name_en": "Bagmara",
+      "is_active": true,
+      "ordering": 304
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 305,
+    "fields": {
+      "district": 41,
+      "name_bn": "চারঘাট",
+      "name_en": "Charghat",
+      "is_active": true,
+      "ordering": 305
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 306,
+    "fields": {
+      "district": 41,
+      "name_bn": "দুর্গাপুর",
+      "name_en": "Durgapur",
+      "is_active": true,
+      "ordering": 306
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 307,
+    "fields": {
+      "district": 41,
+      "name_bn": "গোদাগাড়ী",
+      "name_en": "Godagari",
+      "is_active": true,
+      "ordering": 307
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 308,
+    "fields": {
+      "district": 41,
+      "name_bn": "মোহনপুর",
+      "name_en": "Mohonpur",
+      "is_active": true,
+      "ordering": 308
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 309,
+    "fields": {
+      "district": 41,
+      "name_bn": "পবা",
+      "name_en": "Paba",
+      "is_active": true,
+      "ordering": 309
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 310,
+    "fields": {
+      "district": 41,
+      "name_bn": "পুঠিয়া",
+      "name_en": "Puthia",
+      "is_active": true,
+      "ordering": 310
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 311,
+    "fields": {
+      "district": 41,
+      "name_bn": "তানোর",
+      "name_en": "Tanore",
+      "is_active": true,
+      "ordering": 311
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 312,
+    "fields": {
+      "district": 42,
+      "name_bn": "বেলকুচি",
+      "name_en": "Belkuchi",
+      "is_active": true,
+      "ordering": 312
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 313,
+    "fields": {
+      "district": 42,
+      "name_bn": "চৌহালি",
+      "name_en": "Chauhali",
+      "is_active": true,
+      "ordering": 313
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 314,
+    "fields": {
+      "district": 42,
+      "name_bn": "কামারখন্দ",
+      "name_en": "Kamarkhand",
+      "is_active": true,
+      "ordering": 314
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 315,
+    "fields": {
+      "district": 42,
+      "name_bn": "কাজীপুর",
+      "name_en": "Kazipur",
+      "is_active": true,
+      "ordering": 315
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 316,
+    "fields": {
+      "district": 42,
+      "name_bn": "রায়গঞ্জ",
+      "name_en": "Raigonj",
+      "is_active": true,
+      "ordering": 316
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 317,
+    "fields": {
+      "district": 42,
+      "name_bn": "শাহজাদপুর",
+      "name_en": "Shahjadpur",
+      "is_active": true,
+      "ordering": 317
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 318,
+    "fields": {
+      "district": 42,
+      "name_bn": "সিরাজগঞ্জ সদর",
+      "name_en": "Sirajganj Sadar",
+      "is_active": true,
+      "ordering": 318
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 319,
+    "fields": {
+      "district": 42,
+      "name_bn": "তাড়াশ",
+      "name_en": "Tarash",
+      "is_active": true,
+      "ordering": 319
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 320,
+    "fields": {
+      "district": 42,
+      "name_bn": "উল্লাপাড়া",
+      "name_en": "Ullapara",
+      "is_active": true,
+      "ordering": 320
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 321,
+    "fields": {
+      "district": 43,
+      "name_bn": "আজমিরীগঞ্জ",
+      "name_en": "Ajmiriganj",
+      "is_active": true,
+      "ordering": 321
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 322,
+    "fields": {
+      "district": 43,
+      "name_bn": "বাহুবল",
+      "name_en": "Bahubal",
+      "is_active": true,
+      "ordering": 322
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 323,
+    "fields": {
+      "district": 43,
+      "name_bn": "বানিয়াচং",
+      "name_en": "Baniachong",
+      "is_active": true,
+      "ordering": 323
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 324,
+    "fields": {
+      "district": 43,
+      "name_bn": "চুনারুঘাট",
+      "name_en": "Chunarughat",
+      "is_active": true,
+      "ordering": 324
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 325,
+    "fields": {
+      "district": 43,
+      "name_bn": "হবিগঞ্জ সদর",
+      "name_en": "Habiganj Sadar",
+      "is_active": true,
+      "ordering": 325
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 326,
+    "fields": {
+      "district": 43,
+      "name_bn": "লাখাই",
+      "name_en": "Lakhai",
+      "is_active": true,
+      "ordering": 326
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 327,
+    "fields": {
+      "district": 43,
+      "name_bn": "মাধবপুর",
+      "name_en": "Madhabpur",
+      "is_active": true,
+      "ordering": 327
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 328,
+    "fields": {
+      "district": 43,
+      "name_bn": "নবীগঞ্জ",
+      "name_en": "Nabiganj",
+      "is_active": true,
+      "ordering": 328
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 329,
+    "fields": {
+      "district": 43,
+      "name_bn": "শায়েস্তাগঞ্জ",
+      "name_en": "Shayestaganj",
+      "is_active": true,
+      "ordering": 329
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 330,
+    "fields": {
+      "district": 43,
+      "name_bn": "শায়েস্তাগঞ্জ",
+      "name_en": "Shaistaganj",
+      "is_active": true,
+      "ordering": 330
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 331,
+    "fields": {
+      "district": 44,
+      "name_bn": "বড়লেখা",
+      "name_en": "Barlekha",
+      "is_active": true,
+      "ordering": 331
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 332,
+    "fields": {
+      "district": 44,
+      "name_bn": "জুড়ী",
+      "name_en": "Juri",
+      "is_active": true,
+      "ordering": 332
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 333,
+    "fields": {
+      "district": 44,
+      "name_bn": "কমলগঞ্জ",
+      "name_en": "Kamolganj",
+      "is_active": true,
+      "ordering": 333
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 334,
+    "fields": {
+      "district": 44,
+      "name_bn": "কুলাউড়া",
+      "name_en": "Kulaura",
+      "is_active": true,
+      "ordering": 334
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 335,
+    "fields": {
+      "district": 44,
+      "name_bn": "মৌলভীবাজার সদর",
+      "name_en": "Moulvibazar Sadar",
+      "is_active": true,
+      "ordering": 335
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 336,
+    "fields": {
+      "district": 44,
+      "name_bn": "রাজনগর",
+      "name_en": "Rajnagar",
+      "is_active": true,
+      "ordering": 336
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 337,
+    "fields": {
+      "district": 44,
+      "name_bn": "শ্রীমঙ্গল",
+      "name_en": "Sreemangal",
+      "is_active": true,
+      "ordering": 337
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 338,
+    "fields": {
+      "district": 45,
+      "name_bn": "বিশ্বম্ভরপুর",
+      "name_en": "Bishwambarpur",
+      "is_active": true,
+      "ordering": 338
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 339,
+    "fields": {
+      "district": 45,
+      "name_bn": "ছাতক",
+      "name_en": "Chhatak",
+      "is_active": true,
+      "ordering": 339
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 340,
+    "fields": {
+      "district": 45,
+      "name_bn": "দিরাই",
+      "name_en": "Derai",
+      "is_active": true,
+      "ordering": 340
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 341,
+    "fields": {
+      "district": 45,
+      "name_bn": "ধর্মপাশা",
+      "name_en": "Dharmapasha",
+      "is_active": true,
+      "ordering": 341
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 342,
+    "fields": {
+      "district": 45,
+      "name_bn": "দোয়ারাবাজার",
+      "name_en": "Dowarabazar",
+      "is_active": true,
+      "ordering": 342
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 343,
+    "fields": {
+      "district": 45,
+      "name_bn": "জগন্নাথপুর",
+      "name_en": "Jagannathpur",
+      "is_active": true,
+      "ordering": 343
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 344,
+    "fields": {
+      "district": 45,
+      "name_bn": "জামালগঞ্জ",
+      "name_en": "Jamalganj",
+      "is_active": true,
+      "ordering": 344
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 345,
+    "fields": {
+      "district": 45,
+      "name_bn": "শাল্লা",
+      "name_en": "Shalla",
+      "is_active": true,
+      "ordering": 345
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 346,
+    "fields": {
+      "district": 45,
+      "name_bn": "সুনামগঞ্জ সদর",
+      "name_en": "Sunamganj Sadar",
+      "is_active": true,
+      "ordering": 346
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 347,
+    "fields": {
+      "district": 45,
+      "name_bn": "তাহিরপুর",
+      "name_en": "Tahirpur",
+      "is_active": true,
+      "ordering": 347
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 348,
+    "fields": {
+      "district": 45,
+      "name_bn": "শান্তিগঞ্জ",
+      "name_en": "Shantiganj",
+      "is_active": true,
+      "ordering": 348
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 349,
+    "fields": {
+      "district": 45,
+      "name_bn": "মধ্যনগর",
+      "name_en": "Madhyanagar",
+      "is_active": true,
+      "ordering": 349
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 350,
+    "fields": {
+      "district": 46,
+      "name_bn": "বালাগঞ্জ",
+      "name_en": "Balaganj",
+      "is_active": true,
+      "ordering": 350
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 351,
+    "fields": {
+      "district": 46,
+      "name_bn": "বিয়ানীবাজার",
+      "name_en": "Beanibazar",
+      "is_active": true,
+      "ordering": 351
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 352,
+    "fields": {
+      "district": 46,
+      "name_bn": "বিশ্বনাথ",
+      "name_en": "Bishwanath",
+      "is_active": true,
+      "ordering": 352
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 353,
+    "fields": {
+      "district": 46,
+      "name_bn": "কোম্পানীগঞ্জ",
+      "name_en": "Companiganj",
+      "is_active": true,
+      "ordering": 353
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 354,
+    "fields": {
+      "district": 46,
+      "name_bn": "দক্ষিণ সুরমা",
+      "name_en": "Dakshin Surma",
+      "is_active": true,
+      "ordering": 354
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 355,
+    "fields": {
+      "district": 46,
+      "name_bn": "ফেঞ্চুগঞ্জ",
+      "name_en": "Fenchuganj",
+      "is_active": true,
+      "ordering": 355
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 356,
+    "fields": {
+      "district": 46,
+      "name_bn": "গোলাপগঞ্জ",
+      "name_en": "Golapganj",
+      "is_active": true,
+      "ordering": 356
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 357,
+    "fields": {
+      "district": 46,
+      "name_bn": "গোয়াইনঘাট",
+      "name_en": "Gowainghat",
+      "is_active": true,
+      "ordering": 357
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 358,
+    "fields": {
+      "district": 46,
+      "name_bn": "জৈন্তাপুর",
+      "name_en": "Jaintiapur",
+      "is_active": true,
+      "ordering": 358
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 359,
+    "fields": {
+      "district": 46,
+      "name_bn": "কানাইঘাট",
+      "name_en": "Kanaighat",
+      "is_active": true,
+      "ordering": 359
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 360,
+    "fields": {
+      "district": 46,
+      "name_bn": "সিলেট সদর",
+      "name_en": "Sylhet Sadar",
+      "is_active": true,
+      "ordering": 360
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 361,
+    "fields": {
+      "district": 46,
+      "name_bn": "জকিগঞ্জ",
+      "name_en": "Zakiganj",
+      "is_active": true,
+      "ordering": 361
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 362,
+    "fields": {
+      "district": 46,
+      "name_bn": "ওসমানী নগর",
+      "name_en": "Osmani Nagar",
+      "is_active": true,
+      "ordering": 362
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 363,
+    "fields": {
+      "district": 47,
+      "name_bn": "বিরামপুর",
+      "name_en": "Birampur",
+      "is_active": true,
+      "ordering": 363
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 364,
+    "fields": {
+      "district": 47,
+      "name_bn": "বীরগঞ্জ",
+      "name_en": "Birganj",
+      "is_active": true,
+      "ordering": 364
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 365,
+    "fields": {
+      "district": 47,
+      "name_bn": "বিরল",
+      "name_en": "Birol",
+      "is_active": true,
+      "ordering": 365
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 366,
+    "fields": {
+      "district": 47,
+      "name_bn": "বোচাগঞ্জ",
+      "name_en": "Bochaganj",
+      "is_active": true,
+      "ordering": 366
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 367,
+    "fields": {
+      "district": 47,
+      "name_bn": "চিরিরবন্দর",
+      "name_en": "Chirirbandar",
+      "is_active": true,
+      "ordering": 367
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 368,
+    "fields": {
+      "district": 47,
+      "name_bn": "ফুলবাড়ী",
+      "name_en": "Fulbari",
+      "is_active": true,
+      "ordering": 368
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 369,
+    "fields": {
+      "district": 47,
+      "name_bn": "ঘোড়াঘাট",
+      "name_en": "Ghoraghat",
+      "is_active": true,
+      "ordering": 369
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 370,
+    "fields": {
+      "district": 47,
+      "name_bn": "হাকিমপুর",
+      "name_en": "Hakimpur",
+      "is_active": true,
+      "ordering": 370
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 371,
+    "fields": {
+      "district": 47,
+      "name_bn": "কাহারোল",
+      "name_en": "Kaharol",
+      "is_active": true,
+      "ordering": 371
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 372,
+    "fields": {
+      "district": 47,
+      "name_bn": "খানসামা",
+      "name_en": "Khansama",
+      "is_active": true,
+      "ordering": 372
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 373,
+    "fields": {
+      "district": 47,
+      "name_bn": "নবাবগঞ্জ",
+      "name_en": "Nawabganj",
+      "is_active": true,
+      "ordering": 373
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 374,
+    "fields": {
+      "district": 47,
+      "name_bn": "পার্বতীপুর",
+      "name_en": "Parbatipur",
+      "is_active": true,
+      "ordering": 374
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 375,
+    "fields": {
+      "district": 47,
+      "name_bn": "দিনাজপুর সদর",
+      "name_en": "Dinajpur Sadar",
+      "is_active": true,
+      "ordering": 375
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 376,
+    "fields": {
+      "district": 48,
+      "name_bn": "ফুলছড়ি",
+      "name_en": "Phulchari",
+      "is_active": true,
+      "ordering": 376
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 377,
+    "fields": {
+      "district": 48,
+      "name_bn": "গাইবান্ধা সদর",
+      "name_en": "Gaibandha Sadar",
+      "is_active": true,
+      "ordering": 377
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 378,
+    "fields": {
+      "district": 48,
+      "name_bn": "গোবিন্দগঞ্জ",
+      "name_en": "Gobindaganj",
+      "is_active": true,
+      "ordering": 378
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 379,
+    "fields": {
+      "district": 48,
+      "name_bn": "পলাশবাড়ী",
+      "name_en": "Palashbari",
+      "is_active": true,
+      "ordering": 379
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 380,
+    "fields": {
+      "district": 48,
+      "name_bn": "সাদুল্লাপুর",
+      "name_en": "Sadullapur",
+      "is_active": true,
+      "ordering": 380
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 381,
+    "fields": {
+      "district": 48,
+      "name_bn": "সাঘাটা",
+      "name_en": "Saghata",
+      "is_active": true,
+      "ordering": 381
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 382,
+    "fields": {
+      "district": 48,
+      "name_bn": "সুন্দরগঞ্জ",
+      "name_en": "Sundarganj",
+      "is_active": true,
+      "ordering": 382
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 383,
+    "fields": {
+      "district": 49,
+      "name_bn": "ফুলবাড়ী",
+      "name_en": "Phulbari",
+      "is_active": true,
+      "ordering": 383
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 384,
+    "fields": {
+      "district": 49,
+      "name_bn": "ভূরুঙ্গামারী",
+      "name_en": "Bhurungamari",
+      "is_active": true,
+      "ordering": 384
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 385,
+    "fields": {
+      "district": 49,
+      "name_bn": "চর রাজিবপুর",
+      "name_en": "Charrajibpur",
+      "is_active": true,
+      "ordering": 385
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 386,
+    "fields": {
+      "district": 49,
+      "name_bn": "চিলমারী",
+      "name_en": "Chilmari",
+      "is_active": true,
+      "ordering": 386
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 387,
+    "fields": {
+      "district": 49,
+      "name_bn": "কুড়িগ্রাম সদর",
+      "name_en": "Kurigram Sadar",
+      "is_active": true,
+      "ordering": 387
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 388,
+    "fields": {
+      "district": 49,
+      "name_bn": "নাগেশ্বরী",
+      "name_en": "Nageshwari",
+      "is_active": true,
+      "ordering": 388
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 389,
+    "fields": {
+      "district": 49,
+      "name_bn": "রাজারহাট",
+      "name_en": "Rajarhat",
+      "is_active": true,
+      "ordering": 389
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 390,
+    "fields": {
+      "district": 49,
+      "name_bn": "রৌমারী",
+      "name_en": "Rowmari",
+      "is_active": true,
+      "ordering": 390
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 391,
+    "fields": {
+      "district": 49,
+      "name_bn": "উলিপুর",
+      "name_en": "Ulipur",
+      "is_active": true,
+      "ordering": 391
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 392,
+    "fields": {
+      "district": 50,
+      "name_bn": "আদিতমারী",
+      "name_en": "Aditmari",
+      "is_active": true,
+      "ordering": 392
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 393,
+    "fields": {
+      "district": 50,
+      "name_bn": "হাতীবান্ধা",
+      "name_en": "Hatibandha",
+      "is_active": true,
+      "ordering": 393
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 394,
+    "fields": {
+      "district": 50,
+      "name_bn": "কালীগঞ্জ",
+      "name_en": "Kaliganj",
+      "is_active": true,
+      "ordering": 394
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 395,
+    "fields": {
+      "district": 50,
+      "name_bn": "লালমনিরহাট সদর",
+      "name_en": "Lalmonirhat Sadar",
+      "is_active": true,
+      "ordering": 395
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 396,
+    "fields": {
+      "district": 50,
+      "name_bn": "পাটগ্রাম",
+      "name_en": "Patgram",
+      "is_active": true,
+      "ordering": 396
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 397,
+    "fields": {
+      "district": 51,
+      "name_bn": "ডোমার",
+      "name_en": "Domar",
+      "is_active": true,
+      "ordering": 397
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 398,
+    "fields": {
+      "district": 51,
+      "name_bn": "জলঢাকা",
+      "name_en": "Jaldhaka",
+      "is_active": true,
+      "ordering": 398
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 399,
+    "fields": {
+      "district": 51,
+      "name_bn": "কিশোরগঞ্জ",
+      "name_en": "Kishorganj",
+      "is_active": true,
+      "ordering": 399
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 400,
+    "fields": {
+      "district": 51,
+      "name_bn": "নীলফামারী সদর",
+      "name_en": "Nilphamari Sadar",
+      "is_active": true,
+      "ordering": 400
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 401,
+    "fields": {
+      "district": 51,
+      "name_bn": "সৈয়দপুর",
+      "name_en": "Syedpur",
+      "is_active": true,
+      "ordering": 401
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 402,
+    "fields": {
+      "district": 51,
+      "name_bn": "ডিমলা",
+      "name_en": "Dimla",
+      "is_active": true,
+      "ordering": 402
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 403,
+    "fields": {
+      "district": 52,
+      "name_bn": "আটোয়ারী",
+      "name_en": "Atwari",
+      "is_active": true,
+      "ordering": 403
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 404,
+    "fields": {
+      "district": 52,
+      "name_bn": "বোদা",
+      "name_en": "Boda",
+      "is_active": true,
+      "ordering": 404
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 405,
+    "fields": {
+      "district": 52,
+      "name_bn": "দেবীগঞ্জ",
+      "name_en": "Debiganj",
+      "is_active": true,
+      "ordering": 405
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 406,
+    "fields": {
+      "district": 52,
+      "name_bn": "পঞ্চগড় সদর",
+      "name_en": "Panchagarh Sadar",
+      "is_active": true,
+      "ordering": 406
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 407,
+    "fields": {
+      "district": 52,
+      "name_bn": "তেঁতুলিয়া",
+      "name_en": "Tetulia",
+      "is_active": true,
+      "ordering": 407
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 408,
+    "fields": {
+      "district": 53,
+      "name_bn": "বদরগঞ্জ",
+      "name_en": "Badargonj",
+      "is_active": true,
+      "ordering": 408
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 409,
+    "fields": {
+      "district": 53,
+      "name_bn": "কাউনিয়া",
+      "name_en": "Kaunia",
+      "is_active": true,
+      "ordering": 409
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 410,
+    "fields": {
+      "district": 53,
+      "name_bn": "রংপুর সদর",
+      "name_en": "Rangpur Sadar",
+      "is_active": true,
+      "ordering": 410
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 411,
+    "fields": {
+      "district": 53,
+      "name_bn": "মিঠাপুকুর",
+      "name_en": "Mithapukur",
+      "is_active": true,
+      "ordering": 411
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 412,
+    "fields": {
+      "district": 53,
+      "name_bn": "পীরগাছা",
+      "name_en": "Pirgacha",
+      "is_active": true,
+      "ordering": 412
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 413,
+    "fields": {
+      "district": 53,
+      "name_bn": "পীরগঞ্জ",
+      "name_en": "Pirgonj",
+      "is_active": true,
+      "ordering": 413
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 414,
+    "fields": {
+      "district": 53,
+      "name_bn": "তারাগঞ্জ",
+      "name_en": "Taragonj",
+      "is_active": true,
+      "ordering": 414
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 415,
+    "fields": {
+      "district": 53,
+      "name_bn": "গংগাচড়া",
+      "name_en": "Gangachara",
+      "is_active": true,
+      "ordering": 415
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 416,
+    "fields": {
+      "district": 54,
+      "name_bn": "পীরগঞ্জ",
+      "name_en": "Pirganj",
+      "is_active": true,
+      "ordering": 416
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 417,
+    "fields": {
+      "district": 54,
+      "name_bn": "বালিয়াডাঙ্গী",
+      "name_en": "Baliadangi",
+      "is_active": true,
+      "ordering": 417
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 418,
+    "fields": {
+      "district": 54,
+      "name_bn": "হরিপুর",
+      "name_en": "Haripur",
+      "is_active": true,
+      "ordering": 418
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 419,
+    "fields": {
+      "district": 54,
+      "name_bn": "রাণীশংকৈল",
+      "name_en": "Ranisankail",
+      "is_active": true,
+      "ordering": 419
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 420,
+    "fields": {
+      "district": 54,
+      "name_bn": "ঠাকুরগাঁও সদর",
+      "name_en": "Thakurgaon Sadar",
+      "is_active": true,
+      "ordering": 420
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 421,
+    "fields": {
+      "district": 55,
+      "name_bn": "বকশীগঞ্জ",
+      "name_en": "Bokshiganj",
+      "is_active": true,
+      "ordering": 421
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 422,
+    "fields": {
+      "district": 55,
+      "name_bn": "দেওয়ানগঞ্জ",
+      "name_en": "Dewangonj",
+      "is_active": true,
+      "ordering": 422
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 423,
+    "fields": {
+      "district": 55,
+      "name_bn": "ইসলামপুর",
+      "name_en": "Islampur",
+      "is_active": true,
+      "ordering": 423
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 424,
+    "fields": {
+      "district": 55,
+      "name_bn": "জামালপুর সদর",
+      "name_en": "Jamalpur Sadar",
+      "is_active": true,
+      "ordering": 424
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 425,
+    "fields": {
+      "district": 55,
+      "name_bn": "মাদারগঞ্জ",
+      "name_en": "Madarganj",
+      "is_active": true,
+      "ordering": 425
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 426,
+    "fields": {
+      "district": 55,
+      "name_bn": "মেলান্দহ",
+      "name_en": "Melandah",
+      "is_active": true,
+      "ordering": 426
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 427,
+    "fields": {
+      "district": 55,
+      "name_bn": "সরিষাবাড়ী",
+      "name_en": "Sarishabari",
+      "is_active": true,
+      "ordering": 427
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 428,
+    "fields": {
+      "district": 56,
+      "name_bn": "ভালুকা",
+      "name_en": "Bhaluka",
+      "is_active": true,
+      "ordering": 428
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 429,
+    "fields": {
+      "district": 56,
+      "name_bn": "ধোবাউড়া",
+      "name_en": "Dhobaura",
+      "is_active": true,
+      "ordering": 429
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 430,
+    "fields": {
+      "district": 56,
+      "name_bn": "ফুলবাড়ীয়া",
+      "name_en": "Fulbaria",
+      "is_active": true,
+      "ordering": 430
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 431,
+    "fields": {
+      "district": 56,
+      "name_bn": "গফরগাঁও",
+      "name_en": "Gafargaon",
+      "is_active": true,
+      "ordering": 431
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 432,
+    "fields": {
+      "district": 56,
+      "name_bn": "গৌরীপুর",
+      "name_en": "Gouripur",
+      "is_active": true,
+      "ordering": 432
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 433,
+    "fields": {
+      "district": 56,
+      "name_bn": "হালুয়াঘাট",
+      "name_en": "Haluaghat",
+      "is_active": true,
+      "ordering": 433
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 434,
+    "fields": {
+      "district": 56,
+      "name_bn": "ঈশ্বরগঞ্জ",
+      "name_en": "Iswarganj",
+      "is_active": true,
+      "ordering": 434
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 435,
+    "fields": {
+      "district": 56,
+      "name_bn": "ময়মনসিংহ সদর",
+      "name_en": "Mymensingh Sadar",
+      "is_active": true,
+      "ordering": 435
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 436,
+    "fields": {
+      "district": 56,
+      "name_bn": "মুক্তাগাছা",
+      "name_en": "Muktagacha",
+      "is_active": true,
+      "ordering": 436
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 437,
+    "fields": {
+      "district": 56,
+      "name_bn": "নান্দাইল",
+      "name_en": "Nandail",
+      "is_active": true,
+      "ordering": 437
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 438,
+    "fields": {
+      "district": 56,
+      "name_bn": "ফুলপুর",
+      "name_en": "Phulpur",
+      "is_active": true,
+      "ordering": 438
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 439,
+    "fields": {
+      "district": 56,
+      "name_bn": "তারাকান্দা",
+      "name_en": "Tarakanda",
+      "is_active": true,
+      "ordering": 439
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 440,
+    "fields": {
+      "district": 56,
+      "name_bn": "ত্রিশাল",
+      "name_en": "Trishal",
+      "is_active": true,
+      "ordering": 440
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 441,
+    "fields": {
+      "district": 57,
+      "name_bn": "আটপাড়া",
+      "name_en": "Atpara",
+      "is_active": true,
+      "ordering": 441
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 442,
+    "fields": {
+      "district": 57,
+      "name_bn": "বারহাট্টা",
+      "name_en": "Barhatta",
+      "is_active": true,
+      "ordering": 442
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 443,
+    "fields": {
+      "district": 57,
+      "name_bn": "দুর্গাপুর",
+      "name_en": "Durgapur",
+      "is_active": true,
+      "ordering": 443
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 444,
+    "fields": {
+      "district": 57,
+      "name_bn": "খালিয়াজুরী",
+      "name_en": "Khaliajuri",
+      "is_active": true,
+      "ordering": 444
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 445,
+    "fields": {
+      "district": 57,
+      "name_bn": "কলমাকান্দা",
+      "name_en": "Kalmakanda",
+      "is_active": true,
+      "ordering": 445
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 446,
+    "fields": {
+      "district": 57,
+      "name_bn": "কেন্দুয়া",
+      "name_en": "Kendua",
+      "is_active": true,
+      "ordering": 446
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 447,
+    "fields": {
+      "district": 57,
+      "name_bn": "মদন",
+      "name_en": "Madan",
+      "is_active": true,
+      "ordering": 447
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 448,
+    "fields": {
+      "district": 57,
+      "name_bn": "মোহনগঞ্জ",
+      "name_en": "Mohongonj",
+      "is_active": true,
+      "ordering": 448
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 449,
+    "fields": {
+      "district": 57,
+      "name_bn": "নেত্রকোণা সদর",
+      "name_en": "Netrokona Sadar",
+      "is_active": true,
+      "ordering": 449
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 450,
+    "fields": {
+      "district": 57,
+      "name_bn": "পূর্বধলা",
+      "name_en": "Purbadhala",
+      "is_active": true,
+      "ordering": 450
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 451,
+    "fields": {
+      "district": 58,
+      "name_bn": "ঝিনাইগাতী",
+      "name_en": "Jhenaigati",
+      "is_active": true,
+      "ordering": 451
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 452,
+    "fields": {
+      "district": 58,
+      "name_bn": "নকলা",
+      "name_en": "Nokla",
+      "is_active": true,
+      "ordering": 452
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 453,
+    "fields": {
+      "district": 58,
+      "name_bn": "নালিতাবাড়ী",
+      "name_en": "Nalitabari",
+      "is_active": true,
+      "ordering": 453
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 454,
+    "fields": {
+      "district": 58,
+      "name_bn": "শেরপুর সদর",
+      "name_en": "Sherpur Sadar",
+      "is_active": true,
+      "ordering": 454
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 455,
+    "fields": {
+      "district": 58,
+      "name_bn": "শ্রীবরদী",
+      "name_en": "Sreebordi",
+      "is_active": true,
+      "ordering": 455
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 456,
+    "fields": {
+      "district": 59,
+      "name_bn": "ঝালকাঠি সদর",
+      "name_en": "Jhalakathi Sadar",
+      "is_active": true,
+      "ordering": 456
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 457,
+    "fields": {
+      "district": 59,
+      "name_bn": "নলছিটি",
+      "name_en": "Nalchity",
+      "is_active": true,
+      "ordering": 457
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 458,
+    "fields": {
+      "district": 59,
+      "name_bn": "কাঠালিয়া",
+      "name_en": "Kathalia",
+      "is_active": true,
+      "ordering": 458
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 459,
+    "fields": {
+      "district": 59,
+      "name_bn": "রাজাপুর",
+      "name_en": "Rajapur",
+      "is_active": true,
+      "ordering": 459
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 460,
+    "fields": {
+      "district": 60,
+      "name_bn": "আমতলী",
+      "name_en": "Amtali",
+      "is_active": true,
+      "ordering": 460
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 461,
+    "fields": {
+      "district": 60,
+      "name_bn": "বামনা",
+      "name_en": "Bamna",
+      "is_active": true,
+      "ordering": 461
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 462,
+    "fields": {
+      "district": 60,
+      "name_bn": "বরগুনা সদর",
+      "name_en": "Barguna Sadar",
+      "is_active": true,
+      "ordering": 462
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 463,
+    "fields": {
+      "district": 60,
+      "name_bn": "বেতাগী",
+      "name_en": "Betagi",
+      "is_active": true,
+      "ordering": 463
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 464,
+    "fields": {
+      "district": 60,
+      "name_bn": "পাথরঘাটা",
+      "name_en": "Pathorghata",
+      "is_active": true,
+      "ordering": 464
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 465,
+    "fields": {
+      "district": 60,
+      "name_bn": "তালতলী",
+      "name_en": "Taltali",
+      "is_active": true,
+      "ordering": 465
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 466,
+    "fields": {
+      "district": 61,
+      "name_bn": "আগৈলঝাড়া",
+      "name_en": "Agailjhara",
+      "is_active": true,
+      "ordering": 466
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 467,
+    "fields": {
+      "district": 61,
+      "name_bn": "বাবুগঞ্জ",
+      "name_en": "Babuganj",
+      "is_active": true,
+      "ordering": 467
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 468,
+    "fields": {
+      "district": 61,
+      "name_bn": "বাকেরগঞ্জ",
+      "name_en": "Bakerganj",
+      "is_active": true,
+      "ordering": 468
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 469,
+    "fields": {
+      "district": 61,
+      "name_bn": "বানারীপাড়া",
+      "name_en": "Banaripara",
+      "is_active": true,
+      "ordering": 469
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 470,
+    "fields": {
+      "district": 61,
+      "name_bn": "গৌরনদী",
+      "name_en": "Gournadi",
+      "is_active": true,
+      "ordering": 470
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 471,
+    "fields": {
+      "district": 61,
+      "name_bn": "হিজলা",
+      "name_en": "Hizla",
+      "is_active": true,
+      "ordering": 471
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 472,
+    "fields": {
+      "district": 61,
+      "name_bn": "বরিশাল সদর",
+      "name_en": "Barishal Sadar",
+      "is_active": true,
+      "ordering": 472
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 473,
+    "fields": {
+      "district": 61,
+      "name_bn": "মেহেন্দিগঞ্জ",
+      "name_en": "Mehendiganj",
+      "is_active": true,
+      "ordering": 473
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 474,
+    "fields": {
+      "district": 61,
+      "name_bn": "মুলাদী",
+      "name_en": "Muladi",
+      "is_active": true,
+      "ordering": 474
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 475,
+    "fields": {
+      "district": 61,
+      "name_bn": "উজিরপুর",
+      "name_en": "Wazirpur",
+      "is_active": true,
+      "ordering": 475
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 476,
+    "fields": {
+      "district": 62,
+      "name_bn": "ভোলা সদর",
+      "name_en": "Bhola Sadar",
+      "is_active": true,
+      "ordering": 476
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 477,
+    "fields": {
+      "district": 62,
+      "name_bn": "বোরহানউদ্দিন",
+      "name_en": "Borhanuddin",
+      "is_active": true,
+      "ordering": 477
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 478,
+    "fields": {
+      "district": 62,
+      "name_bn": "দৌলতখান",
+      "name_en": "Doulatkhan",
+      "is_active": true,
+      "ordering": 478
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 479,
+    "fields": {
+      "district": 62,
+      "name_bn": "লালমোহন",
+      "name_en": "Lalmohan",
+      "is_active": true,
+      "ordering": 479
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 480,
+    "fields": {
+      "district": 62,
+      "name_bn": "মনপুরা",
+      "name_en": "Monpura",
+      "is_active": true,
+      "ordering": 480
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 481,
+    "fields": {
+      "district": 62,
+      "name_bn": "তজুমদ্দিন",
+      "name_en": "Tazumuddin",
+      "is_active": true,
+      "ordering": 481
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 482,
+    "fields": {
+      "district": 62,
+      "name_bn": "চরফ্যাশন",
+      "name_en": "Charfesson",
+      "is_active": true,
+      "ordering": 482
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 483,
+    "fields": {
+      "district": 63,
+      "name_bn": "বাউফল",
+      "name_en": "Bauphal",
+      "is_active": true,
+      "ordering": 483
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 484,
+    "fields": {
+      "district": 63,
+      "name_bn": "দশমিনা",
+      "name_en": "Dashmina",
+      "is_active": true,
+      "ordering": 484
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 485,
+    "fields": {
+      "district": 63,
+      "name_bn": "দুমকী",
+      "name_en": "Dumki",
+      "is_active": true,
+      "ordering": 485
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 486,
+    "fields": {
+      "district": 63,
+      "name_bn": "কলাপাড়া",
+      "name_en": "Kalapara",
+      "is_active": true,
+      "ordering": 486
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 487,
+    "fields": {
+      "district": 63,
+      "name_bn": "মির্জাগঞ্জ",
+      "name_en": "Mirzaganj",
+      "is_active": true,
+      "ordering": 487
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 488,
+    "fields": {
+      "district": 63,
+      "name_bn": "পটুয়াখালী সদর",
+      "name_en": "Patuakhali Sadar",
+      "is_active": true,
+      "ordering": 488
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 489,
+    "fields": {
+      "district": 63,
+      "name_bn": "রাঙ্গাবালী",
+      "name_en": "Rangabali",
+      "is_active": true,
+      "ordering": 489
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 490,
+    "fields": {
+      "district": 63,
+      "name_bn": "গলাচিপা",
+      "name_en": "Galachipa",
+      "is_active": true,
+      "ordering": 490
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 491,
+    "fields": {
+      "district": 64,
+      "name_bn": "ভান্ডারিয়া",
+      "name_en": "Bhandaria",
+      "is_active": true,
+      "ordering": 491
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 492,
+    "fields": {
+      "district": 64,
+      "name_bn": "কাউখালী",
+      "name_en": "Kawkhali",
+      "is_active": true,
+      "ordering": 492
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 493,
+    "fields": {
+      "district": 64,
+      "name_bn": "মঠবাড়ীয়া",
+      "name_en": "Mathbaria",
+      "is_active": true,
+      "ordering": 493
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 494,
+    "fields": {
+      "district": 64,
+      "name_bn": "নাজিরপুর",
+      "name_en": "Nazirpur",
+      "is_active": true,
+      "ordering": 494
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 495,
+    "fields": {
+      "district": 64,
+      "name_bn": "পিরোজপুর সদর",
+      "name_en": "Pirojpur Sadar",
+      "is_active": true,
+      "ordering": 495
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 496,
+    "fields": {
+      "district": 64,
+      "name_bn": "নেছারাবাদ",
+      "name_en": "Nesarabad",
+      "is_active": true,
+      "ordering": 496
+    }
+  },
+  {
+    "model": "master.upazila",
+    "pk": 497,
+    "fields": {
+      "district": 64,
+      "name_bn": "জিয়ানগর",
+      "name_en": "Zianagar",
+      "is_active": true,
+      "ordering": 497
+    }
+  }
+]

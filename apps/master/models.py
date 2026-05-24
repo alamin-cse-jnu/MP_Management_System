@@ -253,6 +253,7 @@ class DivisionResult(models.Model):
     """Old division-based result options e.g. 1st Division, 2nd Division."""
     name_bn = models.CharField(max_length=100)
     name_en = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
     ordering = models.IntegerField(default=0)
 
     class Meta:

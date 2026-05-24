@@ -47,7 +47,10 @@
       "Bash(python manage.py runserver --noreload)",
       "Bash(Start-Sleep -Seconds 3)",
       "Bash(curl -s -o NUL -w \"%{http_code}\" http://localhost:8000/accounts/login/)",
-      "Bash(del bilingual_ui3.py add_title_en.py fix_lists.py fix_tabs.py fix_general_tab.py scan_bangla.py)"
+      "Bash(del bilingual_ui3.py add_title_en.py fix_lists.py fix_tabs.py fix_general_tab.py scan_bangla.py)",
+      "Bash(python manage.py makemigrations master --name=\"add_is_active_to_divisionresult\")",
+      "Bash(python manage.py migrate master)",
+      "Bash(python scripts/gen_countries.py)"
     ]
   }
 }
