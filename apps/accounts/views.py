@@ -96,6 +96,66 @@ def dashboard(request):
         .order_by('-count')
     )
 
+    # Gender distribution
+    gender_stats = list(
+        mp_qs.filter(gender__isnull=False)
+        .values('gender__name_en', 'gender__name_bn')
+        .annotate(count=Count('id'))
+        .order_by('-count')
+    )
+
+    # Religion distribution
+    religion_stats = list(
+        mp_qs.filter(religion__isnull=False)
+        .values('religion__name_en', 'religion__name_bn')
+        .annotate(count=Count('id'))
+        .order_by('-count')
+    )
+
+    # Times elected distribution
+    times_stats = []
+    if active_parliament:
+        times_stats = list(
+            ElectionInfo.objects
+            .filter(parliament=active_parliament, mp__is_active=True)
+            .values('times_elected')
+            .annotate(count=Count('id'))
+            .order_by('times_elected')
+        )
+
+    # ── Chart JSON data ────────────────────────────────────────────────────────
+    # Party chart — top 9 + "Others" bucket
+    p_labels = [r['party__name_bn'] or 'দল নেই' for r in party_stats[:9]]
+    p_values = [r['count'] for r in party_stats[:9]]
+    if len(party_stats) > 9:
+        p_labels.append('অন্যান্য')
+        p_values.append(sum(r['count'] for r in party_stats[9:]))
+    party_chart_data = json.dumps({'labels': p_labels, 'values': p_values}, ensure_ascii=False)
+
+    # Division chart
+    division_chart_data = json.dumps({
+        'labels': [r['home_district__division__name_bn'] or 'অজ্ঞাত' for r in division_stats],
+        'values': [r['count'] for r in division_stats],
+    }, ensure_ascii=False)
+
+    # Gender chart
+    gender_chart_data = json.dumps({
+        'labels': [r['gender__name_bn'] or r['gender__name_en'] or 'অজ্ঞাত' for r in gender_stats],
+        'values': [r['count'] for r in gender_stats],
+    }, ensure_ascii=False)
+
+    # Religion chart
+    religion_chart_data = json.dumps({
+        'labels': [r['religion__name_bn'] or r['religion__name_en'] or 'অজ্ঞাত' for r in religion_stats],
+        'values': [r['count'] for r in religion_stats],
+    }, ensure_ascii=False)
+
+    # Times elected chart
+    times_chart_data = json.dumps({
+        'labels': [str(r['times_elected']) for r in times_stats],
+        'values': [r['count'] for r in times_stats],
+    }, ensure_ascii=False)
+
     # Recent MPs (last 6 added)
     recent_mps = list(
         mp_qs.select_related('home_district')
@@ -116,19 +176,24 @@ def dashboard(request):
         recent_activity = []
 
     return render(request, 'accounts/dashboard.html', {
-        'active_parliament':  active_parliament,
-        'total_mps':          total_mps,
-        'women_mps':          women_mps,
-        'direct_mps':         direct_mps,
-        'total_ministers':    total_ministers,
-        'total_com_assigns':  total_com_assigns,
-        'total_institutions': total_institutions,
-        'total_tours':        total_tours,
-        'with_photo':         with_photo,
-        'party_stats':        party_stats,
-        'division_stats':     division_stats,
-        'recent_mps':         recent_mps,
-        'recent_activity':    recent_activity,
+        'active_parliament':   active_parliament,
+        'total_mps':           total_mps,
+        'women_mps':           women_mps,
+        'direct_mps':          direct_mps,
+        'total_ministers':     total_ministers,
+        'total_com_assigns':   total_com_assigns,
+        'total_institutions':  total_institutions,
+        'total_tours':         total_tours,
+        'with_photo':          with_photo,
+        'party_stats':         party_stats,
+        'division_stats':      division_stats,
+        'party_chart_data':    party_chart_data,
+        'division_chart_data': division_chart_data,
+        'gender_chart_data':   gender_chart_data,
+        'religion_chart_data': religion_chart_data,
+        'times_chart_data':    times_chart_data,
+        'recent_mps':          recent_mps,
+        'recent_activity':     recent_activity,
     })
 
 

@@ -50,7 +50,16 @@
       "Bash(del bilingual_ui3.py add_title_en.py fix_lists.py fix_tabs.py fix_general_tab.py scan_bangla.py)",
       "Bash(python manage.py makemigrations master --name=\"add_is_active_to_divisionresult\")",
       "Bash(python manage.py migrate master)",
-      "Bash(python scripts/gen_countries.py)"
+      "Bash(python scripts/gen_countries.py)",
+      "Bash(xargs grep -l \"import.*csv\\\\|FileField\\\\|ImageField\")",
+      "Bash(del *)",
+      "Bash(curl *)",
+      "Bash(python manage.py shell -c ' *)",
+      "Bash(docker exec mp_management_system-web-1 python manage.py shell -c ' *)",
+      "Bash(docker cp *)",
+      "Bash(docker exec *)",
+      "Bash(docker restart *)",
+      "Bash(start *)"
     ]
   }
 }

@@ -12,7 +12,11 @@
       <li class="breadcrumb-item active">{{ mp|tr:"name" }}</li>
     </ol>
   </nav>
-  <div class="d-flex gap-2">
+  <div class="d-flex gap-2 flex-wrap">
+    <a href="{% url 'reports:mp_biodata' %}?mp_id={{ mp.mp_id }}&format=pdf"
+       class="btn btn-danger btn-sm" target="_blank">
+      <i class="bi bi-file-earmark-pdf-fill me-1"></i>{% ui "বায়োডেটা PDF" "Biodata PDF" %}
+    </a>
     <a href="{% url 'office:office_edit' mp.pk %}" class="btn btn-outline-primary btn-sm">
       <i class="bi bi-building-fill me-1"></i>{% ui "অফিস ঠিকানা" "Office Address" %}
     </a>
@@ -173,6 +177,16 @@
 
 {% block extra_js %}
 <script>
+// ── View / Edit panel toggle ──────────────────────────────────────────────
+function showEdit(section) {
+  document.getElementById(section + '-view').classList.add('d-none');
+  document.getElementById(section + '-edit').classList.remove('d-none');
+}
+function cancelEdit(section) {
+  document.getElementById(section + '-edit').classList.add('d-none');
+  document.getElementById(section + '-view').classList.remove('d-none');
+}
+
 // Activate tab from URL query param
 document.addEventListener('DOMContentLoaded', function () {
   const activeId = '{{ active_tab }}' || 'tab-general';

@@ -1,79 +1,142 @@
 {% load static lang_tags %}
-<form method="post" action="{% url 'mp:mp_section_election' mp.pk %}" novalidate>
-  {% csrf_token %}
-  {% if election_form.non_field_errors %}
-  <div class="alert alert-danger">{{ election_form.non_field_errors }}</div>
-  {% endif %}
 
-  <div class="row">
-    <!-- Row 1: Constituency + Parliament -->
-    <div class="col-md-8 mb-3">
-      <label class="form-label fw-medium">{% ui "নির্বাচনী এলাকার নাম ও নম্বর" "Constituency Name & Number" %}</label>
-      {{ election_form.constituency }}
-      {% if election_form.constituency.errors %}<div class="invalid-feedback d-block">{{ election_form.constituency.errors }}</div>{% endif %}
-    </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">{% ui "সংসদ নম্বর" "Parliament Number" %}</label>
-      {{ election_form.parliament }}
-      {% if election_form.parliament.errors %}<div class="invalid-feedback d-block">{{ election_form.parliament.errors }}</div>{% endif %}
-    </div>
-
-    <!-- Row 2: Election Date + Oath Date -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">{% ui "নির্বাচনের তারিখ" "Election Date" %}</label>
-      {{ election_form.election_date }}
-    </div>
-    <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">{% ui "শপথের তারিখ" "Oath Date" %}</label>
-      {{ election_form.oath_date }}
-    </div>
-
-    <!-- Row 3: Gazette Date + Times Elected -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">{% ui "গেজেটের তারিখ" "Gazette Date" %}</label>
-      {{ election_form.gazette_date }}
-    </div>
-    <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">{% ui "কতবার নির্বাচিত" "Times Elected" %}</label>
-      {{ election_form.times_elected }}
-    </div>
-
-    <!-- Row 4: Party + Member Type (info only) -->
-    <div class="col-md-8 mb-3">
-      <label class="form-label fw-medium">{% ui "দলগত পরিচয় (রাজনৈতিক দল)" "Political Party Affiliation" %}</label>
-      {{ election_form.party }}
-    </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label fw-medium">{% ui "সংসদ সদস্যের ধরন" "Member Type" %}</label>
-      <div class="form-control-plaintext fw-medium" style="padding-left:0.75rem;">
-        {{ mp.get_member_type_display }}
-        <div class="form-text">পরিবর্তন করতে প্রশাসকের সাথে যোগাযোগ করুন।</div>
-      </div>
-    </div>
-
-    <!-- System additions -->
-    <div class="col-12 mt-1">
-      <div class="fw-medium mb-2 text-muted" style="font-size:0.85rem; border-top:1px dashed #e2e8f0; padding-top:12px;">
-        সিস্টেম তথ্য (System Fields)
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label class="form-label fw-medium">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</label>
-      {{ election_form.nomination_date }}
-    </div>
-    <div class="col-md-3 mb-3">
-      <label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>
-      {{ election_form.go_number }}
-    </div>
-    <div class="col-md-3 mb-3">
-      <label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>
-      {{ election_form.go_date }}
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-end mt-3 pt-3 border-top">
-    <button type="submit" class="btn btn-primary">
-      <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
+{# ── VIEW PANEL ────────────────────────────────────────────────────────────── #}
+<div id="election-view" {% if election_form.errors %}class="d-none"{% endif %}>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h6 class="fw-bold mb-0">{% ui "নির্বাচন সংক্রান্ত তথ্য" "Election Information" %}</h6>
+    <button type="button" class="btn btn-sm btn-outline-primary" onclick="showEdit('election')">
+      <i class="bi bi-pencil me-1"></i>{% ui "সম্পাদনা" "Edit" %}
     </button>
   </div>
-</form>
+
+  {% if election_info %}
+  <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
+    <tbody>
+      <tr>
+        <th class="table-light" style="width:22%;">{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+        <td style="width:28%;">{{ election_info.constituency|tr:"display"|default:"—" }}</td>
+        <th class="table-light" style="width:22%;">{% ui "সংসদ নম্বর" "Parliament" %}</th>
+        <td>{{ election_info.parliament|tr:"name"|default:"—" }}</td>
+      </tr>
+      <tr>
+        <th class="table-light">{% ui "নির্বাচনের তারিখ" "Election Date" %}</th>
+        <td>{{ election_info.election_date|date:"d/m/Y"|default:"—" }}</td>
+        <th class="table-light">{% ui "শপথের তারিখ" "Oath Date" %}</th>
+        <td>{{ election_info.oath_date|date:"d/m/Y"|default:"—" }}</td>
+      </tr>
+      <tr>
+        <th class="table-light">{% ui "গেজেটের তারিখ" "Gazette Date" %}</th>
+        <td>{{ election_info.gazette_date|date:"d/m/Y"|default:"—" }}</td>
+        <th class="table-light">{% ui "কতবার নির্বাচিত" "Times Elected" %}</th>
+        <td>{{ election_info.times_elected|default:"—" }}</td>
+      </tr>
+      <tr>
+        <th class="table-light">{% ui "দলগত পরিচয়" "Political Party" %}</th>
+        <td>{{ election_info.party|tr:"name"|default:"—" }}</td>
+        <th class="table-light">{% ui "সদস্যের ধরন" "Member Type" %}</th>
+        <td>{{ mp.get_member_type_display }}</td>
+      </tr>
+      <tr>
+        <th class="table-light">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</th>
+        <td>{{ election_info.nomination_date|date:"d/m/Y"|default:"—" }}</td>
+        <th class="table-light">{% ui "GO নম্বর" "GO Number" %}</th>
+        <td>{{ election_info.go_number|default:"—" }}</td>
+      </tr>
+      <tr>
+        <th class="table-light">{% ui "GO তারিখ" "GO Date" %}</th>
+        <td>{{ election_info.go_date|date:"d/m/Y"|default:"—" }}</td>
+        <td colspan="2"></td>
+      </tr>
+    </tbody>
+  </table>
+  {% else %}
+  <div class="text-center py-4 text-muted">
+    <i class="bi bi-info-circle fs-4 d-block mb-2"></i>
+    {% ui "কোনো নির্বাচন তথ্য নেই। সম্পাদনা করুন।" "No election info saved. Click Edit to add." %}
+  </div>
+  {% endif %}
+</div>
+
+{# ── EDIT PANEL ────────────────────────────────────────────────────────────── #}
+<div id="election-edit" {% if not election_form.errors %}class="d-none"{% endif %}>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h6 class="fw-bold mb-0">{% ui "নির্বাচন তথ্য সম্পাদনা" "Edit Election Info" %}</h6>
+  </div>
+
+  <form method="post" action="{% url 'mp:mp_section_election' mp.pk %}" novalidate>
+    {% csrf_token %}
+    {% if election_form.non_field_errors %}
+    <div class="alert alert-danger">{{ election_form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-8 mb-3">
+        <label class="form-label fw-medium">{% ui "নির্বাচনী এলাকার নাম ও নম্বর" "Constituency Name & Number" %}</label>
+        {{ election_form.constituency }}
+        {% if election_form.constituency.errors %}<div class="invalid-feedback d-block">{{ election_form.constituency.errors }}</div>{% endif %}
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label fw-medium">{% ui "সংসদ নম্বর" "Parliament Number" %}</label>
+        {{ election_form.parliament }}
+        {% if election_form.parliament.errors %}<div class="invalid-feedback d-block">{{ election_form.parliament.errors }}</div>{% endif %}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-medium">{% ui "নির্বাচনের তারিখ" "Election Date" %}</label>
+        {{ election_form.election_date }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-medium">{% ui "শপথের তারিখ" "Oath Date" %}</label>
+        {{ election_form.oath_date }}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-medium">{% ui "গেজেটের তারিখ" "Gazette Date" %}</label>
+        {{ election_form.gazette_date }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-medium">{% ui "কতবার নির্বাচিত" "Times Elected" %}</label>
+        {{ election_form.times_elected }}
+      </div>
+
+      <div class="col-md-8 mb-3">
+        <label class="form-label fw-medium">{% ui "দলগত পরিচয় (রাজনৈতিক দল)" "Political Party Affiliation" %}</label>
+        {{ election_form.party }}
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label fw-medium">{% ui "সংসদ সদস্যের ধরন" "Member Type" %}</label>
+        <div class="form-control-plaintext fw-medium" style="padding-left:.75rem;">
+          {{ mp.get_member_type_display }}
+          <div class="form-text">পরিবর্তন করতে প্রশাসকের সাথে যোগাযোগ করুন।</div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-1">
+        <div class="fw-medium mb-2 text-muted" style="font-size:.85rem; border-top:1px dashed #e2e8f0; padding-top:12px;">
+          সিস্টেম তথ্য (System Fields)
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-medium">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</label>
+        {{ election_form.nomination_date }}
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>
+        {{ election_form.go_number }}
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>
+        {{ election_form.go_date }}
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('election')">
+        <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
+      </button>
+      <button type="submit" class="btn btn-primary btn-sm">
+        <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
+      </button>
+    </div>
+  </form>
+</div>

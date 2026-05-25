@@ -3,6 +3,43 @@
 
 {% block title %}{% ui "ড্যাশবোর্ড" "Dashboard" %}{% endblock %}
 
+{% block extra_css %}
+<style>
+  .chart-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    height: 100%;
+  }
+  .chart-card-header {
+    padding: 12px 16px 8px;
+    font-weight: 600;
+    font-size: .85rem;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .chart-card-header .icon { color: #0d9488; margin-right: 6px; }
+  .chart-card-body { padding: 8px 4px 4px; }
+  .kpi-extra {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .84rem;
+  }
+  .kpi-extra .kval { font-size: 1.3rem; font-weight: 700; color: #0d9488; }
+  .progress-slim { height: 6px; border-radius: 3px; }
+  .apexcharts-tooltip { font-family: inherit !important; }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <!-- Page header -->
@@ -10,7 +47,7 @@
   <div>
     <h4 class="mb-0 fw-bold">{% ui "ড্যাশবোর্ড" "Dashboard" %}</h4>
     <small class="text-muted">
-      {{ active_parliament|tr:"name"|default:"জাতীয় সংসদ"  }} — {% ui "সার্বিক চিত্র" "Overview" %}
+      {{ active_parliament|tr:"name"|default:"জাতীয় সংসদ" }} — {% ui "সার্বিক চিত্র" "Overview" %}
     </small>
   </div>
   <div class="d-flex gap-2 flex-wrap">
@@ -18,7 +55,7 @@
       <i class="bi bi-journal-text me-1"></i>{% ui "রিপোর্ট সেন্টার" "Report Center" %}
     </a>
     <a href="{% url 'mp:mp_list' %}" class="btn btn-primary btn-sm">
-      <i class="bi bi-people-fill me-1"></i>{% ui "সকল সংসদ সদস্য" "All Members of Parliament" %}
+      <i class="bi bi-people-fill me-1"></i>{% ui "সকল সংসদ সদস্য" "All Members" %}
     </a>
   </div>
 </div>
@@ -94,96 +131,147 @@
 
 </div>
 
-<!-- ══ ROW 2: STATS + QUICK LINKS ════════════════════════════════════════════ -->
-<div class="row g-3 mb-4">
+<!-- ══ ROW 2: PARTY CHART + DIVISION CHART ═══════════════════════════════════ -->
+<div class="row g-3 mb-3">
 
-  <!-- Party Distribution -->
-  <div class="col-lg-7">
-    <div class="mp-card h-100">
-      <div class="mp-card-header d-flex justify-content-between align-items-center">
+  <!-- Party distribution donut -->
+  <div class="col-lg-5">
+    <div class="chart-card">
+      <div class="chart-card-header">
         <span><i class="bi bi-flag-fill icon"></i>{% ui "দল ভিত্তিক বিতরণ" "Party-wise Distribution" %}</span>
         <a href="{% url 'reports:party_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
           {% ui "বিস্তারিত" "Details" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      <div class="p-3">
-        {% if party_stats %}
-        {% for row in party_stats %}
-        {% with pct=row.count|stringformat:"s" %}
-        <div class="mb-2">
-          <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
-            <span>{{ row.party__name_bn|default:"দল নেই" }}</span>
-            <strong>{{ row.count }}</strong>
-          </div>
-          <div class="progress" style="height:8px;border-radius:4px;">
-            {% if total_mps > 0 %}
-            <div class="progress-bar" role="progressbar"
-                 style="width:{% widthratio row.count total_mps 100 %}%;background:#0d9488;">
-            </div>
-            {% endif %}
-          </div>
-        </div>
-        {% endwith %}
-        {% endfor %}
-        {% else %}
-        <p class="text-muted small mb-0">{% ui "কোনো তথ্য নেই।" "No data available." %}</p>
-        {% endif %}
+      <div class="chart-card-body">
+        <div id="chart-party" style="min-height:300px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- Right column: Division stats + secondary KPIs -->
-  <div class="col-lg-5">
-
-    <!-- Data completeness -->
-    <div class="mp-card mb-3">
-      <div class="mp-card-header"><i class="bi bi-bar-chart-fill icon"></i>{% ui "তথ্য সম্পূর্ণতা" "Data Completeness" %}</div>
-      <div class="p-3">
-        <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
-          <span>{% ui "ছবি আপলোড" "Photo Upload" %}</span>
-          <strong>{{ with_photo }} / {{ total_mps }}</strong>
-        </div>
-        <div class="progress mb-2" style="height:8px;border-radius:4px;">
-          {% if total_mps > 0 %}
-          <div class="progress-bar bg-success" role="progressbar"
-               style="width:{% widthratio with_photo total_mps 100 %}%"></div>
-          {% endif %}
-        </div>
-        <div class="d-flex justify-content-between mb-1" style="font-size:.83rem;">
-          <span>{% ui "প্রতিষ্ঠান নিয়োগ" "Institution Assignment" %}</span>
-          <strong>{{ total_institutions }}</strong>
-        </div>
-      </div>
-    </div>
-
-    <!-- Division breakdown -->
-    <div class="mp-card">
-      <div class="mp-card-header d-flex justify-content-between align-items-center">
+  <!-- Division horizontal bar -->
+  <div class="col-lg-4">
+    <div class="chart-card">
+      <div class="chart-card-header">
         <span><i class="bi bi-geo-alt-fill icon"></i>{% ui "বিভাগ ভিত্তিক বিতরণ" "Division-wise Distribution" %}</span>
         <a href="{% url 'reports:district_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
           {% ui "বিস্তারিত" "Details" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      <div class="p-3">
-        {% for row in division_stats %}
-        <div class="d-flex justify-content-between align-items-center py-1 border-bottom" style="font-size:.83rem;">
-          <span>{{ row.home_district__division__name_bn|default:"অজ্ঞাত" }}</span>
-          <span class="badge rounded-pill" style="background:#ccfbf1;color:#0d9488;font-size:.78rem;">{{ row.count }}</span>
-        </div>
-        {% empty %}
-        <p class="text-muted small mb-0">{% ui "তথ্য নেই।" "No data." %}</p>
-        {% endfor %}
+      <div class="chart-card-body">
+        <div id="chart-division" style="min-height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gender + member type summary -->
+  <div class="col-lg-3">
+    <div class="chart-card mb-3">
+      <div class="chart-card-header">
+        <span><i class="bi bi-gender-ambiguous icon"></i>{% ui "লিঙ্গ বিতরণ" "Gender Distribution" %}</span>
+      </div>
+      <div class="chart-card-body">
+        <div id="chart-gender" style="min-height:180px;"></div>
       </div>
     </div>
 
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <span><i class="bi bi-diagram-3-fill icon"></i>{% ui "সদস্যের ধরন" "Member Type" %}</span>
+      </div>
+      <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2" style="font-size:.84rem;">
+          <span><i class="bi bi-circle-fill me-1" style="color:#0d9488;font-size:.6rem;"></i>{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</span>
+          <strong>{{ direct_mps }}</strong>
+        </div>
+        <div class="progress progress-slim mb-3">
+          {% if total_mps > 0 %}<div class="progress-bar" style="width:{% widthratio direct_mps total_mps 100 %}%;background:#0d9488;"></div>{% endif %}
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-2" style="font-size:.84rem;">
+          <span><i class="bi bi-circle-fill me-1" style="color:#9333ea;font-size:.6rem;"></i>{% ui "সংরক্ষিত (মহিলা)" "Reserved (Women)" %}</span>
+          <strong>{{ women_mps }}</strong>
+        </div>
+        <div class="progress progress-slim mb-3">
+          {% if total_mps > 0 %}<div class="progress-bar" style="width:{% widthratio women_mps total_mps 100 %}%;background:#9333ea;"></div>{% endif %}
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-1" style="font-size:.84rem;">
+          <span><i class="bi bi-camera-fill me-1 text-muted" style="font-size:.75rem;"></i>{% ui "ছবি আপলোড হয়েছে" "Photos Uploaded" %}</span>
+          <strong>{{ with_photo }} / {{ total_mps }}</strong>
+        </div>
+        <div class="progress progress-slim">
+          {% if total_mps > 0 %}<div class="progress-bar bg-warning" style="width:{% widthratio with_photo total_mps 100 %}%;"></div>{% endif %}
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>
 
-<!-- ══ ROW 3: RECENT MPs + QUICK EXPORTS ════════════════════════════════════ -->
-<div class="row g-3">
+<!-- ══ ROW 3: TIMES ELECTED + RELIGION + DATA COMPLETENESS ══════════════════ -->
+<div class="row g-3 mb-3">
 
-  <!-- Recent MPs -->
-  <div class="col-lg-7">
+  <!-- Times elected column chart -->
+  <div class="col-lg-5">
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <span><i class="bi bi-bar-chart-fill icon"></i>{% ui "কতবার নির্বাচিত বিতরণ" "Times Elected Distribution" %}</span>
+      </div>
+      <div class="chart-card-body">
+        <div id="chart-times" style="min-height:240px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Religion donut -->
+  <div class="col-lg-4">
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <span><i class="bi bi-heart-fill icon"></i>{% ui "ধর্ম ভিত্তিক বিতরণ" "Religion Distribution" %}</span>
+      </div>
+      <div class="chart-card-body">
+        <div id="chart-religion" style="min-height:240px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary stats panel -->
+  <div class="col-lg-3">
+    <div class="chart-card h-100">
+      <div class="chart-card-header">
+        <span><i class="bi bi-lightning-fill icon"></i>{% ui "দ্রুত অ্যাকশন" "Quick Actions" %}</span>
+      </div>
+      <div class="p-3 d-flex flex-column gap-2">
+        <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm text-start">
+          <i class="bi bi-plus-circle me-2"></i>{% ui "নতুন সংসদ সদস্য" "Add New MP" %}
+        </a>
+        <a href="{% url 'ministry:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-briefcase me-2"></i>{% ui "মন্ত্রণালয় নিয়োগ" "Assign Ministry" %}
+        </a>
+        <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-clipboard2-check me-2"></i>{% ui "কমিটি সদস্য নিয়োগ" "Assign Committee" %}
+        </a>
+        <a href="{% url 'travel:tour_create' %}" class="btn btn-outline-secondary btn-sm text-start">
+          <i class="bi bi-airplane me-2"></i>{% ui "বিদেশ সফর GO" "Add Tour GO" %}
+        </a>
+        <hr class="my-1">
+        <a href="{% url 'reports:all_mp' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "এমপি তালিকা (Excel)" "MP List (Excel)" %}
+        </a>
+        <a href="{% url 'reports:contact_list' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "যোগাযোগ তালিকা" "Contact List" %}
+        </a>
+        <a href="{% url 'reports:party_wise' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
+          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "দল ভিত্তিক তালিকা" "Party-wise List" %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ ROW 4: RECENT MPs ═════════════════════════════════════════════════════ -->
+<div class="row g-3 mb-3">
+  <div class="col-12">
     <div class="mp-card">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
         <span><i class="bi bi-clock-history icon"></i>{% ui "সর্বশেষ যোগ হওয়া সংসদ সদস্য" "Recently Added MPs" %}</span>
@@ -194,7 +282,14 @@
       <div class="table-responsive">
         <table class="table table-hover mb-0 align-middle" style="font-size:.85rem;">
           <thead class="table-light">
-            <tr><th>#</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "নির্বাচনী এলাকা / দল" "Constituency / Party" %}</th><th></th></tr>
+            <tr>
+              <th>#</th>
+              <th>{% ui "নাম" "Name" %}</th>
+              <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+              <th>{% ui "দল" "Party" %}</th>
+              <th>{% ui "বিভাগ" "Division" %}</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {% for mp in recent_mps %}
@@ -204,16 +299,25 @@
                 {% if mp.photo %}
                 <img src="{{ mp.photo.url }}" style="width:32px;height:40px;object-fit:cover;border-radius:4px;">
                 {% else %}
-                <div style="width:32px;height:40px;border-radius:4px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;"><i class="bi bi-person-fill text-muted" style="font-size:.9rem;"></i></div>
+                <div style="width:32px;height:40px;border-radius:4px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">
+                  <i class="bi bi-person-fill text-muted" style="font-size:.9rem;"></i>
+                </div>
                 {% endif %}
               </td>
               <td>
                 <div class="fw-medium">{{ mp|tr:"name" }}</div>
                 <small class="text-muted">{{ mp.mp_id }}</small>
               </td>
+              <td>{% if ei.constituency %}<span style="font-size:.82rem;">{{ ei.constituency|tr:"display" }}</span>{% else %}—{% endif %}</td>
               <td>
-                {% if ei.constituency %}<div class="text-truncate" style="max-width:160px;font-size:.82rem;">{{ ei.constituency|tr:"display" }}</div>{% endif %}
-                {% if ei.party %}<span class="badge bg-primary-subtle text-primary" style="font-size:.75rem;">{{ ei.party|tr:"name" }}</span>{% endif %}
+                {% if ei.party %}
+                <span class="badge bg-primary-subtle text-primary" style="font-size:.75rem;">{{ ei.party|tr:"name" }}</span>
+                {% else %}—{% endif %}
+              </td>
+              <td>
+                {% if mp.home_district.division %}
+                <span class="text-muted" style="font-size:.82rem;">{{ mp.home_district.division|tr:"name" }}</span>
+                {% else %}—{% endif %}
               </td>
               <td class="text-end">
                 <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm">
@@ -223,58 +327,18 @@
             </tr>
             {% endwith %}
             {% empty %}
-            <tr><td colspan="4" class="text-center text-muted py-3">{% ui "কোনো তথ্য নেই।" "No data available." %}</td></tr>
+            <tr><td colspan="6" class="text-center text-muted py-3">{% ui "কোনো তথ্য নেই।" "No data available." %}</td></tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-  <!-- Quick Actions + Export links -->
-  <div class="col-lg-5">
-    <div class="mp-card mb-3">
-      <div class="mp-card-header"><i class="bi bi-lightning-fill icon"></i>{% ui "দ্রুত অ্যাকশন" "Quick Actions" %}</div>
-      <div class="p-3 d-flex flex-column gap-2">
-        <a href="{% url 'mp:mp_create' %}" class="btn btn-primary btn-sm text-start">
-          <i class="bi bi-plus-circle me-2"></i>{% ui "নতুন সংসদ সদস্য যোগ করুন" "Add New Member of Parliament" %}
-        </a>
-        <a href="{% url 'ministry:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-briefcase me-2"></i>{% ui "মন্ত্রণালয় নিয়োগ দিন" "Assign Ministry" %}
-        </a>
-        <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-clipboard2-check me-2"></i>{% ui "কমিটি সদস্য নিয়োগ দিন" "Assign Committee Member" %}
-        </a>
-        <a href="{% url 'travel:tour_create' %}" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-airplane me-2"></i>{% ui "বিদেশ সফর GO যোগ করুন" "Add Foreign Tour GO" %}
-        </a>
-      </div>
-    </div>
-
-    <div class="mp-card">
-      <div class="mp-card-header"><i class="bi bi-download icon"></i>{% ui "দ্রুত ডাউনলোড" "Quick Downloads" %}</div>
-      <div class="p-3 d-flex flex-column gap-2">
-        <a href="{% url 'reports:all_mp' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "সকল এমপি তালিকা (Excel)" "All MP List (Excel)" %}
-        </a>
-        <a href="{% url 'reports:contact_list' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "যোগাযোগ তালিকা (Excel)" "Contact List (Excel)" %}
-        </a>
-        <a href="{% url 'reports:party_wise' %}?format=excel" class="btn btn-outline-success btn-sm text-start">
-          <i class="bi bi-file-earmark-excel me-2"></i>{% ui "দল ভিত্তিক তালিকা (Excel)" "Party-wise List (Excel)" %}
-        </a>
-        <a href="{% url 'reports:all_mp' %}?format=csv" class="btn btn-outline-secondary btn-sm text-start">
-          <i class="bi bi-filetype-csv me-2"></i>{% ui "সকল এমপি তালিকা (CSV)" "All MP List (CSV)" %}
-        </a>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- ══ ROW 4: RECENT ACTIVITY ════════════════════════════════════════════════ -->
+<!-- ══ ROW 5: RECENT ACTIVITY ════════════════════════════════════════════════ -->
 {% if recent_activity %}
-<div class="row g-3 mt-1">
+<div class="row g-3">
   <div class="col-12">
     <div class="mp-card">
       <div class="mp-card-header d-flex justify-content-between align-items-center">
@@ -300,21 +364,16 @@
               <td class="text-muted text-nowrap">{{ log.timestamp|date:"d M Y H:i" }}</td>
               <td>{{ log.user.username|default:"—" }}</td>
               <td>
-                {% if log.action == 'CREATE' %}
-                  <span class="badge bg-success">{% ui "তৈরি" "Create" %}</span>
-                {% elif log.action == 'UPDATE' %}
-                  <span class="badge bg-warning text-dark">{% ui "পরিবর্তন" "Update" %}</span>
-                {% elif log.action == 'DELETE' %}
-                  <span class="badge bg-danger">{% ui "মুছে ফেলা" "Delete" %}</span>
+                {% if log.action == 'CREATE' %}<span class="badge bg-success">{% ui "তৈরি" "Create" %}</span>
+                {% elif log.action == 'UPDATE' %}<span class="badge bg-warning text-dark">{% ui "পরিবর্তন" "Update" %}</span>
+                {% elif log.action == 'DELETE' %}<span class="badge bg-danger">{% ui "মুছে ফেলা" "Delete" %}</span>
                 {% endif %}
               </td>
               <td><code style="font-size:.78rem;">{{ log.model_name }}</code></td>
               <td>
-                <span class="text-truncate d-inline-block" style="max-width:300px;">
-                  {{ log.object_repr|default:"—" }}
-                </span>
+                <span class="text-truncate d-inline-block" style="max-width:300px;">{{ log.object_repr|default:"—" }}</span>
                 {% if log.changes %}
-                <a href="{% url 'reports:audit_log_detail' log.pk %}" class="ms-1 text-muted" title="{% ui "পরিবর্তন দেখুন" "View changes" %}">
+                <a href="{% url 'reports:audit_log_detail' log.pk %}" class="ms-1 text-muted">
                   <i class="bi bi-eye" style="font-size:.8rem;"></i>
                 </a>
                 {% endif %}
@@ -329,4 +388,148 @@
 </div>
 {% endif %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
+<script>
+(function () {
+  /* ── colour palettes ─────────────────────────────────────────── */
+  const TEAL_SHADES  = ['#0d9488','#14b8a6','#2dd4bf','#5eead4','#99f6e4','#ccfbf1'];
+  const PARTY_COLORS = ['#0d9488','#3b82f6','#f59e0b','#ef4444','#8b5cf6',
+                        '#ec4899','#10b981','#f97316','#64748b','#06b6d4'];
+  const GENDER_COLORS  = ['#3b82f6','#ec4899','#94a3b8'];
+  const RELIG_COLORS   = ['#0d9488','#f59e0b','#8b5cf6','#ef4444','#64748b'];
+  const TIMES_COLOR    = '#3b82f6';
+
+  const commonOpts = {
+    chart: { fontFamily: 'inherit', toolbar: { show: false }, animations: { speed: 600 } },
+    tooltip: { style: { fontSize: '13px' } },
+    dataLabels: { style: { fontSize: '12px' } },
+  };
+
+  /* ── 1. Party distribution donut ────────────────────────────── */
+  const partyRaw   = {{ party_chart_data|safe }};
+  const partyEmpty = !partyRaw.values || partyRaw.values.length === 0;
+
+  new ApexCharts(document.getElementById('chart-party'), {
+    ...commonOpts,
+    chart: { ...commonOpts.chart, type: 'donut', height: 300 },
+    series: partyEmpty ? [1] : partyRaw.values,
+    labels: partyEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : partyRaw.labels,
+    colors: partyEmpty ? ['#e2e8f0'] : PARTY_COLORS,
+    legend: { position: 'bottom', fontSize: '12px', offsetY: 4,
+              itemMargin: { horizontal: 6, vertical: 2 } },
+    plotOptions: { pie: { donut: { size: '62%',
+      labels: { show: !partyEmpty, total: {
+        show: true,
+        label: '{% ui "মোট" "Total" %}',
+        fontSize: '13px', fontWeight: 600, color: '#64748b',
+        formatter: w => w.globals.seriesTotals.reduce((a,b)=>a+b,0)
+      }}
+    }}},
+    dataLabels: { enabled: false },
+    tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
+  }).render();
+
+  /* ── 2. Division horizontal bar ─────────────────────────────── */
+  const divRaw   = {{ division_chart_data|safe }};
+  const divEmpty = !divRaw.values || divRaw.values.length === 0;
+
+  new ApexCharts(document.getElementById('chart-division'), {
+    ...commonOpts,
+    chart: { ...commonOpts.chart, type: 'bar', height: 300 },
+    series: [{ name: '{% ui "সদস্য" "MPs" %}',
+               data: divEmpty ? [] : divRaw.values }],
+    xaxis: { categories: divEmpty ? [] : divRaw.labels,
+             labels: { style: { fontSize: '12px' } } },
+    yaxis: { labels: { style: { fontSize: '12px' } } },
+    plotOptions: { bar: { horizontal: true, borderRadius: 4,
+                          dataLabels: { position: 'right' } } },
+    dataLabels: { enabled: true, offsetX: 4,
+                  style: { fontSize: '11px', colors: ['#334155'] } },
+    colors: [TEAL_SHADES[0]],
+    grid: { borderColor: '#f1f5f9' },
+    tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
+    noData: { text: '{% ui "তথ্য নেই" "No data" %}' },
+  }).render();
+
+  /* ── 3. Gender donut ─────────────────────────────────────────── */
+  const genRaw   = {{ gender_chart_data|safe }};
+  const genEmpty = !genRaw.values || genRaw.values.length === 0;
+
+  new ApexCharts(document.getElementById('chart-gender'), {
+    ...commonOpts,
+    chart: { ...commonOpts.chart, type: 'donut', height: 180 },
+    series: genEmpty ? [1] : genRaw.values,
+    labels: genEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : genRaw.labels,
+    colors: genEmpty ? ['#e2e8f0'] : GENDER_COLORS,
+    legend: { position: 'bottom', fontSize: '11px', offsetY: 2,
+              itemMargin: { horizontal: 4 } },
+    plotOptions: { pie: { donut: { size: '55%',
+      labels: { show: !genEmpty, total: {
+        show: true, label: '{% ui "মোট" "Total" %}',
+        fontSize: '11px', fontWeight: 600, color: '#64748b',
+        formatter: w => w.globals.seriesTotals.reduce((a,b)=>a+b,0)
+      }}
+    }}},
+    dataLabels: { enabled: false },
+    tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
+  }).render();
+
+  /* ── 4. Times elected column bar ─────────────────────────────── */
+  const timesRaw   = {{ times_chart_data|safe }};
+  const timesEmpty = !timesRaw.values || timesRaw.values.length === 0;
+
+  const timesLabels = timesEmpty ? [] : timesRaw.labels.map(t => {
+    const n = parseInt(t);
+    const suffixes = { 1:'st', 2:'nd', 3:'rd' };
+    return n + (suffixes[n] || 'th') + ' {% ui "বার" "Time" %}';
+  });
+
+  new ApexCharts(document.getElementById('chart-times'), {
+    ...commonOpts,
+    chart: { ...commonOpts.chart, type: 'bar', height: 240 },
+    series: [{ name: '{% ui "সদস্য সংখ্যা" "No. of MPs" %}',
+               data: timesEmpty ? [] : timesRaw.values }],
+    xaxis: { categories: timesLabels,
+             labels: { style: { fontSize: '12px' } } },
+    yaxis: { labels: { style: { fontSize: '12px' } } },
+    plotOptions: { bar: { borderRadius: 5, columnWidth: '55%',
+                          dataLabels: { position: 'top' } } },
+    dataLabels: { enabled: true, offsetY: -18,
+                  style: { fontSize: '11px', colors: ['#334155'] } },
+    colors: [TIMES_COLOR],
+    grid: { borderColor: '#f1f5f9', padding: { top: 10 } },
+    tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
+    noData: { text: '{% ui "তথ্য নেই" "No data" %}' },
+  }).render();
+
+  /* ── 5. Religion donut ───────────────────────────────────────── */
+  const relRaw   = {{ religion_chart_data|safe }};
+  const relEmpty = !relRaw.values || relRaw.values.length === 0;
+
+  new ApexCharts(document.getElementById('chart-religion'), {
+    ...commonOpts,
+    chart: { ...commonOpts.chart, type: 'donut', height: 240 },
+    series: relEmpty ? [1] : relRaw.values,
+    labels: relEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : relRaw.labels,
+    colors: relEmpty ? ['#e2e8f0'] : RELIG_COLORS,
+    legend: { position: 'bottom', fontSize: '12px', offsetY: 4,
+              itemMargin: { horizontal: 6, vertical: 2 } },
+    plotOptions: { pie: { donut: { size: '60%',
+      labels: { show: !relEmpty, total: {
+        show: true, label: '{% ui "মোট" "Total" %}',
+        fontSize: '12px', fontWeight: 600, color: '#64748b',
+        formatter: w => w.globals.seriesTotals.reduce((a,b)=>a+b,0)
+      }}
+    }}},
+    dataLabels: { enabled: true, formatter: (val, opts) =>
+      opts.w.globals.series[opts.seriesIndex],
+      style: { fontSize: '12px' } },
+    tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
+  }).render();
+
+})();
+</script>
 {% endblock %}

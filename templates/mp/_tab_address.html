@@ -1,5 +1,9 @@
 {% load static lang_tags %}
-<!-- Sub-tab nav for 3 address types -->
+
+{# Helper macro: renders a view row for one address object #}
+{# Used three times below — keeps the three address view panels DRY #}
+
+{# ── Sub-tab nav ─────────────────────────────────────────────────────────── #}
 <ul class="nav nav-pills mb-3" id="addrTabs" role="tablist">
   <li class="nav-item">
     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#addr-present"
@@ -17,43 +21,224 @@
 
 <div class="tab-content">
 
-  <!-- ── বর্তমান ঠিকানা ── -->
+  {# ════ বর্তমান ঠিকানা ════ #}
   <div class="tab-pane fade show active" id="addr-present">
-    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'present' %}" novalidate>
-      {% csrf_token %}
-      {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True %}
-      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
-        <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>{% ui "বর্তমান ঠিকানা সংরক্ষণ" "Save Present Address" %}
+
+    {# VIEW #}
+    <div id="addr-present-view" {% if present_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "বর্তমান ঠিকানা" "Present Address" %}</h6>
+        <button type="button" class="btn btn-sm btn-outline-primary" onclick="showEdit('addr-present')">
+          <i class="bi bi-pencil me-1"></i>{% ui "সম্পাদনা" "Edit" %}
         </button>
       </div>
-    </form>
-  </div>
+      {% with addr=addresses.present %}
+      {% if addr %}
+      <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
+        <tbody>
+          <tr>
+            <th class="table-light" style="width:22%;">{% ui "বিভাগ" "Division" %}</th>
+            <td style="width:28%;">{{ addr.division|tr:"name"|default:"—" }}</td>
+            <th class="table-light" style="width:22%;">{% ui "জেলা" "District" %}</th>
+            <td>{{ addr.district|tr:"name"|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "উপজেলা/থানা" "Upazila/Thana" %}</th>
+            <td>{{ addr.upazila|tr:"name"|default:"—" }}</td>
+            <th class="table-light">{% ui "পৌরসভা/ইউনিয়ন" "Pouroshova/Union" %}</th>
+            <td>{{ addr.pouroshova_union_bn|default:addr.pouroshova_union_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "ঠিকানার বিস্তারিত" "Address Detail" %}</th>
+            <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
+            <td>{{ addr.postal_code|default:"—" }}</td>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "মোবাইল" "Mobile" %}</th>
+            <td>{{ addr.mobile|default:"—" }}</td>
+            <th class="table-light">{% ui "বিকল্প মোবাইল" "Alt Mobile" %}</th>
+            <td>{{ addr.alt_mobile|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "টেলিফোন" "Telephone" %}</th>
+            <td>{{ addr.telephone|default:"—" }}</td>
+            <th class="table-light">{% ui "হোয়াটসঅ্যাপ" "WhatsApp" %}</th>
+            <td>{{ addr.whatsapp|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "ই-মেইল" "Email" %}</th>
+            <td colspan="3">{{ addr.email|default:"—" }}</td>
+          </tr>
+        </tbody>
+      </table>
+      {% else %}
+      <div class="text-center py-4 text-muted">
+        <i class="bi bi-geo-alt fs-4 d-block mb-2"></i>
+        {% ui "বর্তমান ঠিকানা সংরক্ষিত হয়নি।" "No present address saved yet." %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
 
-  <!-- ── স্থায়ী ঠিকানা ── -->
+    {# EDIT #}
+    <div id="addr-present-edit" {% if not present_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "বর্তমান ঠিকানা সম্পাদনা" "Edit Present Address" %}</h6>
+      </div>
+      <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'present' %}" novalidate>
+        {% csrf_token %}
+        {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True %}
+        <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-present')">
+            <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="bi bi-check-lg me-1"></i>{% ui "বর্তমান ঠিকানা সংরক্ষণ" "Save Present Address" %}
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>{# /addr-present #}
+
+  {# ════ স্থায়ী ঠিকানা ════ #}
   <div class="tab-pane fade" id="addr-permanent">
-    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'permanent' %}" novalidate>
-      {% csrf_token %}
-      {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False %}
-      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
-        <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>{% ui "স্থায়ী ঠিকানা সংরক্ষণ" "Save Permanent Address" %}
+
+    {# VIEW #}
+    <div id="addr-permanent-view" {% if permanent_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "স্থায়ী ঠিকানা" "Permanent Address" %}</h6>
+        <button type="button" class="btn btn-sm btn-outline-primary" onclick="showEdit('addr-permanent')">
+          <i class="bi bi-pencil me-1"></i>{% ui "সম্পাদনা" "Edit" %}
         </button>
       </div>
-    </form>
-  </div>
+      {% with addr=addresses.permanent %}
+      {% if addr %}
+      <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
+        <tbody>
+          <tr>
+            <th class="table-light" style="width:22%;">{% ui "বিভাগ" "Division" %}</th>
+            <td style="width:28%;">{{ addr.division|tr:"name"|default:"—" }}</td>
+            <th class="table-light" style="width:22%;">{% ui "জেলা" "District" %}</th>
+            <td>{{ addr.district|tr:"name"|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "উপজেলা/থানা" "Upazila/Thana" %}</th>
+            <td>{{ addr.upazila|tr:"name"|default:"—" }}</td>
+            <th class="table-light">{% ui "পৌরসভা/ইউনিয়ন" "Pouroshova/Union" %}</th>
+            <td>{{ addr.pouroshova_union_bn|default:addr.pouroshova_union_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "ঠিকানার বিস্তারিত" "Address Detail" %}</th>
+            <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
+            <td>{{ addr.postal_code|default:"—" }}</td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+      {% else %}
+      <div class="text-center py-4 text-muted">
+        <i class="bi bi-geo-alt fs-4 d-block mb-2"></i>
+        {% ui "স্থায়ী ঠিকানা সংরক্ষিত হয়নি।" "No permanent address saved yet." %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
 
-  <!-- ── ঢাকাস্থ ঠিকানা ── -->
+    {# EDIT #}
+    <div id="addr-permanent-edit" {% if not permanent_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "স্থায়ী ঠিকানা সম্পাদনা" "Edit Permanent Address" %}</h6>
+      </div>
+      <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'permanent' %}" novalidate>
+        {% csrf_token %}
+        {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False %}
+        <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-permanent')">
+            <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="bi bi-check-lg me-1"></i>{% ui "স্থায়ী ঠিকানা সংরক্ষণ" "Save Permanent Address" %}
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>{# /addr-permanent #}
+
+  {# ════ ঢাকাস্থ ঠিকানা ════ #}
   <div class="tab-pane fade" id="addr-dhaka">
-    <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'dhaka' %}" novalidate>
-      {% csrf_token %}
-      {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False %}
-      <div class="d-flex justify-content-end mt-3 pt-3 border-top">
-        <button type="submit" class="btn btn-primary btn-sm">
-          <i class="bi bi-check-lg me-1"></i>{% ui "ঢাকাস্থ ঠিকানা সংরক্ষণ" "Save Dhaka Address" %}
+
+    {# VIEW #}
+    <div id="addr-dhaka-view" {% if dhaka_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "ঢাকাস্থ ঠিকানা" "Dhaka Address" %}</h6>
+        <button type="button" class="btn btn-sm btn-outline-primary" onclick="showEdit('addr-dhaka')">
+          <i class="bi bi-pencil me-1"></i>{% ui "সম্পাদনা" "Edit" %}
         </button>
       </div>
-    </form>
-  </div>
+      {% with addr=addresses.dhaka %}
+      {% if addr %}
+      <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
+        <tbody>
+          <tr>
+            <th class="table-light" style="width:22%;">{% ui "বিভাগ" "Division" %}</th>
+            <td style="width:28%;">{{ addr.division|tr:"name"|default:"—" }}</td>
+            <th class="table-light" style="width:22%;">{% ui "জেলা" "District" %}</th>
+            <td>{{ addr.district|tr:"name"|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "উপজেলা/থানা" "Upazila/Thana" %}</th>
+            <td>{{ addr.upazila|tr:"name"|default:"—" }}</td>
+            <th class="table-light">{% ui "পৌরসভা/ইউনিয়ন" "Pouroshova/Union" %}</th>
+            <td>{{ addr.pouroshova_union_bn|default:addr.pouroshova_union_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "ঠিকানার বিস্তারিত" "Address Detail" %}</th>
+            <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
+            <td>{{ addr.postal_code|default:"—" }}</td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+      {% else %}
+      <div class="text-center py-4 text-muted">
+        <i class="bi bi-geo-alt fs-4 d-block mb-2"></i>
+        {% ui "ঢাকাস্থ ঠিকানা সংরক্ষিত হয়নি।" "No Dhaka address saved yet." %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
 
-</div>
+    {# EDIT #}
+    <div id="addr-dhaka-edit" {% if not dhaka_form.errors %}class="d-none"{% endif %}>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">{% ui "ঢাকাস্থ ঠিকানা সম্পাদনা" "Edit Dhaka Address" %}</h6>
+      </div>
+      <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'dhaka' %}" novalidate>
+        {% csrf_token %}
+        {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False %}
+        <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-dhaka')">
+            <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="bi bi-check-lg me-1"></i>{% ui "ঢাকাস্থ ঠিকানা সংরক্ষণ" "Save Dhaka Address" %}
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>{# /addr-dhaka #}
+
+</div>{# /tab-content #}

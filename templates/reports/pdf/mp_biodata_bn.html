@@ -1,8 +1,8 @@
 {% load lang_tags %}<!DOCTYPE html>
-<html lang="bn" dir="ltr">
+<html lang="{% ui 'bn' 'en' %}" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>বায়োডাটা — {{ mp|tr:"name" }}</title>
+<title>{% ui "বায়োডাটা" "Biodata" %} — {{ mp|tr:"name" }}</title>
 <style>
 @font-face {
   font-family: 'SolaimanLipi';
@@ -14,7 +14,7 @@
   size: A4;
   margin: 18mm 14mm 16mm 14mm;
   @bottom-right {
-    content: "পৃষ্ঠা " counter(page) "/" counter(pages);
+    content: "{% ui 'পৃষ্ঠা' 'Page' %} " counter(page) "/" counter(pages);
     font-family: 'SolaimanLipi', serif;
     font-size: 8pt;
     color: #555;
@@ -102,13 +102,13 @@ table.dt th { font-weight: bold; }
 <!-- LETTERHEAD -->
 <div class="lh">
   {% if logo_data %}<img src="{{ logo_data }}" alt="">{% endif %}
-  <h2>বাংলাদেশ জাতীয় সংসদ সচিবালয়</h2>
-  <p>Bangladesh Parliament Secretariat</p>
+  <h2>{% ui "বাংলাদেশ জাতীয় সংসদ সচিবালয়" "Bangladesh Parliament Secretariat" %}</h2>
+  <p>{% ui "Bangladesh Parliament Secretariat" "বাংলাদেশ জাতীয় সংসদ সচিবালয়" %}</p>
 </div>
 
-<div class="doc-title">সংসদ সদস্যের ব্যক্তিগত তথ্যের ফরম</div>
+<div class="doc-title">{% ui "সংসদ সদস্যের ব্যক্তিগত তথ্যের ফরম" "Personal Information Form of Member of Parliament" %}</div>
 
-<div class="print-meta">মুদ্রণের তারিখ: {% now "j F Y" %}</div>
+<div class="print-meta">{% ui "মুদ্রণের তারিখ:" "Print Date:" %} {% now "j F Y" %}</div>
 
 <!-- MP IDENTITY STRIP -->
 {% with ei=mp.election_infos.all.0 %}
@@ -117,116 +117,126 @@ table.dt th { font-weight: bold; }
     {% if photo_data %}
     <img src="{{ photo_data }}" alt="{{ mp|tr:"name" }}">
     {% else %}
-    <div class="no-photo">ছবি নেই</div>
+    <div class="no-photo">{% ui "ছবি নেই" "No Photo" %}</div>
     {% endif %}
   </div>
   <div class="info">
     <div class="name-bn">{{ mp|tr:"name" }}</div>
-    <div class="name-en">{{ mp.name_en }}</div>
+    <div class="name-en">{% ui mp.name_en mp.name_bn %}</div>
     <table>
-      <tr><td>এমপি আইডি:</td><td>{{ mp.mp_id }}</td></tr>
-      <tr><td>সংসদ:</td><td>{{ mp.parliament|tr:"name" }}</td></tr>
-      {% if ei.constituency %}<tr><td>নির্বাচনী এলাকা:</td><td>{{ ei.constituency|tr:"display" }}</td></tr>{% endif %}
-      {% if ei.party %}<tr><td>রাজনৈতিক দল:</td><td>{{ ei.party|tr:"name" }}</td></tr>{% endif %}
-      <tr><td>সদস্যের ধরন:</td><td>{{ mp.get_member_type_display }}</td></tr>
+      <tr><td>{% ui "এমপি আইডি:" "MP ID:" %}</td><td>{{ mp.mp_id }}</td></tr>
+      <tr><td>{% ui "সংসদ:" "Parliament:" %}</td><td>{{ mp.parliament|tr:"name" }}</td></tr>
+      {% if ei.constituency %}<tr><td>{% ui "নির্বাচনী এলাকা:" "Constituency:" %}</td><td>{{ ei.constituency|tr:"display" }}</td></tr>{% endif %}
+      {% if ei.party %}<tr><td>{% ui "রাজনৈতিক দল:" "Political Party:" %}</td><td>{{ ei.party|tr:"name" }}</td></tr>{% endif %}
+      <tr><td>{% ui "সদস্যের ধরন:" "Member Type:" %}</td><td>{{ mp.get_member_type_display }}</td></tr>
     </table>
   </div>
 </div>
 {% endwith %}
 
 <!-- SECTION 1: সাধারণ তথ্য ─────────────────────────────────── -->
-<div class="sec">১। সাধারণ তথ্য</div>
+<div class="sec">{% ui "১। সাধারণ তথ্য" "1. General Information" %}</div>
 <table class="kv">
   <tr>
-    <th>নাম (বাংলায়)</th><td>{{ mp|tr:"name" }}</td>
-    <th>নাম (ইংরেজি)</th><td>{{ mp.name_en }}</td>
+    <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th><td>{{ mp.name_bn }}</td>
+    <th>{% ui "নাম (ইংরেজি)" "Name (English)" %}</th><td>{{ mp.name_en }}</td>
   </tr>
   <tr>
-    <th>পিতার নাম (বাংলায়)</th><td>{{ mp.father_name_bn|default:"—" }}</td>
-    <th>পিতার নাম (ইংরেজি)</th><td>{{ mp.father_name_en|default:"—" }}</td>
+    <th>{% ui "পিতার নাম (বাংলায়)" "Father's Name (Bangla)" %}</th><td>{{ mp.father_name_bn|default:"—" }}</td>
+    <th>{% ui "পিতার নাম (ইংরেজি)" "Father's Name (English)" %}</th><td>{{ mp.father_name_en|default:"—" }}</td>
   </tr>
   <tr>
-    <th>মাতার নাম (বাংলায়)</th><td>{{ mp.mother_name_bn|default:"—" }}</td>
-    <th>মাতার নাম (ইংরেজি)</th><td>{{ mp.mother_name_en|default:"—" }}</td>
+    <th>{% ui "মাতার নাম (বাংলায়)" "Mother's Name (Bangla)" %}</th><td>{{ mp.mother_name_bn|default:"—" }}</td>
+    <th>{% ui "মাতার নাম (ইংরেজি)" "Mother's Name (English)" %}</th><td>{{ mp.mother_name_en|default:"—" }}</td>
   </tr>
   <tr>
-    <th>জন্ম তারিখ</th><td>{{ mp.dob|date:"d F Y"|default:"—" }}</td>
-    <th>জাতীয় পরিচয়পত্র নং</th><td>{{ mp.nid|default:"—" }}</td>
+    <th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th><td>{{ mp.dob|date:"d F Y"|default:"—" }}</td>
+    <th>{% ui "জাতীয় পরিচয়পত্র নং" "NID Number" %}</th><td>{{ mp.nid|default:"—" }}</td>
   </tr>
   <tr>
-    <th>জন্মস্থান (জেলা)</th><td>{{ mp.birth_district|tr:"name"|default:"—"  }}</td>
-    <th>লিঙ্গ</th><td>{{ mp.gender|tr:"name"|default:"—"  }}</td>
+    <th>{% ui "জন্মস্থান (জেলা)" "Birth Place (District)" %}</th><td>{{ mp.birth_district|tr:"name"|default:"—" }}</td>
+    <th>{% ui "লিঙ্গ" "Gender" %}</th><td>{{ mp.gender|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>নিজ জেলা</th><td>{{ mp.home_district|tr:"name"|default:"—"  }}</td>
-    <th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status|tr:"name"|default:"—"  }}</td>
+    <th>{% ui "নিজ জেলা" "Home District" %}</th><td>{{ mp.home_district|tr:"name"|default:"—" }}</td>
+    <th>{% ui "বৈবাহিক অবস্থা" "Marital Status" %}</th><td>{{ mp.marital_status|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>জাতীয়তা</th><td>{{ mp.nationality|default:"—" }}</td>
-    <th>ধর্ম</th><td>{{ mp.religion|tr:"name"|default:"—"  }}</td>
+    <th>{% ui "জাতীয়তা" "Nationality" %}</th><td>{{ mp.nationality|default:"—" }}</td>
+    <th>{% ui "ধর্ম" "Religion" %}</th><td>{{ mp.religion|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>রক্তের গ্রুপ</th><td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td>
-    <th>পেশা (বর্তমান)</th>
+    <th>{% ui "রক্তের গ্রুপ" "Blood Group" %}</th><td>{{ mp.blood_group|tr:"name"|default:"—" }}</td>
+    <th>{% ui "পেশা (বর্তমান)" "Profession (Current)" %}</th>
     <td>{% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
   </tr>
   <tr>
-    <th>পেশা (পূর্বের)</th>
+    <th>{% ui "পেশা (পূর্বের)" "Profession (Previous)" %}</th>
     <td>{% for p in mp.professions_previous.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
-    <th>টিআইএন</th><td>{{ mp.tin|default:"—" }}</td>
+    <th>{% ui "টিআইএন" "TIN" %}</th><td>{{ mp.tin|default:"—" }}</td>
   </tr>
   <tr>
-    <th>পেশাদার যোগ্যতা</th>
+    <th>{% ui "পেশাদার যোগ্যতা" "Professional Qualifications" %}</th>
     <td colspan="3">{% for q in mp.professional_qualifications.all %}{{ q|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
   </tr>
   <tr>
-    <th>পাসপোর্ট নং</th><td>{{ mp.passport_number|default:"—" }}</td>
-    <th>ইস্যুর তারিখ</th><td>{{ mp.passport_issue_date|date:"d/m/Y"|default:"—" }}</td>
+    <th>{% ui "পাসপোর্ট নং" "Passport No." %}</th><td>{{ mp.passport_number|default:"—" }}</td>
+    <th>{% ui "ইস্যুর তারিখ" "Issue Date" %}</th><td>{{ mp.passport_issue_date|date:"d/m/Y"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>ইস্যুর স্থান</th><td>{{ mp.passport_issue_place|default:"—" }}</td>
-    <th>মেয়াদোত্তীর্ণের তারিখ</th><td>{{ mp.passport_expiry_date|date:"d/m/Y"|default:"—" }}</td>
+    <th>{% ui "ইস্যুর স্থান" "Issue Place" %}</th><td>{{ mp.passport_issue_place|default:"—" }}</td>
+    <th>{% ui "মেয়াদোত্তীর্ণের তারিখ" "Expiry Date" %}</th><td>{{ mp.passport_expiry_date|date:"d/m/Y"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>মুক্তিযোদ্ধা</th><td>{% if mp.is_freedom_fighter %}হ্যাঁ{% else %}না{% endif %}</td>
-    <th>মুক্তিযোদ্ধার সন্তান</th><td>{% if mp.is_ff_child %}হ্যাঁ{% else %}না{% endif %}</td>
+    <th>{% ui "মুক্তিযোদ্ধা" "Freedom Fighter" %}</th>
+    <td>{% if mp.is_freedom_fighter %}{% ui "হ্যাঁ" "Yes" %}{% else %}{% ui "না" "No" %}{% endif %}</td>
+    <th>{% ui "মুক্তিযোদ্ধার সন্তান" "Child of Freedom Fighter" %}</th>
+    <td>{% if mp.is_ff_child %}{% ui "হ্যাঁ" "Yes" %}{% else %}{% ui "না" "No" %}{% endif %}</td>
   </tr>
-  {% if mp.hobbies_bn %}
-  <tr><th>শখ</th><td colspan="3">{{ mp.hobbies_bn }}</td></tr>
+  {% if mp.hobbies_bn or mp.hobbies_en %}
+  <tr><th>{% ui "শখ" "Hobbies" %}</th><td colspan="3">{{ mp|tr:"hobbies" }}</td></tr>
   {% endif %}
-  {% if mp.other_info_bn %}
-  <tr><th>অন্যান্য তথ্য</th><td colspan="3">{{ mp.other_info_bn }}</td></tr>
+  {% if mp.other_info_bn or mp.other_info_en %}
+  <tr><th>{% ui "অন্যান্য তথ্য" "Other Info" %}</th><td colspan="3">{{ mp|tr:"other_info" }}</td></tr>
   {% endif %}
 </table>
 
 <!-- SECTION 2: নির্বাচন সংক্রান্ত তথ্য ──────────────────────── -->
 {% with ei=mp.election_infos.all.0 %}{% if ei %}
-<div class="sec nob">২। নির্বাচন সংক্রান্ত তথ্য</div>
+<div class="sec nob">{% ui "২। নির্বাচন সংক্রান্ত তথ্য" "2. Election Information" %}</div>
 <table class="kv nob">
   <tr>
-    <th>নির্বাচনী এলাকা</th><td>{{ ei.constituency|tr:"display"|default:"—"  }}</td>
-    <th>সংসদ নম্বর</th><td>{{ ei.parliament|tr:"name" }}</td>
+    <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th><td>{{ ei.constituency|tr:"display"|default:"—" }}</td>
+    <th>{% ui "সংসদ নম্বর" "Parliament" %}</th><td>{{ ei.parliament|tr:"name" }}</td>
   </tr>
   <tr>
-    <th>নির্বাচনের তারিখ</th><td>{{ ei.election_date|date:"d/m/Y"|default:"—" }}</td>
-    <th>শপথের তারিখ</th><td>{{ ei.oath_date|date:"d/m/Y"|default:"—" }}</td>
+    <th>{% ui "নির্বাচনের তারিখ" "Election Date" %}</th><td>{{ ei.election_date|date:"d/m/Y"|default:"—" }}</td>
+    <th>{% ui "শপথের তারিখ" "Oath Date" %}</th><td>{{ ei.oath_date|date:"d/m/Y"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>গেজেটের তারিখ</th><td>{{ ei.gazette_date|date:"d/m/Y"|default:"—" }}</td>
-    <th>কতবার নির্বাচিত</th><td>{{ ei.times_elected }}</td>
+    <th>{% ui "গেজেটের তারিখ" "Gazette Date" %}</th><td>{{ ei.gazette_date|date:"d/m/Y"|default:"—" }}</td>
+    <th>{% ui "কতবার নির্বাচিত" "Times Elected" %}</th><td>{{ ei.times_elected }}</td>
   </tr>
   <tr>
-    <th>দলগত পরিচয়</th><td>{{ ei.party|tr:"name"|default:"—"  }}</td>
-    <th>সদস্যের ধরন</th><td>{{ mp.get_member_type_display }}</td>
+    <th>{% ui "দলগত পরিচয়" "Political Party" %}</th><td>{{ ei.party|tr:"name"|default:"—" }}</td>
+    <th>{% ui "সদস্যের ধরন" "Member Type" %}</th><td>{{ mp.get_member_type_display }}</td>
   </tr>
 </table>
 {% endif %}{% endwith %}
 
 <!-- SECTION 3: স্বামী/স্ত্রী ─────────────────────────────────── -->
 {% if mp.spouses.all %}
-<div class="sec nob">৩। স্বামী/স্ত্রী সংক্রান্ত তথ্য</div>
+<div class="sec nob">{% ui "৩। স্বামী/স্ত্রী সংক্রান্ত তথ্য" "3. Spouse Information" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>নাম (বাংলায়)</th><th>নাম (ইংরেজি)</th><th>জন্ম তারিখ</th><th>বিবাহের তারিখ</th><th>পেশা</th><th>নিজ জেলা</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th>
+    <th>{% ui "নাম (ইংরেজি)" "Name (English)" %}</th>
+    <th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th>
+    <th>{% ui "বিবাহের তারিখ" "Marriage Date" %}</th>
+    <th>{% ui "পেশা" "Profession" %}</th>
+    <th>{% ui "নিজ জেলা" "Home District" %}</th>
+  </tr></thead>
   <tbody>
     {% for sp in mp.spouses.all %}
     <tr>
@@ -235,8 +245,8 @@ table.dt th { font-weight: bold; }
       <td>{{ sp.name_en|default:"—" }}</td>
       <td>{{ sp.dob|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ sp.marriage_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ sp.profession|tr:"name"|default:"—"  }}</td>
-      <td>{{ sp.home_district|tr:"name"|default:"—"  }}</td>
+      <td>{{ sp.profession|tr:"name"|default:"—" }}</td>
+      <td>{{ sp.home_district|tr:"name"|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -245,9 +255,17 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 4: সন্তান ──────────────────────────────────────── -->
 {% if mp.children.all %}
-<div class="sec nob">৪। সন্তান/সন্তানদের তথ্য</div>
+<div class="sec nob">{% ui "৪। সন্তান/সন্তানদের তথ্য" "4. Children Information" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>নাম (বাংলায়)</th><th>নাম (ইংরেজি)</th><th>জন্ম তারিখ</th><th>লিঙ্গ</th><th>পেশা</th><th>এনআইডি/জন্ম নং</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th>
+    <th>{% ui "নাম (ইংরেজি)" "Name (English)" %}</th>
+    <th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th>
+    <th>{% ui "লিঙ্গ" "Gender" %}</th>
+    <th>{% ui "পেশা" "Profession" %}</th>
+    <th>{% ui "এনআইডি/জন্ম নং" "NID/Birth Reg No." %}</th>
+  </tr></thead>
   <tbody>
     {% for ch in mp.children.all %}
     <tr>
@@ -255,8 +273,8 @@ table.dt th { font-weight: bold; }
       <td>{{ ch|tr:"name" }}</td>
       <td>{{ ch.name_en|default:"—" }}</td>
       <td>{{ ch.dob|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ ch.gender|tr:"name"|default:"—"  }}</td>
-      <td>{{ ch.profession|tr:"name"|default:"—"  }}</td>
+      <td>{{ ch.gender|tr:"name"|default:"—" }}</td>
+      <td>{{ ch.profession|tr:"name"|default:"—" }}</td>
       <td>{{ ch.nid_or_birth_reg|default:"—" }}</td>
     </tr>
     {% endfor %}
@@ -266,18 +284,25 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 5: শিক্ষাগত যোগ্যতা ───────────────────────────── -->
 {% if mp.educations.all %}
-<div class="sec nob">৫। শিক্ষাগত যোগ্যতা</div>
+<div class="sec nob">{% ui "৫। শিক্ষাগত যোগ্যতা" "5. Educational Qualifications" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>পরীক্ষা/ডিগ্রির নাম</th><th>বিষয়</th><th>পাসের সন</th><th>সিজিপিএ/বিভাগ</th><th>শিক্ষাবোর্ড/বিশ্ববিদ্যালয়</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "পরীক্ষা/ডিগ্রির নাম" "Exam/Degree" %}</th>
+    <th>{% ui "বিষয়" "Subject" %}</th>
+    <th>{% ui "পাসের সন" "Passing Year" %}</th>
+    <th>{% ui "সিজিপিএ/বিভাগ" "CGPA/Division" %}</th>
+    <th>{% ui "শিক্ষাবোর্ড/বিশ্ববিদ্যালয়" "Board/University" %}</th>
+  </tr></thead>
   <tbody>
     {% for edu in mp.educations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td>
-      <td>{{ edu.major_subject|tr:"name"|default:"—"  }}</td>
+      <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—" }}</td>
+      <td>{{ edu.major_subject|tr:"name"|default:"—" }}</td>
       <td>{{ edu.passing_year|default:"—" }}</td>
       <td>{{ edu.result_display }}</td>
-      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td>
+      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:edu.institution_other_en|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -286,32 +311,32 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 6: যোগাযোগের ঠিকানা ───────────────────────────── -->
 {% if mp.addresses.all %}
-<div class="sec">৬। যোগাযোগের ঠিকানা</div>
+<div class="sec">{% ui "৬। যোগাযোগের ঠিকানা" "6. Contact Address" %}</div>
 {% for addr in mp.addresses.all %}
 <div class="sub nob">{{ addr.get_address_type_display }}</div>
 <table class="kv nob">
   <tr>
-    <th>বিভাগ</th><td>{{ addr.division|tr:"name"|default:"—"  }}</td>
-    <th>জেলা</th><td>{{ addr.district|tr:"name"|default:"—"  }}</td>
+    <th>{% ui "বিভাগ" "Division" %}</th><td>{{ addr.division|tr:"name"|default:"—" }}</td>
+    <th>{% ui "জেলা" "District" %}</th><td>{{ addr.district|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>উপজেলা/থানা</th><td>{{ addr.upazila|tr:"name"|default:"—"  }}</td>
-    <th>পৌরসভা/ইউনিয়ন</th><td>{{ addr.pouroshova_union_bn|default:"—" }}</td>
+    <th>{% ui "উপজেলা/থানা" "Upazila/Thana" %}</th><td>{{ addr.upazila|tr:"name"|default:"—" }}</td>
+    <th>{% ui "পৌরসভা/ইউনিয়ন" "Pouroshova/Union" %}</th><td>{{ addr|tr:"pouroshova_union"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>বাড়ি/রাস্তা/গ্রাম/ডাকঘর</th><td colspan="3">{{ addr.address_detail_bn|default:"—" }}</td>
+    <th>{% ui "বাড়ি/রাস্তা/গ্রাম/ডাকঘর" "House/Road/Village/P.O." %}</th><td colspan="3">{{ addr|tr:"address_detail"|default:"—" }}</td>
   </tr>
   {% if addr.address_type == 'present' %}
   <tr>
-    <th>টেলিফোন</th><td>{{ addr.telephone|default:"—" }}</td>
-    <th>মোবাইল</th><td>{{ addr.mobile|default:"—" }}</td>
+    <th>{% ui "টেলিফোন" "Telephone" %}</th><td>{{ addr.telephone|default:"—" }}</td>
+    <th>{% ui "মোবাইল" "Mobile" %}</th><td>{{ addr.mobile|default:"—" }}</td>
   </tr>
   <tr>
-    <th>বিকল্প মোবাইল</th><td>{{ addr.alt_mobile|default:"—" }}</td>
-    <th>হোয়াটসঅ্যাপ</th><td>{{ addr.whatsapp|default:"—" }}</td>
+    <th>{% ui "বিকল্প মোবাইল" "Alt Mobile" %}</th><td>{{ addr.alt_mobile|default:"—" }}</td>
+    <th>{% ui "হোয়াটসঅ্যাপ" "WhatsApp" %}</th><td>{{ addr.whatsapp|default:"—" }}</td>
   </tr>
   <tr>
-    <th>ই-মেইল</th><td colspan="3">{{ addr.email|default:"—" }}</td>
+    <th>{% ui "ই-মেইল" "Email" %}</th><td colspan="3">{{ addr.email|default:"—" }}</td>
   </tr>
   {% endif %}
 </table>
@@ -320,15 +345,19 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 7: বিদেশি ভাষায় দক্ষতা ──────────────────────── -->
 {% if mp.language_skills.all %}
-<div class="sec nob">৭। বিদেশি ভাষায় দক্ষতা</div>
+<div class="sec nob">{% ui "৭। বিদেশি ভাষায় দক্ষতা" "7. Foreign Language Proficiency" %}</div>
 <table class="dt nob">
-  <thead><tr><th>ক্রম</th><th>ভাষার নাম</th><th>দক্ষতার মাত্রা</th></tr></thead>
+  <thead><tr>
+    <th>{% ui "ক্রম" "No." %}</th>
+    <th>{% ui "ভাষার নাম" "Language" %}</th>
+    <th>{% ui "দক্ষতার মাত্রা" "Proficiency Level" %}</th>
+  </tr></thead>
   <tbody>
     {% for ls in mp.language_skills.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ ls.language|tr:"name" }}</td>
-      <td>{{ ls.proficiency|tr:"name"|default:"—"  }}</td>
+      <td>{{ ls.proficiency|tr:"name"|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -337,16 +366,22 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 8: ব্যাংক হিসাব ──────────────────────────────── -->
 {% if mp.bank_accounts.all %}
-<div class="sec nob">৮। ব্যাংক হিসাব সংক্রান্ত তথ্য</div>
+<div class="sec nob">{% ui "৮। ব্যাংক হিসাব সংক্রান্ত তথ্য" "8. Bank Account Information" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>হিসাব নম্বর</th><th>ব্যাংকের নাম</th><th>শাখার নাম ও রাউটিং নম্বর</th><th>হিসাবের ধরন</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "হিসাব নম্বর" "Account Number" %}</th>
+    <th>{% ui "ব্যাংকের নাম" "Bank Name" %}</th>
+    <th>{% ui "শাখার নাম ও রাউটিং নম্বর" "Branch & Routing No." %}</th>
+    <th>{% ui "হিসাবের ধরন" "Account Type" %}</th>
+  </tr></thead>
   <tbody>
     {% for ba in mp.bank_accounts.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ ba.account_number }}</td>
-      <td>{{ ba.bank_name_bn }}</td>
-      <td>{{ ba.branch_name_bn|default:"—" }}{% if ba.routing_number %} ({{ ba.routing_number }}){% endif %}</td>
+      <td>{{ ba|tr:"bank_name" }}</td>
+      <td>{{ ba|tr:"branch_name"|default:"—" }}{% if ba.routing_number %} ({{ ba.routing_number }}){% endif %}</td>
       <td>{{ ba.get_account_type_display }}</td>
     </tr>
     {% endfor %}
@@ -356,21 +391,26 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 9: কোভিড-১৯ টিকা ─────────────────────────────── -->
 {% if mp.covid_vaccinations.all %}
-<div class="sec nob">৯। কোভিড-১৯ টিকা সংক্রান্ত তথ্য</div>
+<div class="sec nob">{% ui "৯। কোভিড-১৯ টিকা সংক্রান্ত তথ্য" "9. COVID-19 Vaccination Information" %}</div>
 {% with first_cv=mp.covid_vaccinations.all.0 %}
 {% if first_cv.certificate_number %}
-<p style="font-size:9.5pt;margin-bottom:4px;">সার্টিফিকেট নম্বর: <strong>{{ first_cv.certificate_number }}</strong></p>
+<p style="font-size:9.5pt;margin-bottom:4px;">{% ui "সার্টিফিকেট নম্বর:" "Certificate No.:" %} <strong>{{ first_cv.certificate_number }}</strong></p>
 {% endif %}
 {% endwith %}
 <table class="dt nob">
-  <thead><tr><th>টিকার ডোজ</th><th>তারিখ</th><th>টিকা কেন্দ্র</th><th>টিকার নাম</th></tr></thead>
+  <thead><tr>
+    <th>{% ui "টিকার ডোজ" "Vaccine Dose" %}</th>
+    <th>{% ui "তারিখ" "Date" %}</th>
+    <th>{% ui "টিকা কেন্দ্র" "Vaccination Center" %}</th>
+    <th>{% ui "টিকার নাম" "Vaccine Name" %}</th>
+  </tr></thead>
   <tbody>
     {% for cv in mp.covid_vaccinations.all %}
     <tr>
       <td>{{ cv.dose_number }}</td>
       <td>{{ cv.date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ cv.center_name|default:"—" }}</td>
-      <td>{{ cv.vaccine_name|tr:"name"|default:"—"  }}</td>
+      <td>{{ cv.vaccine_name|tr:"name"|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -379,9 +419,16 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 10: মন্ত্রণালয়ের দায়িত্ব ──────────────────────── -->
 {% if mp.ministry_assignments.all %}
-<div class="sec nob">১০। মন্ত্রণালয়ের দায়িত্ব</div>
+<div class="sec nob">{% ui "১০। মন্ত্রণালয়ের দায়িত্ব" "10. Ministry Responsibilities" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>মন্ত্রণালয়ের নাম</th><th>মন্ত্রিত্বের ধরন</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th><th>সংসদ নম্বর</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "মন্ত্রণালয়ের নাম" "Ministry Name" %}</th>
+    <th>{% ui "মন্ত্রিত্বের ধরন" "Minister Type" %}</th>
+    <th>{% ui "শুরুর তারিখ" "Start Date" %}</th>
+    <th>{% ui "শেষ তারিখ" "End Date" %}</th>
+    <th>{% ui "সংসদ নম্বর" "Parliament" %}</th>
+  </tr></thead>
   <tbody>
     {% for ma in mp.ministry_assignments.all %}
     <tr>
@@ -389,7 +436,7 @@ table.dt th { font-weight: bold; }
       <td>{{ ma.ministry|tr:"name" }}</td>
       <td>{{ ma.minister_type|tr:"name" }}</td>
       <td>{{ ma.start_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ ma.end_date|date:"d/m/Y"|default:"চলমান" }}</td>
+      <td>{% if ma.end_date %}{{ ma.end_date|date:"d/m/Y" }}{% else %}{% ui "চলমান" "Ongoing" %}{% endif %}</td>
       <td>{{ ma.parliament|tr:"name" }}</td>
     </tr>
     {% endfor %}
@@ -399,9 +446,16 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 11: স্থায়ী কমিটির দায়িত্ব ──────────────────────── -->
 {% if mp.committee_assignments.all %}
-<div class="sec nob">১১। স্থায়ী কমিটির দায়িত্ব</div>
+<div class="sec nob">{% ui "১১। স্থায়ী কমিটির দায়িত্ব" "11. Standing Committee Responsibilities" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>সংসদ নম্বর</th><th>স্থায়ী কমিটির নাম</th><th>{% ui "পদবী" "Designation" %}</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "সংসদ নম্বর" "Parliament" %}</th>
+    <th>{% ui "স্থায়ী কমিটির নাম" "Committee Name" %}</th>
+    <th>{% ui "পদবী" "Designation" %}</th>
+    <th>{% ui "শুরুর তারিখ" "Start Date" %}</th>
+    <th>{% ui "শেষ তারিখ" "End Date" %}</th>
+  </tr></thead>
   <tbody>
     {% for ca in mp.committee_assignments.all %}
     <tr>
@@ -410,7 +464,7 @@ table.dt th { font-weight: bold; }
       <td>{{ ca.committee|tr:"name" }}</td>
       <td>{{ ca.position|tr:"name" }}</td>
       <td>{{ ca.start_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td>
+      <td>{% if ca.end_date %}{{ ca.end_date|date:"d/m/Y" }}{% else %}{% ui "চলমান" "Ongoing" %}{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -419,18 +473,25 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 12: পূর্ববর্তী সংসদ ইতিহাস ──────────────────────── -->
 {% if mp.parliamentary_histories.all %}
-<div class="sec nob">১২। পূর্ববর্তী সংসদ ইতিহাস</div>
+<div class="sec nob">{% ui "১২। পূর্ববর্তী সংসদ ইতিহাস" "12. Previous Parliamentary History" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>সংসদের নাম</th><th>নির্বাচনী এলাকা</th><th>কোন তারিখ হতে</th><th>কোন তারিখ পর্যন্ত</th><th>মন্তব্য</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "সংসদের নাম" "Assembly Name" %}</th>
+    <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+    <th>{% ui "কোন তারিখ হতে" "From Date" %}</th>
+    <th>{% ui "কোন তারিখ পর্যন্ত" "To Date" %}</th>
+    <th>{% ui "মন্তব্য" "Remarks" %}</th>
+  </tr></thead>
   <tbody>
     {% for h in mp.parliamentary_histories.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ h.assembly_name_bn|default:"—" }}</td>
-      <td>{{ h.constituency_bn|default:"—" }}</td>
+      <td>{{ h|tr:"assembly_name"|default:"—" }}</td>
+      <td>{{ h|tr:"constituency"|default:"—" }}</td>
       <td>{{ h.from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ h.to_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{{ h.remarks_bn|default:"—" }}</td>
+      <td>{{ h|tr:"remarks"|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -439,15 +500,21 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 13: সংগঠন ──────────────────────────────────────── -->
 {% if mp.organizations.all %}
-<div class="sec nob">১৩। সংগঠন</div>
+<div class="sec nob">{% ui "১৩। সংগঠন" "13. Organizations" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>নাম</th><th>ভূমিকা</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "নাম" "Name" %}</th>
+    <th>{% ui "ভূমিকা" "Role" %}</th>
+    <th>{% ui "শুরুর তারিখ" "From Date" %}</th>
+    <th>{% ui "শেষ তারিখ" "To Date" %}</th>
+  </tr></thead>
   <tbody>
     {% for org in mp.organizations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ org|tr:"name" }}</td>
-      <td>{{ org.role_bn|default:"—" }}</td>
+      <td>{{ org|tr:"role"|default:"—" }}</td>
       <td>{{ org.from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ org.to_date|date:"d/m/Y"|default:"—" }}</td>
     </tr>
@@ -458,16 +525,21 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 14: পুরস্কার ───────────────────────────────────── -->
 {% if mp.awards.all %}
-<div class="sec nob">১৪। পুরস্কার</div>
+<div class="sec nob">{% ui "১৪। পুরস্কার" "14. Awards" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>পুরস্কারের নাম</th><th>সাল</th><th>প্রদানকারী সংস্থা</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "পুরস্কারের নাম" "Award Name" %}</th>
+    <th>{% ui "সাল" "Year" %}</th>
+    <th>{% ui "প্রদানকারী সংস্থা" "Awarded By" %}</th>
+  </tr></thead>
   <tbody>
     {% for aw in mp.awards.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ aw|tr:"name" }}</td>
       <td>{{ aw.year|default:"—" }}</td>
-      <td>{{ aw.awarded_by_bn|default:"—" }}</td>
+      <td>{{ aw|tr:"awarded_by"|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -476,15 +548,21 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 15: সমাজ সেবা ─────────────────────────────────── -->
 {% if social_service %}
-<div class="sec nob">১৫। সমাজ সেবা</div>
-<div class="text-block nob">{{ social_service.description_bn|default:"—" }}</div>
+<div class="sec nob">{% ui "১৫। সমাজ সেবা" "15. Social Service" %}</div>
+<div class="text-block nob">{{ social_service|tr:"description"|default:"—" }}</div>
 {% endif %}
 
 <!-- SECTION 16: বিশেষ পদের দায়িত্ব ────────────────────────── -->
 {% if mp.special_positions.all %}
-<div class="sec nob">১৬। বিশেষ পদের দায়িত্ব</div>
+<div class="sec nob">{% ui "১৬। বিশেষ পদের দায়িত্ব" "16. Special Positions" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>সংসদের নাম</th><th>পদের নাম</th><th>{% ui "শুরুর তারিখ" "Start Date" %}</th><th>{% ui "শেষ তারিখ" "End Date" %}</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "সংসদের নাম" "Parliament" %}</th>
+    <th>{% ui "পদের নাম" "Position" %}</th>
+    <th>{% ui "শুরুর তারিখ" "From Date" %}</th>
+    <th>{% ui "শেষ তারিখ" "To Date" %}</th>
+  </tr></thead>
   <tbody>
     {% for sp in mp.special_positions.all %}
     <tr>
@@ -501,15 +579,21 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 17: পুস্তক ও প্রকাশনা ─────────────────────────── -->
 {% if mp.publications.all %}
-<div class="sec nob">১৭। পুস্তক ও প্রকাশনা</div>
+<div class="sec nob">{% ui "১৭। পুস্তক ও প্রকাশনা" "17. Books & Publications" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>শিরোনাম</th><th>প্রকাশক</th><th>প্রকাশের সাল</th><th>ধরন</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "শিরোনাম" "Title" %}</th>
+    <th>{% ui "প্রকাশক" "Publisher" %}</th>
+    <th>{% ui "প্রকাশের সাল" "Year" %}</th>
+    <th>{% ui "ধরন" "Type" %}</th>
+  </tr></thead>
   <tbody>
     {% for pub in mp.publications.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
-      <td>{{ pub.title_bn }}</td>
-      <td>{{ pub.publisher_bn|default:"—" }}</td>
+      <td>{{ pub|tr:"title" }}</td>
+      <td>{{ pub|tr:"publisher"|default:"—" }}</td>
       <td>{{ pub.pub_year|default:"—" }}</td>
       <td>{{ pub.get_pub_type_display }}</td>
     </tr>
@@ -520,15 +604,21 @@ table.dt th { font-weight: bold; }
 
 <!-- SECTION 18: বিদেশ ভ্রমণ ──────────────────────────────── -->
 {% if mp.travel_participations.all %}
-<div class="sec nob">১৮। বিদেশ ভ্রমণ/বৈদেশিক প্রশিক্ষণ</div>
+<div class="sec nob">{% ui "১৮। বিদেশ ভ্রমণ/বৈদেশিক প্রশিক্ষণ" "18. Foreign Travel/Training" %}</div>
 <table class="dt nob">
-  <thead><tr><th>#</th><th>দেশের নাম</th><th>ভ্রমণের উদ্দেশ্য</th><th>যাত্রার তারিখ</th><th>প্রত্যাবর্তনের তারিখ</th></tr></thead>
+  <thead><tr>
+    <th>#</th>
+    <th>{% ui "দেশের নাম" "Country" %}</th>
+    <th>{% ui "ভ্রমণের উদ্দেশ্য" "Purpose" %}</th>
+    <th>{% ui "যাত্রার তারিখ" "Departure Date" %}</th>
+    <th>{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</th>
+  </tr></thead>
   <tbody>
     {% for tp in mp.travel_participations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{% for tc in tp.tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
-      <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
+      <td>{{ tp.tour.purpose|tr:"name"|default:"—" }}</td>
       <td>{{ tp.departure_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ tp.return_date|date:"d/m/Y"|default:"—" }}</td>
     </tr>
@@ -539,18 +629,18 @@ table.dt th { font-weight: bold; }
 
 <!-- OFFICE ADDRESS (system) ────────────────────────────────── -->
 {% if office %}
-<div class="sec nob">সংসদ অফিস ঠিকানা (সচিবালয়)</div>
+<div class="sec nob">{% ui "সংসদ অফিস ঠিকানা (সচিবালয়)" "Parliament Office Address (Secretariat)" %}</div>
 <table class="kv nob">
   <tr>
-    <th>কক্ষ নং</th><td>{{ office.room_number|default:"—" }}</td>
-    <th>ফ্লোর</th><td>{{ office.floor|default:"—" }}</td>
+    <th>{% ui "কক্ষ নং" "Room No." %}</th><td>{{ office.room_number|default:"—" }}</td>
+    <th>{% ui "ফ্লোর" "Floor" %}</th><td>{{ office.floor|default:"—" }}</td>
   </tr>
   <tr>
-    <th>টেলিফোন</th><td>{{ office.telephone|default:"—" }}</td>
-    <th>ফ্যাক্স</th><td>{{ office.fax|default:"—" }}</td>
+    <th>{% ui "টেলিফোন" "Telephone" %}</th><td>{{ office.telephone|default:"—" }}</td>
+    <th>{% ui "ফ্যাক্স" "Fax" %}</th><td>{{ office.fax|default:"—" }}</td>
   </tr>
   <tr>
-    <th>অফিসিয়াল ই-মেইল</th><td colspan="3">{{ office.official_email|default:"—" }}</td>
+    <th>{% ui "অফিসিয়াল ই-মেইল" "Official Email" %}</th><td colspan="3">{{ office.official_email|default:"—" }}</td>
   </tr>
 </table>
 {% endif %}

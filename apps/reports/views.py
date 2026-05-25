@@ -834,6 +834,8 @@ def mp_biodata(request):
             Path(r'C:\Windows\Fonts\kalpurush.ttf'),
             Path(r'C:\Windows\Fonts\Vrinda.ttf'),
             Path('/usr/share/fonts/truetype/kalpurush/kalpurush.ttf'),
+            Path('/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf'),
+            Path('/usr/share/fonts/truetype/noto/NotoSerifBengali-Regular.ttf'),
         ]
         font_file_path = None
         for fp in font_candidates:
@@ -873,8 +875,8 @@ def mp_biodata(request):
                 photo_data = None
         ctx['photo_data'] = photo_data
 
-        # ── 4. Render Bangla template (self-contained HTML) ──────────────────
-        html_bn = render_to_string('reports/pdf/mp_biodata_bn.html', ctx, request=request)
+        # ── 4. Render bilingual template (language follows session) ─────────
+        html_pdf = render_to_string('reports/pdf/mp_biodata_bn.html', ctx, request=request)
 
         # ── 5. PDF engine cascade: Edge → WeasyPrint → xhtml2pdf ────────────
         pdf_bytes = None
@@ -897,7 +899,7 @@ def mp_biodata(request):
                 tmp_html = os.path.join(tmp_dir, 'biodata.html')
                 tmp_pdf  = os.path.join(tmp_dir, 'biodata.pdf')
                 # Replace file:// font URL with self-contained base64 so Edge can load the font
-                html_for_edge = html_bn.replace(font_file_uri, font_data_uri) if font_file_uri else html_bn
+                html_for_edge = html_pdf.replace(font_file_uri, font_data_uri) if font_file_uri else html_pdf
                 with open(tmp_html, 'w', encoding='utf-8') as fh:
                     fh.write(html_for_edge)
                 file_url = 'file:///' + tmp_html.replace('\\', '/')
@@ -932,7 +934,7 @@ def mp_biodata(request):
         if pdf_bytes is None:
             try:
                 from weasyprint import HTML as WP_HTML
-                pdf_bytes = WP_HTML(string=html_bn, base_url=str(settings.BASE_DIR)).write_pdf()
+                pdf_bytes = WP_HTML(string=html_pdf, base_url=str(settings.BASE_DIR)).write_pdf()
                 pdf_engine = 'weasyprint'
             except Exception:
                 pass
