@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.http import Http404
@@ -7,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
+from apps.accounts.mixins import perm_required
 from apps.parliament.models import Parliament
 from apps.ministry.models import MinistryAssignment
 from apps.committee.models import CommitteeAssignment
@@ -116,7 +116,7 @@ def _detail_ctx(mp, **override):
 
 # ── MP LIST ───────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def mp_list(request):
     qs = MP.objects.select_related('parliament').prefetch_related(
         Prefetch(
@@ -165,7 +165,7 @@ def mp_list(request):
 
 # ── MP CREATE ─────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def mp_create(request):
     active_p = Parliament.objects.filter(is_active=True).first()
     form = MPCreateForm(request.POST or None, initial={'parliament': active_p} if active_p else {})
@@ -181,7 +181,7 @@ def mp_create(request):
 
 # ── MP DETAIL ─────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def mp_detail(request, pk):
     mp  = get_object_or_404(MP, pk=pk)
     ctx = _detail_ctx(mp, active_tab=request.GET.get('active', 'tab-general'))
@@ -190,7 +190,7 @@ def mp_detail(request, pk):
 
 # ── SECTION SAVES ─────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 @require_POST
 def mp_section_general(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
@@ -206,7 +206,7 @@ def mp_section_general(request, pk):
     return render(request, 'mp/mp_detail.html', ctx)
 
 
-@login_required
+@perm_required
 @require_POST
 def mp_section_election(request, pk):
     mp       = get_object_or_404(MP, pk=pk)
@@ -224,7 +224,7 @@ def mp_section_election(request, pk):
     return render(request, 'mp/mp_detail.html', ctx)
 
 
-@login_required
+@perm_required
 @require_POST
 def mp_address_save(request, pk, atype):
     mp = get_object_or_404(MP, pk=pk)
@@ -245,7 +245,7 @@ def mp_address_save(request, pk, atype):
 
 # ── SPOUSE CRUD ───────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def spouse_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = SpouseForm(request.POST or None)
@@ -261,7 +261,7 @@ def spouse_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def spouse_update(request, pk, spk):
     mp     = get_object_or_404(MP, pk=pk)
     spouse = get_object_or_404(Spouse, pk=spk, mp=mp)
@@ -277,7 +277,7 @@ def spouse_update(request, pk, spk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def spouse_delete(request, pk, spk):
     mp = get_object_or_404(MP, pk=pk)
@@ -288,7 +288,7 @@ def spouse_delete(request, pk, spk):
 
 # ── CHILDREN CRUD ─────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def child_create(request, pk):
     mp          = get_object_or_404(MP, pk=pk)
     next_serial = mp.children.count() + 1
@@ -305,7 +305,7 @@ def child_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def child_update(request, pk, ck):
     mp    = get_object_or_404(MP, pk=pk)
     child = get_object_or_404(Child, pk=ck, mp=mp)
@@ -321,7 +321,7 @@ def child_update(request, pk, ck):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def child_delete(request, pk, ck):
     mp = get_object_or_404(MP, pk=pk)
@@ -332,7 +332,7 @@ def child_delete(request, pk, ck):
 
 # ── EDUCATION CRUD ────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def education_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = EducationForm(request.POST or None)
@@ -348,7 +348,7 @@ def education_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def education_update(request, pk, ek):
     mp  = get_object_or_404(MP, pk=pk)
     edu = get_object_or_404(Education, pk=ek, mp=mp)
@@ -364,7 +364,7 @@ def education_update(request, pk, ek):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def education_delete(request, pk, ek):
     mp = get_object_or_404(MP, pk=pk)
@@ -375,7 +375,7 @@ def education_delete(request, pk, ek):
 
 # ── FOREIGN LANGUAGE SKILLS CRUD ─────────────────────────────────────────────
 
-@login_required
+@perm_required
 def language_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = ForeignLanguageSkillForm(request.POST or None,
@@ -392,7 +392,7 @@ def language_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def language_update(request, pk, lk):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(ForeignLanguageSkill, pk=lk, mp=mp)
@@ -408,7 +408,7 @@ def language_update(request, pk, lk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def language_delete(request, pk, lk):
     mp = get_object_or_404(MP, pk=pk)
@@ -419,7 +419,7 @@ def language_delete(request, pk, lk):
 
 # ── BANK ACCOUNTS CRUD ────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def bank_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = BankAccountForm(request.POST or None)
@@ -435,7 +435,7 @@ def bank_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def bank_update(request, pk, bk):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(BankAccount, pk=bk, mp=mp)
@@ -451,7 +451,7 @@ def bank_update(request, pk, bk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def bank_delete(request, pk, bk):
     mp = get_object_or_404(MP, pk=pk)
@@ -462,7 +462,7 @@ def bank_delete(request, pk, bk):
 
 # ── COVID VACCINATION CRUD ────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def covid_create(request, pk):
     mp          = get_object_or_404(MP, pk=pk)
     next_dose   = mp.covid_vaccinations.count() + 1
@@ -479,7 +479,7 @@ def covid_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def covid_update(request, pk, ck):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(CovidVaccination, pk=ck, mp=mp)
@@ -495,7 +495,7 @@ def covid_update(request, pk, ck):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def covid_delete(request, pk, ck):
     mp = get_object_or_404(MP, pk=pk)
@@ -506,7 +506,7 @@ def covid_delete(request, pk, ck):
 
 # ── PARLIAMENTARY HISTORY CRUD ────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def history_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     next_ord = mp.parliamentary_histories.count() + 1
@@ -523,7 +523,7 @@ def history_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def history_update(request, pk, hk):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(PreviousParliamentaryHistory, pk=hk, mp=mp)
@@ -539,7 +539,7 @@ def history_update(request, pk, hk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def history_delete(request, pk, hk):
     mp = get_object_or_404(MP, pk=pk)
@@ -550,7 +550,7 @@ def history_delete(request, pk, hk):
 
 # ── ORGANIZATIONS CRUD ────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def organization_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = OrganizationForm(request.POST or None,
@@ -567,7 +567,7 @@ def organization_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def organization_update(request, pk, ok):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(Organization, pk=ok, mp=mp)
@@ -583,7 +583,7 @@ def organization_update(request, pk, ok):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def organization_delete(request, pk, ok):
     mp = get_object_or_404(MP, pk=pk)
@@ -594,7 +594,7 @@ def organization_delete(request, pk, ok):
 
 # ── AWARDS CRUD ───────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def award_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = AwardForm(request.POST or None, initial={'ordering': mp.awards.count() + 1})
@@ -610,7 +610,7 @@ def award_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def award_update(request, pk, ak):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(Award, pk=ak, mp=mp)
@@ -626,7 +626,7 @@ def award_update(request, pk, ak):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def award_delete(request, pk, ak):
     mp = get_object_or_404(MP, pk=pk)
@@ -637,7 +637,7 @@ def award_delete(request, pk, ak):
 
 # ── SOCIAL SERVICE (single per MP) ────────────────────────────────────────────
 
-@login_required
+@perm_required
 def social_service_save(request, pk):
     mp       = get_object_or_404(MP, pk=pk)
     instance, _ = SocialService.objects.get_or_create(mp=mp)
@@ -654,7 +654,7 @@ def social_service_save(request, pk):
 
 # ── SPECIAL POSITIONS CRUD ────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def special_position_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = SpecialPositionHistoryForm(request.POST or None,
@@ -671,7 +671,7 @@ def special_position_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def special_position_update(request, pk, spk):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(SpecialPositionHistory, pk=spk, mp=mp)
@@ -687,7 +687,7 @@ def special_position_update(request, pk, spk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def special_position_delete(request, pk, spk):
     mp = get_object_or_404(MP, pk=pk)
@@ -698,7 +698,7 @@ def special_position_delete(request, pk, spk):
 
 # ── PUBLICATIONS CRUD ─────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def publication_create(request, pk):
     mp   = get_object_or_404(MP, pk=pk)
     form = PublicationForm(request.POST or None,
@@ -715,7 +715,7 @@ def publication_create(request, pk):
     })
 
 
-@login_required
+@perm_required
 def publication_update(request, pk, pubk):
     mp  = get_object_or_404(MP, pk=pk)
     obj = get_object_or_404(Publication, pk=pubk, mp=mp)
@@ -731,7 +731,7 @@ def publication_update(request, pk, pubk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def publication_delete(request, pk, pubk):
     mp = get_object_or_404(MP, pk=pk)
@@ -742,7 +742,7 @@ def publication_delete(request, pk, pubk):
 
 # ── TOGGLE ACTIVE ─────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 @require_POST
 def mp_toggle(request, pk):
     mp = get_object_or_404(MP, pk=pk)

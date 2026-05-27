@@ -1,6 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from apps.accounts.mixins import perm_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from apps.accounts.mixins import PermissionMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -302,7 +304,7 @@ def _url_name(key, suffix):
 
 # ── GENERIC BASE VIEWS ───────────────────────────────────────────────────────
 
-class _MasterListView(LoginRequiredMixin, ListView):
+class _MasterListView(PermissionMixin, LoginRequiredMixin, ListView):
     template_name = 'master/generic_list.html'
     paginate_by = 25
     _spec = None
@@ -340,7 +342,7 @@ class _MasterListView(LoginRequiredMixin, ListView):
         return ctx
 
 
-class _MasterCreateView(LoginRequiredMixin, CreateView):
+class _MasterCreateView(PermissionMixin, LoginRequiredMixin, CreateView):
     template_name = 'master/generic_form.html'
     _spec = None
 
@@ -366,7 +368,7 @@ class _MasterCreateView(LoginRequiredMixin, CreateView):
         return ctx
 
 
-class _MasterUpdateView(LoginRequiredMixin, UpdateView):
+class _MasterUpdateView(PermissionMixin, LoginRequiredMixin, UpdateView):
     template_name = 'master/generic_form.html'
     _spec = None
 
@@ -395,7 +397,7 @@ class _MasterUpdateView(LoginRequiredMixin, UpdateView):
         return ctx
 
 
-class _MasterToggleView(LoginRequiredMixin, View):
+class _MasterToggleView(PermissionMixin, LoginRequiredMixin, View):
     _spec = None
 
     def post(self, request, pk):
@@ -453,7 +455,7 @@ def get_views(key):
 
 # ── HTMX PARTIAL VIEWS ───────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def master_home(request):
     def _item(name_bn, name_en, url_key):
         from django.urls import reverse

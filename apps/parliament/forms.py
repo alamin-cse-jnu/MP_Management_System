@@ -15,6 +15,7 @@ class _BootstrapMixin:
                 w.attrs.setdefault('rows', '3')
             elif isinstance(w, forms.Select):
                 w.attrs.setdefault('class', 'form-select')
+                w.attrs.setdefault('data-select2', '')
             elif isinstance(w, forms.CheckboxInput):
                 w.attrs.setdefault('class', 'form-check-input')
 

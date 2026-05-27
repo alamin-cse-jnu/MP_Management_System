@@ -1,7 +1,8 @@
 from django import forms
 
+from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import Country, TravelPurpose, TravelType
-from apps.mp.models import MP
+from apps.mp.form_fields import MPChoiceField
 from apps.parliament.models import Parliament
 from .models import ForeignTour, ForeignTourCountry, ForeignTourParticipant
 
@@ -19,6 +20,7 @@ class _BootstrapMixin:
                 w.attrs.setdefault('rows', 3)
             elif isinstance(w, forms.Select):
                 w.attrs.setdefault('class', 'form-select')
+                w.attrs.setdefault('data-select2', '')
             elif isinstance(w, forms.CheckboxInput):
                 w.attrs.setdefault('class', 'form-check-input')
             elif isinstance(w, forms.DateInput):
@@ -47,6 +49,8 @@ class ForeignTourForm(_BootstrapMixin, forms.ModelForm):
 
 
 class ParticipantForm(_BootstrapMixin, forms.ModelForm):
+    mp = MPChoiceField(required=True)
+
     class Meta:
         model  = ForeignTourParticipant
         fields = ['mp', 'departure_date', 'return_date', 'remarks_bn', 'remarks_en']
@@ -57,18 +61,20 @@ class ParticipantForm(_BootstrapMixin, forms.ModelForm):
 
     def __init__(self, *args, tour=None, **kwargs):
         super().__init__(*args, **kwargs)
+        exclude_ids = None
         if tour is not None:
-            existing_ids = tour.participants.values_list('mp_id', flat=True)
-            self.fields['mp'].queryset = MP.objects.filter(
-                is_active=True).exclude(pk__in=existing_ids).order_by('name_bn')
-        else:
-            self.fields['mp'].queryset = MP.objects.filter(
-                is_active=True).order_by('name_bn')
+            exclude_ids = list(tour.participants.values_list('mp_id', flat=True))
+        self.fields['mp'].queryset = MPChoiceField.annotated_queryset(exclude_pks=exclude_ids)
         for f in ('departure_date', 'return_date'):
             self.fields[f].required = False
 
 
 class TourCountryForm(_BootstrapMixin, forms.ModelForm):
+    country = BilingualChoiceField(
+        queryset=Country.objects.filter(is_active=True).order_by('name_bn'),
+        empty_label='-- দেশ নির্বাচন করুন / Select Country --',
+    )
+
     class Meta:
         model  = ForeignTourCountry
         fields = ['country', 'ordering']
@@ -76,7 +82,7 @@ class TourCountryForm(_BootstrapMixin, forms.ModelForm):
     def __init__(self, *args, tour=None, **kwargs):
         super().__init__(*args, **kwargs)
         if tour is not None:
-            existing_ids = tour.countries.values_list('country_id', flat=True)
+            existing_ids = list(tour.countries.values_list('country_id', flat=True))
             self.fields['country'].queryset = Country.objects.filter(
                 is_active=True).exclude(pk__in=existing_ids).order_by('name_bn')
         else:

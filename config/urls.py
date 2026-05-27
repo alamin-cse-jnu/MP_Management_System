@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
+handler403 = 'apps.accounts.views.permission_denied_view'
+
 urlpatterns = [
     path('', include('apps.accounts.urls', namespace='accounts')),
     path('master/', include('apps.master.urls', namespace='master')),

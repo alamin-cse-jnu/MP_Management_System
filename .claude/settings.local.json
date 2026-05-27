@@ -59,7 +59,8 @@
       "Bash(docker cp *)",
       "Bash(docker exec *)",
       "Bash(docker restart *)",
-      "Bash(start *)"
+      "Bash(start *)",
+      "PowerShell(pip install *)"
     ]
   }
 }

@@ -2,7 +2,7 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from apps.accounts.mixins import perm_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
@@ -15,6 +15,12 @@ from .forms import (
     MenuForm, RoleForm, SubMenuForm,
 )
 from .models import CustomUser, Menu, Role, RolePermission, SubMenu
+
+
+# ── ERROR HANDLERS ───────────────────────────────────────────────────────────
+
+def permission_denied_view(request, exception=None):
+    return render(request, '403.html', status=403)
 
 
 # ── AUTH ─────────────────────────────────────────────────────────────────────
@@ -41,7 +47,7 @@ def logout_view(request):
     return redirect('accounts:login')
 
 
-@login_required
+@perm_required
 def dashboard(request):
     from apps.committee.models import CommitteeAssignment
     from apps.institution.models import InstitutionAssignment
@@ -212,7 +218,7 @@ def set_language(request):
 
 # ── ROLES ────────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def role_list(request):
     qs = Role.objects.all()
     q = request.GET.get('q', '').strip()
@@ -235,7 +241,7 @@ def role_list(request):
     })
 
 
-@login_required
+@perm_required
 def role_create(request):
     form = RoleForm(request.POST or None)
     if form.is_valid():
@@ -252,7 +258,7 @@ def role_create(request):
     })
 
 
-@login_required
+@perm_required
 def role_update(request, pk):
     role = get_object_or_404(Role, pk=pk)
     form = RoleForm(request.POST or None, instance=role)
@@ -269,7 +275,7 @@ def role_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def role_toggle(request, pk):
     role = get_object_or_404(Role, pk=pk)
@@ -280,7 +286,7 @@ def role_toggle(request, pk):
     return redirect('accounts:role_list')
 
 
-@login_required
+@perm_required
 def role_permissions(request, pk):
     role = get_object_or_404(Role, pk=pk)
     menus = Menu.objects.filter(is_active=True).prefetch_related(
@@ -320,7 +326,7 @@ def role_permissions(request, pk):
 
 # ── USERS ────────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def user_list(request):
     qs = CustomUser.objects.select_related('role').order_by('full_name_bn', 'username')
     q = request.GET.get('q', '').strip()
@@ -346,7 +352,7 @@ def user_list(request):
     })
 
 
-@login_required
+@perm_required
 def user_create(request):
     form = CustomUserCreateForm(request.POST or None)
     if form.is_valid():
@@ -363,7 +369,7 @@ def user_create(request):
     })
 
 
-@login_required
+@perm_required
 def user_update(request, pk):
     user_obj = get_object_or_404(CustomUser, pk=pk)
     form = CustomUserUpdateForm(request.POST or None, instance=user_obj)
@@ -380,7 +386,7 @@ def user_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def user_toggle(request, pk):
     user_obj = get_object_or_404(CustomUser, pk=pk)
@@ -396,13 +402,13 @@ def user_toggle(request, pk):
 
 # ── MENUS ────────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def menu_list(request):
     menus = Menu.objects.prefetch_related('submenus').order_by('ordering', 'name_bn')
     return render(request, 'accounts/menu_list.html', {'menus': menus})
 
 
-@login_required
+@perm_required
 def menu_create(request):
     form = MenuForm(request.POST or None)
     if form.is_valid():
@@ -417,7 +423,7 @@ def menu_create(request):
     })
 
 
-@login_required
+@perm_required
 def menu_update(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     form = MenuForm(request.POST or None, instance=menu)
@@ -434,7 +440,7 @@ def menu_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def menu_toggle(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
@@ -447,7 +453,7 @@ def menu_toggle(request, pk):
 
 # ── SUBMENUS ─────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def submenu_create(request):
     initial = {}
     menu_pk = request.GET.get('menu')
@@ -466,7 +472,7 @@ def submenu_create(request):
     })
 
 
-@login_required
+@perm_required
 def submenu_update(request, pk):
     sub = get_object_or_404(SubMenu, pk=pk)
     form = SubMenuForm(request.POST or None, instance=sub)
@@ -483,7 +489,7 @@ def submenu_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def submenu_toggle(request, pk):
     sub = get_object_or_404(SubMenu, pk=pk)

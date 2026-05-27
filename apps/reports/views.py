@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from apps.accounts.mixins import perm_required
 from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse
@@ -82,7 +82,7 @@ def _mp_qs_base(parliament_id=None):
 
 # ── index ──────────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def index(request):
     active_parliament = Parliament.objects.filter(is_active=True).first()
     stats = {}
@@ -125,7 +125,7 @@ ALL_MP_COLS = [
 ALL_MP_DEFAULT = ['mp_id', 'name_bn', 'name_en', 'constituency', 'party', 'district']
 
 
-@login_required
+@perm_required
 def all_mp(request):
     fmt = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -218,7 +218,7 @@ def _all_mp_csv(qs, selected_cols):
 
 # ── Report 2: মহিলা সদস্য তালিকা ─────────────────────────────────────────────
 
-@login_required
+@perm_required
 def women_mp(request):
     fmt = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -268,7 +268,7 @@ def women_mp(request):
 
 # ── Report 3: দল ভিত্তিক তালিকা ──────────────────────────────────────────────
 
-@login_required
+@perm_required
 def party_wise(request):
     fmt = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -320,7 +320,7 @@ def party_wise(request):
 
 # ── Report 4: জেলা/বিভাগ ভিত্তিক ─────────────────────────────────────────────
 
-@login_required
+@perm_required
 def district_wise(request):
     fmt = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -379,7 +379,7 @@ def district_wise(request):
 
 # ── Report 5: পেশাদার যোগ্যতা ভিত্তিক ────────────────────────────────────────
 
-@login_required
+@perm_required
 def qualification_wise(request):
     fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -431,7 +431,7 @@ def qualification_wise(request):
 
 # ── Report 6: মন্ত্রিসভা তালিকা ───────────────────────────────────────────────
 
-@login_required
+@perm_required
 def cabinet(request):
     fmt             = request.GET.get('format', '')
     parliament_id   = _active_parliament_id(request)
@@ -499,7 +499,7 @@ def cabinet(request):
 
 # ── Report 7: কমিটি সদস্য তালিকা ─────────────────────────────────────────────
 
-@login_required
+@perm_required
 def committee_members(request):
     fmt          = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -571,7 +571,7 @@ def committee_members(request):
 
 # ── Report 8: এমপি কমিটি সারসংক্ষেপ ──────────────────────────────────────────
 
-@login_required
+@perm_required
 def mp_committee_summary(request):
     fmt   = request.GET.get('format', '')
     mp_id = request.GET.get('mp_id', '').strip()
@@ -618,7 +618,7 @@ def mp_committee_summary(request):
 
 # ── Report 9: প্রতিষ্ঠান নিয়োগ তালিকা ────────────────────────────────────────
 
-@login_required
+@perm_required
 def institution_assignments(request):
     fmt            = request.GET.get('format', '')
     parliament_id  = _active_parliament_id(request)
@@ -685,7 +685,7 @@ def institution_assignments(request):
 
 # ── Report 10: বিদেশ সফর তালিকা ───────────────────────────────────────────────
 
-@login_required
+@perm_required
 def foreign_tours(request):
     fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -763,7 +763,7 @@ def foreign_tours(request):
 
 # ── Report 11: এমপি বায়োডাটা (একক) ───────────────────────────────────────────
 
-@login_required
+@perm_required
 def mp_biodata(request):
     mp_id = request.GET.get('mp_id', '').strip()
     mp    = None
@@ -979,7 +979,7 @@ CONTACT_COLS = [
 CONTACT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'mobile', 'email', 'office_phone']
 
 
-@login_required
+@perm_required
 def contact_list(request):
     fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -1069,7 +1069,7 @@ def contact_list(request):
 AUDIT_PAGE_SIZE = 50
 
 
-@login_required
+@perm_required
 def audit_log_list(request):
     from apps.accounts.models import CustomUser
     from .models import AuditLog
@@ -1333,7 +1333,7 @@ def _build_custom_qs(get, parliament_id):
     return qs
 
 
-@login_required
+@perm_required
 def custom_report(request):
     from apps.master.models import (
         BloodGroup, Gender, Religion, Division, District,
@@ -1436,7 +1436,7 @@ def custom_report(request):
     return render(request, 'reports/custom_report.html', ctx)
 
 
-@login_required
+@perm_required
 def family_report(request):
     import datetime
     from django.db.models import Prefetch
@@ -1539,7 +1539,7 @@ def family_report(request):
     return render(request, 'reports/family_report.html', ctx)
 
 
-@login_required
+@perm_required
 def audit_log_detail(request, pk):
     from .models import AuditLog
     log = get_object_or_404(AuditLog.objects.select_related('user'), pk=pk)

@@ -1,7 +1,8 @@
 from django import forms
 
+from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import Ministry, MinisterType
-from apps.mp.models import MP
+from apps.mp.form_fields import MPChoiceField
 from apps.parliament.models import Parliament
 from .models import MinistryAssignment
 
@@ -19,6 +20,7 @@ class _BootstrapMixin:
                 w.attrs.setdefault('rows', 3)
             elif isinstance(w, forms.Select):
                 w.attrs.setdefault('class', 'form-select')
+                w.attrs.setdefault('data-select2', '')
             elif isinstance(w, forms.CheckboxInput):
                 w.attrs.setdefault('class', 'form-check-input')
             elif isinstance(w, forms.DateInput):
@@ -27,6 +29,12 @@ class _BootstrapMixin:
 
 
 class MinistryAssignmentForm(_BootstrapMixin, forms.ModelForm):
+    mp = MPChoiceField(required=True)
+    ministry = BilingualChoiceField(
+        queryset=Ministry.objects.filter(is_active=True).order_by('name_bn'),
+        empty_label='-- মন্ত্রণালয় নির্বাচন করুন / Select Ministry --',
+    )
+
     class Meta:
         model  = MinistryAssignment
         fields = [
@@ -45,12 +53,8 @@ class MinistryAssignmentForm(_BootstrapMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         if mp_preset:
             self.fields.pop('mp')
-        else:
-            self.fields['mp'].queryset = MP.objects.filter(
-                is_active=True).select_related('parliament').order_by('name_bn')
-            self.fields['mp'].widget.attrs.update({'data-select2': '', 'class': 'form-select'})
         self.fields['parliament'].queryset = Parliament.objects.order_by('-start_date')
-        self.fields['ministry'].queryset = Ministry.objects.filter(is_active=True).order_by('name_bn')
-        self.fields['minister_type'].queryset = MinisterType.objects.filter(is_active=True).order_by('ordering')
+        self.fields['minister_type'].queryset = MinisterType.objects.filter(
+            is_active=True).order_by('ordering')
         self.fields['end_date'].required = False
         self.fields['go_date'].required = False

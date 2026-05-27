@@ -202,17 +202,33 @@
     document.body.classList.toggle('sidebar-collapsed');
   });
 
-  // Initialize Select2 on all select elements with data-select2
-  $(document).ready(function () {
-    $('[data-select2]').select2({
-      theme: 'bootstrap-5',
-      width: '100%',
+  // ── Select2 init ──────────────────────────────────────────────────────────
+  function initSelect2(root) {
+    $('[data-select2]', root).each(function () {
+      var $el = $(this);
+      // Destroy existing instance before re-init (prevents double-wrap on HTMX swaps)
+      if ($el.hasClass('select2-hidden-accessible')) {
+        $el.select2('destroy');
+      }
+      // Placeholder: prefer data-placeholder attr; skip Django's default "-------" filler
+      var optText = $el.find('option[value=""]:first').text().trim();
+      var usefulOpt = optText && !/^[-\s]+$/.test(optText) ? optText : '';
+      var placeholder = $el.data('placeholder') || usefulOpt || '-- নির্বাচন করুন --';
+      $el.select2({
+        theme: 'bootstrap-5',
+        width: '100%',
+        placeholder: placeholder,
+        allowClear: true,
+        language: { noResults: function () { return 'কোনো ফলাফল নেই'; } },
+      });
     });
-  });
+  }
 
-  // HTMX: re-init Select2 after HTMX swaps
-  document.body.addEventListener('htmx:afterSwap', function () {
-    $('[data-select2]').select2({ theme: 'bootstrap-5', width: '100%' });
+  $(document).ready(function () { initSelect2(document); });
+
+  // HTMX: re-init only inside the swapped element
+  document.body.addEventListener('htmx:afterSwap', function (e) {
+    initSelect2(e.detail.target);
   });
 
   // Language switch

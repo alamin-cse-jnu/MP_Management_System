@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,11 +8,12 @@ from django.views.decorators.http import require_POST
 from apps.master.models import CommitteePosition, StandingCommittee
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
+from apps.accounts.mixins import perm_required
 from .forms import CommitteeAssignmentForm
 from .models import CommitteeAssignment
 
 
-@login_required
+@perm_required
 def assignment_list(request):
     qs = CommitteeAssignment.objects.select_related(
         'mp', 'parliament', 'committee', 'position'
@@ -62,7 +62,7 @@ def assignment_list(request):
     })
 
 
-@login_required
+@perm_required
 def assignment_create(request):
     mp_pk = request.GET.get('mp') or request.POST.get('_mp_pk')
     mp    = get_object_or_404(MP, pk=mp_pk) if mp_pk else None
@@ -94,7 +94,7 @@ def assignment_create(request):
     })
 
 
-@login_required
+@perm_required
 def assignment_update(request, pk):
     obj  = get_object_or_404(CommitteeAssignment, pk=pk)
     form = CommitteeAssignmentForm(request.POST or None, instance=obj, mp_preset=True)
@@ -115,7 +115,7 @@ def assignment_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def assignment_delete(request, pk):
     obj = get_object_or_404(CommitteeAssignment, pk=pk)
@@ -127,7 +127,7 @@ def assignment_delete(request, pk):
     return redirect('committee:assignment_list')
 
 
-@login_required
+@perm_required
 @require_POST
 def assignment_toggle(request, pk):
     obj = get_object_or_404(CommitteeAssignment, pk=pk)

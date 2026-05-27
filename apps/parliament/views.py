@@ -1,17 +1,17 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from apps.accounts.mixins import perm_required
 from .forms import ConstituencyForm, ParliamentForm
 from .models import Constituency, Parliament
 
 
 # ── PARLIAMENT ────────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def parliament_list(request):
     parliaments = Parliament.objects.order_by('-ordinal')
     return render(request, 'parliament/parliament_list.html', {
@@ -19,7 +19,7 @@ def parliament_list(request):
     })
 
 
-@login_required
+@perm_required
 def parliament_create(request):
     form = ParliamentForm(request.POST or None)
     if form.is_valid():
@@ -34,7 +34,7 @@ def parliament_create(request):
     })
 
 
-@login_required
+@perm_required
 def parliament_update(request, pk):
     parliament = get_object_or_404(Parliament, pk=pk)
     form = ParliamentForm(request.POST or None, instance=parliament)
@@ -51,7 +51,7 @@ def parliament_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def parliament_activate(request, pk):
     """Set this parliament as the single active parliament (mutex)."""
@@ -67,7 +67,7 @@ def parliament_activate(request, pk):
 
 # ── CONSTITUENCY ──────────────────────────────────────────────────────────────
 
-@login_required
+@perm_required
 def constituency_list(request):
     qs = Constituency.objects.all()
     q = request.GET.get('q', '').strip()
@@ -91,7 +91,7 @@ def constituency_list(request):
     })
 
 
-@login_required
+@perm_required
 def constituency_create(request):
     form = ConstituencyForm(request.POST or None)
     if form.is_valid():
@@ -106,7 +106,7 @@ def constituency_create(request):
     })
 
 
-@login_required
+@perm_required
 def constituency_update(request, pk):
     constituency = get_object_or_404(Constituency, pk=pk)
     form = ConstituencyForm(request.POST or None, instance=constituency)
@@ -123,7 +123,7 @@ def constituency_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def constituency_toggle(request, pk):
     constituency = get_object_or_404(Constituency, pk=pk)

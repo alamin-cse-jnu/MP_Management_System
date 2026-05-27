@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,11 +8,12 @@ from django.views.decorators.http import require_POST
 from apps.master.models import TravelType
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
+from apps.accounts.mixins import perm_required
 from .forms import ForeignTourForm, ParticipantForm, TourCountryForm
 from .models import ForeignTour, ForeignTourCountry, ForeignTourParticipant
 
 
-@login_required
+@perm_required
 def tour_list(request):
     qs = ForeignTour.objects.select_related(
         'parliament', 'tour_type', 'purpose'
@@ -55,7 +55,7 @@ def tour_list(request):
     })
 
 
-@login_required
+@perm_required
 def tour_create(request):
     active_p = Parliament.objects.filter(is_active=True).first()
     initial  = {'parliament': active_p} if active_p else {}
@@ -74,7 +74,7 @@ def tour_create(request):
     })
 
 
-@login_required
+@perm_required
 def tour_detail(request, pk):
     tour             = get_object_or_404(ForeignTour, pk=pk)
     participants     = tour.participants.select_related('mp').all()
@@ -90,7 +90,7 @@ def tour_detail(request, pk):
     })
 
 
-@login_required
+@perm_required
 def tour_update(request, pk):
     tour = get_object_or_404(ForeignTour, pk=pk)
     form = ForeignTourForm(request.POST or None, instance=tour)
@@ -107,7 +107,7 @@ def tour_update(request, pk):
     })
 
 
-@login_required
+@perm_required
 @require_POST
 def tour_delete(request, pk):
     get_object_or_404(ForeignTour, pk=pk).delete()
@@ -115,7 +115,7 @@ def tour_delete(request, pk):
     return redirect('travel:tour_list')
 
 
-@login_required
+@perm_required
 @require_POST
 def participant_add(request, pk):
     tour = get_object_or_404(ForeignTour, pk=pk)
@@ -130,7 +130,7 @@ def participant_add(request, pk):
     return redirect('travel:tour_detail', pk=pk)
 
 
-@login_required
+@perm_required
 @require_POST
 def participant_remove(request, pk, ppk):
     tour = get_object_or_404(ForeignTour, pk=pk)
@@ -139,7 +139,7 @@ def participant_remove(request, pk, ppk):
     return redirect('travel:tour_detail', pk=pk)
 
 
-@login_required
+@perm_required
 @require_POST
 def country_add(request, pk):
     tour = get_object_or_404(ForeignTour, pk=pk)
@@ -154,7 +154,7 @@ def country_add(request, pk):
     return redirect('travel:tour_detail', pk=pk)
 
 
-@login_required
+@perm_required
 @require_POST
 def country_remove(request, pk, cpk):
     tour = get_object_or_404(ForeignTour, pk=pk)

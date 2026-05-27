@@ -1,14 +1,14 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from apps.accounts.mixins import perm_required
 from apps.mp.models import MP
 from .forms import OfficeAddressForm
 from .models import ParliamentOfficeAddress
 
 
-@login_required
+@perm_required
 def office_edit(request, mp_pk):
     mp  = get_object_or_404(MP, pk=mp_pk)
     try:
