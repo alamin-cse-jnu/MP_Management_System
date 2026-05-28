@@ -103,6 +103,14 @@
             {{ mp|tr:"name" }}
           </a>
           <div class="text-muted" style="font-size:0.8rem;">{{ mp.name_en }}</div>
+          {% with score=mp.profile_score %}
+          <div style="display:flex;align-items:center;gap:5px;margin-top:4px;">
+            <div style="width:56px;height:3px;border-radius:2px;background:#e2e8f0;overflow:hidden;">
+              <div style="height:3px;width:{{ score }}%;border-radius:2px;background:{% if score >= 80 %}#10b981{% elif score >= 50 %}#f59e0b{% else %}#ef4444{% endif %};"></div>
+            </div>
+            <span style="font-size:.67rem;color:{% if score >= 80 %}#10b981{% elif score >= 50 %}#d97706{% else %}#ef4444{% endif %};">{{ score }}%</span>
+          </div>
+          {% endwith %}
         </td>
         <td class="text-muted" style="font-family:monospace;">{{ mp.mp_id }}</td>
         <td class="text-muted" style="font-size:0.875rem;">

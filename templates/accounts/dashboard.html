@@ -37,6 +37,9 @@
   .kpi-extra .kval { font-size: 1.3rem; font-weight: 700; color: #0d9488; }
   .progress-slim { height: 6px; border-radius: 3px; }
   .apexcharts-tooltip { font-family: inherit !important; }
+  #chart-party, #chart-division, #chart-gender, #chart-religion, #chart-times {
+    cursor: pointer;
+  }
 </style>
 {% endblock %}
 
@@ -67,7 +70,7 @@
     <a href="{% url 'mp:mp_list' %}" class="text-decoration-none">
       <div class="stat-card text-center">
         <div class="stat-icon mx-auto"><i class="bi bi-people-fill"></i></div>
-        <div class="stat-value">{{ total_mps }}</div>
+        <div class="stat-value" data-countup="{{ total_mps }}">{{ total_mps }}</div>
         <div class="stat-label">{% ui "মোট সংসদ সদস্য" "Total MPs" %}</div>
       </div>
     </a>
@@ -78,7 +81,7 @@
       <div class="stat-icon mx-auto" style="background:rgba(16,185,129,.12);color:#059669;">
         <i class="bi bi-person-check-fill"></i>
       </div>
-      <div class="stat-value">{{ direct_mps }}</div>
+      <div class="stat-value" data-countup="{{ direct_mps }}">{{ direct_mps }}</div>
       <div class="stat-label">{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</div>
     </div>
   </div>
@@ -88,7 +91,7 @@
       <div class="stat-icon mx-auto" style="background:rgba(168,85,247,.12);color:#9333ea;">
         <i class="bi bi-gender-female"></i>
       </div>
-      <div class="stat-value">{{ women_mps }}</div>
+      <div class="stat-value" data-countup="{{ women_mps }}">{{ women_mps }}</div>
       <div class="stat-label">{% ui "মহিলা সদস্য (সংরক্ষিত)" "Women MPs (Reserved)" %}</div>
     </div>
   </div>
@@ -99,7 +102,7 @@
         <div class="stat-icon mx-auto" style="background:rgba(245,158,11,.12);color:#d97706;">
           <i class="bi bi-briefcase-fill"></i>
         </div>
-        <div class="stat-value">{{ total_ministers }}</div>
+        <div class="stat-value" data-countup="{{ total_ministers }}">{{ total_ministers }}</div>
         <div class="stat-label">{% ui "মন্ত্রী/প্রতিমন্ত্রী" "Ministers" %}</div>
       </div>
     </a>
@@ -111,7 +114,7 @@
         <div class="stat-icon mx-auto" style="background:rgba(59,130,246,.12);color:#2563eb;">
           <i class="bi bi-clipboard2-check-fill"></i>
         </div>
-        <div class="stat-value">{{ total_com_assigns }}</div>
+        <div class="stat-value" data-countup="{{ total_com_assigns }}">{{ total_com_assigns }}</div>
         <div class="stat-label">{% ui "কমিটি সদস্যপদ" "Committee Memberships" %}</div>
       </div>
     </a>
@@ -123,7 +126,7 @@
         <div class="stat-icon mx-auto" style="background:rgba(239,68,68,.12);color:#dc2626;">
           <i class="bi bi-airplane-fill"></i>
         </div>
-        <div class="stat-value">{{ total_tours }}</div>
+        <div class="stat-value" data-countup="{{ total_tours }}">{{ total_tours }}</div>
         <div class="stat-label">{% ui "বিদেশ সফর GO" "Foreign Tour GOs" %}</div>
       </div>
     </a>
@@ -269,6 +272,53 @@
 
 </div>
 
+<!-- ══ BIRTHDAY WIDGET ═══════════════════════════════════════════════════════ -->
+{% if birthday_data %}
+<div class="row g-3 mb-3">
+  <div class="col-12">
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <span>
+          <i class="bi bi-cake2-fill me-1" style="color:#ec4899;"></i>
+          {% ui "এই মাসে জন্মদিন" "Birthdays This Month" %}
+          <span class="badge ms-1" style="background:#ec4899;font-size:.7rem;">{{ birthday_data|length }}</span>
+        </span>
+        <small class="text-muted" style="font-size:.75rem;">{{ today|date:"F Y" }}</small>
+      </div>
+      <div class="d-flex flex-wrap gap-3 p-3">
+        {% for item in birthday_data %}
+        <a href="{% url 'mp:mp_detail' item.mp.pk %}" class="text-decoration-none"
+           style="display:flex;align-items:center;gap:10px;background:{% if item.is_today %}#fdf2f8{% else %}#f8fafc{% endif %};border-radius:10px;padding:10px 14px;border:1px solid {% if item.is_today %}#fce7f3{% else %}#e2e8f0{% endif %};min-width:190px;max-width:230px;">
+          {% if item.mp.photo %}
+          <img src="{{ item.mp.photo.url }}" style="width:36px;height:45px;object-fit:cover;border-radius:5px;flex-shrink:0;">
+          {% else %}
+          <div style="width:36px;height:45px;background:{% if item.is_today %}#fce7f3{% else %}#e2e8f0{% endif %};border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-person-fill" style="color:{% if item.is_today %}#ec4899{% else %}#94a3b8{% endif %};"></i>
+          </div>
+          {% endif %}
+          <div>
+            <div style="font-size:.84rem;font-weight:600;color:#1e293b;">{{ item.mp|tr:"name" }}</div>
+            <div style="font-size:.74rem;color:#64748b;">{{ item.mp.dob|date:"d M" }}</div>
+            {% if item.is_today %}
+            <span class="badge mt-1" style="background:#ec4899;font-size:.67rem;">🎂 {% ui "আজ!" "Today!" %}</span>
+            {% elif item.passed %}
+            <span style="font-size:.7rem;color:#94a3b8;">{{ item.days }} {% ui "দিন আগে" "days ago" %}</span>
+            {% elif item.days == 1 %}
+            <span class="badge bg-warning text-dark mt-1" style="font-size:.67rem;">{% ui "আগামীকাল" "Tomorrow" %}</span>
+            {% elif item.days <= 5 %}
+            <span class="badge bg-warning text-dark mt-1" style="font-size:.67rem;">{{ item.days }} {% ui "দিন পর" "days" %}</span>
+            {% else %}
+            <span style="font-size:.7rem;color:#94a3b8;">{{ item.days }} {% ui "দিন পর" "days left" %}</span>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <!-- ══ ROW 4: RECENT MPs ═════════════════════════════════════════════════════ -->
 <div class="row g-3 mb-3">
   <div class="col-12">
@@ -394,6 +444,11 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
 <script>
 (function () {
+  /* ── report URLs for click-through ──────────────────────────── */
+  const URL_PARTY_WISE   = "{% url 'reports:party_wise' %}";
+  const URL_DIST_WISE    = "{% url 'reports:district_wise' %}";
+  const URL_ALL_MP       = "{% url 'reports:all_mp' %}";
+
   /* ── colour palettes ─────────────────────────────────────────── */
   const TEAL_SHADES  = ['#0d9488','#14b8a6','#2dd4bf','#5eead4','#99f6e4','#ccfbf1'];
   const PARTY_COLORS = ['#0d9488','#3b82f6','#f59e0b','#ef4444','#8b5cf6',
@@ -414,7 +469,14 @@
 
   new ApexCharts(document.getElementById('chart-party'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'donut', height: 300 },
+    chart: { ...commonOpts.chart, type: 'donut', height: 300,
+      events: { dataPointSelection: function(e, ctx, cfg) {
+        if (partyEmpty) return;
+        const id = partyRaw.ids[cfg.dataPointIndex];
+        if (!id) return;
+        window.location.href = URL_PARTY_WISE + '?party=' + id;
+      }}
+    },
     series: partyEmpty ? [1] : partyRaw.values,
     labels: partyEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : partyRaw.labels,
     colors: partyEmpty ? ['#e2e8f0'] : PARTY_COLORS,
@@ -438,7 +500,14 @@
 
   new ApexCharts(document.getElementById('chart-division'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'bar', height: 300 },
+    chart: { ...commonOpts.chart, type: 'bar', height: 300,
+      events: { dataPointSelection: function(e, ctx, cfg) {
+        if (divEmpty) return;
+        const id = divRaw.ids[cfg.dataPointIndex];
+        if (!id) return;
+        window.location.href = URL_DIST_WISE + '?division=' + id;
+      }}
+    },
     series: [{ name: '{% ui "সদস্য" "MPs" %}',
                data: divEmpty ? [] : divRaw.values }],
     xaxis: { categories: divEmpty ? [] : divRaw.labels,
@@ -460,7 +529,14 @@
 
   new ApexCharts(document.getElementById('chart-gender'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'donut', height: 180 },
+    chart: { ...commonOpts.chart, type: 'donut', height: 180,
+      events: { dataPointSelection: function(e, ctx, cfg) {
+        if (genEmpty) return;
+        const id = genRaw.ids[cfg.dataPointIndex];
+        if (!id) return;
+        window.location.href = URL_ALL_MP + '?gender=' + id;
+      }}
+    },
     series: genEmpty ? [1] : genRaw.values,
     labels: genEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : genRaw.labels,
     colors: genEmpty ? ['#e2e8f0'] : GENDER_COLORS,
@@ -489,7 +565,14 @@
 
   new ApexCharts(document.getElementById('chart-times'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'bar', height: 240 },
+    chart: { ...commonOpts.chart, type: 'bar', height: 240,
+      events: { dataPointSelection: function(e, ctx, cfg) {
+        if (timesEmpty) return;
+        const id = timesRaw.ids[cfg.dataPointIndex];
+        if (id === null || id === undefined) return;
+        window.location.href = URL_ALL_MP + '?times_elected=' + id;
+      }}
+    },
     series: [{ name: '{% ui "সদস্য সংখ্যা" "No. of MPs" %}',
                data: timesEmpty ? [] : timesRaw.values }],
     xaxis: { categories: timesLabels,
@@ -511,7 +594,14 @@
 
   new ApexCharts(document.getElementById('chart-religion'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'donut', height: 240 },
+    chart: { ...commonOpts.chart, type: 'donut', height: 240,
+      events: { dataPointSelection: function(e, ctx, cfg) {
+        if (relEmpty) return;
+        const id = relRaw.ids[cfg.dataPointIndex];
+        if (!id) return;
+        window.location.href = URL_ALL_MP + '?religion=' + id;
+      }}
+    },
     series: relEmpty ? [1] : relRaw.values,
     labels: relEmpty ? ['{% ui "তথ্য নেই" "No data" %}'] : relRaw.labels,
     colors: relEmpty ? ['#e2e8f0'] : RELIG_COLORS,
@@ -531,5 +621,27 @@
   }).render();
 
 })();
+</script>
+
+<script>
+/* ── KPI count-up animation ──────────────────────────────────────── */
+(function () {
+  var DURATION = 1100;
+  document.querySelectorAll('[data-countup]').forEach(function (el) {
+    var target = parseInt(el.dataset.countup, 10) || 0;
+    if (target === 0) return;
+    var start = null;
+    el.textContent = '0';
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / DURATION, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  });
+}());
 </script>
 {% endblock %}

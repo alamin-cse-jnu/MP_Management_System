@@ -94,8 +94,17 @@
         {% endfor %}
       </select>
     </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "ধর্ম" "Religion" %}</label>
+      <select name="religion" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সব ধর্ম" "All" %}</option>
+        {% for r in religions %}
+        <option value="{{ r.pk }}" {% if r.pk|stringformat:"s" == religion_id %}selected{% endif %}>{{ r|tr:"name" }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <!-- Column selector -->
-    <div class="col-md-8">
+    <div class="col-md-6">
       <label class="form-label fw-medium mb-1" style="font-size:.85rem;">কলাম নির্বাচন করুন</label>
       <div class="d-flex flex-wrap gap-2">
         {% for col_key, col_label in ALL_COLS %}
@@ -112,8 +121,49 @@
   </div>
 </div>
 
+<!-- Active filter chips -->
+{% if party_id or gender_id or religion_id or division_id or district_id or member_type or times_elected or q %}
+<div class="d-flex flex-wrap gap-2 mb-2 align-items-center no-print">
+  <span class="text-muted" style="font-size:.82rem;"><i class="bi bi-funnel-fill me-1"></i>{% ui "ফিল্টার:" "Filters:" %}</span>
+  {% if party_id %}{% for p in parties %}{% if p.pk|stringformat:"s" == party_id %}
+  <a href="?parliament={{ parliament_id }}&gender={{ gender_id }}&religion={{ religion_id }}&division={{ division_id }}&district={{ district_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#0d9488;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "দল:" "Party:" %} {{ p|tr:"name" }} <i class="bi bi-x"></i></a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if gender_id %}{% for g in genders %}{% if g.pk|stringformat:"s" == gender_id %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&religion={{ religion_id }}&division={{ division_id }}&district={{ district_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#3b82f6;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "লিঙ্গ:" "Gender:" %} {{ g|tr:"name" }} <i class="bi bi-x"></i></a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if religion_id %}{% for r in religions %}{% if r.pk|stringformat:"s" == religion_id %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&division={{ division_id }}&district={{ district_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#8b5cf6;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "ধর্ম:" "Religion:" %} {{ r|tr:"name" }} <i class="bi bi-x"></i></a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if division_id %}{% for d in divisions %}{% if d.pk|stringformat:"s" == division_id %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&religion={{ religion_id }}&district={{ district_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#f59e0b;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "বিভাগ:" "Division:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i></a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if district_id %}{% for d in districts %}{% if d.pk|stringformat:"s" == district_id %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&religion={{ religion_id }}&division={{ division_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#ef4444;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "জেলা:" "District:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i></a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if member_type %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&religion={{ religion_id }}&division={{ division_id }}&district={{ district_id }}&times_elected={{ times_elected }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#64748b;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% if member_type == 'direct' %}{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}{% else %}{% ui "সংরক্ষিত" "Reserved" %}{% endif %} <i class="bi bi-x"></i></a>
+  {% endif %}
+  {% if times_elected %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&religion={{ religion_id }}&division={{ division_id }}&district={{ district_id }}&member_type={{ member_type }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#ec4899;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "নির্বাচিত:" "Elected:" %} {{ times_elected }}x <i class="bi bi-x"></i></a>
+  {% endif %}
+  {% if q %}
+  <a href="?parliament={{ parliament_id }}&party={{ party_id }}&gender={{ gender_id }}&religion={{ religion_id }}&division={{ division_id }}&district={{ district_id }}&member_type={{ member_type }}&times_elected={{ times_elected }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1" style="background:#475569;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    "{{ q }}" <i class="bi bi-x"></i></a>
+  {% endif %}
+  <a href="?parliament={{ parliament_id }}" class="text-muted ms-1" style="font-size:.8rem;">
+    <i class="bi bi-x-circle me-1"></i>{% ui "সব সরান" "Clear all" %}</a>
+</div>
+{% endif %}
+
 <!-- Export bar -->
-{% with base_url="?parliament="|add:parliament_id|add:"&party="|add:party_id|add:"&gender="|add:gender_id|add:"&district="|add:district_id|add:"&division="|add:division_id|add:"&member_type="|add:member_type|add:"&q="|add:q %}
+{% with base_url="?parliament="|add:parliament_id|add:"&party="|add:party_id|add:"&gender="|add:gender_id|add:"&religion="|add:religion_id|add:"&district="|add:district_id|add:"&division="|add:division_id|add:"&member_type="|add:member_type|add:"&times_elected="|add:times_elected|add:"&q="|add:q %}
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2 no-print">
   <small class="text-muted">{% ui "মোট ফলাফল:" "Total results:" %} <strong>{{ total_count }}</strong> টি</small>
   <div class="d-flex gap-2 flex-wrap">

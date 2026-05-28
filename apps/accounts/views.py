@@ -1,13 +1,15 @@
 import json
+import datetime
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from apps.accounts.mixins import perm_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Count, Prefetch, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from .forms import (
@@ -88,7 +90,7 @@ def dashboard(request):
         party_stats = list(
             ElectionInfo.objects
             .filter(parliament=active_parliament, mp__is_active=True, party__isnull=False)
-            .values('party__name_bn')
+            .values('party__id', 'party__name_bn')
             .annotate(count=Count('id'))
             .order_by('-count')[:12]
         )
@@ -97,7 +99,7 @@ def dashboard(request):
     division_stats = list(
         mp_qs
         .filter(home_district__division__isnull=False)
-        .values('home_district__division__name_bn')
+        .values('home_district__division__id', 'home_district__division__name_bn')
         .annotate(count=Count('id'))
         .order_by('-count')
     )
@@ -105,7 +107,7 @@ def dashboard(request):
     # Gender distribution
     gender_stats = list(
         mp_qs.filter(gender__isnull=False)
-        .values('gender__name_en', 'gender__name_bn')
+        .values('gender__id', 'gender__name_en', 'gender__name_bn')
         .annotate(count=Count('id'))
         .order_by('-count')
     )
@@ -113,7 +115,7 @@ def dashboard(request):
     # Religion distribution
     religion_stats = list(
         mp_qs.filter(religion__isnull=False)
-        .values('religion__name_en', 'religion__name_bn')
+        .values('religion__id', 'religion__name_en', 'religion__name_bn')
         .annotate(count=Count('id'))
         .order_by('-count')
     )
@@ -131,36 +133,71 @@ def dashboard(request):
 
     # ── Chart JSON data ────────────────────────────────────────────────────────
     # Party chart — top 9 + "Others" bucket
+    p_ids    = [r['party__id'] for r in party_stats[:9]]
     p_labels = [r['party__name_bn'] or 'দল নেই' for r in party_stats[:9]]
     p_values = [r['count'] for r in party_stats[:9]]
     if len(party_stats) > 9:
+        p_ids.append(None)
         p_labels.append('অন্যান্য')
         p_values.append(sum(r['count'] for r in party_stats[9:]))
-    party_chart_data = json.dumps({'labels': p_labels, 'values': p_values}, ensure_ascii=False)
+    party_chart_data = json.dumps({'labels': p_labels, 'values': p_values, 'ids': p_ids}, ensure_ascii=False)
 
     # Division chart
     division_chart_data = json.dumps({
         'labels': [r['home_district__division__name_bn'] or 'অজ্ঞাত' for r in division_stats],
         'values': [r['count'] for r in division_stats],
+        'ids':    [r['home_district__division__id'] for r in division_stats],
     }, ensure_ascii=False)
 
     # Gender chart
     gender_chart_data = json.dumps({
         'labels': [r['gender__name_bn'] or r['gender__name_en'] or 'অজ্ঞাত' for r in gender_stats],
         'values': [r['count'] for r in gender_stats],
+        'ids':    [r['gender__id'] for r in gender_stats],
     }, ensure_ascii=False)
 
     # Religion chart
     religion_chart_data = json.dumps({
         'labels': [r['religion__name_bn'] or r['religion__name_en'] or 'অজ্ঞাত' for r in religion_stats],
         'values': [r['count'] for r in religion_stats],
+        'ids':    [r['religion__id'] for r in religion_stats],
     }, ensure_ascii=False)
 
     # Times elected chart
     times_chart_data = json.dumps({
         'labels': [str(r['times_elected']) for r in times_stats],
         'values': [r['count'] for r in times_stats],
+        'ids':    [r['times_elected'] for r in times_stats],
     }, ensure_ascii=False)
+
+    # Birthday this month
+    today = timezone.localdate()
+    birthday_mps = list(
+        mp_qs.filter(dob__isnull=False, dob__month=today.month)
+        .select_related('home_district')
+        .prefetch_related(Prefetch('election_infos',
+            queryset=ElectionInfo.objects.select_related('party')))
+        .order_by('dob__day')[:12]
+    )
+    birthday_data = []
+    for mp in birthday_mps:
+        try:
+            bday = mp.dob.replace(year=today.year)
+        except ValueError:
+            bday = datetime.date(today.year, 3, 1)
+        if bday == today:
+            days, is_today, passed = 0, True, False
+        elif bday < today:
+            days, is_today, passed = (today - bday).days, False, True
+        else:
+            days, is_today, passed = (bday - today).days, False, False
+        birthday_data.append({
+            'mp':       mp,
+            'day':      mp.dob.day,
+            'days':     days,
+            'is_today': is_today,
+            'passed':   passed,
+        })
 
     # Recent MPs (last 6 added)
     recent_mps = list(
@@ -200,7 +237,37 @@ def dashboard(request):
         'times_chart_data':    times_chart_data,
         'recent_mps':          recent_mps,
         'recent_activity':     recent_activity,
+        'birthday_data':       birthday_data,
+        'today':               today,
     })
+
+
+def mp_search(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'results': []})
+    q = request.GET.get('q', '').strip()
+    if len(q) < 2:
+        return JsonResponse({'results': []})
+    from apps.mp.models import MP, ElectionInfo as EI
+    qs = MP.objects.filter(
+        Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q),
+        is_active=True,
+    ).prefetch_related(
+        Prefetch('election_infos', queryset=EI.objects.select_related('party', 'constituency'))
+    )[:8]
+    from django.urls import reverse
+    results = []
+    for mp in qs:
+        ei = next(iter(mp.election_infos.all()), None)
+        results.append({
+            'name_bn':   mp.name_bn,
+            'name_en':   mp.name_en or '',
+            'mp_id':     mp.mp_id,
+            'photo_url': mp.photo.url if mp.photo else '',
+            'party':     (ei.party.name_bn if ei and ei.party else ''),
+            'url':       reverse('mp:mp_detail', args=[mp.pk]),
+        })
+    return JsonResponse({'results': results})
 
 
 @require_POST

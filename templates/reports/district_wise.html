@@ -35,6 +35,29 @@
     <div class="col-md-2"><button type="submit" class="btn btn-primary btn-sm w-100 mt-3">{% ui "খুঁজুন" "Search" %}</button></div>
   </div>
 </div>
+{% if division_id or district_id or q %}
+<div class="d-flex flex-wrap gap-2 mb-2 align-items-center">
+  <span class="text-muted" style="font-size:.82rem;"><i class="bi bi-funnel-fill me-1"></i>{% ui "ফিল্টার:" "Filters:" %}</span>
+  {% if division_id %}{% for d in divisions %}{% if d.pk|stringformat:"s" == division_id %}
+  <a href="?parliament={{ parliament_id }}&district={{ district_id }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+     style="background:#0d9488;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "বিভাগ:" "Division:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i>
+  </a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if district_id %}{% for d in districts %}{% if d.pk|stringformat:"s" == district_id %}
+  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+     style="background:#3b82f6;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    {% ui "জেলা:" "District:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i>
+  </a>
+  {% endif %}{% endfor %}{% endif %}
+  {% if q %}
+  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+     style="background:#64748b;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
+    "{{ q }}" <i class="bi bi-x"></i>
+  </a>
+  {% endif %}
+</div>
+{% endif %}
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
   <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি</small>
   <div class="d-flex gap-2">

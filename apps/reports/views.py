@@ -10,7 +10,7 @@ from apps.institution.models import InstitutionAssignment
 from apps.master.models import (
     CommitteePosition, Country, District, Division, Gender,
     GovernmentInstitution, MinisterType, Ministry, PoliticalParty,
-    ProfessionalQualification, StandingCommittee, TravelType,
+    ProfessionalQualification, Religion, StandingCommittee, TravelType,
 )
 from apps.ministry.models import MinistryAssignment
 from apps.mp.models import MP, Address, ElectionInfo
@@ -133,9 +133,11 @@ def all_mp(request):
     selected_cols = request.GET.getlist('col') or ALL_MP_DEFAULT
     party_id      = request.GET.get('party', '')
     gender_id     = request.GET.get('gender', '')
+    religion_id   = request.GET.get('religion', '')
     district_id   = request.GET.get('district', '')
     division_id   = request.GET.get('division', '')
     member_type   = request.GET.get('member_type', '')
+    times_elected = request.GET.get('times_elected', '')
     q             = request.GET.get('q', '').strip()
 
     qs = _mp_qs_base(parliament_id)
@@ -143,12 +145,19 @@ def all_mp(request):
         qs = qs.filter(election_infos__party_id=party_id)
     if gender_id:
         qs = qs.filter(gender_id=gender_id)
+    if religion_id:
+        qs = qs.filter(religion_id=religion_id)
     if district_id:
         qs = qs.filter(home_district_id=district_id)
     if division_id:
         qs = qs.filter(home_district__division_id=division_id)
     if member_type:
         qs = qs.filter(member_type=member_type)
+    if times_elected:
+        try:
+            qs = qs.filter(election_infos__times_elected=int(times_elected))
+        except ValueError:
+            pass
     if q:
         qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q))
     qs = qs.distinct()
@@ -159,13 +168,16 @@ def all_mp(request):
         'parliament_id':  parliament_id,
         'party_id':       party_id,
         'gender_id':      gender_id,
+        'religion_id':    religion_id,
         'district_id':    district_id,
         'division_id':    division_id,
         'member_type':    member_type,
+        'times_elected':  times_elected,
         'q':              q,
         'parliaments':    _parliament_qs(),
         'parties':        PoliticalParty.objects.filter(is_active=True),
         'genders':        Gender.objects.filter(is_active=True),
+        'religions':      Religion.objects.filter(is_active=True),
         'districts':      District.objects.filter(is_active=True).select_related('division'),
         'divisions':      Division.objects.filter(is_active=True),
         'total_count':    qs.count(),

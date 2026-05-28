@@ -107,6 +107,22 @@ class MP(models.Model):
     def current_election(self):
         return self.election_infos.filter(parliament=self.parliament).first()
 
+    @property
+    def profile_score(self):
+        checks = [
+            bool(self.photo),
+            bool(self.dob),
+            bool(self.gender_id),
+            bool(self.religion_id),
+            bool(self.home_district_id),
+            bool(self.nid),
+            bool(self.father_name_bn),
+            bool(self.mother_name_bn),
+            bool(self.blood_group_id),
+            bool(self.marital_status_id),
+        ]
+        return round(sum(checks) / len(checks) * 100)
+
 
 class ElectionInfo(models.Model):
     mp           = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='election_infos')
