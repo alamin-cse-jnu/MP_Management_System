@@ -60,7 +60,8 @@
       "Bash(docker exec *)",
       "Bash(docker restart *)",
       "Bash(start *)",
-      "PowerShell(pip install *)"
+      "PowerShell(pip install *)",
+      "Bash(xargs wc -l)"
     ]
   }
 }

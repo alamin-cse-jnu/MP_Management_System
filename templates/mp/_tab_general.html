@@ -9,7 +9,7 @@
     </button>
   </div>
 
-  <div class="d-flex gap-4 mb-3">
+  <div class="d-flex flex-column flex-sm-row gap-3 mb-3">
     {# Photo #}
     <div style="flex-shrink:0;">
       {% if mp.photo %}
@@ -24,7 +24,7 @@
     </div>
 
     {# Core identity fields #}
-    <div class="flex-grow-1">
+    <div class="flex-grow-1 table-responsive">
       <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
         <tbody>
           <tr>
@@ -50,6 +50,7 @@
     </div>
   </div>
 
+  <div class="table-responsive">
   <table class="table table-sm table-bordered mb-0" style="font-size:.875rem;">
     <tbody>
       <tr>
@@ -137,6 +138,7 @@
       {% endif %}
     </tbody>
   </table>
+  </div>
 </div>
 
 {# ── EDIT PANEL ────────────────────────────────────────────────────────────── #}

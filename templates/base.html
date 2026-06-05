@@ -30,12 +30,13 @@
     .global-search-wrap { position: relative; }
     .global-search-input {
       border: none; background: #f1f5f9; border-radius: 0 6px 6px 0 !important;
-      min-width: 210px; font-size: .85rem;
+      width: 210px; font-size: .85rem;
     }
     .global-search-input:focus { background: #fff; box-shadow: 0 0 0 2px rgba(13,148,136,.25); }
     .global-search-icon { border: none; background: #f1f5f9; color: #64748b; border-radius: 6px 0 0 6px !important; }
     .global-search-results {
-      position: absolute; top: calc(100% + 6px); left: 0; min-width: 340px;
+      position: absolute; top: calc(100% + 6px); left: 0;
+      min-width: 100%; width: max-content; max-width: min(400px, calc(100vw - 24px));
       background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
       box-shadow: 0 8px 24px rgba(0,0,0,.12); z-index: 9999; overflow: hidden;
     }
@@ -206,6 +207,9 @@
   </div>
 </div>
 
+<!-- Sidebar backdrop overlay (mobile/tablet) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
 <main class="mp-main" id="mainContent">
 
@@ -236,10 +240,33 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-  // Sidebar toggle
-  document.getElementById('sidebarToggle').addEventListener('click', function () {
-    document.body.classList.toggle('sidebar-collapsed');
-  });
+  // Sidebar toggle — desktop collapses to 64px; mobile shows overlay
+  (function () {
+    var toggle  = document.getElementById('sidebarToggle');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+
+    toggle.addEventListener('click', function () {
+      if (window.innerWidth <= 991) {
+        sidebar.classList.toggle('show');
+        overlay.classList.toggle('show');
+      } else {
+        document.body.classList.toggle('sidebar-collapsed');
+      }
+    });
+
+    overlay.addEventListener('click', function () {
+      sidebar.classList.remove('show');
+      overlay.classList.remove('show');
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 991) {
+        sidebar.classList.remove('show');
+        overlay.classList.remove('show');
+      }
+    });
+  }());
 
   // ── Select2 init ──────────────────────────────────────────────────────────
   function initSelect2(root) {

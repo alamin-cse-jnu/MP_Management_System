@@ -46,7 +46,7 @@
 {% block content %}
 
 <!-- Page header -->
-<div class="d-flex align-items-center justify-content-between mb-4">
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
   <div>
     <h4 class="mb-0 fw-bold">{% ui "ড্যাশবোর্ড" "Dashboard" %}</h4>
     <small class="text-muted">
@@ -138,7 +138,7 @@
 <div class="row g-3 mb-3">
 
   <!-- Party distribution donut -->
-  <div class="col-lg-5">
+  <div class="col-12 col-md-6 col-lg-5">
     <div class="chart-card">
       <div class="chart-card-header">
         <span><i class="bi bi-flag-fill icon"></i>{% ui "দল ভিত্তিক বিতরণ" "Party-wise Distribution" %}</span>
@@ -153,7 +153,7 @@
   </div>
 
   <!-- Division horizontal bar -->
-  <div class="col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4">
     <div class="chart-card">
       <div class="chart-card-header">
         <span><i class="bi bi-geo-alt-fill icon"></i>{% ui "বিভাগ ভিত্তিক বিতরণ" "Division-wise Distribution" %}</span>
@@ -168,7 +168,7 @@
   </div>
 
   <!-- Gender + member type summary -->
-  <div class="col-lg-3">
+  <div class="col-12 col-lg-3">
     <div class="chart-card mb-3">
       <div class="chart-card-header">
         <span><i class="bi bi-gender-ambiguous icon"></i>{% ui "লিঙ্গ বিতরণ" "Gender Distribution" %}</span>
@@ -214,7 +214,7 @@
 <div class="row g-3 mb-3">
 
   <!-- Times elected column chart -->
-  <div class="col-lg-5">
+  <div class="col-12 col-md-6 col-lg-5">
     <div class="chart-card">
       <div class="chart-card-header">
         <span><i class="bi bi-bar-chart-fill icon"></i>{% ui "কতবার নির্বাচিত বিতরণ" "Times Elected Distribution" %}</span>
@@ -226,7 +226,7 @@
   </div>
 
   <!-- Religion donut -->
-  <div class="col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4">
     <div class="chart-card">
       <div class="chart-card-header">
         <span><i class="bi bi-heart-fill icon"></i>{% ui "ধর্ম ভিত্তিক বিতরণ" "Religion Distribution" %}</span>
@@ -238,7 +238,7 @@
   </div>
 
   <!-- Summary stats panel -->
-  <div class="col-lg-3">
+  <div class="col-12 col-lg-3">
     <div class="chart-card h-100">
       <div class="chart-card-header">
         <span><i class="bi bi-lightning-fill icon"></i>{% ui "দ্রুত অ্যাকশন" "Quick Actions" %}</span>
@@ -288,7 +288,7 @@
       <div class="d-flex flex-wrap gap-3 p-3">
         {% for item in birthday_data %}
         <a href="{% url 'mp:mp_detail' item.mp.pk %}" class="text-decoration-none"
-           style="display:flex;align-items:center;gap:10px;background:{% if item.is_today %}#fdf2f8{% else %}#f8fafc{% endif %};border-radius:10px;padding:10px 14px;border:1px solid {% if item.is_today %}#fce7f3{% else %}#e2e8f0{% endif %};min-width:190px;max-width:230px;">
+           style="display:flex;align-items:center;gap:10px;background:{% if item.is_today %}#fdf2f8{% else %}#f8fafc{% endif %};border-radius:10px;padding:10px 14px;border:1px solid {% if item.is_today %}#fce7f3{% else %}#e2e8f0{% endif %};min-width:150px;max-width:230px;flex:1 1 150px;">
           {% if item.mp.photo %}
           <img src="{{ item.mp.photo.url }}" style="width:36px;height:45px;object-fit:cover;border-radius:5px;flex-shrink:0;">
           {% else %}

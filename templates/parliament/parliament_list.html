@@ -4,7 +4,7 @@
 {% block title %}{% ui "সংসদ তালিকা" "Parliament List" %}{% endblock %}
 
 {% block content %}
-<div class="d-flex align-items-center justify-content-between mb-4">
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
@@ -21,6 +21,7 @@
 </div>
 
 <div class="mp-card p-0">
+  <div class="table-responsive">
   <table class="mp-table">
     <thead>
       <tr>
@@ -79,6 +80,7 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 
 {% if parliaments %}
