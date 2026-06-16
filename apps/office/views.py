@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from apps.accounts.mixins import perm_required
 from apps.mp.models import MP
-from .forms import OfficeAddressForm
+from .forms import OfficeAddressForm, PAStaffFormSet
 from .models import ParliamentOfficeAddress
 
 
@@ -16,17 +16,26 @@ def office_edit(request, mp_pk):
     except ParliamentOfficeAddress.DoesNotExist:
         obj = None
 
-    form = OfficeAddressForm(request.POST or None, instance=obj)
-    if form.is_valid():
-        addr = form.save(commit=False)
-        addr.mp = mp
-        addr.save()
-        messages.success(request, 'সংসদ অফিস ঠিকানা সংরক্ষিত হয়েছে।')
-        return redirect(reverse('mp:mp_detail', args=[mp.pk]) + '?active=tab-general')
+    if request.method == 'POST':
+        form    = OfficeAddressForm(request.POST, instance=obj)
+        formset = PAStaffFormSet(request.POST, instance=obj, prefix='pa_staff')
+        if form.is_valid() and formset.is_valid():
+            addr = form.save(commit=False)
+            addr.mp = mp
+            addr.save()
+            formset.instance = addr
+            formset.save()
+            messages.success(request, 'সংসদ অফিস ঠিকানা সংরক্ষিত হয়েছে।')
+            return redirect(reverse('mp:mp_detail', args=[mp.pk]) + '?active=tab-general')
+    else:
+        form    = OfficeAddressForm(instance=obj)
+        formset = PAStaffFormSet(instance=obj, prefix='pa_staff')
+
     return render(request, 'office/office_form.html', {
-        'form':      form,
-        'mp':        mp,
-        'obj':       obj,
+        'form':     form,
+        'formset':  formset,
+        'mp':       mp,
+        'obj':      obj,
         'title_bn': 'সংসদ অফিস ঠিকানা',
-        'title_en':  'Parliament Office Address',
+        'title_en': 'Parliament Office Address',
     })

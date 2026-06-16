@@ -13,8 +13,9 @@
     <h4 class="mb-0 fw-bold">{% ui "অডিট লগ" "Audit Log" %}</h4>
     <small class="text-muted">{% ui "Audit Log — সিস্টেম কার্যক্রম পর্যবেক্ষণ" "Audit Log — System Activity Monitor" %}</small>
   </div>
-  <div class="d-flex gap-2">
+  <div class="d-flex align-items-center gap-3">
     <span class="badge bg-secondary fs-6">{% ui "মোট" "Total" %}: {{ total_count }}</span>
+    {% include "reports/_per_page_selector.html" %}
   </div>
 </div>
 

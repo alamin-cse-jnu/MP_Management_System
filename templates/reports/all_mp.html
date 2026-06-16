@@ -165,7 +165,10 @@
 <!-- Export bar -->
 {% with base_url="?parliament="|add:parliament_id|add:"&party="|add:party_id|add:"&gender="|add:gender_id|add:"&religion="|add:religion_id|add:"&district="|add:district_id|add:"&division="|add:division_id|add:"&member_type="|add:member_type|add:"&times_elected="|add:times_elected|add:"&q="|add:q %}
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2 no-print">
-  <small class="text-muted">{% ui "মোট ফলাফল:" "Total results:" %} <strong>{{ total_count }}</strong> টি</small>
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <small class="text-muted">{% ui "মোট ফলাফল:" "Total results:" %} <strong>{{ total_count }}</strong> টি</small>
+    {% include "reports/_per_page_selector.html" %}
+  </div>
   <div class="d-flex gap-2 flex-wrap">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
       <i class="bi bi-printer-fill me-1"></i>প্রিন্ট

@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import inlineformset_factory
 
-from .models import ParliamentOfficeAddress
+from .models import MPPAStaff, ParliamentOfficeAddress
 
 
 class _BootstrapMixin:
@@ -28,6 +29,20 @@ class OfficeAddressForm(_BootstrapMixin, forms.ModelForm):
             'room_number', 'building_bn', 'building_en',
             'address_bn', 'address_en',
             'telephone', 'extension', 'fax', 'official_email',
-            'secretary_name_bn', 'secretary_name_en', 'secretary_mobile',
             'is_active',
         ]
+
+
+class MPPAStaffForm(_BootstrapMixin, forms.ModelForm):
+    class Meta:
+        model  = MPPAStaff
+        fields = ['name_bn', 'name_en', 'designation', 'mobile', 'ordering']
+
+
+PAStaffFormSet = inlineformset_factory(
+    ParliamentOfficeAddress,
+    MPPAStaff,
+    form=MPPAStaffForm,
+    extra=1,
+    can_delete=True,
+)

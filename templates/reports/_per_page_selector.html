@@ -1,0 +1,25 @@
+{% load lang_tags %}{% with cur=request.GET.per_page|default:"25" %}<div class="d-flex align-items-center gap-1 no-print">
+  <label class="mb-0 text-muted" style="font-size:.82rem;white-space:nowrap;">{% ui "প্রতি পাতা:" "Per page:" %}</label>
+  <select class="form-select form-select-sm" style="width:auto;min-width:72px;"
+          onchange="(function(v){var u=new URL(location);u.searchParams.set('per_page',v);u.searchParams.delete('page');location=u;})(this.value)">
+    <option value="25"  {% if cur == "25"  %}selected{% endif %}>25</option>
+    <option value="50"  {% if cur == "50"  %}selected{% endif %}>50</option>
+    <option value="100" {% if cur == "100" %}selected{% endif %}>100</option>
+    <option value="350" {% if cur == "350" %}selected{% endif %}>350</option>
+  </select>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var p = new URLSearchParams(location.search).get('per_page');
+  if (p) {
+    document.querySelectorAll('.pagination a.page-link').forEach(function (a) {
+      try {
+        var u = new URL(a.href, location);
+        u.searchParams.set('per_page', p);
+        a.href = u.toString();
+      } catch (e) {}
+    });
+  }
+});
+</script>
+{% endwith %}

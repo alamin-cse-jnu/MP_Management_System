@@ -100,17 +100,20 @@
 
 <!-- ══ RESULTS ══════════════════════════════════════════════════════════════ -->
 {% if searched %}
-<div class="d-flex align-items-center justify-content-between mb-2">
-  <span class="text-muted" style="font-size:.875rem;">
-    {% if is_en == 'en' %}
-      Total family members: <strong>{{ total_count }}</strong>
-      (from <strong>{{ mp_count }}</strong> MPs)
-    {% else %}
-      মোট পরিবার সদস্য: <strong>{{ total_count }}</strong> জন
-      (<strong>{{ mp_count }}</strong> জন এমপির পরিবার)
-    {% endif %}
-    {% if total_count == 0 %}— {% if is_en == 'en' %}No records found.{% else %}কোনো তথ্য পাওয়া যায়নি।{% endif %}{% endif %}
-  </span>
+<div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <span class="text-muted" style="font-size:.875rem;">
+      {% if is_en == 'en' %}
+        Total family members: <strong>{{ total_count }}</strong>
+        (from <strong>{{ mp_count }}</strong> MPs)
+      {% else %}
+        মোট পরিবার সদস্য: <strong>{{ total_count }}</strong> জন
+        (<strong>{{ mp_count }}</strong> জন এমপির পরিবার)
+      {% endif %}
+      {% if total_count == 0 %}— {% if is_en == 'en' %}No records found.{% else %}কোনো তথ্য পাওয়া যায়নি।{% endif %}{% endif %}
+    </span>
+    {% include "reports/_per_page_selector.html" %}
+  </div>
 </div>
 
 {% if page_obj %}

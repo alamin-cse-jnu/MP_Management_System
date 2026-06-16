@@ -37,7 +37,10 @@
   </div>
 </div>
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
-  <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি</small>
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি</small>
+    {% include "reports/_per_page_selector.html" %}
+  </div>
   <div class="d-flex gap-2">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}</button>
     <a href="?parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>

@@ -61,7 +61,17 @@
       "Bash(docker restart *)",
       "Bash(start *)",
       "PowerShell(pip install *)",
-      "Bash(xargs wc -l)"
+      "Bash(xargs wc -l)",
+      "PowerShell(docker exec mp_management_system-db-1 *)",
+      "PowerShell(docker start mp_management_system-web-1 *)",
+      "PowerShell(docker exec mp_management_system-web-1 *)",
+      "Bash(python manage.py migrate)",
+      "Bash(python3 *)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(git -C \"E:/projects/MP_Management_System\" checkout --ours mp_data.sql)",
+      "Bash(git -C \"E:/projects/MP_Management_System\" add mp_data.sql .claude/settings.local.json)",
+      "Bash(git *)",
+      "Bash(GIT_EDITOR=true git *)"
     ]
   }
 }

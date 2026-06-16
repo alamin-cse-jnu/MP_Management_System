@@ -1,0 +1,38 @@
+{% extends "base_print.html" %}
+{% load lang_tags %}
+{% block title %}{% ui "পিএ/পিএস তালিকা" "PA/PS List" %}{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:4px;">{% ui "পিএ/পিএস তালিকা" "PA/PS List" %}</h2>
+<p style="text-align:center;font-size:10pt;color:#555;">{% ui "ব্যক্তিগত সহকারী ও ব্যক্তিগত সচিব" "Personal Assistants &amp; Private Secretaries" %}</p>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th>
+      <th>{% ui "নাম (ইংরেজিতে)" "Name (English)" %}</th>
+      <th>{% ui "পদবী" "Designation" %}</th>
+      <th>{% ui "মোবাইল" "Mobile" %}</th>
+      <th>{% ui "এমপির নাম" "MP Name" %}</th>
+      <th>{% ui "নির্বাচনী এলাকা / অফিস" "Constituency / Office" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for staff in object_list %}
+    {% with mp=staff.office.mp ei=staff.office.mp.election_infos.all.0 %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ staff.name_bn }}</td>
+      <td>{{ staff.name_en|default:"—" }}</td>
+      <td>{% if staff.designation %}{{ staff.designation|tr:"name" }}{% else %}—{% endif %}</td>
+      <td>{{ staff.mobile|default:"—" }}</td>
+      <td>{{ mp|tr:"name" }}</td>
+      <td>{% if ei and ei.constituency %}{{ ei.constituency|tr:"display" }}{% else %}—{% endif %}</td>
+    </tr>
+    {% endwith %}
+    {% empty %}
+    <tr><td colspan="7" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p style="font-size:9pt;color:#777;margin-top:8px;">{% ui "মোট:" "Total:" %} {{ object_list|length }} {% ui "জন" "" %}</p>
+{% endblock %}

@@ -37,6 +37,7 @@ AUDITED_MODELS = [
     ('apps.travel',      'ForeignTour'),
     ('apps.travel',      'ForeignTourParticipant'),
     ('apps.office',      'ParliamentOfficeAddress'),
+    ('apps.office',      'MPPAStaff'),
     ('apps.parliament',  'Parliament'),
     ('apps.parliament',  'Constituency'),
     ('apps.accounts',    'CustomUser'),

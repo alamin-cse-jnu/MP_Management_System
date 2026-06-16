@@ -460,11 +460,14 @@
 <!-- ══ RESULTS TABLE ═════════════════════════════════════════════════════════ -->
 {% if searched %}
 
-<div class="d-flex align-items-center justify-content-between mb-2">
-  <span class="text-muted" style="font-size:.875rem;">
-    মোট ফলাফল: <strong>{{ total_count }}</strong> জন সংসদ সদস্য
-    {% if total_count == 0 %}— কোনো ফলাফল পাওয়া যায়নি।{% endif %}
-  </span>
+<div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <span class="text-muted" style="font-size:.875rem;">
+      মোট ফলাফল: <strong>{{ total_count }}</strong> জন সংসদ সদস্য
+      {% if total_count == 0 %}— কোনো ফলাফল পাওয়া যায়নি।{% endif %}
+    </span>
+    {% include "reports/_per_page_selector.html" %}
+  </div>
 </div>
 
 {% if page_obj %}

@@ -19,7 +19,7 @@ from .forms import (
     ProfessionForm, ProfessionalQualificationForm, ProficiencyLevelForm,
     ReligionForm, ResultTypeForm, StandingCommitteeForm,
     TravelPurposeForm, TravelTypeForm, UpazilaForm,
-    VaccineNameForm, SpecialRoleTypeForm,
+    VaccineNameForm, SpecialRoleTypeForm, PADesignationForm,
 )
 from .models import (
     BloodGroup, CommitteePosition, Country,
@@ -31,7 +31,7 @@ from .models import (
     Profession, ProfessionalQualification, ProficiencyLevel,
     Religion, ResultType, StandingCommittee,
     TravelPurpose, TravelType, Upazila,
-    VaccineName, SpecialRoleType,
+    VaccineName, SpecialRoleType, PADesignation,
 )
 
 # ── MASTER_SPECS ─────────────────────────────────────────────────────────────
@@ -292,6 +292,15 @@ MASTER_SPECS = [
         'title_en': 'Special Role Types',
         'extra_cols': [],
     },
+    # Office / PA-PS
+    {
+        'key': 'pa-designation',
+        'model': PADesignation,
+        'form': PADesignationForm,
+        'title_bn': 'পিএ/পিএস পদবী',
+        'title_en': 'PA/PS Designations',
+        'extra_cols': [],
+    },
 ]
 
 # Quick lookup by key
@@ -509,6 +518,9 @@ def master_home(request):
         {'title_bn': 'ভাষা', 'title_en': 'Language', 'icon': 'bi-translate', 'items': [
             _item('বিদেশি ভাষা', 'Foreign Languages', 'foreign_language_list'),
             _item('দক্ষতার মাত্রা', 'Proficiency Levels', 'proficiency_level_list'),
+        ]},
+        {'title_bn': 'অফিস / পিএ-পিএস', 'title_en': 'Office / PA-PS', 'icon': 'bi-person-badge-fill', 'items': [
+            _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'pa_designation_list'),
         ]},
     ]
     return render(request, 'master/home.html', {'sections': sections})

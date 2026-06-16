@@ -451,3 +451,18 @@ class SpecialRoleType(models.Model):
 
     def __str__(self):
         return f"{self.name_bn} ({self.name_en})"
+
+
+class PADesignation(models.Model):
+    """Designation for MP's Personal Assistant / Private Secretary."""
+    name_bn = models.CharField(max_length=200)
+    name_en = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering', 'name_bn']
+        verbose_name = 'PA/PS Designation'
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"

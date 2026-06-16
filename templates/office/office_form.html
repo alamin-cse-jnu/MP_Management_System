@@ -17,11 +17,14 @@
     <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
   </a>
 </div>
-<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
-  <div class="mp-card">
-    <div class="mp-card-header"><i class="bi bi-building-fill icon"></i> {% ui title_bn title_en %}</div>
-    <form method="post" novalidate>{% csrf_token %}
-      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+<div class="row justify-content-center"><div class="col-lg-9 col-md-11">
+  <form method="post" novalidate>{% csrf_token %}
+    {{ formset.management_form }}
+
+    <!-- Office Address Card -->
+    <div class="mp-card mb-4">
+      <div class="mp-card-header"><i class="bi bi-building-fill icon"></i> {% ui title_bn title_en %}</div>
+      {% if form.non_field_errors %}<div class="alert alert-danger mx-3 mt-3">{{ form.non_field_errors }}</div>{% endif %}
       <div class="row">
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">কক্ষ নম্বর</label>{{ form.room_number }}</div>
         <div class="col-md-5 mb-3"><label class="form-label fw-medium">ভবন (বাংলায়)</label>{{ form.building_bn }}</div>
@@ -32,19 +35,96 @@
         <div class="col-md-2 mb-3"><label class="form-label fw-medium">এক্সটেনশন</label>{{ form.extension }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">ফ্যাক্স</label>{{ form.fax }}</div>
         <div class="col-md-4 mb-3"><label class="form-label fw-medium">অফিসিয়াল ইমেইল</label>{{ form.official_email }}</div>
-        <div class="col-12"><hr class="my-2"><p class="fw-medium mb-2" style="font-size:0.9rem;">সচিবের তথ্য</p></div>
-        <div class="col-md-4 mb-3"><label class="form-label fw-medium">সচিবের নাম (বাংলায়)</label>{{ form.secretary_name_bn }}</div>
-        <div class="col-md-4 mb-3"><label class="form-label fw-medium">Secretary Name (English)</label>{{ form.secretary_name_en }}</div>
-        <div class="col-md-4 mb-3"><label class="form-label fw-medium">সচিবের মোবাইল</label>{{ form.secretary_mobile }}</div>
         <div class="col-md-3 mb-3 d-flex align-items-end">
           <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">{% ui "সক্রিয়" "Active" %}</label></div>
         </div>
       </div>
-      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
-        <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Clear" %}</a>
-        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}</button>
+    </div>
+
+    <!-- PA/PS Staff Card -->
+    <div class="mp-card mb-4">
+      <div class="mp-card-header"><i class="bi bi-person-badge-fill icon"></i> {% ui "পিএ/পিএস এর তথ্য" "PA/PS Information" %}</div>
+      <div id="pa-staff-container">
+        {% for staff_form in formset %}
+        <div class="pa-staff-row border rounded p-3 mb-3 position-relative {% if staff_form.instance.pk %}bg-light{% endif %}">
+          {{ staff_form.id }}
+          <div class="row g-2">
+            <div class="col-md-4">
+              <label class="form-label fw-medium mb-1" style="font-size:.85rem;">নাম (বাংলায়) <span class="text-danger">*</span></label>
+              {{ staff_form.name_bn }}
+              {% if staff_form.name_bn.errors %}<div class="text-danger" style="font-size:.8rem;">{{ staff_form.name_bn.errors }}</div>{% endif %}
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-medium mb-1" style="font-size:.85rem;">Name (English)</label>
+              {{ staff_form.name_en }}
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-medium mb-1" style="font-size:.85rem;">পদবী / Designation</label>
+              {{ staff_form.designation }}
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-medium mb-1" style="font-size:.85rem;">মোবাইল</label>
+              {{ staff_form.mobile }}
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-medium mb-1" style="font-size:.85rem;">ক্রম</label>
+              {{ staff_form.ordering }}
+            </div>
+            {% if staff_form.instance.pk %}
+            <div class="col-md-2 d-flex align-items-end">
+              <div class="form-check mb-2">
+                {{ staff_form.DELETE }}
+                <label class="form-check-label text-danger" style="font-size:.85rem;">{% ui "মুছুন" "Delete" %}</label>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
       </div>
-    </form>
-  </div>
+      <button type="button" class="btn btn-outline-secondary btn-sm mt-1" id="add-pa-row">
+        <i class="bi bi-plus-circle me-1"></i>{% ui "আরও যোগ করুন" "Add Another" %}
+      </button>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-end pt-2 pb-3">
+      <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+      <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}</button>
+    </div>
+  </form>
 </div></div>
+
+<script>
+(function () {
+  const container = document.getElementById('pa-staff-container');
+  const addBtn    = document.getElementById('add-pa-row');
+  const totalInput = document.getElementById('id_pa_staff-TOTAL_FORMS');
+
+  addBtn.addEventListener('click', function () {
+    const idx   = parseInt(totalInput.value);
+    const first = container.querySelector('.pa-staff-row');
+    if (!first) return;
+    const clone = first.cloneNode(true);
+    // Update all field IDs and names to use new index
+    clone.querySelectorAll('[id]').forEach(el => {
+      el.id = el.id.replace(/-(\d+)-/, `-${idx}-`);
+    });
+    clone.querySelectorAll('[name]').forEach(el => {
+      el.name = el.name.replace(/-(\d+)-/, `-${idx}-`);
+      if (el.tagName === 'INPUT') el.value = '';
+      if (el.tagName === 'SELECT') el.selectedIndex = 0;
+    });
+    clone.classList.remove('bg-light');
+    // Remove delete checkbox row if it was shown (only for saved instances)
+    const delCheck = clone.querySelector('[id$="-DELETE"]');
+    if (delCheck) delCheck.closest('.col-md-2').remove();
+    container.appendChild(clone);
+    totalInput.value = idx + 1;
+    // Re-init Select2 on the new row if present
+    if (window.jQuery && window.jQuery.fn.select2) {
+      jQuery(clone).find('select[data-select2]').select2({ width: '100%' });
+    }
+  });
+})();
+</script>
 {% endblock %}

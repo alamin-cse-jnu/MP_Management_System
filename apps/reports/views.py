@@ -9,18 +9,27 @@ from apps.committee.models import CommitteeAssignment
 from apps.institution.models import InstitutionAssignment
 from apps.master.models import (
     CommitteePosition, Country, District, Division, Gender,
-    GovernmentInstitution, MinisterType, Ministry, PoliticalParty,
+    GovernmentInstitution, MinisterType, Ministry, PADesignation, PoliticalParty,
     ProfessionalQualification, Religion, StandingCommittee, TravelType,
 )
 from apps.ministry.models import MinistryAssignment
 from apps.mp.models import MP, Address, ElectionInfo
-from apps.office.models import ParliamentOfficeAddress
+from apps.office.models import MPPAStaff, ParliamentOfficeAddress
 from apps.parliament.models import Parliament
 from apps.travel.models import ForeignTour, ForeignTourParticipant
 
 from .utils import export_csv, export_excel
 
 PAGE_SIZE = 25
+_VALID_PAGE_SIZES = frozenset({25, 50, 100, 350})
+
+
+def _page_size(request):
+    try:
+        n = int(request.GET.get('per_page', 25))
+        return n if n in _VALID_PAGE_SIZES else 25
+    except (ValueError, TypeError):
+        return 25
 
 
 # ── language-aware field helper (mirrors the `tr` template filter) ─────────────
@@ -191,7 +200,7 @@ def all_mp(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/all_mp.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/all_mp.html', ctx)
 
@@ -273,7 +282,7 @@ def women_mp(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/women_mp.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/women_mp.html', ctx)
 
@@ -325,7 +334,7 @@ def party_wise(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/party_wise.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/party_wise.html', ctx)
 
@@ -384,7 +393,7 @@ def district_wise(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/district_wise.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/district_wise.html', ctx)
 
@@ -436,7 +445,7 @@ def qualification_wise(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/qualification_wise.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/qualification_wise.html', ctx)
 
@@ -504,7 +513,7 @@ def cabinet(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/cabinet.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/cabinet.html', ctx)
 
@@ -576,7 +585,7 @@ def committee_members(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/committee_members.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/committee_members.html', ctx)
 
@@ -690,7 +699,7 @@ def institution_assignments(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/institution_assignments.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/institution_assignments.html', ctx)
 
@@ -768,7 +777,7 @@ def foreign_tours(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/foreign_tours.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/foreign_tours.html', ctx)
 
@@ -1071,7 +1080,7 @@ def contact_list(request):
         ctx['object_list'] = qs
         return render(request, 'reports/print/contact_list.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/contact_list.html', ctx)
 
@@ -1106,7 +1115,7 @@ def audit_log_list(request):
         qs = qs.filter(timestamp__date__lte=date_to)
 
     total_count  = qs.count()
-    paginator    = Paginator(qs, AUDIT_PAGE_SIZE)
+    paginator    = Paginator(qs, _page_size(request))
     page_obj     = paginator.get_page(request.GET.get('page'))
 
     # Distinct model names for filter dropdown
@@ -1442,7 +1451,7 @@ def custom_report(request):
         ctx['today']       = today
         return render(request, 'reports/print/custom_report.html', ctx)
 
-    paginator = Paginator(qs, PAGE_SIZE)
+    paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     ctx['today']    = today
     return render(request, 'reports/custom_report.html', ctx)
@@ -1544,7 +1553,7 @@ def family_report(request):
         ctx['lang']  = lang
         return render(request, 'reports/print/family_report.html', ctx)
 
-    paginator       = Paginator(rows, PAGE_SIZE)
+    paginator       = Paginator(rows, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     ctx['today']    = today
     ctx['lang']     = lang
@@ -1556,3 +1565,74 @@ def audit_log_detail(request, pk):
     from .models import AuditLog
     log = get_object_or_404(AuditLog.objects.select_related('user'), pk=pk)
     return render(request, 'reports/audit_log_detail.html', {'log': log})
+
+
+# ── Report: পিএ/পিএস তালিকা ────────────────────────────────────────────────────
+
+@perm_required
+def pa_ps_list(request):
+    fmt            = request.GET.get('format', '')
+    parliament_id  = _active_parliament_id(request)
+    designation_id = request.GET.get('designation', '')
+    q              = request.GET.get('q', '').strip()
+
+    qs = MPPAStaff.objects.select_related(
+        'office__mp', 'office__mp__parliament', 'designation',
+    ).prefetch_related(
+        Prefetch(
+            'office__mp__election_infos',
+            queryset=ElectionInfo.objects.select_related('constituency', 'party'),
+        )
+    )
+
+    if parliament_id:
+        qs = qs.filter(office__mp__parliament_id=parliament_id)
+    if designation_id:
+        qs = qs.filter(designation_id=designation_id)
+    if q:
+        qs = qs.filter(
+            Q(name_bn__icontains=q) | Q(name_en__icontains=q) |
+            Q(mobile__icontains=q) |
+            Q(office__mp__name_bn__icontains=q) | Q(office__mp__name_en__icontains=q)
+        )
+
+    headers = ['ক্রম', 'নাম (বাংলায়)', 'Name (English)', 'পদবী', 'মোবাইল',
+               'এমপির নাম', 'নির্বাচনী এলাকা / অফিস']
+
+    def rows_fn(queryset):
+        out = []
+        for i, staff in enumerate(queryset):
+            mp = staff.office.mp
+            ei = next(iter(mp.election_infos.all()), None)
+            constituency = _tr(ei.constituency, 'display') if ei and ei.constituency else '—'
+            out.append([
+                i + 1,
+                staff.name_bn,
+                staff.name_en or '—',
+                _tr(staff.designation) if staff.designation else '—',
+                staff.mobile or '—',
+                _tr(mp),
+                constituency,
+            ])
+        return out
+
+    if fmt == 'excel':
+        return export_excel('pa_ps_list', headers, rows_fn(qs), 'পিএ/পিএস তালিকা')
+    if fmt == 'csv':
+        return export_csv('pa_ps_list', headers, rows_fn(qs))
+
+    ctx = {
+        'parliament_id':  parliament_id,
+        'designation_id': designation_id,
+        'q':              q,
+        'parliaments':    _parliament_qs(),
+        'designations':   PADesignation.objects.filter(is_active=True),
+        'total_count':    qs.count(),
+    }
+    if fmt == 'print':
+        ctx['object_list'] = qs
+        return render(request, 'reports/print/pa_ps_list.html', ctx)
+
+    paginator = Paginator(qs, _page_size(request))
+    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    return render(request, 'reports/pa_ps_list.html', ctx)
