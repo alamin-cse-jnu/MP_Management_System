@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict mycVlV8OtIvYfMIVFl2wkxikmbcdPGeiDy68XmchRrFjhQ8hb2yfbjSRRdI7CXU
+\restrict CXZdmfZ0AQHXgJ7DktRxoCpf7pqXOdhGdZfQOeDY9ouxZGxi3xC8CDVbrCk2RTr
 
 -- Dumped from database version 16.13
 -- Dumped by pg_dump version 16.13
@@ -2699,66 +2699,24 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 162	Can change Parliament	41	change_parliament
 163	Can delete Parliament	41	delete_parliament
 164	Can view Parliament	41	view_parliament
-165	Can add Óª©ÓªéÓª©Óªª Óª©ÓªªÓª©ÓºìÓª»	42	add_mp
-166	Can change Óª©ÓªéÓª©Óªª Óª©ÓªªÓª©ÓºìÓª»	42	change_mp
-167	Can delete Óª©ÓªéÓª©Óªª Óª©ÓªªÓª©ÓºìÓª»	42	delete_mp
-168	Can view Óª©ÓªéÓª©Óªª Óª©ÓªªÓª©ÓºìÓª»	42	view_mp
-169	Can add ÓªÂÓª┐ÓªòÓºìÓªÀÓª¥ÓªùÓªñ Óª»ÓºïÓªùÓºìÓª»ÓªñÓª¥	43	add_education
-170	Can change ÓªÂÓª┐ÓªòÓºìÓªÀÓª¥ÓªùÓªñ Óª»ÓºïÓªùÓºìÓª»ÓªñÓª¥	43	change_education
-171	Can delete ÓªÂÓª┐ÓªòÓºìÓªÀÓª¥ÓªùÓªñ Óª»ÓºïÓªùÓºìÓª»ÓªñÓª¥	43	delete_education
-172	Can view ÓªÂÓª┐ÓªòÓºìÓªÀÓª¥ÓªùÓªñ Óª»ÓºïÓªùÓºìÓª»ÓªñÓª¥	43	view_education
-173	Can add Óª©Óª¿ÓºìÓªñÓª¥Óª¿	44	add_child
-174	Can change Óª©Óª¿ÓºìÓªñÓª¥Óª¿	44	change_child
-175	Can delete Óª©Óª¿ÓºìÓªñÓª¥Óª¿	44	delete_child
-176	Can view Óª©Óª¿ÓºìÓªñÓª¥Óª¿	44	view_child
-177	Can add Óª©ÓºìÓª¼Óª¥Óª«ÓºÇ/Óª©ÓºìÓªñÓºìÓª░ÓºÇ	45	add_spouse
-178	Can change Óª©ÓºìÓª¼Óª¥Óª«ÓºÇ/Óª©ÓºìÓªñÓºìÓª░ÓºÇ	45	change_spouse
-179	Can delete Óª©ÓºìÓª¼Óª¥Óª«ÓºÇ/Óª©ÓºìÓªñÓºìÓª░ÓºÇ	45	delete_spouse
-180	Can view Óª©ÓºìÓª¼Óª¥Óª«ÓºÇ/Óª©ÓºìÓªñÓºìÓª░ÓºÇ	45	view_spouse
-181	Can add Óª¿Óª┐Óª░ÓºìÓª¼Óª¥ÓªÜÓª¿ Óª©ÓªéÓªòÓºìÓª░Óª¥Óª¿ÓºìÓªñ ÓªñÓªÑÓºìÓª»	46	add_electioninfo
-182	Can change Óª¿Óª┐Óª░ÓºìÓª¼Óª¥ÓªÜÓª¿ Óª©ÓªéÓªòÓºìÓª░Óª¥Óª¿ÓºìÓªñ ÓªñÓªÑÓºìÓª»	46	change_electioninfo
-183	Can delete Óª¿Óª┐Óª░ÓºìÓª¼Óª¥ÓªÜÓª¿ Óª©ÓªéÓªòÓºìÓª░Óª¥Óª¿ÓºìÓªñ ÓªñÓªÑÓºìÓª»	46	delete_electioninfo
-184	Can view Óª¿Óª┐Óª░ÓºìÓª¼Óª¥ÓªÜÓª¿ Óª©ÓªéÓªòÓºìÓª░Óª¥Óª¿ÓºìÓªñ ÓªñÓªÑÓºìÓª»	46	view_electioninfo
-185	Can add ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥	47	add_address
-186	Can change ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥	47	change_address
-187	Can delete ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥	47	delete_address
-188	Can view ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥	47	view_address
-189	Can add Óª¬ÓºüÓª░Óª©ÓºìÓªòÓª¥Óª░	48	add_award
-190	Can change Óª¬ÓºüÓª░Óª©ÓºìÓªòÓª¥Óª░	48	change_award
-191	Can delete Óª¬ÓºüÓª░Óª©ÓºìÓªòÓª¥Óª░	48	delete_award
-192	Can view Óª¬ÓºüÓª░Óª©ÓºìÓªòÓª¥Óª░	48	view_award
-193	Can add Óª¼ÓºìÓª»Óª¥ÓªéÓªò Óª╣Óª┐Óª©Óª¥Óª¼	49	add_bankaccount
-194	Can change Óª¼ÓºìÓª»Óª¥ÓªéÓªò Óª╣Óª┐Óª©Óª¥Óª¼	49	change_bankaccount
-195	Can delete Óª¼ÓºìÓª»Óª¥ÓªéÓªò Óª╣Óª┐Óª©Óª¥Óª¼	49	delete_bankaccount
-196	Can view Óª¼ÓºìÓª»Óª¥ÓªéÓªò Óª╣Óª┐Óª©Óª¥Óª¼	49	view_bankaccount
-197	Can add ÓªòÓºïÓª¡Óª┐Óªí ÓªƒÓª┐ÓªòÓª¥	50	add_covidvaccination
-198	Can change ÓªòÓºïÓª¡Óª┐Óªí ÓªƒÓª┐ÓªòÓª¥	50	change_covidvaccination
-199	Can delete ÓªòÓºïÓª¡Óª┐Óªí ÓªƒÓª┐ÓªòÓª¥	50	delete_covidvaccination
-200	Can view ÓªòÓºïÓª¡Óª┐Óªí ÓªƒÓª┐ÓªòÓª¥	50	view_covidvaccination
-201	Can add Óª¼Óª┐ÓªªÓºçÓªÂÓª┐ Óª¡Óª¥ÓªÀÓª¥Óª░ ÓªªÓªòÓºìÓªÀÓªñÓª¥	51	add_foreignlanguageskill
-202	Can change Óª¼Óª┐ÓªªÓºçÓªÂÓª┐ Óª¡Óª¥ÓªÀÓª¥Óª░ ÓªªÓªòÓºìÓªÀÓªñÓª¥	51	change_foreignlanguageskill
-203	Can delete Óª¼Óª┐ÓªªÓºçÓªÂÓª┐ Óª¡Óª¥ÓªÀÓª¥Óª░ ÓªªÓªòÓºìÓªÀÓªñÓª¥	51	delete_foreignlanguageskill
-204	Can view Óª¼Óª┐ÓªªÓºçÓªÂÓª┐ Óª¡Óª¥ÓªÀÓª¥Óª░ ÓªªÓªòÓºìÓªÀÓªñÓª¥	51	view_foreignlanguageskill
-205	Can add Óª©ÓªéÓªùÓªáÓª¿	52	add_organization
-206	Can change Óª©ÓªéÓªùÓªáÓª¿	52	change_organization
-207	Can delete Óª©ÓªéÓªùÓªáÓª¿	52	delete_organization
-208	Can view Óª©ÓªéÓªùÓªáÓª¿	52	view_organization
-209	Can add Óª¬ÓºéÓª░ÓºìÓª¼Óª¼Óª░ÓºìÓªñÓºÇ Óª©ÓªéÓª©Óªª ÓªçÓªñÓª┐Óª╣Óª¥Óª©	53	add_previousparliamentaryhistory
-210	Can change Óª¬ÓºéÓª░ÓºìÓª¼Óª¼Óª░ÓºìÓªñÓºÇ Óª©ÓªéÓª©Óªª ÓªçÓªñÓª┐Óª╣Óª¥Óª©	53	change_previousparliamentaryhistory
-211	Can delete Óª¬ÓºéÓª░ÓºìÓª¼Óª¼Óª░ÓºìÓªñÓºÇ Óª©ÓªéÓª©Óªª ÓªçÓªñÓª┐Óª╣Óª¥Óª©	53	delete_previousparliamentaryhistory
-212	Can view Óª¬ÓºéÓª░ÓºìÓª¼Óª¼Óª░ÓºìÓªñÓºÇ Óª©ÓªéÓª©Óªª ÓªçÓªñÓª┐Óª╣Óª¥Óª©	53	view_previousparliamentaryhistory
-213	Can add Óª¬ÓºìÓª░ÓªòÓª¥ÓªÂÓª¿Óª¥	54	add_publication
-214	Can change Óª¬ÓºìÓª░ÓªòÓª¥ÓªÂÓª¿Óª¥	54	change_publication
-215	Can delete Óª¬ÓºìÓª░ÓªòÓª¥ÓªÂÓª¿Óª¥	54	delete_publication
-216	Can view Óª¬ÓºìÓª░ÓªòÓª¥ÓªÂÓª¿Óª¥	54	view_publication
-217	Can add Óª©Óª«Óª¥Óª£ Óª©ÓºçÓª¼Óª¥	55	add_socialservice
-218	Can change Óª©Óª«Óª¥Óª£ Óª©ÓºçÓª¼Óª¥	55	change_socialservice
-219	Can delete Óª©Óª«Óª¥Óª£ Óª©ÓºçÓª¼Óª¥	55	delete_socialservice
-220	Can view Óª©Óª«Óª¥Óª£ Óª©ÓºçÓª¼Óª¥	55	view_socialservice
-221	Can add Óª¼Óª┐ÓªÂÓºçÓªÀ Óª¬Óªª	56	add_specialpositionhistory
-222	Can change Óª¼Óª┐ÓªÂÓºçÓªÀ Óª¬Óªª	56	change_specialpositionhistory
-223	Can delete Óª¼Óª┐ÓªÂÓºçÓªÀ Óª¬Óªª	56	delete_specialpositionhistory
-224	Can view Óª¼Óª┐ÓªÂÓºçÓªÀ Óª¬Óªª	56	view_specialpositionhistory
+173	Can add সন্তান	44	add_child
+174	Can change সন্তান	44	change_child
+175	Can delete সন্তান	44	delete_child
+176	Can view সন্তান	44	view_child
+169	Can add শিক্ষাগত যোগ্যতা	43	add_education
+170	Can change শিক্ষাগত যোগ্যতা	43	change_education
+171	Can delete শিক্ষাগত যোগ্যতা	43	delete_education
+172	Can view শিক্ষাগত যোগ্যতা	43	view_education
+181	Can add নির্বাচন সংক্রান্ত তথ্য	46	add_electioninfo
+182	Can change নির্বাচন সংক্রান্ত তথ্য	46	change_electioninfo
+165	Can add সংসদ সদস্য	42	add_mp
+166	Can change সংসদ সদস্য	42	change_mp
+167	Can delete সংসদ সদস্য	42	delete_mp
+168	Can view সংসদ সদস্য	42	view_mp
+177	Can add স্বামী/স্ত্রী	45	add_spouse
+178	Can change স্বামী/স্ত্রী	45	change_spouse
+179	Can delete স্বামী/স্ত্রী	45	delete_spouse
+180	Can view স্বামী/স্ত্রী	45	view_spouse
 225	Can add ministry assignment	57	add_ministryassignment
 226	Can change ministry assignment	57	change_ministryassignment
 227	Can delete ministry assignment	57	delete_ministryassignment
@@ -2783,6 +2741,47 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 246	Can change foreign tour participant	62	change_foreigntourparticipant
 247	Can delete foreign tour participant	62	delete_foreigntourparticipant
 248	Can view foreign tour participant	62	view_foreigntourparticipant
+186	Can change ঠিকানা	47	change_address
+187	Can delete ঠিকানা	47	delete_address
+188	Can view ঠিকানা	47	view_address
+189	Can add পুরস্কার	48	add_award
+190	Can change পুরস্কার	48	change_award
+191	Can delete পুরস্কার	48	delete_award
+192	Can view পুরস্কার	48	view_award
+193	Can add ব্যাংক হিসাব	49	add_bankaccount
+194	Can change ব্যাংক হিসাব	49	change_bankaccount
+195	Can delete ব্যাংক হিসাব	49	delete_bankaccount
+196	Can view ব্যাংক হিসাব	49	view_bankaccount
+197	Can add কোভিড টিকা	50	add_covidvaccination
+198	Can change কোভিড টিকা	50	change_covidvaccination
+199	Can delete কোভিড টিকা	50	delete_covidvaccination
+200	Can view কোভিড টিকা	50	view_covidvaccination
+183	Can delete নির্বাচন সংক্রান্ত তথ্য	46	delete_electioninfo
+184	Can view নির্বাচন সংক্রান্ত তথ্য	46	view_electioninfo
+201	Can add বিদেশি ভাষার দক্ষতা	51	add_foreignlanguageskill
+202	Can change বিদেশি ভাষার দক্ষতা	51	change_foreignlanguageskill
+203	Can delete বিদেশি ভাষার দক্ষতা	51	delete_foreignlanguageskill
+204	Can view বিদেশি ভাষার দক্ষতা	51	view_foreignlanguageskill
+205	Can add সংগঠন	52	add_organization
+206	Can change সংগঠন	52	change_organization
+207	Can delete সংগঠন	52	delete_organization
+208	Can view সংগঠন	52	view_organization
+209	Can add পূর্ববর্তী সংসদ ইতিহাস	53	add_previousparliamentaryhistory
+210	Can change পূর্ববর্তী সংসদ ইতিহাস	53	change_previousparliamentaryhistory
+211	Can delete পূর্ববর্তী সংসদ ইতিহাস	53	delete_previousparliamentaryhistory
+212	Can view পূর্ববর্তী সংসদ ইতিহাস	53	view_previousparliamentaryhistory
+213	Can add প্রকাশনা	54	add_publication
+214	Can change প্রকাশনা	54	change_publication
+215	Can delete প্রকাশনা	54	delete_publication
+216	Can view প্রকাশনা	54	view_publication
+217	Can add সমাজ সেবা	55	add_socialservice
+218	Can change সমাজ সেবা	55	change_socialservice
+219	Can delete সমাজ সেবা	55	delete_socialservice
+220	Can view সমাজ সেবা	55	view_socialservice
+221	Can add বিশেষ পদ	56	add_specialpositionhistory
+222	Can change বিশেষ পদ	56	change_specialpositionhistory
+223	Can delete বিশেষ পদ	56	delete_specialpositionhistory
+224	Can view বিশেষ পদ	56	view_specialpositionhistory
 249	Can add parliament office address	63	add_parliamentofficeaddress
 250	Can change parliament office address	63	change_parliamentofficeaddress
 251	Can delete parliament office address	63	delete_parliamentofficeaddress
@@ -2803,6 +2802,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 266	Can change mppa staff	67	change_mppastaff
 267	Can delete mppa staff	67	delete_mppastaff
 268	Can view mppa staff	67	view_mppastaff
+185	Can add ঠিকানা	47	add_address
 \.
 
 
@@ -2935,30 +2935,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 31	master	0003_add_is_active_to_divisionresult	2026-05-24 16:53:07.338604+00
 32	master	0004_padesignation	2026-06-03 08:06:26.887801+00
 33	office	0002_remove_secretary_add_mpppastaff	2026-06-03 08:06:26.99223+00
-\.
-
-
---
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-l9tq5n916iredw94pn95jd5ijhtfnc00	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wQrV7:ag9fFMtU2KE9P9XVkwZ78py0LWGZfrRJl8lTAw1HNCc	2026-05-24 02:55:09.074745+00
-1lys6s8knyvezpdjnwfwegfa8a16un9b	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e15hL7fAGR5TvO:1wRBSE:5DxELsEVs1ui1WtimBdsk-oC_ygbF_sch_2d32B2ZUc	2026-05-25 00:13:30.176997+00
-x2dpq5xbu4mfay9sfdowq0pt8z42bsxv	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRRjQ:BlGQnpcSdX2FkAMKwkwYdq7pGpp81zg0zhDT_kaJ5Bc	2026-05-25 17:36:20.42034+00
-q50v39uq1gxtfffwlya3bpa35k0mt9cp	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRRjX:E9aGh_d_4xLNHtTTCAuth-wxrw6fZnPAUh1ht70kHgc	2026-05-25 17:36:27.156099+00
-nuryjqs0ytnn9q35d0feb8ou015qzs17	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRRro:jftoNgFkb5VGDpRy0JbymIRKUvh9hDJGI2gaLNKVz4A	2026-05-25 17:45:00.067463+00
-0vfsnaf992xq698m2tonf67vi5ykkbwj	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRS7g:cgp3DVN-CDcAD5jmIbpuxnjJ3S2yE14YDrDXz8rDKpU	2026-05-25 18:01:24.881762+00
-9nvo0khostrht4t0eyoikm9ofgn8dgqf	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRSOB:-vn5f7eP8vKmHxA8szb2UXPB3qTYLHS729WcZVA1MnY	2026-05-25 18:18:27.375125+00
-ihah3tj8n1ibmkvkdixtaje07yktef0x	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wRSST:SNXe_-6Pm4BO1rT9Ia0BT_x-x6WPxo74WWl6ajyraq0	2026-05-25 18:22:53.458017+00
-t6y7bht3b5t1cabesz4sjrenf3o0fglh	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e15hL7fAGR5TvO:1wRSgF:XitlTFpvjxeP1iJlVOOLjBx7XFvDNsNy_UUCh92T6RE	2026-05-25 18:37:07.724792+00
-leyerx3uer6vu6xl7qo5onol1clmmqok	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wSAji:oZfVnqKFECvqEJMALelSNS088KeW5agJ1asVPsIt-bQ	2026-05-27 17:39:38.808821+00
-0ansklfswni74kb0i5bsbn4bu6v7sczl	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wSeNY:PQ-VDwLKa8FJ0qzbFkwcwvOl2aqXEy3Nuc78XV07gfU	2026-05-29 01:18:44.667545+00
-d1an5txx960zs79ffmy1wxmv2g9y9nmy	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wTNud:5Wxqp4gyVvTgl_jlflS17iV75i72RrCBaIf_YbqhLok	2026-05-31 01:55:55.626371+00
-ik0d7ca66b7d4gis1ynyyziymk8mbmlf	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e15hL7fAGR5TvO:1wUGuA:3fD9vZInjjHZkuyTPPkOFYpSGp_pglc2Tv3UgtkDNYE	2026-06-02 12:39:06.054191+00
-5vxczf4bknlvegyfxehex3za8xfvztcg	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wUhva:vniHZrtlhwf93nJjzHKBiq3VHW3hJ8IuPzIB0NLR2fQ	2026-06-03 17:30:22.654434+00
-m7kpbas7oma6mu2n3nzp6578ndry9prf	.eJxVjEEOwiAQRe_C2hCmQCku3fcMzcAwUjWQlHZlvLsh6UK3_73332LBY8_L0dK2rCSuAsTldwsYn6l0QA8s9ypjLfu2BtkVedIm50rpdTvdv4OMLfdaOzsCJcUJgYAn7zyxAwqRnQKtbURmi5YgWjOaYDwMTgU1-ai0HcTnC_d_N8w:1wZ5X9:QaxXbr8JdTb8Acs9hKINNn6875piGBix75Dtle32_q0	2026-06-15 19:31:15.996239+00
-s6607ef6xsca2gcofb3cn2jhf5v7uj7f	.eJxVjLEOgjAURf-ls2n6aEupGyaGRd2cyWtfK6ApCYXJ-O9CwqDrPeeeN2txmbt2yWFqe2JHBuzwuzn0z5A2QAOmx8j9mOapd3xT-E4zv44UXqfd_Qt0mLvtLY0ugYKIAYEgVtZYigbI-WgESKk9xqhRE3itSuWUhcIIJyrrhdTFGr3Ut-ZeN-e1FhL7fAGR8TvR:1wZM2R:jgULgpBzwuhbzzn7fQvyHHdk9drMEfpbtV_pAT0oGNs	2026-06-16 13:08:39.342639+00
 \.
 
 
@@ -5652,1449 +5628,1402 @@ COPY public.parliament_parliament (id, name_bn, name_en, ordinal, start_date, en
 COPY public.reports_auditlog (id, app_label, model_name, object_id, object_repr, action, changes, "timestamp", ip_address, user_id) FROM stdin;
 1	accounts	customuser	1	superadmin	CREATE	{}	2026-05-23 15:17:12.553807+00	\N	\N
 2	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["", "2026-05-23 15:17:35.888303+00:00"]}	2026-05-23 15:17:35.901759+00	172.23.0.1	1
-3	parliament	parliament	1	Óª¬ÓºìÓª░ÓªÑÓª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (1st National Parliament)	CREATE	{}	2026-05-23 15:39:35.733869+00	\N	\N
-4	parliament	parliament	2	ÓªªÓºìÓª¼Óª┐ÓªñÓºÇÓª»Óª╝ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (2nd National Parliament)	CREATE	{}	2026-05-23 15:39:35.737172+00	\N	\N
-5	parliament	parliament	3	ÓªñÓºâÓªñÓºÇÓª»Óª╝ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (3rd National Parliament)	CREATE	{}	2026-05-23 15:39:35.739109+00	\N	\N
-6	parliament	parliament	4	ÓªÜÓªñÓºüÓª░ÓºìÓªÑ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (4th National Parliament)	CREATE	{}	2026-05-23 15:39:35.740923+00	\N	\N
-7	parliament	parliament	5	Óª¬Óª×ÓºìÓªÜÓª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (5th National Parliament)	CREATE	{}	2026-05-23 15:39:35.742494+00	\N	\N
-8	parliament	parliament	6	ÓªÀÓªÀÓºìÓªá Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (6th National Parliament)	CREATE	{}	2026-05-23 15:39:35.744159+00	\N	\N
-9	parliament	parliament	7	Óª©Óª¬ÓºìÓªñÓª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (7th National Parliament)	CREATE	{}	2026-05-23 15:39:35.745541+00	\N	\N
-10	parliament	parliament	8	ÓªàÓªÀÓºìÓªƒÓª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (8th National Parliament)	CREATE	{}	2026-05-23 15:39:35.746955+00	\N	\N
-11	parliament	parliament	9	Óª¿Óª¼Óª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (9th National Parliament)	CREATE	{}	2026-05-23 15:39:35.74832+00	\N	\N
-12	parliament	parliament	10	ÓªªÓªÂÓª« Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (10th National Parliament)	CREATE	{}	2026-05-23 15:39:35.750162+00	\N	\N
-13	parliament	parliament	11	ÓªÅÓªòÓª¥ÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (11th National Parliament)	CREATE	{}	2026-05-23 15:39:35.751863+00	\N	\N
-14	parliament	parliament	12	ÓªªÓºìÓª¼Óª¥ÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (12th National Parliament)	CREATE	{}	2026-05-23 15:39:35.753235+00	\N	\N
-15	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th National Parliament)	CREATE	{}	2026-05-23 15:39:35.755266+00	\N	\N
-16	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"name_en": ["13th National Parliament", "13th Parliament"]}	2026-05-23 16:39:49.159101+00	172.23.0.1	1
 17	accounts	customuser	1	superadmin	UPDATE	{"is_superadmin": ["False", "True"]}	2026-05-23 16:58:40.8122+00	172.23.0.1	1
 18	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-23 15:17:35.888303+00:00", "2026-05-23 17:36:07.142034+00:00"]}	2026-05-23 17:36:07.154805+00	172.23.0.1	1
-19	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th National Parliament)	UPDATE	{"name_en": ["13th Parliament", "13th National Parliament"]}	2026-05-24 16:11:58.392493+00	\N	\N
 20	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-23 17:36:07.142034+00:00", "2026-05-24 16:12:37.372086+00:00"]}	2026-05-24 16:12:37.391049+00	172.23.0.1	1
-21	parliament	constituency	1	Óºº Óª¬Óª×ÓºìÓªÜÓªùÓº£-Óºº (1 Panchagarh-1)	CREATE	{}	2026-05-24 17:06:26.047781+00	\N	\N
-22	parliament	constituency	2	Óº¿ Óª¬Óª×ÓºìÓªÜÓªùÓº£-Óº¿ (2 Panchagarh-2)	CREATE	{}	2026-05-24 17:06:26.050333+00	\N	\N
-23	parliament	constituency	3	Óº® ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óºº (3 Thakurgaon-1)	CREATE	{}	2026-05-24 17:06:26.052005+00	\N	\N
-24	parliament	constituency	4	Óº¬ ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óº¿ (4 Thakurgaon-2)	CREATE	{}	2026-05-24 17:06:26.053614+00	\N	\N
-25	parliament	constituency	5	Óº½ ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óº® (5 Thakurgaon-3)	CREATE	{}	2026-05-24 17:06:26.055206+00	\N	\N
-26	parliament	constituency	6	Óº¼ ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óºº (6 Dinajpur-1)	CREATE	{}	2026-05-24 17:06:26.056818+00	\N	\N
-27	parliament	constituency	7	Óº¡ ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº¿ (7 Dinajpur-2)	CREATE	{}	2026-05-24 17:06:26.058451+00	\N	\N
-28	parliament	constituency	8	Óº« ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº® (8 Dinajpur-3)	CREATE	{}	2026-05-24 17:06:26.060132+00	\N	\N
-29	parliament	constituency	9	Óº» ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº¬ (9 Dinajpur-4)	CREATE	{}	2026-05-24 17:06:26.061741+00	\N	\N
-30	parliament	constituency	10	ÓººÓºª ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº½ (10 Dinajpur-5)	CREATE	{}	2026-05-24 17:06:26.063262+00	\N	\N
-31	parliament	constituency	11	ÓººÓºº ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº¼ (11 Dinajpur-6)	CREATE	{}	2026-05-24 17:06:26.064946+00	\N	\N
-32	parliament	constituency	12	ÓººÓº¿ Óª¿ÓºÇÓª▓Óª½Óª¥Óª«Óª¥Óª░ÓºÇ-Óºº (12 Nilphamari-1)	CREATE	{}	2026-05-24 17:06:26.066607+00	\N	\N
-33	parliament	constituency	13	ÓººÓº® Óª¿ÓºÇÓª▓Óª½Óª¥Óª«Óª¥Óª░ÓºÇ-Óº¿ (13 Nilphamari-2)	CREATE	{}	2026-05-24 17:06:26.068417+00	\N	\N
-34	parliament	constituency	14	ÓººÓº¬ Óª¿ÓºÇÓª▓Óª½Óª¥Óª«Óª¥Óª░ÓºÇ-Óº® (14 Nilphamari-3)	CREATE	{}	2026-05-24 17:06:26.070096+00	\N	\N
-35	parliament	constituency	15	ÓººÓº½ Óª¿ÓºÇÓª▓Óª½Óª¥Óª«Óª¥Óª░ÓºÇ-Óº¬ (15 Nilphamari-4)	CREATE	{}	2026-05-24 17:06:26.071826+00	\N	\N
-36	parliament	constituency	16	ÓººÓº¼ Óª▓Óª¥Óª▓Óª«Óª¿Óª┐Óª░Óª╣Óª¥Óªƒ-Óºº (16 Lalmonirhat-1)	CREATE	{}	2026-05-24 17:06:26.073552+00	\N	\N
-37	parliament	constituency	17	ÓººÓº¡ Óª▓Óª¥Óª▓Óª«Óª¿Óª┐Óª░Óª╣Óª¥Óªƒ-Óº¿ (17 Lalmonirhat-2)	CREATE	{}	2026-05-24 17:06:26.075341+00	\N	\N
-38	parliament	constituency	18	ÓººÓº« Óª▓Óª¥Óª▓Óª«Óª¿Óª┐Óª░Óª╣Óª¥Óªƒ-Óº® (18 Lalmonirhat-3)	CREATE	{}	2026-05-24 17:06:26.077107+00	\N	\N
-39	parliament	constituency	19	ÓººÓº» Óª░ÓªéÓª¬ÓºüÓª░-Óºº (19 Rangpur-1)	CREATE	{}	2026-05-24 17:06:26.079333+00	\N	\N
-40	parliament	constituency	20	Óº¿Óºª Óª░ÓªéÓª¬ÓºüÓª░-Óº¿ (20 Rangpur-2)	CREATE	{}	2026-05-24 17:06:26.081022+00	\N	\N
-41	parliament	constituency	21	Óº¿Óºº Óª░ÓªéÓª¬ÓºüÓª░-Óº® (21 Rangpur-3)	CREATE	{}	2026-05-24 17:06:26.082693+00	\N	\N
-42	parliament	constituency	22	Óº¿Óº¿ Óª░ÓªéÓª¬ÓºüÓª░-Óº¬ (22 Rangpur-4)	CREATE	{}	2026-05-24 17:06:26.084267+00	\N	\N
-43	parliament	constituency	23	Óº¿Óº® Óª░ÓªéÓª¬ÓºüÓª░-Óº½ (23 Rangpur-5)	CREATE	{}	2026-05-24 17:06:26.086135+00	\N	\N
-44	parliament	constituency	24	Óº¿Óº¬ Óª░ÓªéÓª¬ÓºüÓª░-Óº¼ (24 Rangpur-6)	CREATE	{}	2026-05-24 17:06:26.087826+00	\N	\N
-45	parliament	constituency	25	Óº¿Óº½ ÓªòÓºüÓº£Óª┐ÓªùÓºìÓª░Óª¥Óª«-Óºº (25 Kurigram-1)	CREATE	{}	2026-05-24 17:06:26.089469+00	\N	\N
-46	parliament	constituency	26	Óº¿Óº¼ ÓªòÓºüÓº£Óª┐ÓªùÓºìÓª░Óª¥Óª«-Óº¿ (26 Kurigram-2)	CREATE	{}	2026-05-24 17:06:26.091195+00	\N	\N
-47	parliament	constituency	27	Óº¿Óº¡ ÓªòÓºüÓº£Óª┐ÓªùÓºìÓª░Óª¥Óª«-Óº® (27 Kurigram-3)	CREATE	{}	2026-05-24 17:06:26.093082+00	\N	\N
-48	parliament	constituency	28	Óº¿Óº« ÓªòÓºüÓº£Óª┐ÓªùÓºìÓª░Óª¥Óª«-Óº¬ (28 Kurigram-4)	CREATE	{}	2026-05-24 17:06:26.094957+00	\N	\N
-49	parliament	constituency	29	Óº¿Óº» ÓªùÓª¥ÓªçÓª¼Óª¥Óª¿ÓºìÓªºÓª¥-Óºº (29 Gaibandha-1)	CREATE	{}	2026-05-24 17:06:26.096681+00	\N	\N
-50	parliament	constituency	30	Óº®Óºª ÓªùÓª¥ÓªçÓª¼Óª¥Óª¿ÓºìÓªºÓª¥-Óº¿ (30 Gaibandha-2)	CREATE	{}	2026-05-24 17:06:26.098467+00	\N	\N
-51	parliament	constituency	31	Óº®Óºº ÓªùÓª¥ÓªçÓª¼Óª¥Óª¿ÓºìÓªºÓª¥-Óº® (31 Gaibandha-3)	CREATE	{}	2026-05-24 17:06:26.10023+00	\N	\N
-52	parliament	constituency	32	Óº®Óº¿ ÓªùÓª¥ÓªçÓª¼Óª¥Óª¿ÓºìÓªºÓª¥-Óº¬ (32 Gaibandha-4)	CREATE	{}	2026-05-24 17:06:26.102167+00	\N	\N
-53	parliament	constituency	33	Óº®Óº® ÓªùÓª¥ÓªçÓª¼Óª¥Óª¿ÓºìÓªºÓª¥-Óº½ (33 Gaibandha-5)	CREATE	{}	2026-05-24 17:06:26.104024+00	\N	\N
-54	parliament	constituency	34	Óº®Óº¬ Óª£ÓºƒÓª¬ÓºüÓª░Óª╣Óª¥Óªƒ-Óºº (34 Jaipurhat-1)	CREATE	{}	2026-05-24 17:06:26.10616+00	\N	\N
-55	parliament	constituency	35	Óº®Óº½ Óª£ÓºƒÓª¬ÓºüÓª░Óª╣Óª¥Óªƒ-Óº¿ (35 Jaipurhat-2)	CREATE	{}	2026-05-24 17:06:26.107805+00	\N	\N
-56	parliament	constituency	36	Óº®Óº¼ Óª¼ÓªùÓºüÓº£Óª¥-Óºº (36 Bogura-1)	CREATE	{}	2026-05-24 17:06:26.109555+00	\N	\N
-57	parliament	constituency	37	Óº®Óº¡ Óª¼ÓªùÓºüÓº£Óª¥-Óº¿ (37 Bogura-2)	CREATE	{}	2026-05-24 17:06:26.111338+00	\N	\N
-58	parliament	constituency	38	Óº®Óº« Óª¼ÓªùÓºüÓº£Óª¥-Óº® (38 Bogura-3)	CREATE	{}	2026-05-24 17:06:26.112985+00	\N	\N
-59	parliament	constituency	39	Óº®Óº» Óª¼ÓªùÓºüÓº£Óª¥-Óº¬ (39 Bogura-4)	CREATE	{}	2026-05-24 17:06:26.11468+00	\N	\N
-60	parliament	constituency	40	Óº¬Óºª Óª¼ÓªùÓºüÓº£Óª¥-Óº½ (40 Bogura-5)	CREATE	{}	2026-05-24 17:06:26.116294+00	\N	\N
-61	parliament	constituency	41	Óº¬Óºº Óª¼ÓªùÓºüÓº£Óª¥-Óº¼ (41 Bogura-6)	CREATE	{}	2026-05-24 17:06:26.117864+00	\N	\N
-62	parliament	constituency	42	Óº¬Óº¿ Óª¼ÓªùÓºüÓº£Óª¥-Óº¡ (42 Bogura-7)	CREATE	{}	2026-05-24 17:06:26.11954+00	\N	\N
-63	parliament	constituency	43	Óº¬Óº® ÓªÜÓª¥ÓªüÓª¬Óª¥ÓªçÓª¿Óª¼Óª¥Óª¼ÓªùÓª×ÓºìÓª£-Óºº (43 ChapaiNawabganj-1)	CREATE	{}	2026-05-24 17:06:26.121177+00	\N	\N
-64	parliament	constituency	44	Óº¬Óº¬ ÓªÜÓª¥ÓªüÓª¬Óª¥ÓªçÓª¿Óª¼Óª¥Óª¼ÓªùÓª×ÓºìÓª£-Óº¿ (44 ChapaiNawabganj-2)	CREATE	{}	2026-05-24 17:06:26.1227+00	\N	\N
-65	parliament	constituency	45	Óº¬Óº½ ÓªÜÓª¥ÓªüÓª¬Óª¥ÓªçÓª¿Óª¼Óª¥Óª¼ÓªùÓª×ÓºìÓª£-Óº® (45 ChapaiNawabganj-3)	CREATE	{}	2026-05-24 17:06:26.124361+00	\N	\N
-66	parliament	constituency	46	Óº¬Óº¼ Óª¿ÓªôÓªùÓª¥Óªü-Óºº (46 Naogaon-1)	CREATE	{}	2026-05-24 17:06:26.125906+00	\N	\N
-67	parliament	constituency	47	Óº¬Óº¡ Óª¿ÓªôÓªùÓª¥Óªü-Óº¿ (47 Naogaon-2)	CREATE	{}	2026-05-24 17:06:26.127734+00	\N	\N
-68	parliament	constituency	48	Óº¬Óº« Óª¿ÓªôÓªùÓª¥Óªü-Óº® (48 Naogaon-3)	CREATE	{}	2026-05-24 17:06:26.129308+00	\N	\N
-69	parliament	constituency	49	Óº¬Óº» Óª¿ÓªôÓªùÓª¥Óªü-Óº¬ (49 Naogaon-4)	CREATE	{}	2026-05-24 17:06:26.130884+00	\N	\N
-70	parliament	constituency	50	Óº½Óºª Óª¿ÓªôÓªùÓª¥Óªü-Óº½ (50 Naogaon-5)	CREATE	{}	2026-05-24 17:06:26.132394+00	\N	\N
-71	parliament	constituency	51	Óº½Óºº Óª¿ÓªôÓªùÓª¥Óªü-Óº¼ (51 Naogaon-6)	CREATE	{}	2026-05-24 17:06:26.133972+00	\N	\N
-72	parliament	constituency	52	Óº½Óº¿ Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óºº (52 Rajshahi-1)	CREATE	{}	2026-05-24 17:06:26.135525+00	\N	\N
-73	parliament	constituency	53	Óº½Óº® Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óº¿ (53 Rajshahi-2)	CREATE	{}	2026-05-24 17:06:26.13702+00	\N	\N
-74	parliament	constituency	54	Óº½Óº¬ Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óº® (54 Rajshahi-3)	CREATE	{}	2026-05-24 17:06:26.138503+00	\N	\N
-75	parliament	constituency	55	Óº½Óº½ Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óº¬ (55 Rajshahi-4)	CREATE	{}	2026-05-24 17:06:26.140001+00	\N	\N
-76	parliament	constituency	56	Óº½Óº¼ Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óº½ (56 Rajshahi-5)	CREATE	{}	2026-05-24 17:06:26.141513+00	\N	\N
-77	parliament	constituency	57	Óº½Óº¡ Óª░Óª¥Óª£ÓªÂÓª¥Óª╣ÓºÇ-Óº¼ (57 Rajshahi-6)	CREATE	{}	2026-05-24 17:06:26.143183+00	\N	\N
-78	parliament	constituency	58	Óº½Óº« Óª¿Óª¥ÓªƒÓºïÓª░-Óºº (58 Natore-1)	CREATE	{}	2026-05-24 17:06:26.145035+00	\N	\N
-79	parliament	constituency	59	Óº½Óº» Óª¿Óª¥ÓªƒÓºïÓª░-Óº¿ (59 Natore-2)	CREATE	{}	2026-05-24 17:06:26.146713+00	\N	\N
-80	parliament	constituency	60	Óº¼Óºª Óª¿Óª¥ÓªƒÓºïÓª░-Óº® (60 Natore-3)	CREATE	{}	2026-05-24 17:06:26.14827+00	\N	\N
-81	parliament	constituency	61	Óº¼Óºº Óª¿Óª¥ÓªƒÓºïÓª░-Óº¬ (61 Natore-4)	CREATE	{}	2026-05-24 17:06:26.149982+00	\N	\N
-82	parliament	constituency	62	Óº¼Óº¿ Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óºº (62 Sirajganj-1)	CREATE	{}	2026-05-24 17:06:26.151639+00	\N	\N
-83	parliament	constituency	63	Óº¼Óº® Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óº¿ (63 Sirajganj-2)	CREATE	{}	2026-05-24 17:06:26.153334+00	\N	\N
-84	parliament	constituency	64	Óº¼Óº¬ Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óº® (64 Sirajganj-3)	CREATE	{}	2026-05-24 17:06:26.155028+00	\N	\N
-85	parliament	constituency	65	Óº¼Óº½ Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óº¬ (65 Sirajganj-4)	CREATE	{}	2026-05-24 17:06:26.156676+00	\N	\N
-86	parliament	constituency	66	Óº¼Óº¼ Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óº½ (66 Sirajganj-5)	CREATE	{}	2026-05-24 17:06:26.158222+00	\N	\N
-87	parliament	constituency	67	Óº¼Óº¡ Óª©Óª┐Óª░Óª¥Óª£ÓªùÓª×ÓºìÓª£-Óº¼ (67 Sirajganj-6)	CREATE	{}	2026-05-24 17:06:26.159788+00	\N	\N
-88	parliament	constituency	68	Óº¼Óº« Óª¬Óª¥Óª¼Óª¿Óª¥-Óºº (68 Pabna-1)	CREATE	{}	2026-05-24 17:06:26.161477+00	\N	\N
-89	parliament	constituency	69	Óº¼Óº» Óª¬Óª¥Óª¼Óª¿Óª¥-Óº¿ (69 Pabna-2)	CREATE	{}	2026-05-24 17:06:26.163297+00	\N	\N
-90	parliament	constituency	70	Óº¡Óºª Óª¬Óª¥Óª¼Óª¿Óª¥-Óº® (70 Pabna-3)	CREATE	{}	2026-05-24 17:06:26.164938+00	\N	\N
-91	parliament	constituency	71	Óº¡Óºº Óª¬Óª¥Óª¼Óª¿Óª¥-Óº¬ (71 Pabna-4)	CREATE	{}	2026-05-24 17:06:26.166349+00	\N	\N
-92	parliament	constituency	72	Óº¡Óº¿ Óª¬Óª¥Óª¼Óª¿Óª¥-Óº½ (72 Pabna 5)	CREATE	{}	2026-05-24 17:06:26.16777+00	\N	\N
-93	parliament	constituency	73	Óº¡Óº® Óª«ÓºçÓª╣ÓºçÓª░Óª¬ÓºüÓª░-Óºº (73 Meherpur-1)	CREATE	{}	2026-05-24 17:06:26.169153+00	\N	\N
-94	parliament	constituency	74	Óº¡Óº¬ Óª«ÓºçÓª╣ÓºçÓª░Óª¬ÓºüÓª░-Óº¿ (74 Meherpur-2)	CREATE	{}	2026-05-24 17:06:26.170565+00	\N	\N
-95	parliament	constituency	75	Óº¡Óº½ ÓªòÓºüÓªÀÓºìÓªƒÓª┐ÓºƒÓª¥-Óºº (75 Kushtia-1)	CREATE	{}	2026-05-24 17:06:26.171941+00	\N	\N
-96	parliament	constituency	76	Óº¡Óº¼ ÓªòÓºüÓªÀÓºìÓªƒÓª┐ÓºƒÓª¥-Óº¿ (76 Kushtia-2)	CREATE	{}	2026-05-24 17:06:26.173313+00	\N	\N
-97	parliament	constituency	77	Óº¡Óº¡ ÓªòÓºüÓªÀÓºìÓªƒÓª┐ÓºƒÓª¥-Óº® (77 Kushtia-3)	CREATE	{}	2026-05-24 17:06:26.174639+00	\N	\N
-98	parliament	constituency	78	Óº¡Óº« ÓªòÓºüÓªÀÓºìÓªƒÓª┐ÓºƒÓª¥-Óº¬ (78 Kushtia-4)	CREATE	{}	2026-05-24 17:06:26.176138+00	\N	\N
-99	parliament	constituency	79	Óº¡Óº» ÓªÜÓºüÓºƒÓª¥ÓªíÓª¥ÓªÖÓºìÓªùÓª¥-Óºº (79 Chuadanga-1)	CREATE	{}	2026-05-24 17:06:26.17796+00	\N	\N
-100	parliament	constituency	80	Óº«Óºª ÓªÜÓºüÓºƒÓª¥ÓªíÓª¥ÓªÖÓºìÓªùÓª¥-Óº¿ (80 Chuadanga-2)	CREATE	{}	2026-05-24 17:06:26.179826+00	\N	\N
-101	parliament	constituency	81	Óº«Óºº ÓªØÓª┐Óª¿Óª¥ÓªçÓªªÓª╣-Óºº (81 Jhenaidah-1)	CREATE	{}	2026-05-24 17:06:26.18125+00	\N	\N
-102	parliament	constituency	82	Óº«Óº¿ ÓªØÓª┐Óª¿Óª¥ÓªçÓªªÓª╣-Óº¿ (82 Jhenaidah-2)	CREATE	{}	2026-05-24 17:06:26.182631+00	\N	\N
-103	parliament	constituency	83	Óº«Óº® ÓªØÓª┐Óª¿Óª¥ÓªçÓªªÓª╣-Óº® (83 Jhenaidah-3)	CREATE	{}	2026-05-24 17:06:26.184023+00	\N	\N
-104	parliament	constituency	84	Óº«Óº¬ ÓªØÓª┐Óª¿Óª¥ÓªçÓªªÓª╣-Óº¬ (84 Jhenaidah-4)	CREATE	{}	2026-05-24 17:06:26.18546+00	\N	\N
-105	parliament	constituency	85	Óº«Óº½ Óª»ÓªÂÓºïÓª░-Óºº (85 Jashore-1)	CREATE	{}	2026-05-24 17:06:26.187264+00	\N	\N
-106	parliament	constituency	86	Óº«Óº¼ Óª»ÓªÂÓºïÓª░-Óº¿ (86 Jashore-2)	CREATE	{}	2026-05-24 17:06:26.188826+00	\N	\N
-107	parliament	constituency	87	Óº«Óº¡ Óª»ÓªÂÓºïÓª░-Óº® (87 Jashore-3)	CREATE	{}	2026-05-24 17:06:26.190138+00	\N	\N
-108	parliament	constituency	88	Óº«Óº« Óª»ÓªÂÓºïÓª░-Óº¬ (88 Jashore-4)	CREATE	{}	2026-05-24 17:06:26.191546+00	\N	\N
-109	parliament	constituency	89	Óº«Óº» Óª»ÓªÂÓºïÓª░-Óº½ (89 Jashore-5)	CREATE	{}	2026-05-24 17:06:26.193048+00	\N	\N
-110	parliament	constituency	90	Óº»Óºª Óª»ÓªÂÓºïÓª░-Óº¼ (90 Jashore-6)	CREATE	{}	2026-05-24 17:06:26.19475+00	\N	\N
-111	parliament	constituency	91	Óº»Óºº Óª«Óª¥ÓªùÓºüÓª░Óª¥-Óºº (91 Magura-1)	CREATE	{}	2026-05-24 17:06:26.196214+00	\N	\N
-112	parliament	constituency	92	Óº»Óº¿ Óª«Óª¥ÓªùÓºüÓª░Óª¥-Óº¿ (92 Magura-2)	CREATE	{}	2026-05-24 17:06:26.19775+00	\N	\N
-113	parliament	constituency	93	Óº»Óº® Óª¿Óº£Óª¥ÓªçÓª▓-Óºº (93 Narail-1)	CREATE	{}	2026-05-24 17:06:26.199256+00	\N	\N
-114	parliament	constituency	94	Óº»Óº¬ Óª¿Óº£Óª¥ÓªçÓª▓-Óº¿ (94 Narail-2)	CREATE	{}	2026-05-24 17:06:26.200788+00	\N	\N
-115	parliament	constituency	95	Óº»Óº½ Óª¼Óª¥ÓªùÓºçÓª░Óª╣Óª¥Óªƒ-Óºº (95 Bagerhat-1)	CREATE	{}	2026-05-24 17:06:26.202586+00	\N	\N
-116	parliament	constituency	96	Óº»Óº¼ Óª¼Óª¥ÓªùÓºçÓª░Óª╣Óª¥Óªƒ-Óº¿ (96 Bagerhat-2)	CREATE	{}	2026-05-24 17:06:26.20445+00	\N	\N
-117	parliament	constituency	97	Óº»Óº¡ Óª¼Óª¥ÓªùÓºçÓª░Óª╣Óª¥Óªƒ-Óº® (97 Bagerhat-3)	CREATE	{}	2026-05-24 17:06:26.206143+00	\N	\N
-118	parliament	constituency	98	Óº»Óº« Óª¼Óª¥ÓªùÓºçÓª░Óª╣Óª¥Óªƒ-Óº¬ (98 Bagerhat-4)	CREATE	{}	2026-05-24 17:06:26.20813+00	\N	\N
-119	parliament	constituency	99	Óº»Óº» ÓªûÓºüÓª▓Óª¿Óª¥-Óºº (99 Khulna-1)	CREATE	{}	2026-05-24 17:06:26.209556+00	\N	\N
-120	parliament	constituency	100	ÓººÓºªÓºª ÓªûÓºüÓª▓Óª¿Óª¥-Óº¿ (100 Khulna-2)	CREATE	{}	2026-05-24 17:06:26.211694+00	\N	\N
-121	parliament	constituency	101	ÓººÓºªÓºº ÓªûÓºüÓª▓Óª¿Óª¥-Óº® (101 Khulna-3)	CREATE	{}	2026-05-24 17:06:26.213387+00	\N	\N
-122	parliament	constituency	102	ÓººÓºªÓº¿ ÓªûÓºüÓª▓Óª¿Óª¥-Óº¬ (102 Khulna-4)	CREATE	{}	2026-05-24 17:06:26.21559+00	\N	\N
-123	parliament	constituency	103	ÓººÓºªÓº® ÓªûÓºüÓª▓Óª¿Óª¥-Óº½ (103 Khulna-5)	CREATE	{}	2026-05-24 17:06:26.217382+00	\N	\N
-124	parliament	constituency	104	ÓººÓºªÓº¬ ÓªûÓºüÓª▓Óª¿Óª¥-Óº¼ (104 Khulna-6)	CREATE	{}	2026-05-24 17:06:26.219718+00	\N	\N
-125	parliament	constituency	105	ÓººÓºªÓº½ Óª©Óª¥ÓªñÓªòÓºìÓªÀÓºÇÓª░Óª¥-Óºº (105 Satkhira-1)	CREATE	{}	2026-05-24 17:06:26.221801+00	\N	\N
-126	parliament	constituency	106	ÓººÓºªÓº¼ Óª©Óª¥ÓªñÓªòÓºìÓªÀÓºÇÓª░Óª¥-Óº¿ (106 Satkhira-2)	CREATE	{}	2026-05-24 17:06:26.223461+00	\N	\N
-127	parliament	constituency	107	ÓººÓºªÓº¡ Óª©Óª¥ÓªñÓªòÓºìÓªÀÓºÇÓª░Óª¥-Óº® (107 Satkhira-3)	CREATE	{}	2026-05-24 17:06:26.225101+00	\N	\N
-128	parliament	constituency	108	ÓººÓºªÓº« Óª©Óª¥ÓªñÓªòÓºìÓªÀÓºÇÓª░Óª¥-Óº¬ (108 Satkhira-4)	CREATE	{}	2026-05-24 17:06:26.226713+00	\N	\N
-129	parliament	constituency	109	ÓººÓºªÓº» Óª¼Óª░ÓªùÓºüÓª¿Óª¥-Óºº (109 Barguna-1)	CREATE	{}	2026-05-24 17:06:26.228524+00	\N	\N
-130	parliament	constituency	110	ÓººÓººÓºª Óª¼Óª░ÓªùÓºüÓª¿Óª¥-Óº¿ (110 Barguna-2)	CREATE	{}	2026-05-24 17:06:26.230178+00	\N	\N
-131	parliament	constituency	111	ÓººÓººÓºº Óª¬ÓªƒÓºüÓºƒÓª¥ÓªûÓª¥Óª▓Óª┐-Óºº (111 Patuakhali-1)	CREATE	{}	2026-05-24 17:06:26.232339+00	\N	\N
-132	parliament	constituency	112	ÓººÓººÓº¿ Óª¬ÓªƒÓºüÓºƒÓª¥ÓªûÓª¥Óª▓Óª┐-Óº¿ (112 Patuakhali-2)	CREATE	{}	2026-05-24 17:06:26.234713+00	\N	\N
-133	parliament	constituency	113	ÓººÓººÓº® Óª¬ÓªƒÓºüÓºƒÓª¥ÓªûÓª¥Óª▓Óª┐-Óº® (113 Patuakhali-3)	CREATE	{}	2026-05-24 17:06:26.236714+00	\N	\N
-134	parliament	constituency	114	ÓººÓººÓº¬ Óª¬ÓªƒÓºüÓºƒÓª¥ÓªûÓª¥Óª▓Óª┐-Óº¬ (114 Patuakhali-4)	CREATE	{}	2026-05-24 17:06:26.238552+00	\N	\N
-135	parliament	constituency	115	ÓººÓººÓº½ Óª¡ÓºïÓª▓Óª¥-Óºº (115 Bhola-1)	CREATE	{}	2026-05-24 17:06:26.241221+00	\N	\N
-136	parliament	constituency	116	ÓººÓººÓº¼ Óª¡ÓºïÓª▓Óª¥-Óº¿ (116 Bhola-2)	CREATE	{}	2026-05-24 17:06:26.243333+00	\N	\N
-137	parliament	constituency	117	ÓººÓººÓº¡ Óª¡ÓºïÓª▓Óª¥-Óº® (117 Bhola-3)	CREATE	{}	2026-05-24 17:06:26.246079+00	\N	\N
-138	parliament	constituency	118	ÓººÓººÓº« Óª¡ÓºïÓª▓Óª¥-Óº¬ (118 Bhola-4)	CREATE	{}	2026-05-24 17:06:26.248199+00	\N	\N
-139	parliament	constituency	119	ÓººÓººÓº» Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óºº (119 Barishal-1)	CREATE	{}	2026-05-24 17:06:26.252063+00	\N	\N
-140	parliament	constituency	120	ÓººÓº¿Óºª Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óº¿ (120 Barishal-2)	CREATE	{}	2026-05-24 17:06:26.254614+00	\N	\N
-141	parliament	constituency	121	ÓººÓº¿Óºº Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óº® (121 Barishal-3)	CREATE	{}	2026-05-24 17:06:26.256662+00	\N	\N
-142	parliament	constituency	122	ÓººÓº¿Óº¿ Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óº¬ (122 Barishal-4)	CREATE	{}	2026-05-24 17:06:26.258587+00	\N	\N
-143	parliament	constituency	123	ÓººÓº¿Óº® Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óº½ (123 Barishal-5)	CREATE	{}	2026-05-24 17:06:26.260462+00	\N	\N
-144	parliament	constituency	124	ÓººÓº¿Óº¬ Óª¼Óª░Óª┐ÓªÂÓª¥Óª▓-Óº¼ (124 Barishal-6)	CREATE	{}	2026-05-24 17:06:26.262551+00	\N	\N
-145	parliament	constituency	125	ÓººÓº¿Óº½ ÓªØÓª¥Óª▓ÓªòÓª¥ÓªáÓª┐-Óºº (125 Jhalokathi-1)	CREATE	{}	2026-05-24 17:06:26.264415+00	\N	\N
-146	parliament	constituency	126	ÓººÓº¿Óº¼ ÓªØÓª¥Óª▓ÓªòÓª¥ÓªáÓª┐-Óº¿ (126 Jhalokathi-2)	CREATE	{}	2026-05-24 17:06:26.266706+00	\N	\N
-147	parliament	constituency	127	ÓººÓº¿Óº¡ Óª¬Óª┐Óª░ÓºïÓª£Óª¬ÓºüÓª░-Óºº (127 Pirojpur-1)	CREATE	{}	2026-05-24 17:06:26.268709+00	\N	\N
-148	parliament	constituency	128	ÓººÓº¿Óº« Óª¬Óª┐Óª░ÓºïÓª£Óª¬ÓºüÓª░-Óº¿ (128 Pirojpur-2)	CREATE	{}	2026-05-24 17:06:26.271031+00	\N	\N
-149	parliament	constituency	129	ÓººÓº¿Óº» Óª¬Óª┐Óª░ÓºïÓª£Óª¬ÓºüÓª░-Óº® (129 Pirojpur-3)	CREATE	{}	2026-05-24 17:06:26.273016+00	\N	\N
-150	parliament	constituency	130	ÓººÓº®Óºª ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óºº (130 Tangail-1)	CREATE	{}	2026-05-24 17:06:26.274856+00	\N	\N
-151	parliament	constituency	131	ÓººÓº®Óºº ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº¿ (131 Tangail-2)	CREATE	{}	2026-05-24 17:06:26.277114+00	\N	\N
-152	parliament	constituency	132	ÓººÓº®Óº¿ ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº® (132 Tangail-3)	CREATE	{}	2026-05-24 17:06:26.279069+00	\N	\N
-153	parliament	constituency	133	ÓººÓº®Óº® ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº¬ (133 Tangail-4)	CREATE	{}	2026-05-24 17:06:26.280783+00	\N	\N
-154	parliament	constituency	134	ÓººÓº®Óº¬ ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº½ (134 Tangail-5)	CREATE	{}	2026-05-24 17:06:26.283099+00	\N	\N
-155	parliament	constituency	135	ÓººÓº®Óº½ ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº¼ (135 Tangail-6)	CREATE	{}	2026-05-24 17:06:26.285164+00	\N	\N
-156	parliament	constituency	136	ÓººÓº®Óº¼ ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº¡ (136 Tangail-7)	CREATE	{}	2026-05-24 17:06:26.287243+00	\N	\N
-157	parliament	constituency	137	ÓººÓº®Óº¡ ÓªƒÓª¥ÓªÖÓºìÓªùÓª¥ÓªçÓª▓-Óº« (137 Tangail-8)	CREATE	{}	2026-05-24 17:06:26.28892+00	\N	\N
-158	parliament	constituency	138	ÓººÓº®Óº« Óª£Óª¥Óª«Óª¥Óª▓Óª¬ÓºüÓª░-Óºº (138 Jamalpur-1)	CREATE	{}	2026-05-24 17:06:26.290478+00	\N	\N
-159	parliament	constituency	139	ÓººÓº®Óº» Óª£Óª¥Óª«Óª¥Óª▓Óª¬ÓºüÓª░-Óº¿ (139 Jamalpur-2)	CREATE	{}	2026-05-24 17:06:26.292383+00	\N	\N
-160	parliament	constituency	140	ÓººÓº¬Óºª Óª£Óª¥Óª«Óª¥Óª▓Óª¬ÓºüÓª░-Óº® (140 Jamalpur-3)	CREATE	{}	2026-05-24 17:06:26.294402+00	\N	\N
-161	parliament	constituency	141	ÓººÓº¬Óºº Óª£Óª¥Óª«Óª¥Óª▓Óª¬ÓºüÓª░-Óº¬ (141 Jamalpur-4)	CREATE	{}	2026-05-24 17:06:26.296615+00	\N	\N
-162	parliament	constituency	142	ÓººÓº¬Óº¿ Óª£Óª¥Óª«Óª¥Óª▓Óª¬ÓºüÓª░-Óº½ (142 Jamalpur-5)	CREATE	{}	2026-05-24 17:06:26.298095+00	\N	\N
-163	parliament	constituency	143	ÓººÓº¬Óº® ÓªÂÓºçÓª░Óª¬ÓºüÓª░-Óºº (143 Sherpur-1)	CREATE	{}	2026-05-24 17:06:26.299455+00	\N	\N
-164	parliament	constituency	144	ÓººÓº¬Óº¬ ÓªÂÓºçÓª░Óª¬ÓºüÓª░-Óº¿ (144 Sherpur-2)	CREATE	{}	2026-05-24 17:06:26.300727+00	\N	\N
-165	parliament	constituency	145	ÓººÓº¬Óº½ ÓªÂÓºçÓª░Óª¬ÓºüÓª░-Óº® (145 Sherpur-3)	CREATE	{}	2026-05-24 17:06:26.302691+00	\N	\N
-166	parliament	constituency	146	ÓººÓº¬Óº¼ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óºº (146 Mymensingh-1)	CREATE	{}	2026-05-24 17:06:26.304589+00	\N	\N
-167	parliament	constituency	147	ÓººÓº¬Óº¡ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº¿ (147 Mymensingh-2)	CREATE	{}	2026-05-24 17:06:26.305938+00	\N	\N
-168	parliament	constituency	148	ÓººÓº¬Óº« Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº® (148 Mymensingh-3)	CREATE	{}	2026-05-24 17:06:26.307248+00	\N	\N
-169	parliament	constituency	149	ÓººÓº¬Óº» Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº¬ (149 Mymensingh-4)	CREATE	{}	2026-05-24 17:06:26.308514+00	\N	\N
-170	parliament	constituency	150	ÓººÓº½Óºª Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº½ (150 Mymensingh-5)	CREATE	{}	2026-05-24 17:06:26.309785+00	\N	\N
-171	parliament	constituency	151	ÓººÓº½Óºº Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº¼ (151 Mymensingh-6)	CREATE	{}	2026-05-24 17:06:26.311683+00	\N	\N
-172	parliament	constituency	152	ÓººÓº½Óº¿ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº¡ (152 Mymensingh-7)	CREATE	{}	2026-05-24 17:06:26.313287+00	\N	\N
-173	parliament	constituency	153	ÓººÓº½Óº® Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº« (153 Mymensingh-8)	CREATE	{}	2026-05-24 17:06:26.314614+00	\N	\N
-174	parliament	constituency	154	ÓººÓº½Óº¬ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-Óº» (154 Mymensingh-9)	CREATE	{}	2026-05-24 17:06:26.315886+00	\N	\N
-175	parliament	constituency	155	ÓººÓº½Óº½ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-ÓººÓºª (155 Mymensingh-10)	CREATE	{}	2026-05-24 17:06:26.317133+00	\N	\N
-176	parliament	constituency	156	ÓººÓº½Óº¼ Óª«ÓºƒÓª«Óª¿Óª©Óª┐ÓªéÓª╣-ÓººÓºº (156 Mymensingh-11)	CREATE	{}	2026-05-24 17:06:26.319126+00	\N	\N
-177	parliament	constituency	157	ÓººÓº½Óº¡ Óª¿ÓºçÓªñÓºìÓª░ÓªòÓºïÓª¿Óª¥-Óºº (157 Netrokona-1)	CREATE	{}	2026-05-24 17:06:26.320802+00	\N	\N
-178	parliament	constituency	158	ÓººÓº½Óº« Óª¿ÓºçÓªñÓºìÓª░ÓªòÓºïÓª¿Óª¥-Óº¿ (158 Netrokona-2)	CREATE	{}	2026-05-24 17:06:26.323122+00	\N	\N
-179	parliament	constituency	159	ÓººÓº½Óº» Óª¿ÓºçÓªñÓºìÓª░ÓªòÓºïÓª¿Óª¥-Óº® (159 Netrokona-3)	CREATE	{}	2026-05-24 17:06:26.32447+00	\N	\N
-180	parliament	constituency	160	ÓººÓº¼Óºª Óª¿ÓºçÓªñÓºìÓª░ÓªòÓºïÓª¿Óª¥-Óº¬ (160 Netrokona-4)	CREATE	{}	2026-05-24 17:06:26.325812+00	\N	\N
-181	parliament	constituency	161	ÓººÓº¼Óºº Óª¿ÓºçÓªñÓºìÓª░ÓªòÓºïÓª¿Óª¥-Óº½ (161 Netrokona-5)	CREATE	{}	2026-05-24 17:06:26.327103+00	\N	\N
-182	parliament	constituency	162	ÓººÓº¼Óº¿ ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óºº (162 Kishoreganj-1)	CREATE	{}	2026-05-24 17:06:26.328417+00	\N	\N
-183	parliament	constituency	163	ÓººÓº¼Óº® ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óº¿ (163 Kishoreganj-2)	CREATE	{}	2026-05-24 17:06:26.329867+00	\N	\N
-184	parliament	constituency	164	ÓººÓº¼Óº¬ ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óº® (164 Kishoreganj-3)	CREATE	{}	2026-05-24 17:06:26.331112+00	\N	\N
-185	parliament	constituency	165	ÓººÓº¼Óº½ ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óº¬ (165 Kishoreganj-4)	CREATE	{}	2026-05-24 17:06:26.332379+00	\N	\N
-186	parliament	constituency	166	ÓººÓº¼Óº¼ ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óº½ (166 Kishoreganj-5)	CREATE	{}	2026-05-24 17:06:26.333617+00	\N	\N
-187	parliament	constituency	167	ÓººÓº¼Óº¡ ÓªòÓª┐ÓªÂÓºïÓª░ÓªùÓª×ÓºìÓª£-Óº¼ (167 Kishoreganj-6)	CREATE	{}	2026-05-24 17:06:26.334873+00	\N	\N
-188	parliament	constituency	168	ÓººÓº¼Óº« Óª«Óª¥Óª¿Óª┐ÓªòÓªùÓª×ÓºìÓª£-Óºº (168 Manikganj-1)	CREATE	{}	2026-05-24 17:06:26.336767+00	\N	\N
-189	parliament	constituency	169	ÓººÓº¼Óº» Óª«Óª¥Óª¿Óª┐ÓªòÓªùÓª×ÓºìÓª£-Óº¿ (169 Manikganj-2)	CREATE	{}	2026-05-24 17:06:26.338896+00	\N	\N
-190	parliament	constituency	170	ÓººÓº¡Óºª Óª«Óª¥Óª¿Óª┐ÓªòÓªùÓª×ÓºìÓª£-Óº® (170 Manikganj-3)	CREATE	{}	2026-05-24 17:06:26.340656+00	\N	\N
-191	parliament	constituency	171	ÓººÓº¡Óºº Óª«ÓºüÓª¿ÓºìÓª©Óª┐ÓªùÓª×ÓºìÓª£-Óºº (171 Munshiganj-1)	CREATE	{}	2026-05-24 17:06:26.342234+00	\N	\N
-192	parliament	constituency	172	ÓººÓº¡Óº¿ Óª«ÓºüÓª¿ÓºìÓª©Óª┐ÓªùÓª×ÓºìÓª£-Óº¿ (172 Munshiganj-2)	CREATE	{}	2026-05-24 17:06:26.34356+00	\N	\N
-193	parliament	constituency	173	ÓººÓº¡Óº® Óª«ÓºüÓª¿ÓºìÓª©Óª┐ÓªùÓª×ÓºìÓª£-Óº® (173 Munshiganj-3)	CREATE	{}	2026-05-24 17:06:26.345503+00	\N	\N
-194	parliament	constituency	174	ÓººÓº¡Óº¬ ÓªóÓª¥ÓªòÓª¥-Óºº (174 Dhaka-1)	CREATE	{}	2026-05-24 17:06:26.347449+00	\N	\N
-195	parliament	constituency	175	ÓººÓº¡Óº½ ÓªóÓª¥ÓªòÓª¥-Óº¿ (175 Dhaka-2)	CREATE	{}	2026-05-24 17:06:26.348793+00	\N	\N
-196	parliament	constituency	176	ÓººÓº¡Óº¼ ÓªóÓª¥ÓªòÓª¥-Óº® (176 Dhaka-3)	CREATE	{}	2026-05-24 17:06:26.350062+00	\N	\N
-197	parliament	constituency	177	ÓººÓº¡Óº¡ ÓªóÓª¥ÓªòÓª¥-Óº¬ (177 Dhaka-4)	CREATE	{}	2026-05-24 17:06:26.35136+00	\N	\N
-198	parliament	constituency	178	ÓººÓº¡Óº« ÓªóÓª¥ÓªòÓª¥-Óº½ (178 Dhaka-5)	CREATE	{}	2026-05-24 17:06:26.353121+00	\N	\N
-199	parliament	constituency	179	ÓººÓº¡Óº» ÓªóÓª¥ÓªòÓª¥-Óº¼ (179 Dhaka-6)	CREATE	{}	2026-05-24 17:06:26.355638+00	\N	\N
-200	parliament	constituency	180	ÓººÓº«Óºª ÓªóÓª¥ÓªòÓª¥-Óº¡ (180 Dhaka-7)	CREATE	{}	2026-05-24 17:06:26.357773+00	\N	\N
-201	parliament	constituency	181	ÓººÓº«Óºº ÓªóÓª¥ÓªòÓª¥-Óº« (181 Dhaka-8)	CREATE	{}	2026-05-24 17:06:26.359966+00	\N	\N
-202	parliament	constituency	182	ÓººÓº«Óº¿ ÓªóÓª¥ÓªòÓª¥-Óº» (182 Dhaka-9)	CREATE	{}	2026-05-24 17:06:26.361777+00	\N	\N
-203	parliament	constituency	183	ÓººÓº«Óº® ÓªóÓª¥ÓªòÓª¥-ÓººÓºª (183 Dhaka-10)	CREATE	{}	2026-05-24 17:06:26.363338+00	\N	\N
-204	parliament	constituency	184	ÓººÓº«Óº¬ ÓªóÓª¥ÓªòÓª¥-ÓººÓºº (184 Dhaka-11)	CREATE	{}	2026-05-24 17:06:26.365204+00	\N	\N
-205	parliament	constituency	185	ÓººÓº«Óº½ ÓªóÓª¥ÓªòÓª¥-ÓººÓº¿ (185 Dhaka-12)	CREATE	{}	2026-05-24 17:06:26.366535+00	\N	\N
-206	parliament	constituency	186	ÓººÓº«Óº¼ ÓªóÓª¥ÓªòÓª¥-ÓººÓº® (186 Dhaka-13)	CREATE	{}	2026-05-24 17:06:26.367782+00	\N	\N
-207	parliament	constituency	187	ÓººÓº«Óº¡ ÓªóÓª¥ÓªòÓª¥-ÓººÓº¬ (187 Dhaka-14)	CREATE	{}	2026-05-24 17:06:26.369003+00	\N	\N
-208	parliament	constituency	188	ÓººÓº«Óº« ÓªóÓª¥ÓªòÓª¥-ÓººÓº½ (188 Dhaka-15)	CREATE	{}	2026-05-24 17:06:26.370272+00	\N	\N
-209	parliament	constituency	189	ÓººÓº«Óº» ÓªóÓª¥ÓªòÓª¥-ÓººÓº¼ (189 Dhaka-16)	CREATE	{}	2026-05-24 17:06:26.372471+00	\N	\N
-210	parliament	constituency	190	ÓººÓº»Óºª ÓªóÓª¥ÓªòÓª¥-ÓººÓº¡ (190 Dhaka-17)	CREATE	{}	2026-05-24 17:06:26.374562+00	\N	\N
-211	parliament	constituency	191	ÓººÓº»Óºº ÓªóÓª¥ÓªòÓª¥-ÓººÓº« (191 Dhaka-18)	CREATE	{}	2026-05-24 17:06:26.377434+00	\N	\N
-212	parliament	constituency	192	ÓººÓº»Óº¿ ÓªóÓª¥ÓªòÓª¥-ÓººÓº» (192 Dhaka-19)	CREATE	{}	2026-05-24 17:06:26.380118+00	\N	\N
-213	parliament	constituency	193	ÓººÓº»Óº® ÓªóÓª¥ÓªòÓª¥-Óº¿Óºª (193 Dhaka-20)	CREATE	{}	2026-05-24 17:06:26.381671+00	\N	\N
-214	parliament	constituency	194	ÓººÓº»Óº¬ ÓªùÓª¥Óª£ÓºÇÓª¬ÓºüÓª░-Óºº (194 Gazipur-1)	CREATE	{}	2026-05-24 17:06:26.382978+00	\N	\N
-215	parliament	constituency	195	ÓººÓº»Óº½ ÓªùÓª¥Óª£ÓºÇÓª¬ÓºüÓª░-Óº¿ (195 Gazipur-2)	CREATE	{}	2026-05-24 17:06:26.384242+00	\N	\N
-216	parliament	constituency	196	ÓººÓº»Óº¼ ÓªùÓª¥Óª£ÓºÇÓª¬ÓºüÓª░-Óº® (196 Gazipur-3)	CREATE	{}	2026-05-24 17:06:26.385496+00	\N	\N
-217	parliament	constituency	197	ÓººÓº»Óº¡ ÓªùÓª¥Óª£ÓºÇÓª¬ÓºüÓª░-Óº¬ (197 Gazipur-4)	CREATE	{}	2026-05-24 17:06:26.387279+00	\N	\N
-218	parliament	constituency	198	ÓººÓº»Óº« ÓªùÓª¥Óª£ÓºÇÓª¬ÓºüÓª░-Óº½ (198 Gazipur-5)	CREATE	{}	2026-05-24 17:06:26.388678+00	\N	\N
-219	parliament	constituency	199	ÓººÓº»Óº» Óª¿Óª░Óª©Óª┐ÓªéÓªªÓºÇ-Óºº (199 Narsingdi-1)	CREATE	{}	2026-05-24 17:06:26.390585+00	\N	\N
-220	parliament	constituency	200	Óº¿ÓºªÓºª Óª¿Óª░Óª©Óª┐ÓªéÓªªÓºÇ-Óº¿ (200 Narsingdi-2)	CREATE	{}	2026-05-24 17:06:26.392477+00	\N	\N
-221	parliament	constituency	201	Óº¿ÓºªÓºº Óª¿Óª░Óª©Óª┐ÓªéÓªªÓºÇ-Óº® (201 Narsingdi-3)	CREATE	{}	2026-05-24 17:06:26.393753+00	\N	\N
-222	parliament	constituency	202	Óº¿ÓºªÓº¿ Óª¿Óª░Óª©Óª┐ÓªéÓªªÓºÇ-Óº¬ (202 Narsingdi-4)	CREATE	{}	2026-05-24 17:06:26.395833+00	\N	\N
-223	parliament	constituency	203	Óº¿ÓºªÓº® Óª¿Óª░Óª©Óª┐ÓªéÓªªÓºÇ-Óº½ (203 Narsingdi-5)	CREATE	{}	2026-05-24 17:06:26.397296+00	\N	\N
-224	parliament	constituency	204	Óº¿ÓºªÓº¬ Óª¿Óª¥Óª░Óª¥ÓºƒÓªúÓªùÓª×ÓºìÓª£-Óºº (204 Narayanganj-1)	CREATE	{}	2026-05-24 17:06:26.398572+00	\N	\N
-225	parliament	constituency	205	Óº¿ÓºªÓº½ Óª¿Óª¥Óª░Óª¥ÓºƒÓªúÓªùÓª×ÓºìÓª£-Óº¿ (205 Narayanganj-2)	CREATE	{}	2026-05-24 17:06:26.399842+00	\N	\N
-226	parliament	constituency	206	Óº¿ÓºªÓº¼ Óª¿Óª¥Óª░Óª¥ÓºƒÓªúÓªùÓª×ÓºìÓª£-Óº® (206 Narayanganj-3)	CREATE	{}	2026-05-24 17:06:26.401097+00	\N	\N
-227	parliament	constituency	207	Óº¿ÓºªÓº¡ Óª¿Óª¥Óª░Óª¥ÓºƒÓªúÓªùÓª×ÓºìÓª£-Óº¬ (207 Narayanganj-4)	CREATE	{}	2026-05-24 17:06:26.402386+00	\N	\N
-228	parliament	constituency	208	Óº¿ÓºªÓº« Óª¿Óª¥Óª░Óª¥ÓºƒÓªúÓªùÓª×ÓºìÓª£-Óº½ (208 Narayanganj-5)	CREATE	{}	2026-05-24 17:06:26.404146+00	\N	\N
-229	parliament	constituency	209	Óº¿ÓºªÓº» Óª░Óª¥Óª£Óª¼Óª¥Óº£ÓºÇ-Óºº (209 Rajbari-1)	CREATE	{}	2026-05-24 17:06:26.406264+00	\N	\N
-230	parliament	constituency	210	Óº¿ÓººÓºª Óª░Óª¥Óª£Óª¼Óª¥Óº£ÓºÇ-Óº¿ (210 Rajbari-2)	CREATE	{}	2026-05-24 17:06:26.408397+00	\N	\N
-231	parliament	constituency	211	Óº¿ÓººÓºº Óª½Óª░Óª┐ÓªªÓª¬ÓºüÓª░-Óºº (211 Faridpur-1)	CREATE	{}	2026-05-24 17:06:26.410243+00	\N	\N
-232	parliament	constituency	212	Óº¿ÓººÓº¿ Óª½Óª░Óª┐ÓªªÓª¬ÓºüÓª░-Óº¿ (212 Faridpur-2)	CREATE	{}	2026-05-24 17:06:26.411639+00	\N	\N
-233	parliament	constituency	213	Óº¿ÓººÓº® Óª½Óª░Óª┐ÓªªÓª¬ÓºüÓª░-Óº® (213 Faridpur-3)	CREATE	{}	2026-05-24 17:06:26.413568+00	\N	\N
-234	parliament	constituency	214	Óº¿ÓººÓº¬ Óª½Óª░Óª┐ÓªªÓª¬ÓºüÓª░-Óº¬ (214 Faridpur-4)	CREATE	{}	2026-05-24 17:06:26.41504+00	\N	\N
-235	parliament	constituency	215	Óº¿ÓººÓº½ ÓªùÓºïÓª¬Óª¥Óª▓ÓªùÓª×ÓºìÓª£-Óºº (215 Gopalgonj-1)	CREATE	{}	2026-05-24 17:06:26.416305+00	\N	\N
-236	parliament	constituency	216	Óº¿ÓººÓº¼ ÓªùÓºïÓª¬Óª¥Óª▓ÓªùÓª×ÓºìÓª£-Óº¿ (216 Gopalgonj-2)	CREATE	{}	2026-05-24 17:06:26.417996+00	\N	\N
-237	parliament	constituency	217	Óº¿ÓººÓº¡ ÓªùÓºïÓª¬Óª¥Óª▓ÓªùÓª×ÓºìÓª£-Óº® (217 Gopalgonj-3)	CREATE	{}	2026-05-24 17:06:26.419351+00	\N	\N
-238	parliament	constituency	218	Óº¿ÓººÓº« Óª«Óª¥ÓªªÓª¥Óª░Óª┐Óª¬ÓºüÓª░-Óºº (218 Madaripur-1)	CREATE	{}	2026-05-24 17:06:26.420673+00	\N	\N
-239	parliament	constituency	219	Óº¿ÓººÓº» Óª«Óª¥ÓªªÓª¥Óª░Óª┐Óª¬ÓºüÓª░-Óº¿ (219 Madaripur-2)	CREATE	{}	2026-05-24 17:06:26.422037+00	\N	\N
-240	parliament	constituency	220	Óº¿Óº¿Óºª Óª«Óª¥ÓªªÓª¥Óª░Óª┐Óª¬ÓºüÓª░-Óº® (220 Madaripur-3)	CREATE	{}	2026-05-24 17:06:26.423838+00	\N	\N
-241	parliament	constituency	221	Óº¿Óº¿Óºº ÓªÂÓª░Óª┐ÓºƒÓªñÓª¬ÓºüÓª░-Óºº (221 Shariatpur-1)	CREATE	{}	2026-05-24 17:06:26.426601+00	\N	\N
-242	parliament	constituency	222	Óº¿Óº¿Óº¿ ÓªÂÓª░Óª┐ÓºƒÓªñÓª¬ÓºüÓª░-Óº¿ (222 Shariatpur-2)	CREATE	{}	2026-05-24 17:06:26.4291+00	\N	\N
-243	parliament	constituency	223	Óº¿Óº¿Óº® ÓªÂÓª░Óª┐ÓºƒÓªñÓª¬ÓºüÓª░-Óº® (223 Shariatpur-3)	CREATE	{}	2026-05-24 17:06:26.43083+00	\N	\N
-244	parliament	constituency	224	Óº¿Óº¿Óº¬ Óª©ÓºüÓª¿Óª¥Óª«ÓªùÓª×ÓºìÓª£-Óºº (224 Sunamganj-1)	CREATE	{}	2026-05-24 17:06:26.432144+00	\N	\N
-245	parliament	constituency	225	Óº¿Óº¿Óº½ Óª©ÓºüÓª¿Óª¥Óª«ÓªùÓª×ÓºìÓª£-Óº¿ (225 Sunamganj-2)	CREATE	{}	2026-05-24 17:06:26.433387+00	\N	\N
-246	parliament	constituency	226	Óº¿Óº¿Óº¼ Óª©ÓºüÓª¿Óª¥Óª«ÓªùÓª×ÓºìÓª£-Óº® (226 Sunamganj-3)	CREATE	{}	2026-05-24 17:06:26.434684+00	\N	\N
-247	parliament	constituency	227	Óº¿Óº¿Óº¡ Óª©ÓºüÓª¿Óª¥Óª«ÓªùÓª×ÓºìÓª£-Óº¬ (227 Sunamganj-4)	CREATE	{}	2026-05-24 17:06:26.435932+00	\N	\N
-248	parliament	constituency	228	Óº¿Óº¿Óº« Óª©ÓºüÓª¿Óª¥Óª«ÓªùÓª×ÓºìÓª£-Óº½ (228 Sunamganj-5)	CREATE	{}	2026-05-24 17:06:26.43724+00	\N	\N
-249	parliament	constituency	229	Óº¿Óº¿Óº» Óª©Óª┐Óª▓ÓºçÓªƒ-Óºº (229 Sylhet-1)	CREATE	{}	2026-05-24 17:06:26.438741+00	\N	\N
-250	parliament	constituency	230	Óº¿Óº®Óºª Óª©Óª┐Óª▓ÓºçÓªƒ-Óº¿ (230 Sylhet-2)	CREATE	{}	2026-05-24 17:06:26.4402+00	\N	\N
-251	parliament	constituency	231	Óº¿Óº®Óºº Óª©Óª┐Óª▓ÓºçÓªƒ-Óº® (231 Sylhet-3)	CREATE	{}	2026-05-24 17:06:26.442364+00	\N	\N
-252	parliament	constituency	232	Óº¿Óº®Óº¿ Óª©Óª┐Óª▓ÓºçÓªƒ-Óº¬ (232 Sylhet-4)	CREATE	{}	2026-05-24 17:06:26.444175+00	\N	\N
-253	parliament	constituency	233	Óº¿Óº®Óº® Óª©Óª┐Óª▓ÓºçÓªƒ-Óº½ (233 Sylhet-5)	CREATE	{}	2026-05-24 17:06:26.446565+00	\N	\N
-254	parliament	constituency	234	Óº¿Óº®Óº¬ Óª©Óª┐Óª▓ÓºçÓªƒ-Óº¼ (234 Sylhet-6)	CREATE	{}	2026-05-24 17:06:26.447881+00	\N	\N
-255	parliament	constituency	235	Óº¿Óº®Óº½ Óª«ÓºîÓª▓Óª¡ÓºÇÓª¼Óª¥Óª£Óª¥Óª░-Óºº (235 Maulvibazar-1)	CREATE	{}	2026-05-24 17:06:26.449174+00	\N	\N
-256	parliament	constituency	236	Óº¿Óº®Óº¼ Óª«ÓºîÓª▓Óª¡ÓºÇÓª¼Óª¥Óª£Óª¥Óª░-Óº¿ (236 Maulvibazar-2)	CREATE	{}	2026-05-24 17:06:26.450465+00	\N	\N
-257	parliament	constituency	237	Óº¿Óº®Óº¡ Óª«ÓºîÓª▓Óª¡ÓºÇÓª¼Óª¥Óª£Óª¥Óª░-Óº® (237 Maulvibazar-3)	CREATE	{}	2026-05-24 17:06:26.452386+00	\N	\N
-258	parliament	constituency	238	Óº¿Óº®Óº« Óª«ÓºîÓª▓Óª¡ÓºÇÓª¼Óª¥Óª£Óª¥Óª░-Óº¬ (238 Maulvibazar-4)	CREATE	{}	2026-05-24 17:06:26.45406+00	\N	\N
-259	parliament	constituency	239	Óº¿Óº®Óº» Óª╣Óª¼Óª┐ÓªùÓª×ÓºìÓª£-Óºº (239 Habiganj-1)	CREATE	{}	2026-05-24 17:06:26.455989+00	\N	\N
-260	parliament	constituency	240	Óº¿Óº¬Óºª Óª╣Óª¼Óª┐ÓªùÓª×ÓºìÓª£-Óº¿ (240 Habiganj-2)	CREATE	{}	2026-05-24 17:06:26.458014+00	\N	\N
-261	parliament	constituency	241	Óº¿Óº¬Óºº Óª╣Óª¼Óª┐ÓªùÓª×ÓºìÓª£-Óº® (241 Habiganj-3)	CREATE	{}	2026-05-24 17:06:26.459876+00	\N	\N
-262	parliament	constituency	242	Óº¿Óº¬Óº¿ Óª╣Óª¼Óª┐ÓªùÓª×ÓºìÓª£-Óº¬ (242 Habiganj-4)	CREATE	{}	2026-05-24 17:06:26.461812+00	\N	\N
-263	parliament	constituency	243	Óº¿Óº¬Óº® Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óºº (243 Brahmanbaria-1)	CREATE	{}	2026-05-24 17:06:26.464001+00	\N	\N
-264	parliament	constituency	244	Óº¿Óº¬Óº¬ Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óº¿ (244 Brahmanbaria-2)	CREATE	{}	2026-05-24 17:06:26.465375+00	\N	\N
-712	mp	mp	114	ÓªÅ Óª¼Óª┐ ÓªÅÓª« Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿ (013011401)	CREATE	{}	2026-05-25 09:27:23.691161+00	\N	\N
-265	parliament	constituency	245	Óº¿Óº¬Óº½ Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óº® (245 Brahmanbaria-3)	CREATE	{}	2026-05-24 17:06:26.466696+00	\N	\N
-266	parliament	constituency	246	Óº¿Óº¬Óº¼ Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óº¬ (246 Brahmanbaria-4)	CREATE	{}	2026-05-24 17:06:26.467947+00	\N	\N
-267	parliament	constituency	247	Óº¿Óº¬Óº¡ Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óº½ (247 Brahmanbaria-5)	CREATE	{}	2026-05-24 17:06:26.469276+00	\N	\N
-268	parliament	constituency	248	Óº¿Óº¬Óº« Óª¼ÓºìÓª░Óª¥Óª╣ÓºìÓª«ÓªúÓª¼Óª¥ÓªíÓª╝Óª┐Óª»Óª╝Óª¥-Óº¼ (248 Brahmanbaria-6)	CREATE	{}	2026-05-24 17:06:26.471572+00	\N	\N
-269	parliament	constituency	249	Óº¿Óº¬Óº» ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óºº (249 Cumilla-1)	CREATE	{}	2026-05-24 17:06:26.472951+00	\N	\N
-270	parliament	constituency	250	Óº¿Óº½Óºª ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº¿ (250 Cumilla-2)	CREATE	{}	2026-05-24 17:06:26.474215+00	\N	\N
-271	parliament	constituency	251	Óº¿Óº½Óºº ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº® (251 Cumilla-3)	CREATE	{}	2026-05-24 17:06:26.475482+00	\N	\N
-272	parliament	constituency	252	Óº¿Óº½Óº¿ ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº¬ (252 Cumilla-4)	CREATE	{}	2026-05-24 17:06:26.477211+00	\N	\N
-273	parliament	constituency	253	Óº¿Óº½Óº® ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº½ (253 Cumilla-5)	CREATE	{}	2026-05-24 17:06:26.479693+00	\N	\N
-274	parliament	constituency	254	Óº¿Óº½Óº¬ ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº¼ (254 Cumilla-6)	CREATE	{}	2026-05-24 17:06:26.481292+00	\N	\N
-275	parliament	constituency	255	Óº¿Óº½Óº½ ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº¡ (255 Cumilla-7)	CREATE	{}	2026-05-24 17:06:26.482577+00	\N	\N
-276	parliament	constituency	256	Óº¿Óº½Óº¼ ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº« (256 Cumilla-8)	CREATE	{}	2026-05-24 17:06:26.483873+00	\N	\N
-277	parliament	constituency	257	Óº¿Óº½Óº¡ ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-Óº» (257 Cumilla-9)	CREATE	{}	2026-05-24 17:06:26.485161+00	\N	\N
-278	parliament	constituency	258	Óº¿Óº½Óº« ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-ÓººÓºª (258 Cumilla-10)	CREATE	{}	2026-05-24 17:06:26.486402+00	\N	\N
-279	parliament	constituency	259	Óº¿Óº½Óº» ÓªòÓºüÓª«Óª┐Óª▓ÓºìÓª▓Óª¥-ÓººÓºº (259 Cumilla-11)	CREATE	{}	2026-05-24 17:06:26.487744+00	\N	\N
-280	parliament	constituency	260	Óº¿Óº¼Óºª ÓªÜÓª¥ÓªüÓªªÓª¬ÓºüÓª░-Óºº (260 Chandpur-1)	CREATE	{}	2026-05-24 17:06:26.489001+00	\N	\N
-281	parliament	constituency	261	Óº¿Óº¼Óºº ÓªÜÓª¥ÓªüÓªªÓª¬ÓºüÓª░-Óº¿ (261 Chandpur-2)	CREATE	{}	2026-05-24 17:06:26.490319+00	\N	\N
-282	parliament	constituency	262	Óº¿Óº¼Óº¿ ÓªÜÓª¥ÓªüÓªªÓª¬ÓºüÓª░-Óº® (262 Chandpur-3)	CREATE	{}	2026-05-24 17:06:26.491578+00	\N	\N
-283	parliament	constituency	263	Óº¿Óº¼Óº® ÓªÜÓª¥ÓªüÓªªÓª¬ÓºüÓª░-Óº¬ (263 Chandpur-4)	CREATE	{}	2026-05-24 17:06:26.492845+00	\N	\N
-284	parliament	constituency	264	Óº¿Óº¼Óº¬ ÓªÜÓª¥ÓªüÓªªÓª¬ÓºüÓª░-Óº½ (264 Chandpur-5)	CREATE	{}	2026-05-24 17:06:26.49533+00	\N	\N
-285	parliament	constituency	265	Óº¿Óº¼Óº½ Óª½ÓºçÓª¿ÓºÇ-Óºº (265 Feni-1)	CREATE	{}	2026-05-24 17:06:26.497177+00	\N	\N
-286	parliament	constituency	266	Óº¿Óº¼Óº¼ Óª½ÓºçÓª¿ÓºÇ-Óº¿ (266 Feni-2)	CREATE	{}	2026-05-24 17:06:26.498558+00	\N	\N
-287	parliament	constituency	267	Óº¿Óº¼Óº¡ Óª½ÓºçÓª¿ÓºÇ-Óº® (267 Feni-3)	CREATE	{}	2026-05-24 17:06:26.499839+00	\N	\N
-288	parliament	constituency	268	Óº¿Óº¼Óº« Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óºº (268 Noakhali-1)	CREATE	{}	2026-05-24 17:06:26.501125+00	\N	\N
-289	parliament	constituency	269	Óº¿Óº¼Óº» Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óº¿ (269 Noakhali-2)	CREATE	{}	2026-05-24 17:06:26.502383+00	\N	\N
-290	parliament	constituency	270	Óº¿Óº¡Óºª Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óº® (270 Noakhali-3)	CREATE	{}	2026-05-24 17:06:26.504104+00	\N	\N
-291	parliament	constituency	271	Óº¿Óº¡Óºº Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óº¬ (271 Noakhali-4)	CREATE	{}	2026-05-24 17:06:26.506488+00	\N	\N
-292	parliament	constituency	272	Óº¿Óº¡Óº¿ Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óº½ (272 Noakhali-5)	CREATE	{}	2026-05-24 17:06:26.507821+00	\N	\N
-293	parliament	constituency	273	Óº¿Óº¡Óº® Óª¿ÓºïÓºƒÓª¥ÓªûÓª¥Óª▓ÓºÇ-Óº¼ (273 Noakhali-6)	CREATE	{}	2026-05-24 17:06:26.509072+00	\N	\N
-294	parliament	constituency	274	Óº¿Óº¡Óº¬ Óª▓ÓªòÓºìÓªÀÓºìÓª«ÓºÇÓª¬ÓºüÓª░-Óºº (274 Laxmipur-1)	CREATE	{}	2026-05-24 17:06:26.510595+00	\N	\N
-295	parliament	constituency	275	Óº¿Óº¡Óº½ Óª▓ÓªòÓºìÓªÀÓºìÓª«ÓºÇÓª¬ÓºüÓª░-Óº¿ (275 Laxmipur-2)	CREATE	{}	2026-05-24 17:06:26.512509+00	\N	\N
-296	parliament	constituency	276	Óº¿Óº¡Óº¼ Óª▓ÓªòÓºìÓªÀÓºìÓª«ÓºÇÓª¬ÓºüÓª░-Óº® (276 Laxmipur-3)	CREATE	{}	2026-05-24 17:06:26.514595+00	\N	\N
-297	parliament	constituency	277	Óº¿Óº¡Óº¡ Óª▓ÓªòÓºìÓªÀÓºìÓª«ÓºÇÓª¬ÓºüÓª░-Óº¬ (277 Laxmipur-4)	CREATE	{}	2026-05-24 17:06:26.516596+00	\N	\N
-298	parliament	constituency	278	Óº¿Óº¡Óº« ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óºº (278 Chattogram-1)	CREATE	{}	2026-05-24 17:06:26.517961+00	\N	\N
-299	parliament	constituency	279	Óº¿Óº¡Óº» ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº¿ (279 Chattogram-2)	CREATE	{}	2026-05-24 17:06:26.519251+00	\N	\N
-300	parliament	constituency	280	Óº¿Óº«Óºª ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº® (280 Chattogram-3)	CREATE	{}	2026-05-24 17:06:26.520499+00	\N	\N
-301	parliament	constituency	281	Óº¿Óº«Óºº ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº¬ (281 Chattogram-4)	CREATE	{}	2026-05-24 17:06:26.521766+00	\N	\N
-302	parliament	constituency	282	Óº¿Óº«Óº¿ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº½ (282 Chattogram-5)	CREATE	{}	2026-05-24 17:06:26.523118+00	\N	\N
-303	parliament	constituency	283	Óº¿Óº«Óº® ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº¼ (283 Chattogram-6)	CREATE	{}	2026-05-24 17:06:26.524366+00	\N	\N
-304	parliament	constituency	284	Óº¿Óº«Óº¬ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº¡ (284 Chattogram-7)	CREATE	{}	2026-05-24 17:06:26.525648+00	\N	\N
-305	parliament	constituency	285	Óº¿Óº«Óº½ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº« (285 Chittagong-8)	CREATE	{}	2026-05-24 17:06:26.526899+00	\N	\N
-306	parliament	constituency	286	Óº¿Óº«Óº¼ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-Óº» (286 Chattogram-9)	CREATE	{}	2026-05-24 17:06:26.529852+00	\N	\N
-307	parliament	constituency	287	Óº¿Óº«Óº¡ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓºª (287 Chattogram-10)	CREATE	{}	2026-05-24 17:06:26.531603+00	\N	\N
-308	parliament	constituency	288	Óº¿Óº«Óº« ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓºº (288 Chattogram-11)	CREATE	{}	2026-05-24 17:06:26.5345+00	\N	\N
-309	parliament	constituency	289	Óº¿Óº«Óº» ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓº¿ (289 Chattogram-12)	CREATE	{}	2026-05-24 17:06:26.535871+00	\N	\N
-310	parliament	constituency	290	Óº¿Óº»Óºª ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓº® (290 Chattogram-13)	CREATE	{}	2026-05-24 17:06:26.537441+00	\N	\N
-311	parliament	constituency	291	Óº¿Óº»Óºº ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓº¬ (291 Chattogram-14)	CREATE	{}	2026-05-24 17:06:26.53954+00	\N	\N
-312	parliament	constituency	292	Óº¿Óº»Óº¿ ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓº½ (292 Chattogram-15)	CREATE	{}	2026-05-24 17:06:26.540825+00	\N	\N
-313	parliament	constituency	293	Óº¿Óº»Óº® ÓªÜÓªƒÓºìÓªƒÓªùÓºìÓª░Óª¥Óª«-ÓººÓº¼ (293 Chattogram-16)	CREATE	{}	2026-05-24 17:06:26.542168+00	\N	\N
-314	parliament	constituency	294	Óº¿Óº»Óº¬ ÓªòÓªòÓºìÓª©Óª¼Óª¥Óª£Óª¥Óª░-Óºº (294 Cox'sBazar-1)	CREATE	{}	2026-05-24 17:06:26.543809+00	\N	\N
-315	parliament	constituency	295	Óº¿Óº»Óº½ ÓªòÓªòÓºìÓª©Óª¼Óª¥Óª£Óª¥Óª░-Óº¿ (295 Cox'sBazar-2)	CREATE	{}	2026-05-24 17:06:26.545078+00	\N	\N
-316	parliament	constituency	296	Óº¿Óº»Óº¼ ÓªòÓªòÓºìÓª©Óª¼Óª¥Óª£Óª¥Óª░-Óº® (296 Cox'sBazar-3)	CREATE	{}	2026-05-24 17:06:26.546687+00	\N	\N
-317	parliament	constituency	297	Óº¿Óº»Óº¡ ÓªòÓªòÓºìÓª©Óª¼Óª¥Óª£Óª¥Óª░-Óº¬ (297 Cox'sBazar-4)	CREATE	{}	2026-05-24 17:06:26.549315+00	\N	\N
-318	parliament	constituency	298	Óº¿Óº»Óº« ÓªûÓª¥ÓªùÓº£Óª¥ÓªøÓº£Óª┐ (298 Khagrachhari)	CREATE	{}	2026-05-24 17:06:26.551219+00	\N	\N
-319	parliament	constituency	299	Óº¿Óº»Óº» Óª░Óª¥ÓªÖÓºìÓªùÓª¥Óª«Óª¥ÓªƒÓª┐ (299 Rangamati)	CREATE	{}	2026-05-24 17:06:26.552508+00	\N	\N
-320	parliament	constituency	300	Óº®ÓºªÓºª Óª¼Óª¥Óª¿ÓºìÓªªÓª░Óª¼Óª¿ (300 Bandarban)	CREATE	{}	2026-05-24 17:06:26.553796+00	\N	\N
-321	parliament	constituency	301	Óº®ÓºªÓºº Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óºº (301 Women┬áSeat-1)	CREATE	{}	2026-05-24 17:06:26.556095+00	\N	\N
-322	parliament	constituency	302	Óº®ÓºªÓº¿ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿ (302 Women┬áSeat-2)	CREATE	{}	2026-05-24 17:06:26.557406+00	\N	\N
-323	parliament	constituency	303	Óº®ÓºªÓº® Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº® (303 Women┬áSeat-3)	CREATE	{}	2026-05-24 17:06:26.558742+00	\N	\N
-324	parliament	constituency	304	Óº®ÓºªÓº¬ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬ (304 Women┬áSeat-4)	CREATE	{}	2026-05-24 17:06:26.56001+00	\N	\N
-325	parliament	constituency	305	Óº®ÓºªÓº½ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº½ (305 Women┬áSeat-5)	CREATE	{}	2026-05-24 17:06:26.561307+00	\N	\N
-326	parliament	constituency	306	Óº®ÓºªÓº¼ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¼ (306 Women┬áSeat-6)	CREATE	{}	2026-05-24 17:06:26.563206+00	\N	\N
-327	parliament	constituency	307	Óº®ÓºªÓº¡ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¡ (307 Women┬áSeat-7)	CREATE	{}	2026-05-24 17:06:26.565307+00	\N	\N
-328	parliament	constituency	308	Óº®ÓºªÓº« Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº« (308 Women┬áSeat-8)	CREATE	{}	2026-05-24 17:06:26.566937+00	\N	\N
-329	parliament	constituency	309	Óº®ÓºªÓº» Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº» (309 Women┬áSeat-9)	CREATE	{}	2026-05-24 17:06:26.568221+00	\N	\N
-330	parliament	constituency	310	Óº®ÓººÓºª Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓºª (310 Women┬áSeat-10)	CREATE	{}	2026-05-24 17:06:26.569498+00	\N	\N
-331	parliament	constituency	311	Óº®ÓººÓºº Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓºº (311 Women┬áSeat-11)	CREATE	{}	2026-05-24 17:06:26.571256+00	\N	\N
-332	parliament	constituency	312	Óº®ÓººÓº¿ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº¿ (312 Women┬áSeat-12)	CREATE	{}	2026-05-24 17:06:26.572645+00	\N	\N
-333	parliament	constituency	313	Óº®ÓººÓº® Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº® (313 Women┬áSeat-13)	CREATE	{}	2026-05-24 17:06:26.573907+00	\N	\N
-334	parliament	constituency	314	Óº®ÓººÓº¬ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº¬ (314 Women┬áSeat-14)	CREATE	{}	2026-05-24 17:06:26.575601+00	\N	\N
-335	parliament	constituency	315	Óº®ÓººÓº½ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº½ (315 Women┬áSeat-15)	CREATE	{}	2026-05-24 17:06:26.576887+00	\N	\N
-336	parliament	constituency	316	Óº®ÓººÓº¼ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº¼ (316 Women┬áSeat-16)	CREATE	{}	2026-05-24 17:06:26.578134+00	\N	\N
-337	parliament	constituency	317	Óº®ÓººÓº¡ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº¡ (317 Women┬áSeat-17)	CREATE	{}	2026-05-24 17:06:26.579921+00	\N	\N
-338	parliament	constituency	318	Óº®ÓººÓº« Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº« (318 Women┬áSeat-18)	CREATE	{}	2026-05-24 17:06:26.581307+00	\N	\N
-339	parliament	constituency	319	Óº®ÓººÓº» Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-ÓººÓº» (319 Women┬áSeat-19)	CREATE	{}	2026-05-24 17:06:26.583456+00	\N	\N
-340	parliament	constituency	320	Óº®Óº¿Óºª Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óºª (320 Women┬áSeat-20)	CREATE	{}	2026-05-24 17:06:26.584923+00	\N	\N
-341	parliament	constituency	321	Óº®Óº¿Óºº Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óºº (321 Women┬áSeat-21)	CREATE	{}	2026-05-24 17:06:26.586351+00	\N	\N
-342	parliament	constituency	322	Óº®Óº¿Óº¿ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº¿ (322 Women┬áSeat-22)	CREATE	{}	2026-05-24 17:06:26.588445+00	\N	\N
-343	parliament	constituency	323	Óº®Óº¿Óº® Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº® (323 Women┬áSeat-23)	CREATE	{}	2026-05-24 17:06:26.589861+00	\N	\N
-344	parliament	constituency	324	Óº®Óº¿Óº¬ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº¬ (324 Women┬áSeat-24)	CREATE	{}	2026-05-24 17:06:26.591192+00	\N	\N
-345	parliament	constituency	325	Óº®Óº¿Óº½ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº½ (325 Women┬áSeat-25)	CREATE	{}	2026-05-24 17:06:26.592436+00	\N	\N
-346	parliament	constituency	326	Óº®Óº¿Óº¼ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº¼ (326 Women┬áSeat-26)	CREATE	{}	2026-05-24 17:06:26.593687+00	\N	\N
-347	parliament	constituency	327	Óº®Óº¿Óº¡ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº¡ (327 Women┬áSeat-27)	CREATE	{}	2026-05-24 17:06:26.595049+00	\N	\N
-348	parliament	constituency	328	Óº®Óº¿Óº« Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº« (328 Women┬áSeat-28)	CREATE	{}	2026-05-24 17:06:26.59688+00	\N	\N
-349	parliament	constituency	329	Óº®Óº¿Óº» Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¿Óº» (329 Women┬áSeat-29)	CREATE	{}	2026-05-24 17:06:26.598706+00	\N	\N
-350	parliament	constituency	330	Óº®Óº®Óºª Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óºª (330 Women┬áSeat-30)	CREATE	{}	2026-05-24 17:06:26.600509+00	\N	\N
-351	parliament	constituency	331	Óº®Óº®Óºº Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óºº (331 Women┬áSeat-31)	CREATE	{}	2026-05-24 17:06:26.602083+00	\N	\N
-352	parliament	constituency	332	Óº®Óº®Óº¿ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº¿ (332 Women┬áSeat-32)	CREATE	{}	2026-05-24 17:06:26.60342+00	\N	\N
-353	parliament	constituency	333	Óº®Óº®Óº® Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº® (333 Women┬áSeat-33)	CREATE	{}	2026-05-24 17:06:26.605773+00	\N	\N
-354	parliament	constituency	334	Óº®Óº®Óº¬ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº¬ (334 Women┬áSeat-34)	CREATE	{}	2026-05-24 17:06:26.607149+00	\N	\N
-355	parliament	constituency	335	Óº®Óº®Óº½ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº½ (335 Women┬áSeat-35)	CREATE	{}	2026-05-24 17:06:26.608414+00	\N	\N
-356	parliament	constituency	336	Óº®Óº®Óº¼ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº¼ (336 Women┬áSeat-36)	CREATE	{}	2026-05-24 17:06:26.609713+00	\N	\N
-357	parliament	constituency	337	Óº®Óº®Óº¡ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº¡ (337 Women┬áSeat-37)	CREATE	{}	2026-05-24 17:06:26.611306+00	\N	\N
-358	parliament	constituency	338	Óº®Óº®Óº« Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº« (338 Women┬áSeat-38)	CREATE	{}	2026-05-24 17:06:26.613728+00	\N	\N
-359	parliament	constituency	339	Óº®Óº®Óº» Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº®Óº» (339 Women┬áSeat-39)	CREATE	{}	2026-05-24 17:06:26.615185+00	\N	\N
-360	parliament	constituency	340	Óº®Óº¬Óºª Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óºª (340 Women┬áSeat-40)	CREATE	{}	2026-05-24 17:06:26.618064+00	\N	\N
-361	parliament	constituency	341	Óº®Óº¬Óºº Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óºº (341 Women┬áSeat-41)	CREATE	{}	2026-05-24 17:06:26.62006+00	\N	\N
-362	parliament	constituency	342	Óº®Óº¬Óº¿ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº¿ (342 Women┬áSeat-42)	CREATE	{}	2026-05-24 17:06:26.622252+00	\N	\N
-363	parliament	constituency	343	Óº®Óº¬Óº® Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº® (343 Women┬áSeat-43)	CREATE	{}	2026-05-24 17:06:26.624048+00	\N	\N
-364	parliament	constituency	344	Óº®Óº¬Óº¬ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº¬ (344 Women┬áSeat-44)	CREATE	{}	2026-05-24 17:06:26.625734+00	\N	\N
-365	parliament	constituency	345	Óº®Óº¬Óº½ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº½ (345 Women┬áSeat-45)	CREATE	{}	2026-05-24 17:06:26.62779+00	\N	\N
-366	parliament	constituency	346	Óº®Óº¬Óº¼ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº¼ (346 Women┬áSeat-46)	CREATE	{}	2026-05-24 17:06:26.629446+00	\N	\N
-367	parliament	constituency	347	Óº®Óº¬Óº¡ Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº¡ (347 Women┬áSeat-47)	CREATE	{}	2026-05-24 17:06:26.63117+00	\N	\N
-368	parliament	constituency	348	Óº®Óº¬Óº« Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº« (348 Women┬áSeat-48)	CREATE	{}	2026-05-24 17:06:26.632813+00	\N	\N
-369	parliament	constituency	349	Óº®Óº¬Óº» Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº¬Óº» (349 Women┬áSeat-49)	CREATE	{}	2026-05-24 17:06:26.63542+00	\N	\N
-370	parliament	constituency	350	Óº®Óº½Óºª Óª«Óª╣Óª┐Óª▓Óª¥ ÓªåÓª©Óª¿-Óº½Óºª (350 Women┬áSeat-50)	CREATE	{}	2026-05-24 17:06:26.637237+00	\N	\N
+41	parliament	constituency	21	২১ রংপুর-৩ (21 Rangpur-3)	CREATE	{}	2026-05-24 17:06:26.082693+00	\N	\N
+40	parliament	constituency	20	২০ রংপুর-২ (20 Rangpur-2)	CREATE	{}	2026-05-24 17:06:26.081022+00	\N	\N
+39	parliament	constituency	19	১৯ রংপুর-১ (19 Rangpur-1)	CREATE	{}	2026-05-24 17:06:26.079333+00	\N	\N
+38	parliament	constituency	18	১৮ লালমনিরহাট-৩ (18 Lalmonirhat-3)	CREATE	{}	2026-05-24 17:06:26.077107+00	\N	\N
+37	parliament	constituency	17	১৭ লালমনিরহাট-২ (17 Lalmonirhat-2)	CREATE	{}	2026-05-24 17:06:26.075341+00	\N	\N
+36	parliament	constituency	16	১৬ লালমনিরহাট-১ (16 Lalmonirhat-1)	CREATE	{}	2026-05-24 17:06:26.073552+00	\N	\N
+35	parliament	constituency	15	১৫ নীলফামারী-৪ (15 Nilphamari-4)	CREATE	{}	2026-05-24 17:06:26.071826+00	\N	\N
+34	parliament	constituency	14	১৪ নীলফামারী-৩ (14 Nilphamari-3)	CREATE	{}	2026-05-24 17:06:26.070096+00	\N	\N
+33	parliament	constituency	13	১৩ নীলফামারী-২ (13 Nilphamari-2)	CREATE	{}	2026-05-24 17:06:26.068417+00	\N	\N
+32	parliament	constituency	12	১২ নীলফামারী-১ (12 Nilphamari-1)	CREATE	{}	2026-05-24 17:06:26.066607+00	\N	\N
+31	parliament	constituency	11	১১ দিনাজপুর-৬ (11 Dinajpur-6)	CREATE	{}	2026-05-24 17:06:26.064946+00	\N	\N
+30	parliament	constituency	10	১০ দিনাজপুর-৫ (10 Dinajpur-5)	CREATE	{}	2026-05-24 17:06:26.063262+00	\N	\N
+29	parliament	constituency	9	৯ দিনাজপুর-৪ (9 Dinajpur-4)	CREATE	{}	2026-05-24 17:06:26.061741+00	\N	\N
+28	parliament	constituency	8	৮ দিনাজপুর-৩ (8 Dinajpur-3)	CREATE	{}	2026-05-24 17:06:26.060132+00	\N	\N
+27	parliament	constituency	7	৭ দিনাজপুর-২ (7 Dinajpur-2)	CREATE	{}	2026-05-24 17:06:26.058451+00	\N	\N
+26	parliament	constituency	6	৬ দিনাজপুর-১ (6 Dinajpur-1)	CREATE	{}	2026-05-24 17:06:26.056818+00	\N	\N
+25	parliament	constituency	5	৫ ঠাকুরগাঁও-৩ (5 Thakurgaon-3)	CREATE	{}	2026-05-24 17:06:26.055206+00	\N	\N
+24	parliament	constituency	4	৪ ঠাকুরগাঁও-২ (4 Thakurgaon-2)	CREATE	{}	2026-05-24 17:06:26.053614+00	\N	\N
+23	parliament	constituency	3	৩ ঠাকুরগাঁও-১ (3 Thakurgaon-1)	CREATE	{}	2026-05-24 17:06:26.052005+00	\N	\N
+22	parliament	constituency	2	২ পঞ্চগড়-২ (2 Panchagarh-2)	CREATE	{}	2026-05-24 17:06:26.050333+00	\N	\N
+21	parliament	constituency	1	১ পঞ্চগড়-১ (1 Panchagarh-1)	CREATE	{}	2026-05-24 17:06:26.047781+00	\N	\N
+19	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th National Parliament)	UPDATE	{"name_en": ["13th Parliament", "13th National Parliament"]}	2026-05-24 16:11:58.392493+00	\N	\N
+16	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"name_en": ["13th National Parliament", "13th Parliament"]}	2026-05-23 16:39:49.159101+00	172.23.0.1	1
+15	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th National Parliament)	CREATE	{}	2026-05-23 15:39:35.755266+00	\N	\N
+14	parliament	parliament	12	দ্বাদশ জাতীয় সংসদ (12th National Parliament)	CREATE	{}	2026-05-23 15:39:35.753235+00	\N	\N
+13	parliament	parliament	11	একাদশ জাতীয় সংসদ (11th National Parliament)	CREATE	{}	2026-05-23 15:39:35.751863+00	\N	\N
+12	parliament	parliament	10	দশম জাতীয় সংসদ (10th National Parliament)	CREATE	{}	2026-05-23 15:39:35.750162+00	\N	\N
+11	parliament	parliament	9	নবম জাতীয় সংসদ (9th National Parliament)	CREATE	{}	2026-05-23 15:39:35.74832+00	\N	\N
+10	parliament	parliament	8	অষ্টম জাতীয় সংসদ (8th National Parliament)	CREATE	{}	2026-05-23 15:39:35.746955+00	\N	\N
+9	parliament	parliament	7	সপ্তম জাতীয় সংসদ (7th National Parliament)	CREATE	{}	2026-05-23 15:39:35.745541+00	\N	\N
+8	parliament	parliament	6	ষষ্ঠ জাতীয় সংসদ (6th National Parliament)	CREATE	{}	2026-05-23 15:39:35.744159+00	\N	\N
+7	parliament	parliament	5	পঞ্চম জাতীয় সংসদ (5th National Parliament)	CREATE	{}	2026-05-23 15:39:35.742494+00	\N	\N
+6	parliament	parliament	4	চতুর্থ জাতীয় সংসদ (4th National Parliament)	CREATE	{}	2026-05-23 15:39:35.740923+00	\N	\N
+5	parliament	parliament	3	তৃতীয় জাতীয় সংসদ (3rd National Parliament)	CREATE	{}	2026-05-23 15:39:35.739109+00	\N	\N
+4	parliament	parliament	2	দ্বিতীয় জাতীয় সংসদ (2nd National Parliament)	CREATE	{}	2026-05-23 15:39:35.737172+00	\N	\N
+3	parliament	parliament	1	প্রথম জাতীয় সংসদ (1st National Parliament)	CREATE	{}	2026-05-23 15:39:35.733869+00	\N	\N
+87	parliament	constituency	67	৬৭ সিরাজগঞ্জ-৬ (67 Sirajganj-6)	CREATE	{}	2026-05-24 17:06:26.159788+00	\N	\N
+86	parliament	constituency	66	৬৬ সিরাজগঞ্জ-৫ (66 Sirajganj-5)	CREATE	{}	2026-05-24 17:06:26.158222+00	\N	\N
+85	parliament	constituency	65	৬৫ সিরাজগঞ্জ-৪ (65 Sirajganj-4)	CREATE	{}	2026-05-24 17:06:26.156676+00	\N	\N
+84	parliament	constituency	64	৬৪ সিরাজগঞ্জ-৩ (64 Sirajganj-3)	CREATE	{}	2026-05-24 17:06:26.155028+00	\N	\N
+83	parliament	constituency	63	৬৩ সিরাজগঞ্জ-২ (63 Sirajganj-2)	CREATE	{}	2026-05-24 17:06:26.153334+00	\N	\N
+82	parliament	constituency	62	৬২ সিরাজগঞ্জ-১ (62 Sirajganj-1)	CREATE	{}	2026-05-24 17:06:26.151639+00	\N	\N
+81	parliament	constituency	61	৬১ নাটোর-৪ (61 Natore-4)	CREATE	{}	2026-05-24 17:06:26.149982+00	\N	\N
+80	parliament	constituency	60	৬০ নাটোর-৩ (60 Natore-3)	CREATE	{}	2026-05-24 17:06:26.14827+00	\N	\N
+79	parliament	constituency	59	৫৯ নাটোর-২ (59 Natore-2)	CREATE	{}	2026-05-24 17:06:26.146713+00	\N	\N
+78	parliament	constituency	58	৫৮ নাটোর-১ (58 Natore-1)	CREATE	{}	2026-05-24 17:06:26.145035+00	\N	\N
+77	parliament	constituency	57	৫৭ রাজশাহী-৬ (57 Rajshahi-6)	CREATE	{}	2026-05-24 17:06:26.143183+00	\N	\N
+76	parliament	constituency	56	৫৬ রাজশাহী-৫ (56 Rajshahi-5)	CREATE	{}	2026-05-24 17:06:26.141513+00	\N	\N
+75	parliament	constituency	55	৫৫ রাজশাহী-৪ (55 Rajshahi-4)	CREATE	{}	2026-05-24 17:06:26.140001+00	\N	\N
+74	parliament	constituency	54	৫৪ রাজশাহী-৩ (54 Rajshahi-3)	CREATE	{}	2026-05-24 17:06:26.138503+00	\N	\N
+73	parliament	constituency	53	৫৩ রাজশাহী-২ (53 Rajshahi-2)	CREATE	{}	2026-05-24 17:06:26.13702+00	\N	\N
+72	parliament	constituency	52	৫২ রাজশাহী-১ (52 Rajshahi-1)	CREATE	{}	2026-05-24 17:06:26.135525+00	\N	\N
+71	parliament	constituency	51	৫১ নওগাঁ-৬ (51 Naogaon-6)	CREATE	{}	2026-05-24 17:06:26.133972+00	\N	\N
+70	parliament	constituency	50	৫০ নওগাঁ-৫ (50 Naogaon-5)	CREATE	{}	2026-05-24 17:06:26.132394+00	\N	\N
+69	parliament	constituency	49	৪৯ নওগাঁ-৪ (49 Naogaon-4)	CREATE	{}	2026-05-24 17:06:26.130884+00	\N	\N
+68	parliament	constituency	48	৪৮ নওগাঁ-৩ (48 Naogaon-3)	CREATE	{}	2026-05-24 17:06:26.129308+00	\N	\N
+67	parliament	constituency	47	৪৭ নওগাঁ-২ (47 Naogaon-2)	CREATE	{}	2026-05-24 17:06:26.127734+00	\N	\N
+66	parliament	constituency	46	৪৬ নওগাঁ-১ (46 Naogaon-1)	CREATE	{}	2026-05-24 17:06:26.125906+00	\N	\N
+65	parliament	constituency	45	৪৫ চাঁপাইনবাবগঞ্জ-৩ (45 ChapaiNawabganj-3)	CREATE	{}	2026-05-24 17:06:26.124361+00	\N	\N
+64	parliament	constituency	44	৪৪ চাঁপাইনবাবগঞ্জ-২ (44 ChapaiNawabganj-2)	CREATE	{}	2026-05-24 17:06:26.1227+00	\N	\N
+63	parliament	constituency	43	৪৩ চাঁপাইনবাবগঞ্জ-১ (43 ChapaiNawabganj-1)	CREATE	{}	2026-05-24 17:06:26.121177+00	\N	\N
+62	parliament	constituency	42	৪২ বগুড়া-৭ (42 Bogura-7)	CREATE	{}	2026-05-24 17:06:26.11954+00	\N	\N
+61	parliament	constituency	41	৪১ বগুড়া-৬ (41 Bogura-6)	CREATE	{}	2026-05-24 17:06:26.117864+00	\N	\N
+60	parliament	constituency	40	৪০ বগুড়া-৫ (40 Bogura-5)	CREATE	{}	2026-05-24 17:06:26.116294+00	\N	\N
+59	parliament	constituency	39	৩৯ বগুড়া-৪ (39 Bogura-4)	CREATE	{}	2026-05-24 17:06:26.11468+00	\N	\N
+58	parliament	constituency	38	৩৮ বগুড়া-৩ (38 Bogura-3)	CREATE	{}	2026-05-24 17:06:26.112985+00	\N	\N
+57	parliament	constituency	37	৩৭ বগুড়া-২ (37 Bogura-2)	CREATE	{}	2026-05-24 17:06:26.111338+00	\N	\N
+56	parliament	constituency	36	৩৬ বগুড়া-১ (36 Bogura-1)	CREATE	{}	2026-05-24 17:06:26.109555+00	\N	\N
+55	parliament	constituency	35	৩৫ জয়পুরহাট-২ (35 Jaipurhat-2)	CREATE	{}	2026-05-24 17:06:26.107805+00	\N	\N
+54	parliament	constituency	34	৩৪ জয়পুরহাট-১ (34 Jaipurhat-1)	CREATE	{}	2026-05-24 17:06:26.10616+00	\N	\N
+53	parliament	constituency	33	৩৩ গাইবান্ধা-৫ (33 Gaibandha-5)	CREATE	{}	2026-05-24 17:06:26.104024+00	\N	\N
+52	parliament	constituency	32	৩২ গাইবান্ধা-৪ (32 Gaibandha-4)	CREATE	{}	2026-05-24 17:06:26.102167+00	\N	\N
+51	parliament	constituency	31	৩১ গাইবান্ধা-৩ (31 Gaibandha-3)	CREATE	{}	2026-05-24 17:06:26.10023+00	\N	\N
+50	parliament	constituency	30	৩০ গাইবান্ধা-২ (30 Gaibandha-2)	CREATE	{}	2026-05-24 17:06:26.098467+00	\N	\N
+49	parliament	constituency	29	২৯ গাইবান্ধা-১ (29 Gaibandha-1)	CREATE	{}	2026-05-24 17:06:26.096681+00	\N	\N
+48	parliament	constituency	28	২৮ কুড়িগ্রাম-৪ (28 Kurigram-4)	CREATE	{}	2026-05-24 17:06:26.094957+00	\N	\N
+47	parliament	constituency	27	২৭ কুড়িগ্রাম-৩ (27 Kurigram-3)	CREATE	{}	2026-05-24 17:06:26.093082+00	\N	\N
+46	parliament	constituency	26	২৬ কুড়িগ্রাম-২ (26 Kurigram-2)	CREATE	{}	2026-05-24 17:06:26.091195+00	\N	\N
+45	parliament	constituency	25	২৫ কুড়িগ্রাম-১ (25 Kurigram-1)	CREATE	{}	2026-05-24 17:06:26.089469+00	\N	\N
+44	parliament	constituency	24	২৪ রংপুর-৬ (24 Rangpur-6)	CREATE	{}	2026-05-24 17:06:26.087826+00	\N	\N
+43	parliament	constituency	23	২৩ রংপুর-৫ (23 Rangpur-5)	CREATE	{}	2026-05-24 17:06:26.086135+00	\N	\N
+133	parliament	constituency	113	১১৩ পটুয়াখালি-৩ (113 Patuakhali-3)	CREATE	{}	2026-05-24 17:06:26.236714+00	\N	\N
+132	parliament	constituency	112	১১২ পটুয়াখালি-২ (112 Patuakhali-2)	CREATE	{}	2026-05-24 17:06:26.234713+00	\N	\N
+131	parliament	constituency	111	১১১ পটুয়াখালি-১ (111 Patuakhali-1)	CREATE	{}	2026-05-24 17:06:26.232339+00	\N	\N
+130	parliament	constituency	110	১১০ বরগুনা-২ (110 Barguna-2)	CREATE	{}	2026-05-24 17:06:26.230178+00	\N	\N
+129	parliament	constituency	109	১০৯ বরগুনা-১ (109 Barguna-1)	CREATE	{}	2026-05-24 17:06:26.228524+00	\N	\N
+128	parliament	constituency	108	১০৮ সাতক্ষীরা-৪ (108 Satkhira-4)	CREATE	{}	2026-05-24 17:06:26.226713+00	\N	\N
+127	parliament	constituency	107	১০৭ সাতক্ষীরা-৩ (107 Satkhira-3)	CREATE	{}	2026-05-24 17:06:26.225101+00	\N	\N
+126	parliament	constituency	106	১০৬ সাতক্ষীরা-২ (106 Satkhira-2)	CREATE	{}	2026-05-24 17:06:26.223461+00	\N	\N
+125	parliament	constituency	105	১০৫ সাতক্ষীরা-১ (105 Satkhira-1)	CREATE	{}	2026-05-24 17:06:26.221801+00	\N	\N
+124	parliament	constituency	104	১০৪ খুলনা-৬ (104 Khulna-6)	CREATE	{}	2026-05-24 17:06:26.219718+00	\N	\N
+123	parliament	constituency	103	১০৩ খুলনা-৫ (103 Khulna-5)	CREATE	{}	2026-05-24 17:06:26.217382+00	\N	\N
+122	parliament	constituency	102	১০২ খুলনা-৪ (102 Khulna-4)	CREATE	{}	2026-05-24 17:06:26.21559+00	\N	\N
+121	parliament	constituency	101	১০১ খুলনা-৩ (101 Khulna-3)	CREATE	{}	2026-05-24 17:06:26.213387+00	\N	\N
+120	parliament	constituency	100	১০০ খুলনা-২ (100 Khulna-2)	CREATE	{}	2026-05-24 17:06:26.211694+00	\N	\N
+119	parliament	constituency	99	৯৯ খুলনা-১ (99 Khulna-1)	CREATE	{}	2026-05-24 17:06:26.209556+00	\N	\N
+118	parliament	constituency	98	৯৮ বাগেরহাট-৪ (98 Bagerhat-4)	CREATE	{}	2026-05-24 17:06:26.20813+00	\N	\N
+117	parliament	constituency	97	৯৭ বাগেরহাট-৩ (97 Bagerhat-3)	CREATE	{}	2026-05-24 17:06:26.206143+00	\N	\N
+116	parliament	constituency	96	৯৬ বাগেরহাট-২ (96 Bagerhat-2)	CREATE	{}	2026-05-24 17:06:26.20445+00	\N	\N
+115	parliament	constituency	95	৯৫ বাগেরহাট-১ (95 Bagerhat-1)	CREATE	{}	2026-05-24 17:06:26.202586+00	\N	\N
+114	parliament	constituency	94	৯৪ নড়াইল-২ (94 Narail-2)	CREATE	{}	2026-05-24 17:06:26.200788+00	\N	\N
+113	parliament	constituency	93	৯৩ নড়াইল-১ (93 Narail-1)	CREATE	{}	2026-05-24 17:06:26.199256+00	\N	\N
+112	parliament	constituency	92	৯২ মাগুরা-২ (92 Magura-2)	CREATE	{}	2026-05-24 17:06:26.19775+00	\N	\N
+111	parliament	constituency	91	৯১ মাগুরা-১ (91 Magura-1)	CREATE	{}	2026-05-24 17:06:26.196214+00	\N	\N
+110	parliament	constituency	90	৯০ যশোর-৬ (90 Jashore-6)	CREATE	{}	2026-05-24 17:06:26.19475+00	\N	\N
+109	parliament	constituency	89	৮৯ যশোর-৫ (89 Jashore-5)	CREATE	{}	2026-05-24 17:06:26.193048+00	\N	\N
+108	parliament	constituency	88	৮৮ যশোর-৪ (88 Jashore-4)	CREATE	{}	2026-05-24 17:06:26.191546+00	\N	\N
+107	parliament	constituency	87	৮৭ যশোর-৩ (87 Jashore-3)	CREATE	{}	2026-05-24 17:06:26.190138+00	\N	\N
+106	parliament	constituency	86	৮৬ যশোর-২ (86 Jashore-2)	CREATE	{}	2026-05-24 17:06:26.188826+00	\N	\N
+105	parliament	constituency	85	৮৫ যশোর-১ (85 Jashore-1)	CREATE	{}	2026-05-24 17:06:26.187264+00	\N	\N
+104	parliament	constituency	84	৮৪ ঝিনাইদহ-৪ (84 Jhenaidah-4)	CREATE	{}	2026-05-24 17:06:26.18546+00	\N	\N
+103	parliament	constituency	83	৮৩ ঝিনাইদহ-৩ (83 Jhenaidah-3)	CREATE	{}	2026-05-24 17:06:26.184023+00	\N	\N
+102	parliament	constituency	82	৮২ ঝিনাইদহ-২ (82 Jhenaidah-2)	CREATE	{}	2026-05-24 17:06:26.182631+00	\N	\N
+101	parliament	constituency	81	৮১ ঝিনাইদহ-১ (81 Jhenaidah-1)	CREATE	{}	2026-05-24 17:06:26.18125+00	\N	\N
+100	parliament	constituency	80	৮০ চুয়াডাঙ্গা-২ (80 Chuadanga-2)	CREATE	{}	2026-05-24 17:06:26.179826+00	\N	\N
+99	parliament	constituency	79	৭৯ চুয়াডাঙ্গা-১ (79 Chuadanga-1)	CREATE	{}	2026-05-24 17:06:26.17796+00	\N	\N
+98	parliament	constituency	78	৭৮ কুষ্টিয়া-৪ (78 Kushtia-4)	CREATE	{}	2026-05-24 17:06:26.176138+00	\N	\N
+97	parliament	constituency	77	৭৭ কুষ্টিয়া-৩ (77 Kushtia-3)	CREATE	{}	2026-05-24 17:06:26.174639+00	\N	\N
+96	parliament	constituency	76	৭৬ কুষ্টিয়া-২ (76 Kushtia-2)	CREATE	{}	2026-05-24 17:06:26.173313+00	\N	\N
+95	parliament	constituency	75	৭৫ কুষ্টিয়া-১ (75 Kushtia-1)	CREATE	{}	2026-05-24 17:06:26.171941+00	\N	\N
+94	parliament	constituency	74	৭৪ মেহেরপুর-২ (74 Meherpur-2)	CREATE	{}	2026-05-24 17:06:26.170565+00	\N	\N
+93	parliament	constituency	73	৭৩ মেহেরপুর-১ (73 Meherpur-1)	CREATE	{}	2026-05-24 17:06:26.169153+00	\N	\N
+92	parliament	constituency	72	৭২ পাবনা-৫ (72 Pabna 5)	CREATE	{}	2026-05-24 17:06:26.16777+00	\N	\N
+91	parliament	constituency	71	৭১ পাবনা-৪ (71 Pabna-4)	CREATE	{}	2026-05-24 17:06:26.166349+00	\N	\N
+90	parliament	constituency	70	৭০ পাবনা-৩ (70 Pabna-3)	CREATE	{}	2026-05-24 17:06:26.164938+00	\N	\N
+89	parliament	constituency	69	৬৯ পাবনা-২ (69 Pabna-2)	CREATE	{}	2026-05-24 17:06:26.163297+00	\N	\N
+177	parliament	constituency	157	১৫৭ নেত্রকোনা-১ (157 Netrokona-1)	CREATE	{}	2026-05-24 17:06:26.320802+00	\N	\N
+176	parliament	constituency	156	১৫৬ ময়মনসিংহ-১১ (156 Mymensingh-11)	CREATE	{}	2026-05-24 17:06:26.319126+00	\N	\N
+175	parliament	constituency	155	১৫৫ ময়মনসিংহ-১০ (155 Mymensingh-10)	CREATE	{}	2026-05-24 17:06:26.317133+00	\N	\N
+174	parliament	constituency	154	১৫৪ ময়মনসিংহ-৯ (154 Mymensingh-9)	CREATE	{}	2026-05-24 17:06:26.315886+00	\N	\N
+173	parliament	constituency	153	১৫৩ ময়মনসিংহ-৮ (153 Mymensingh-8)	CREATE	{}	2026-05-24 17:06:26.314614+00	\N	\N
+172	parliament	constituency	152	১৫২ ময়মনসিংহ-৭ (152 Mymensingh-7)	CREATE	{}	2026-05-24 17:06:26.313287+00	\N	\N
+171	parliament	constituency	151	১৫১ ময়মনসিংহ-৬ (151 Mymensingh-6)	CREATE	{}	2026-05-24 17:06:26.311683+00	\N	\N
+170	parliament	constituency	150	১৫০ ময়মনসিংহ-৫ (150 Mymensingh-5)	CREATE	{}	2026-05-24 17:06:26.309785+00	\N	\N
+169	parliament	constituency	149	১৪৯ ময়মনসিংহ-৪ (149 Mymensingh-4)	CREATE	{}	2026-05-24 17:06:26.308514+00	\N	\N
+168	parliament	constituency	148	১৪৮ ময়মনসিংহ-৩ (148 Mymensingh-3)	CREATE	{}	2026-05-24 17:06:26.307248+00	\N	\N
+167	parliament	constituency	147	১৪৭ ময়মনসিংহ-২ (147 Mymensingh-2)	CREATE	{}	2026-05-24 17:06:26.305938+00	\N	\N
+166	parliament	constituency	146	১৪৬ ময়মনসিংহ-১ (146 Mymensingh-1)	CREATE	{}	2026-05-24 17:06:26.304589+00	\N	\N
+165	parliament	constituency	145	১৪৫ শেরপুর-৩ (145 Sherpur-3)	CREATE	{}	2026-05-24 17:06:26.302691+00	\N	\N
+164	parliament	constituency	144	১৪৪ শেরপুর-২ (144 Sherpur-2)	CREATE	{}	2026-05-24 17:06:26.300727+00	\N	\N
+163	parliament	constituency	143	১৪৩ শেরপুর-১ (143 Sherpur-1)	CREATE	{}	2026-05-24 17:06:26.299455+00	\N	\N
+162	parliament	constituency	142	১৪২ জামালপুর-৫ (142 Jamalpur-5)	CREATE	{}	2026-05-24 17:06:26.298095+00	\N	\N
+161	parliament	constituency	141	১৪১ জামালপুর-৪ (141 Jamalpur-4)	CREATE	{}	2026-05-24 17:06:26.296615+00	\N	\N
+160	parliament	constituency	140	১৪০ জামালপুর-৩ (140 Jamalpur-3)	CREATE	{}	2026-05-24 17:06:26.294402+00	\N	\N
+159	parliament	constituency	139	১৩৯ জামালপুর-২ (139 Jamalpur-2)	CREATE	{}	2026-05-24 17:06:26.292383+00	\N	\N
+158	parliament	constituency	138	১৩৮ জামালপুর-১ (138 Jamalpur-1)	CREATE	{}	2026-05-24 17:06:26.290478+00	\N	\N
+157	parliament	constituency	137	১৩৭ টাঙ্গাইল-৮ (137 Tangail-8)	CREATE	{}	2026-05-24 17:06:26.28892+00	\N	\N
+156	parliament	constituency	136	১৩৬ টাঙ্গাইল-৭ (136 Tangail-7)	CREATE	{}	2026-05-24 17:06:26.287243+00	\N	\N
+155	parliament	constituency	135	১৩৫ টাঙ্গাইল-৬ (135 Tangail-6)	CREATE	{}	2026-05-24 17:06:26.285164+00	\N	\N
+154	parliament	constituency	134	১৩৪ টাঙ্গাইল-৫ (134 Tangail-5)	CREATE	{}	2026-05-24 17:06:26.283099+00	\N	\N
+153	parliament	constituency	133	১৩৩ টাঙ্গাইল-৪ (133 Tangail-4)	CREATE	{}	2026-05-24 17:06:26.280783+00	\N	\N
+152	parliament	constituency	132	১৩২ টাঙ্গাইল-৩ (132 Tangail-3)	CREATE	{}	2026-05-24 17:06:26.279069+00	\N	\N
+151	parliament	constituency	131	১৩১ টাঙ্গাইল-২ (131 Tangail-2)	CREATE	{}	2026-05-24 17:06:26.277114+00	\N	\N
+150	parliament	constituency	130	১৩০ টাঙ্গাইল-১ (130 Tangail-1)	CREATE	{}	2026-05-24 17:06:26.274856+00	\N	\N
+149	parliament	constituency	129	১২৯ পিরোজপুর-৩ (129 Pirojpur-3)	CREATE	{}	2026-05-24 17:06:26.273016+00	\N	\N
+148	parliament	constituency	128	১২৮ পিরোজপুর-২ (128 Pirojpur-2)	CREATE	{}	2026-05-24 17:06:26.271031+00	\N	\N
+147	parliament	constituency	127	১২৭ পিরোজপুর-১ (127 Pirojpur-1)	CREATE	{}	2026-05-24 17:06:26.268709+00	\N	\N
+146	parliament	constituency	126	১২৬ ঝালকাঠি-২ (126 Jhalokathi-2)	CREATE	{}	2026-05-24 17:06:26.266706+00	\N	\N
+145	parliament	constituency	125	১২৫ ঝালকাঠি-১ (125 Jhalokathi-1)	CREATE	{}	2026-05-24 17:06:26.264415+00	\N	\N
+144	parliament	constituency	124	১২৪ বরিশাল-৬ (124 Barishal-6)	CREATE	{}	2026-05-24 17:06:26.262551+00	\N	\N
+143	parliament	constituency	123	১২৩ বরিশাল-৫ (123 Barishal-5)	CREATE	{}	2026-05-24 17:06:26.260462+00	\N	\N
+142	parliament	constituency	122	১২২ বরিশাল-৪ (122 Barishal-4)	CREATE	{}	2026-05-24 17:06:26.258587+00	\N	\N
+141	parliament	constituency	121	১২১ বরিশাল-৩ (121 Barishal-3)	CREATE	{}	2026-05-24 17:06:26.256662+00	\N	\N
+140	parliament	constituency	120	১২০ বরিশাল-২ (120 Barishal-2)	CREATE	{}	2026-05-24 17:06:26.254614+00	\N	\N
+139	parliament	constituency	119	১১৯ বরিশাল-১ (119 Barishal-1)	CREATE	{}	2026-05-24 17:06:26.252063+00	\N	\N
+138	parliament	constituency	118	১১৮ ভোলা-৪ (118 Bhola-4)	CREATE	{}	2026-05-24 17:06:26.248199+00	\N	\N
+137	parliament	constituency	117	১১৭ ভোলা-৩ (117 Bhola-3)	CREATE	{}	2026-05-24 17:06:26.246079+00	\N	\N
+136	parliament	constituency	116	১১৬ ভোলা-২ (116 Bhola-2)	CREATE	{}	2026-05-24 17:06:26.243333+00	\N	\N
+135	parliament	constituency	115	১১৫ ভোলা-১ (115 Bhola-1)	CREATE	{}	2026-05-24 17:06:26.241221+00	\N	\N
+222	parliament	constituency	202	২০২ নরসিংদী-৪ (202 Narsingdi-4)	CREATE	{}	2026-05-24 17:06:26.395833+00	\N	\N
+221	parliament	constituency	201	২০১ নরসিংদী-৩ (201 Narsingdi-3)	CREATE	{}	2026-05-24 17:06:26.393753+00	\N	\N
+220	parliament	constituency	200	২০০ নরসিংদী-২ (200 Narsingdi-2)	CREATE	{}	2026-05-24 17:06:26.392477+00	\N	\N
+219	parliament	constituency	199	১৯৯ নরসিংদী-১ (199 Narsingdi-1)	CREATE	{}	2026-05-24 17:06:26.390585+00	\N	\N
+218	parliament	constituency	198	১৯৮ গাজীপুর-৫ (198 Gazipur-5)	CREATE	{}	2026-05-24 17:06:26.388678+00	\N	\N
+217	parliament	constituency	197	১৯৭ গাজীপুর-৪ (197 Gazipur-4)	CREATE	{}	2026-05-24 17:06:26.387279+00	\N	\N
+216	parliament	constituency	196	১৯৬ গাজীপুর-৩ (196 Gazipur-3)	CREATE	{}	2026-05-24 17:06:26.385496+00	\N	\N
+215	parliament	constituency	195	১৯৫ গাজীপুর-২ (195 Gazipur-2)	CREATE	{}	2026-05-24 17:06:26.384242+00	\N	\N
+214	parliament	constituency	194	১৯৪ গাজীপুর-১ (194 Gazipur-1)	CREATE	{}	2026-05-24 17:06:26.382978+00	\N	\N
+213	parliament	constituency	193	১৯৩ ঢাকা-২০ (193 Dhaka-20)	CREATE	{}	2026-05-24 17:06:26.381671+00	\N	\N
+212	parliament	constituency	192	১৯২ ঢাকা-১৯ (192 Dhaka-19)	CREATE	{}	2026-05-24 17:06:26.380118+00	\N	\N
+211	parliament	constituency	191	১৯১ ঢাকা-১৮ (191 Dhaka-18)	CREATE	{}	2026-05-24 17:06:26.377434+00	\N	\N
+210	parliament	constituency	190	১৯০ ঢাকা-১৭ (190 Dhaka-17)	CREATE	{}	2026-05-24 17:06:26.374562+00	\N	\N
+209	parliament	constituency	189	১৮৯ ঢাকা-১৬ (189 Dhaka-16)	CREATE	{}	2026-05-24 17:06:26.372471+00	\N	\N
+208	parliament	constituency	188	১৮৮ ঢাকা-১৫ (188 Dhaka-15)	CREATE	{}	2026-05-24 17:06:26.370272+00	\N	\N
+207	parliament	constituency	187	১৮৭ ঢাকা-১৪ (187 Dhaka-14)	CREATE	{}	2026-05-24 17:06:26.369003+00	\N	\N
+206	parliament	constituency	186	১৮৬ ঢাকা-১৩ (186 Dhaka-13)	CREATE	{}	2026-05-24 17:06:26.367782+00	\N	\N
+205	parliament	constituency	185	১৮৫ ঢাকা-১২ (185 Dhaka-12)	CREATE	{}	2026-05-24 17:06:26.366535+00	\N	\N
+204	parliament	constituency	184	১৮৪ ঢাকা-১১ (184 Dhaka-11)	CREATE	{}	2026-05-24 17:06:26.365204+00	\N	\N
+203	parliament	constituency	183	১৮৩ ঢাকা-১০ (183 Dhaka-10)	CREATE	{}	2026-05-24 17:06:26.363338+00	\N	\N
+202	parliament	constituency	182	১৮২ ঢাকা-৯ (182 Dhaka-9)	CREATE	{}	2026-05-24 17:06:26.361777+00	\N	\N
+201	parliament	constituency	181	১৮১ ঢাকা-৮ (181 Dhaka-8)	CREATE	{}	2026-05-24 17:06:26.359966+00	\N	\N
+200	parliament	constituency	180	১৮০ ঢাকা-৭ (180 Dhaka-7)	CREATE	{}	2026-05-24 17:06:26.357773+00	\N	\N
+199	parliament	constituency	179	১৭৯ ঢাকা-৬ (179 Dhaka-6)	CREATE	{}	2026-05-24 17:06:26.355638+00	\N	\N
+198	parliament	constituency	178	১৭৮ ঢাকা-৫ (178 Dhaka-5)	CREATE	{}	2026-05-24 17:06:26.353121+00	\N	\N
+197	parliament	constituency	177	১৭৭ ঢাকা-৪ (177 Dhaka-4)	CREATE	{}	2026-05-24 17:06:26.35136+00	\N	\N
+196	parliament	constituency	176	১৭৬ ঢাকা-৩ (176 Dhaka-3)	CREATE	{}	2026-05-24 17:06:26.350062+00	\N	\N
+195	parliament	constituency	175	১৭৫ ঢাকা-২ (175 Dhaka-2)	CREATE	{}	2026-05-24 17:06:26.348793+00	\N	\N
+194	parliament	constituency	174	১৭৪ ঢাকা-১ (174 Dhaka-1)	CREATE	{}	2026-05-24 17:06:26.347449+00	\N	\N
+193	parliament	constituency	173	১৭৩ মুন্সিগঞ্জ-৩ (173 Munshiganj-3)	CREATE	{}	2026-05-24 17:06:26.345503+00	\N	\N
+192	parliament	constituency	172	১৭২ মুন্সিগঞ্জ-২ (172 Munshiganj-2)	CREATE	{}	2026-05-24 17:06:26.34356+00	\N	\N
+191	parliament	constituency	171	১৭১ মুন্সিগঞ্জ-১ (171 Munshiganj-1)	CREATE	{}	2026-05-24 17:06:26.342234+00	\N	\N
+190	parliament	constituency	170	১৭০ মানিকগঞ্জ-৩ (170 Manikganj-3)	CREATE	{}	2026-05-24 17:06:26.340656+00	\N	\N
+189	parliament	constituency	169	১৬৯ মানিকগঞ্জ-২ (169 Manikganj-2)	CREATE	{}	2026-05-24 17:06:26.338896+00	\N	\N
+188	parliament	constituency	168	১৬৮ মানিকগঞ্জ-১ (168 Manikganj-1)	CREATE	{}	2026-05-24 17:06:26.336767+00	\N	\N
+187	parliament	constituency	167	১৬৭ কিশোরগঞ্জ-৬ (167 Kishoreganj-6)	CREATE	{}	2026-05-24 17:06:26.334873+00	\N	\N
+186	parliament	constituency	166	১৬৬ কিশোরগঞ্জ-৫ (166 Kishoreganj-5)	CREATE	{}	2026-05-24 17:06:26.333617+00	\N	\N
+185	parliament	constituency	165	১৬৫ কিশোরগঞ্জ-৪ (165 Kishoreganj-4)	CREATE	{}	2026-05-24 17:06:26.332379+00	\N	\N
+184	parliament	constituency	164	১৬৪ কিশোরগঞ্জ-৩ (164 Kishoreganj-3)	CREATE	{}	2026-05-24 17:06:26.331112+00	\N	\N
+183	parliament	constituency	163	১৬৩ কিশোরগঞ্জ-২ (163 Kishoreganj-2)	CREATE	{}	2026-05-24 17:06:26.329867+00	\N	\N
+182	parliament	constituency	162	১৬২ কিশোরগঞ্জ-১ (162 Kishoreganj-1)	CREATE	{}	2026-05-24 17:06:26.328417+00	\N	\N
+181	parliament	constituency	161	১৬১ নেত্রকোনা-৫ (161 Netrokona-5)	CREATE	{}	2026-05-24 17:06:26.327103+00	\N	\N
+180	parliament	constituency	160	১৬০ নেত্রকোনা-৪ (160 Netrokona-4)	CREATE	{}	2026-05-24 17:06:26.325812+00	\N	\N
+179	parliament	constituency	159	১৫৯ নেত্রকোনা-৩ (159 Netrokona-3)	CREATE	{}	2026-05-24 17:06:26.32447+00	\N	\N
+264	parliament	constituency	244	২৪৪ ব্রাহ্মণবাড়িয়া-২ (244 Brahmanbaria-2)	CREATE	{}	2026-05-24 17:06:26.465375+00	\N	\N
+263	parliament	constituency	243	২৪৩ ব্রাহ্মণবাড়িয়া-১ (243 Brahmanbaria-1)	CREATE	{}	2026-05-24 17:06:26.464001+00	\N	\N
+262	parliament	constituency	242	২৪২ হবিগঞ্জ-৪ (242 Habiganj-4)	CREATE	{}	2026-05-24 17:06:26.461812+00	\N	\N
+261	parliament	constituency	241	২৪১ হবিগঞ্জ-৩ (241 Habiganj-3)	CREATE	{}	2026-05-24 17:06:26.459876+00	\N	\N
+260	parliament	constituency	240	২৪০ হবিগঞ্জ-২ (240 Habiganj-2)	CREATE	{}	2026-05-24 17:06:26.458014+00	\N	\N
+259	parliament	constituency	239	২৩৯ হবিগঞ্জ-১ (239 Habiganj-1)	CREATE	{}	2026-05-24 17:06:26.455989+00	\N	\N
+258	parliament	constituency	238	২৩৮ মৌলভীবাজার-৪ (238 Maulvibazar-4)	CREATE	{}	2026-05-24 17:06:26.45406+00	\N	\N
+257	parliament	constituency	237	২৩৭ মৌলভীবাজার-৩ (237 Maulvibazar-3)	CREATE	{}	2026-05-24 17:06:26.452386+00	\N	\N
+256	parliament	constituency	236	২৩৬ মৌলভীবাজার-২ (236 Maulvibazar-2)	CREATE	{}	2026-05-24 17:06:26.450465+00	\N	\N
+255	parliament	constituency	235	২৩৫ মৌলভীবাজার-১ (235 Maulvibazar-1)	CREATE	{}	2026-05-24 17:06:26.449174+00	\N	\N
+254	parliament	constituency	234	২৩৪ সিলেট-৬ (234 Sylhet-6)	CREATE	{}	2026-05-24 17:06:26.447881+00	\N	\N
+253	parliament	constituency	233	২৩৩ সিলেট-৫ (233 Sylhet-5)	CREATE	{}	2026-05-24 17:06:26.446565+00	\N	\N
+252	parliament	constituency	232	২৩২ সিলেট-৪ (232 Sylhet-4)	CREATE	{}	2026-05-24 17:06:26.444175+00	\N	\N
+251	parliament	constituency	231	২৩১ সিলেট-৩ (231 Sylhet-3)	CREATE	{}	2026-05-24 17:06:26.442364+00	\N	\N
+250	parliament	constituency	230	২৩০ সিলেট-২ (230 Sylhet-2)	CREATE	{}	2026-05-24 17:06:26.4402+00	\N	\N
+249	parliament	constituency	229	২২৯ সিলেট-১ (229 Sylhet-1)	CREATE	{}	2026-05-24 17:06:26.438741+00	\N	\N
+248	parliament	constituency	228	২২৮ সুনামগঞ্জ-৫ (228 Sunamganj-5)	CREATE	{}	2026-05-24 17:06:26.43724+00	\N	\N
+247	parliament	constituency	227	২২৭ সুনামগঞ্জ-৪ (227 Sunamganj-4)	CREATE	{}	2026-05-24 17:06:26.435932+00	\N	\N
+246	parliament	constituency	226	২২৬ সুনামগঞ্জ-৩ (226 Sunamganj-3)	CREATE	{}	2026-05-24 17:06:26.434684+00	\N	\N
+245	parliament	constituency	225	২২৫ সুনামগঞ্জ-২ (225 Sunamganj-2)	CREATE	{}	2026-05-24 17:06:26.433387+00	\N	\N
+244	parliament	constituency	224	২২৪ সুনামগঞ্জ-১ (224 Sunamganj-1)	CREATE	{}	2026-05-24 17:06:26.432144+00	\N	\N
+243	parliament	constituency	223	২২৩ শরিয়তপুর-৩ (223 Shariatpur-3)	CREATE	{}	2026-05-24 17:06:26.43083+00	\N	\N
+242	parliament	constituency	222	২২২ শরিয়তপুর-২ (222 Shariatpur-2)	CREATE	{}	2026-05-24 17:06:26.4291+00	\N	\N
+241	parliament	constituency	221	২২১ শরিয়তপুর-১ (221 Shariatpur-1)	CREATE	{}	2026-05-24 17:06:26.426601+00	\N	\N
+240	parliament	constituency	220	২২০ মাদারিপুর-৩ (220 Madaripur-3)	CREATE	{}	2026-05-24 17:06:26.423838+00	\N	\N
+239	parliament	constituency	219	২১৯ মাদারিপুর-২ (219 Madaripur-2)	CREATE	{}	2026-05-24 17:06:26.422037+00	\N	\N
+238	parliament	constituency	218	২১৮ মাদারিপুর-১ (218 Madaripur-1)	CREATE	{}	2026-05-24 17:06:26.420673+00	\N	\N
+237	parliament	constituency	217	২১৭ গোপালগঞ্জ-৩ (217 Gopalgonj-3)	CREATE	{}	2026-05-24 17:06:26.419351+00	\N	\N
+236	parliament	constituency	216	২১৬ গোপালগঞ্জ-২ (216 Gopalgonj-2)	CREATE	{}	2026-05-24 17:06:26.417996+00	\N	\N
+235	parliament	constituency	215	২১৫ গোপালগঞ্জ-১ (215 Gopalgonj-1)	CREATE	{}	2026-05-24 17:06:26.416305+00	\N	\N
+234	parliament	constituency	214	২১৪ ফরিদপুর-৪ (214 Faridpur-4)	CREATE	{}	2026-05-24 17:06:26.41504+00	\N	\N
+233	parliament	constituency	213	২১৩ ফরিদপুর-৩ (213 Faridpur-3)	CREATE	{}	2026-05-24 17:06:26.413568+00	\N	\N
+232	parliament	constituency	212	২১২ ফরিদপুর-২ (212 Faridpur-2)	CREATE	{}	2026-05-24 17:06:26.411639+00	\N	\N
+231	parliament	constituency	211	২১১ ফরিদপুর-১ (211 Faridpur-1)	CREATE	{}	2026-05-24 17:06:26.410243+00	\N	\N
+230	parliament	constituency	210	২১০ রাজবাড়ী-২ (210 Rajbari-2)	CREATE	{}	2026-05-24 17:06:26.408397+00	\N	\N
+229	parliament	constituency	209	২০৯ রাজবাড়ী-১ (209 Rajbari-1)	CREATE	{}	2026-05-24 17:06:26.406264+00	\N	\N
+228	parliament	constituency	208	২০৮ নারায়ণগঞ্জ-৫ (208 Narayanganj-5)	CREATE	{}	2026-05-24 17:06:26.404146+00	\N	\N
+227	parliament	constituency	207	২০৭ নারায়ণগঞ্জ-৪ (207 Narayanganj-4)	CREATE	{}	2026-05-24 17:06:26.402386+00	\N	\N
+226	parliament	constituency	206	২০৬ নারায়ণগঞ্জ-৩ (206 Narayanganj-3)	CREATE	{}	2026-05-24 17:06:26.401097+00	\N	\N
+225	parliament	constituency	205	২০৫ নারায়ণগঞ্জ-২ (205 Narayanganj-2)	CREATE	{}	2026-05-24 17:06:26.399842+00	\N	\N
+224	parliament	constituency	204	২০৪ নারায়ণগঞ্জ-১ (204 Narayanganj-1)	CREATE	{}	2026-05-24 17:06:26.398572+00	\N	\N
+305	parliament	constituency	285	২৮৫ চট্টগ্রাম-৮ (285 Chittagong-8)	CREATE	{}	2026-05-24 17:06:26.526899+00	\N	\N
+304	parliament	constituency	284	২৮৪ চট্টগ্রাম-৭ (284 Chattogram-7)	CREATE	{}	2026-05-24 17:06:26.525648+00	\N	\N
+303	parliament	constituency	283	২৮৩ চট্টগ্রাম-৬ (283 Chattogram-6)	CREATE	{}	2026-05-24 17:06:26.524366+00	\N	\N
+302	parliament	constituency	282	২৮২ চট্টগ্রাম-৫ (282 Chattogram-5)	CREATE	{}	2026-05-24 17:06:26.523118+00	\N	\N
+301	parliament	constituency	281	২৮১ চট্টগ্রাম-৪ (281 Chattogram-4)	CREATE	{}	2026-05-24 17:06:26.521766+00	\N	\N
+300	parliament	constituency	280	২৮০ চট্টগ্রাম-৩ (280 Chattogram-3)	CREATE	{}	2026-05-24 17:06:26.520499+00	\N	\N
+299	parliament	constituency	279	২৭৯ চট্টগ্রাম-২ (279 Chattogram-2)	CREATE	{}	2026-05-24 17:06:26.519251+00	\N	\N
+298	parliament	constituency	278	২৭৮ চট্টগ্রাম-১ (278 Chattogram-1)	CREATE	{}	2026-05-24 17:06:26.517961+00	\N	\N
+297	parliament	constituency	277	২৭৭ লক্ষ্মীপুর-৪ (277 Laxmipur-4)	CREATE	{}	2026-05-24 17:06:26.516596+00	\N	\N
+296	parliament	constituency	276	২৭৬ লক্ষ্মীপুর-৩ (276 Laxmipur-3)	CREATE	{}	2026-05-24 17:06:26.514595+00	\N	\N
+295	parliament	constituency	275	২৭৫ লক্ষ্মীপুর-২ (275 Laxmipur-2)	CREATE	{}	2026-05-24 17:06:26.512509+00	\N	\N
+294	parliament	constituency	274	২৭৪ লক্ষ্মীপুর-১ (274 Laxmipur-1)	CREATE	{}	2026-05-24 17:06:26.510595+00	\N	\N
+293	parliament	constituency	273	২৭৩ নোয়াখালী-৬ (273 Noakhali-6)	CREATE	{}	2026-05-24 17:06:26.509072+00	\N	\N
+292	parliament	constituency	272	২৭২ নোয়াখালী-৫ (272 Noakhali-5)	CREATE	{}	2026-05-24 17:06:26.507821+00	\N	\N
+291	parliament	constituency	271	২৭১ নোয়াখালী-৪ (271 Noakhali-4)	CREATE	{}	2026-05-24 17:06:26.506488+00	\N	\N
+290	parliament	constituency	270	২৭০ নোয়াখালী-৩ (270 Noakhali-3)	CREATE	{}	2026-05-24 17:06:26.504104+00	\N	\N
+289	parliament	constituency	269	২৬৯ নোয়াখালী-২ (269 Noakhali-2)	CREATE	{}	2026-05-24 17:06:26.502383+00	\N	\N
+288	parliament	constituency	268	২৬৮ নোয়াখালী-১ (268 Noakhali-1)	CREATE	{}	2026-05-24 17:06:26.501125+00	\N	\N
+287	parliament	constituency	267	২৬৭ ফেনী-৩ (267 Feni-3)	CREATE	{}	2026-05-24 17:06:26.499839+00	\N	\N
+286	parliament	constituency	266	২৬৬ ফেনী-২ (266 Feni-2)	CREATE	{}	2026-05-24 17:06:26.498558+00	\N	\N
+285	parliament	constituency	265	২৬৫ ফেনী-১ (265 Feni-1)	CREATE	{}	2026-05-24 17:06:26.497177+00	\N	\N
+284	parliament	constituency	264	২৬৪ চাঁদপুর-৫ (264 Chandpur-5)	CREATE	{}	2026-05-24 17:06:26.49533+00	\N	\N
+283	parliament	constituency	263	২৬৩ চাঁদপুর-৪ (263 Chandpur-4)	CREATE	{}	2026-05-24 17:06:26.492845+00	\N	\N
+282	parliament	constituency	262	২৬২ চাঁদপুর-৩ (262 Chandpur-3)	CREATE	{}	2026-05-24 17:06:26.491578+00	\N	\N
+281	parliament	constituency	261	২৬১ চাঁদপুর-২ (261 Chandpur-2)	CREATE	{}	2026-05-24 17:06:26.490319+00	\N	\N
+280	parliament	constituency	260	২৬০ চাঁদপুর-১ (260 Chandpur-1)	CREATE	{}	2026-05-24 17:06:26.489001+00	\N	\N
+279	parliament	constituency	259	২৫৯ কুমিল্লা-১১ (259 Cumilla-11)	CREATE	{}	2026-05-24 17:06:26.487744+00	\N	\N
+278	parliament	constituency	258	২৫৮ কুমিল্লা-১০ (258 Cumilla-10)	CREATE	{}	2026-05-24 17:06:26.486402+00	\N	\N
+277	parliament	constituency	257	২৫৭ কুমিল্লা-৯ (257 Cumilla-9)	CREATE	{}	2026-05-24 17:06:26.485161+00	\N	\N
+276	parliament	constituency	256	২৫৬ কুমিল্লা-৮ (256 Cumilla-8)	CREATE	{}	2026-05-24 17:06:26.483873+00	\N	\N
+275	parliament	constituency	255	২৫৫ কুমিল্লা-৭ (255 Cumilla-7)	CREATE	{}	2026-05-24 17:06:26.482577+00	\N	\N
+274	parliament	constituency	254	২৫৪ কুমিল্লা-৬ (254 Cumilla-6)	CREATE	{}	2026-05-24 17:06:26.481292+00	\N	\N
+273	parliament	constituency	253	২৫৩ কুমিল্লা-৫ (253 Cumilla-5)	CREATE	{}	2026-05-24 17:06:26.479693+00	\N	\N
+272	parliament	constituency	252	২৫২ কুমিল্লা-৪ (252 Cumilla-4)	CREATE	{}	2026-05-24 17:06:26.477211+00	\N	\N
+271	parliament	constituency	251	২৫১ কুমিল্লা-৩ (251 Cumilla-3)	CREATE	{}	2026-05-24 17:06:26.475482+00	\N	\N
+270	parliament	constituency	250	২৫০ কুমিল্লা-২ (250 Cumilla-2)	CREATE	{}	2026-05-24 17:06:26.474215+00	\N	\N
+269	parliament	constituency	249	২৪৯ কুমিল্লা-১ (249 Cumilla-1)	CREATE	{}	2026-05-24 17:06:26.472951+00	\N	\N
+268	parliament	constituency	248	২৪৮ ব্রাহ্মণবাড়িয়া-৬ (248 Brahmanbaria-6)	CREATE	{}	2026-05-24 17:06:26.471572+00	\N	\N
+267	parliament	constituency	247	২৪৭ ব্রাহ্মণবাড়িয়া-৫ (247 Brahmanbaria-5)	CREATE	{}	2026-05-24 17:06:26.469276+00	\N	\N
+266	parliament	constituency	246	২৪৬ ব্রাহ্মণবাড়িয়া-৪ (246 Brahmanbaria-4)	CREATE	{}	2026-05-24 17:06:26.467947+00	\N	\N
+265	parliament	constituency	245	২৪৫ ব্রাহ্মণবাড়িয়া-৩ (245 Brahmanbaria-3)	CREATE	{}	2026-05-24 17:06:26.466696+00	\N	\N
+346	parliament	constituency	326	৩২৬ মহিলা আসন-২৬ (326 Women Seat-26)	CREATE	{}	2026-05-24 17:06:26.593687+00	\N	\N
+345	parliament	constituency	325	৩২৫ মহিলা আসন-২৫ (325 Women Seat-25)	CREATE	{}	2026-05-24 17:06:26.592436+00	\N	\N
+344	parliament	constituency	324	৩২৪ মহিলা আসন-২৪ (324 Women Seat-24)	CREATE	{}	2026-05-24 17:06:26.591192+00	\N	\N
+343	parliament	constituency	323	৩২৩ মহিলা আসন-২৩ (323 Women Seat-23)	CREATE	{}	2026-05-24 17:06:26.589861+00	\N	\N
+342	parliament	constituency	322	৩২২ মহিলা আসন-২২ (322 Women Seat-22)	CREATE	{}	2026-05-24 17:06:26.588445+00	\N	\N
+341	parliament	constituency	321	৩২১ মহিলা আসন-২১ (321 Women Seat-21)	CREATE	{}	2026-05-24 17:06:26.586351+00	\N	\N
+340	parliament	constituency	320	৩২০ মহিলা আসন-২০ (320 Women Seat-20)	CREATE	{}	2026-05-24 17:06:26.584923+00	\N	\N
+339	parliament	constituency	319	৩১৯ মহিলা আসন-১৯ (319 Women Seat-19)	CREATE	{}	2026-05-24 17:06:26.583456+00	\N	\N
+338	parliament	constituency	318	৩১৮ মহিলা আসন-১৮ (318 Women Seat-18)	CREATE	{}	2026-05-24 17:06:26.581307+00	\N	\N
+337	parliament	constituency	317	৩১৭ মহিলা আসন-১৭ (317 Women Seat-17)	CREATE	{}	2026-05-24 17:06:26.579921+00	\N	\N
+336	parliament	constituency	316	৩১৬ মহিলা আসন-১৬ (316 Women Seat-16)	CREATE	{}	2026-05-24 17:06:26.578134+00	\N	\N
+335	parliament	constituency	315	৩১৫ মহিলা আসন-১৫ (315 Women Seat-15)	CREATE	{}	2026-05-24 17:06:26.576887+00	\N	\N
+334	parliament	constituency	314	৩১৪ মহিলা আসন-১৪ (314 Women Seat-14)	CREATE	{}	2026-05-24 17:06:26.575601+00	\N	\N
+333	parliament	constituency	313	৩১৩ মহিলা আসন-১৩ (313 Women Seat-13)	CREATE	{}	2026-05-24 17:06:26.573907+00	\N	\N
+332	parliament	constituency	312	৩১২ মহিলা আসন-১২ (312 Women Seat-12)	CREATE	{}	2026-05-24 17:06:26.572645+00	\N	\N
+331	parliament	constituency	311	৩১১ মহিলা আসন-১১ (311 Women Seat-11)	CREATE	{}	2026-05-24 17:06:26.571256+00	\N	\N
+330	parliament	constituency	310	৩১০ মহিলা আসন-১০ (310 Women Seat-10)	CREATE	{}	2026-05-24 17:06:26.569498+00	\N	\N
+329	parliament	constituency	309	৩০৯ মহিলা আসন-৯ (309 Women Seat-9)	CREATE	{}	2026-05-24 17:06:26.568221+00	\N	\N
+328	parliament	constituency	308	৩০৮ মহিলা আসন-৮ (308 Women Seat-8)	CREATE	{}	2026-05-24 17:06:26.566937+00	\N	\N
+327	parliament	constituency	307	৩০৭ মহিলা আসন-৭ (307 Women Seat-7)	CREATE	{}	2026-05-24 17:06:26.565307+00	\N	\N
+326	parliament	constituency	306	৩০৬ মহিলা আসন-৬ (306 Women Seat-6)	CREATE	{}	2026-05-24 17:06:26.563206+00	\N	\N
+325	parliament	constituency	305	৩০৫ মহিলা আসন-৫ (305 Women Seat-5)	CREATE	{}	2026-05-24 17:06:26.561307+00	\N	\N
+324	parliament	constituency	304	৩০৪ মহিলা আসন-৪ (304 Women Seat-4)	CREATE	{}	2026-05-24 17:06:26.56001+00	\N	\N
+323	parliament	constituency	303	৩০৩ মহিলা আসন-৩ (303 Women Seat-3)	CREATE	{}	2026-05-24 17:06:26.558742+00	\N	\N
+322	parliament	constituency	302	৩০২ মহিলা আসন-২ (302 Women Seat-2)	CREATE	{}	2026-05-24 17:06:26.557406+00	\N	\N
+321	parliament	constituency	301	৩০১ মহিলা আসন-১ (301 Women Seat-1)	CREATE	{}	2026-05-24 17:06:26.556095+00	\N	\N
+320	parliament	constituency	300	৩০০ বান্দরবন (300 Bandarban)	CREATE	{}	2026-05-24 17:06:26.553796+00	\N	\N
+319	parliament	constituency	299	২৯৯ রাঙ্গামাটি (299 Rangamati)	CREATE	{}	2026-05-24 17:06:26.552508+00	\N	\N
+318	parliament	constituency	298	২৯৮ খাগড়াছড়ি (298 Khagrachhari)	CREATE	{}	2026-05-24 17:06:26.551219+00	\N	\N
+317	parliament	constituency	297	২৯৭ কক্সবাজার-৪ (297 Cox'sBazar-4)	CREATE	{}	2026-05-24 17:06:26.549315+00	\N	\N
+316	parliament	constituency	296	২৯৬ কক্সবাজার-৩ (296 Cox'sBazar-3)	CREATE	{}	2026-05-24 17:06:26.546687+00	\N	\N
+315	parliament	constituency	295	২৯৫ কক্সবাজার-২ (295 Cox'sBazar-2)	CREATE	{}	2026-05-24 17:06:26.545078+00	\N	\N
+314	parliament	constituency	294	২৯৪ কক্সবাজার-১ (294 Cox'sBazar-1)	CREATE	{}	2026-05-24 17:06:26.543809+00	\N	\N
+313	parliament	constituency	293	২৯৩ চট্টগ্রাম-১৬ (293 Chattogram-16)	CREATE	{}	2026-05-24 17:06:26.542168+00	\N	\N
+312	parliament	constituency	292	২৯২ চট্টগ্রাম-১৫ (292 Chattogram-15)	CREATE	{}	2026-05-24 17:06:26.540825+00	\N	\N
+311	parliament	constituency	291	২৯১ চট্টগ্রাম-১৪ (291 Chattogram-14)	CREATE	{}	2026-05-24 17:06:26.53954+00	\N	\N
+310	parliament	constituency	290	২৯০ চট্টগ্রাম-১৩ (290 Chattogram-13)	CREATE	{}	2026-05-24 17:06:26.537441+00	\N	\N
+309	parliament	constituency	289	২৮৯ চট্টগ্রাম-১২ (289 Chattogram-12)	CREATE	{}	2026-05-24 17:06:26.535871+00	\N	\N
+308	parliament	constituency	288	২৮৮ চট্টগ্রাম-১১ (288 Chattogram-11)	CREATE	{}	2026-05-24 17:06:26.5345+00	\N	\N
+307	parliament	constituency	287	২৮৭ চট্টগ্রাম-১০ (287 Chattogram-10)	CREATE	{}	2026-05-24 17:06:26.531603+00	\N	\N
 371	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-24 16:12:37.372086+00:00", "2026-05-25 08:20:38.776643+00:00"]}	2026-05-25 08:20:38.792041+00	172.23.0.1	1
-372	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"name_en": ["13th National Parliament", "13th Parliament"], "start_date": ["2024-11-04", "2026-02-17"]}	2026-05-25 08:49:44.11807+00	172.23.0.1	1
-373	mp	mp	1	Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░ (013000101)	CREATE	{}	2026-05-25 09:27:23.064855+00	\N	\N
-418	mp	mp	16	Óª«ÓºçÓª¥Óªâ Óª╣Óª¥Óª©Óª¥Óª¿ Óª░Óª¥Óª£ÓºÇÓª¼ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿ (013001601)	CREATE	{}	2026-05-25 09:27:23.168226+00	\N	\N
-374	mp	electioninfo	1	Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.070155+00	\N	\N
-375	mp	address	1	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░	CREATE	{}	2026-05-25 09:27:23.078798+00	\N	\N
-376	mp	mp	2	Óª½Óª░Óª╣Óª¥Óªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªåÓª£Óª¥Óªª (013000201)	CREATE	{}	2026-05-25 09:27:23.088828+00	\N	\N
-377	mp	electioninfo	2	Óª½Óª░Óª╣Óª¥Óªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªåÓª£Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.090053+00	\N	\N
-378	mp	address	2	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½Óª░Óª╣Óª¥Óªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªåÓª£Óª¥Óªª	CREATE	{}	2026-05-25 09:27:23.091174+00	\N	\N
-379	mp	mp	3	Óª«Óª┐Óª░ÓºìÓª£Óª¥ Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª▓Óª«ÓªùÓºÇÓª░ (013000301)	CREATE	{}	2026-05-25 09:27:23.095615+00	\N	\N
-380	mp	electioninfo	3	Óª«Óª┐Óª░ÓºìÓª£Óª¥ Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª▓Óª«ÓªùÓºÇÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.096619+00	\N	\N
-381	mp	address	3	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª┐Óª░ÓºìÓª£Óª¥ Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª▓Óª«ÓªùÓºÇÓª░	CREATE	{}	2026-05-25 09:27:23.097778+00	\N	\N
-382	mp	mp	4	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« (013000401)	CREATE	{}	2026-05-25 09:27:23.101745+00	\N	\N
-383	mp	electioninfo	4	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.102637+00	\N	\N
-384	mp	address	4	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.103729+00	\N	\N
-385	mp	mp	5	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013000501)	CREATE	{}	2026-05-25 09:27:23.107506+00	\N	\N
-386	mp	electioninfo	5	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.108384+00	\N	\N
-387	mp	address	5	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.109338+00	\N	\N
-388	mp	mp	6	Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013000601)	CREATE	{}	2026-05-25 09:27:23.114044+00	\N	\N
-389	mp	electioninfo	6	Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.115348+00	\N	\N
-390	mp	address	6	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.116575+00	\N	\N
-391	mp	mp	7	Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªªÓª┐Óªò Óª░Óª┐ÓºƒÓª¥Óª£ (013000701)	CREATE	{}	2026-05-25 09:27:23.120387+00	\N	\N
-392	mp	electioninfo	7	Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªªÓª┐Óªò Óª░Óª┐ÓºƒÓª¥Óª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.121394+00	\N	\N
-393	mp	address	7	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªªÓª┐Óªò Óª░Óª┐ÓºƒÓª¥Óª£	CREATE	{}	2026-05-25 09:27:23.122411+00	\N	\N
-394	mp	mp	8	Óª©ÓºêÓºƒÓªª Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª« (013000801)	CREATE	{}	2026-05-25 09:27:23.126112+00	\N	\N
-395	mp	electioninfo	8	Óª©ÓºêÓºƒÓªª Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.127184+00	\N	\N
-396	mp	address	8	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºêÓºƒÓªª Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:23.128167+00	\N	\N
-397	mp	mp	9	Óª«ÓºïÓªâ ÓªåÓªûÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐ÓºƒÓª¥ (013000901)	CREATE	{}	2026-05-25 09:27:23.131941+00	\N	\N
-398	mp	electioninfo	9	Óª«ÓºïÓªâ ÓªåÓªûÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐ÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.132895+00	\N	\N
-399	mp	address	9	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓªûÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐ÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:23.133713+00	\N	\N
-400	mp	mp	10	ÓªÅ, Óª£ÓºçÓªí, ÓªÅÓª«, Óª░ÓºçÓª£ÓªôÓºƒÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò (013001001)	CREATE	{}	2026-05-25 09:27:23.137369+00	\N	\N
-401	mp	electioninfo	10	ÓªÅ, Óª£ÓºçÓªí, ÓªÅÓª«, Óª░ÓºçÓª£ÓªôÓºƒÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.138386+00	\N	\N
-402	mp	address	10	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ, Óª£ÓºçÓªí, ÓªÅÓª«, Óª░ÓºçÓª£ÓªôÓºƒÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.13966+00	\N	\N
-403	mp	mp	11	ÓªåÓª¼Óºü Óª£Óª¥Óª½Óª░ Óª«ÓºïÓªâ Óª£Óª¥Óª╣Óª┐Óªª Óª╣ÓºïÓª©ÓºçÓª¿ (013001101)	CREATE	{}	2026-05-25 09:27:23.142939+00	\N	\N
-404	mp	electioninfo	11	ÓªåÓª¼Óºü Óª£Óª¥Óª½Óª░ Óª«ÓºïÓªâ Óª£Óª¥Óª╣Óª┐Óªª Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.143861+00	\N	\N
-405	mp	address	11	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼Óºü Óª£Óª¥Óª½Óª░ Óª«ÓºïÓªâ Óª£Óª¥Óª╣Óª┐Óªª Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.144831+00	\N	\N
-406	mp	mp	12	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥ÓªñÓºìÓªñÓª¥Óª░ (013001201)	CREATE	{}	2026-05-25 09:27:23.148433+00	\N	\N
-407	mp	electioninfo	12	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥ÓªñÓºìÓªñÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.149454+00	\N	\N
-408	mp	address	12	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥ÓªñÓºìÓªñÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.150393+00	\N	\N
-409	mp	mp	13	ÓªåÓª▓Óª½Óª¥Óª░ÓºüÓªò ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª▓ÓªñÓºÇÓª½ (013001301)	CREATE	{}	2026-05-25 09:27:23.153468+00	\N	\N
-410	mp	electioninfo	13	ÓªåÓª▓Óª½Óª¥Óª░ÓºüÓªò ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª▓ÓªñÓºÇÓª½ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.154355+00	\N	\N
-411	mp	address	13	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓Óª½Óª¥Óª░ÓºüÓªò ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª▓ÓªñÓºÇÓª½	CREATE	{}	2026-05-25 09:27:23.155208+00	\N	\N
-412	mp	mp	14	ÓªôÓª¼Óª¥ÓºƒÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª©Óª¥Óª▓Óª¥Óª½ÓºÇ (013001401)	CREATE	{}	2026-05-25 09:27:23.158357+00	\N	\N
-413	mp	electioninfo	14	ÓªôÓª¼Óª¥ÓºƒÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª©Óª¥Óª▓Óª¥Óª½ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.159198+00	\N	\N
-414	mp	address	14	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªôÓª¼Óª¥ÓºƒÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª©Óª¥Óª▓Óª¥Óª½ÓºÇ	CREATE	{}	2026-05-25 09:27:23.160031+00	\N	\N
-415	mp	mp	15	ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«ÓºüÓª¿ÓªñÓª¥ÓªòÓª┐Óª« (013001501)	CREATE	{}	2026-05-25 09:27:23.163155+00	\N	\N
-416	mp	electioninfo	15	ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«ÓºüÓª¿ÓªñÓª¥ÓªòÓª┐Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.164166+00	\N	\N
-417	mp	address	15	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«ÓºüÓª¿ÓªñÓª¥ÓªòÓª┐Óª«	CREATE	{}	2026-05-25 09:27:23.165015+00	\N	\N
-419	mp	electioninfo	16	Óª«ÓºçÓª¥Óªâ Óª╣Óª¥Óª©Óª¥Óª¿ Óª░Óª¥Óª£ÓºÇÓª¼ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.169125+00	\N	\N
-420	mp	address	16	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª╣Óª¥Óª©Óª¥Óª¿ Óª░Óª¥Óª£ÓºÇÓª¼ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.170089+00	\N	\N
-421	mp	mp	17	Óª«ÓºïÓªâ Óª░ÓºïÓªòÓª¿ ÓªëÓªªÓºìÓªªÓºÇÓª¿ Óª¼Óª¥Óª¼ÓºüÓª▓ (013001701)	CREATE	{}	2026-05-25 09:27:23.173339+00	\N	\N
-422	mp	electioninfo	17	Óª«ÓºïÓªâ Óª░ÓºïÓªòÓª¿ ÓªëÓªªÓºìÓªªÓºÇÓª¿ Óª¼Óª¥Óª¼ÓºüÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.174338+00	\N	\N
-423	mp	address	17	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░ÓºïÓªòÓª¿ ÓªëÓªªÓºìÓªªÓºÇÓª¿ Óª¼Óª¥Óª¼ÓºüÓª▓	CREATE	{}	2026-05-25 09:27:23.175208+00	\N	\N
-424	mp	mp	18	ÓªåÓª©Óª¥ÓªªÓºüÓª▓ Óª╣Óª¥Óª¼Óª┐Óª¼ ÓªªÓºüÓª▓Óºü (013001801)	CREATE	{}	2026-05-25 09:27:23.179302+00	\N	\N
-425	mp	electioninfo	18	ÓªåÓª©Óª¥ÓªªÓºüÓª▓ Óª╣Óª¥Óª¼Óª┐Óª¼ ÓªªÓºüÓª▓Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.18027+00	\N	\N
-426	mp	address	18	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª©Óª¥ÓªªÓºüÓª▓ Óª╣Óª¥Óª¼Óª┐Óª¼ ÓªªÓºüÓª▓Óºü	CREATE	{}	2026-05-25 09:27:23.181177+00	\N	\N
-427	mp	mp	19	Óª«ÓºçÓª¥Óªâ Óª░Óª¥ÓºƒÓª╣Óª¥Óª¿ Óª©Óª┐Óª░Óª¥Óª£ÓºÇ (013001901)	CREATE	{}	2026-05-25 09:27:23.184831+00	\N	\N
-428	mp	electioninfo	19	Óª«ÓºçÓª¥Óªâ Óª░Óª¥ÓºƒÓª╣Óª¥Óª¿ Óª©Óª┐Óª░Óª¥Óª£ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.185771+00	\N	\N
-429	mp	address	19	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª░Óª¥ÓºƒÓª╣Óª¥Óª¿ Óª©Óª┐Óª░Óª¥Óª£ÓºÇ	CREATE	{}	2026-05-25 09:27:23.186969+00	\N	\N
-430	mp	mp	20	ÓªÅ ÓªƒÓª┐ ÓªÅÓª« ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013002001)	CREATE	{}	2026-05-25 09:27:23.190775+00	\N	\N
-431	mp	electioninfo	20	ÓªÅ ÓªƒÓª┐ ÓªÅÓª« ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.191784+00	\N	\N
-432	mp	address	20	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ ÓªƒÓª┐ ÓªÅÓª« ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.192821+00	\N	\N
-433	mp	mp	21	Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (Óª¼ÓºçÓª▓Óª¥Óª▓) (013002101)	CREATE	{}	2026-05-25 09:27:23.196247+00	\N	\N
-434	mp	electioninfo	21	Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (Óª¼ÓºçÓª▓Óª¥Óª▓) ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.197292+00	\N	\N
-435	mp	address	21	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (Óª¼ÓºçÓª▓Óª¥Óª▓)	CREATE	{}	2026-05-25 09:27:23.198329+00	\N	\N
-436	mp	mp	22	ÓªåÓªûÓªñÓª¥Óª░ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013002201)	CREATE	{}	2026-05-25 09:27:23.20176+00	\N	\N
-437	mp	electioninfo	22	ÓªåÓªûÓªñÓª¥Óª░ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.202641+00	\N	\N
-438	mp	address	22	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓªûÓªñÓª¥Óª░ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.203516+00	\N	\N
-439	mp	mp	23	Óª«ÓºçÓª¥Óªâ ÓªùÓºçÓª¥Óª▓Óª¥Óª« Óª░Óª¼ÓºìÓª¼Óª¥Óª¿ÓºÇ (013002301)	CREATE	{}	2026-05-25 09:27:23.206599+00	\N	\N
-440	mp	electioninfo	23	Óª«ÓºçÓª¥Óªâ ÓªùÓºçÓª¥Óª▓Óª¥Óª« Óª░Óª¼ÓºìÓª¼Óª¥Óª¿ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.20801+00	\N	\N
+380	mp	electioninfo	3	মির্জা ফখরুল ইসলাম আলমগীর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.096619+00	\N	\N
+379	mp	mp	3	মির্জা ফখরুল ইসলাম আলমগীর (013000301)	CREATE	{}	2026-05-25 09:27:23.095615+00	\N	\N
+378	mp	address	2	বর্তমান ঠিকানা — ফরহাদ হোসেন আজাদ	CREATE	{}	2026-05-25 09:27:23.091174+00	\N	\N
+377	mp	electioninfo	2	ফরহাদ হোসেন আজাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.090053+00	\N	\N
+376	mp	mp	2	ফরহাদ হোসেন আজাদ (013000201)	CREATE	{}	2026-05-25 09:27:23.088828+00	\N	\N
+375	mp	address	1	বর্তমান ঠিকানা — ব্যারিস্টার মুহম্মদ নওশাদ জমির	CREATE	{}	2026-05-25 09:27:23.078798+00	\N	\N
+374	mp	electioninfo	1	ব্যারিস্টার মুহম্মদ নওশাদ জমির — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.070155+00	\N	\N
+373	mp	mp	1	ব্যারিস্টার মুহম্মদ নওশাদ জমির (013000101)	CREATE	{}	2026-05-25 09:27:23.064855+00	\N	\N
+372	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"name_en": ["13th National Parliament", "13th Parliament"], "start_date": ["2024-11-04", "2026-02-17"]}	2026-05-25 08:49:44.11807+00	172.23.0.1	1
+370	parliament	constituency	350	৩৫০ মহিলা আসন-৫০ (350 Women Seat-50)	CREATE	{}	2026-05-24 17:06:26.637237+00	\N	\N
+369	parliament	constituency	349	৩৪৯ মহিলা আসন-৪৯ (349 Women Seat-49)	CREATE	{}	2026-05-24 17:06:26.63542+00	\N	\N
+368	parliament	constituency	348	৩৪৮ মহিলা আসন-৪৮ (348 Women Seat-48)	CREATE	{}	2026-05-24 17:06:26.632813+00	\N	\N
+367	parliament	constituency	347	৩৪৭ মহিলা আসন-৪৭ (347 Women Seat-47)	CREATE	{}	2026-05-24 17:06:26.63117+00	\N	\N
+366	parliament	constituency	346	৩৪৬ মহিলা আসন-৪৬ (346 Women Seat-46)	CREATE	{}	2026-05-24 17:06:26.629446+00	\N	\N
+365	parliament	constituency	345	৩৪৫ মহিলা আসন-৪৫ (345 Women Seat-45)	CREATE	{}	2026-05-24 17:06:26.62779+00	\N	\N
+364	parliament	constituency	344	৩৪৪ মহিলা আসন-৪৪ (344 Women Seat-44)	CREATE	{}	2026-05-24 17:06:26.625734+00	\N	\N
+363	parliament	constituency	343	৩৪৩ মহিলা আসন-৪৩ (343 Women Seat-43)	CREATE	{}	2026-05-24 17:06:26.624048+00	\N	\N
+362	parliament	constituency	342	৩৪২ মহিলা আসন-৪২ (342 Women Seat-42)	CREATE	{}	2026-05-24 17:06:26.622252+00	\N	\N
+361	parliament	constituency	341	৩৪১ মহিলা আসন-৪১ (341 Women Seat-41)	CREATE	{}	2026-05-24 17:06:26.62006+00	\N	\N
+360	parliament	constituency	340	৩৪০ মহিলা আসন-৪০ (340 Women Seat-40)	CREATE	{}	2026-05-24 17:06:26.618064+00	\N	\N
+359	parliament	constituency	339	৩৩৯ মহিলা আসন-৩৯ (339 Women Seat-39)	CREATE	{}	2026-05-24 17:06:26.615185+00	\N	\N
+358	parliament	constituency	338	৩৩৮ মহিলা আসন-৩৮ (338 Women Seat-38)	CREATE	{}	2026-05-24 17:06:26.613728+00	\N	\N
+357	parliament	constituency	337	৩৩৭ মহিলা আসন-৩৭ (337 Women Seat-37)	CREATE	{}	2026-05-24 17:06:26.611306+00	\N	\N
+356	parliament	constituency	336	৩৩৬ মহিলা আসন-৩৬ (336 Women Seat-36)	CREATE	{}	2026-05-24 17:06:26.609713+00	\N	\N
+355	parliament	constituency	335	৩৩৫ মহিলা আসন-৩৫ (335 Women Seat-35)	CREATE	{}	2026-05-24 17:06:26.608414+00	\N	\N
+354	parliament	constituency	334	৩৩৪ মহিলা আসন-৩৪ (334 Women Seat-34)	CREATE	{}	2026-05-24 17:06:26.607149+00	\N	\N
+353	parliament	constituency	333	৩৩৩ মহিলা আসন-৩৩ (333 Women Seat-33)	CREATE	{}	2026-05-24 17:06:26.605773+00	\N	\N
+352	parliament	constituency	332	৩৩২ মহিলা আসন-৩২ (332 Women Seat-32)	CREATE	{}	2026-05-24 17:06:26.60342+00	\N	\N
+351	parliament	constituency	331	৩৩১ মহিলা আসন-৩১ (331 Women Seat-31)	CREATE	{}	2026-05-24 17:06:26.602083+00	\N	\N
+350	parliament	constituency	330	৩৩০ মহিলা আসন-৩০ (330 Women Seat-30)	CREATE	{}	2026-05-24 17:06:26.600509+00	\N	\N
+349	parliament	constituency	329	৩২৯ মহিলা আসন-২৯ (329 Women Seat-29)	CREATE	{}	2026-05-24 17:06:26.598706+00	\N	\N
+348	parliament	constituency	328	৩২৮ মহিলা আসন-২৮ (328 Women Seat-28)	CREATE	{}	2026-05-24 17:06:26.59688+00	\N	\N
+347	parliament	constituency	327	৩২৭ মহিলা আসন-২৭ (327 Women Seat-27)	CREATE	{}	2026-05-24 17:06:26.595049+00	\N	\N
+409	mp	mp	13	আলফারুক আব্দুল লতীফ (013001301)	CREATE	{}	2026-05-25 09:27:23.153468+00	\N	\N
+408	mp	address	12	বর্তমান ঠিকানা — মোঃ আব্দুস সাত্তার	CREATE	{}	2026-05-25 09:27:23.150393+00	\N	\N
+407	mp	electioninfo	12	মোঃ আব্দুস সাত্তার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.149454+00	\N	\N
+406	mp	mp	12	মোঃ আব্দুস সাত্তার (013001201)	CREATE	{}	2026-05-25 09:27:23.148433+00	\N	\N
+405	mp	address	11	বর্তমান ঠিকানা — আবু জাফর মোঃ জাহিদ হোসেন	CREATE	{}	2026-05-25 09:27:23.144831+00	\N	\N
+404	mp	electioninfo	11	আবু জাফর মোঃ জাহিদ হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.143861+00	\N	\N
+403	mp	mp	11	আবু জাফর মোঃ জাহিদ হোসেন (013001101)	CREATE	{}	2026-05-25 09:27:23.142939+00	\N	\N
+402	mp	address	10	বর্তমান ঠিকানা — এ, জেড, এম, রেজওয়ানুল হক	CREATE	{}	2026-05-25 09:27:23.13966+00	\N	\N
+401	mp	electioninfo	10	এ, জেড, এম, রেজওয়ানুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.138386+00	\N	\N
+400	mp	mp	10	এ, জেড, এম, রেজওয়ানুল হক (013001001)	CREATE	{}	2026-05-25 09:27:23.137369+00	\N	\N
+399	mp	address	9	বর্তমান ঠিকানা — মোঃ আখতারুজ্জামান মিয়া	CREATE	{}	2026-05-25 09:27:23.133713+00	\N	\N
+398	mp	electioninfo	9	মোঃ আখতারুজ্জামান মিয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.132895+00	\N	\N
+397	mp	mp	9	মোঃ আখতারুজ্জামান মিয়া (013000901)	CREATE	{}	2026-05-25 09:27:23.131941+00	\N	\N
+396	mp	address	8	বর্তমান ঠিকানা — সৈয়দ জাহাঙ্গীর আলম	CREATE	{}	2026-05-25 09:27:23.128167+00	\N	\N
+395	mp	electioninfo	8	সৈয়দ জাহাঙ্গীর আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.127184+00	\N	\N
+394	mp	mp	8	সৈয়দ জাহাঙ্গীর আলম (013000801)	CREATE	{}	2026-05-25 09:27:23.126112+00	\N	\N
+393	mp	address	7	বর্তমান ঠিকানা — মোঃ সাদিক রিয়াজ	CREATE	{}	2026-05-25 09:27:23.122411+00	\N	\N
+392	mp	electioninfo	7	মোঃ সাদিক রিয়াজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.121394+00	\N	\N
+391	mp	mp	7	মোঃ সাদিক রিয়াজ (013000701)	CREATE	{}	2026-05-25 09:27:23.120387+00	\N	\N
+390	mp	address	6	বর্তমান ঠিকানা — মোঃ মনজুরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.116575+00	\N	\N
+389	mp	electioninfo	6	মোঃ মনজুরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.115348+00	\N	\N
+388	mp	mp	6	মোঃ মনজুরুল ইসলাম (013000601)	CREATE	{}	2026-05-25 09:27:23.114044+00	\N	\N
+387	mp	address	5	বর্তমান ঠিকানা — মোঃ জাহিদুর রহমান	CREATE	{}	2026-05-25 09:27:23.109338+00	\N	\N
+386	mp	electioninfo	5	মোঃ জাহিদুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.108384+00	\N	\N
+385	mp	mp	5	মোঃ জাহিদুর রহমান (013000501)	CREATE	{}	2026-05-25 09:27:23.107506+00	\N	\N
+384	mp	address	4	বর্তমান ঠিকানা — মোঃ আব্দুস সালাম	CREATE	{}	2026-05-25 09:27:23.103729+00	\N	\N
+383	mp	electioninfo	4	মোঃ আব্দুস সালাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.102637+00	\N	\N
+382	mp	mp	4	মোঃ আব্দুস সালাম (013000401)	CREATE	{}	2026-05-25 09:27:23.101745+00	\N	\N
+381	mp	address	3	বর্তমান ঠিকানা — মির্জা ফখরুল ইসলাম আলমগীর	CREATE	{}	2026-05-25 09:27:23.097778+00	\N	\N
 1444	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-30 17:47:27.025994+00:00", "2026-06-02 04:36:53.273240+00:00"]}	2026-06-02 04:36:53.318243+00	172.23.0.1	1
-441	mp	address	23	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªùÓºçÓª¥Óª▓Óª¥Óª« Óª░Óª¼ÓºìÓª¼Óª¥Óª¿ÓºÇ	CREATE	{}	2026-05-25 09:27:23.208925+00	\N	\N
-442	mp	mp	24	Óª«ÓºïÓªâ Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿ (013002401)	CREATE	{}	2026-05-25 09:27:23.212395+00	\N	\N
-443	mp	electioninfo	24	Óª«ÓºïÓªâ Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.213327+00	\N	\N
-444	mp	address	24	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:23.214994+00	\N	\N
-445	mp	mp	25	Óª«ÓºçÓª¥Óªâ ÓªåÓª¿ÓºçÓª¥ÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013002501)	CREATE	{}	2026-05-25 09:27:23.218457+00	\N	\N
-446	mp	electioninfo	25	Óª«ÓºçÓª¥Óªâ ÓªåÓª¿ÓºçÓª¥ÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.21951+00	\N	\N
-447	mp	address	25	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¿ÓºçÓª¥ÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.220604+00	\N	\N
-448	mp	mp	26	ÓªåÓªñÓª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª£Óª¥Óª╣Óª┐Óªª (013002601)	CREATE	{}	2026-05-25 09:27:23.223732+00	\N	\N
-449	mp	electioninfo	26	ÓªåÓªñÓª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª£Óª¥Óª╣Óª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.224643+00	\N	\N
-450	mp	address	26	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓªñÓª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª£Óª¥Óª╣Óª┐Óªª	CREATE	{}	2026-05-25 09:27:23.225623+00	\N	\N
-451	mp	mp	27	Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª▓ ÓªåÓª▓Óª« (013002701)	CREATE	{}	2026-05-25 09:27:23.228822+00	\N	\N
-452	mp	electioninfo	27	Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.229822+00	\N	\N
-453	mp	address	27	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ÓºüÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:23.230717+00	\N	\N
-454	mp	mp	28	Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013002801)	CREATE	{}	2026-05-25 09:27:23.23398+00	\N	\N
-455	mp	electioninfo	28	Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.234959+00	\N	\N
-456	mp	address	28	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.235946+00	\N	\N
-457	mp	mp	29	Óª«ÓºïÓªâ Óª«Óª¥Óª£ÓºçÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013002901)	CREATE	{}	2026-05-25 09:27:23.239716+00	\N	\N
-458	mp	electioninfo	29	Óª«ÓºïÓªâ Óª«Óª¥Óª£ÓºçÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.240693+00	\N	\N
-459	mp	address	29	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª¥Óª£ÓºçÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.24154+00	\N	\N
-460	mp	mp	30	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªòÓª░Óª┐Óª« (013003001)	CREATE	{}	2026-05-25 09:27:23.244708+00	\N	\N
-461	mp	electioninfo	30	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªòÓª░Óª┐Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.245657+00	\N	\N
-462	mp	address	30	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªòÓª░Óª┐Óª«	CREATE	{}	2026-05-25 09:27:23.246509+00	\N	\N
-508	mp	mp	46	Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013004601)	CREATE	{}	2026-05-25 09:27:23.330108+00	\N	\N
-463	mp	mp	31	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥ÓªôÓªøÓª¥Óª░ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013003101)	CREATE	{}	2026-05-25 09:27:23.249539+00	\N	\N
-464	mp	electioninfo	31	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥ÓªôÓªøÓª¥Óª░ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.250515+00	\N	\N
-465	mp	address	31	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥ÓªôÓªøÓª¥Óª░ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.251483+00	\N	\N
-466	mp	mp	32	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª¥Óª«ÓºÇÓª« ÓªòÓª¥ÓºƒÓª©Óª¥Óª░ (013003201)	CREATE	{}	2026-05-25 09:27:23.255657+00	\N	\N
-467	mp	electioninfo	32	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª¥Óª«ÓºÇÓª« ÓªòÓª¥ÓºƒÓª©Óª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.256893+00	\N	\N
-468	mp	address	32	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª¥Óª«ÓºÇÓª« ÓªòÓª¥ÓºƒÓª©Óª¥Óª░	CREATE	{}	2026-05-25 09:27:23.257962+00	\N	\N
-469	mp	mp	33	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªôÓºƒÓª¥Óª░ÓºçÓªø (013003301)	CREATE	{}	2026-05-25 09:27:23.261408+00	\N	\N
-470	mp	electioninfo	33	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªôÓºƒÓª¥Óª░ÓºçÓªø ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.262338+00	\N	\N
-471	mp	address	33	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªôÓºƒÓª¥Óª░ÓºçÓªø	CREATE	{}	2026-05-25 09:27:23.263212+00	\N	\N
-472	mp	mp	34	Óª«ÓºçÓª¥Óªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª¥ÓªçÓªª (013003401)	CREATE	{}	2026-05-25 09:27:23.266416+00	\N	\N
-473	mp	electioninfo	34	Óª«ÓºçÓª¥Óªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª¥ÓªçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.267469+00	\N	\N
-474	mp	address	34	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª¥ÓªçÓªª	CREATE	{}	2026-05-25 09:27:23.268427+00	\N	\N
-475	mp	mp	35	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ (013003501)	CREATE	{}	2026-05-25 09:27:23.271677+00	\N	\N
-476	mp	electioninfo	35	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.272653+00	\N	\N
-477	mp	address	35	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.27353+00	\N	\N
-478	mp	mp	36	ÓªòÓª¥Óª£ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013003601)	CREATE	{}	2026-05-25 09:27:23.276721+00	\N	\N
-479	mp	electioninfo	36	ÓªòÓª¥Óª£ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.278137+00	\N	\N
-480	mp	address	36	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªòÓª¥Óª£ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.279066+00	\N	\N
-481	mp	mp	37	Óª«ÓºÇÓª░ ÓªÂÓª¥Óª╣Óºç ÓªåÓª▓Óª« (013003701)	CREATE	{}	2026-05-25 09:27:23.282316+00	\N	\N
-482	mp	electioninfo	37	Óª«ÓºÇÓª░ ÓªÂÓª¥Óª╣Óºç ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.283338+00	\N	\N
-483	mp	address	37	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºÇÓª░ ÓªÂÓª¥Óª╣Óºç ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:23.284346+00	\N	\N
-484	mp	mp	38	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª╣Óª┐Óªñ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ (013003801)	CREATE	{}	2026-05-25 09:27:23.28784+00	\N	\N
-485	mp	electioninfo	38	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª╣Óª┐Óªñ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.289041+00	\N	\N
-486	mp	address	38	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª╣Óª┐Óªñ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.290192+00	\N	\N
-487	mp	mp	39	Óª«ÓºïÓªâ Óª«ÓºçÓª¥ÓªÂÓª¥Óª░Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013003901)	CREATE	{}	2026-05-25 09:27:23.293587+00	\N	\N
-488	mp	electioninfo	39	Óª«ÓºïÓªâ Óª«ÓºçÓª¥ÓªÂÓª¥Óª░Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.294478+00	\N	\N
-489	mp	address	39	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºçÓª¥ÓªÂÓª¥Óª░Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.295342+00	\N	\N
-490	mp	mp	40	ÓªùÓºïÓª▓Óª¥Óª« Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª┐Óª░Óª¥Óª£ (013004001)	CREATE	{}	2026-05-25 09:27:23.298571+00	\N	\N
-491	mp	electioninfo	40	ÓªùÓºïÓª▓Óª¥Óª« Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª┐Óª░Óª¥Óª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.299476+00	\N	\N
-492	mp	address	40	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªùÓºïÓª▓Óª¥Óª« Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª┐Óª░Óª¥Óª£	CREATE	{}	2026-05-25 09:27:23.30066+00	\N	\N
-493	mp	mp	41	Óª«ÓºçÓª¥Óªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªòÓª░Óª┐Óª« Óª¼Óª¥ÓªªÓªÂÓª¥ (013004101)	CREATE	{}	2026-05-25 09:27:23.303997+00	\N	\N
-494	mp	electioninfo	41	Óª«ÓºçÓª¥Óªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªòÓª░Óª┐Óª« Óª¼Óª¥ÓªªÓªÂÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.304949+00	\N	\N
-495	mp	address	41	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªòÓª░Óª┐Óª« Óª¼Óª¥ÓªªÓªÂÓª¥	CREATE	{}	2026-05-25 09:27:23.30588+00	\N	\N
-496	mp	mp	42	Óª«ÓºïÓª░ÓªÂÓºçÓªª Óª«Óª┐Óª▓ÓªƒÓª¿ (013004201)	CREATE	{}	2026-05-25 09:27:23.309071+00	\N	\N
-497	mp	electioninfo	42	Óª«ÓºïÓª░ÓªÂÓºçÓªª Óª«Óª┐Óª▓ÓªƒÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.309949+00	\N	\N
-498	mp	address	42	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª░ÓªÂÓºçÓªª Óª«Óª┐Óª▓ÓªƒÓª¿	CREATE	{}	2026-05-25 09:27:23.310798+00	\N	\N
-499	mp	mp	43	Óª«ÓºïÓªâ ÓªòÓºçÓª░Óª¥Óª«Óªñ ÓªåÓª▓ÓºÇ (013004301)	CREATE	{}	2026-05-25 09:27:23.313821+00	\N	\N
-500	mp	electioninfo	43	Óª«ÓºïÓªâ ÓªòÓºçÓª░Óª¥Óª«Óªñ ÓªåÓª▓ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.314708+00	\N	\N
-501	mp	address	43	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªòÓºçÓª░Óª¥Óª«Óªñ ÓªåÓª▓ÓºÇ	CREATE	{}	2026-05-25 09:27:23.315614+00	\N	\N
-502	mp	mp	44	Óª«Óºü. Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013004401)	CREATE	{}	2026-05-25 09:27:23.31894+00	\N	\N
-503	mp	electioninfo	44	Óª«Óºü. Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.320092+00	\N	\N
-504	mp	address	44	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óºü. Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.321137+00	\N	\N
-505	mp	mp	45	Óª«ÓºïÓªâ Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013004501)	CREATE	{}	2026-05-25 09:27:23.324919+00	\N	\N
-506	mp	electioninfo	45	Óª«ÓºïÓªâ Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.325958+00	\N	\N
-507	mp	address	45	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.326855+00	\N	\N
-509	mp	electioninfo	46	Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.331074+00	\N	\N
-510	mp	address	46	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«ÓºçÓª¥Óª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.332079+00	\N	\N
-511	mp	mp	47	Óª«ÓºïÓªâ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò (013004701)	CREATE	{}	2026-05-25 09:27:23.335485+00	\N	\N
-512	mp	electioninfo	47	Óª«ÓºïÓªâ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.336494+00	\N	\N
-513	mp	address	47	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.337358+00	\N	\N
-514	mp	mp	48	Óª«ÓºïÓªâ Óª½Óª£Óª▓Óºç Óª╣ÓºüÓªªÓª¥ (013004801)	CREATE	{}	2026-05-25 09:27:23.340822+00	\N	\N
-515	mp	electioninfo	48	Óª«ÓºïÓªâ Óª½Óª£Óª▓Óºç Óª╣ÓºüÓªªÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.341986+00	\N	\N
-516	mp	address	48	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª½Óª£Óª▓Óºç Óª╣ÓºüÓªªÓª¥	CREATE	{}	2026-05-25 09:27:23.34288+00	\N	\N
-517	mp	mp	49	ÓªçÓªòÓª░Óª¥Óª«ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ ÓªƒÓª┐Óª¬Óºü (013004901)	CREATE	{}	2026-05-25 09:27:23.346289+00	\N	\N
-518	mp	electioninfo	49	ÓªçÓªòÓª░Óª¥Óª«ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ ÓªƒÓª┐Óª¬Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.347207+00	\N	\N
-519	mp	address	49	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªçÓªòÓª░Óª¥Óª«ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ ÓªƒÓª┐Óª¬Óºü	CREATE	{}	2026-05-25 09:27:23.348234+00	\N	\N
-520	mp	mp	50	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªºÓª▓Óºü (013005001)	CREATE	{}	2026-05-25 09:27:23.351595+00	\N	\N
-521	mp	electioninfo	50	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªºÓª▓Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.352594+00	\N	\N
-522	mp	address	50	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªºÓª▓Óºü	CREATE	{}	2026-05-25 09:27:23.353486+00	\N	\N
-523	mp	mp	51	ÓªÂÓºçÓªû Óª«ÓºïÓªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013005101)	CREATE	{}	2026-05-25 09:27:23.356699+00	\N	\N
-524	mp	electioninfo	51	ÓªÂÓºçÓªû Óª«ÓºïÓªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.357641+00	\N	\N
-525	mp	address	51	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª«ÓºïÓªâ Óª░ÓºçÓª£Óª¥ÓªëÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.358505+00	\N	\N
-526	mp	mp	52	Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013005201)	CREATE	{}	2026-05-25 09:27:23.361807+00	\N	\N
-527	mp	electioninfo	52	Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.362773+00	\N	\N
-528	mp	address	52	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.363607+00	\N	\N
-529	mp	mp	53	Óª«ÓºïÓªâ Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«Óª┐Óª¿Óºü (013005301)	CREATE	{}	2026-05-25 09:27:23.366727+00	\N	\N
-530	mp	electioninfo	53	Óª«ÓºïÓªâ Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«Óª┐Óª¿Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.36767+00	\N	\N
-531	mp	address	53	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª┐Óª£Óª¥Óª¿ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª«Óª┐Óª¿Óºü	CREATE	{}	2026-05-25 09:27:23.368747+00	\N	\N
-532	mp	mp	54	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ (013005401)	CREATE	{}	2026-05-25 09:27:23.372313+00	\N	\N
-533	mp	electioninfo	54	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.373383+00	\N	\N
-534	mp	address	54	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿	CREATE	{}	2026-05-25 09:27:23.374296+00	\N	\N
-535	mp	mp	55	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ Óª©Óª░ÓªªÓª¥Óª░ (013005501)	CREATE	{}	2026-05-25 09:27:23.377659+00	\N	\N
-536	mp	electioninfo	55	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ Óª©Óª░ÓªªÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.378532+00	\N	\N
-537	mp	address	55	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ Óª©Óª░ÓªªÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.379372+00	\N	\N
-538	mp	mp	56	ÓªàÓªºÓºìÓª»Óª¥Óª¬Óªò Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013005601)	CREATE	{}	2026-05-25 09:27:23.38261+00	\N	\N
-539	mp	electioninfo	56	ÓªàÓªºÓºìÓª»Óª¥Óª¬Óªò Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.383553+00	\N	\N
-540	mp	address	56	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªàÓªºÓºìÓª»Óª¥Óª¬Óªò Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.384913+00	\N	\N
-541	mp	mp	57	Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª©Óª¥ÓªçÓªª ÓªÜÓª¥ÓªüÓªª (013005701)	CREATE	{}	2026-05-25 09:27:23.388772+00	\N	\N
-542	mp	electioninfo	57	Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª©Óª¥ÓªçÓªª ÓªÜÓª¥ÓªüÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.389848+00	\N	\N
-543	mp	address	57	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª©Óª¥ÓªçÓªª ÓªÜÓª¥ÓªüÓªª	CREATE	{}	2026-05-25 09:27:23.390879+00	\N	\N
-544	mp	mp	58	Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥ ÓªÂÓª¥Óª░Óª«ÓºÇÓª¿ (013005801)	CREATE	{}	2026-05-25 09:27:23.394005+00	\N	\N
-545	mp	electioninfo	58	Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥ ÓªÂÓª¥Óª░Óª«ÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.394954+00	\N	\N
-546	mp	address	58	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥ ÓªÂÓª¥Óª░Óª«ÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:23.395963+00	\N	\N
-547	mp	mp	59	ÓªÅÓª«, Óª░ÓºüÓª╣ÓºüÓª▓ ÓªòÓºüÓªªÓºìÓªªÓºüÓª© ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ ÓªªÓºüÓª▓Óºü (013005901)	CREATE	{}	2026-05-25 09:27:23.398955+00	\N	\N
-548	mp	electioninfo	59	ÓªÅÓª«, Óª░ÓºüÓª╣ÓºüÓª▓ ÓªòÓºüÓªªÓºìÓªªÓºüÓª© ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ ÓªªÓºüÓª▓Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.400079+00	\N	\N
-549	mp	address	59	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª«, Óª░ÓºüÓª╣ÓºüÓª▓ ÓªòÓºüÓªªÓºìÓªªÓºüÓª© ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ ÓªªÓºüÓª▓Óºü	CREATE	{}	2026-05-25 09:27:23.401156+00	\N	\N
-550	mp	mp	60	Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013006001)	CREATE	{}	2026-05-25 09:27:23.404586+00	\N	\N
-551	mp	electioninfo	60	Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.405457+00	\N	\N
-552	mp	address	60	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.406357+00	\N	\N
-553	mp	mp	61	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª£Óª┐Óª£ (013006101)	CREATE	{}	2026-05-25 09:27:23.409376+00	\N	\N
-554	mp	electioninfo	61	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª£Óª┐Óª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.410346+00	\N	\N
-555	mp	address	61	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª£Óª┐Óª£	CREATE	{}	2026-05-25 09:27:23.411297+00	\N	\N
-556	mp	mp	62	Óª«ÓºïÓªâ Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥ (013006201)	CREATE	{}	2026-05-25 09:27:23.414908+00	\N	\N
-557	mp	electioninfo	62	Óª«ÓºïÓªâ Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.416212+00	\N	\N
-558	mp	address	62	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥	CREATE	{}	2026-05-25 09:27:23.417443+00	\N	\N
-559	mp	mp	63	ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣Óª¥Óª©Óª¥Óª¿ Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªª (013006301)	CREATE	{}	2026-05-25 09:27:23.420931+00	\N	\N
-560	mp	electioninfo	63	ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣Óª¥Óª©Óª¥Óª¿ Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.421917+00	\N	\N
-561	mp	address	63	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣Óª¥Óª©Óª¥Óª¿ Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªª	CREATE	{}	2026-05-25 09:27:23.422765+00	\N	\N
-562	mp	mp	64	Óª«ÓºçÓª¥Óªâ ÓªåÓºƒÓª¿ÓºüÓª▓ Óª╣Óªò (013006401)	CREATE	{}	2026-05-25 09:27:23.42639+00	\N	\N
-563	mp	electioninfo	64	Óª«ÓºçÓª¥Óªâ ÓªåÓºƒÓª¿ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.427355+00	\N	\N
-564	mp	address	64	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓºƒÓª¿ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.428383+00	\N	\N
-565	mp	mp	65	Óª«ÓºçÓª¥Óªâ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ (013006501)	CREATE	{}	2026-05-25 09:27:23.431722+00	\N	\N
-566	mp	electioninfo	65	Óª«ÓºçÓª¥Óªâ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.432751+00	\N	\N
-567	mp	address	65	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.433698+00	\N	\N
-568	mp	mp	66	Óª«ÓºïÓªâ ÓªåÓª«Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ (013006601)	CREATE	{}	2026-05-25 09:27:23.436717+00	\N	\N
-569	mp	electioninfo	66	Óª«ÓºïÓªâ ÓªåÓª«Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.437541+00	\N	\N
-570	mp	address	66	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª«Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.43878+00	\N	\N
-571	mp	mp	67	ÓªÅÓª«, ÓªÅ, Óª«ÓºüÓª╣Óª┐Óªñ (013006701)	CREATE	{}	2026-05-25 09:27:23.44192+00	\N	\N
-572	mp	electioninfo	67	ÓªÅÓª«, ÓªÅ, Óª«ÓºüÓª╣Óª┐Óªñ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.442941+00	\N	\N
-573	mp	address	67	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª«, ÓªÅ, Óª«ÓºüÓª╣Óª┐Óªñ	CREATE	{}	2026-05-25 09:27:23.443831+00	\N	\N
-574	mp	mp	68	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª¥Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013006801)	CREATE	{}	2026-05-25 09:27:23.447105+00	\N	\N
-575	mp	electioninfo	68	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª¥Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.448086+00	\N	\N
-576	mp	address	68	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿Óª¥Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.449194+00	\N	\N
-577	mp	mp	69	ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥ Óª╣Óª¥Óª¼Óª┐Óª¼ (013006901)	CREATE	{}	2026-05-25 09:27:23.452637+00	\N	\N
-578	mp	electioninfo	69	ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥ Óª╣Óª¥Óª¼Óª┐Óª¼ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.453593+00	\N	\N
-579	mp	address	69	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª©ÓºçÓª▓Óª┐Óª« Óª░ÓºçÓª£Óª¥ Óª╣Óª¥Óª¼Óª┐Óª¼	CREATE	{}	2026-05-25 09:27:23.454521+00	\N	\N
-580	mp	mp	70	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª▓ÓºÇ ÓªåÓªøÓªùÓª¥Óª░ (013007001)	CREATE	{}	2026-05-25 09:27:23.457685+00	\N	\N
-581	mp	electioninfo	70	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª▓ÓºÇ ÓªåÓªøÓªùÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.458635+00	\N	\N
-582	mp	address	70	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª▓ÓºÇ ÓªåÓªøÓªùÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.459498+00	\N	\N
-583	mp	mp	71	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓ÓºçÓª¼ Óª«Óª¿ÓºìÓªíÓª▓ (013007101)	CREATE	{}	2026-05-25 09:27:23.463817+00	\N	\N
-584	mp	electioninfo	71	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓ÓºçÓª¼ Óª«Óª¿ÓºìÓªíÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.464785+00	\N	\N
-585	mp	address	71	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓ÓºçÓª¼ Óª«Óª¿ÓºìÓªíÓª▓	CREATE	{}	2026-05-25 09:27:23.466211+00	\N	\N
-586	mp	mp	72	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª«ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÂÓª┐Óª«ÓºüÓª▓ Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª© (013007201)	CREATE	{}	2026-05-25 09:27:23.469595+00	\N	\N
-587	mp	electioninfo	72	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª«ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÂÓª┐Óª«ÓºüÓª▓ Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª© ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.47052+00	\N	\N
-588	mp	address	72	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª«ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÂÓª┐Óª«ÓºüÓª▓ Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª©	CREATE	{}	2026-05-25 09:27:23.471458+00	\N	\N
-589	mp	mp	73	Óª«ÓºïÓªâ ÓªñÓª¥Óª£ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªûÓª¥Óª¿ (013007301)	CREATE	{}	2026-05-25 09:27:23.474631+00	\N	\N
-1311	mp	address	313	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥Óª¿Óª©Óª┐Óª▓Óª¥ Óª£ÓºçÓª¼Óª░Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.783169+00	\N	\N
-590	mp	electioninfo	73	Óª«ÓºïÓªâ ÓªñÓª¥Óª£ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.475664+00	\N	\N
-591	mp	address	73	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªñÓª¥Óª£ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.476667+00	\N	\N
-592	mp	mp	74	Óª«ÓºïÓªâ Óª¿Óª¥Óª£Óª«ÓºüÓª▓ Óª╣ÓºüÓªªÓª¥ (013007401)	CREATE	{}	2026-05-25 09:27:23.479802+00	\N	\N
-593	mp	electioninfo	74	Óª«ÓºïÓªâ Óª¿Óª¥Óª£Óª«ÓºüÓª▓ Óª╣ÓºüÓªªÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.480681+00	\N	\N
-594	mp	address	74	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª¿Óª¥Óª£Óª«ÓºüÓª▓ Óª╣ÓºüÓªªÓª¥	CREATE	{}	2026-05-25 09:27:23.481566+00	\N	\N
-595	mp	mp	75	Óª░ÓºçÓª£Óª¥ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª (013007501)	CREATE	{}	2026-05-25 09:27:23.48456+00	\N	\N
-596	mp	electioninfo	75	Óª░ÓºçÓª£Óª¥ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.485446+00	\N	\N
-597	mp	address	75	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºçÓª£Óª¥ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:23.486279+00	\N	\N
-598	mp	mp	76	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªùÓª½ÓºüÓª░ (013007601)	CREATE	{}	2026-05-25 09:27:23.489238+00	\N	\N
-736	mp	mp	122	Óª«ÓºïÓªâ Óª░Óª¥Óª£Óª┐Óª¼ ÓªåÓª╣Óª©Óª¥Óª¿ (013012201)	CREATE	{}	2026-05-25 09:27:23.73476+00	\N	\N
-599	mp	electioninfo	76	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªùÓª½ÓºüÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.490112+00	\N	\N
-600	mp	address	76	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªùÓª½ÓºüÓª░	CREATE	{}	2026-05-25 09:27:23.49102+00	\N	\N
-601	mp	mp	77	Óª«ÓºçÓª¥Óªâ ÓªåÓª«Óª┐Óª░ Óª╣Óª¥Óª«Óª£Óª¥ (013007701)	CREATE	{}	2026-05-25 09:27:23.494188+00	\N	\N
-602	mp	electioninfo	77	Óª«ÓºçÓª¥Óªâ ÓªåÓª«Óª┐Óª░ Óª╣Óª¥Óª«Óª£Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.4951+00	\N	\N
-603	mp	address	77	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª«Óª┐Óª░ Óª╣Óª¥Óª«Óª£Óª¥	CREATE	{}	2026-05-25 09:27:23.496059+00	\N	\N
-604	mp	mp	78	Óª«ÓºçÓª¥Óªâ ÓªåÓª½Óª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013007801)	CREATE	{}	2026-05-25 09:27:23.499713+00	\N	\N
-605	mp	electioninfo	78	Óª«ÓºçÓª¥Óªâ ÓªåÓª½Óª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.500763+00	\N	\N
-606	mp	address	78	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª½Óª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.501748+00	\N	\N
-607	mp	mp	79	Óª«ÓºïÓªâ Óª«Óª¥Óª©ÓºüÓªª Óª¬Óª¥Óª░Óª¡ÓºçÓª£ (013007901)	CREATE	{}	2026-05-25 09:27:23.505013+00	\N	\N
-608	mp	electioninfo	79	Óª«ÓºïÓªâ Óª«Óª¥Óª©ÓºüÓªª Óª¬Óª¥Óª░Óª¡ÓºçÓª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.506018+00	\N	\N
-609	mp	address	79	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª¥Óª©ÓºüÓªª Óª¬Óª¥Óª░Óª¡ÓºçÓª£	CREATE	{}	2026-05-25 09:27:23.506971+00	\N	\N
-610	mp	mp	80	Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿ (013008001)	CREATE	{}	2026-05-25 09:27:23.510106+00	\N	\N
-611	mp	electioninfo	80	Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.511075+00	\N	\N
-612	mp	address	80	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:23.512056+00	\N	\N
-613	mp	mp	81	Óª«ÓºçÓª¥Óªâ ÓªåÓª©Óª¥ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ (013008101)	CREATE	{}	2026-05-25 09:27:23.515562+00	\N	\N
-614	mp	electioninfo	81	Óª«ÓºçÓª¥Óªâ ÓªåÓª©Óª¥ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.51662+00	\N	\N
-615	mp	address	81	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª©Óª¥ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.517754+00	\N	\N
-616	mp	mp	82	ÓªåÓª▓ÓºÇ ÓªåÓª£Óª« Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª¼ÓªòÓª░ (013008201)	CREATE	{}	2026-05-25 09:27:23.523265+00	\N	\N
-617	mp	electioninfo	82	ÓªåÓª▓ÓºÇ ÓªåÓª£Óª« Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª¼ÓªòÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.524165+00	\N	\N
-618	mp	address	82	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓ÓºÇ ÓªåÓª£Óª« Óª«ÓºïÓªâ ÓªåÓª¼Óºü Óª¼ÓªòÓª░	CREATE	{}	2026-05-25 09:27:23.525062+00	\N	\N
-619	mp	mp	83	Óª«ÓºçÓª¥Óªâ Óª«ÓªñÓª┐ÓºƒÓª¥Óª░ Óª░Óª╣Óª«Óª¥Óª¿ (013008301)	CREATE	{}	2026-05-25 09:27:23.529238+00	\N	\N
-620	mp	electioninfo	83	Óª«ÓºçÓª¥Óªâ Óª«ÓªñÓª┐ÓºƒÓª¥Óª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.530496+00	\N	\N
-621	mp	address	83	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«ÓªñÓª┐ÓºƒÓª¥Óª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.531605+00	\N	\N
-622	mp	mp	84	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓Óª┐Óª¼ (013008401)	CREATE	{}	2026-05-25 09:27:23.535265+00	\N	\N
-623	mp	electioninfo	84	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓Óª┐Óª¼ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.536192+00	\N	\N
-624	mp	address	84	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªñÓª¥Óª▓Óª┐Óª¼	CREATE	{}	2026-05-25 09:27:23.537065+00	\N	\N
-625	mp	mp	85	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª£ÓºÇÓª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013008501)	CREATE	{}	2026-05-25 09:27:23.540353+00	\N	\N
-626	mp	electioninfo	85	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª£ÓºÇÓª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.541373+00	\N	\N
-627	mp	address	85	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª£ÓºÇÓª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.542302+00	\N	\N
-628	mp	mp	86	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«ÓºïÓª©Óª▓ÓºçÓª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª½Óª░Óª┐Óªª (013008601)	CREATE	{}	2026-05-25 09:27:23.545669+00	\N	\N
-629	mp	electioninfo	86	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«ÓºïÓª©Óª▓ÓºçÓª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª½Óª░Óª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.546652+00	\N	\N
-630	mp	address	86	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«ÓºïÓª©Óª▓ÓºçÓª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª½Óª░Óª┐Óªª	CREATE	{}	2026-05-25 09:27:23.547651+00	\N	\N
-631	mp	mp	87	ÓªàÓª¿Óª┐Óª¿ÓºìÓªªÓºìÓª» ÓªçÓª©Óª▓Óª¥Óª« ÓªàÓª«Óª┐Óªñ (013008701)	CREATE	{}	2026-05-25 09:27:23.550602+00	\N	\N
-632	mp	electioninfo	87	ÓªàÓª¿Óª┐Óª¿ÓºìÓªªÓºìÓª» ÓªçÓª©Óª▓Óª¥Óª« ÓªàÓª«Óª┐Óªñ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.551746+00	\N	\N
-633	mp	address	87	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªàÓª¿Óª┐Óª¿ÓºìÓªªÓºìÓª» ÓªçÓª©Óª▓Óª¥Óª« ÓªàÓª«Óª┐Óªñ	CREATE	{}	2026-05-25 09:27:23.552586+00	\N	\N
-634	mp	mp	88	Óª«ÓºïÓªâ ÓªùÓºïÓª▓Óª¥Óª« Óª░ÓªøÓºüÓª▓ (013008801)	CREATE	{}	2026-05-25 09:27:23.5558+00	\N	\N
-635	mp	electioninfo	88	Óª«ÓºïÓªâ ÓªùÓºïÓª▓Óª¥Óª« Óª░ÓªøÓºüÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.556744+00	\N	\N
-636	mp	address	88	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªùÓºïÓª▓Óª¥Óª« Óª░ÓªøÓºüÓª▓	CREATE	{}	2026-05-25 09:27:23.55764+00	\N	\N
-637	mp	mp	89	ÓªùÓª¥Óª£ÓºÇ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò (013008901)	CREATE	{}	2026-05-25 09:27:23.560607+00	\N	\N
-638	mp	electioninfo	89	ÓªùÓª¥Óª£ÓºÇ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.561598+00	\N	\N
-639	mp	address	89	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªùÓª¥Óª£ÓºÇ ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.562573+00	\N	\N
-640	mp	mp	90	Óª«ÓºïÓªâ Óª«ÓºïÓªòÓºìÓªñÓª¥Óª░ ÓªåÓª▓ÓºÇ (013009001)	CREATE	{}	2026-05-25 09:27:23.565672+00	\N	\N
-641	mp	electioninfo	90	Óª«ÓºïÓªâ Óª«ÓºïÓªòÓºìÓªñÓª¥Óª░ ÓªåÓª▓ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.566669+00	\N	\N
-642	mp	address	90	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºïÓªòÓºìÓªñÓª¥Óª░ ÓªåÓª▓ÓºÇ	CREATE	{}	2026-05-25 09:27:23.56765+00	\N	\N
-643	mp	mp	91	Óª«ÓºïÓªâ Óª«Óª¿ÓºïÓºƒÓª¥Óª░ Óª╣ÓºïÓª©ÓºçÓª¿ (013009101)	CREATE	{}	2026-05-25 09:27:23.570586+00	\N	\N
-644	mp	electioninfo	91	Óª«ÓºïÓªâ Óª«Óª¿ÓºïÓºƒÓª¥Óª░ Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.571552+00	\N	\N
-645	mp	address	91	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª¿ÓºïÓºƒÓª¥Óª░ Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.57241+00	\N	\N
-646	mp	mp	92	Óª¿Óª┐ÓªñÓª¥Óªç Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013009201)	CREATE	{}	2026-05-25 09:27:23.575409+00	\N	\N
-647	mp	electioninfo	92	Óª¿Óª┐ÓªñÓª¥Óªç Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.576492+00	\N	\N
-648	mp	address	92	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª┐ÓªñÓª¥Óªç Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.577327+00	\N	\N
-649	mp	mp	93	Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª© Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª« (013009301)	CREATE	{}	2026-05-25 09:27:23.581118+00	\N	\N
-650	mp	electioninfo	93	Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª© Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.582272+00	\N	\N
-1312	mp	mp	314	Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓª©Óª▓Óª¥Óª« (013031601)	CREATE	{}	2026-05-25 09:27:24.789893+00	\N	\N
-651	mp	address	93	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼Óª┐ÓªÂÓºìÓª¼Óª¥Óª© Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:23.583311+00	\N	\N
-652	mp	mp	94	Óª«ÓºïÓªâ ÓªåÓªñÓª¥ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013009401)	CREATE	{}	2026-05-25 09:27:23.586755+00	\N	\N
-653	mp	electioninfo	94	Óª«ÓºïÓªâ ÓªåÓªñÓª¥ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.587707+00	\N	\N
-654	mp	address	94	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓªñÓª¥ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.58874+00	\N	\N
-655	mp	mp	95	Óª«ÓºçÓª¥Óªâ Óª«ÓªÂÓª┐ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿ (013009501)	CREATE	{}	2026-05-25 09:27:23.592093+00	\N	\N
-656	mp	electioninfo	95	Óª«ÓºçÓª¥Óªâ Óª«ÓªÂÓª┐ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.593143+00	\N	\N
-657	mp	address	95	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«ÓªÂÓª┐ÓªëÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.594193+00	\N	\N
-658	mp	mp	96	ÓªÂÓºçÓªû Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ Óª╣Óªò (Óª░Óª¥Óª╣Óª¥Óªª) (013009601)	CREATE	{}	2026-05-25 09:27:23.59752+00	\N	\N
-659	mp	electioninfo	96	ÓªÂÓºçÓªû Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ Óª╣Óªò (Óª░Óª¥Óª╣Óª¥Óªª) ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.59839+00	\N	\N
-660	mp	address	96	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª«Óª¿Óª£ÓºüÓª░ÓºüÓª▓ Óª╣Óªò (Óª░Óª¥Óª╣Óª¥Óªª)	CREATE	{}	2026-05-25 09:27:23.599233+00	\N	\N
-661	mp	mp	97	ÓªÂÓºçÓªû Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013009701)	CREATE	{}	2026-05-25 09:27:23.602301+00	\N	\N
-662	mp	electioninfo	97	ÓªÂÓºçÓªû Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.603274+00	\N	\N
-663	mp	address	97	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.604194+00	\N	\N
-664	mp	mp	98	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª▓ÓºÇÓª« (013009801)	CREATE	{}	2026-05-25 09:27:23.607543+00	\N	\N
-665	mp	electioninfo	98	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª▓ÓºÇÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.608374+00	\N	\N
-666	mp	address	98	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªåÓª▓ÓºÇÓª«	CREATE	{}	2026-05-25 09:27:23.609322+00	\N	\N
-667	mp	mp	99	ÓªåÓª«ÓºÇÓª░ ÓªÅÓª£Óª¥Óª£ ÓªûÓª¥Óª¿ (013009901)	CREATE	{}	2026-05-25 09:27:23.612916+00	\N	\N
-668	mp	electioninfo	99	ÓªåÓª«ÓºÇÓª░ ÓªÅÓª£Óª¥Óª£ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.613983+00	\N	\N
-669	mp	address	99	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª«ÓºÇÓª░ ÓªÅÓª£Óª¥Óª£ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.615056+00	\N	\N
-670	mp	mp	100	ÓªÂÓºçÓªû Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºüÓª©Óª¥ÓªçÓª¿ Óª╣ÓºçÓª▓Óª¥Óª▓ (013010001)	CREATE	{}	2026-05-25 09:27:23.61844+00	\N	\N
-671	mp	electioninfo	100	ÓªÂÓºçÓªû Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºüÓª©Óª¥ÓªçÓª¿ Óª╣ÓºçÓª▓Óª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.619371+00	\N	\N
-672	mp	address	100	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºüÓª©Óª¥ÓªçÓª¿ Óª╣ÓºçÓª▓Óª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.620392+00	\N	\N
-673	mp	mp	101	Óª░ÓªòÓª┐Óª¼ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013010101)	CREATE	{}	2026-05-25 09:27:23.623697+00	\N	\N
-674	mp	electioninfo	101	Óª░ÓªòÓª┐Óª¼ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.624606+00	\N	\N
-675	mp	address	101	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓªòÓª┐Óª¼ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.62548+00	\N	\N
-676	mp	mp	102	ÓªÅÓª© ÓªòÓºç ÓªåÓª£Óª┐Óª£ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ (013010201)	CREATE	{}	2026-05-25 09:27:23.628753+00	\N	\N
-677	mp	electioninfo	102	ÓªÅÓª© ÓªòÓºç ÓªåÓª£Óª┐Óª£ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.629717+00	\N	\N
-678	mp	address	102	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª© ÓªòÓºç ÓªåÓª£Óª┐Óª£ÓºüÓª▓ Óª¼Óª¥Óª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.630691+00	\N	\N
-679	mp	mp	103	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª▓Óª┐ ÓªåÓª©ÓªùÓª¥Óª░ (013010301)	CREATE	{}	2026-05-25 09:27:23.633839+00	\N	\N
-680	mp	electioninfo	103	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª▓Óª┐ ÓªåÓª©ÓªùÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.634694+00	\N	\N
-681	mp	address	103	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª▓Óª┐ ÓªåÓª©ÓªùÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.635609+00	\N	\N
-682	mp	mp	104	Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª (013010401)	CREATE	{}	2026-05-25 09:27:23.638439+00	\N	\N
-683	mp	electioninfo	104	Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.639367+00	\N	\N
-684	mp	address	104	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª	CREATE	{}	2026-05-25 09:27:23.640303+00	\N	\N
-685	mp	mp	105	Óª«ÓºçÓª¥Óªâ ÓªçÓª£ÓºìÓª£Óªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ (013010501)	CREATE	{}	2026-05-25 09:27:23.643794+00	\N	\N
-686	mp	electioninfo	105	Óª«ÓºçÓª¥Óªâ ÓªçÓª£ÓºìÓª£Óªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.64483+00	\N	\N
-687	mp	address	105	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªçÓª£ÓºìÓª£Óªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣	CREATE	{}	2026-05-25 09:27:23.645875+00	\N	\N
-688	mp	mp	106	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªûÓª¥Óª▓ÓºçÓªò (013010601)	CREATE	{}	2026-05-25 09:27:23.649447+00	\N	\N
-689	mp	electioninfo	106	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªûÓª¥Óª▓ÓºçÓªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.6504+00	\N	\N
-735	mp	address	121	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:23.731636+00	\N	\N
-690	mp	address	106	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óª¥Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ ÓªûÓª¥Óª▓ÓºçÓªò	CREATE	{}	2026-05-25 09:27:23.651352+00	\N	\N
-691	mp	mp	107	Óª╣Óª¥Óª½ÓºçÓª£ Óª«ÓºüÓª╣Óª¥Óªâ Óª░Óª¼Óª┐ÓªëÓª▓ Óª¼Óª¥ÓªÂÓª¥Óª░ (013010701)	CREATE	{}	2026-05-25 09:27:23.65476+00	\N	\N
-692	mp	electioninfo	107	Óª╣Óª¥Óª½ÓºçÓª£ Óª«ÓºüÓª╣Óª¥Óªâ Óª░Óª¼Óª┐ÓªëÓª▓ Óª¼Óª¥ÓªÂÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.655629+00	\N	\N
-693	mp	address	107	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣Óª¥Óª½ÓºçÓª£ Óª«ÓºüÓª╣Óª¥Óªâ Óª░Óª¼Óª┐ÓªëÓª▓ Óª¼Óª¥ÓªÂÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.656527+00	\N	\N
-694	mp	mp	108	Óª£Óª┐, ÓªÅÓª«, Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013010801)	CREATE	{}	2026-05-25 09:27:23.659889+00	\N	\N
-695	mp	electioninfo	108	Óª£Óª┐, ÓªÅÓª«, Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.660922+00	\N	\N
-696	mp	address	108	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£Óª┐, ÓªÅÓª«, Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.661836+00	\N	\N
-697	mp	mp	109	Óª«ÓºçÓª¥Óªâ ÓªàÓª▓Óª┐ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ (013010901)	CREATE	{}	2026-05-25 09:27:23.665149+00	\N	\N
-698	mp	electioninfo	109	Óª«ÓºçÓª¥Óªâ ÓªàÓª▓Óª┐ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.666016+00	\N	\N
-699	mp	address	109	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªàÓª▓Óª┐ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣	CREATE	{}	2026-05-25 09:27:23.666833+00	\N	\N
-700	mp	mp	110	Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¿Óª┐ (013011001)	CREATE	{}	2026-05-25 09:27:23.669963+00	\N	\N
-701	mp	electioninfo	110	Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¿Óª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.670916+00	\N	\N
-702	mp	address	110	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¿Óª┐	CREATE	{}	2026-05-25 09:27:23.671907+00	\N	\N
-703	mp	mp	111	ÓªåÓª▓ÓªñÓª¥Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013011101)	CREATE	{}	2026-05-25 09:27:23.675521+00	\N	\N
-704	mp	electioninfo	111	ÓªåÓª▓ÓªñÓª¥Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.676505+00	\N	\N
-705	mp	address	111	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓ÓªñÓª¥Óª½ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.677528+00	\N	\N
-706	mp	mp	112	Óª«ÓºïÓªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013011201)	CREATE	{}	2026-05-25 09:27:23.680923+00	\N	\N
-707	mp	electioninfo	112	Óª«ÓºïÓªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.681808+00	\N	\N
-708	mp	address	112	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.682677+00	\N	\N
-709	mp	mp	113	Óª«ÓºçÓª¥Óªâ Óª¿ÓºüÓª░ÓºüÓª▓ Óª╣Óªò (013011301)	CREATE	{}	2026-05-25 09:27:23.685859+00	\N	\N
-710	mp	electioninfo	113	Óª«ÓºçÓª¥Óªâ Óª¿ÓºüÓª░ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.686854+00	\N	\N
-711	mp	address	113	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª¿ÓºüÓª░ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.68783+00	\N	\N
-713	mp	electioninfo	114	ÓªÅ Óª¼Óª┐ ÓªÅÓª« Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.69204+00	\N	\N
-714	mp	address	114	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ Óª¼Óª┐ ÓªÅÓª« Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.693+00	\N	\N
-715	mp	mp	115	ÓªåÓª¿ÓºìÓªªÓª¥Óª▓Óª┐Óª¡ Óª░Óª╣Óª«Óª¥Óª¿ (013011501)	CREATE	{}	2026-05-25 09:27:23.696341+00	\N	\N
-716	mp	electioninfo	115	ÓªåÓª¿ÓºìÓªªÓª¥Óª▓Óª┐Óª¡ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.697267+00	\N	\N
-717	mp	address	115	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¿ÓºìÓªªÓª¥Óª▓Óª┐Óª¡ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.69827+00	\N	\N
-718	mp	mp	116	Óª«ÓºïÓªâ Óª╣Óª¥Óª½Óª┐Óª£ ÓªçÓª¼ÓºìÓª░Óª¥Óª╣Óª┐Óª« (013011601)	CREATE	{}	2026-05-25 09:27:23.701596+00	\N	\N
-719	mp	electioninfo	116	Óª«ÓºïÓªâ Óª╣Óª¥Óª½Óª┐Óª£ ÓªçÓª¼ÓºìÓª░Óª¥Óª╣Óª┐Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.70245+00	\N	\N
-720	mp	address	116	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª╣Óª¥Óª½Óª┐Óª£ ÓªçÓª¼ÓºìÓª░Óª¥Óª╣Óª┐Óª«	CREATE	{}	2026-05-25 09:27:23.703724+00	\N	\N
-721	mp	mp	117	Óª╣Óª¥Óª½Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª Óª¼ÓºÇÓª░ Óª¼Óª┐ÓªòÓºìÓª░Óª« (013011701)	CREATE	{}	2026-05-25 09:27:23.707176+00	\N	\N
-722	mp	electioninfo	117	Óª╣Óª¥Óª½Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª Óª¼ÓºÇÓª░ Óª¼Óª┐ÓªòÓºìÓª░Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.708278+00	\N	\N
-723	mp	address	117	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣Óª¥Óª½Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª Óª¼ÓºÇÓª░ Óª¼Óª┐ÓªòÓºìÓª░Óª«	CREATE	{}	2026-05-25 09:27:23.709259+00	\N	\N
-724	mp	mp	118	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013011801)	CREATE	{}	2026-05-25 09:27:23.713035+00	\N	\N
-725	mp	electioninfo	118	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.71401+00	\N	\N
-726	mp	address	118	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.714991+00	\N	\N
-727	mp	mp	119	Óª£Óª╣Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª©ÓºìÓª¼Óª¬Óª¿ (013011901)	CREATE	{}	2026-05-25 09:27:23.718616+00	\N	\N
-728	mp	electioninfo	119	Óª£Óª╣Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª©ÓºìÓª¼Óª¬Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.719695+00	\N	\N
-729	mp	address	119	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£Óª╣Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª©ÓºìÓª¼Óª¬Óª¿	CREATE	{}	2026-05-25 09:27:23.72066+00	\N	\N
-730	mp	mp	120	Óª©Óª░ÓªªÓª¥Óª░ Óª©Óª░Óª½ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª (013012001)	CREATE	{}	2026-05-25 09:27:23.724211+00	\N	\N
-731	mp	electioninfo	120	Óª©Óª░ÓªªÓª¥Óª░ Óª©Óª░Óª½ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.725194+00	\N	\N
-732	mp	address	120	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª░ÓªªÓª¥Óª░ Óª©Óª░Óª½ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:23.726172+00	\N	\N
-733	mp	mp	121	Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿ (013012101)	CREATE	{}	2026-05-25 09:27:23.729595+00	\N	\N
-734	mp	electioninfo	121	Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.730679+00	\N	\N
-737	mp	electioninfo	122	Óª«ÓºïÓªâ Óª░Óª¥Óª£Óª┐Óª¼ ÓªåÓª╣Óª©Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.735657+00	\N	\N
-738	mp	address	122	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░Óª¥Óª£Óª┐Óª¼ ÓªåÓª╣Óª©Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.736633+00	\N	\N
-739	mp	mp	123	Óª«ÓºçÓª¥Óªâ Óª«Óª£Óª┐Óª¼Óª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª░ÓªôÓºƒÓª¥Óª░ (013012301)	CREATE	{}	2026-05-25 09:27:23.740193+00	\N	\N
-740	mp	electioninfo	123	Óª«ÓºçÓª¥Óªâ Óª«Óª£Óª┐Óª¼Óª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª░ÓªôÓºƒÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.741181+00	\N	\N
-741	mp	address	123	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«Óª£Óª┐Óª¼Óª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª©Óª░ÓªôÓºƒÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.742102+00	\N	\N
-742	mp	mp	124	ÓªåÓª¼ÓºüÓª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªûÓª¥Óª¿ (013012401)	CREATE	{}	2026-05-25 09:27:23.745414+00	\N	\N
-743	mp	electioninfo	124	ÓªåÓª¼ÓºüÓª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.746404+00	\N	\N
-744	mp	address	124	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºüÓª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.747268+00	\N	\N
-745	mp	mp	125	Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª£Óª¥Óª«Óª¥Óª▓ (013012501)	CREATE	{}	2026-05-25 09:27:23.750388+00	\N	\N
-746	mp	electioninfo	125	Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª£Óª¥Óª«Óª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.751347+00	\N	\N
-747	mp	address	125	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª£Óª¥Óª«Óª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.75233+00	\N	\N
-748	mp	mp	126	ÓªçÓª©Óª░Óª¥Óªñ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªçÓª▓ÓºçÓª¿ Óª¡ÓºéÓªƒÓºìÓªƒÓºï (013012601)	CREATE	{}	2026-05-25 09:27:23.756174+00	\N	\N
-749	mp	electioninfo	126	ÓªçÓª©Óª░Óª¥Óªñ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªçÓª▓ÓºçÓª¿ Óª¡ÓºéÓªƒÓºìÓªƒÓºï ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.757257+00	\N	\N
-750	mp	address	126	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªçÓª©Óª░Óª¥Óªñ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªçÓª▓ÓºçÓª¿ Óª¡ÓºéÓªƒÓºìÓªƒÓºï	CREATE	{}	2026-05-25 09:27:23.758303+00	\N	\N
-751	mp	mp	127	Óª«Óª¥Óª©ÓºüÓªª Óª©Óª¥ÓªêÓªªÓºÇ (013012701)	CREATE	{}	2026-05-25 09:27:23.762093+00	\N	\N
-752	mp	electioninfo	127	Óª«Óª¥Óª©ÓºüÓªª Óª©Óª¥ÓªêÓªªÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.76302+00	\N	\N
-753	mp	address	127	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª©ÓºüÓªª Óª©Óª¥ÓªêÓªªÓºÇ	CREATE	{}	2026-05-25 09:27:23.764003+00	\N	\N
-754	mp	mp	128	ÓªåÓª╣Óª«ÓºìÓª«Óªª Óª©ÓºçÓª¥Óª╣ÓºçÓª▓ Óª«Óª¿Óª£ÓºüÓª░ (013012801)	CREATE	{}	2026-05-25 09:27:23.768077+00	\N	\N
-755	mp	electioninfo	128	ÓªåÓª╣Óª«ÓºìÓª«Óªª Óª©ÓºçÓª¥Óª╣ÓºçÓª▓ Óª«Óª¿Óª£ÓºüÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.76905+00	\N	\N
-756	mp	address	128	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª╣Óª«ÓºìÓª«Óªª Óª©ÓºçÓª¥Óª╣ÓºçÓª▓ Óª«Óª¿Óª£ÓºüÓª░	CREATE	{}	2026-05-25 09:27:23.76991+00	\N	\N
-757	mp	mp	129	Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿ ÓªªÓºüÓª▓Óª¥Óª▓ (013012901)	CREATE	{}	2026-05-25 09:27:23.773601+00	\N	\N
-758	mp	electioninfo	129	Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿ ÓªªÓºüÓª▓Óª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.774798+00	\N	\N
-759	mp	address	129	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░ÓºüÓª╣ÓºüÓª▓ ÓªåÓª«ÓºÇÓª¿ ÓªªÓºüÓª▓Óª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.775842+00	\N	\N
-760	mp	mp	130	Óª½ÓªòÓª┐Óª░ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªåÓª¿Óª¥Óª« (013013001)	CREATE	{}	2026-05-25 09:27:23.779922+00	\N	\N
-761	mp	electioninfo	130	Óª½ÓªòÓª┐Óª░ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªåÓª¿Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.780794+00	\N	\N
-762	mp	address	130	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½ÓªòÓª┐Óª░ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªåÓª¿Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.781811+00	\N	\N
-763	mp	mp	131	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« Óª¬Óª┐Óª¿ÓºìÓªƒÓºü (013013101)	CREATE	{}	2026-05-25 09:27:23.785944+00	\N	\N
-764	mp	electioninfo	131	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« Óª¬Óª┐Óª¿ÓºìÓªƒÓºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.787115+00	\N	\N
-765	mp	address	131	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« Óª¬Óª┐Óª¿ÓºìÓªƒÓºü	CREATE	{}	2026-05-25 09:27:23.788139+00	\N	\N
-766	mp	mp	132	Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿ ÓªåÓª£Óª¥Óªª (013013201)	CREATE	{}	2026-05-25 09:27:23.793856+00	\N	\N
-767	mp	electioninfo	132	Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿ ÓªåÓª£Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.794833+00	\N	\N
-768	mp	address	132	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªûÓª¥Óª¿ ÓªåÓª£Óª¥Óªª	CREATE	{}	2026-05-25 09:27:23.795982+00	\N	\N
-769	mp	mp	133	Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿ (013013301)	CREATE	{}	2026-05-25 09:27:23.799478+00	\N	\N
-770	mp	electioninfo	133	Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.80044+00	\N	\N
-771	mp	address	133	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª▓ÓºüÓºÄÓª½Óª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.801354+00	\N	\N
-772	mp	mp	134	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªƒÓºüÓªòÓºü (013013401)	CREATE	{}	2026-05-25 09:27:23.805024+00	\N	\N
-773	mp	electioninfo	134	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªƒÓºüÓªòÓºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.806015+00	\N	\N
-774	mp	address	134	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªƒÓºüÓªòÓºü	CREATE	{}	2026-05-25 09:27:23.807016+00	\N	\N
-775	mp	mp	135	Óª«ÓºïÓªâ Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓªôÓºƒÓª¥Óª▓ (013013501)	CREATE	{}	2026-05-25 09:27:23.810466+00	\N	\N
-776	mp	electioninfo	135	Óª«ÓºïÓªâ Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓªôÓºƒÓª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.811615+00	\N	\N
-777	mp	address	135	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓªôÓºƒÓª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.812516+00	\N	\N
-778	mp	mp	136	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª Óª©Óª┐ÓªªÓºìÓªªÓª┐ÓªòÓºÇ (013013601)	CREATE	{}	2026-05-25 09:27:23.815906+00	\N	\N
-779	mp	electioninfo	136	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª Óª©Óª┐ÓªªÓºìÓªªÓª┐ÓªòÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.816936+00	\N	\N
-780	mp	address	136	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª Óª©Óª┐ÓªªÓºìÓªªÓª┐ÓªòÓºÇ	CREATE	{}	2026-05-25 09:27:23.817996+00	\N	\N
-781	mp	mp	137	ÓªåÓª╣Óª«ÓºçÓªª ÓªåÓª»Óª« ÓªûÓª¥Óª¿ (013013701)	CREATE	{}	2026-05-25 09:27:23.821439+00	\N	\N
-782	mp	electioninfo	137	ÓªåÓª╣Óª«ÓºçÓªª ÓªåÓª»Óª« ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.822361+00	\N	\N
-783	mp	address	137	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª╣Óª«ÓºçÓªª ÓªåÓª»Óª« ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.823232+00	\N	\N
-784	mp	mp	138	ÓªÅÓª« Óª░ÓªÂÓª┐ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐Óª▓ÓºìÓª▓Óª¥Óªñ (013013801)	CREATE	{}	2026-05-25 09:27:23.82667+00	\N	\N
-785	mp	electioninfo	138	ÓªÅÓª« Óª░ÓªÂÓª┐ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐Óª▓ÓºìÓª▓Óª¥Óªñ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.827634+00	\N	\N
-786	mp	address	138	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª« Óª░ÓªÂÓª┐ÓªªÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«Óª┐Óª▓ÓºìÓª▓Óª¥Óªñ	CREATE	{}	2026-05-25 09:27:23.828496+00	\N	\N
-787	mp	mp	139	ÓªÅ, Óªç, Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª«Óª¥Óª╣Óª«ÓºüÓªª Óª¼Óª¥Óª¼Óºü (013013901)	CREATE	{}	2026-05-25 09:27:23.832368+00	\N	\N
-788	mp	electioninfo	139	ÓªÅ, Óªç, Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª«Óª¥Óª╣Óª«ÓºüÓªª Óª¼Óª¥Óª¼Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.833293+00	\N	\N
-789	mp	address	139	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ, Óªç, Óª©ÓºüÓª▓ÓªñÓª¥Óª¿ Óª«Óª¥Óª╣Óª«ÓºüÓªª Óª¼Óª¥Óª¼Óºü	CREATE	{}	2026-05-25 09:27:23.834308+00	\N	\N
-790	mp	mp	140	Óª«ÓºïÓªâ Óª«ÓºïÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼ÓºüÓª▓ (013014001)	CREATE	{}	2026-05-25 09:27:23.837782+00	\N	\N
-791	mp	electioninfo	140	Óª«ÓºïÓªâ Óª«ÓºïÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼ÓºüÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.838945+00	\N	\N
-792	mp	address	140	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºïÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼ÓºüÓª▓	CREATE	{}	2026-05-25 09:27:23.840172+00	\N	\N
-793	mp	mp	141	Óª«ÓºïÓªâ Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªòÓª¼ÓºÇÓª░ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ (013014101)	CREATE	{}	2026-05-25 09:27:23.843938+00	\N	\N
-794	mp	electioninfo	141	Óª«ÓºïÓªâ Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªòÓª¼ÓºÇÓª░ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.84498+00	\N	\N
-795	mp	address	141	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª½Óª░Óª┐ÓªªÓºüÓª▓ ÓªòÓª¼ÓºÇÓª░ ÓªñÓª¥Óª▓ÓºüÓªòÓªªÓª¥Óª░	CREATE	{}	2026-05-25 09:27:23.846016+00	\N	\N
-796	mp	mp	142	ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óªâ ÓªôÓºƒÓª¥Óª░ÓºçÓªø ÓªåÓª▓ÓºÇ Óª«Óª¥Óª«ÓºüÓª¿ (013014201)	CREATE	{}	2026-05-25 09:27:23.849157+00	\N	\N
-797	mp	electioninfo	142	ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óªâ ÓªôÓºƒÓª¥Óª░ÓºçÓªø ÓªåÓª▓ÓºÇ Óª«Óª¥Óª«ÓºüÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.850114+00	\N	\N
-798	mp	address	142	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óªâ ÓªôÓºƒÓª¥Óª░ÓºçÓªø ÓªåÓª▓ÓºÇ Óª«Óª¥Óª«ÓºüÓª¿	CREATE	{}	2026-05-25 09:27:23.850923+00	\N	\N
-799	mp	mp	143	Óª«ÓºïÓªâ Óª░Óª¥ÓªÂÓºçÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª░Óª¥ÓªÂÓºçÓªª (013014301)	CREATE	{}	2026-05-25 09:27:23.854241+00	\N	\N
-800	mp	electioninfo	143	Óª«ÓºïÓªâ Óª░Óª¥ÓªÂÓºçÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª░Óª¥ÓªÂÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.855332+00	\N	\N
-801	mp	address	143	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª░Óª¥ÓªÂÓºçÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª░Óª¥ÓªÂÓºçÓªª	CREATE	{}	2026-05-25 09:27:23.856385+00	\N	\N
-802	mp	mp	144	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½Óª¥Óª╣Óª┐Óª« ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013014401)	CREATE	{}	2026-05-25 09:27:23.859495+00	\N	\N
-803	mp	electioninfo	144	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½Óª¥Óª╣Óª┐Óª« ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.860372+00	\N	\N
-804	mp	address	144	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½Óª¥Óª╣Óª┐Óª« ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.861268+00	\N	\N
-805	mp	mp	145	Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª«ÓºüÓªªÓºüÓª▓ Óª╣Óªò Óª░ÓºüÓª¼ÓºçÓª▓ (013014501)	CREATE	{}	2026-05-25 09:27:23.864607+00	\N	\N
-806	mp	electioninfo	145	Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª«ÓºüÓªªÓºüÓª▓ Óª╣Óªò Óª░ÓºüÓª¼ÓºçÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.865524+00	\N	\N
-807	mp	address	145	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«Óª¥Óª╣Óª«ÓºüÓªªÓºüÓª▓ Óª╣Óªò Óª░ÓºüÓª¼ÓºçÓª▓	CREATE	{}	2026-05-25 09:27:23.866415+00	\N	\N
-808	mp	mp	146	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª«Óª¥Óª¿ ÓªôÓª«Óª░ (013014601)	CREATE	{}	2026-05-25 09:27:23.869497+00	\N	\N
-809	mp	electioninfo	146	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª«Óª¥Óª¿ ÓªôÓª«Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.870497+00	\N	\N
-810	mp	address	146	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª«Óª¥Óª¿ ÓªôÓª«Óª░	CREATE	{}	2026-05-25 09:27:23.871586+00	\N	\N
-811	mp	mp	147	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ (013014701)	CREATE	{}	2026-05-25 09:27:23.875227+00	\N	\N
-812	mp	electioninfo	147	Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.87632+00	\N	\N
-813	mp	address	147	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣	CREATE	{}	2026-05-25 09:27:23.877346+00	\N	\N
-814	mp	mp	148	ÓªÅÓª« ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣ÓºïÓª©ÓºçÓªçÓª¿ (013014801)	CREATE	{}	2026-05-25 09:27:23.880366+00	\N	\N
-815	mp	electioninfo	148	ÓªÅÓª« ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣ÓºïÓª©ÓºçÓªçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.881345+00	\N	\N
-816	mp	address	148	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª« ÓªçÓªòÓª¼Óª¥Óª▓ Óª╣ÓºïÓª©ÓºçÓªçÓª¿	CREATE	{}	2026-05-25 09:27:23.882391+00	\N	\N
-817	mp	mp	149	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªôÓºƒÓª¥Óª╣Óª¥Óª¼ ÓªåÓªòÓª¿ÓºìÓªª ÓªôÓºƒÓª¥Óª╣Óª┐Óªª (013014901)	CREATE	{}	2026-05-25 09:27:23.886227+00	\N	\N
-818	mp	electioninfo	149	Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªôÓºƒÓª¥Óª╣Óª¥Óª¼ ÓªåÓªòÓª¿ÓºìÓªª ÓªôÓºƒÓª¥Óª╣Óª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.887334+00	\N	\N
-819	mp	address	149	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼Óºü ÓªôÓºƒÓª¥Óª╣Óª¥Óª¼ ÓªåÓªòÓª¿ÓºìÓªª ÓªôÓºƒÓª¥Óª╣Óª┐Óªª	CREATE	{}	2026-05-25 09:27:23.888411+00	\N	\N
-820	mp	mp	150	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª¥ÓªòÓª┐Óª░ Óª╣ÓºïÓª©ÓºçÓª¿ (013015001)	CREATE	{}	2026-05-25 09:27:23.891978+00	\N	\N
-821	mp	electioninfo	150	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª¥ÓªòÓª┐Óª░ Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.892901+00	\N	\N
-822	mp	address	150	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª¥ÓªòÓª┐Óª░ Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:23.893814+00	\N	\N
-823	mp	mp	151	Óª«ÓºïÓªâ ÓªòÓª¥Óª«Óª░ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿ (013015101)	CREATE	{}	2026-05-25 09:27:23.896932+00	\N	\N
-824	mp	electioninfo	151	Óª«ÓºïÓªâ ÓªòÓª¥Óª«Óª░ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.89791+00	\N	\N
-825	mp	address	151	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªòÓª¥Óª«Óª░ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.898814+00	\N	\N
-826	mp	mp	152	ÓªíÓª¥Óªâ Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¥Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013015201)	CREATE	{}	2026-05-25 09:27:23.901854+00	\N	\N
-827	mp	electioninfo	152	ÓªíÓª¥Óªâ Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¥Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.902875+00	\N	\N
-828	mp	address	152	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªíÓª¥Óªâ Óª«ÓºïÓªâ Óª«Óª¥Óª╣Óª¥Óª¼ÓºüÓª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.904064+00	\N	\N
-829	mp	mp	153	Óª▓ÓºüÓºÄÓª½ÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ÓºçÓª▓ Óª«Óª¥Óª£ÓºçÓªª (013015301)	CREATE	{}	2026-05-25 09:27:23.90789+00	\N	\N
-830	mp	electioninfo	153	Óª▓ÓºüÓºÄÓª½ÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ÓºçÓª▓ Óª«Óª¥Óª£ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.90895+00	\N	\N
-831	mp	address	153	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª▓ÓºüÓºÄÓª½ÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ÓºçÓª▓ Óª«Óª¥Óª£ÓºçÓªª	CREATE	{}	2026-05-25 09:27:23.910067+00	\N	\N
-832	mp	mp	154	ÓªçÓºƒÓª¥Óª©ÓºçÓª░ ÓªûÓª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013015401)	CREATE	{}	2026-05-25 09:27:23.913484+00	\N	\N
-833	mp	electioninfo	154	ÓªçÓºƒÓª¥Óª©ÓºçÓª░ ÓªûÓª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.914449+00	\N	\N
-834	mp	address	154	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªçÓºƒÓª¥Óª©ÓºçÓª░ ÓªûÓª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:23.915446+00	\N	\N
-835	mp	mp	155	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓªòÓºìÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ (013015501)	CREATE	{}	2026-05-25 09:27:23.919081+00	\N	\N
-836	mp	electioninfo	155	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓªòÓºìÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.920485+00	\N	\N
-837	mp	address	155	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓªòÓºìÓªñÓª¥Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.921816+00	\N	\N
-838	mp	mp	156	Óª½ÓªûÓª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª (013015601)	CREATE	{}	2026-05-25 09:27:23.926502+00	\N	\N
-839	mp	electioninfo	156	Óª½ÓªûÓª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.92774+00	\N	\N
-840	mp	address	156	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½ÓªûÓª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:23.92914+00	\N	\N
-841	mp	mp	157	Óª¼ÓºìÓª»Óª¥Óª░Óª┐ÓªÀÓºìÓªƒÓª¥Óª░ ÓªòÓª¥ÓºƒÓª©Óª¥Óª░ ÓªòÓª¥Óª«Óª¥Óª▓ (013015701)	CREATE	{}	2026-05-25 09:27:23.932864+00	\N	\N
-842	mp	electioninfo	157	Óª¼ÓºìÓª»Óª¥Óª░Óª┐ÓªÀÓºìÓªƒÓª¥Óª░ ÓªòÓª¥ÓºƒÓª©Óª¥Óª░ ÓªòÓª¥Óª«Óª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.933949+00	\N	\N
-843	mp	address	157	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐ÓªÀÓºìÓªƒÓª¥Óª░ ÓªòÓª¥ÓºƒÓª©Óª¥Óª░ ÓªòÓª¥Óª«Óª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.935046+00	\N	\N
-844	mp	mp	158	ÓªíÓª¥Óªâ Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ Óª╣Óªò (013015801)	CREATE	{}	2026-05-25 09:27:23.938976+00	\N	\N
-845	mp	electioninfo	158	ÓªíÓª¥Óªâ Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.939996+00	\N	\N
-846	mp	address	158	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªíÓª¥Óªâ Óª«ÓºïÓªâ ÓªåÓª¿ÓºïÓºƒÓª¥Óª░ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:23.941108+00	\N	\N
-847	mp	mp	159	Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª╣Óª┐Óª▓Óª¥Óª▓ÓºÇ (013015901)	CREATE	{}	2026-05-25 09:27:23.944554+00	\N	\N
-848	mp	electioninfo	159	Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª╣Óª┐Óª▓Óª¥Óª▓ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.945733+00	\N	\N
-849	mp	address	159	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª╣Óª┐Óª▓Óª¥Óª▓ÓºÇ	CREATE	{}	2026-05-25 09:27:23.946816+00	\N	\N
-850	mp	mp	160	Óª«ÓºçÓª¥Óªâ Óª▓ÓºüÓºÄÓª½ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼Óª░ (013016001)	CREATE	{}	2026-05-25 09:27:23.950406+00	\N	\N
-851	mp	electioninfo	160	Óª«ÓºçÓª¥Óªâ Óª▓ÓºüÓºÄÓª½ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.95148+00	\N	\N
-852	mp	address	160	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª▓ÓºüÓºÄÓª½ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª¼Óª¥Óª¼Óª░	CREATE	{}	2026-05-25 09:27:23.952547+00	\N	\N
-853	mp	mp	161	Óª«Óª¥ÓªøÓºüÓª« Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥ (013016101)	CREATE	{}	2026-05-25 09:27:23.956071+00	\N	\N
-854	mp	electioninfo	161	Óª«Óª¥ÓªøÓºüÓª« Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.957116+00	\N	\N
-855	mp	address	161	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥ÓªøÓºüÓª« Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥	CREATE	{}	2026-05-25 09:27:23.958249+00	\N	\N
-856	mp	mp	162	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013016201)	CREATE	{}	2026-05-25 09:27:23.962077+00	\N	\N
-857	mp	electioninfo	162	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.963313+00	\N	\N
-858	mp	address	162	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:23.96456+00	\N	\N
-859	mp	mp	163	ÓªÅÓªíÓª¡ÓºçÓª¥ÓªòÓºçÓªƒ Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿ (013016301)	CREATE	{}	2026-05-25 09:27:23.96867+00	\N	\N
-860	mp	electioninfo	163	ÓªÅÓªíÓª¡ÓºçÓª¥ÓªòÓºçÓªƒ Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.970049+00	\N	\N
-861	mp	address	163	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓªíÓª¡ÓºçÓª¥ÓªòÓºçÓªƒ Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:23.971557+00	\N	\N
-862	mp	mp	164	Óªí. Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªôÓª©Óª«Óª¥Óª¿ Óª½Óª¥Óª░ÓºüÓªò (013016401)	CREATE	{}	2026-05-25 09:27:23.976414+00	\N	\N
-863	mp	electioninfo	164	Óªí. Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªôÓª©Óª«Óª¥Óª¿ Óª½Óª¥Óª░ÓºüÓªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.978018+00	\N	\N
-864	mp	address	164	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óªí. Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªôÓª©Óª«Óª¥Óª¿ Óª½Óª¥Óª░ÓºüÓªò	CREATE	{}	2026-05-25 09:27:23.979399+00	\N	\N
-865	mp	mp	165	Óª«ÓºïÓªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013016501)	CREATE	{}	2026-05-25 09:27:23.984084+00	\N	\N
-866	mp	electioninfo	165	Óª«ÓºïÓªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.985428+00	\N	\N
-867	mp	address	165	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª½Óª£Óª▓ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:23.986906+00	\N	\N
-868	mp	mp	166	ÓªÂÓºçÓªû Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªçÓªòÓª¼Óª¥Óª▓ (013016601)	CREATE	{}	2026-05-25 09:27:23.991138+00	\N	\N
-869	mp	electioninfo	166	ÓªÂÓºçÓªû Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªçÓªòÓª¼Óª¥Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.992541+00	\N	\N
-870	mp	address	166	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªçÓªòÓª¼Óª¥Óª▓	CREATE	{}	2026-05-25 09:27:23.993777+00	\N	\N
-871	mp	mp	167	Óª«ÓºçÓª¥Óªâ ÓªÂÓª░ÓºÇÓª½ÓºüÓª▓ ÓªåÓª▓Óª« (013016701)	CREATE	{}	2026-05-25 09:27:23.998174+00	\N	\N
-872	mp	electioninfo	167	Óª«ÓºçÓª¥Óªâ ÓªÂÓª░ÓºÇÓª½ÓºüÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.999582+00	\N	\N
-873	mp	address	167	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª░ÓºÇÓª½ÓºüÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:24.000973+00	\N	\N
-874	mp	mp	168	ÓªÅÓª© ÓªÅ Óª£Óª┐Óª¿ÓºìÓª¿Óª¥Óª╣ ÓªòÓª¼ÓºÇÓª░ (013016801)	CREATE	{}	2026-05-25 09:27:24.005284+00	\N	\N
-875	mp	electioninfo	168	ÓªÅÓª© ÓªÅ Óª£Óª┐Óª¿ÓºìÓª¿Óª¥Óª╣ ÓªòÓª¼ÓºÇÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.006798+00	\N	\N
-876	mp	address	168	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª© ÓªÅ Óª£Óª┐Óª¿ÓºìÓª¿Óª¥Óª╣ ÓªòÓª¼ÓºÇÓª░	CREATE	{}	2026-05-25 09:27:24.008367+00	\N	\N
-877	mp	mp	169	Óª«ÓªêÓª¿ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ (013016901)	CREATE	{}	2026-05-25 09:27:24.012728+00	\N	\N
-878	mp	electioninfo	169	Óª«ÓªêÓª¿ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.013961+00	\N	\N
-879	mp	address	169	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓªêÓª¿ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.015293+00	\N	\N
-880	mp	mp	170	ÓªåÓª½Óª░ÓºïÓª£Óª¥ ÓªûÓª¥Óª¿Óª« (013017001)	CREATE	{}	2026-05-25 09:27:24.019357+00	\N	\N
-881	mp	electioninfo	170	ÓªåÓª½Óª░ÓºïÓª£Óª¥ ÓªûÓª¥Óª¿Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.02072+00	\N	\N
-882	mp	address	170	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª½Óª░ÓºïÓª£Óª¥ ÓªûÓª¥Óª¿Óª«	CREATE	{}	2026-05-25 09:27:24.022523+00	\N	\N
-883	mp	mp	171	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣Óºì (013017101)	CREATE	{}	2026-05-25 09:27:24.026573+00	\N	\N
-884	mp	electioninfo	171	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣Óºì ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.028318+00	\N	\N
-885	mp	address	171	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣Óºì	CREATE	{}	2026-05-25 09:27:24.031468+00	\N	\N
-886	mp	mp	172	ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª (013017201)	CREATE	{}	2026-05-25 09:27:24.035992+00	\N	\N
-887	mp	electioninfo	172	ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.036941+00	\N	\N
-888	mp	address	172	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºìÓªªÓºüÓª© Óª©Óª¥Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª	CREATE	{}	2026-05-25 09:27:24.037909+00	\N	\N
-889	mp	mp	173	Óª«ÓºçÓª¥Óªâ ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ (013017301)	CREATE	{}	2026-05-25 09:27:24.041668+00	\N	\N
-1314	mp	address	314	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.791666+00	\N	\N
-890	mp	electioninfo	173	Óª«ÓºçÓª¥Óªâ ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.043003+00	\N	\N
-891	mp	address	173	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.044468+00	\N	\N
-892	mp	mp	174	ÓªûÓºçÓª¥Óª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼Óºü ÓªåÓªÂÓª½Óª¥Óªò (013017401)	CREATE	{}	2026-05-25 09:27:24.04856+00	\N	\N
-893	mp	electioninfo	174	ÓªûÓºçÓª¥Óª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼Óºü ÓªåÓªÂÓª½Óª¥Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.049772+00	\N	\N
-894	mp	address	174	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªûÓºçÓª¥Óª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼Óºü ÓªåÓªÂÓª½Óª¥Óªò	CREATE	{}	2026-05-25 09:27:24.050837+00	\N	\N
-895	mp	mp	175	Óª«ÓºïÓªâ ÓªåÓª«Óª¥Óª¿ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª«Óª¥Óª¿ (013017501)	CREATE	{}	2026-05-25 09:27:24.054167+00	\N	\N
-896	mp	electioninfo	175	Óª«ÓºïÓªâ ÓªåÓª«Óª¥Óª¿ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.055091+00	\N	\N
-897	mp	address	175	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª«Óª¥Óª¿ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.056106+00	\N	\N
-898	mp	mp	176	ÓªùÓºƒÓºçÓªÂÓºìÓª¼Óª░ ÓªÜÓª¿ÓºìÓªªÓºìÓª░ Óª░Óª¥Óºƒ (013017601)	CREATE	{}	2026-05-25 09:27:24.059183+00	\N	\N
-899	mp	electioninfo	176	ÓªùÓºƒÓºçÓªÂÓºìÓª¼Óª░ ÓªÜÓª¿ÓºìÓªªÓºìÓª░ Óª░Óª¥Óºƒ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.060219+00	\N	\N
-900	mp	address	176	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªùÓºƒÓºçÓªÂÓºìÓª¼Óª░ ÓªÜÓª¿ÓºìÓªªÓºìÓª░ Óª░Óª¥Óºƒ	CREATE	{}	2026-05-25 09:27:24.061187+00	\N	\N
-901	mp	mp	177	Óª©ÓºêÓºƒÓªª Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿ (013017701)	CREATE	{}	2026-05-25 09:27:24.064903+00	\N	\N
-902	mp	electioninfo	177	Óª©ÓºêÓºƒÓªª Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.065948+00	\N	\N
-903	mp	address	177	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºêÓºƒÓªª Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓºçÓªªÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:24.066987+00	\N	\N
-904	mp	mp	178	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓª¥Óª«Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013017801)	CREATE	{}	2026-05-25 09:27:24.070788+00	\N	\N
-905	mp	electioninfo	178	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓª¥Óª«Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.072045+00	\N	\N
-906	mp	address	178	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓª¥Óª«Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.073281+00	\N	\N
-907	mp	mp	179	ÓªçÓªÂÓª░Óª¥Óªò Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013017901)	CREATE	{}	2026-05-25 09:27:24.076851+00	\N	\N
-908	mp	electioninfo	179	ÓªçÓªÂÓª░Óª¥Óªò Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.077884+00	\N	\N
-909	mp	address	179	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªçÓªÂÓª░Óª¥Óªò Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.07894+00	\N	\N
-910	mp	mp	180	Óª╣Óª¥Óª«Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013018001)	CREATE	{}	2026-05-25 09:27:24.083413+00	\N	\N
-911	mp	electioninfo	180	Óª╣Óª¥Óª«Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.084729+00	\N	\N
-912	mp	address	180	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣Óª¥Óª«Óª┐ÓªªÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.086044+00	\N	\N
-913	mp	mp	181	Óª«Óª┐Óª░ÓºìÓª£Óª¥ ÓªåÓª¼ÓºìÓª¼Óª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª (013018101)	CREATE	{}	2026-05-25 09:27:24.090026+00	\N	\N
-914	mp	electioninfo	181	Óª«Óª┐Óª░ÓºìÓª£Óª¥ ÓªåÓª¼ÓºìÓª¼Óª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.091913+00	\N	\N
-915	mp	address	181	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª┐Óª░ÓºìÓª£Óª¥ ÓªåÓª¼ÓºìÓª¼Óª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.093369+00	\N	\N
-916	mp	mp	182	Óª╣Óª¥Óª¼Óª┐Óª¼ÓºüÓª░ Óª░ÓªÂÓª┐Óªª (013018201)	CREATE	{}	2026-05-25 09:27:24.097275+00	\N	\N
-917	mp	electioninfo	182	Óª╣Óª¥Óª¼Óª┐Óª¼ÓºüÓª░ Óª░ÓªÂÓª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.098475+00	\N	\N
-918	mp	address	182	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣Óª¥Óª¼Óª┐Óª¼ÓºüÓª░ Óª░ÓªÂÓª┐Óªª	CREATE	{}	2026-05-25 09:27:24.100358+00	\N	\N
-919	mp	mp	183	ÓªÂÓºçÓªû Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓª▓Óª« (013018301)	CREATE	{}	2026-05-25 09:27:24.104249+00	\N	\N
-1315	mp	mp	315	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªåÓª╣Óª«ÓºçÓªª (013031701)	CREATE	{}	2026-05-25 09:27:24.798705+00	\N	\N
-920	mp	electioninfo	183	ÓªÂÓºçÓªû Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.105363+00	\N	\N
-921	mp	address	183	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª░Óª¼Óª┐ÓªëÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:24.106471+00	\N	\N
-922	mp	mp	184	Óª«ÓºçÓª¥Óªâ Óª¿Óª¥Óª╣Óª┐Óªª ÓªçÓª©Óª▓Óª¥Óª« (013018401)	CREATE	{}	2026-05-25 09:27:24.109986+00	\N	\N
-923	mp	electioninfo	184	Óª«ÓºçÓª¥Óªâ Óª¿Óª¥Óª╣Óª┐Óªª ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.11098+00	\N	\N
-924	mp	address	184	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª¿Óª¥Óª╣Óª┐Óªª ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.112389+00	\N	\N
-925	mp	mp	185	Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªçÓª½ÓºüÓª▓ ÓªåÓª▓Óª« (013018501)	CREATE	{}	2026-05-25 09:27:24.11651+00	\N	\N
-926	mp	electioninfo	185	Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªçÓª½ÓºüÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.117742+00	\N	\N
-927	mp	address	185	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª©Óª¥ÓªçÓª½ÓºüÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:24.118867+00	\N	\N
-928	mp	mp	186	Óª¼Óª¼Óª┐ Óª╣Óª¥Óª£ÓºìÓª£Óª¥Óª£ (013018601)	CREATE	{}	2026-05-25 09:27:24.122458+00	\N	\N
-929	mp	electioninfo	186	Óª¼Óª¼Óª┐ Óª╣Óª¥Óª£ÓºìÓª£Óª¥Óª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.123394+00	\N	\N
-930	mp	address	186	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼Óª¼Óª┐ Óª╣Óª¥Óª£ÓºìÓª£Óª¥Óª£	CREATE	{}	2026-05-25 09:27:24.124388+00	\N	\N
-931	mp	mp	187	Óª«ÓºÇÓª░ ÓªåÓª╣Óª«Óª¥Óªª Óª¼Óª┐Óª¿ÓªòÓª¥Óª©ÓºçÓª« (013018701)	CREATE	{}	2026-05-25 09:27:24.127584+00	\N	\N
-932	mp	electioninfo	187	Óª«ÓºÇÓª░ ÓªåÓª╣Óª«Óª¥Óªª Óª¼Óª┐Óª¿ÓªòÓª¥Óª©ÓºçÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.129008+00	\N	\N
-933	mp	address	187	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºÇÓª░ ÓªåÓª╣Óª«Óª¥Óªª Óª¼Óª┐Óª¿ÓªòÓª¥Óª©ÓºçÓª«	CREATE	{}	2026-05-25 09:27:24.130279+00	\N	\N
-934	mp	mp	188	ÓªíÓª¥Óªâ Óª«ÓºçÓª¥Óªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013018801)	CREATE	{}	2026-05-25 09:27:24.13403+00	\N	\N
-935	mp	electioninfo	188	ÓªíÓª¥Óªâ Óª«ÓºçÓª¥Óªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.135123+00	\N	\N
-936	mp	address	188	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªíÓª¥Óªâ Óª«ÓºçÓª¥Óªâ ÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.136178+00	\N	\N
-937	mp	mp	189	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥ÓªñÓºçÓª¿ (013018901)	CREATE	{}	2026-05-25 09:27:24.139493+00	\N	\N
-938	mp	electioninfo	189	Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥ÓªñÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.140436+00	\N	\N
-939	mp	address	189	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª¼Óª¥ÓªñÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.141344+00	\N	\N
-940	mp	mp	190	ÓªñÓª¥Óª░ÓºçÓªò Óª░Óª╣Óª«Óª¥Óª¿ (013019001)	CREATE	{}	2026-05-25 09:27:24.144589+00	\N	\N
-941	mp	electioninfo	190	ÓªñÓª¥Óª░ÓºçÓªò Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.145537+00	\N	\N
-942	mp	address	190	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªñÓª¥Óª░ÓºçÓªò Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.146485+00	\N	\N
-943	mp	mp	191	ÓªÅÓª©, ÓªÅÓª«, Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºïÓª©ÓºçÓª¿ (013019101)	CREATE	{}	2026-05-25 09:27:24.149653+00	\N	\N
-944	mp	electioninfo	191	ÓªÅÓª©, ÓªÅÓª«, Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.150629+00	\N	\N
-945	mp	address	191	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª©, ÓªÅÓª«, Óª£Óª¥Óª╣Óª¥ÓªÖÓºìÓªùÓºÇÓª░ Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.151626+00	\N	\N
-946	mp	mp	192	ÓªªÓºçÓªôÓºƒÓª¥Óª¿ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013019201)	CREATE	{}	2026-05-25 09:27:24.154688+00	\N	\N
-947	mp	electioninfo	192	ÓªªÓºçÓªôÓºƒÓª¥Óª¿ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.155689+00	\N	\N
-948	mp	address	192	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªªÓºçÓªôÓºƒÓª¥Óª¿ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª©Óª¥Óª▓Óª¥ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.156644+00	\N	\N
-949	mp	mp	193	Óª«ÓºïÓªâ ÓªñÓª«Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013019301)	CREATE	{}	2026-05-25 09:27:24.159997+00	\N	\N
-950	mp	electioninfo	193	Óª«ÓºïÓªâ ÓªñÓª«Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.160954+00	\N	\N
-951	mp	address	193	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªñÓª«Óª┐Óª£ ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.16189+00	\N	\N
-952	mp	mp	194	Óª«ÓºïÓªâ Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013019401)	CREATE	{}	2026-05-25 09:27:24.165134+00	\N	\N
-953	mp	electioninfo	194	Óª«ÓºïÓªâ Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.166066+00	\N	\N
-954	mp	address	194	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.167008+00	\N	\N
-955	mp	mp	195	ÓªÅÓª« Óª«Óª×ÓºìÓª£ÓºüÓª░ÓºüÓª▓ ÓªòÓª░Óª┐Óª« Óª░Óª¿Óª┐ (013019501)	CREATE	{}	2026-05-25 09:27:24.170549+00	\N	\N
-956	mp	electioninfo	195	ÓªÅÓª« Óª«Óª×ÓºìÓª£ÓºüÓª░ÓºüÓª▓ ÓªòÓª░Óª┐Óª« Óª░Óª¿Óª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.171568+00	\N	\N
-957	mp	address	195	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª« Óª«Óª×ÓºìÓª£ÓºüÓª░ÓºüÓª▓ ÓªòÓª░Óª┐Óª« Óª░Óª¿Óª┐	CREATE	{}	2026-05-25 09:27:24.172581+00	\N	\N
-958	mp	mp	196	ÓªÅÓª©,ÓªÅÓª«, Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013019601)	CREATE	{}	2026-05-25 09:27:24.175767+00	\N	\N
-959	mp	electioninfo	196	ÓªÅÓª©,ÓªÅÓª«, Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.176824+00	\N	\N
-960	mp	address	196	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª©,ÓªÅÓª«, Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.177774+00	\N	\N
-961	mp	mp	197	Óª©Óª¥Óª▓Óª¥Óª╣ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013019701)	CREATE	{}	2026-05-25 09:27:24.181087+00	\N	\N
-962	mp	electioninfo	197	Óª©Óª¥Óª▓Óª¥Óª╣ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.182041+00	\N	\N
-963	mp	address	197	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥Óª▓Óª¥Óª╣ ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.183053+00	\N	\N
-964	mp	mp	198	ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª½Óª£Óª▓ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ (013019801)	CREATE	{}	2026-05-25 09:27:24.186277+00	\N	\N
-965	mp	electioninfo	198	ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª½Óª£Óª▓ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.18726+00	\N	\N
-966	mp	address	198	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ, ÓªòÓºç, ÓªÅÓª«, Óª½Óª£Óª▓ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿	CREATE	{}	2026-05-25 09:27:24.18819+00	\N	\N
-967	mp	mp	199	ÓªûÓª¥ÓºƒÓª░ÓºüÓª▓ ÓªòÓª¼Óª┐Óª░ ÓªûÓºçÓª¥ÓªòÓª¿ (013019901)	CREATE	{}	2026-05-25 09:27:24.191452+00	\N	\N
-968	mp	electioninfo	199	ÓªûÓª¥ÓºƒÓª░ÓºüÓª▓ ÓªòÓª¼Óª┐Óª░ ÓªûÓºçÓª¥ÓªòÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.192551+00	\N	\N
-969	mp	address	199	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªûÓª¥ÓºƒÓª░ÓºüÓª▓ ÓªòÓª¼Óª┐Óª░ ÓªûÓºçÓª¥ÓªòÓª¿	CREATE	{}	2026-05-25 09:27:24.193671+00	\N	\N
-970	mp	mp	200	Óªí, ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓªêÓª¿ ÓªûÓª¥Óª¿ (013020001)	CREATE	{}	2026-05-25 09:27:24.197409+00	\N	\N
-971	mp	electioninfo	200	Óªí, ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓªêÓª¿ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.199033+00	\N	\N
-972	mp	address	200	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óªí, ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓªêÓª¿ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.2001+00	\N	\N
-973	mp	mp	201	Óª«Óª¿Óª£ÓºüÓª░ ÓªÅÓª▓Óª¥Óª╣ÓºÇ (013020101)	CREATE	{}	2026-05-25 09:27:24.203657+00	\N	\N
-974	mp	electioninfo	201	Óª«Óª¿Óª£ÓºüÓª░ ÓªÅÓª▓Óª¥Óª╣ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.204775+00	\N	\N
-975	mp	address	201	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¿Óª£ÓºüÓª░ ÓªÅÓª▓Óª¥Óª╣ÓºÇ	CREATE	{}	2026-05-25 09:27:24.205753+00	\N	\N
-976	mp	mp	202	Óª©Óª░ÓªªÓª¥Óª░ Óª«ÓºïÓªâ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013020201)	CREATE	{}	2026-05-25 09:27:24.212812+00	\N	\N
-977	mp	electioninfo	202	Óª©Óª░ÓªªÓª¥Óª░ Óª«ÓºïÓªâ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.213761+00	\N	\N
-978	mp	address	202	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª░ÓªªÓª¥Óª░ Óª«ÓºïÓªâ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.214704+00	\N	\N
-979	mp	mp	203	Óª«ÓºçÓª¥Óªâ ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013020301)	CREATE	{}	2026-05-25 09:27:24.217868+00	\N	\N
-980	mp	electioninfo	203	Óª«ÓºçÓª¥Óªâ ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.218802+00	\N	\N
-981	mp	address	203	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.21977+00	\N	\N
-982	mp	mp	204	Óª«ÓºüÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¡ÓºéÓªüÓªçÓºƒÓª¥ (013020401)	CREATE	{}	2026-05-25 09:27:24.223031+00	\N	\N
-983	mp	electioninfo	204	Óª«ÓºüÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¡ÓºéÓªüÓªçÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.22401+00	\N	\N
-984	mp	address	204	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª©ÓºìÓªñÓª¥Óª½Óª┐Óª£ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ Óª¡ÓºéÓªüÓªçÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.225006+00	\N	\N
-985	mp	mp	205	Óª«ÓºïÓªâ Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª (013020501)	CREATE	{}	2026-05-25 09:27:24.228143+00	\N	\N
-986	mp	electioninfo	205	Óª«ÓºïÓªâ Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.229036+00	\N	\N
-987	mp	address	205	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª¿Óª£Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª£Óª¥Óªª	CREATE	{}	2026-05-25 09:27:24.230005+00	\N	\N
-988	mp	mp	206	ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ (013020601)	CREATE	{}	2026-05-25 09:27:24.233241+00	\N	\N
-989	mp	electioninfo	206	ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.234162+00	\N	\N
-990	mp	address	206	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª£Óª╣Óª¥Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.235214+00	\N	\N
-991	mp	mp	207	ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª▓ ÓªåÓª«Óª┐Óª¿ (013020701)	CREATE	{}	2026-05-25 09:27:24.238371+00	\N	\N
-992	mp	electioninfo	207	ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª▓ ÓªåÓª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.239279+00	\N	\N
-993	mp	address	207	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºìÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ ÓªåÓª▓ ÓªåÓª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.240298+00	\N	\N
-994	mp	mp	208	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« (013020801)	CREATE	{}	2026-05-25 09:27:24.243558+00	\N	\N
-995	mp	electioninfo	208	ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.244543+00	\N	\N
-996	mp	address	208	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.245477+00	\N	\N
-997	mp	mp	209	ÓªåÓª▓ÓºÇ Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªûÓºêÓºƒÓª« (013020901)	CREATE	{}	2026-05-25 09:27:24.248481+00	\N	\N
-998	mp	electioninfo	209	ÓªåÓª▓ÓºÇ Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªûÓºêÓºƒÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.249483+00	\N	\N
-999	mp	address	209	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓ÓºÇ Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªûÓºêÓºƒÓª«	CREATE	{}	2026-05-25 09:27:24.250486+00	\N	\N
-1000	mp	mp	210	Óª«ÓºïÓªâ Óª╣Óª¥Óª░ÓºüÓª¿-ÓªàÓª░-Óª░ÓªÂÓª┐Óªª (013021001)	CREATE	{}	2026-05-25 09:27:24.25366+00	\N	\N
-1001	mp	electioninfo	210	Óª«ÓºïÓªâ Óª╣Óª¥Óª░ÓºüÓª¿-ÓªàÓª░-Óª░ÓªÂÓª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.254618+00	\N	\N
-1002	mp	address	210	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª╣Óª¥Óª░ÓºüÓª¿-ÓªàÓª░-Óª░ÓªÂÓª┐Óªª	CREATE	{}	2026-05-25 09:27:24.255571+00	\N	\N
-1003	mp	mp	211	Óª«ÓºçÓª¥Óªâ ÓªçÓª▓Óª┐ÓºƒÓª¥Óª© Óª«ÓºçÓª¥Óª▓ÓºìÓª▓Óª¥ (013021101)	CREATE	{}	2026-05-25 09:27:24.259226+00	\N	\N
-1004	mp	electioninfo	211	Óª«ÓºçÓª¥Óªâ ÓªçÓª▓Óª┐ÓºƒÓª¥Óª© Óª«ÓºçÓª¥Óª▓ÓºìÓª▓Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.260365+00	\N	\N
-1321	mp	mp	317	ÓªåÓª¿ÓºìÓª¿Óª¥ Óª«Óª┐Óª¿ÓºìÔÇîÓª£ (013031901)	CREATE	{}	2026-05-25 09:27:24.816627+00	\N	\N
-1005	mp	address	211	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªçÓª▓Óª┐ÓºƒÓª¥Óª© Óª«ÓºçÓª¥Óª▓ÓºìÓª▓Óª¥	CREATE	{}	2026-05-25 09:27:24.261434+00	\N	\N
-1006	mp	mp	212	ÓªÂÓª¥Óª«Óª¥ ÓªôÓª¼Óª¥ÓºƒÓºçÓªª ÓªçÓª©Óª▓Óª¥Óª« (013021201)	CREATE	{}	2026-05-25 09:27:24.265145+00	\N	\N
-1007	mp	electioninfo	212	ÓªÂÓª¥Óª«Óª¥ ÓªôÓª¼Óª¥ÓºƒÓºçÓªª ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.266108+00	\N	\N
-1008	mp	address	212	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª«Óª¥ ÓªôÓª¼Óª¥ÓºƒÓºçÓªª ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.267115+00	\N	\N
-1009	mp	mp	213	Óª¿Óª¥ÓºƒÓª¥Óª¼ ÓªçÓªëÓª©ÓºüÓª½ ÓªåÓª╣Óª«ÓºçÓªª (013021301)	CREATE	{}	2026-05-25 09:27:24.270389+00	\N	\N
-1010	mp	electioninfo	213	Óª¿Óª¥ÓºƒÓª¥Óª¼ ÓªçÓªëÓª©ÓºüÓª½ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.271323+00	\N	\N
+439	mp	mp	23	মোঃ গোলাম রব্বানী (013002301)	CREATE	{}	2026-05-25 09:27:23.206599+00	\N	\N
+438	mp	address	22	বর্তমান ঠিকানা — আখতার হোসেন	CREATE	{}	2026-05-25 09:27:23.203516+00	\N	\N
+437	mp	electioninfo	22	আখতার হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.202641+00	\N	\N
+436	mp	mp	22	আখতার হোসেন (013002201)	CREATE	{}	2026-05-25 09:27:23.20176+00	\N	\N
+435	mp	address	21	বর্তমান ঠিকানা — মোঃ মাহবুবুর রহমান (বেলাল)	CREATE	{}	2026-05-25 09:27:23.198329+00	\N	\N
+434	mp	electioninfo	21	মোঃ মাহবুবুর রহমান (বেলাল) — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.197292+00	\N	\N
+433	mp	mp	21	মোঃ মাহবুবুর রহমান (বেলাল) (013002101)	CREATE	{}	2026-05-25 09:27:23.196247+00	\N	\N
+432	mp	address	20	বর্তমান ঠিকানা — এ টি এম আজহারুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.192821+00	\N	\N
+431	mp	electioninfo	20	এ টি এম আজহারুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.191784+00	\N	\N
+430	mp	mp	20	এ টি এম আজহারুল ইসলাম (013002001)	CREATE	{}	2026-05-25 09:27:23.190775+00	\N	\N
+429	mp	address	19	বর্তমান ঠিকানা — মোঃ রায়হান সিরাজী	CREATE	{}	2026-05-25 09:27:23.186969+00	\N	\N
+428	mp	electioninfo	19	মোঃ রায়হান সিরাজী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.185771+00	\N	\N
+427	mp	mp	19	মোঃ রায়হান সিরাজী (013001901)	CREATE	{}	2026-05-25 09:27:23.184831+00	\N	\N
+426	mp	address	18	বর্তমান ঠিকানা — আসাদুল হাবিব দুলু	CREATE	{}	2026-05-25 09:27:23.181177+00	\N	\N
+425	mp	electioninfo	18	আসাদুল হাবিব দুলু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.18027+00	\N	\N
+424	mp	mp	18	আসাদুল হাবিব দুলু (013001801)	CREATE	{}	2026-05-25 09:27:23.179302+00	\N	\N
+423	mp	address	17	বর্তমান ঠিকানা — মোঃ রোকন উদ্দীন বাবুল	CREATE	{}	2026-05-25 09:27:23.175208+00	\N	\N
+422	mp	electioninfo	17	মোঃ রোকন উদ্দীন বাবুল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.174338+00	\N	\N
+421	mp	mp	17	মোঃ রোকন উদ্দীন বাবুল (013001701)	CREATE	{}	2026-05-25 09:27:23.173339+00	\N	\N
+420	mp	address	16	বর্তমান ঠিকানা — মোঃ হাসান রাজীব প্রধান	CREATE	{}	2026-05-25 09:27:23.170089+00	\N	\N
+419	mp	electioninfo	16	মোঃ হাসান রাজীব প্রধান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.169125+00	\N	\N
+417	mp	address	15	বর্তমান ঠিকানা — আব্দুল মুনতাকিম	CREATE	{}	2026-05-25 09:27:23.165015+00	\N	\N
+416	mp	electioninfo	15	আব্দুল মুনতাকিম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.164166+00	\N	\N
+415	mp	mp	15	আব্দুল মুনতাকিম (013001501)	CREATE	{}	2026-05-25 09:27:23.163155+00	\N	\N
+414	mp	address	14	বর্তমান ঠিকানা — ওবায়দুল্লাহ সালাফী	CREATE	{}	2026-05-25 09:27:23.160031+00	\N	\N
+413	mp	electioninfo	14	ওবায়দুল্লাহ সালাফী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.159198+00	\N	\N
+412	mp	mp	14	ওবায়দুল্লাহ সালাফী (013001401)	CREATE	{}	2026-05-25 09:27:23.158357+00	\N	\N
+411	mp	address	13	বর্তমান ঠিকানা — আলফারুক আব্দুল লতীফ	CREATE	{}	2026-05-25 09:27:23.155208+00	\N	\N
+468	mp	address	32	বর্তমান ঠিকানা — মোহাম্মদ শামীম কায়সার	CREATE	{}	2026-05-25 09:27:23.257962+00	\N	\N
+467	mp	electioninfo	32	মোহাম্মদ শামীম কায়সার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.256893+00	\N	\N
+466	mp	mp	32	মোহাম্মদ শামীম কায়সার (013003201)	CREATE	{}	2026-05-25 09:27:23.255657+00	\N	\N
+465	mp	address	31	বর্তমান ঠিকানা — আবুল কাওছার মোহাম্মদ নজরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.251483+00	\N	\N
+464	mp	electioninfo	31	আবুল কাওছার মোহাম্মদ নজরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.250515+00	\N	\N
+463	mp	mp	31	আবুল কাওছার মোহাম্মদ নজরুল ইসলাম (013003101)	CREATE	{}	2026-05-25 09:27:23.249539+00	\N	\N
+462	mp	address	30	বর্তমান ঠিকানা — মোঃ আব্দুল করিম	CREATE	{}	2026-05-25 09:27:23.246509+00	\N	\N
+461	mp	electioninfo	30	মোঃ আব্দুল করিম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.245657+00	\N	\N
+460	mp	mp	30	মোঃ আব্দুল করিম (013003001)	CREATE	{}	2026-05-25 09:27:23.244708+00	\N	\N
+459	mp	address	29	বর্তমান ঠিকানা — মোঃ মাজেদুর রহমান	CREATE	{}	2026-05-25 09:27:23.24154+00	\N	\N
+458	mp	electioninfo	29	মোঃ মাজেদুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.240693+00	\N	\N
+457	mp	mp	29	মোঃ মাজেদুর রহমান (013002901)	CREATE	{}	2026-05-25 09:27:23.239716+00	\N	\N
+456	mp	address	28	বর্তমান ঠিকানা — মোঃ মোস্তাফিজুর রহমান	CREATE	{}	2026-05-25 09:27:23.235946+00	\N	\N
+455	mp	electioninfo	28	মোঃ মোস্তাফিজুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.234959+00	\N	\N
+454	mp	mp	28	মোঃ মোস্তাফিজুর রহমান (013002801)	CREATE	{}	2026-05-25 09:27:23.23398+00	\N	\N
+453	mp	address	27	বর্তমান ঠিকানা — মোঃ মাহবুবুল আলম	CREATE	{}	2026-05-25 09:27:23.230717+00	\N	\N
+452	mp	electioninfo	27	মোঃ মাহবুবুল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.229822+00	\N	\N
+451	mp	mp	27	মোঃ মাহবুবুল আলম (013002701)	CREATE	{}	2026-05-25 09:27:23.228822+00	\N	\N
+450	mp	address	26	বর্তমান ঠিকানা — আতিকুর রহমান মোজাহিদ	CREATE	{}	2026-05-25 09:27:23.225623+00	\N	\N
+449	mp	electioninfo	26	আতিকুর রহমান মোজাহিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.224643+00	\N	\N
+448	mp	mp	26	আতিকুর রহমান মোজাহিদ (013002601)	CREATE	{}	2026-05-25 09:27:23.223732+00	\N	\N
+447	mp	address	25	বর্তমান ঠিকানা — মোঃ আনোয়ারুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.220604+00	\N	\N
+446	mp	electioninfo	25	মোঃ আনোয়ারুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.21951+00	\N	\N
+445	mp	mp	25	মোঃ আনোয়ারুল ইসলাম (013002501)	CREATE	{}	2026-05-25 09:27:23.218457+00	\N	\N
+444	mp	address	24	বর্তমান ঠিকানা — মোঃ নুরুল আমীন	CREATE	{}	2026-05-25 09:27:23.214994+00	\N	\N
+443	mp	electioninfo	24	মোঃ নুরুল আমীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.213327+00	\N	\N
+442	mp	mp	24	মোঃ নুরুল আমীন (013002401)	CREATE	{}	2026-05-25 09:27:23.212395+00	\N	\N
+441	mp	address	23	বর্তমান ঠিকানা — মোঃ গোলাম রব্বানী	CREATE	{}	2026-05-25 09:27:23.208925+00	\N	\N
+498	mp	address	42	বর্তমান ঠিকানা — মোরশেদ মিলটন	CREATE	{}	2026-05-25 09:27:23.310798+00	\N	\N
+497	mp	electioninfo	42	মোরশেদ মিলটন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.309949+00	\N	\N
+496	mp	mp	42	মোরশেদ মিলটন (013004201)	CREATE	{}	2026-05-25 09:27:23.309071+00	\N	\N
+495	mp	address	41	বর্তমান ঠিকানা — মোঃ রেজাউল করিম বাদশা	CREATE	{}	2026-05-25 09:27:23.30588+00	\N	\N
+494	mp	electioninfo	41	মোঃ রেজাউল করিম বাদশা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.304949+00	\N	\N
+493	mp	mp	41	মোঃ রেজাউল করিম বাদশা (013004101)	CREATE	{}	2026-05-25 09:27:23.303997+00	\N	\N
+492	mp	address	40	বর্তমান ঠিকানা — গোলাম মোহাম্মদ সিরাজ	CREATE	{}	2026-05-25 09:27:23.30066+00	\N	\N
+491	mp	electioninfo	40	গোলাম মোহাম্মদ সিরাজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.299476+00	\N	\N
+490	mp	mp	40	গোলাম মোহাম্মদ সিরাজ (013004001)	CREATE	{}	2026-05-25 09:27:23.298571+00	\N	\N
+489	mp	address	39	বর্তমান ঠিকানা — মোঃ মোশারফ হোসেন	CREATE	{}	2026-05-25 09:27:23.295342+00	\N	\N
+488	mp	electioninfo	39	মোঃ মোশারফ হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.294478+00	\N	\N
+487	mp	mp	39	মোঃ মোশারফ হোসেন (013003901)	CREATE	{}	2026-05-25 09:27:23.293587+00	\N	\N
+486	mp	address	38	বর্তমান ঠিকানা — মোঃ আব্দুল মহিত তালুকদার	CREATE	{}	2026-05-25 09:27:23.290192+00	\N	\N
+485	mp	electioninfo	38	মোঃ আব্দুল মহিত তালুকদার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.289041+00	\N	\N
+484	mp	mp	38	মোঃ আব্দুল মহিত তালুকদার (013003801)	CREATE	{}	2026-05-25 09:27:23.28784+00	\N	\N
+483	mp	address	37	বর্তমান ঠিকানা — মীর শাহে আলম	CREATE	{}	2026-05-25 09:27:23.284346+00	\N	\N
+482	mp	electioninfo	37	মীর শাহে আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.283338+00	\N	\N
+481	mp	mp	37	মীর শাহে আলম (013003701)	CREATE	{}	2026-05-25 09:27:23.282316+00	\N	\N
+480	mp	address	36	বর্তমান ঠিকানা — কাজী রফিকুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.279066+00	\N	\N
+479	mp	electioninfo	36	কাজী রফিকুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.278137+00	\N	\N
+478	mp	mp	36	কাজী রফিকুল ইসলাম (013003601)	CREATE	{}	2026-05-25 09:27:23.276721+00	\N	\N
+477	mp	address	35	বর্তমান ঠিকানা — মোঃ আব্দুল বারী	CREATE	{}	2026-05-25 09:27:23.27353+00	\N	\N
+476	mp	electioninfo	35	মোঃ আব্দুল বারী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.272653+00	\N	\N
+475	mp	mp	35	মোঃ আব্দুল বারী (013003501)	CREATE	{}	2026-05-25 09:27:23.271677+00	\N	\N
+474	mp	address	34	বর্তমান ঠিকানা — মোঃ ফজলুর রহমান সাইদ	CREATE	{}	2026-05-25 09:27:23.268427+00	\N	\N
+473	mp	electioninfo	34	মোঃ ফজলুর রহমান সাইদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.267469+00	\N	\N
+472	mp	mp	34	মোঃ ফজলুর রহমান সাইদ (013003401)	CREATE	{}	2026-05-25 09:27:23.266416+00	\N	\N
+471	mp	address	33	বর্তমান ঠিকানা — মোঃ আব্দুল ওয়ারেছ	CREATE	{}	2026-05-25 09:27:23.263212+00	\N	\N
+470	mp	electioninfo	33	মোঃ আব্দুল ওয়ারেছ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.262338+00	\N	\N
+469	mp	mp	33	মোঃ আব্দুল ওয়ারেছ (013003301)	CREATE	{}	2026-05-25 09:27:23.261408+00	\N	\N
+529	mp	mp	53	মোঃ মিজানুর রহমান মিনু (013005301)	CREATE	{}	2026-05-25 09:27:23.366727+00	\N	\N
+528	mp	address	52	বর্তমান ঠিকানা — মোঃ মুজিবুর রহমান	CREATE	{}	2026-05-25 09:27:23.363607+00	\N	\N
+527	mp	electioninfo	52	মোঃ মুজিবুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.362773+00	\N	\N
+526	mp	mp	52	মোঃ মুজিবুর রহমান (013005201)	CREATE	{}	2026-05-25 09:27:23.361807+00	\N	\N
+525	mp	address	51	বর্তমান ঠিকানা — শেখ মোঃ রেজাউল ইসলাম	CREATE	{}	2026-05-25 09:27:23.358505+00	\N	\N
+524	mp	electioninfo	51	শেখ মোঃ রেজাউল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.357641+00	\N	\N
+523	mp	mp	51	শেখ মোঃ রেজাউল ইসলাম (013005101)	CREATE	{}	2026-05-25 09:27:23.356699+00	\N	\N
+522	mp	address	50	বর্তমান ঠিকানা — মোঃ জাহিদুল ইসলাম ধলু	CREATE	{}	2026-05-25 09:27:23.353486+00	\N	\N
+521	mp	electioninfo	50	মোঃ জাহিদুল ইসলাম ধলু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.352594+00	\N	\N
+520	mp	mp	50	মোঃ জাহিদুল ইসলাম ধলু (013005001)	CREATE	{}	2026-05-25 09:27:23.351595+00	\N	\N
+519	mp	address	49	বর্তমান ঠিকানা — ইকরামুল বারী টিপু	CREATE	{}	2026-05-25 09:27:23.348234+00	\N	\N
+518	mp	electioninfo	49	ইকরামুল বারী টিপু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.347207+00	\N	\N
+517	mp	mp	49	ইকরামুল বারী টিপু (013004901)	CREATE	{}	2026-05-25 09:27:23.346289+00	\N	\N
+516	mp	address	48	বর্তমান ঠিকানা — মোঃ ফজলে হুদা	CREATE	{}	2026-05-25 09:27:23.34288+00	\N	\N
+515	mp	electioninfo	48	মোঃ ফজলে হুদা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.341986+00	\N	\N
+514	mp	mp	48	মোঃ ফজলে হুদা (013004801)	CREATE	{}	2026-05-25 09:27:23.340822+00	\N	\N
+513	mp	address	47	বর্তমান ঠিকানা — মোঃ এনামুল হক	CREATE	{}	2026-05-25 09:27:23.337358+00	\N	\N
+512	mp	electioninfo	47	মোঃ এনামুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.336494+00	\N	\N
+511	mp	mp	47	মোঃ এনামুল হক (013004701)	CREATE	{}	2026-05-25 09:27:23.335485+00	\N	\N
+510	mp	address	46	বর্তমান ঠিকানা — মোঃ মোস্তাফিজুর রহমান	CREATE	{}	2026-05-25 09:27:23.332079+00	\N	\N
+509	mp	electioninfo	46	মোঃ মোস্তাফিজুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.331074+00	\N	\N
+507	mp	address	45	বর্তমান ঠিকানা — মোঃ নূরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.326855+00	\N	\N
+506	mp	electioninfo	45	মোঃ নূরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.325958+00	\N	\N
+505	mp	mp	45	মোঃ নূরুল ইসলাম (013004501)	CREATE	{}	2026-05-25 09:27:23.324919+00	\N	\N
+504	mp	address	44	বর্তমান ঠিকানা — মু. মিজানুর রহমান	CREATE	{}	2026-05-25 09:27:23.321137+00	\N	\N
+503	mp	electioninfo	44	মু. মিজানুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.320092+00	\N	\N
+502	mp	mp	44	মু. মিজানুর রহমান (013004401)	CREATE	{}	2026-05-25 09:27:23.31894+00	\N	\N
+501	mp	address	43	বর্তমান ঠিকানা — মোঃ কেরামত আলী	CREATE	{}	2026-05-25 09:27:23.315614+00	\N	\N
+500	mp	electioninfo	43	মোঃ কেরামত আলী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.314708+00	\N	\N
+42	parliament	constituency	22	২২ রংপুর-৪ (22 Rangpur-4)	CREATE	{}	2026-05-24 17:06:26.084267+00	\N	\N
+559	mp	mp	63	ইকবাল হাসান মাহ্‌মুদ (013006301)	CREATE	{}	2026-05-25 09:27:23.420931+00	\N	\N
+558	mp	address	62	বর্তমান ঠিকানা — মোঃ সেলিম রেজা	CREATE	{}	2026-05-25 09:27:23.417443+00	\N	\N
+557	mp	electioninfo	62	মোঃ সেলিম রেজা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.416212+00	\N	\N
+556	mp	mp	62	মোঃ সেলিম রেজা (013006201)	CREATE	{}	2026-05-25 09:27:23.414908+00	\N	\N
+555	mp	address	61	বর্তমান ঠিকানা — মোঃ আব্দুল আজিজ	CREATE	{}	2026-05-25 09:27:23.411297+00	\N	\N
+554	mp	electioninfo	61	মোঃ আব্দুল আজিজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.410346+00	\N	\N
+553	mp	mp	61	মোঃ আব্দুল আজিজ (013006101)	CREATE	{}	2026-05-25 09:27:23.409376+00	\N	\N
+552	mp	address	60	বর্তমান ঠিকানা — মোঃ আনোয়ারুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.406357+00	\N	\N
+551	mp	electioninfo	60	মোঃ আনোয়ারুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.405457+00	\N	\N
+550	mp	mp	60	মোঃ আনোয়ারুল ইসলাম (013006001)	CREATE	{}	2026-05-25 09:27:23.404586+00	\N	\N
+549	mp	address	59	বর্তমান ঠিকানা — এম, রুহুল কুদ্দুস তালুকদার দুলু	CREATE	{}	2026-05-25 09:27:23.401156+00	\N	\N
+548	mp	electioninfo	59	এম, রুহুল কুদ্দুস তালুকদার দুলু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.400079+00	\N	\N
+547	mp	mp	59	এম, রুহুল কুদ্দুস তালুকদার দুলু (013005901)	CREATE	{}	2026-05-25 09:27:23.398955+00	\N	\N
+546	mp	address	58	বর্তমান ঠিকানা — ফারজানা শারমীন	CREATE	{}	2026-05-25 09:27:23.395963+00	\N	\N
+545	mp	electioninfo	58	ফারজানা শারমীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.394954+00	\N	\N
+544	mp	mp	58	ফারজানা শারমীন (013005801)	CREATE	{}	2026-05-25 09:27:23.394005+00	\N	\N
+543	mp	address	57	বর্তমান ঠিকানা — মোঃ আবু সাইদ চাঁদ	CREATE	{}	2026-05-25 09:27:23.390879+00	\N	\N
+542	mp	electioninfo	57	মোঃ আবু সাইদ চাঁদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.389848+00	\N	\N
+541	mp	mp	57	মোঃ আবু সাইদ চাঁদ (013005701)	CREATE	{}	2026-05-25 09:27:23.388772+00	\N	\N
+540	mp	address	56	বর্তমান ঠিকানা — অধ্যাপক নজরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.384913+00	\N	\N
+539	mp	electioninfo	56	অধ্যাপক নজরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.383553+00	\N	\N
+538	mp	mp	56	অধ্যাপক নজরুল ইসলাম (013005601)	CREATE	{}	2026-05-25 09:27:23.38261+00	\N	\N
+537	mp	address	55	বর্তমান ঠিকানা — মোঃ আব্দুল বারী সরদার	CREATE	{}	2026-05-25 09:27:23.379372+00	\N	\N
+536	mp	electioninfo	55	মোঃ আব্দুল বারী সরদার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.378532+00	\N	\N
+535	mp	mp	55	মোঃ আব্দুল বারী সরদার (013005501)	CREATE	{}	2026-05-25 09:27:23.377659+00	\N	\N
+534	mp	address	54	বর্তমান ঠিকানা — মোহাম্মদ শফিকুল হক মিলন	CREATE	{}	2026-05-25 09:27:23.374296+00	\N	\N
+533	mp	electioninfo	54	মোহাম্মদ শফিকুল হক মিলন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.373383+00	\N	\N
+532	mp	mp	54	মোহাম্মদ শফিকুল হক মিলন (013005401)	CREATE	{}	2026-05-25 09:27:23.372313+00	\N	\N
+531	mp	address	53	বর্তমান ঠিকানা — মোঃ মিজানুর রহমান মিনু	CREATE	{}	2026-05-25 09:27:23.368747+00	\N	\N
+589	mp	mp	73	মোঃ তাজউদ্দীন খান (013007301)	CREATE	{}	2026-05-25 09:27:23.474631+00	\N	\N
+588	mp	address	72	বর্তমান ঠিকানা — মোঃ শামছুর রহমান শিমুল বিশ্বাস	CREATE	{}	2026-05-25 09:27:23.471458+00	\N	\N
+587	mp	electioninfo	72	মোঃ শামছুর রহমান শিমুল বিশ্বাস — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.47052+00	\N	\N
+586	mp	mp	72	মোঃ শামছুর রহমান শিমুল বিশ্বাস (013007201)	CREATE	{}	2026-05-25 09:27:23.469595+00	\N	\N
+585	mp	address	71	বর্তমান ঠিকানা — মোঃ আবু তালেব মন্ডল	CREATE	{}	2026-05-25 09:27:23.466211+00	\N	\N
+584	mp	electioninfo	71	মোঃ আবু তালেব মন্ডল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.464785+00	\N	\N
+583	mp	mp	71	মোঃ আবু তালেব মন্ডল (013007101)	CREATE	{}	2026-05-25 09:27:23.463817+00	\N	\N
+582	mp	address	70	বর্তমান ঠিকানা — মুহাম্মাদ আলী আছগার	CREATE	{}	2026-05-25 09:27:23.459498+00	\N	\N
+581	mp	electioninfo	70	মুহাম্মাদ আলী আছগার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.458635+00	\N	\N
+580	mp	mp	70	মুহাম্মাদ আলী আছগার (013007001)	CREATE	{}	2026-05-25 09:27:23.457685+00	\N	\N
+579	mp	address	69	বর্তমান ঠিকানা — এ, কে, এম, সেলিম রেজা হাবিব	CREATE	{}	2026-05-25 09:27:23.454521+00	\N	\N
+578	mp	electioninfo	69	এ, কে, এম, সেলিম রেজা হাবিব — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.453593+00	\N	\N
+577	mp	mp	69	এ, কে, এম, সেলিম রেজা হাবিব (013006901)	CREATE	{}	2026-05-25 09:27:23.452637+00	\N	\N
+576	mp	address	68	বর্তমান ঠিকানা — মোহাম্মদ নাজিবুর রহমান	CREATE	{}	2026-05-25 09:27:23.449194+00	\N	\N
+575	mp	electioninfo	68	মোহাম্মদ নাজিবুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.448086+00	\N	\N
+574	mp	mp	68	মোহাম্মদ নাজিবুর রহমান (013006801)	CREATE	{}	2026-05-25 09:27:23.447105+00	\N	\N
+573	mp	address	67	বর্তমান ঠিকানা — এম, এ, মুহিত	CREATE	{}	2026-05-25 09:27:23.443831+00	\N	\N
+572	mp	electioninfo	67	এম, এ, মুহিত — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.442941+00	\N	\N
+571	mp	mp	67	এম, এ, মুহিত (013006701)	CREATE	{}	2026-05-25 09:27:23.44192+00	\N	\N
+570	mp	address	66	বর্তমান ঠিকানা — মোঃ আমিরুল ইসলাম খান	CREATE	{}	2026-05-25 09:27:23.43878+00	\N	\N
+569	mp	electioninfo	66	মোঃ আমিরুল ইসলাম খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.437541+00	\N	\N
+568	mp	mp	66	মোঃ আমিরুল ইসলাম খান (013006601)	CREATE	{}	2026-05-25 09:27:23.436717+00	\N	\N
+567	mp	address	65	বর্তমান ঠিকানা — মোঃ রফিকুল ইসলাম খান	CREATE	{}	2026-05-25 09:27:23.433698+00	\N	\N
+566	mp	electioninfo	65	মোঃ রফিকুল ইসলাম খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.432751+00	\N	\N
+565	mp	mp	65	মোঃ রফিকুল ইসলাম খান (013006501)	CREATE	{}	2026-05-25 09:27:23.431722+00	\N	\N
+564	mp	address	64	বর্তমান ঠিকানা — মোঃ আয়নুল হক	CREATE	{}	2026-05-25 09:27:23.428383+00	\N	\N
+563	mp	electioninfo	64	মোঃ আয়নুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.427355+00	\N	\N
+562	mp	mp	64	মোঃ আয়নুল হক (013006401)	CREATE	{}	2026-05-25 09:27:23.42639+00	\N	\N
+561	mp	address	63	বর্তমান ঠিকানা — ইকবাল হাসান মাহ্‌মুদ	CREATE	{}	2026-05-25 09:27:23.422765+00	\N	\N
+620	mp	electioninfo	83	মোঃ মতিয়ার রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.530496+00	\N	\N
+619	mp	mp	83	মোঃ মতিয়ার রহমান (013008301)	CREATE	{}	2026-05-25 09:27:23.529238+00	\N	\N
+618	mp	address	82	বর্তমান ঠিকানা — আলী আজম মোঃ আবু বকর	CREATE	{}	2026-05-25 09:27:23.525062+00	\N	\N
+617	mp	electioninfo	82	আলী আজম মোঃ আবু বকর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.524165+00	\N	\N
+616	mp	mp	82	আলী আজম মোঃ আবু বকর (013008201)	CREATE	{}	2026-05-25 09:27:23.523265+00	\N	\N
+615	mp	address	81	বর্তমান ঠিকানা — মোঃ আসাদুজ্জামান	CREATE	{}	2026-05-25 09:27:23.517754+00	\N	\N
+614	mp	electioninfo	81	মোঃ আসাদুজ্জামান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.51662+00	\N	\N
+613	mp	mp	81	মোঃ আসাদুজ্জামান (013008101)	CREATE	{}	2026-05-25 09:27:23.515562+00	\N	\N
+612	mp	address	80	বর্তমান ঠিকানা — মোঃ রুহুল আমিন	CREATE	{}	2026-05-25 09:27:23.512056+00	\N	\N
+611	mp	electioninfo	80	মোঃ রুহুল আমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.511075+00	\N	\N
+610	mp	mp	80	মোঃ রুহুল আমিন (013008001)	CREATE	{}	2026-05-25 09:27:23.510106+00	\N	\N
+609	mp	address	79	বর্তমান ঠিকানা — মোঃ মাসুদ পারভেজ	CREATE	{}	2026-05-25 09:27:23.506971+00	\N	\N
+608	mp	electioninfo	79	মোঃ মাসুদ পারভেজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.506018+00	\N	\N
+607	mp	mp	79	মোঃ মাসুদ পারভেজ (013007901)	CREATE	{}	2026-05-25 09:27:23.505013+00	\N	\N
+606	mp	address	78	বর্তমান ঠিকানা — মোঃ আফজাল হোসেন	CREATE	{}	2026-05-25 09:27:23.501748+00	\N	\N
+605	mp	electioninfo	78	মোঃ আফজাল হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.500763+00	\N	\N
+604	mp	mp	78	মোঃ আফজাল হোসেন (013007801)	CREATE	{}	2026-05-25 09:27:23.499713+00	\N	\N
+603	mp	address	77	বর্তমান ঠিকানা — মোঃ আমির হামজা	CREATE	{}	2026-05-25 09:27:23.496059+00	\N	\N
+602	mp	electioninfo	77	মোঃ আমির হামজা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.4951+00	\N	\N
+601	mp	mp	77	মোঃ আমির হামজা (013007701)	CREATE	{}	2026-05-25 09:27:23.494188+00	\N	\N
+600	mp	address	76	বর্তমান ঠিকানা — মোঃ আব্দুল গফুর	CREATE	{}	2026-05-25 09:27:23.49102+00	\N	\N
+599	mp	electioninfo	76	মোঃ আব্দুল গফুর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.490112+00	\N	\N
+598	mp	mp	76	মোঃ আব্দুল গফুর (013007601)	CREATE	{}	2026-05-25 09:27:23.489238+00	\N	\N
+597	mp	address	75	বর্তমান ঠিকানা — রেজা আহাম্মেদ	CREATE	{}	2026-05-25 09:27:23.486279+00	\N	\N
+596	mp	electioninfo	75	রেজা আহাম্মেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.485446+00	\N	\N
+595	mp	mp	75	রেজা আহাম্মেদ (013007501)	CREATE	{}	2026-05-25 09:27:23.48456+00	\N	\N
+594	mp	address	74	বর্তমান ঠিকানা — মোঃ নাজমুল হুদা	CREATE	{}	2026-05-25 09:27:23.481566+00	\N	\N
+593	mp	electioninfo	74	মোঃ নাজমুল হুদা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.480681+00	\N	\N
+592	mp	mp	74	মোঃ নাজমুল হুদা (013007401)	CREATE	{}	2026-05-25 09:27:23.479802+00	\N	\N
+591	mp	address	73	বর্তমান ঠিকানা — মোঃ তাজউদ্দীন খান	CREATE	{}	2026-05-25 09:27:23.476667+00	\N	\N
+590	mp	electioninfo	73	মোঃ তাজউদ্দীন খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.475664+00	\N	\N
+650	mp	electioninfo	93	বিশ্বাস জাহাঙ্গীর আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.582272+00	\N	\N
+649	mp	mp	93	বিশ্বাস জাহাঙ্গীর আলম (013009301)	CREATE	{}	2026-05-25 09:27:23.581118+00	\N	\N
+648	mp	address	92	বর্তমান ঠিকানা — নিতাই রায় চৌধুরী	CREATE	{}	2026-05-25 09:27:23.577327+00	\N	\N
+647	mp	electioninfo	92	নিতাই রায় চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.576492+00	\N	\N
+646	mp	mp	92	নিতাই রায় চৌধুরী (013009201)	CREATE	{}	2026-05-25 09:27:23.575409+00	\N	\N
+645	mp	address	91	বর্তমান ঠিকানা — মোঃ মনোয়ার হোসেন	CREATE	{}	2026-05-25 09:27:23.57241+00	\N	\N
+644	mp	electioninfo	91	মোঃ মনোয়ার হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.571552+00	\N	\N
+643	mp	mp	91	মোঃ মনোয়ার হোসেন (013009101)	CREATE	{}	2026-05-25 09:27:23.570586+00	\N	\N
+642	mp	address	90	বর্তমান ঠিকানা — মোঃ মোক্তার আলী	CREATE	{}	2026-05-25 09:27:23.56765+00	\N	\N
+641	mp	electioninfo	90	মোঃ মোক্তার আলী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.566669+00	\N	\N
+640	mp	mp	90	মোঃ মোক্তার আলী (013009001)	CREATE	{}	2026-05-25 09:27:23.565672+00	\N	\N
+639	mp	address	89	বর্তমান ঠিকানা — গাজী এনামুল হক	CREATE	{}	2026-05-25 09:27:23.562573+00	\N	\N
+638	mp	electioninfo	89	গাজী এনামুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.561598+00	\N	\N
+637	mp	mp	89	গাজী এনামুল হক (013008901)	CREATE	{}	2026-05-25 09:27:23.560607+00	\N	\N
+636	mp	address	88	বর্তমান ঠিকানা — মোঃ গোলাম রছুল	CREATE	{}	2026-05-25 09:27:23.55764+00	\N	\N
+635	mp	electioninfo	88	মোঃ গোলাম রছুল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.556744+00	\N	\N
+634	mp	mp	88	মোঃ গোলাম রছুল (013008801)	CREATE	{}	2026-05-25 09:27:23.5558+00	\N	\N
+633	mp	address	87	বর্তমান ঠিকানা — অনিন্দ্য ইসলাম অমিত	CREATE	{}	2026-05-25 09:27:23.552586+00	\N	\N
+632	mp	electioninfo	87	অনিন্দ্য ইসলাম অমিত — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.551746+00	\N	\N
+631	mp	mp	87	অনিন্দ্য ইসলাম অমিত (013008701)	CREATE	{}	2026-05-25 09:27:23.550602+00	\N	\N
+630	mp	address	86	বর্তমান ঠিকানা — মোহাম্মদ মোসলেহউদ্দিন ফরিদ	CREATE	{}	2026-05-25 09:27:23.547651+00	\N	\N
+629	mp	electioninfo	86	মোহাম্মদ মোসলেহউদ্দিন ফরিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.546652+00	\N	\N
+628	mp	mp	86	মোহাম্মদ মোসলেহউদ্দিন ফরিদ (013008601)	CREATE	{}	2026-05-25 09:27:23.545669+00	\N	\N
+627	mp	address	85	বর্তমান ঠিকানা — মুহাম্মাদ আজীজুর রহমান	CREATE	{}	2026-05-25 09:27:23.542302+00	\N	\N
+626	mp	electioninfo	85	মুহাম্মাদ আজীজুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.541373+00	\N	\N
+625	mp	mp	85	মুহাম্মাদ আজীজুর রহমান (013008501)	CREATE	{}	2026-05-25 09:27:23.540353+00	\N	\N
+624	mp	address	84	বর্তমান ঠিকানা — মোঃ আবু তালিব	CREATE	{}	2026-05-25 09:27:23.537065+00	\N	\N
+623	mp	electioninfo	84	মোঃ আবু তালিব — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.536192+00	\N	\N
+622	mp	mp	84	মোঃ আবু তালিব (013008401)	CREATE	{}	2026-05-25 09:27:23.535265+00	\N	\N
+621	mp	address	83	বর্তমান ঠিকানা — মোঃ মতিয়ার রহমান	CREATE	{}	2026-05-25 09:27:23.531605+00	\N	\N
+680	mp	electioninfo	103	মোহাম্মদ আলি আসগার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.634694+00	\N	\N
+679	mp	mp	103	মোহাম্মদ আলি আসগার (013010301)	CREATE	{}	2026-05-25 09:27:23.633839+00	\N	\N
+678	mp	address	102	বর্তমান ঠিকানা — এস কে আজিজুল বারী	CREATE	{}	2026-05-25 09:27:23.630691+00	\N	\N
+677	mp	electioninfo	102	এস কে আজিজুল বারী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.629717+00	\N	\N
+676	mp	mp	102	এস কে আজিজুল বারী (013010201)	CREATE	{}	2026-05-25 09:27:23.628753+00	\N	\N
+675	mp	address	101	বর্তমান ঠিকানা — রকিবুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.62548+00	\N	\N
+674	mp	electioninfo	101	রকিবুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.624606+00	\N	\N
+673	mp	mp	101	রকিবুল ইসলাম (013010101)	CREATE	{}	2026-05-25 09:27:23.623697+00	\N	\N
+672	mp	address	100	বর্তমান ঠিকানা — শেখ জাহাঙ্গীর হুসাইন হেলাল	CREATE	{}	2026-05-25 09:27:23.620392+00	\N	\N
+671	mp	electioninfo	100	শেখ জাহাঙ্গীর হুসাইন হেলাল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.619371+00	\N	\N
+670	mp	mp	100	শেখ জাহাঙ্গীর হুসাইন হেলাল (013010001)	CREATE	{}	2026-05-25 09:27:23.61844+00	\N	\N
+669	mp	address	99	বর্তমান ঠিকানা — আমীর এজাজ খান	CREATE	{}	2026-05-25 09:27:23.615056+00	\N	\N
+668	mp	electioninfo	99	আমীর এজাজ খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.613983+00	\N	\N
+667	mp	mp	99	আমীর এজাজ খান (013009901)	CREATE	{}	2026-05-25 09:27:23.612916+00	\N	\N
+666	mp	address	98	বর্তমান ঠিকানা — মোঃ আব্দুল আলীম	CREATE	{}	2026-05-25 09:27:23.609322+00	\N	\N
+665	mp	electioninfo	98	মোঃ আব্দুল আলীম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.608374+00	\N	\N
+664	mp	mp	98	মোঃ আব্দুল আলীম (013009801)	CREATE	{}	2026-05-25 09:27:23.607543+00	\N	\N
+663	mp	address	97	বর্তমান ঠিকানা — শেখ ফরিদুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.604194+00	\N	\N
+662	mp	electioninfo	97	শেখ ফরিদুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.603274+00	\N	\N
+661	mp	mp	97	শেখ ফরিদুল ইসলাম (013009701)	CREATE	{}	2026-05-25 09:27:23.602301+00	\N	\N
+660	mp	address	96	বর্তমান ঠিকানা — শেখ মনজুরুল হক (রাহাদ)	CREATE	{}	2026-05-25 09:27:23.599233+00	\N	\N
+659	mp	electioninfo	96	শেখ মনজুরুল হক (রাহাদ) — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.59839+00	\N	\N
+658	mp	mp	96	শেখ মনজুরুল হক (রাহাদ) (013009601)	CREATE	{}	2026-05-25 09:27:23.59752+00	\N	\N
+657	mp	address	95	বর্তমান ঠিকানা — মোঃ মশিউর রহমান খান	CREATE	{}	2026-05-25 09:27:23.594193+00	\N	\N
+656	mp	electioninfo	95	মোঃ মশিউর রহমান খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.593143+00	\N	\N
+655	mp	mp	95	মোঃ মশিউর রহমান খান (013009501)	CREATE	{}	2026-05-25 09:27:23.592093+00	\N	\N
+654	mp	address	94	বর্তমান ঠিকানা — মোঃ আতাউর রহমান	CREATE	{}	2026-05-25 09:27:23.58874+00	\N	\N
+653	mp	electioninfo	94	মোঃ আতাউর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.587707+00	\N	\N
+652	mp	mp	94	মোঃ আতাউর রহমান (013009401)	CREATE	{}	2026-05-25 09:27:23.586755+00	\N	\N
+651	mp	address	93	বর্তমান ঠিকানা — বিশ্বাস জাহাঙ্গীর আলম	CREATE	{}	2026-05-25 09:27:23.583311+00	\N	\N
+711	mp	address	113	বর্তমান ঠিকানা — মোঃ নুরুল হক	CREATE	{}	2026-05-25 09:27:23.68783+00	\N	\N
+710	mp	electioninfo	113	মোঃ নুরুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.686854+00	\N	\N
+709	mp	mp	113	মোঃ নুরুল হক (013011301)	CREATE	{}	2026-05-25 09:27:23.685859+00	\N	\N
+708	mp	address	112	বর্তমান ঠিকানা — মোঃ শফিকুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.682677+00	\N	\N
+707	mp	electioninfo	112	মোঃ শফিকুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.681808+00	\N	\N
+706	mp	mp	112	মোঃ শফিকুল ইসলাম (013011201)	CREATE	{}	2026-05-25 09:27:23.680923+00	\N	\N
+705	mp	address	111	বর্তমান ঠিকানা — আলতাফ হোসেন চৌধুরী	CREATE	{}	2026-05-25 09:27:23.677528+00	\N	\N
+704	mp	electioninfo	111	আলতাফ হোসেন চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.676505+00	\N	\N
+703	mp	mp	111	আলতাফ হোসেন চৌধুরী (013011101)	CREATE	{}	2026-05-25 09:27:23.675521+00	\N	\N
+702	mp	address	110	বর্তমান ঠিকানা — নূরুল ইসলাম মনি	CREATE	{}	2026-05-25 09:27:23.671907+00	\N	\N
+701	mp	electioninfo	110	নূরুল ইসলাম মনি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.670916+00	\N	\N
+700	mp	mp	110	নূরুল ইসলাম মনি (013011001)	CREATE	{}	2026-05-25 09:27:23.669963+00	\N	\N
+699	mp	address	109	বর্তমান ঠিকানা — মোঃ অলি উল্লাহ	CREATE	{}	2026-05-25 09:27:23.666833+00	\N	\N
+698	mp	electioninfo	109	মোঃ অলি উল্লাহ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.666016+00	\N	\N
+697	mp	mp	109	মোঃ অলি উল্লাহ (013010901)	CREATE	{}	2026-05-25 09:27:23.665149+00	\N	\N
+696	mp	address	108	বর্তমান ঠিকানা — জি, এম, নজরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.661836+00	\N	\N
+695	mp	electioninfo	108	জি, এম, নজরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.660922+00	\N	\N
+694	mp	mp	108	জি, এম, নজরুল ইসলাম (013010801)	CREATE	{}	2026-05-25 09:27:23.659889+00	\N	\N
+693	mp	address	107	বর্তমান ঠিকানা — হাফেজ মুহাঃ রবিউল বাশার	CREATE	{}	2026-05-25 09:27:23.656527+00	\N	\N
+692	mp	electioninfo	107	হাফেজ মুহাঃ রবিউল বাশার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.655629+00	\N	\N
+691	mp	mp	107	হাফেজ মুহাঃ রবিউল বাশার (013010701)	CREATE	{}	2026-05-25 09:27:23.65476+00	\N	\N
+690	mp	address	106	বর্তমান ঠিকানা — মুহাম্মাদ আব্দুল খালেক	CREATE	{}	2026-05-25 09:27:23.651352+00	\N	\N
+689	mp	electioninfo	106	মুহাম্মাদ আব্দুল খালেক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.6504+00	\N	\N
+688	mp	mp	106	মুহাম্মাদ আব্দুল খালেক (013010601)	CREATE	{}	2026-05-25 09:27:23.649447+00	\N	\N
+687	mp	address	105	বর্তমান ঠিকানা — মোঃ ইজ্জত উল্লাহ	CREATE	{}	2026-05-25 09:27:23.645875+00	\N	\N
+686	mp	electioninfo	105	মোঃ ইজ্জত উল্লাহ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.64483+00	\N	\N
+685	mp	mp	105	মোঃ ইজ্জত উল্লাহ (013010501)	CREATE	{}	2026-05-25 09:27:23.643794+00	\N	\N
+684	mp	address	104	বর্তমান ঠিকানা — মোঃ আবুল কালাম আজাদ	CREATE	{}	2026-05-25 09:27:23.640303+00	\N	\N
+683	mp	electioninfo	104	মোঃ আবুল কালাম আজাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.639367+00	\N	\N
+682	mp	mp	104	মোঃ আবুল কালাম আজাদ (013010401)	CREATE	{}	2026-05-25 09:27:23.638439+00	\N	\N
+742	mp	mp	124	আবুল হোসেন খান (013012401)	CREATE	{}	2026-05-25 09:27:23.745414+00	\N	\N
+741	mp	address	123	বর্তমান ঠিকানা — মোঃ মজিবর রহমান সরওয়ার	CREATE	{}	2026-05-25 09:27:23.742102+00	\N	\N
+740	mp	electioninfo	123	মোঃ মজিবর রহমান সরওয়ার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.741181+00	\N	\N
+739	mp	mp	123	মোঃ মজিবর রহমান সরওয়ার (013012301)	CREATE	{}	2026-05-25 09:27:23.740193+00	\N	\N
+738	mp	address	122	বর্তমান ঠিকানা — মোঃ রাজিব আহসান	CREATE	{}	2026-05-25 09:27:23.736633+00	\N	\N
+737	mp	electioninfo	122	মোঃ রাজিব আহসান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.735657+00	\N	\N
+734	mp	electioninfo	121	জয়নুল আবেদীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.730679+00	\N	\N
+733	mp	mp	121	জয়নুল আবেদীন (013012101)	CREATE	{}	2026-05-25 09:27:23.729595+00	\N	\N
+732	mp	address	120	বর্তমান ঠিকানা — সরদার সরফুদ্দিন আহমেদ	CREATE	{}	2026-05-25 09:27:23.726172+00	\N	\N
+731	mp	electioninfo	120	সরদার সরফুদ্দিন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.725194+00	\N	\N
+730	mp	mp	120	সরদার সরফুদ্দিন আহমেদ (013012001)	CREATE	{}	2026-05-25 09:27:23.724211+00	\N	\N
+729	mp	address	119	বর্তমান ঠিকানা — জহির উদ্দিন স্বপন	CREATE	{}	2026-05-25 09:27:23.72066+00	\N	\N
+728	mp	electioninfo	119	জহির উদ্দিন স্বপন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.719695+00	\N	\N
+727	mp	mp	119	জহির উদ্দিন স্বপন (013011901)	CREATE	{}	2026-05-25 09:27:23.718616+00	\N	\N
+726	mp	address	118	বর্তমান ঠিকানা — মোহাম্মদ নূরুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.714991+00	\N	\N
+725	mp	electioninfo	118	মোহাম্মদ নূরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.71401+00	\N	\N
+724	mp	mp	118	মোহাম্মদ নূরুল ইসলাম (013011801)	CREATE	{}	2026-05-25 09:27:23.713035+00	\N	\N
+723	mp	address	117	বর্তমান ঠিকানা — হাফিজ উদ্দিন আহমদ বীর বিক্রম	CREATE	{}	2026-05-25 09:27:23.709259+00	\N	\N
+722	mp	electioninfo	117	হাফিজ উদ্দিন আহমদ বীর বিক্রম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.708278+00	\N	\N
+721	mp	mp	117	হাফিজ উদ্দিন আহমদ বীর বিক্রম (013011701)	CREATE	{}	2026-05-25 09:27:23.707176+00	\N	\N
+720	mp	address	116	বর্তমান ঠিকানা — মোঃ হাফিজ ইব্রাহিম	CREATE	{}	2026-05-25 09:27:23.703724+00	\N	\N
+719	mp	electioninfo	116	মোঃ হাফিজ ইব্রাহিম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.70245+00	\N	\N
+718	mp	mp	116	মোঃ হাফিজ ইব্রাহিম (013011601)	CREATE	{}	2026-05-25 09:27:23.701596+00	\N	\N
+717	mp	address	115	বর্তমান ঠিকানা — আন্দালিভ রহমান	CREATE	{}	2026-05-25 09:27:23.69827+00	\N	\N
+716	mp	electioninfo	115	আন্দালিভ রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.697267+00	\N	\N
+715	mp	mp	115	আন্দালিভ রহমান (013011501)	CREATE	{}	2026-05-25 09:27:23.696341+00	\N	\N
+714	mp	address	114	বর্তমান ঠিকানা — এ বি এম মোশাররফ হোসেন	CREATE	{}	2026-05-25 09:27:23.693+00	\N	\N
+713	mp	electioninfo	114	এ বি এম মোশাররফ হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.69204+00	\N	\N
+772	mp	mp	134	সুলতান সালাউদ্দিন টুকু (013013401)	CREATE	{}	2026-05-25 09:27:23.805024+00	\N	\N
+771	mp	address	133	বর্তমান ঠিকানা — মোঃ লুৎফর রহমান	CREATE	{}	2026-05-25 09:27:23.801354+00	\N	\N
+770	mp	electioninfo	133	মোঃ লুৎফর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.80044+00	\N	\N
+769	mp	mp	133	মোঃ লুৎফর রহমান (013013301)	CREATE	{}	2026-05-25 09:27:23.799478+00	\N	\N
+768	mp	address	132	বর্তমান ঠিকানা — মোঃ লুৎফর রহমান খান আজাদ	CREATE	{}	2026-05-25 09:27:23.795982+00	\N	\N
+767	mp	electioninfo	132	মোঃ লুৎফর রহমান খান আজাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.794833+00	\N	\N
+766	mp	mp	132	মোঃ লুৎফর রহমান খান আজাদ (013013201)	CREATE	{}	2026-05-25 09:27:23.793856+00	\N	\N
+765	mp	address	131	বর্তমান ঠিকানা — মোঃ আবদুস সালাম পিন্টু	CREATE	{}	2026-05-25 09:27:23.788139+00	\N	\N
+764	mp	electioninfo	131	মোঃ আবদুস সালাম পিন্টু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.787115+00	\N	\N
+763	mp	mp	131	মোঃ আবদুস সালাম পিন্টু (013013101)	CREATE	{}	2026-05-25 09:27:23.785944+00	\N	\N
+762	mp	address	130	বর্তমান ঠিকানা — ফকির মাহবুব আনাম	CREATE	{}	2026-05-25 09:27:23.781811+00	\N	\N
+761	mp	electioninfo	130	ফকির মাহবুব আনাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.780794+00	\N	\N
+760	mp	mp	130	ফকির মাহবুব আনাম (013013001)	CREATE	{}	2026-05-25 09:27:23.779922+00	\N	\N
+759	mp	address	129	বর্তমান ঠিকানা — মোঃ রুহুল আমীন দুলাল	CREATE	{}	2026-05-25 09:27:23.775842+00	\N	\N
+758	mp	electioninfo	129	মোঃ রুহুল আমীন দুলাল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.774798+00	\N	\N
+757	mp	mp	129	মোঃ রুহুল আমীন দুলাল (013012901)	CREATE	{}	2026-05-25 09:27:23.773601+00	\N	\N
+756	mp	address	128	বর্তমান ঠিকানা — আহম্মদ সোহেল মনজুর	CREATE	{}	2026-05-25 09:27:23.76991+00	\N	\N
+755	mp	electioninfo	128	আহম্মদ সোহেল মনজুর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.76905+00	\N	\N
+754	mp	mp	128	আহম্মদ সোহেল মনজুর (013012801)	CREATE	{}	2026-05-25 09:27:23.768077+00	\N	\N
+753	mp	address	127	বর্তমান ঠিকানা — মাসুদ সাঈদী	CREATE	{}	2026-05-25 09:27:23.764003+00	\N	\N
+752	mp	electioninfo	127	মাসুদ সাঈদী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.76302+00	\N	\N
+751	mp	mp	127	মাসুদ সাঈদী (013012701)	CREATE	{}	2026-05-25 09:27:23.762093+00	\N	\N
+750	mp	address	126	বর্তমান ঠিকানা — ইসরাত সুলতানা ইলেন ভূট্টো	CREATE	{}	2026-05-25 09:27:23.758303+00	\N	\N
+749	mp	electioninfo	126	ইসরাত সুলতানা ইলেন ভূট্টো — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.757257+00	\N	\N
+748	mp	mp	126	ইসরাত সুলতানা ইলেন ভূট্টো (013012601)	CREATE	{}	2026-05-25 09:27:23.756174+00	\N	\N
+747	mp	address	125	বর্তমান ঠিকানা — রফিকুল ইসলাম জামাল	CREATE	{}	2026-05-25 09:27:23.75233+00	\N	\N
+746	mp	electioninfo	125	রফিকুল ইসলাম জামাল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.751347+00	\N	\N
+745	mp	mp	125	রফিকুল ইসলাম জামাল (013012501)	CREATE	{}	2026-05-25 09:27:23.750388+00	\N	\N
+744	mp	address	124	বর্তমান ঠিকানা — আবুল হোসেন খান	CREATE	{}	2026-05-25 09:27:23.747268+00	\N	\N
+800	mp	electioninfo	143	মোঃ রাশেদুল ইসলাম রাশেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.855332+00	\N	\N
+799	mp	mp	143	মোঃ রাশেদুল ইসলাম রাশেদ (013014301)	CREATE	{}	2026-05-25 09:27:23.854241+00	\N	\N
+798	mp	address	142	বর্তমান ঠিকানা — শাহ মোঃ ওয়ারেছ আলী মামুন	CREATE	{}	2026-05-25 09:27:23.850923+00	\N	\N
+797	mp	electioninfo	142	শাহ মোঃ ওয়ারেছ আলী মামুন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.850114+00	\N	\N
+796	mp	mp	142	শাহ মোঃ ওয়ারেছ আলী মামুন (013014201)	CREATE	{}	2026-05-25 09:27:23.849157+00	\N	\N
+795	mp	address	141	বর্তমান ঠিকানা — মোঃ ফরিদুল কবীর তালুকদার	CREATE	{}	2026-05-25 09:27:23.846016+00	\N	\N
+794	mp	electioninfo	141	মোঃ ফরিদুল কবীর তালুকদার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.84498+00	\N	\N
+793	mp	mp	141	মোঃ ফরিদুল কবীর তালুকদার (013014101)	CREATE	{}	2026-05-25 09:27:23.843938+00	\N	\N
+792	mp	address	140	বর্তমান ঠিকানা — মোঃ মোস্তাফিজুর রহমান বাবুল	CREATE	{}	2026-05-25 09:27:23.840172+00	\N	\N
+791	mp	electioninfo	140	মোঃ মোস্তাফিজুর রহমান বাবুল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.838945+00	\N	\N
+790	mp	mp	140	মোঃ মোস্তাফিজুর রহমান বাবুল (013014001)	CREATE	{}	2026-05-25 09:27:23.837782+00	\N	\N
+789	mp	address	139	বর্তমান ঠিকানা — এ, ই, সুলতান মাহমুদ বাবু	CREATE	{}	2026-05-25 09:27:23.834308+00	\N	\N
+788	mp	electioninfo	139	এ, ই, সুলতান মাহমুদ বাবু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.833293+00	\N	\N
+787	mp	mp	139	এ, ই, সুলতান মাহমুদ বাবু (013013901)	CREATE	{}	2026-05-25 09:27:23.832368+00	\N	\N
+786	mp	address	138	বর্তমান ঠিকানা — এম রশিদুজ্জামান মিল্লাত	CREATE	{}	2026-05-25 09:27:23.828496+00	\N	\N
+785	mp	electioninfo	138	এম রশিদুজ্জামান মিল্লাত — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.827634+00	\N	\N
+784	mp	mp	138	এম রশিদুজ্জামান মিল্লাত (013013801)	CREATE	{}	2026-05-25 09:27:23.82667+00	\N	\N
+783	mp	address	137	বর্তমান ঠিকানা — আহমেদ আযম খান	CREATE	{}	2026-05-25 09:27:23.823232+00	\N	\N
+782	mp	electioninfo	137	আহমেদ আযম খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.822361+00	\N	\N
+781	mp	mp	137	আহমেদ আযম খান (013013701)	CREATE	{}	2026-05-25 09:27:23.821439+00	\N	\N
+780	mp	address	136	বর্তমান ঠিকানা — আবুল কালাম আজাদ সিদ্দিকী	CREATE	{}	2026-05-25 09:27:23.817996+00	\N	\N
+779	mp	electioninfo	136	আবুল কালাম আজাদ সিদ্দিকী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.816936+00	\N	\N
+778	mp	mp	136	আবুল কালাম আজাদ সিদ্দিকী (013013601)	CREATE	{}	2026-05-25 09:27:23.815906+00	\N	\N
+777	mp	address	135	বর্তমান ঠিকানা — মোঃ রবিউল আওয়াল	CREATE	{}	2026-05-25 09:27:23.812516+00	\N	\N
+776	mp	electioninfo	135	মোঃ রবিউল আওয়াল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.811615+00	\N	\N
+775	mp	mp	135	মোঃ রবিউল আওয়াল (013013501)	CREATE	{}	2026-05-25 09:27:23.810466+00	\N	\N
+774	mp	address	134	বর্তমান ঠিকানা — সুলতান সালাউদ্দিন টুকু	CREATE	{}	2026-05-25 09:27:23.807016+00	\N	\N
+829	mp	mp	153	লুৎফুল্লাহেল মাজেদ (013015301)	CREATE	{}	2026-05-25 09:27:23.90789+00	\N	\N
+828	mp	address	152	বর্তমান ঠিকানা — ডাঃ মোঃ মাহাবুবুর রহমান	CREATE	{}	2026-05-25 09:27:23.904064+00	\N	\N
+827	mp	electioninfo	152	ডাঃ মোঃ মাহাবুবুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.902875+00	\N	\N
+826	mp	mp	152	ডাঃ মোঃ মাহাবুবুর রহমান (013015201)	CREATE	{}	2026-05-25 09:27:23.901854+00	\N	\N
+825	mp	address	151	বর্তমান ঠিকানা — মোঃ কামরুল হাসান	CREATE	{}	2026-05-25 09:27:23.898814+00	\N	\N
+824	mp	electioninfo	151	মোঃ কামরুল হাসান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.89791+00	\N	\N
+823	mp	mp	151	মোঃ কামরুল হাসান (013015101)	CREATE	{}	2026-05-25 09:27:23.896932+00	\N	\N
+822	mp	address	150	বর্তমান ঠিকানা — মোহাম্মদ জাকির হোসেন	CREATE	{}	2026-05-25 09:27:23.893814+00	\N	\N
+821	mp	electioninfo	150	মোহাম্মদ জাকির হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.892901+00	\N	\N
+820	mp	mp	150	মোহাম্মদ জাকির হোসেন (013015001)	CREATE	{}	2026-05-25 09:27:23.891978+00	\N	\N
+819	mp	address	149	বর্তমান ঠিকানা — মোঃ আবু ওয়াহাব আকন্দ ওয়াহিদ	CREATE	{}	2026-05-25 09:27:23.888411+00	\N	\N
+818	mp	electioninfo	149	মোঃ আবু ওয়াহাব আকন্দ ওয়াহিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.887334+00	\N	\N
+817	mp	mp	149	মোঃ আবু ওয়াহাব আকন্দ ওয়াহিদ (013014901)	CREATE	{}	2026-05-25 09:27:23.886227+00	\N	\N
+816	mp	address	148	বর্তমান ঠিকানা — এম ইকবাল হোসেইন	CREATE	{}	2026-05-25 09:27:23.882391+00	\N	\N
+815	mp	electioninfo	148	এম ইকবাল হোসেইন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.881345+00	\N	\N
+814	mp	mp	148	এম ইকবাল হোসেইন (013014801)	CREATE	{}	2026-05-25 09:27:23.880366+00	\N	\N
+813	mp	address	147	বর্তমান ঠিকানা — মুহাম্মদুল্লাহ	CREATE	{}	2026-05-25 09:27:23.877346+00	\N	\N
+812	mp	electioninfo	147	মুহাম্মদুল্লাহ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.87632+00	\N	\N
+811	mp	mp	147	মুহাম্মদুল্লাহ (013014701)	CREATE	{}	2026-05-25 09:27:23.875227+00	\N	\N
+810	mp	address	146	বর্তমান ঠিকানা — মোহাম্মদ সালমান ওমর	CREATE	{}	2026-05-25 09:27:23.871586+00	\N	\N
+809	mp	electioninfo	146	মোহাম্মদ সালমান ওমর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.870497+00	\N	\N
+808	mp	mp	146	মোহাম্মদ সালমান ওমর (013014601)	CREATE	{}	2026-05-25 09:27:23.869497+00	\N	\N
+807	mp	address	145	বর্তমান ঠিকানা — মোঃ মাহমুদুল হক রুবেল	CREATE	{}	2026-05-25 09:27:23.866415+00	\N	\N
+806	mp	electioninfo	145	মোঃ মাহমুদুল হক রুবেল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.865524+00	\N	\N
+805	mp	mp	145	মোঃ মাহমুদুল হক রুবেল (013014501)	CREATE	{}	2026-05-25 09:27:23.864607+00	\N	\N
+804	mp	address	144	বর্তমান ঠিকানা — মোহাম্মদ ফাহিম চৌধুরী	CREATE	{}	2026-05-25 09:27:23.861268+00	\N	\N
+803	mp	electioninfo	144	মোহাম্মদ ফাহিম চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.860372+00	\N	\N
+802	mp	mp	144	মোহাম্মদ ফাহিম চৌধুরী (013014401)	CREATE	{}	2026-05-25 09:27:23.859495+00	\N	\N
+858	mp	address	162	বর্তমান ঠিকানা — মোহাম্মদ মাজহারুল ইসলাম	CREATE	{}	2026-05-25 09:27:23.96456+00	\N	\N
+857	mp	electioninfo	162	মোহাম্মদ মাজহারুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.963313+00	\N	\N
+856	mp	mp	162	মোহাম্মদ মাজহারুল ইসলাম (013016201)	CREATE	{}	2026-05-25 09:27:23.962077+00	\N	\N
+855	mp	address	161	বর্তমান ঠিকানা — মাছুম মোস্তফা	CREATE	{}	2026-05-25 09:27:23.958249+00	\N	\N
+854	mp	electioninfo	161	মাছুম মোস্তফা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.957116+00	\N	\N
+853	mp	mp	161	মাছুম মোস্তফা (013016101)	CREATE	{}	2026-05-25 09:27:23.956071+00	\N	\N
+852	mp	address	160	বর্তমান ঠিকানা — মোঃ লুৎফুজ্জামান বাবর	CREATE	{}	2026-05-25 09:27:23.952547+00	\N	\N
+851	mp	electioninfo	160	মোঃ লুৎফুজ্জামান বাবর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.95148+00	\N	\N
+850	mp	mp	160	মোঃ লুৎফুজ্জামান বাবর (013016001)	CREATE	{}	2026-05-25 09:27:23.950406+00	\N	\N
+849	mp	address	159	বর্তমান ঠিকানা — রফিকুল ইসলাম হিলালী	CREATE	{}	2026-05-25 09:27:23.946816+00	\N	\N
+848	mp	electioninfo	159	রফিকুল ইসলাম হিলালী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.945733+00	\N	\N
+847	mp	mp	159	রফিকুল ইসলাম হিলালী (013015901)	CREATE	{}	2026-05-25 09:27:23.944554+00	\N	\N
+846	mp	address	158	বর্তমান ঠিকানা — ডাঃ মোঃ আনোয়ারুল হক	CREATE	{}	2026-05-25 09:27:23.941108+00	\N	\N
+845	mp	electioninfo	158	ডাঃ মোঃ আনোয়ারুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.939996+00	\N	\N
+844	mp	mp	158	ডাঃ মোঃ আনোয়ারুল হক (013015801)	CREATE	{}	2026-05-25 09:27:23.938976+00	\N	\N
+843	mp	address	157	বর্তমান ঠিকানা — ব্যারিষ্টার কায়সার কামাল	CREATE	{}	2026-05-25 09:27:23.935046+00	\N	\N
+842	mp	electioninfo	157	ব্যারিষ্টার কায়সার কামাল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.933949+00	\N	\N
+841	mp	mp	157	ব্যারিষ্টার কায়সার কামাল (013015701)	CREATE	{}	2026-05-25 09:27:23.932864+00	\N	\N
+840	mp	address	156	বর্তমান ঠিকানা — ফখর উদ্দিন আহমেদ	CREATE	{}	2026-05-25 09:27:23.92914+00	\N	\N
+839	mp	electioninfo	156	ফখর উদ্দিন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.92774+00	\N	\N
+838	mp	mp	156	ফখর উদ্দিন আহমেদ (013015601)	CREATE	{}	2026-05-25 09:27:23.926502+00	\N	\N
+837	mp	address	155	বর্তমান ঠিকানা — মোহাম্মদ আক্তারুজ্জামান	CREATE	{}	2026-05-25 09:27:23.921816+00	\N	\N
+836	mp	electioninfo	155	মোহাম্মদ আক্তারুজ্জামান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.920485+00	\N	\N
+835	mp	mp	155	মোহাম্মদ আক্তারুজ্জামান (013015501)	CREATE	{}	2026-05-25 09:27:23.919081+00	\N	\N
+834	mp	address	154	বর্তমান ঠিকানা — ইয়াসের খান চৌধুরী	CREATE	{}	2026-05-25 09:27:23.915446+00	\N	\N
+833	mp	electioninfo	154	ইয়াসের খান চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.914449+00	\N	\N
+832	mp	mp	154	ইয়াসের খান চৌধুরী (013015401)	CREATE	{}	2026-05-25 09:27:23.913484+00	\N	\N
+831	mp	address	153	বর্তমান ঠিকানা — লুৎফুল্লাহেল মাজেদ	CREATE	{}	2026-05-25 09:27:23.910067+00	\N	\N
+889	mp	mp	173	মোঃ কামরুজ্জামান (013017301)	CREATE	{}	2026-05-25 09:27:24.041668+00	\N	\N
+888	mp	address	172	বর্তমান ঠিকানা — আব্দুস সালাম আজাদ	CREATE	{}	2026-05-25 09:27:24.037909+00	\N	\N
+887	mp	electioninfo	172	আব্দুস সালাম আজাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.036941+00	\N	\N
+886	mp	mp	172	আব্দুস সালাম আজাদ (013017201)	CREATE	{}	2026-05-25 09:27:24.035992+00	\N	\N
+885	mp	address	171	বর্তমান ঠিকানা — মোঃ আব্দুল্লাহ্	CREATE	{}	2026-05-25 09:27:24.031468+00	\N	\N
+884	mp	electioninfo	171	মোঃ আব্দুল্লাহ্ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.028318+00	\N	\N
+883	mp	mp	171	মোঃ আব্দুল্লাহ্ (013017101)	CREATE	{}	2026-05-25 09:27:24.026573+00	\N	\N
+882	mp	address	170	বর্তমান ঠিকানা — আফরোজা খানম	CREATE	{}	2026-05-25 09:27:24.022523+00	\N	\N
+881	mp	electioninfo	170	আফরোজা খানম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.02072+00	\N	\N
+880	mp	mp	170	আফরোজা খানম (013017001)	CREATE	{}	2026-05-25 09:27:24.019357+00	\N	\N
+879	mp	address	169	বর্তমান ঠিকানা — মঈনুল ইসলাম খান	CREATE	{}	2026-05-25 09:27:24.015293+00	\N	\N
+878	mp	electioninfo	169	মঈনুল ইসলাম খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.013961+00	\N	\N
+877	mp	mp	169	মঈনুল ইসলাম খান (013016901)	CREATE	{}	2026-05-25 09:27:24.012728+00	\N	\N
+876	mp	address	168	বর্তমান ঠিকানা — এস এ জিন্নাহ কবীর	CREATE	{}	2026-05-25 09:27:24.008367+00	\N	\N
+875	mp	electioninfo	168	এস এ জিন্নাহ কবীর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.006798+00	\N	\N
+874	mp	mp	168	এস এ জিন্নাহ কবীর (013016801)	CREATE	{}	2026-05-25 09:27:24.005284+00	\N	\N
+873	mp	address	167	বর্তমান ঠিকানা — মোঃ শরীফুল আলম	CREATE	{}	2026-05-25 09:27:24.000973+00	\N	\N
+872	mp	electioninfo	167	মোঃ শরীফুল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.999582+00	\N	\N
+871	mp	mp	167	মোঃ শরীফুল আলম (013016701)	CREATE	{}	2026-05-25 09:27:23.998174+00	\N	\N
+870	mp	address	166	বর্তমান ঠিকানা — শেখ মজিবুর রহমান ইকবাল	CREATE	{}	2026-05-25 09:27:23.993777+00	\N	\N
+869	mp	electioninfo	166	শেখ মজিবুর রহমান ইকবাল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.992541+00	\N	\N
+868	mp	mp	166	শেখ মজিবুর রহমান ইকবাল (013016601)	CREATE	{}	2026-05-25 09:27:23.991138+00	\N	\N
+867	mp	address	165	বর্তমান ঠিকানা — মোঃ ফজলুর রহমান	CREATE	{}	2026-05-25 09:27:23.986906+00	\N	\N
+866	mp	electioninfo	165	মোঃ ফজলুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.985428+00	\N	\N
+865	mp	mp	165	মোঃ ফজলুর রহমান (013016501)	CREATE	{}	2026-05-25 09:27:23.984084+00	\N	\N
+864	mp	address	164	বর্তমান ঠিকানা — ড. মুহাম্মদ ওসমান ফারুক	CREATE	{}	2026-05-25 09:27:23.979399+00	\N	\N
+863	mp	electioninfo	164	ড. মুহাম্মদ ওসমান ফারুক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.978018+00	\N	\N
+862	mp	mp	164	ড. মুহাম্মদ ওসমান ফারুক (013016401)	CREATE	{}	2026-05-25 09:27:23.976414+00	\N	\N
+861	mp	address	163	বর্তমান ঠিকানা — এডভোকেট মোঃ জালাল উদ্দীন	CREATE	{}	2026-05-25 09:27:23.971557+00	\N	\N
+860	mp	electioninfo	163	এডভোকেট মোঃ জালাল উদ্দীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.970049+00	\N	\N
+919	mp	mp	183	শেখ রবিউল আলম (013018301)	CREATE	{}	2026-05-25 09:27:24.104249+00	\N	\N
+918	mp	address	182	বর্তমান ঠিকানা — হাবিবুর রশিদ	CREATE	{}	2026-05-25 09:27:24.100358+00	\N	\N
+917	mp	electioninfo	182	হাবিবুর রশিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.098475+00	\N	\N
+916	mp	mp	182	হাবিবুর রশিদ (013018201)	CREATE	{}	2026-05-25 09:27:24.097275+00	\N	\N
+915	mp	address	181	বর্তমান ঠিকানা — মির্জা আব্বাস উদ্দিন আহমেদ	CREATE	{}	2026-05-25 09:27:24.093369+00	\N	\N
+914	mp	electioninfo	181	মির্জা আব্বাস উদ্দিন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.091913+00	\N	\N
+913	mp	mp	181	মির্জা আব্বাস উদ্দিন আহমেদ (013018101)	CREATE	{}	2026-05-25 09:27:24.090026+00	\N	\N
+912	mp	address	180	বর্তমান ঠিকানা — হামিদুর রহমান	CREATE	{}	2026-05-25 09:27:24.086044+00	\N	\N
+911	mp	electioninfo	180	হামিদুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.084729+00	\N	\N
+910	mp	mp	180	হামিদুর রহমান (013018001)	CREATE	{}	2026-05-25 09:27:24.083413+00	\N	\N
+909	mp	address	179	বর্তমান ঠিকানা — ইশরাক হোসেন	CREATE	{}	2026-05-25 09:27:24.07894+00	\N	\N
+908	mp	electioninfo	179	ইশরাক হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.077884+00	\N	\N
+907	mp	mp	179	ইশরাক হোসেন (013017901)	CREATE	{}	2026-05-25 09:27:24.076851+00	\N	\N
+906	mp	address	178	বর্তমান ঠিকানা — মোহাম্মদ কামাল হোসেন	CREATE	{}	2026-05-25 09:27:24.073281+00	\N	\N
+905	mp	electioninfo	178	মোহাম্মদ কামাল হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.072045+00	\N	\N
+904	mp	mp	178	মোহাম্মদ কামাল হোসেন (013017801)	CREATE	{}	2026-05-25 09:27:24.070788+00	\N	\N
+903	mp	address	177	বর্তমান ঠিকানা — সৈয়দ জয়নুল আবেদীন	CREATE	{}	2026-05-25 09:27:24.066987+00	\N	\N
+902	mp	electioninfo	177	সৈয়দ জয়নুল আবেদীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.065948+00	\N	\N
+901	mp	mp	177	সৈয়দ জয়নুল আবেদীন (013017701)	CREATE	{}	2026-05-25 09:27:24.064903+00	\N	\N
+900	mp	address	176	বর্তমান ঠিকানা — গয়েশ্বর চন্দ্র রায়	CREATE	{}	2026-05-25 09:27:24.061187+00	\N	\N
+899	mp	electioninfo	176	গয়েশ্বর চন্দ্র রায় — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.060219+00	\N	\N
+898	mp	mp	176	গয়েশ্বর চন্দ্র রায় (013017601)	CREATE	{}	2026-05-25 09:27:24.059183+00	\N	\N
+897	mp	address	175	বর্তমান ঠিকানা — মোঃ আমানউল্লাহ আমান	CREATE	{}	2026-05-25 09:27:24.056106+00	\N	\N
+896	mp	electioninfo	175	মোঃ আমানউল্লাহ আমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.055091+00	\N	\N
+895	mp	mp	175	মোঃ আমানউল্লাহ আমান (013017501)	CREATE	{}	2026-05-25 09:27:24.054167+00	\N	\N
+894	mp	address	174	বর্তমান ঠিকানা — খোন্দকার আবু আশফাক	CREATE	{}	2026-05-25 09:27:24.050837+00	\N	\N
+893	mp	electioninfo	174	খোন্দকার আবু আশফাক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.049772+00	\N	\N
+892	mp	mp	174	খোন্দকার আবু আশফাক (013017401)	CREATE	{}	2026-05-25 09:27:24.04856+00	\N	\N
+891	mp	address	173	বর্তমান ঠিকানা — মোঃ কামরুজ্জামান	CREATE	{}	2026-05-25 09:27:24.044468+00	\N	\N
+890	mp	electioninfo	173	মোঃ কামরুজ্জামান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.043003+00	\N	\N
+949	mp	mp	193	মোঃ তমিজ উদ্দিন (013019301)	CREATE	{}	2026-05-25 09:27:24.159997+00	\N	\N
+948	mp	address	192	বর্তমান ঠিকানা — দেওয়ান মোহাম্মদ সালাউদ্দিন	CREATE	{}	2026-05-25 09:27:24.156644+00	\N	\N
+947	mp	electioninfo	192	দেওয়ান মোহাম্মদ সালাউদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.155689+00	\N	\N
+946	mp	mp	192	দেওয়ান মোহাম্মদ সালাউদ্দিন (013019201)	CREATE	{}	2026-05-25 09:27:24.154688+00	\N	\N
+945	mp	address	191	বর্তমান ঠিকানা — এস, এম, জাহাঙ্গীর হোসেন	CREATE	{}	2026-05-25 09:27:24.151626+00	\N	\N
+944	mp	electioninfo	191	এস, এম, জাহাঙ্গীর হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.150629+00	\N	\N
+943	mp	mp	191	এস, এম, জাহাঙ্গীর হোসেন (013019101)	CREATE	{}	2026-05-25 09:27:24.149653+00	\N	\N
+942	mp	address	190	বর্তমান ঠিকানা — তারেক রহমান	CREATE	{}	2026-05-25 09:27:24.146485+00	\N	\N
+941	mp	electioninfo	190	তারেক রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.145537+00	\N	\N
+940	mp	mp	190	তারেক রহমান (013019001)	CREATE	{}	2026-05-25 09:27:24.144589+00	\N	\N
+939	mp	address	189	বর্তমান ঠিকানা — মোঃ আব্দুল বাতেন	CREATE	{}	2026-05-25 09:27:24.141344+00	\N	\N
+938	mp	electioninfo	189	মোঃ আব্দুল বাতেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.140436+00	\N	\N
+937	mp	mp	189	মোঃ আব্দুল বাতেন (013018901)	CREATE	{}	2026-05-25 09:27:24.139493+00	\N	\N
+936	mp	address	188	বর্তমান ঠিকানা — ডাঃ মোঃ শফিকুর রহমান	CREATE	{}	2026-05-25 09:27:24.136178+00	\N	\N
+935	mp	electioninfo	188	ডাঃ মোঃ শফিকুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.135123+00	\N	\N
+934	mp	mp	188	ডাঃ মোঃ শফিকুর রহমান (013018801)	CREATE	{}	2026-05-25 09:27:24.13403+00	\N	\N
+933	mp	address	187	বর্তমান ঠিকানা — মীর আহমাদ বিনকাসেম	CREATE	{}	2026-05-25 09:27:24.130279+00	\N	\N
+932	mp	electioninfo	187	মীর আহমাদ বিনকাসেম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.129008+00	\N	\N
+931	mp	mp	187	মীর আহমাদ বিনকাসেম (013018701)	CREATE	{}	2026-05-25 09:27:24.127584+00	\N	\N
+930	mp	address	186	বর্তমান ঠিকানা — ববি হাজ্জাজ	CREATE	{}	2026-05-25 09:27:24.124388+00	\N	\N
+929	mp	electioninfo	186	ববি হাজ্জাজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.123394+00	\N	\N
+928	mp	mp	186	ববি হাজ্জাজ (013018601)	CREATE	{}	2026-05-25 09:27:24.122458+00	\N	\N
+927	mp	address	185	বর্তমান ঠিকানা — মোঃ সাইফুল আলম	CREATE	{}	2026-05-25 09:27:24.118867+00	\N	\N
+926	mp	electioninfo	185	মোঃ সাইফুল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.117742+00	\N	\N
+925	mp	mp	185	মোঃ সাইফুল আলম (013018501)	CREATE	{}	2026-05-25 09:27:24.11651+00	\N	\N
+924	mp	address	184	বর্তমান ঠিকানা — মোঃ নাহিদ ইসলাম	CREATE	{}	2026-05-25 09:27:24.112389+00	\N	\N
+923	mp	electioninfo	184	মোঃ নাহিদ ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.11098+00	\N	\N
+922	mp	mp	184	মোঃ নাহিদ ইসলাম (013018401)	CREATE	{}	2026-05-25 09:27:24.109986+00	\N	\N
+921	mp	address	183	বর্তমান ঠিকানা — শেখ রবিউল আলম	CREATE	{}	2026-05-25 09:27:24.106471+00	\N	\N
+920	mp	electioninfo	183	শেখ রবিউল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.105363+00	\N	\N
+980	mp	electioninfo	203	মোঃ আশরাফ উদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.218802+00	\N	\N
+979	mp	mp	203	মোঃ আশরাফ উদ্দিন (013020301)	CREATE	{}	2026-05-25 09:27:24.217868+00	\N	\N
+978	mp	address	202	বর্তমান ঠিকানা — সরদার মোঃ সাখাওয়াত হোসেন	CREATE	{}	2026-05-25 09:27:24.214704+00	\N	\N
+977	mp	electioninfo	202	সরদার মোঃ সাখাওয়াত হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.213761+00	\N	\N
+976	mp	mp	202	সরদার মোঃ সাখাওয়াত হোসেন (013020201)	CREATE	{}	2026-05-25 09:27:24.212812+00	\N	\N
+975	mp	address	201	বর্তমান ঠিকানা — মনজুর এলাহী	CREATE	{}	2026-05-25 09:27:24.205753+00	\N	\N
+974	mp	electioninfo	201	মনজুর এলাহী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.204775+00	\N	\N
+973	mp	mp	201	মনজুর এলাহী (013020101)	CREATE	{}	2026-05-25 09:27:24.203657+00	\N	\N
+972	mp	address	200	বর্তমান ঠিকানা — ড, আবদুল মঈন খান	CREATE	{}	2026-05-25 09:27:24.2001+00	\N	\N
+971	mp	electioninfo	200	ড, আবদুল মঈন খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.199033+00	\N	\N
+970	mp	mp	200	ড, আবদুল মঈন খান (013020001)	CREATE	{}	2026-05-25 09:27:24.197409+00	\N	\N
+969	mp	address	199	বর্তমান ঠিকানা — খায়রুল কবির খোকন	CREATE	{}	2026-05-25 09:27:24.193671+00	\N	\N
+968	mp	electioninfo	199	খায়রুল কবির খোকন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.192551+00	\N	\N
+967	mp	mp	199	খায়রুল কবির খোকন (013019901)	CREATE	{}	2026-05-25 09:27:24.191452+00	\N	\N
+966	mp	address	198	বর্তমান ঠিকানা — এ, কে, এম, ফজলুল হক মিলন	CREATE	{}	2026-05-25 09:27:24.18819+00	\N	\N
+965	mp	electioninfo	198	এ, কে, এম, ফজলুল হক মিলন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.18726+00	\N	\N
+964	mp	mp	198	এ, কে, এম, ফজলুল হক মিলন (013019801)	CREATE	{}	2026-05-25 09:27:24.186277+00	\N	\N
+963	mp	address	197	বর্তমান ঠিকানা — সালাহ উদ্দিন	CREATE	{}	2026-05-25 09:27:24.183053+00	\N	\N
+962	mp	electioninfo	197	সালাহ উদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.182041+00	\N	\N
+961	mp	mp	197	সালাহ উদ্দিন (013019701)	CREATE	{}	2026-05-25 09:27:24.181087+00	\N	\N
+960	mp	address	196	বর্তমান ঠিকানা — এস,এম, রফিকুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.177774+00	\N	\N
+959	mp	electioninfo	196	এস,এম, রফিকুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.176824+00	\N	\N
+958	mp	mp	196	এস,এম, রফিকুল ইসলাম (013019601)	CREATE	{}	2026-05-25 09:27:24.175767+00	\N	\N
+957	mp	address	195	বর্তমান ঠিকানা — এম মঞ্জুরুল করিম রনি	CREATE	{}	2026-05-25 09:27:24.172581+00	\N	\N
+956	mp	electioninfo	195	এম মঞ্জুরুল করিম রনি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.171568+00	\N	\N
+955	mp	mp	195	এম মঞ্জুরুল করিম রনি (013019501)	CREATE	{}	2026-05-25 09:27:24.170549+00	\N	\N
+954	mp	address	194	বর্তমান ঠিকানা — মোঃ মজিবুর রহমান	CREATE	{}	2026-05-25 09:27:24.167008+00	\N	\N
+953	mp	electioninfo	194	মোঃ মজিবুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.166066+00	\N	\N
+952	mp	mp	194	মোঃ মজিবুর রহমান (013019401)	CREATE	{}	2026-05-25 09:27:24.165134+00	\N	\N
+951	mp	address	193	বর্তমান ঠিকানা — মোঃ তমিজ উদ্দিন	CREATE	{}	2026-05-25 09:27:24.16189+00	\N	\N
 1445	accounts	customuser	2	টেস্ট	UPDATE	{"full_name_bn": ["ÓªƒÓºçÓª©ÓºìÓªƒ", "টেস্ট"]}	2026-06-02 04:59:14.448549+00	\N	\N
-1011	mp	address	213	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª¥ÓºƒÓª¥Óª¼ ÓªçÓªëÓª©ÓºüÓª½ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.272314+00	\N	\N
-1012	mp	mp	214	Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013021401)	CREATE	{}	2026-05-25 09:27:24.275748+00	\N	\N
-1013	mp	electioninfo	214	Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.276808+00	\N	\N
-1014	mp	address	214	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣Óª┐ÓªªÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.277813+00	\N	\N
-1015	mp	mp	215	Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª«ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª▓ÓºìÓª»Óª¥ (013021501)	CREATE	{}	2026-05-25 09:27:24.281077+00	\N	\N
-1016	mp	electioninfo	215	Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª«ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª▓ÓºìÓª»Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.282064+00	\N	\N
-1017	mp	address	215	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª«ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ Óª«ÓºçÓª¥Óª▓ÓºìÓª»Óª¥	CREATE	{}	2026-05-25 09:27:24.282996+00	\N	\N
-1018	mp	mp	216	ÓªòÓºç ÓªÅÓª« Óª¼Óª¥Óª¼Óª░ (013021601)	CREATE	{}	2026-05-25 09:27:24.286011+00	\N	\N
-1019	mp	electioninfo	216	ÓªòÓºç ÓªÅÓª« Óª¼Óª¥Óª¼Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.287032+00	\N	\N
-1020	mp	address	216	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªòÓºç ÓªÅÓª« Óª¼Óª¥Óª¼Óª░	CREATE	{}	2026-05-25 09:27:24.288155+00	\N	\N
-1021	mp	mp	217	ÓªÅÓª©, ÓªÅÓª«, Óª£Óª┐Óª▓Óª¥Óª¿ÓºÇ (013021701)	CREATE	{}	2026-05-25 09:27:24.291677+00	\N	\N
-1022	mp	electioninfo	217	ÓªÅÓª©, ÓªÅÓª«, Óª£Óª┐Óª▓Óª¥Óª¿ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.292629+00	\N	\N
-1023	mp	address	217	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª©, ÓªÅÓª«, Óª£Óª┐Óª▓Óª¥Óª¿ÓºÇ	CREATE	{}	2026-05-25 09:27:24.293594+00	\N	\N
-1024	mp	mp	218	Óª©Óª¥ÓªçÓªª ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óª¥Óªª Óª╣Óª¥Óª¿Óª£Óª¥Óª▓Óª¥ (013021801)	CREATE	{}	2026-05-25 09:27:24.29668+00	\N	\N
-1025	mp	electioninfo	218	Óª©Óª¥ÓªçÓªª ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óª¥Óªª Óª╣Óª¥Óª¿Óª£Óª¥Óª▓Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.297584+00	\N	\N
-1026	mp	address	218	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥ÓªçÓªª ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óª¥Óªª Óª╣Óª¥Óª¿Óª£Óª¥Óª▓Óª¥	CREATE	{}	2026-05-25 09:27:24.298554+00	\N	\N
-1027	mp	mp	219	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª¥Óª¿ÓºìÓªªÓª¥Óª░ ÓªåÓª▓ÓºÇ Óª«Óª┐ÓºƒÓª¥ (013021901)	CREATE	{}	2026-05-25 09:27:24.301821+00	\N	\N
-1028	mp	electioninfo	219	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª¥Óª¿ÓºìÓªªÓª¥Óª░ ÓªåÓª▓ÓºÇ Óª«Óª┐ÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.302739+00	\N	\N
-1029	mp	address	219	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª╣Óª¥Óª¿ÓºìÓªªÓª¥Óª░ ÓªåÓª▓ÓºÇ Óª«Óª┐ÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.303613+00	\N	\N
-1030	mp	mp	220	ÓªåÓª¿Óª┐ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013022001)	CREATE	{}	2026-05-25 09:27:24.3066+00	\N	\N
-1031	mp	electioninfo	220	ÓªåÓª¿Óª┐ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.307621+00	\N	\N
-1032	mp	address	220	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¿Óª┐ÓªøÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.308661+00	\N	\N
-1033	mp	mp	221	Óª©Óª¥ÓªêÓªª ÓªåÓª╣Óª«ÓºçÓªª (013022101)	CREATE	{}	2026-05-25 09:27:24.311807+00	\N	\N
-1034	mp	electioninfo	221	Óª©Óª¥ÓªêÓªª ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.312642+00	\N	\N
-1035	mp	address	221	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥ÓªêÓªª ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.313457+00	\N	\N
-1036	mp	mp	222	Óª«ÓºïÓªâ Óª©Óª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (ÓªòÓª┐Óª░Óª¿) (013022201)	CREATE	{}	2026-05-25 09:27:24.316573+00	\N	\N
-1037	mp	electioninfo	222	Óª«ÓºïÓªâ Óª©Óª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (ÓªòÓª┐Óª░Óª¿) ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.317488+00	\N	\N
-1038	mp	address	222	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª©Óª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (ÓªòÓª┐Óª░Óª¿)	CREATE	{}	2026-05-25 09:27:24.318381+00	\N	\N
-1039	mp	mp	223	Óª«Óª┐ÓºƒÓª¥ Óª¿ÓºüÓª░ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª ÓªàÓª¬Óºü (013022301)	CREATE	{}	2026-05-25 09:27:24.321796+00	\N	\N
-1040	mp	electioninfo	223	Óª«Óª┐ÓºƒÓª¥ Óª¿ÓºüÓª░ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª ÓªàÓª¬Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.322713+00	\N	\N
-1041	mp	address	223	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª┐ÓºƒÓª¥ Óª¿ÓºüÓª░ÓºüÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª¥Óª«ÓºìÓª«ÓºçÓªª ÓªàÓª¬Óºü	CREATE	{}	2026-05-25 09:27:24.323587+00	\N	\N
-1042	mp	mp	224	ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÓªòÓª¥Óª«Óª░ÓºüÓª▓ (013022401)	CREATE	{}	2026-05-25 09:27:24.327087+00	\N	\N
-1043	mp	electioninfo	224	ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÓªòÓª¥Óª«Óª░ÓºüÓª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.328124+00	\N	\N
-1044	mp	address	224	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªòÓª¥Óª«Óª░ÓºüÓª£ÓºìÓª£Óª¥Óª«Óª¥Óª¿ ÓªòÓª¥Óª«Óª░ÓºüÓª▓	CREATE	{}	2026-05-25 09:27:24.32912+00	\N	\N
-1045	mp	mp	225	Óª«ÓºçÓª¥Óªâ Óª¿Óª¥ÓªøÓª┐Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013022501)	CREATE	{}	2026-05-25 09:27:24.332299+00	\N	\N
-1046	mp	electioninfo	225	Óª«ÓºçÓª¥Óªâ Óª¿Óª¥ÓªøÓª┐Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.333268+00	\N	\N
-1047	mp	address	225	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª¿Óª¥ÓªøÓª┐Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.334116+00	\N	\N
-1048	mp	mp	226	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓºƒÓªøÓª░ ÓªåÓª╣Óª«ÓºçÓªª (013022601)	CREATE	{}	2026-05-25 09:27:24.337206+00	\N	\N
-1049	mp	electioninfo	226	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓºƒÓªøÓª░ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.338187+00	\N	\N
-1050	mp	address	226	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªòÓºƒÓªøÓª░ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.3391+00	\N	\N
-1051	mp	mp	227	Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013022701)	CREATE	{}	2026-05-25 09:27:24.34255+00	\N	\N
-1052	mp	electioninfo	227	Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.343575+00	\N	\N
-1053	mp	address	227	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿ÓºéÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.344533+00	\N	\N
-1054	mp	mp	228	ÓªòÓª▓Óª┐Óª« ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª (013022801)	CREATE	{}	2026-05-25 09:27:24.347886+00	\N	\N
-1055	mp	electioninfo	228	ÓªòÓª▓Óª┐Óª« ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.348892+00	\N	\N
-1056	mp	address	228	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªòÓª▓Óª┐Óª« ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.34982+00	\N	\N
-1057	mp	mp	229	ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓºüÓªòÓºìÓªñÓª¥ÓªªÓºÇÓª░ (013022901)	CREATE	{}	2026-05-25 09:27:24.352971+00	\N	\N
-1058	mp	electioninfo	229	ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓºüÓªòÓºìÓªñÓª¥ÓªªÓºÇÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.35387+00	\N	\N
-1059	mp	address	229	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«ÓºüÓªòÓºìÓªñÓª¥ÓªªÓºÇÓª░	CREATE	{}	2026-05-25 09:27:24.354755+00	\N	\N
-1060	mp	mp	230	Óª«ÓºçÓª¥ÓªøÓª¥Óªâ ÓªñÓª¥Óª╣Óª©Óª┐Óª¿Óª¥ Óª░ÓºüÓªÂÓªªÓºÇÓª░ (013023001)	CREATE	{}	2026-05-25 09:27:24.357924+00	\N	\N
-1061	mp	electioninfo	230	Óª«ÓºçÓª¥ÓªøÓª¥Óªâ ÓªñÓª¥Óª╣Óª©Óª┐Óª¿Óª¥ Óª░ÓºüÓªÂÓªªÓºÇÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.358882+00	\N	\N
-1062	mp	address	230	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥ÓªøÓª¥Óªâ ÓªñÓª¥Óª╣Óª©Óª┐Óª¿Óª¥ Óª░ÓºüÓªÂÓªªÓºÇÓª░	CREATE	{}	2026-05-25 09:27:24.359823+00	\N	\N
-1063	mp	mp	231	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª¥Óª▓Óª┐Óªò (013023101)	CREATE	{}	2026-05-25 09:27:24.363203+00	\N	\N
-1064	mp	electioninfo	231	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª¥Óª▓Óª┐Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.364186+00	\N	\N
-1065	mp	address	231	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºìÓªªÓºüÓª▓ Óª«Óª¥Óª▓Óª┐Óªò	CREATE	{}	2026-05-25 09:27:24.365077+00	\N	\N
-1066	mp	mp	232	ÓªåÓª░Óª┐Óª½ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013023201)	CREATE	{}	2026-05-25 09:27:24.368283+00	\N	\N
-1067	mp	electioninfo	232	ÓªåÓª░Óª┐Óª½ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.369182+00	\N	\N
-1068	mp	address	232	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª░Óª┐Óª½ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.370206+00	\N	\N
-1069	mp	mp	233	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿ (013023301)	CREATE	{}	2026-05-25 09:27:24.373099+00	\N	\N
-1313	mp	electioninfo	314	Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.79077+00	\N	\N
-1070	mp	electioninfo	233	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.374008+00	\N	\N
-1071	mp	address	233	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.374866+00	\N	\N
-1072	mp	mp	234	ÓªÅÓª«Óª░Óª¥Óª¿ ÓªåÓª╣Óª«Óªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013023401)	CREATE	{}	2026-05-25 09:27:24.377971+00	\N	\N
-1073	mp	electioninfo	234	ÓªÅÓª«Óª░Óª¥Óª¿ ÓªåÓª╣Óª«Óªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.37884+00	\N	\N
-1074	mp	address	234	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª«Óª░Óª¥Óª¿ ÓªåÓª╣Óª«Óªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.379691+00	\N	\N
-1075	mp	mp	235	Óª¿Óª¥Óª©Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª (013023501)	CREATE	{}	2026-05-25 09:27:24.3828+00	\N	\N
-1076	mp	electioninfo	235	Óª¿Óª¥Óª©Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.383725+00	\N	\N
-1077	mp	address	235	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª¥Óª©Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.384641+00	\N	\N
-1078	mp	mp	236	Óª«ÓºïÓªâ ÓªÂÓªôÓªòÓªñÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013023601)	CREATE	{}	2026-05-25 09:27:24.388263+00	\N	\N
-1079	mp	electioninfo	236	Óª«ÓºïÓªâ ÓªÂÓªôÓªòÓªñÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.389277+00	\N	\N
-1080	mp	address	236	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªÂÓªôÓªòÓªñÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.390291+00	\N	\N
-1081	mp	mp	237	Óª¿Óª¥Óª©ÓºçÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013023701)	CREATE	{}	2026-05-25 09:27:24.39363+00	\N	\N
-1082	mp	electioninfo	237	Óª¿Óª¥Óª©ÓºçÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.394569+00	\N	\N
-1083	mp	address	237	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª¥Óª©ÓºçÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.395535+00	\N	\N
-1084	mp	mp	238	Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013023801)	CREATE	{}	2026-05-25 09:27:24.399176+00	\N	\N
-1085	mp	electioninfo	238	Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.400135+00	\N	\N
-1086	mp	address	238	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºüÓª£Óª┐Óª¼ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.401001+00	\N	\N
-1087	mp	mp	239	Óª░ÓºçÓª£Óª¥ ÓªòÓª┐Óª¼Óª░Óª┐ÓºƒÓª¥ (013023901)	CREATE	{}	2026-05-25 09:27:24.404467+00	\N	\N
-1088	mp	electioninfo	239	Óª░ÓºçÓª£Óª¥ ÓªòÓª┐Óª¼Óª░Óª┐ÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.405373+00	\N	\N
-1089	mp	address	239	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºçÓª£Óª¥ ÓªòÓª┐Óª¼Óª░Óª┐ÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.406227+00	\N	\N
-1090	mp	mp	240	ÓªåÓª¼Óºü Óª«Óª¿Óª©ÓºüÓª░ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣Óª¥Óª©Óª¥Óª¿ (013024001)	CREATE	{}	2026-05-25 09:27:24.409209+00	\N	\N
-1091	mp	electioninfo	240	ÓªåÓª¼Óºü Óª«Óª¿Óª©ÓºüÓª░ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣Óª¥Óª©Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.410241+00	\N	\N
-1092	mp	address	240	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼Óºü Óª«Óª¿Óª©ÓºüÓª░ Óª©Óª¥ÓªûÓª¥ÓªôÓºƒÓª¥Óªñ Óª╣Óª¥Óª©Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.411091+00	\N	\N
-1093	mp	mp	241	ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª«ÓºçÓª¥Óªâ Óª£Óª┐ ÓªòÓºç ÓªùÓªëÓªø (013024101)	CREATE	{}	2026-05-25 09:27:24.41442+00	\N	\N
-1094	mp	electioninfo	241	ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª«ÓºçÓª¥Óªâ Óª£Óª┐ ÓªòÓºç ÓªùÓªëÓªø ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.415239+00	\N	\N
-1095	mp	address	241	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª«ÓºçÓª¥Óªâ Óª£Óª┐ ÓªòÓºç ÓªùÓªëÓªø	CREATE	{}	2026-05-25 09:27:24.416143+00	\N	\N
-1096	mp	mp	242	ÓªÅÓª©, ÓªÅÓª«, Óª½ÓºƒÓª©Óª▓ (013024201)	CREATE	{}	2026-05-25 09:27:24.419168+00	\N	\N
-1097	mp	electioninfo	242	ÓªÅÓª©, ÓªÅÓª«, Óª½ÓºƒÓª©Óª▓ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.420171+00	\N	\N
-1098	mp	address	242	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª©, ÓªÅÓª«, Óª½ÓºƒÓª©Óª▓	CREATE	{}	2026-05-25 09:27:24.421123+00	\N	\N
-1099	mp	mp	243	ÓªÅÓª«, ÓªÅ, Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ (013024301)	CREATE	{}	2026-05-25 09:27:24.424354+00	\N	\N
-1100	mp	electioninfo	243	ÓªÅÓª«, ÓªÅ, Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.425242+00	\N	\N
-1101	mp	address	243	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª«, ÓªÅ, Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.42613+00	\N	\N
-1102	mp	mp	244	Óª░ÓºüÓª«Óª┐Óª¿ Óª½Óª¥Óª░Óª╣Óª¥Óª¿Óª¥ (013024401)	CREATE	{}	2026-05-25 09:27:24.429075+00	\N	\N
-1103	mp	electioninfo	244	Óª░ÓºüÓª«Óª┐Óª¿ Óª½Óª¥Óª░Óª╣Óª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.430003+00	\N	\N
-1104	mp	address	244	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºüÓª«Óª┐Óª¿ Óª½Óª¥Óª░Óª╣Óª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.431229+00	\N	\N
-1105	mp	mp	245	Óª«ÓºïÓªâ ÓªûÓª¥Óª▓ÓºçÓªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ (013024501)	CREATE	{}	2026-05-25 09:27:24.434603+00	\N	\N
-1106	mp	electioninfo	245	Óª«ÓºïÓªâ ÓªûÓª¥Óª▓ÓºçÓªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.435515+00	\N	\N
-1107	mp	address	245	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªûÓª¥Óª▓ÓºçÓªª Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ Óª«Óª¥Óª╣Óª¼ÓºüÓª¼	CREATE	{}	2026-05-25 09:27:24.436388+00	\N	\N
-1108	mp	mp	246	Óª«ÓºüÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013024601)	CREATE	{}	2026-05-25 09:27:24.4394+00	\N	\N
-1109	mp	electioninfo	246	Óª«ÓºüÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.440414+00	\N	\N
-1110	mp	address	246	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓªÂÓª½Óª┐ÓªòÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.44129+00	\N	\N
-1111	mp	mp	247	Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ (013024701)	CREATE	{}	2026-05-25 09:27:24.44438+00	\N	\N
-1112	mp	electioninfo	247	Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.445327+00	\N	\N
-1113	mp	address	247	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª«Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.446315+00	\N	\N
-1114	mp	mp	248	Óª«ÓºïÓªâ Óª£ÓºïÓª¿Óª¥ÓºƒÓºçÓªª ÓªåÓª¼ÓºìÓªªÓºüÓª░ Óª░Óª╣Óª┐Óª« Óª©Óª¥ÓªòÓª┐ (013024801)	CREATE	{}	2026-05-25 09:27:24.449147+00	\N	\N
-1115	mp	electioninfo	248	Óª«ÓºïÓªâ Óª£ÓºïÓª¿Óª¥ÓºƒÓºçÓªª ÓªåÓª¼ÓºìÓªªÓºüÓª░ Óª░Óª╣Óª┐Óª« Óª©Óª¥ÓªòÓª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.450045+00	\N	\N
-1116	mp	address	248	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª£ÓºïÓª¿Óª¥ÓºƒÓºçÓªª ÓªåÓª¼ÓºìÓªªÓºüÓª░ Óª░Óª╣Óª┐Óª« Óª©Óª¥ÓªòÓª┐	CREATE	{}	2026-05-25 09:27:24.451031+00	\N	\N
-1117	mp	mp	249	Óªí, ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿ (013024901)	CREATE	{}	2026-05-25 09:27:24.454727+00	\N	\N
-1118	mp	electioninfo	249	Óªí, ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.45571+00	\N	\N
-1119	mp	address	249	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óªí, ÓªûÓª¿ÓºìÓªªÓªòÓª¥Óª░ Óª«ÓºïÓªÂÓª¥Óª░Óª░Óª½ Óª╣ÓºïÓª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.456688+00	\N	\N
-1120	mp	mp	250	Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª« Óª¡ÓºéÓªçÓºƒÓª¥ (013025001)	CREATE	{}	2026-05-25 09:27:24.460016+00	\N	\N
-1121	mp	electioninfo	250	Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª« Óª¡ÓºéÓªçÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.460922+00	\N	\N
-1122	mp	address	250	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª©ÓºçÓª▓Óª┐Óª« Óª¡ÓºéÓªçÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.461901+00	\N	\N
-1123	mp	mp	251	ÓªòÓª¥Óª£ÓºÇ ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óª½Óª¥Óª£ÓºìÓª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿ (ÓªòÓª¥ÓºƒÓªòÓºçÓª¥Óª¼Óª¥Óªª) (013025101)	CREATE	{}	2026-05-25 09:27:24.464932+00	\N	\N
-1124	mp	electioninfo	251	ÓªòÓª¥Óª£ÓºÇ ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óª½Óª¥Óª£ÓºìÓª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿ (ÓªòÓª¥ÓºƒÓªòÓºçÓª¥Óª¼Óª¥Óªª) ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.465877+00	\N	\N
-1125	mp	address	251	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªòÓª¥Óª£ÓºÇ ÓªÂÓª¥Óª╣ Óª«ÓºçÓª¥Óª½Óª¥Óª£ÓºìÓª£Óª¥Óª▓ Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿ (ÓªòÓª¥ÓºƒÓªòÓºçÓª¥Óª¼Óª¥Óªª)	CREATE	{}	2026-05-25 09:27:24.467137+00	\N	\N
-1126	mp	mp	252	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¿Óª¥Óªñ (013025201)	CREATE	{}	2026-05-25 09:27:24.470512+00	\N	\N
-1127	mp	electioninfo	252	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¿Óª¥Óªñ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.471377+00	\N	\N
-1128	mp	address	252	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ Óª╣Óª¥Óª©Óª¿Óª¥Óªñ	CREATE	{}	2026-05-25 09:27:24.472402+00	\N	\N
-1129	mp	mp	253	Óª«ÓºïÓªâ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013025301)	CREATE	{}	2026-05-25 09:27:24.475402+00	\N	\N
-1130	mp	electioninfo	253	Óª«ÓºïÓªâ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.476438+00	\N	\N
-1131	mp	address	253	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.477433+00	\N	\N
-1132	mp	mp	254	Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª┐Óª░ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013025401)	CREATE	{}	2026-05-25 09:27:24.48114+00	\N	\N
-1133	mp	electioninfo	254	Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª┐Óª░ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.482084+00	\N	\N
-1134	mp	address	254	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª«Óª¿Óª┐Óª░ÓºüÓª▓ Óª╣Óªò ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.483454+00	\N	\N
-1135	mp	mp	255	ÓªåÓªñÓª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª« (013025501)	CREATE	{}	2026-05-25 09:27:24.486847+00	\N	\N
-1136	mp	electioninfo	255	ÓªåÓªñÓª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.487851+00	\N	\N
-1137	mp	address	255	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓªñÓª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:24.488803+00	\N	\N
-1138	mp	mp	256	Óª£Óª¥ÓªòÓª¥Óª░Óª┐ÓºƒÓª¥ ÓªñÓª¥Óª╣ÓºçÓª░ (013025601)	CREATE	{}	2026-05-25 09:27:24.492638+00	\N	\N
-1139	mp	electioninfo	256	Óª£Óª¥ÓªòÓª¥Óª░Óª┐ÓºƒÓª¥ ÓªñÓª¥Óª╣ÓºçÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.493523+00	\N	\N
-1140	mp	address	256	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£Óª¥ÓªòÓª¥Óª░Óª┐ÓºƒÓª¥ ÓªñÓª¥Óª╣ÓºçÓª░	CREATE	{}	2026-05-25 09:27:24.494354+00	\N	\N
-1141	mp	mp	257	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« (013025701)	CREATE	{}	2026-05-25 09:27:24.497364+00	\N	\N
-1142	mp	electioninfo	257	Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.498216+00	\N	\N
-1143	mp	address	257	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªåÓª¼ÓºüÓª▓ ÓªòÓª¥Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.499182+00	\N	\N
-1144	mp	mp	258	Óª«ÓºïÓªâ Óª«ÓºïÓª¼Óª¥ÓªÂÓºìÓª¼ÓºçÓª░ ÓªåÓª▓Óª« Óª¡ÓºüÓªüÓªçÓºƒÓª¥ (013025801)	CREATE	{}	2026-05-25 09:27:24.502475+00	\N	\N
-1145	mp	electioninfo	258	Óª«ÓºïÓªâ Óª«ÓºïÓª¼Óª¥ÓªÂÓºìÓª¼ÓºçÓª░ ÓªåÓª▓Óª« Óª¡ÓºüÓªüÓªçÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.503404+00	\N	\N
-1146	mp	address	258	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«ÓºïÓª¼Óª¥ÓªÂÓºìÓª¼ÓºçÓª░ ÓªåÓª▓Óª« Óª¡ÓºüÓªüÓªçÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.504324+00	\N	\N
-1147	mp	mp	259	Óª©ÓºêÓºƒÓªª ÓªåÓª¼ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªñÓª¥Óª╣ÓºçÓª░ (013025901)	CREATE	{}	2026-05-25 09:27:24.507335+00	\N	\N
-1148	mp	electioninfo	259	Óª©ÓºêÓºƒÓªª ÓªåÓª¼ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªñÓª¥Óª╣ÓºçÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.508253+00	\N	\N
-1149	mp	address	259	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºêÓºƒÓªª ÓªåÓª¼ÓªªÓºüÓª▓ÓºìÓª▓Óª¥Óª╣ Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªñÓª¥Óª╣ÓºçÓª░	CREATE	{}	2026-05-25 09:27:24.509087+00	\N	\N
-1150	mp	mp	260	Óªå Óª¿ Óª« ÓªÅÓª╣ÓªøÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ (013026001)	CREATE	{}	2026-05-25 09:27:24.512054+00	\N	\N
-1151	mp	electioninfo	260	Óªå Óª¿ Óª« ÓªÅÓª╣ÓªøÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.512929+00	\N	\N
-1152	mp	address	260	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óªå Óª¿ Óª« ÓªÅÓª╣ÓªøÓª¥Óª¿ÓºüÓª▓ Óª╣Óªò Óª«Óª┐Óª▓Óª¿	CREATE	{}	2026-05-25 09:27:24.513772+00	\N	\N
-1153	mp	mp	261	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (013026101)	CREATE	{}	2026-05-25 09:27:24.517165+00	\N	\N
-1154	mp	electioninfo	261	Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.51816+00	\N	\N
-1155	mp	address	261	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ Óª£Óª¥Óª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.519199+00	\N	\N
-1156	mp	mp	262	ÓªÂÓºçÓªû Óª½Óª░Óª┐Óªª ÓªåÓª╣Óª«ÓºìÓª«ÓºçÓªª (013026201)	CREATE	{}	2026-05-25 09:27:24.522924+00	\N	\N
-1157	mp	electioninfo	262	ÓªÂÓºçÓªû Óª½Óª░Óª┐Óªª ÓªåÓª╣Óª«ÓºìÓª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.523922+00	\N	\N
-1158	mp	address	262	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓºçÓªû Óª½Óª░Óª┐Óªª ÓªåÓª╣Óª«ÓºìÓª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.524919+00	\N	\N
-1159	mp	mp	263	Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ (013026301)	CREATE	{}	2026-05-25 09:27:24.528135+00	\N	\N
-1160	mp	electioninfo	263	Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.528994+00	\N	\N
-1161	mp	address	263	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.529841+00	\N	\N
-1162	mp	mp	264	Óª«ÓºïÓªâ Óª«Óª«Óª┐Óª¿ÓºüÓª▓ Óª╣Óªò (013026401)	CREATE	{}	2026-05-25 09:27:24.533001+00	\N	\N
-1163	mp	electioninfo	264	Óª«ÓºïÓªâ Óª«Óª«Óª┐Óª¿ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.533895+00	\N	\N
-1164	mp	address	264	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª«Óª«Óª┐Óª¿ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:24.534812+00	\N	\N
-1165	mp	mp	265	Óª«ÓºüÓª¿ÓºìÓª©ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª« (013026501)	CREATE	{}	2026-05-25 09:27:24.538219+00	\N	\N
-1166	mp	electioninfo	265	Óª«ÓºüÓª¿ÓºìÓª©ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.539241+00	\N	\N
-1167	mp	address	265	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºüÓª¿ÓºìÓª©ÓºÇ Óª░Óª½Óª┐ÓªòÓºüÓª▓ ÓªåÓª▓Óª«	CREATE	{}	2026-05-25 09:27:24.54015+00	\N	\N
-1168	mp	mp	266	Óª£ÓºƒÓª¿Óª¥Óª▓ ÓªåÓª¼ÓªªÓª┐Óª¿ (013026601)	CREATE	{}	2026-05-25 09:27:24.54315+00	\N	\N
-1169	mp	electioninfo	266	Óª£ÓºƒÓª¿Óª¥Óª▓ ÓªåÓª¼ÓªªÓª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.544048+00	\N	\N
-1170	mp	address	266	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£ÓºƒÓª¿Óª¥Óª▓ ÓªåÓª¼ÓªªÓª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.544974+00	\N	\N
-1171	mp	mp	267	ÓªåÓª¼ÓªªÓºüÓª▓ ÓªåÓªëÓºƒÓª¥Óª▓ Óª«Óª┐Óª¿ÓºìÓªƒÓºü (013026701)	CREATE	{}	2026-05-25 09:27:24.548415+00	\N	\N
-1172	mp	electioninfo	267	ÓªåÓª¼ÓªªÓºüÓª▓ ÓªåÓªëÓºƒÓª¥Óª▓ Óª«Óª┐Óª¿ÓºìÓªƒÓºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.549402+00	\N	\N
-1173	mp	address	267	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓªªÓºüÓª▓ ÓªåÓªëÓºƒÓª¥Óª▓ Óª«Óª┐Óª¿ÓºìÓªƒÓºü	CREATE	{}	2026-05-25 09:27:24.550339+00	\N	\N
-1174	mp	mp	268	ÓªÅ.ÓªÅÓª« Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªûÓºïÓªòÓª¿ (013026801)	CREATE	{}	2026-05-25 09:27:24.553357+00	\N	\N
-1175	mp	electioninfo	268	ÓªÅ.ÓªÅÓª« Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªûÓºïÓªòÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.554237+00	\N	\N
-1176	mp	address	268	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ.ÓªÅÓª« Óª«Óª¥Óª╣Óª¼ÓºüÓª¼ ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªûÓºïÓªòÓª¿	CREATE	{}	2026-05-25 09:27:24.555063+00	\N	\N
-1177	mp	mp	269	Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓªªÓª┐Óª¿ Óª½Óª¥Óª░ÓºüÓªò (013026901)	CREATE	{}	2026-05-25 09:27:24.558373+00	\N	\N
-1178	mp	electioninfo	269	Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓªªÓª┐Óª¿ Óª½Óª¥Óª░ÓºüÓªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.559308+00	\N	\N
-1179	mp	address	269	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£ÓºƒÓª¿ÓºüÓª▓ ÓªåÓª¼ÓªªÓª┐Óª¿ Óª½Óª¥Óª░ÓºüÓªò	CREATE	{}	2026-05-25 09:27:24.560198+00	\N	\N
-1180	mp	mp	270	Óª«ÓºïÓªâ Óª¼Óª░ÓªòÓªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª¼ÓºüÓª▓Óºü (013027001)	CREATE	{}	2026-05-25 09:27:24.563141+00	\N	\N
-1181	mp	electioninfo	270	Óª«ÓºïÓªâ Óª¼Óª░ÓªòÓªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª¼ÓºüÓª▓Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.564152+00	\N	\N
-1182	mp	address	270	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ Óª¼Óª░ÓªòÓªñ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª¼ÓºüÓª▓Óºü	CREATE	{}	2026-05-25 09:27:24.56499+00	\N	\N
-1183	mp	mp	271	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ (013027101)	CREATE	{}	2026-05-25 09:27:24.568457+00	\N	\N
-1184	mp	electioninfo	271	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.569406+00	\N	\N
-1185	mp	address	271	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.570355+00	\N	\N
-1186	mp	mp	272	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013027201)	CREATE	{}	2026-05-25 09:27:24.573478+00	\N	\N
-1187	mp	electioninfo	272	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.574415+00	\N	\N
-1188	mp	address	272	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.575237+00	\N	\N
-1189	mp	mp	273	ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ Óª«Óª¥Óª©ÓªëÓªª (013027301)	CREATE	{}	2026-05-25 09:27:24.578732+00	\N	\N
-1190	mp	electioninfo	273	ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ Óª«Óª¥Óª©ÓªëÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.579631+00	\N	\N
-1191	mp	address	273	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓªªÓºüÓª▓ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ Óª«Óª¥Óª©ÓªëÓªª	CREATE	{}	2026-05-25 09:27:24.580626+00	\N	\N
-1192	mp	mp	274	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª¥ÓªªÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ (013027401)	CREATE	{}	2026-05-25 09:27:24.585755+00	\N	\N
-1193	mp	electioninfo	274	Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª¥ÓªªÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.586733+00	\N	\N
-1194	mp	address	274	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª¥Óª╣Óª¥ÓªªÓª¥Óªñ Óª╣ÓºçÓª¥Óª©ÓºçÓª¿	CREATE	{}	2026-05-25 09:27:24.587722+00	\N	\N
-1195	mp	mp	275	Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªûÓª¥ÓºƒÓºçÓª░ Óª¡ÓºéÓªüÓªçÓºƒÓª¥ (013027501)	CREATE	{}	2026-05-25 09:27:24.59087+00	\N	\N
-1196	mp	electioninfo	275	Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªûÓª¥ÓºƒÓºçÓª░ Óª¡ÓºéÓªüÓªçÓºƒÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.591839+00	\N	\N
-1197	mp	address	275	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªâ ÓªåÓª¼ÓºüÓª▓ ÓªûÓª¥ÓºƒÓºçÓª░ Óª¡ÓºéÓªüÓªçÓºƒÓª¥	CREATE	{}	2026-05-25 09:27:24.592758+00	\N	\N
-1198	mp	mp	276	Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣ÓºÇÓªªÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÓªÅÓºìÓª»Óª¥Óª¿Óª┐ (013027601)	CREATE	{}	2026-05-25 09:27:24.595853+00	\N	\N
-1199	mp	electioninfo	276	Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣ÓºÇÓªªÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÓªÅÓºìÓª»Óª¥Óª¿Óª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.596696+00	\N	\N
-1200	mp	address	276	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óªâ ÓªÂÓª╣ÓºÇÓªªÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÓªÅÓºìÓª»Óª¥Óª¿Óª┐	CREATE	{}	2026-05-25 09:27:24.597559+00	\N	\N
-1201	mp	mp	277	ÓªÅ. Óª¼Óª┐. ÓªÅÓª« ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (Óª¿Óª┐Óª£Óª¥Óª¿) (013027701)	CREATE	{}	2026-05-25 09:27:24.600515+00	\N	\N
-1202	mp	electioninfo	277	ÓªÅ. Óª¼Óª┐. ÓªÅÓª« ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (Óª¿Óª┐Óª£Óª¥Óª¿) ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.601428+00	\N	\N
-1203	mp	address	277	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅ. Óª¼Óª┐. ÓªÅÓª« ÓªåÓªÂÓª░Óª¥Óª½ ÓªëÓªªÓºìÓªªÓª┐Óª¿ (Óª¿Óª┐Óª£Óª¥Óª¿)	CREATE	{}	2026-05-25 09:27:24.602315+00	\N	\N
-1204	mp	mp	278	Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿ (013027801)	CREATE	{}	2026-05-25 09:27:24.605722+00	\N	\N
-1205	mp	electioninfo	278	Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.606684+00	\N	\N
-1206	mp	address	278	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿ÓºüÓª░ÓºüÓª▓ ÓªåÓª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.607666+00	\N	\N
-1207	mp	mp	279	Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥ ÓªòÓª¥Óª«Óª¥Óª▓ Óª¬Óª¥ÓªÂÓª¥ (013028001)	CREATE	{}	2026-05-25 09:27:24.610661+00	\N	\N
-1208	mp	electioninfo	279	Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥ ÓªòÓª¥Óª«Óª¥Óª▓ Óª¬Óª¥ÓªÂÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.611585+00	\N	\N
-1209	mp	address	279	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª©ÓºìÓªñÓª½Óª¥ ÓªòÓª¥Óª«Óª¥Óª▓ Óª¬Óª¥ÓªÂÓª¥	CREATE	{}	2026-05-25 09:27:24.612472+00	\N	\N
-1210	mp	mp	280	Óª«ÓºÇÓª░ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª╣ÓºçÓª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿ (013028201)	CREATE	{}	2026-05-25 09:27:24.615598+00	\N	\N
-1211	mp	electioninfo	280	Óª«ÓºÇÓª░ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª╣ÓºçÓª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.616535+00	\N	\N
-1212	mp	address	280	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºÇÓª░ Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª╣ÓºçÓª▓Óª¥Óª▓ ÓªëÓªªÓºìÓªªÓºÇÓª¿	CREATE	{}	2026-05-25 09:27:24.617364+00	\N	\N
-1213	mp	mp	281	ÓªùÓª┐ÓºƒÓª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºçÓºùÓªºÓºüÓª░ÓºÇ (013028301)	CREATE	{}	2026-05-25 09:27:24.620308+00	\N	\N
-1214	mp	electioninfo	281	ÓªùÓª┐ÓºƒÓª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºçÓºùÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.621151+00	\N	\N
-1215	mp	address	281	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªùÓª┐ÓºƒÓª¥Óª© ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºçÓºùÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.621967+00	\N	\N
-1216	mp	mp	282	Óª╣ÓºüÓª«Óª¥Óª« ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013028401)	CREATE	{}	2026-05-25 09:27:24.62491+00	\N	\N
-1217	mp	electioninfo	282	Óª╣ÓºüÓª«Óª¥Óª« ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.625905+00	\N	\N
-1218	mp	address	282	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣ÓºüÓª«Óª¥Óª« ÓªòÓª¥ÓªªÓºçÓª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.62674+00	\N	\N
-1219	mp	mp	283	ÓªÅÓª░ÓªÂÓª¥Óªª ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ (013028501)	CREATE	{}	2026-05-25 09:27:24.629984+00	\N	\N
-1220	mp	electioninfo	283	ÓªÅÓª░ÓªÂÓª¥Óªª ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.630816+00	\N	\N
-1221	mp	address	283	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÅÓª░ÓªÂÓª¥Óªª ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣	CREATE	{}	2026-05-25 09:27:24.63172+00	\N	\N
-1222	mp	mp	284	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼Óºü Óª©ÓºüÓª½Óª┐ÓºƒÓª¥Óª¿ (013028601)	CREATE	{}	2026-05-25 09:27:24.634997+00	\N	\N
-1223	mp	electioninfo	284	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼Óºü Óª©ÓºüÓª½Óª┐ÓºƒÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.635913+00	\N	\N
-1224	mp	address	284	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª ÓªåÓª¼Óºü Óª©ÓºüÓª½Óª┐ÓºƒÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.636816+00	\N	\N
-1225	mp	mp	285	Óª©Óª¥ÓªêÓªª ÓªåÓª▓ Óª¿ÓºçÓª¥Óª«Óª¥Óª¿ (013028701)	CREATE	{}	2026-05-25 09:27:24.639788+00	\N	\N
-1226	mp	electioninfo	285	Óª©Óª¥ÓªêÓªª ÓªåÓª▓ Óª¿ÓºçÓª¥Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.640641+00	\N	\N
-1227	mp	address	285	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥ÓªêÓªª ÓªåÓª▓ Óª¿ÓºçÓª¥Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.641483+00	\N	\N
-1228	mp	mp	286	ÓªåÓª«Óª┐Óª░ ÓªûÓª©Óª░Óºü Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013028801)	CREATE	{}	2026-05-25 09:27:24.644435+00	\N	\N
-1229	mp	electioninfo	286	ÓªåÓª«Óª┐Óª░ ÓªûÓª©Óª░Óºü Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.645428+00	\N	\N
-1230	mp	address	286	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª«Óª┐Óª░ ÓªûÓª©Óª░Óºü Óª«Óª¥Óª╣Óª«ÓºüÓªª ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.646402+00	\N	\N
-1231	mp	mp	287	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò (013028901)	CREATE	{}	2026-05-25 09:27:24.649783+00	\N	\N
-1232	mp	electioninfo	287	Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.650825+00	\N	\N
-1233	mp	address	287	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª╣Óª¥Óª«ÓºìÓª«Óªª ÓªÅÓª¿Óª¥Óª«ÓºüÓª▓ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:24.651701+00	\N	\N
-1234	mp	mp	288	Óª©Óª░ÓªôÓºƒÓª¥Óª░ Óª£Óª¥Óª«Óª¥Óª▓ Óª¿Óª┐Óª£Óª¥Óª« (013029001)	CREATE	{}	2026-05-25 09:27:24.654862+00	\N	\N
-1235	mp	electioninfo	288	Óª©Óª░ÓªôÓºƒÓª¥Óª░ Óª£Óª¥Óª«Óª¥Óª▓ Óª¿Óª┐Óª£Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.6557+00	\N	\N
-1236	mp	address	288	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª░ÓªôÓºƒÓª¥Óª░ Óª£Óª¥Óª«Óª¥Óª▓ Óª¿Óª┐Óª£Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.656568+00	\N	\N
-1237	mp	mp	289	ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªåÓª╣Óª«ÓºçÓªª (013029101)	CREATE	{}	2026-05-25 09:27:24.659767+00	\N	\N
-1238	mp	electioninfo	289	ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.660678+00	\N	\N
-1239	mp	address	289	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓Óª╣Óª¥Óª£ÓºìÓª¼ Óª£Óª©ÓºÇÓª« ÓªëÓªªÓºìÓªªÓºÇÓª¿ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.661531+00	\N	\N
-1240	mp	mp	290	ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013029201)	CREATE	{}	2026-05-25 09:27:24.664768+00	\N	\N
-1241	mp	electioninfo	290	ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.665727+00	\N	\N
-1242	mp	address	290	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.666699+00	\N	\N
-1243	mp	mp	291	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª╣Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« (013029301)	CREATE	{}	2026-05-25 09:27:24.669678+00	\N	\N
-1244	mp	electioninfo	291	Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª╣Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.6706+00	\N	\N
-1245	mp	address	291	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª£Óª╣Óª┐Óª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.671494+00	\N	\N
-1246	mp	mp	292	Óª©Óª¥Óª▓Óª¥Óª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª (013029401)	CREATE	{}	2026-05-25 09:27:24.674584+00	\N	\N
-1247	mp	electioninfo	292	Óª©Óª¥Óª▓Óª¥Óª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.675572+00	\N	\N
-1248	mp	address	292	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥Óª▓Óª¥Óª╣ÓªëÓªªÓºìÓªªÓª┐Óª¿ ÓªåÓª╣Óª«Óªª	CREATE	{}	2026-05-25 09:27:24.676447+00	\N	\N
-1249	mp	mp	293	ÓªåÓª▓Óª«ÓªùÓºÇÓª░ Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª╣Óª½ÓºüÓª£ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª½Óª░Óª┐Óªª (013029501)	CREATE	{}	2026-05-25 09:27:24.679638+00	\N	\N
-1250	mp	electioninfo	293	ÓªåÓª▓Óª«ÓªùÓºÇÓª░ Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª╣Óª½ÓºüÓª£ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª½Óª░Óª┐Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.680535+00	\N	\N
-1251	mp	address	293	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª▓Óª«ÓªùÓºÇÓª░ Óª«ÓºüÓª╣Óª¥Óª«ÓºìÓª«Óªª Óª«Óª¥Óª╣Óª½ÓºüÓª£ ÓªëÓª▓ÓºìÓª▓Óª¥Óª╣ Óª½Óª░Óª┐Óªª	CREATE	{}	2026-05-25 09:27:24.681384+00	\N	\N
-1252	mp	mp	294	Óª▓ÓºüÓºÄÓª½ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ (013029601)	CREATE	{}	2026-05-25 09:27:24.68452+00	\N	\N
-1253	mp	electioninfo	294	Óª▓ÓºüÓºÄÓª½ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.685316+00	\N	\N
-1254	mp	address	294	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª▓ÓºüÓºÄÓª½ÓºüÓª░ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.686252+00	\N	\N
-1255	mp	mp	295	ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013029701)	CREATE	{}	2026-05-25 09:27:24.689223+00	\N	\N
-1256	mp	electioninfo	295	ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.690137+00	\N	\N
-1257	mp	address	295	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª╣Óª£Óª¥Óª╣Óª¥Óª¿ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.690971+00	\N	\N
-1258	mp	mp	296	ÓªåÓª¼ÓªªÓºüÓª▓ ÓªôÓºƒÓª¥ÓªªÓºüÓªª Óª¡ÓºéÓªüÓª×Óª¥ (013029801)	CREATE	{}	2026-05-25 09:27:24.693972+00	\N	\N
-1259	mp	electioninfo	296	ÓªåÓª¼ÓªªÓºüÓª▓ ÓªôÓºƒÓª¥ÓªªÓºüÓªª Óª¡ÓºéÓªüÓª×Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.694859+00	\N	\N
-1260	mp	address	296	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¼ÓªªÓºüÓª▓ ÓªôÓºƒÓª¥ÓªªÓºüÓªª Óª¡ÓºéÓªüÓª×Óª¥	CREATE	{}	2026-05-25 09:27:24.695715+00	\N	\N
-1261	mp	mp	297	ÓªªÓºÇÓª¬ÓºçÓª¿ ÓªªÓºçÓªôÓºƒÓª¥Óª¿ (013029901)	CREATE	{}	2026-05-25 09:27:24.698734+00	\N	\N
-1262	mp	electioninfo	297	ÓªªÓºÇÓª¬ÓºçÓª¿ ÓªªÓºçÓªôÓºƒÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.69967+00	\N	\N
-1263	mp	address	297	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªªÓºÇÓª¬ÓºçÓª¿ ÓªªÓºçÓªôÓºƒÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.700591+00	\N	\N
-1264	mp	mp	298	Óª©Óª¥ÓªÜÓª┐Óªé Óª¬ÓºìÓª░Óºü (013030001)	CREATE	{}	2026-05-25 09:27:24.704221+00	\N	\N
-1265	mp	electioninfo	298	Óª©Óª¥ÓªÜÓª┐Óªé Óª¬ÓºìÓª░Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.705249+00	\N	\N
-1266	mp	address	298	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥ÓªÜÓª┐Óªé Óª¬ÓºìÓª░Óºü	CREATE	{}	2026-05-25 09:27:24.706285+00	\N	\N
-1267	mp	mp	299	Óª©ÓºçÓª▓Óª┐Óª«Óª¥ Óª░Óª╣Óª«Óª¥Óª¿ (013030101)	CREATE	{}	2026-05-25 09:27:24.710074+00	\N	\N
-1268	mp	electioninfo	299	Óª©ÓºçÓª▓Óª┐Óª«Óª¥ Óª░Óª╣Óª«Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.711168+00	\N	\N
-1269	mp	address	299	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºçÓª▓Óª┐Óª«Óª¥ Óª░Óª╣Óª«Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.712199+00	\N	\N
-1270	mp	mp	300	ÓªÂÓª┐Óª░ÓºÇÓª¿ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ (013030201)	CREATE	{}	2026-05-25 09:27:24.716501+00	\N	\N
-1271	mp	electioninfo	300	ÓªÂÓª┐Óª░ÓºÇÓª¿ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.717501+00	\N	\N
-1272	mp	address	300	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª┐Óª░ÓºÇÓª¿ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.718351+00	\N	\N
-1273	mp	mp	301	Óª░Óª¥ÓªÂÓºçÓªªÓª¥ Óª¼ÓºçÓªùÓª« Óª╣ÓºÇÓª░Óª¥ (013030301)	CREATE	{}	2026-05-25 09:27:24.721418+00	\N	\N
-1368	mp	address	332	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥ÓªºÓª¼ÓºÇ Óª«Óª¥Óª░ÓºìÓª«Óª¥	CREATE	{}	2026-05-25 09:27:24.89867+00	\N	\N
-1274	mp	electioninfo	301	Óª░Óª¥ÓªÂÓºçÓªªÓª¥ Óª¼ÓºçÓªùÓª« Óª╣ÓºÇÓª░Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.722322+00	\N	\N
-1275	mp	address	301	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░Óª¥ÓªÂÓºçÓªªÓª¥ Óª¼ÓºçÓªùÓª« Óª╣ÓºÇÓª░Óª¥	CREATE	{}	2026-05-25 09:27:24.723223+00	\N	\N
-1276	mp	mp	302	Óª░ÓºçÓª╣Óª¥Óª¿Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ Óª░Óª¥Óª¿Óºü (013030401)	CREATE	{}	2026-05-25 09:27:24.726367+00	\N	\N
-1277	mp	electioninfo	302	Óª░ÓºçÓª╣Óª¥Óª¿Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ Óª░Óª¥Óª¿Óºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.727266+00	\N	\N
-1278	mp	address	302	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºçÓª╣Óª¥Óª¿Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ Óª░Óª¥Óª¿Óºü	CREATE	{}	2026-05-25 09:27:24.728356+00	\N	\N
-1279	mp	mp	303	Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª╣Óª¥Óª▓Óª┐Óª«Óª¥ ÓªåÓª░Óª▓ÓºÇ (013030501)	CREATE	{}	2026-05-25 09:27:24.732007+00	\N	\N
-1280	mp	electioninfo	303	Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª╣Óª¥Óª▓Óª┐Óª«Óª¥ ÓªåÓª░Óª▓ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.732897+00	\N	\N
-1281	mp	address	303	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿ÓºçÓªôÓºƒÓª¥Óª£ Óª╣Óª¥Óª▓Óª┐Óª«Óª¥ ÓªåÓª░Óª▓ÓºÇ	CREATE	{}	2026-05-25 09:27:24.733723+00	\N	\N
-1282	mp	mp	304	Óª«ÓºïÓª©Óª¥Óªâ Óª½Óª░Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿ (013030601)	CREATE	{}	2026-05-25 09:27:24.73675+00	\N	\N
-1283	mp	electioninfo	304	Óª«ÓºïÓª©Óª¥Óªâ Óª½Óª░Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.737643+00	\N	\N
-1284	mp	address	304	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª©Óª¥Óªâ Óª½Óª░Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.738453+00	\N	\N
-1285	mp	mp	305	Óª¼Óª┐Óª▓ÓªòÓª┐Óª© ÓªçÓª©Óª▓Óª¥Óª« (013030701)	CREATE	{}	2026-05-25 09:27:24.741507+00	\N	\N
-1286	mp	electioninfo	305	Óª¼Óª┐Óª▓ÓªòÓª┐Óª© ÓªçÓª©Óª▓Óª¥Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.742497+00	\N	\N
-1287	mp	address	305	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼Óª┐Óª▓ÓªòÓª┐Óª© ÓªçÓª©Óª▓Óª¥Óª«	CREATE	{}	2026-05-25 09:27:24.743372+00	\N	\N
-1288	mp	mp	306	Óª©Óª¥ÓªòÓª┐Óª▓Óª¥ Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥ (013030801)	CREATE	{}	2026-05-25 09:27:24.746415+00	\N	\N
-1289	mp	electioninfo	306	Óª©Óª¥ÓªòÓª┐Óª▓Óª¥ Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.747256+00	\N	\N
-1290	mp	address	306	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥ÓªòÓª┐Óª▓Óª¥ Óª½Óª¥Óª░Óª£Óª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.748228+00	\N	\N
-1291	mp	mp	307	Óª╣ÓºçÓª▓ÓºçÓª¿ Óª£ÓºçÓª░Óª┐Óª¿ ÓªûÓª¥Óª¿ (013030901)	CREATE	{}	2026-05-25 09:27:24.751209+00	\N	\N
-1292	mp	electioninfo	307	Óª╣ÓºçÓª▓ÓºçÓª¿ Óª£ÓºçÓª░Óª┐Óª¿ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.752199+00	\N	\N
-1293	mp	address	307	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª╣ÓºçÓª▓ÓºçÓª¿ Óª£ÓºçÓª░Óª┐Óª¿ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.753029+00	\N	\N
-1294	mp	mp	308	Óª¿Óª┐Óª▓ÓºïÓª½Óª¥Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ Óª«Óª¿Óª┐ (013031001)	CREATE	{}	2026-05-25 09:27:24.756206+00	\N	\N
-1295	mp	electioninfo	308	Óª¿Óª┐Óª▓ÓºïÓª½Óª¥Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ Óª«Óª¿Óª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.757046+00	\N	\N
-1296	mp	address	308	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª┐Óª▓ÓºïÓª½Óª¥Óª░ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ Óª«Óª¿Óª┐	CREATE	{}	2026-05-25 09:27:24.757927+00	\N	\N
-1297	mp	mp	309	ÔÇîÓª¿Óª┐Óª¬ÓºüÓª¿ Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013031101)	CREATE	{}	2026-05-25 09:27:24.76107+00	\N	\N
-1298	mp	electioninfo	309	ÔÇîÓª¿Óª┐Óª¬ÓºüÓª¿ Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.761973+00	\N	\N
-1299	mp	address	309	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÔÇîÓª¿Óª┐Óª¬ÓºüÓª¿ Óª░Óª¥Óºƒ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.762829+00	\N	\N
-1300	mp	mp	310	Óª£ÓºÇÓª¼Óª¥ ÓªåÓª«Óª┐Óª¿Óª¥ ÓªûÓª¥Óª¿ (013031201)	CREATE	{}	2026-05-25 09:27:24.7659+00	\N	\N
-1301	mp	electioninfo	310	Óª£ÓºÇÓª¼Óª¥ ÓªåÓª«Óª┐Óª¿Óª¥ ÓªûÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.766834+00	\N	\N
-1302	mp	address	310	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£ÓºÇÓª¼Óª¥ ÓªåÓª«Óª┐Óª¿Óª¥ ÓªûÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.767621+00	\N	\N
-1303	mp	mp	311	Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªªÓª¥ Óª╣Óª¥Óª¼ÓºÇÓª¼Óª¥ (013031301)	CREATE	{}	2026-05-25 09:27:24.770591+00	\N	\N
-1304	mp	electioninfo	311	Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªªÓª¥ Óª╣Óª¥Óª¼ÓºÇÓª¼Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.771482+00	\N	\N
-1305	mp	address	311	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª╣ÓºìÔÇîÓª«ÓºüÓªªÓª¥ Óª╣Óª¥Óª¼ÓºÇÓª¼Óª¥	CREATE	{}	2026-05-25 09:27:24.772303+00	\N	\N
-1306	mp	mp	312	Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¼Óª┐Óª░Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ (013031401)	CREATE	{}	2026-05-25 09:27:24.775647+00	\N	\N
-1307	mp	electioninfo	312	Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¼Óª┐Óª░Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.776632+00	\N	\N
-1308	mp	address	312	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¼Óª┐Óª░Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.777631+00	\N	\N
-1309	mp	mp	313	Óª©Óª¥Óª¿Óª©Óª┐Óª▓Óª¥ Óª£ÓºçÓª¼Óª░Óª┐Óª¿ (013031501)	CREATE	{}	2026-05-25 09:27:24.781256+00	\N	\N
-1310	mp	electioninfo	313	Óª©Óª¥Óª¿Óª©Óª┐Óª▓Óª¥ Óª£ÓºçÓª¼Óª░Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.782246+00	\N	\N
-1316	mp	electioninfo	315	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.799814+00	\N	\N
-1317	mp	address	315	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.800758+00	\N	\N
-1318	mp	mp	316	Óª½Óª¥Óª╣Óª«Óª┐ÓªªÓª¥ Óª╣Óªò (013031801)	CREATE	{}	2026-05-25 09:27:24.807574+00	\N	\N
-1319	mp	electioninfo	316	Óª½Óª¥Óª╣Óª«Óª┐ÓªªÓª¥ Óª╣Óªò ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.808644+00	\N	\N
-1320	mp	address	316	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½Óª¥Óª╣Óª«Óª┐ÓªªÓª¥ Óª╣Óªò	CREATE	{}	2026-05-25 09:27:24.809665+00	\N	\N
-1322	mp	electioninfo	317	ÓªåÓª¿ÓºìÓª¿Óª¥ Óª«Óª┐Óª¿ÓºìÔÇîÓª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.818134+00	\N	\N
-1323	mp	address	317	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª¿ÓºìÓª¿Óª¥ Óª«Óª┐Óª¿ÓºìÔÇîÓª£	CREATE	{}	2026-05-25 09:27:24.819766+00	\N	\N
-1324	mp	mp	318	Óª©ÓºéÓª¼Óª░ÓºìÓª¿Óª¥ Óª©Óª┐ÓªòÓªªÓª¥Óª░ (013032001)	CREATE	{}	2026-05-25 09:27:24.823568+00	\N	\N
-1325	mp	electioninfo	318	Óª©ÓºéÓª¼Óª░ÓºìÓª¿Óª¥ Óª©Óª┐ÓªòÓªªÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.824717+00	\N	\N
-1326	mp	address	318	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºéÓª¼Óª░ÓºìÓª¿Óª¥ Óª©Óª┐ÓªòÓªªÓª¥Óª░	CREATE	{}	2026-05-25 09:27:24.825838+00	\N	\N
-1327	mp	mp	319	ÓªÂÓª¥Óª«ÓºÇÓª« ÓªåÓª░Óª¥ Óª¼ÓºçÓªùÓª« Óª©ÓºìÓª¼Óª¬ÓºìÓª¿Óª¥ (013032101)	CREATE	{}	2026-05-25 09:27:24.829358+00	\N	\N
-1328	mp	electioninfo	319	ÓªÂÓª¥Óª«ÓºÇÓª« ÓªåÓª░Óª¥ Óª¼ÓºçÓªùÓª« Óª©ÓºìÓª¼Óª¬ÓºìÓª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.830923+00	\N	\N
-1329	mp	address	319	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª«ÓºÇÓª« ÓªåÓª░Óª¥ Óª¼ÓºçÓªùÓª« Óª©ÓºìÓª¼Óª¬ÓºìÓª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.832075+00	\N	\N
-1330	mp	mp	320	Óª«ÓºïÓª©Óª¥Óª«ÓºìÓª«ÓºÄ ÓªÂÓª¥Óª«ÓºìÓª«ÓºÇ ÓªåÓªòÓºìÓªñÓª¥Óª░ (013032201)	CREATE	{}	2026-05-25 09:27:24.836182+00	\N	\N
-1331	mp	electioninfo	320	Óª«ÓºïÓª©Óª¥Óª«ÓºìÓª«ÓºÄ ÓªÂÓª¥Óª«ÓºìÓª«ÓºÇ ÓªåÓªòÓºìÓªñÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.837109+00	\N	\N
-1332	mp	address	320	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓª©Óª¥Óª«ÓºìÓª«ÓºÄ ÓªÂÓª¥Óª«ÓºìÓª«ÓºÇ ÓªåÓªòÓºìÓªñÓª¥Óª░	CREATE	{}	2026-05-25 09:27:24.838044+00	\N	\N
-1333	mp	mp	321	Óª½ÓºçÓª░ÓªªÓºîÓª©ÓºÇ ÓªåÓª╣Óª«ÓºçÓªª (013032301)	CREATE	{}	2026-05-25 09:27:24.841624+00	\N	\N
-1334	mp	electioninfo	321	Óª½ÓºçÓª░ÓªªÓºîÓª©ÓºÇ ÓªåÓª╣Óª«ÓºçÓªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.842786+00	\N	\N
-1335	mp	address	321	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½ÓºçÓª░ÓªªÓºîÓª©ÓºÇ ÓªåÓª╣Óª«ÓºçÓªª	CREATE	{}	2026-05-25 09:27:24.843812+00	\N	\N
-1336	mp	mp	322	Óª¼ÓºÇÓªÑÓª┐ÓªòÓª¥ Óª¼Óª┐Óª¿ÓªñÓºç Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿ (013032401)	CREATE	{}	2026-05-25 09:27:24.847357+00	\N	\N
-1337	mp	electioninfo	322	Óª¼ÓºÇÓªÑÓª┐ÓªòÓª¥ Óª¼Óª┐Óª¿ÓªñÓºç Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.848353+00	\N	\N
-1338	mp	address	322	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºÇÓªÑÓª┐ÓªòÓª¥ Óª¼Óª┐Óª¿ÓªñÓºç Óª╣ÓºçÓª¥Óª©Óª¥ÓªçÓª¿	CREATE	{}	2026-05-25 09:27:24.849335+00	\N	\N
-1339	mp	mp	323	Óª«ÓºïÓªøÓª¥Óªâ Óª©ÓºüÓª░Óª¥ÓªçÓºƒÓª¥ Óª£ÓºçÓª░Óª┐Óª¿ (013032501)	CREATE	{}	2026-05-25 09:27:24.852616+00	\N	\N
-1340	mp	electioninfo	323	Óª«ÓºïÓªøÓª¥Óªâ Óª©ÓºüÓª░Óª¥ÓªçÓºƒÓª¥ Óª£ÓºçÓª░Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.853451+00	\N	\N
-1341	mp	address	323	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªøÓª¥Óªâ Óª©ÓºüÓª░Óª¥ÓªçÓºƒÓª¥ Óª£ÓºçÓª░Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.854267+00	\N	\N
-1342	mp	mp	324	Óª«Óª¥Óª¿Óª©ÓºüÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ (013032601)	CREATE	{}	2026-05-25 09:27:24.857112+00	\N	\N
-1343	mp	electioninfo	324	Óª«Óª¥Óª¿Óª©ÓºüÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.857899+00	\N	\N
-1344	mp	address	324	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª¿Óª©ÓºüÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░	CREATE	{}	2026-05-25 09:27:24.858702+00	\N	\N
-1345	mp	mp	325	Óª£Óª╣Óª░Óªñ ÓªåÓªªÓª┐Óª¼ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ (013032701)	CREATE	{}	2026-05-25 09:27:24.861602+00	\N	\N
-1346	mp	electioninfo	325	Óª£Óª╣Óª░Óªñ ÓªåÓªªÓª┐Óª¼ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.86251+00	\N	\N
-1347	mp	address	325	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª£Óª╣Óª░Óªñ ÓªåÓªªÓª┐Óª¼ ÓªÜÓºîÓªºÓºüÓª░ÓºÇ	CREATE	{}	2026-05-25 09:27:24.863302+00	\N	\N
-1348	mp	mp	326	Óª«Óª«ÓªñÓª¥Óª£ ÓªåÓª▓Óºï (013032801)	CREATE	{}	2026-05-25 09:27:24.866606+00	\N	\N
-1349	mp	electioninfo	326	Óª«Óª«ÓªñÓª¥Óª£ ÓªåÓª▓Óºï ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.867549+00	\N	\N
-1350	mp	address	326	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª«ÓªñÓª¥Óª£ ÓªåÓª▓Óºï	CREATE	{}	2026-05-25 09:27:24.86845+00	\N	\N
-1351	mp	mp	327	Óª½Óª¥Óª╣Óª┐Óª«Óª¥ Óª¿Óª¥Óª©Óª░Óª┐Óª¿ (013032901)	CREATE	{}	2026-05-25 09:27:24.87137+00	\N	\N
-1352	mp	electioninfo	327	Óª½Óª¥Óª╣Óª┐Óª«Óª¥ Óª¿Óª¥Óª©Óª░Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.8726+00	\N	\N
-1353	mp	address	327	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª½Óª¥Óª╣Óª┐Óª«Óª¥ Óª¿Óª¥Óª©Óª░Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.873608+00	\N	\N
-1354	mp	mp	328	ÓªåÓª░Óª┐Óª½Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ (013033001)	CREATE	{}	2026-05-25 09:27:24.877375+00	\N	\N
-1355	mp	electioninfo	328	ÓªåÓª░Óª┐Óª½Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.878376+00	\N	\N
-1356	mp	address	328	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªåÓª░Óª┐Óª½Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.879226+00	\N	\N
-1357	mp	mp	329	Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿ (013033101)	CREATE	{}	2026-05-25 09:27:24.88217+00	\N	\N
-1358	mp	electioninfo	329	Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.883158+00	\N	\N
-1359	mp	address	329	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªøÓª¥Óªâ Óª©Óª¥Óª¿Óª£Óª┐ÓªªÓª¥ ÓªçÓºƒÓª¥Óª©Óª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.884+00	\N	\N
-1360	mp	mp	330	Óª¿Óª¥ÓªªÓª┐ÓºƒÓª¥ Óª¬Óª¥ÓªáÓª¥Óª¿ Óª¬Óª¥Óª¬Óª¿ (013033201)	CREATE	{}	2026-05-25 09:27:24.887326+00	\N	\N
-1361	mp	electioninfo	330	Óª¿Óª¥ÓªªÓª┐ÓºƒÓª¥ Óª¬Óª¥ÓªáÓª¥Óª¿ Óª¬Óª¥Óª¬Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.88826+00	\N	\N
-1362	mp	address	330	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿Óª¥ÓªªÓª┐ÓºƒÓª¥ Óª¬Óª¥ÓªáÓª¥Óª¿ Óª¬Óª¥Óª¬Óª¿	CREATE	{}	2026-05-25 09:27:24.889154+00	\N	\N
-1363	mp	mp	331	ÓªÂÓªôÓªòÓªñ ÓªåÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ (013033301)	CREATE	{}	2026-05-25 09:27:24.892099+00	\N	\N
-1364	mp	electioninfo	331	ÓªÂÓªôÓªòÓªñ ÓªåÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.893029+00	\N	\N
-1365	mp	address	331	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓªôÓªòÓªñ ÓªåÓª░Óª¥ ÓªåÓªòÓºìÓªñÓª¥Óª░	CREATE	{}	2026-05-25 09:27:24.893879+00	\N	\N
-1366	mp	mp	332	Óª«Óª¥ÓªºÓª¼ÓºÇ Óª«Óª¥Óª░ÓºìÓª«Óª¥ (013033401)	CREATE	{}	2026-05-25 09:27:24.896937+00	\N	\N
-1367	mp	electioninfo	332	Óª«Óª¥ÓªºÓª¼ÓºÇ Óª«Óª¥Óª░ÓºìÓª«Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.897847+00	\N	\N
-1369	mp	mp	333	Óª©ÓºçÓª▓Óª┐Óª¿Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ (013033501)	CREATE	{}	2026-05-25 09:27:24.901525+00	\N	\N
-1370	mp	electioninfo	333	Óª©ÓºçÓª▓Óª┐Óª¿Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.902487+00	\N	\N
-1371	mp	address	333	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºçÓª▓Óª┐Óª¿Óª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.903582+00	\N	\N
-1372	mp	mp	334	Óª░ÓºçÓª£ÓºçÓªòÓª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ (013033601)	CREATE	{}	2026-05-25 09:27:24.906669+00	\N	\N
-1373	mp	electioninfo	334	Óª░ÓºçÓª£ÓºçÓªòÓª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.907558+00	\N	\N
-1374	mp	address	334	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºçÓª£ÓºçÓªòÓª¥ Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥	CREATE	{}	2026-05-25 09:27:24.908473+00	\N	\N
-1375	mp	mp	335	Óª¿ÓºéÓª░ÓºüÓª¿ÓºìÓª¿Óª┐Óª©Óª¥ Óª©Óª┐ÓªªÓºìÓªªÓºÇÓªòÓª¥ (013033701)	CREATE	{}	2026-05-25 09:27:24.911757+00	\N	\N
-1376	mp	electioninfo	335	Óª¿ÓºéÓª░ÓºüÓª¿ÓºìÓª¿Óª┐Óª©Óª¥ Óª©Óª┐ÓªªÓºìÓªªÓºÇÓªòÓª¥ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.912678+00	\N	\N
-1377	mp	address	335	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¿ÓºéÓª░ÓºüÓª¿ÓºìÓª¿Óª┐Óª©Óª¥ Óª©Óª┐ÓªªÓºìÓªªÓºÇÓªòÓª¥	CREATE	{}	2026-05-25 09:27:24.913556+00	\N	\N
-1378	mp	mp	336	Óª«Óª¥Óª░Óª£Óª┐ÓºƒÓª¥ Óª¼ÓºçÓªùÓª« (013033801)	CREATE	{}	2026-05-25 09:27:24.916524+00	\N	\N
-1379	mp	electioninfo	336	Óª«Óª¥Óª░Óª£Óª┐ÓºƒÓª¥ Óª¼ÓºçÓªùÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.917439+00	\N	\N
-1380	mp	address	336	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª░Óª£Óª┐ÓºƒÓª¥ Óª¼ÓºçÓªùÓª«	CREATE	{}	2026-05-25 09:27:24.918324+00	\N	\N
-1381	mp	mp	337	Óª©Óª¥Óª¼Óª┐ÓªòÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░ (013033901)	CREATE	{}	2026-05-25 09:27:24.921289+00	\N	\N
-1382	mp	electioninfo	337	Óª©Óª¥Óª¼Óª┐ÓªòÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.922177+00	\N	\N
-1383	mp	address	337	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©Óª¥Óª¼Óª┐ÓªòÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░	CREATE	{}	2026-05-25 09:27:24.92303+00	\N	\N
-1384	mp	mp	338	Óª«ÓºçÓª¥Óª©Óª¥Óªâ Óª¿Óª¥Óª£Óª«ÓºüÓª¿ Óª¿Óª¥Óª╣Óª¥Óª░ (013034001)	CREATE	{}	2026-05-25 09:27:24.925967+00	\N	\N
-1385	mp	electioninfo	338	Óª«ÓºçÓª¥Óª©Óª¥Óªâ Óª¿Óª¥Óª£Óª«ÓºüÓª¿ Óª¿Óª¥Óª╣Óª¥Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.926893+00	\N	\N
-1386	mp	address	338	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºçÓª¥Óª©Óª¥Óªâ Óª¿Óª¥Óª£Óª«ÓºüÓª¿ Óª¿Óª¥Óª╣Óª¥Óª░	CREATE	{}	2026-05-25 09:27:24.927887+00	\N	\N
-1387	mp	mp	339	Óª«Óª¥Óª╣Óª½ÓºüÓª£Óª¥ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ (013034101)	CREATE	{}	2026-05-25 09:27:24.931375+00	\N	\N
-1388	mp	electioninfo	339	Óª«Óª¥Óª╣Óª½ÓºüÓª£Óª¥ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.932403+00	\N	\N
-1389	mp	address	339	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª╣Óª½ÓºüÓª£Óª¥ Óª╣Óª¥Óª¿ÓºìÓª¿Óª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.933278+00	\N	\N
-1390	mp	mp	340	Óª«Óª┐Óª©ÓºçÓª© Óª©Óª¥Óª£ÓºçÓªªÓª¥ Óª©Óª¥Óª«Óª¥Óªª (013034201)	CREATE	{}	2026-05-25 09:27:24.936348+00	\N	\N
-1391	mp	electioninfo	340	Óª«Óª┐Óª©ÓºçÓª© Óª©Óª¥Óª£ÓºçÓªªÓª¥ Óª©Óª¥Óª«Óª¥Óªª ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.937414+00	\N	\N
-1392	mp	address	340	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª┐Óª©ÓºçÓª© Óª©Óª¥Óª£ÓºçÓªªÓª¥ Óª©Óª¥Óª«Óª¥Óªª	CREATE	{}	2026-05-25 09:27:24.938405+00	\N	\N
-1393	mp	mp	341	ÓªÂÓª¥Óª«ÓªøÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░ Óª¼ÓºçÓªùÓª« (013034301)	CREATE	{}	2026-05-25 09:27:24.942+00	\N	\N
-1394	mp	electioninfo	341	ÓªÂÓª¥Óª«ÓªøÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░ Óª¼ÓºçÓªùÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.942915+00	\N	\N
-1395	mp	address	341	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªÂÓª¥Óª«ÓªøÓºüÓª¿ÓºìÓª¿Óª¥Óª╣Óª¥Óª░ Óª¼ÓºçÓªùÓª«	CREATE	{}	2026-05-25 09:27:24.943882+00	\N	\N
-1396	mp	mp	342	Óª«Óª¥Óª░ÓªªÓª┐ÓºƒÓª¥ Óª«Óª«ÓªñÓª¥Óª£ (013034401)	CREATE	{}	2026-05-25 09:27:24.946901+00	\N	\N
-1397	mp	electioninfo	342	Óª«Óª¥Óª░ÓªªÓª┐ÓºƒÓª¥ Óª«Óª«ÓªñÓª¥Óª£ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.947755+00	\N	\N
-1398	mp	address	342	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª░ÓªªÓª┐ÓºƒÓª¥ Óª«Óª«ÓªñÓª¥Óª£	CREATE	{}	2026-05-25 09:27:24.948622+00	\N	\N
-1399	mp	mp	343	Óª░ÓºçÓª¥ÓªòÓºçÓºƒÓª¥ Óª¼ÓºçÓªùÓª« (013034501)	CREATE	{}	2026-05-25 09:27:24.951825+00	\N	\N
-1400	mp	electioninfo	343	Óª░ÓºçÓª¥ÓªòÓºçÓºƒÓª¥ Óª¼ÓºçÓªùÓª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.952837+00	\N	\N
-1401	mp	address	343	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª░ÓºçÓª¥ÓªòÓºçÓºƒÓª¥ Óª¼ÓºçÓªùÓª«	CREATE	{}	2026-05-25 09:27:24.953766+00	\N	\N
-1402	mp	mp	344	Óª«Óª¥Óª╣Óª«ÓºüÓªªÓª¥ ÓªåÓª▓Óª« Óª«Óª┐ÓªñÓºü (013034601)	CREATE	{}	2026-05-25 09:27:24.95732+00	\N	\N
-1403	mp	electioninfo	344	Óª«Óª¥Óª╣Óª«ÓºüÓªªÓª¥ ÓªåÓª▓Óª« Óª«Óª┐ÓªñÓºü ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.958233+00	\N	\N
-1404	mp	address	344	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª╣Óª«ÓºüÓªªÓª¥ ÓªåÓª▓Óª« Óª«Óª┐ÓªñÓºü	CREATE	{}	2026-05-25 09:27:24.959154+00	\N	\N
-1405	mp	mp	345	ÓªñÓª¥Óª©Óª«Óª┐ÓºƒÓª¥ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿ (013034701)	CREATE	{}	2026-05-25 09:27:24.962365+00	\N	\N
-1406	mp	electioninfo	345	ÓªñÓª¥Óª©Óª«Óª┐ÓºƒÓª¥ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.963203+00	\N	\N
-1407	mp	address	345	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö ÓªñÓª¥Óª©Óª«Óª┐ÓºƒÓª¥ Óª¬ÓºìÓª░ÓªºÓª¥Óª¿	CREATE	{}	2026-05-25 09:27:24.964028+00	\N	\N
-1408	mp	mp	346	Óª«Óª¥Óª╣Óª¼ÓºüÓª¼Óª¥ Óª╣Óª¥ÓªòÓª┐Óª« (013034801)	CREATE	{}	2026-05-25 09:27:24.967291+00	\N	\N
-1409	mp	electioninfo	346	Óª«Óª¥Óª╣Óª¼ÓºüÓª¼Óª¥ Óª╣Óª¥ÓªòÓª┐Óª« ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.968142+00	\N	\N
-1410	mp	address	346	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«Óª¥Óª╣Óª¼ÓºüÓª¼Óª¥ Óª╣Óª¥ÓªòÓª┐Óª«	CREATE	{}	2026-05-25 09:27:24.969174+00	\N	\N
-1411	mp	mp	347	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ Óª£ÓºçÓª©Óª«Óª┐Óª¿ (013034901)	CREATE	{}	2026-05-25 09:27:24.97242+00	\N	\N
-1412	mp	electioninfo	347	Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ Óª£ÓºçÓª©Óª«Óª┐Óª¿ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.973325+00	\N	\N
-1413	mp	address	347	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª©ÓºüÓª▓ÓªñÓª¥Óª¿Óª¥ Óª£ÓºçÓª©Óª«Óª┐Óª¿	CREATE	{}	2026-05-25 09:27:24.974322+00	\N	\N
-1414	mp	mp	348	Óª«ÓºïÓªøÓª¥Óªâ Óª¿ÓºüÓª©Óª░Óª¥Óªñ ÓªñÓª¥Óª¼Óª¥Óª©Óª©ÓºüÓª« Óª£ÓºìÓª»ÓºçÓª¥ÓªñÓª┐ (013035001)	CREATE	{}	2026-05-25 09:27:24.977385+00	\N	\N
-1415	mp	electioninfo	348	Óª«ÓºïÓªøÓª¥Óªâ Óª¿ÓºüÓª©Óª░Óª¥Óªñ ÓªñÓª¥Óª¼Óª¥Óª©Óª©ÓºüÓª« Óª£ÓºìÓª»ÓºçÓª¥ÓªñÓª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.978257+00	\N	\N
-1416	mp	address	348	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª«ÓºïÓªøÓª¥Óªâ Óª¿ÓºüÓª©Óª░Óª¥Óªñ ÓªñÓª¥Óª¼Óª¥Óª©Óª©ÓºüÓª« Óª£ÓºìÓª»ÓºçÓª¥ÓªñÓª┐	CREATE	{}	2026-05-25 09:27:24.979123+00	\N	\N
-1417	mp	electioninfo	1	Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"party": ["", "1"], "oath_date": ["", "2026-02-17"], "gazette_date": ["", "2026-02-13"], "election_date": ["", "2026-02-12"]}	2026-05-25 09:30:08.172334+00	172.23.0.1	1
+1009	mp	mp	213	নায়াব ইউসুফ আহমেদ (013021301)	CREATE	{}	2026-05-25 09:27:24.270389+00	\N	\N
+1008	mp	address	212	বর্তমান ঠিকানা — শামা ওবায়েদ ইসলাম	CREATE	{}	2026-05-25 09:27:24.267115+00	\N	\N
+1007	mp	electioninfo	212	শামা ওবায়েদ ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.266108+00	\N	\N
+1006	mp	mp	212	শামা ওবায়েদ ইসলাম (013021201)	CREATE	{}	2026-05-25 09:27:24.265145+00	\N	\N
+1005	mp	address	211	বর্তমান ঠিকানা — মোঃ ইলিয়াস মোল্লা	CREATE	{}	2026-05-25 09:27:24.261434+00	\N	\N
+1004	mp	electioninfo	211	মোঃ ইলিয়াস মোল্লা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.260365+00	\N	\N
+1003	mp	mp	211	মোঃ ইলিয়াস মোল্লা (013021101)	CREATE	{}	2026-05-25 09:27:24.259226+00	\N	\N
+1002	mp	address	210	বর্তমান ঠিকানা — মোঃ হারুন-অর-রশিদ	CREATE	{}	2026-05-25 09:27:24.255571+00	\N	\N
+1001	mp	electioninfo	210	মোঃ হারুন-অর-রশিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.254618+00	\N	\N
+1000	mp	mp	210	মোঃ হারুন-অর-রশিদ (013021001)	CREATE	{}	2026-05-25 09:27:24.25366+00	\N	\N
+999	mp	address	209	বর্তমান ঠিকানা — আলী নেওয়াজ মাহমুদ খৈয়ম	CREATE	{}	2026-05-25 09:27:24.250486+00	\N	\N
+998	mp	electioninfo	209	আলী নেওয়াজ মাহমুদ খৈয়ম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.249483+00	\N	\N
+997	mp	mp	209	আলী নেওয়াজ মাহমুদ খৈয়ম (013020901)	CREATE	{}	2026-05-25 09:27:24.248481+00	\N	\N
+996	mp	address	208	বর্তমান ঠিকানা — আবুল কালাম	CREATE	{}	2026-05-25 09:27:24.245477+00	\N	\N
+995	mp	electioninfo	208	আবুল কালাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.244543+00	\N	\N
+994	mp	mp	208	আবুল কালাম (013020801)	CREATE	{}	2026-05-25 09:27:24.243558+00	\N	\N
+993	mp	address	207	বর্তমান ঠিকানা — আব্দুল্লাহ আল আমিন	CREATE	{}	2026-05-25 09:27:24.240298+00	\N	\N
+992	mp	electioninfo	207	আব্দুল্লাহ আল আমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.239279+00	\N	\N
+991	mp	mp	207	আব্দুল্লাহ আল আমিন (013020701)	CREATE	{}	2026-05-25 09:27:24.238371+00	\N	\N
+990	mp	address	206	বর্তমান ঠিকানা — আজহারুল ইসলাম মান্নান	CREATE	{}	2026-05-25 09:27:24.235214+00	\N	\N
+989	mp	electioninfo	206	আজহারুল ইসলাম মান্নান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.234162+00	\N	\N
+988	mp	mp	206	আজহারুল ইসলাম মান্নান (013020601)	CREATE	{}	2026-05-25 09:27:24.233241+00	\N	\N
+987	mp	address	205	বর্তমান ঠিকানা — মোঃ নজরুল ইসলাম আজাদ	CREATE	{}	2026-05-25 09:27:24.230005+00	\N	\N
+986	mp	electioninfo	205	মোঃ নজরুল ইসলাম আজাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.229036+00	\N	\N
+985	mp	mp	205	মোঃ নজরুল ইসলাম আজাদ (013020501)	CREATE	{}	2026-05-25 09:27:24.228143+00	\N	\N
+984	mp	address	204	বর্তমান ঠিকানা — মুস্তাফিজুর রহমান ভূঁইয়া	CREATE	{}	2026-05-25 09:27:24.225006+00	\N	\N
+983	mp	electioninfo	204	মুস্তাফিজুর রহমান ভূঁইয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.22401+00	\N	\N
+982	mp	mp	204	মুস্তাফিজুর রহমান ভূঁইয়া (013020401)	CREATE	{}	2026-05-25 09:27:24.223031+00	\N	\N
+1039	mp	mp	223	মিয়া নুরুদ্দিন আহাম্মেদ অপু (013022301)	CREATE	{}	2026-05-25 09:27:24.321796+00	\N	\N
+1038	mp	address	222	বর্তমান ঠিকানা — মোঃ সফিকুর রহমান (কিরন)	CREATE	{}	2026-05-25 09:27:24.318381+00	\N	\N
+1037	mp	electioninfo	222	মোঃ সফিকুর রহমান (কিরন) — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.317488+00	\N	\N
+1036	mp	mp	222	মোঃ সফিকুর রহমান (কিরন) (013022201)	CREATE	{}	2026-05-25 09:27:24.316573+00	\N	\N
+1035	mp	address	221	বর্তমান ঠিকানা — সাঈদ আহমেদ	CREATE	{}	2026-05-25 09:27:24.313457+00	\N	\N
+1034	mp	electioninfo	221	সাঈদ আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.312642+00	\N	\N
+1033	mp	mp	221	সাঈদ আহমেদ (013022101)	CREATE	{}	2026-05-25 09:27:24.311807+00	\N	\N
+1032	mp	address	220	বর্তমান ঠিকানা — আনিছুর রহমান	CREATE	{}	2026-05-25 09:27:24.308661+00	\N	\N
+1031	mp	electioninfo	220	আনিছুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.307621+00	\N	\N
+1030	mp	mp	220	আনিছুর রহমান (013022001)	CREATE	{}	2026-05-25 09:27:24.3066+00	\N	\N
+1029	mp	address	219	বর্তমান ঠিকানা — মোঃ জাহান্দার আলী মিয়া	CREATE	{}	2026-05-25 09:27:24.303613+00	\N	\N
+1028	mp	electioninfo	219	মোঃ জাহান্দার আলী মিয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.302739+00	\N	\N
+1027	mp	mp	219	মোঃ জাহান্দার আলী মিয়া (013021901)	CREATE	{}	2026-05-25 09:27:24.301821+00	\N	\N
+1026	mp	address	218	বর্তমান ঠিকানা — সাইদ উদ্দিন আহমাদ হানজালা	CREATE	{}	2026-05-25 09:27:24.298554+00	\N	\N
+1025	mp	electioninfo	218	সাইদ উদ্দিন আহমাদ হানজালা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.297584+00	\N	\N
+1024	mp	mp	218	সাইদ উদ্দিন আহমাদ হানজালা (013021801)	CREATE	{}	2026-05-25 09:27:24.29668+00	\N	\N
+1023	mp	address	217	বর্তমান ঠিকানা — এস, এম, জিলানী	CREATE	{}	2026-05-25 09:27:24.293594+00	\N	\N
+1022	mp	electioninfo	217	এস, এম, জিলানী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.292629+00	\N	\N
+1021	mp	mp	217	এস, এম, জিলানী (013021701)	CREATE	{}	2026-05-25 09:27:24.291677+00	\N	\N
+1020	mp	address	216	বর্তমান ঠিকানা — কে এম বাবর	CREATE	{}	2026-05-25 09:27:24.288155+00	\N	\N
+1019	mp	electioninfo	216	কে এম বাবর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.287032+00	\N	\N
+1018	mp	mp	216	কে এম বাবর (013021601)	CREATE	{}	2026-05-25 09:27:24.286011+00	\N	\N
+1017	mp	address	215	বর্তমান ঠিকানা — মোঃ সেলিমুজ্জামান মোল্যা	CREATE	{}	2026-05-25 09:27:24.282996+00	\N	\N
+1016	mp	electioninfo	215	মোঃ সেলিমুজ্জামান মোল্যা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.282064+00	\N	\N
+1015	mp	mp	215	মোঃ সেলিমুজ্জামান মোল্যা (013021501)	CREATE	{}	2026-05-25 09:27:24.281077+00	\N	\N
+1014	mp	address	214	বর্তমান ঠিকানা — মোঃ শহিদুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.277813+00	\N	\N
+1013	mp	electioninfo	214	মোঃ শহিদুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.276808+00	\N	\N
+1012	mp	mp	214	মোঃ শহিদুল ইসলাম (013021401)	CREATE	{}	2026-05-25 09:27:24.275748+00	\N	\N
+1011	mp	address	213	বর্তমান ঠিকানা — নায়াব ইউসুফ আহমেদ	CREATE	{}	2026-05-25 09:27:24.272314+00	\N	\N
+1069	mp	mp	233	মোহাম্মদ আবুল হাসান (013023301)	CREATE	{}	2026-05-25 09:27:24.373099+00	\N	\N
+1068	mp	address	232	বর্তমান ঠিকানা — আরিফুল হক চৌধুরী	CREATE	{}	2026-05-25 09:27:24.370206+00	\N	\N
+1067	mp	electioninfo	232	আরিফুল হক চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.369182+00	\N	\N
+1066	mp	mp	232	আরিফুল হক চৌধুরী (013023201)	CREATE	{}	2026-05-25 09:27:24.368283+00	\N	\N
+1065	mp	address	231	বর্তমান ঠিকানা — মোহাম্মদ আব্দুল মালিক	CREATE	{}	2026-05-25 09:27:24.365077+00	\N	\N
+1064	mp	electioninfo	231	মোহাম্মদ আব্দুল মালিক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.364186+00	\N	\N
+1063	mp	mp	231	মোহাম্মদ আব্দুল মালিক (013023101)	CREATE	{}	2026-05-25 09:27:24.363203+00	\N	\N
+1062	mp	address	230	বর্তমান ঠিকানা — মোছাঃ তাহসিনা রুশদীর	CREATE	{}	2026-05-25 09:27:24.359823+00	\N	\N
+1061	mp	electioninfo	230	মোছাঃ তাহসিনা রুশদীর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.358882+00	\N	\N
+1060	mp	mp	230	মোছাঃ তাহসিনা রুশদীর (013023001)	CREATE	{}	2026-05-25 09:27:24.357924+00	\N	\N
+1059	mp	address	229	বর্তমান ঠিকানা — খন্দকার আবদুল মুক্তাদীর	CREATE	{}	2026-05-25 09:27:24.354755+00	\N	\N
+1058	mp	electioninfo	229	খন্দকার আবদুল মুক্তাদীর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.35387+00	\N	\N
+1057	mp	mp	229	খন্দকার আবদুল মুক্তাদীর (013022901)	CREATE	{}	2026-05-25 09:27:24.352971+00	\N	\N
+1056	mp	address	228	বর্তমান ঠিকানা — কলিম উদ্দিন আহমেদ	CREATE	{}	2026-05-25 09:27:24.34982+00	\N	\N
+1055	mp	electioninfo	228	কলিম উদ্দিন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.348892+00	\N	\N
+1054	mp	mp	228	কলিম উদ্দিন আহমেদ (013022801)	CREATE	{}	2026-05-25 09:27:24.347886+00	\N	\N
+1053	mp	address	227	বর্তমান ঠিকানা — নূরুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.344533+00	\N	\N
+1052	mp	electioninfo	227	নূরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.343575+00	\N	\N
+1051	mp	mp	227	নূরুল ইসলাম (013022701)	CREATE	{}	2026-05-25 09:27:24.34255+00	\N	\N
+1050	mp	address	226	বর্তমান ঠিকানা — মোহাম্মদ কয়ছর আহমেদ	CREATE	{}	2026-05-25 09:27:24.3391+00	\N	\N
+1049	mp	electioninfo	226	মোহাম্মদ কয়ছর আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.338187+00	\N	\N
+1048	mp	mp	226	মোহাম্মদ কয়ছর আহমেদ (013022601)	CREATE	{}	2026-05-25 09:27:24.337206+00	\N	\N
+1047	mp	address	225	বর্তমান ঠিকানা — মোঃ নাছির চৌধুরী	CREATE	{}	2026-05-25 09:27:24.334116+00	\N	\N
+1046	mp	electioninfo	225	মোঃ নাছির চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.333268+00	\N	\N
+1045	mp	mp	225	মোঃ নাছির চৌধুরী (013022501)	CREATE	{}	2026-05-25 09:27:24.332299+00	\N	\N
+1044	mp	address	224	বর্তমান ঠিকানা — কামরুজ্জামান কামরুল	CREATE	{}	2026-05-25 09:27:24.32912+00	\N	\N
+1043	mp	electioninfo	224	কামরুজ্জামান কামরুল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.328124+00	\N	\N
+1042	mp	mp	224	কামরুজ্জামান কামরুল (013022401)	CREATE	{}	2026-05-25 09:27:24.327087+00	\N	\N
+1041	mp	address	223	বর্তমান ঠিকানা — মিয়া নুরুদ্দিন আহাম্মেদ অপু	CREATE	{}	2026-05-25 09:27:24.323587+00	\N	\N
+1099	mp	mp	243	এম, এ, হান্নান (013024301)	CREATE	{}	2026-05-25 09:27:24.424354+00	\N	\N
+1098	mp	address	242	বর্তমান ঠিকানা — এস, এম, ফয়সল	CREATE	{}	2026-05-25 09:27:24.421123+00	\N	\N
+1097	mp	electioninfo	242	এস, এম, ফয়সল — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.420171+00	\N	\N
+1096	mp	mp	242	এস, এম, ফয়সল (013024201)	CREATE	{}	2026-05-25 09:27:24.419168+00	\N	\N
+1095	mp	address	241	বর্তমান ঠিকানা — আলহাজ্ব মোঃ জি কে গউছ	CREATE	{}	2026-05-25 09:27:24.416143+00	\N	\N
+1094	mp	electioninfo	241	আলহাজ্ব মোঃ জি কে গউছ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.415239+00	\N	\N
+1093	mp	mp	241	আলহাজ্ব মোঃ জি কে গউছ (013024101)	CREATE	{}	2026-05-25 09:27:24.41442+00	\N	\N
+1092	mp	address	240	বর্তমান ঠিকানা — আবু মনসুর সাখাওয়াত হাসান	CREATE	{}	2026-05-25 09:27:24.411091+00	\N	\N
+1091	mp	electioninfo	240	আবু মনসুর সাখাওয়াত হাসান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.410241+00	\N	\N
+1090	mp	mp	240	আবু মনসুর সাখাওয়াত হাসান (013024001)	CREATE	{}	2026-05-25 09:27:24.409209+00	\N	\N
+1089	mp	address	239	বর্তমান ঠিকানা — রেজা কিবরিয়া	CREATE	{}	2026-05-25 09:27:24.406227+00	\N	\N
+1088	mp	electioninfo	239	রেজা কিবরিয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.405373+00	\N	\N
+1087	mp	mp	239	রেজা কিবরিয়া (013023901)	CREATE	{}	2026-05-25 09:27:24.404467+00	\N	\N
+1086	mp	address	238	বর্তমান ঠিকানা — মোঃ মুজিবুর রহমান চৌধুরী	CREATE	{}	2026-05-25 09:27:24.401001+00	\N	\N
+1085	mp	electioninfo	238	মোঃ মুজিবুর রহমান চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.400135+00	\N	\N
+1084	mp	mp	238	মোঃ মুজিবুর রহমান চৌধুরী (013023801)	CREATE	{}	2026-05-25 09:27:24.399176+00	\N	\N
+1083	mp	address	237	বর্তমান ঠিকানা — নাসের রহমান	CREATE	{}	2026-05-25 09:27:24.395535+00	\N	\N
+1082	mp	electioninfo	237	নাসের রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.394569+00	\N	\N
+1081	mp	mp	237	নাসের রহমান (013023701)	CREATE	{}	2026-05-25 09:27:24.39363+00	\N	\N
+1080	mp	address	236	বর্তমান ঠিকানা — মোঃ শওকতুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.390291+00	\N	\N
+1079	mp	electioninfo	236	মোঃ শওকতুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.389277+00	\N	\N
+1078	mp	mp	236	মোঃ শওকতুল ইসলাম (013023601)	CREATE	{}	2026-05-25 09:27:24.388263+00	\N	\N
+1077	mp	address	235	বর্তমান ঠিকানা — নাসির উদ্দিন আহমেদ	CREATE	{}	2026-05-25 09:27:24.384641+00	\N	\N
+1076	mp	electioninfo	235	নাসির উদ্দিন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.383725+00	\N	\N
+1075	mp	mp	235	নাসির উদ্দিন আহমেদ (013023501)	CREATE	{}	2026-05-25 09:27:24.3828+00	\N	\N
+1074	mp	address	234	বর্তমান ঠিকানা — এমরান আহমদ চৌধুরী	CREATE	{}	2026-05-25 09:27:24.379691+00	\N	\N
+1073	mp	electioninfo	234	এমরান আহমদ চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.37884+00	\N	\N
+1072	mp	mp	234	এমরান আহমদ চৌধুরী (013023401)	CREATE	{}	2026-05-25 09:27:24.377971+00	\N	\N
+1071	mp	address	233	বর্তমান ঠিকানা — মোহাম্মদ আবুল হাসান	CREATE	{}	2026-05-25 09:27:24.374866+00	\N	\N
+1070	mp	electioninfo	233	মোহাম্মদ আবুল হাসান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.374008+00	\N	\N
+1129	mp	mp	253	মোঃ জসীম উদ্দিন (013025301)	CREATE	{}	2026-05-25 09:27:24.475402+00	\N	\N
+1128	mp	address	252	বর্তমান ঠিকানা — মোঃ আবুল হাসনাত	CREATE	{}	2026-05-25 09:27:24.472402+00	\N	\N
+1127	mp	electioninfo	252	মোঃ আবুল হাসনাত — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.471377+00	\N	\N
+1126	mp	mp	252	মোঃ আবুল হাসনাত (013025201)	CREATE	{}	2026-05-25 09:27:24.470512+00	\N	\N
+1125	mp	address	251	বর্তমান ঠিকানা — কাজী শাহ মোফাজ্জাল হোসাইন (কায়কোবাদ)	CREATE	{}	2026-05-25 09:27:24.467137+00	\N	\N
+1124	mp	electioninfo	251	কাজী শাহ মোফাজ্জাল হোসাইন (কায়কোবাদ) — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.465877+00	\N	\N
+1123	mp	mp	251	কাজী শাহ মোফাজ্জাল হোসাইন (কায়কোবাদ) (013025101)	CREATE	{}	2026-05-25 09:27:24.464932+00	\N	\N
+1122	mp	address	250	বর্তমান ঠিকানা — মোঃ সেলিম ভূইয়া	CREATE	{}	2026-05-25 09:27:24.461901+00	\N	\N
+1121	mp	electioninfo	250	মোঃ সেলিম ভূইয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.460922+00	\N	\N
+1120	mp	mp	250	মোঃ সেলিম ভূইয়া (013025001)	CREATE	{}	2026-05-25 09:27:24.460016+00	\N	\N
+1119	mp	address	249	বর্তমান ঠিকানা — ড, খন্দকার মোশাররফ হোসেন	CREATE	{}	2026-05-25 09:27:24.456688+00	\N	\N
+1118	mp	electioninfo	249	ড, খন্দকার মোশাররফ হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.45571+00	\N	\N
+1117	mp	mp	249	ড, খন্দকার মোশাররফ হোসেন (013024901)	CREATE	{}	2026-05-25 09:27:24.454727+00	\N	\N
+1116	mp	address	248	বর্তমান ঠিকানা — মোঃ জোনায়েদ আব্দুর রহিম সাকি	CREATE	{}	2026-05-25 09:27:24.451031+00	\N	\N
+1115	mp	electioninfo	248	মোঃ জোনায়েদ আব্দুর রহিম সাকি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.450045+00	\N	\N
+1114	mp	mp	248	মোঃ জোনায়েদ আব্দুর রহিম সাকি (013024801)	CREATE	{}	2026-05-25 09:27:24.449147+00	\N	\N
+1113	mp	address	247	বর্তমান ঠিকানা — মোঃ আবদুল মান্নান	CREATE	{}	2026-05-25 09:27:24.446315+00	\N	\N
+1112	mp	electioninfo	247	মোঃ আবদুল মান্নান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.445327+00	\N	\N
+1111	mp	mp	247	মোঃ আবদুল মান্নান (013024701)	CREATE	{}	2026-05-25 09:27:24.44438+00	\N	\N
+1110	mp	address	246	বর্তমান ঠিকানা — মুশফিকুর রহমান	CREATE	{}	2026-05-25 09:27:24.44129+00	\N	\N
+1109	mp	electioninfo	246	মুশফিকুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.440414+00	\N	\N
+1108	mp	mp	246	মুশফিকুর রহমান (013024601)	CREATE	{}	2026-05-25 09:27:24.4394+00	\N	\N
+1107	mp	address	245	বর্তমান ঠিকানা — মোঃ খালেদ হোসেন মাহবুব	CREATE	{}	2026-05-25 09:27:24.436388+00	\N	\N
+1106	mp	electioninfo	245	মোঃ খালেদ হোসেন মাহবুব — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.435515+00	\N	\N
+1105	mp	mp	245	মোঃ খালেদ হোসেন মাহবুব (013024501)	CREATE	{}	2026-05-25 09:27:24.434603+00	\N	\N
+1104	mp	address	244	বর্তমান ঠিকানা — রুমিন ফারহানা	CREATE	{}	2026-05-25 09:27:24.431229+00	\N	\N
+1103	mp	electioninfo	244	রুমিন ফারহানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.430003+00	\N	\N
+1102	mp	mp	244	রুমিন ফারহানা (013024401)	CREATE	{}	2026-05-25 09:27:24.429075+00	\N	\N
+1101	mp	address	243	বর্তমান ঠিকানা — এম, এ, হান্নান	CREATE	{}	2026-05-25 09:27:24.42613+00	\N	\N
+1158	mp	address	262	বর্তমান ঠিকানা — শেখ ফরিদ আহম্মেদ	CREATE	{}	2026-05-25 09:27:24.524919+00	\N	\N
+1157	mp	electioninfo	262	শেখ ফরিদ আহম্মেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.523922+00	\N	\N
+1156	mp	mp	262	শেখ ফরিদ আহম্মেদ (013026201)	CREATE	{}	2026-05-25 09:27:24.522924+00	\N	\N
+1155	mp	address	261	বর্তমান ঠিকানা — মোঃ জালাল উদ্দিন	CREATE	{}	2026-05-25 09:27:24.519199+00	\N	\N
+1154	mp	electioninfo	261	মোঃ জালাল উদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.51816+00	\N	\N
+1153	mp	mp	261	মোঃ জালাল উদ্দিন (013026101)	CREATE	{}	2026-05-25 09:27:24.517165+00	\N	\N
+1152	mp	address	260	বর্তমান ঠিকানা — আ ন ম এহছানুল হক মিলন	CREATE	{}	2026-05-25 09:27:24.513772+00	\N	\N
+1151	mp	electioninfo	260	আ ন ম এহছানুল হক মিলন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.512929+00	\N	\N
+1150	mp	mp	260	আ ন ম এহছানুল হক মিলন (013026001)	CREATE	{}	2026-05-25 09:27:24.512054+00	\N	\N
+1149	mp	address	259	বর্তমান ঠিকানা — সৈয়দ আবদুল্লাহ মোহাম্মদ তাহের	CREATE	{}	2026-05-25 09:27:24.509087+00	\N	\N
+1148	mp	electioninfo	259	সৈয়দ আবদুল্লাহ মোহাম্মদ তাহের — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.508253+00	\N	\N
+1147	mp	mp	259	সৈয়দ আবদুল্লাহ মোহাম্মদ তাহের (013025901)	CREATE	{}	2026-05-25 09:27:24.507335+00	\N	\N
+1146	mp	address	258	বর্তমান ঠিকানা — মোঃ মোবাশ্বের আলম ভুঁইয়া	CREATE	{}	2026-05-25 09:27:24.504324+00	\N	\N
+1145	mp	electioninfo	258	মোঃ মোবাশ্বের আলম ভুঁইয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.503404+00	\N	\N
+1144	mp	mp	258	মোঃ মোবাশ্বের আলম ভুঁইয়া (013025801)	CREATE	{}	2026-05-25 09:27:24.502475+00	\N	\N
+1143	mp	address	257	বর্তমান ঠিকানা — মোঃ আবুল কালাম	CREATE	{}	2026-05-25 09:27:24.499182+00	\N	\N
+1142	mp	electioninfo	257	মোঃ আবুল কালাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.498216+00	\N	\N
+1141	mp	mp	257	মোঃ আবুল কালাম (013025701)	CREATE	{}	2026-05-25 09:27:24.497364+00	\N	\N
+1140	mp	address	256	বর্তমান ঠিকানা — জাকারিয়া তাহের	CREATE	{}	2026-05-25 09:27:24.494354+00	\N	\N
+1139	mp	electioninfo	256	জাকারিয়া তাহের — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.493523+00	\N	\N
+1138	mp	mp	256	জাকারিয়া তাহের (013025601)	CREATE	{}	2026-05-25 09:27:24.492638+00	\N	\N
+1137	mp	address	255	বর্তমান ঠিকানা — আতিকুল আলম	CREATE	{}	2026-05-25 09:27:24.488803+00	\N	\N
+1136	mp	electioninfo	255	আতিকুল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.487851+00	\N	\N
+1135	mp	mp	255	আতিকুল আলম (013025501)	CREATE	{}	2026-05-25 09:27:24.486847+00	\N	\N
+1134	mp	address	254	বর্তমান ঠিকানা — মোঃ মনিরুল হক চৌধুরী	CREATE	{}	2026-05-25 09:27:24.483454+00	\N	\N
+1133	mp	electioninfo	254	মোঃ মনিরুল হক চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.482084+00	\N	\N
+1132	mp	mp	254	মোঃ মনিরুল হক চৌধুরী (013025401)	CREATE	{}	2026-05-25 09:27:24.48114+00	\N	\N
+1131	mp	address	253	বর্তমান ঠিকানা — মোঃ জসীম উদ্দিন	CREATE	{}	2026-05-25 09:27:24.477433+00	\N	\N
+1130	mp	electioninfo	253	মোঃ জসীম উদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.476438+00	\N	\N
+1189	mp	mp	273	আবদুল হান্নান মাসউদ (013027301)	CREATE	{}	2026-05-25 09:27:24.578732+00	\N	\N
+1188	mp	address	272	বর্তমান ঠিকানা — মোহাম্মদ ফখরুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.575237+00	\N	\N
+1187	mp	electioninfo	272	মোহাম্মদ ফখরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.574415+00	\N	\N
+1186	mp	mp	272	মোহাম্মদ ফখরুল ইসলাম (013027201)	CREATE	{}	2026-05-25 09:27:24.573478+00	\N	\N
+1185	mp	address	271	বর্তমান ঠিকানা — মোঃ শাহজাহান	CREATE	{}	2026-05-25 09:27:24.570355+00	\N	\N
+1184	mp	electioninfo	271	মোঃ শাহজাহান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.569406+00	\N	\N
+1183	mp	mp	271	মোঃ শাহজাহান (013027101)	CREATE	{}	2026-05-25 09:27:24.568457+00	\N	\N
+1182	mp	address	270	বর্তমান ঠিকানা — মোঃ বরকত উল্লাহ বুলু	CREATE	{}	2026-05-25 09:27:24.56499+00	\N	\N
+1181	mp	electioninfo	270	মোঃ বরকত উল্লাহ বুলু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.564152+00	\N	\N
+1180	mp	mp	270	মোঃ বরকত উল্লাহ বুলু (013027001)	CREATE	{}	2026-05-25 09:27:24.563141+00	\N	\N
+1179	mp	address	269	বর্তমান ঠিকানা — জয়নুল আবদিন ফারুক	CREATE	{}	2026-05-25 09:27:24.560198+00	\N	\N
+1178	mp	electioninfo	269	জয়নুল আবদিন ফারুক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.559308+00	\N	\N
+1177	mp	mp	269	জয়নুল আবদিন ফারুক (013026901)	CREATE	{}	2026-05-25 09:27:24.558373+00	\N	\N
+1176	mp	address	268	বর্তমান ঠিকানা — এ.এম মাহবুব উদ্দিন খোকন	CREATE	{}	2026-05-25 09:27:24.555063+00	\N	\N
+1175	mp	electioninfo	268	এ.এম মাহবুব উদ্দিন খোকন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.554237+00	\N	\N
+1174	mp	mp	268	এ.এম মাহবুব উদ্দিন খোকন (013026801)	CREATE	{}	2026-05-25 09:27:24.553357+00	\N	\N
+1173	mp	address	267	বর্তমান ঠিকানা — আবদুল আউয়াল মিন্টু	CREATE	{}	2026-05-25 09:27:24.550339+00	\N	\N
+1172	mp	electioninfo	267	আবদুল আউয়াল মিন্টু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.549402+00	\N	\N
+1171	mp	mp	267	আবদুল আউয়াল মিন্টু (013026701)	CREATE	{}	2026-05-25 09:27:24.548415+00	\N	\N
+1170	mp	address	266	বর্তমান ঠিকানা — জয়নাল আবদিন	CREATE	{}	2026-05-25 09:27:24.544974+00	\N	\N
+1169	mp	electioninfo	266	জয়নাল আবদিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.544048+00	\N	\N
+1168	mp	mp	266	জয়নাল আবদিন (013026601)	CREATE	{}	2026-05-25 09:27:24.54315+00	\N	\N
+1167	mp	address	265	বর্তমান ঠিকানা — মুন্সী রফিকুল আলম	CREATE	{}	2026-05-25 09:27:24.54015+00	\N	\N
+1166	mp	electioninfo	265	মুন্সী রফিকুল আলম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.539241+00	\N	\N
+1165	mp	mp	265	মুন্সী রফিকুল আলম (013026501)	CREATE	{}	2026-05-25 09:27:24.538219+00	\N	\N
+1164	mp	address	264	বর্তমান ঠিকানা — মোঃ মমিনুল হক	CREATE	{}	2026-05-25 09:27:24.534812+00	\N	\N
+1163	mp	electioninfo	264	মোঃ মমিনুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.533895+00	\N	\N
+1162	mp	mp	264	মোঃ মমিনুল হক (013026401)	CREATE	{}	2026-05-25 09:27:24.533001+00	\N	\N
+1161	mp	address	263	বর্তমান ঠিকানা — মোঃ আবদুল হান্নান	CREATE	{}	2026-05-25 09:27:24.529841+00	\N	\N
+1160	mp	electioninfo	263	মোঃ আবদুল হান্নান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.528994+00	\N	\N
+1217	mp	electioninfo	282	হুমাম কাদের চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.625905+00	\N	\N
+1216	mp	mp	282	হুমাম কাদের চৌধুরী (013028401)	CREATE	{}	2026-05-25 09:27:24.62491+00	\N	\N
+1215	mp	address	281	বর্তমান ঠিকানা — গিয়াস উদ্দিন কাদের চৌধুরী	CREATE	{}	2026-05-25 09:27:24.621967+00	\N	\N
+1214	mp	electioninfo	281	গিয়াস উদ্দিন কাদের চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.621151+00	\N	\N
+1213	mp	mp	281	গিয়াস উদ্দিন কাদের চৌধুরী (013028301)	CREATE	{}	2026-05-25 09:27:24.620308+00	\N	\N
+1212	mp	address	280	বর্তমান ঠিকানা — মীর মোহাম্মদ হেলাল উদ্দীন	CREATE	{}	2026-05-25 09:27:24.617364+00	\N	\N
+1211	mp	electioninfo	280	মীর মোহাম্মদ হেলাল উদ্দীন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.616535+00	\N	\N
+1210	mp	mp	280	মীর মোহাম্মদ হেলাল উদ্দীন (013028201)	CREATE	{}	2026-05-25 09:27:24.615598+00	\N	\N
+1209	mp	address	279	বর্তমান ঠিকানা — মোস্তফা কামাল পাশা	CREATE	{}	2026-05-25 09:27:24.612472+00	\N	\N
+1208	mp	electioninfo	279	মোস্তফা কামাল পাশা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.611585+00	\N	\N
+1207	mp	mp	279	মোস্তফা কামাল পাশা (013028001)	CREATE	{}	2026-05-25 09:27:24.610661+00	\N	\N
+1206	mp	address	278	বর্তমান ঠিকানা — নুরুল আমিন	CREATE	{}	2026-05-25 09:27:24.607666+00	\N	\N
+1205	mp	electioninfo	278	নুরুল আমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.606684+00	\N	\N
+1204	mp	mp	278	নুরুল আমিন (013027801)	CREATE	{}	2026-05-25 09:27:24.605722+00	\N	\N
+1203	mp	address	277	বর্তমান ঠিকানা — এ. বি. এম আশরাফ উদ্দিন (নিজান)	CREATE	{}	2026-05-25 09:27:24.602315+00	\N	\N
+1202	mp	electioninfo	277	এ. বি. এম আশরাফ উদ্দিন (নিজান) — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.601428+00	\N	\N
+1201	mp	mp	277	এ. বি. এম আশরাফ উদ্দিন (নিজান) (013027701)	CREATE	{}	2026-05-25 09:27:24.600515+00	\N	\N
+1200	mp	address	276	বর্তমান ঠিকানা — মোঃ শহীদউদ্দীন চৌধুরী এ্যানি	CREATE	{}	2026-05-25 09:27:24.597559+00	\N	\N
+1199	mp	electioninfo	276	মোঃ শহীদউদ্দীন চৌধুরী এ্যানি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.596696+00	\N	\N
+1198	mp	mp	276	মোঃ শহীদউদ্দীন চৌধুরী এ্যানি (013027601)	CREATE	{}	2026-05-25 09:27:24.595853+00	\N	\N
+1197	mp	address	275	বর্তমান ঠিকানা — মোঃ আবুল খায়ের ভূঁইয়া	CREATE	{}	2026-05-25 09:27:24.592758+00	\N	\N
+1196	mp	electioninfo	275	মোঃ আবুল খায়ের ভূঁইয়া — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.591839+00	\N	\N
+1195	mp	mp	275	মোঃ আবুল খায়ের ভূঁইয়া (013027501)	CREATE	{}	2026-05-25 09:27:24.59087+00	\N	\N
+1194	mp	address	274	বর্তমান ঠিকানা — মোঃ শাহাদাত হোসেন	CREATE	{}	2026-05-25 09:27:24.587722+00	\N	\N
+1193	mp	electioninfo	274	মোঃ শাহাদাত হোসেন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.586733+00	\N	\N
+1192	mp	mp	274	মোঃ শাহাদাত হোসেন (013027401)	CREATE	{}	2026-05-25 09:27:24.585755+00	\N	\N
+1191	mp	address	273	বর্তমান ঠিকানা — আবদুল হান্নান মাসউদ	CREATE	{}	2026-05-25 09:27:24.580626+00	\N	\N
+1248	mp	address	292	বর্তমান ঠিকানা — সালাহউদ্দিন আহমদ	CREATE	{}	2026-05-25 09:27:24.676447+00	\N	\N
+1247	mp	electioninfo	292	সালাহউদ্দিন আহমদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.675572+00	\N	\N
+1246	mp	mp	292	সালাহউদ্দিন আহমদ (013029401)	CREATE	{}	2026-05-25 09:27:24.674584+00	\N	\N
+1245	mp	address	291	বর্তমান ঠিকানা — মোহাম্মদ জহিরুল ইসলাম	CREATE	{}	2026-05-25 09:27:24.671494+00	\N	\N
+1244	mp	electioninfo	291	মোহাম্মদ জহিরুল ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.6706+00	\N	\N
+1243	mp	mp	291	মোহাম্মদ জহিরুল ইসলাম (013029301)	CREATE	{}	2026-05-25 09:27:24.669678+00	\N	\N
+1242	mp	address	290	বর্তমান ঠিকানা — শাহজাহান চৌধুরী	CREATE	{}	2026-05-25 09:27:24.666699+00	\N	\N
+1241	mp	electioninfo	290	শাহজাহান চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.665727+00	\N	\N
+1240	mp	mp	290	শাহজাহান চৌধুরী (013029201)	CREATE	{}	2026-05-25 09:27:24.664768+00	\N	\N
+1239	mp	address	289	বর্তমান ঠিকানা — আলহাজ্ব জসীম উদ্দীন আহমেদ	CREATE	{}	2026-05-25 09:27:24.661531+00	\N	\N
+1238	mp	electioninfo	289	আলহাজ্ব জসীম উদ্দীন আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.660678+00	\N	\N
+1237	mp	mp	289	আলহাজ্ব জসীম উদ্দীন আহমেদ (013029101)	CREATE	{}	2026-05-25 09:27:24.659767+00	\N	\N
+1236	mp	address	288	বর্তমান ঠিকানা — সরওয়ার জামাল নিজাম	CREATE	{}	2026-05-25 09:27:24.656568+00	\N	\N
+1235	mp	electioninfo	288	সরওয়ার জামাল নিজাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.6557+00	\N	\N
+1234	mp	mp	288	সরওয়ার জামাল নিজাম (013029001)	CREATE	{}	2026-05-25 09:27:24.654862+00	\N	\N
+1233	mp	address	287	বর্তমান ঠিকানা — মোহাম্মদ এনামুল হক	CREATE	{}	2026-05-25 09:27:24.651701+00	\N	\N
+1232	mp	electioninfo	287	মোহাম্মদ এনামুল হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.650825+00	\N	\N
+1231	mp	mp	287	মোহাম্মদ এনামুল হক (013028901)	CREATE	{}	2026-05-25 09:27:24.649783+00	\N	\N
+1230	mp	address	286	বর্তমান ঠিকানা — আমির খসরু মাহমুদ চৌধুরী	CREATE	{}	2026-05-25 09:27:24.646402+00	\N	\N
+1229	mp	electioninfo	286	আমির খসরু মাহমুদ চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.645428+00	\N	\N
+1228	mp	mp	286	আমির খসরু মাহমুদ চৌধুরী (013028801)	CREATE	{}	2026-05-25 09:27:24.644435+00	\N	\N
+1227	mp	address	285	বর্তমান ঠিকানা — সাঈদ আল নোমান	CREATE	{}	2026-05-25 09:27:24.641483+00	\N	\N
+1226	mp	electioninfo	285	সাঈদ আল নোমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.640641+00	\N	\N
+1225	mp	mp	285	সাঈদ আল নোমান (013028701)	CREATE	{}	2026-05-25 09:27:24.639788+00	\N	\N
+1224	mp	address	284	বর্তমান ঠিকানা — মোহাম্মদ আবু সুফিয়ান	CREATE	{}	2026-05-25 09:27:24.636816+00	\N	\N
+1223	mp	electioninfo	284	মোহাম্মদ আবু সুফিয়ান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.635913+00	\N	\N
+1222	mp	mp	284	মোহাম্মদ আবু সুফিয়ান (013028601)	CREATE	{}	2026-05-25 09:27:24.634997+00	\N	\N
+1221	mp	address	283	বর্তমান ঠিকানা — এরশাদ উল্লাহ	CREATE	{}	2026-05-25 09:27:24.63172+00	\N	\N
+1220	mp	electioninfo	283	এরশাদ উল্লাহ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.630816+00	\N	\N
+1279	mp	mp	303	নেওয়াজ হালিমা আরলী (013030501)	CREATE	{}	2026-05-25 09:27:24.732007+00	\N	\N
+1278	mp	address	302	বর্তমান ঠিকানা — রেহানা আক্তার রানু	CREATE	{}	2026-05-25 09:27:24.728356+00	\N	\N
+1277	mp	electioninfo	302	রেহানা আক্তার রানু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.727266+00	\N	\N
+1276	mp	mp	302	রেহানা আক্তার রানু (013030401)	CREATE	{}	2026-05-25 09:27:24.726367+00	\N	\N
+1275	mp	address	301	বর্তমান ঠিকানা — রাশেদা বেগম হীরা	CREATE	{}	2026-05-25 09:27:24.723223+00	\N	\N
+1274	mp	electioninfo	301	রাশেদা বেগম হীরা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.722322+00	\N	\N
+1273	mp	mp	301	রাশেদা বেগম হীরা (013030301)	CREATE	{}	2026-05-25 09:27:24.721418+00	\N	\N
+1272	mp	address	300	বর্তমান ঠিকানা — শিরীন সুলতানা	CREATE	{}	2026-05-25 09:27:24.718351+00	\N	\N
+1271	mp	electioninfo	300	শিরীন সুলতানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.717501+00	\N	\N
+1270	mp	mp	300	শিরীন সুলতানা (013030201)	CREATE	{}	2026-05-25 09:27:24.716501+00	\N	\N
+1269	mp	address	299	বর্তমান ঠিকানা — সেলিমা রহমান	CREATE	{}	2026-05-25 09:27:24.712199+00	\N	\N
+1268	mp	electioninfo	299	সেলিমা রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.711168+00	\N	\N
+1267	mp	mp	299	সেলিমা রহমান (013030101)	CREATE	{}	2026-05-25 09:27:24.710074+00	\N	\N
+1266	mp	address	298	বর্তমান ঠিকানা — সাচিং প্রু	CREATE	{}	2026-05-25 09:27:24.706285+00	\N	\N
+1265	mp	electioninfo	298	সাচিং প্রু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.705249+00	\N	\N
+1264	mp	mp	298	সাচিং প্রু (013030001)	CREATE	{}	2026-05-25 09:27:24.704221+00	\N	\N
+1263	mp	address	297	বর্তমান ঠিকানা — দীপেন দেওয়ান	CREATE	{}	2026-05-25 09:27:24.700591+00	\N	\N
+1262	mp	electioninfo	297	দীপেন দেওয়ান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.69967+00	\N	\N
+1261	mp	mp	297	দীপেন দেওয়ান (013029901)	CREATE	{}	2026-05-25 09:27:24.698734+00	\N	\N
+1260	mp	address	296	বর্তমান ঠিকানা — আবদুল ওয়াদুদ ভূঁঞা	CREATE	{}	2026-05-25 09:27:24.695715+00	\N	\N
+1259	mp	electioninfo	296	আবদুল ওয়াদুদ ভূঁঞা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.694859+00	\N	\N
+1258	mp	mp	296	আবদুল ওয়াদুদ ভূঁঞা (013029801)	CREATE	{}	2026-05-25 09:27:24.693972+00	\N	\N
+1257	mp	address	295	বর্তমান ঠিকানা — শাহজাহান চৌধুরী	CREATE	{}	2026-05-25 09:27:24.690971+00	\N	\N
+1256	mp	electioninfo	295	শাহজাহান চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.690137+00	\N	\N
+1255	mp	mp	295	শাহজাহান চৌধুরী (013029701)	CREATE	{}	2026-05-25 09:27:24.689223+00	\N	\N
+1254	mp	address	294	বর্তমান ঠিকানা — লুৎফুর রহমান	CREATE	{}	2026-05-25 09:27:24.686252+00	\N	\N
+1253	mp	electioninfo	294	লুৎফুর রহমান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.685316+00	\N	\N
+1252	mp	mp	294	লুৎফুর রহমান (013029601)	CREATE	{}	2026-05-25 09:27:24.68452+00	\N	\N
+1251	mp	address	293	বর্তমান ঠিকানা — আলমগীর মুহাম্মদ মাহফুজ উল্লাহ ফরিদ	CREATE	{}	2026-05-25 09:27:24.681384+00	\N	\N
+1250	mp	electioninfo	293	আলমগীর মুহাম্মদ মাহফুজ উল্লাহ ফরিদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.680535+00	\N	\N
+1249	mp	mp	293	আলমগীর মুহাম্মদ মাহফুজ উল্লাহ ফরিদ (013029501)	CREATE	{}	2026-05-25 09:27:24.679638+00	\N	\N
+1309	mp	mp	313	সানসিলা জেবরিন (013031501)	CREATE	{}	2026-05-25 09:27:24.781256+00	\N	\N
+1308	mp	address	312	বর্তমান ঠিকানা — মোছাঃ সাবিরা সুলতানা	CREATE	{}	2026-05-25 09:27:24.777631+00	\N	\N
+1307	mp	electioninfo	312	মোছাঃ সাবিরা সুলতানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.776632+00	\N	\N
+1306	mp	mp	312	মোছাঃ সাবিরা সুলতানা (013031401)	CREATE	{}	2026-05-25 09:27:24.775647+00	\N	\N
+1305	mp	address	311	বর্তমান ঠিকানা — মাহ্‌মুদা হাবীবা	CREATE	{}	2026-05-25 09:27:24.772303+00	\N	\N
+1304	mp	electioninfo	311	মাহ্‌মুদা হাবীবা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.771482+00	\N	\N
+1303	mp	mp	311	মাহ্‌মুদা হাবীবা (013031301)	CREATE	{}	2026-05-25 09:27:24.770591+00	\N	\N
+1302	mp	address	310	বর্তমান ঠিকানা — জীবা আমিনা খান	CREATE	{}	2026-05-25 09:27:24.767621+00	\N	\N
+1301	mp	electioninfo	310	জীবা আমিনা খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.766834+00	\N	\N
+1300	mp	mp	310	জীবা আমিনা খান (013031201)	CREATE	{}	2026-05-25 09:27:24.7659+00	\N	\N
+1299	mp	address	309	বর্তমান ঠিকানা — ‌নিপুন রায় চৌধুরী	CREATE	{}	2026-05-25 09:27:24.762829+00	\N	\N
+1298	mp	electioninfo	309	‌নিপুন রায় চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.761973+00	\N	\N
+1297	mp	mp	309	‌নিপুন রায় চৌধুরী (013031101)	CREATE	{}	2026-05-25 09:27:24.76107+00	\N	\N
+1296	mp	address	308	বর্তমান ঠিকানা — নিলোফার চৌধুরী মনি	CREATE	{}	2026-05-25 09:27:24.757927+00	\N	\N
+1295	mp	electioninfo	308	নিলোফার চৌধুরী মনি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.757046+00	\N	\N
+1294	mp	mp	308	নিলোফার চৌধুরী মনি (013031001)	CREATE	{}	2026-05-25 09:27:24.756206+00	\N	\N
+1293	mp	address	307	বর্তমান ঠিকানা — হেলেন জেরিন খান	CREATE	{}	2026-05-25 09:27:24.753029+00	\N	\N
+1292	mp	electioninfo	307	হেলেন জেরিন খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.752199+00	\N	\N
+1291	mp	mp	307	হেলেন জেরিন খান (013030901)	CREATE	{}	2026-05-25 09:27:24.751209+00	\N	\N
+1290	mp	address	306	বর্তমান ঠিকানা — সাকিলা ফারজানা	CREATE	{}	2026-05-25 09:27:24.748228+00	\N	\N
+1289	mp	electioninfo	306	সাকিলা ফারজানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.747256+00	\N	\N
+1288	mp	mp	306	সাকিলা ফারজানা (013030801)	CREATE	{}	2026-05-25 09:27:24.746415+00	\N	\N
+1287	mp	address	305	বর্তমান ঠিকানা — বিলকিস ইসলাম	CREATE	{}	2026-05-25 09:27:24.743372+00	\N	\N
+1286	mp	electioninfo	305	বিলকিস ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.742497+00	\N	\N
+1285	mp	mp	305	বিলকিস ইসলাম (013030701)	CREATE	{}	2026-05-25 09:27:24.741507+00	\N	\N
+1284	mp	address	304	বর্তমান ঠিকানা — মোসাঃ ফরিদা ইয়াসমিন	CREATE	{}	2026-05-25 09:27:24.738453+00	\N	\N
+1283	mp	electioninfo	304	মোসাঃ ফরিদা ইয়াসমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.737643+00	\N	\N
+1282	mp	mp	304	মোসাঃ ফরিদা ইয়াসমিন (013030601)	CREATE	{}	2026-05-25 09:27:24.73675+00	\N	\N
+1281	mp	address	303	বর্তমান ঠিকানা — নেওয়াজ হালিমা আরলী	CREATE	{}	2026-05-25 09:27:24.733723+00	\N	\N
+1280	mp	electioninfo	303	নেওয়াজ হালিমা আরলী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.732897+00	\N	\N
+1346	mp	electioninfo	325	জহরত আদিব চৌধুরী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.86251+00	\N	\N
+1345	mp	mp	325	জহরত আদিব চৌধুরী (013032701)	CREATE	{}	2026-05-25 09:27:24.861602+00	\N	\N
+1344	mp	address	324	বর্তমান ঠিকানা — মানসুরা আক্তার	CREATE	{}	2026-05-25 09:27:24.858702+00	\N	\N
+1343	mp	electioninfo	324	মানসুরা আক্তার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.857899+00	\N	\N
+1342	mp	mp	324	মানসুরা আক্তার (013032601)	CREATE	{}	2026-05-25 09:27:24.857112+00	\N	\N
+1341	mp	address	323	বর্তমান ঠিকানা — মোছাঃ সুরাইয়া জেরিন	CREATE	{}	2026-05-25 09:27:24.854267+00	\N	\N
+1340	mp	electioninfo	323	মোছাঃ সুরাইয়া জেরিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.853451+00	\N	\N
+1339	mp	mp	323	মোছাঃ সুরাইয়া জেরিন (013032501)	CREATE	{}	2026-05-25 09:27:24.852616+00	\N	\N
+1338	mp	address	322	বর্তমান ঠিকানা — বীথিকা বিনতে হোসাইন	CREATE	{}	2026-05-25 09:27:24.849335+00	\N	\N
+1337	mp	electioninfo	322	বীথিকা বিনতে হোসাইন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.848353+00	\N	\N
+1336	mp	mp	322	বীথিকা বিনতে হোসাইন (013032401)	CREATE	{}	2026-05-25 09:27:24.847357+00	\N	\N
+1335	mp	address	321	বর্তমান ঠিকানা — ফেরদৌসী আহমেদ	CREATE	{}	2026-05-25 09:27:24.843812+00	\N	\N
+1334	mp	electioninfo	321	ফেরদৌসী আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.842786+00	\N	\N
+1333	mp	mp	321	ফেরদৌসী আহমেদ (013032301)	CREATE	{}	2026-05-25 09:27:24.841624+00	\N	\N
+1332	mp	address	320	বর্তমান ঠিকানা — মোসাম্মৎ শাম্মী আক্তার	CREATE	{}	2026-05-25 09:27:24.838044+00	\N	\N
+1331	mp	electioninfo	320	মোসাম্মৎ শাম্মী আক্তার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.837109+00	\N	\N
+1330	mp	mp	320	মোসাম্মৎ শাম্মী আক্তার (013032201)	CREATE	{}	2026-05-25 09:27:24.836182+00	\N	\N
+1329	mp	address	319	বর্তমান ঠিকানা — শামীম আরা বেগম স্বপ্না	CREATE	{}	2026-05-25 09:27:24.832075+00	\N	\N
+1328	mp	electioninfo	319	শামীম আরা বেগম স্বপ্না — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.830923+00	\N	\N
+1327	mp	mp	319	শামীম আরা বেগম স্বপ্না (013032101)	CREATE	{}	2026-05-25 09:27:24.829358+00	\N	\N
+1326	mp	address	318	বর্তমান ঠিকানা — সূবর্না সিকদার	CREATE	{}	2026-05-25 09:27:24.825838+00	\N	\N
+1325	mp	electioninfo	318	সূবর্না সিকদার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.824717+00	\N	\N
+1324	mp	mp	318	সূবর্না সিকদার (013032001)	CREATE	{}	2026-05-25 09:27:24.823568+00	\N	\N
+1323	mp	address	317	বর্তমান ঠিকানা — আন্না মিন্‌জ	CREATE	{}	2026-05-25 09:27:24.819766+00	\N	\N
+1322	mp	electioninfo	317	আন্না মিন্‌জ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.818134+00	\N	\N
+1320	mp	address	316	বর্তমান ঠিকানা — ফাহমিদা হক	CREATE	{}	2026-05-25 09:27:24.809665+00	\N	\N
+1319	mp	electioninfo	316	ফাহমিদা হক — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.808644+00	\N	\N
+1318	mp	mp	316	ফাহমিদা হক (013031801)	CREATE	{}	2026-05-25 09:27:24.807574+00	\N	\N
+1317	mp	address	315	বর্তমান ঠিকানা — সুলতানা আহমেদ	CREATE	{}	2026-05-25 09:27:24.800758+00	\N	\N
+1316	mp	electioninfo	315	সুলতানা আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.799814+00	\N	\N
+1380	mp	address	336	বর্তমান ঠিকানা — মারজিয়া বেগম	CREATE	{}	2026-05-25 09:27:24.918324+00	\N	\N
+1379	mp	electioninfo	336	মারজিয়া বেগম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.917439+00	\N	\N
+1378	mp	mp	336	মারজিয়া বেগম (013033801)	CREATE	{}	2026-05-25 09:27:24.916524+00	\N	\N
+1377	mp	address	335	বর্তমান ঠিকানা — নূরুন্নিসা সিদ্দীকা	CREATE	{}	2026-05-25 09:27:24.913556+00	\N	\N
+1376	mp	electioninfo	335	নূরুন্নিসা সিদ্দীকা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.912678+00	\N	\N
+1375	mp	mp	335	নূরুন্নিসা সিদ্দীকা (013033701)	CREATE	{}	2026-05-25 09:27:24.911757+00	\N	\N
+1374	mp	address	334	বর্তমান ঠিকানা — রেজেকা সুলতানা	CREATE	{}	2026-05-25 09:27:24.908473+00	\N	\N
+1373	mp	electioninfo	334	রেজেকা সুলতানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.907558+00	\N	\N
+1372	mp	mp	334	রেজেকা সুলতানা (013033601)	CREATE	{}	2026-05-25 09:27:24.906669+00	\N	\N
+1371	mp	address	333	বর্তমান ঠিকানা — সেলিনা সুলতানা	CREATE	{}	2026-05-25 09:27:24.903582+00	\N	\N
+1370	mp	electioninfo	333	সেলিনা সুলতানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.902487+00	\N	\N
+1369	mp	mp	333	সেলিনা সুলতানা (013033501)	CREATE	{}	2026-05-25 09:27:24.901525+00	\N	\N
+1367	mp	electioninfo	332	মাধবী মার্মা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.897847+00	\N	\N
+1366	mp	mp	332	মাধবী মার্মা (013033401)	CREATE	{}	2026-05-25 09:27:24.896937+00	\N	\N
+1365	mp	address	331	বর্তমান ঠিকানা — শওকত আরা আক্তার	CREATE	{}	2026-05-25 09:27:24.893879+00	\N	\N
+1364	mp	electioninfo	331	শওকত আরা আক্তার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.893029+00	\N	\N
+1363	mp	mp	331	শওকত আরা আক্তার (013033301)	CREATE	{}	2026-05-25 09:27:24.892099+00	\N	\N
+1362	mp	address	330	বর্তমান ঠিকানা — নাদিয়া পাঠান পাপন	CREATE	{}	2026-05-25 09:27:24.889154+00	\N	\N
+1361	mp	electioninfo	330	নাদিয়া পাঠান পাপন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.88826+00	\N	\N
+1360	mp	mp	330	নাদিয়া পাঠান পাপন (013033201)	CREATE	{}	2026-05-25 09:27:24.887326+00	\N	\N
+1359	mp	address	329	বর্তমান ঠিকানা — মোছাঃ সানজিদা ইয়াসমিন	CREATE	{}	2026-05-25 09:27:24.884+00	\N	\N
+1358	mp	electioninfo	329	মোছাঃ সানজিদা ইয়াসমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.883158+00	\N	\N
+1357	mp	mp	329	মোছাঃ সানজিদা ইয়াসমিন (013033101)	CREATE	{}	2026-05-25 09:27:24.88217+00	\N	\N
+1356	mp	address	328	বর্তমান ঠিকানা — আরিফা সুলতানা	CREATE	{}	2026-05-25 09:27:24.879226+00	\N	\N
+1355	mp	electioninfo	328	আরিফা সুলতানা — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.878376+00	\N	\N
+1354	mp	mp	328	আরিফা সুলতানা (013033001)	CREATE	{}	2026-05-25 09:27:24.877375+00	\N	\N
+1353	mp	address	327	বর্তমান ঠিকানা — ফাহিমা নাসরিন	CREATE	{}	2026-05-25 09:27:24.873608+00	\N	\N
+1352	mp	electioninfo	327	ফাহিমা নাসরিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.8726+00	\N	\N
+1351	mp	mp	327	ফাহিমা নাসরিন (013032901)	CREATE	{}	2026-05-25 09:27:24.87137+00	\N	\N
+1350	mp	address	326	বর্তমান ঠিকানা — মমতাজ আলো	CREATE	{}	2026-05-25 09:27:24.86845+00	\N	\N
+1349	mp	electioninfo	326	মমতাজ আলো — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.867549+00	\N	\N
+1348	mp	mp	326	মমতাজ আলো (013032801)	CREATE	{}	2026-05-25 09:27:24.866606+00	\N	\N
+1412	mp	electioninfo	347	সুলতানা জেসমিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.973325+00	\N	\N
+1411	mp	mp	347	সুলতানা জেসমিন (013034901)	CREATE	{}	2026-05-25 09:27:24.97242+00	\N	\N
+1410	mp	address	346	বর্তমান ঠিকানা — মাহবুবা হাকিম	CREATE	{}	2026-05-25 09:27:24.969174+00	\N	\N
+1409	mp	electioninfo	346	মাহবুবা হাকিম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.968142+00	\N	\N
+1408	mp	mp	346	মাহবুবা হাকিম (013034801)	CREATE	{}	2026-05-25 09:27:24.967291+00	\N	\N
+1407	mp	address	345	বর্তমান ঠিকানা — তাসমিয়া প্রধান	CREATE	{}	2026-05-25 09:27:24.964028+00	\N	\N
+1406	mp	electioninfo	345	তাসমিয়া প্রধান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.963203+00	\N	\N
+1405	mp	mp	345	তাসমিয়া প্রধান (013034701)	CREATE	{}	2026-05-25 09:27:24.962365+00	\N	\N
+1404	mp	address	344	বর্তমান ঠিকানা — মাহমুদা আলম মিতু	CREATE	{}	2026-05-25 09:27:24.959154+00	\N	\N
+1403	mp	electioninfo	344	মাহমুদা আলম মিতু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.958233+00	\N	\N
+1402	mp	mp	344	মাহমুদা আলম মিতু (013034601)	CREATE	{}	2026-05-25 09:27:24.95732+00	\N	\N
+1401	mp	address	343	বর্তমান ঠিকানা — রোকেয়া বেগম	CREATE	{}	2026-05-25 09:27:24.953766+00	\N	\N
+1400	mp	electioninfo	343	রোকেয়া বেগম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.952837+00	\N	\N
+1399	mp	mp	343	রোকেয়া বেগম (013034501)	CREATE	{}	2026-05-25 09:27:24.951825+00	\N	\N
+1398	mp	address	342	বর্তমান ঠিকানা — মারদিয়া মমতাজ	CREATE	{}	2026-05-25 09:27:24.948622+00	\N	\N
+1397	mp	electioninfo	342	মারদিয়া মমতাজ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.947755+00	\N	\N
+1396	mp	mp	342	মারদিয়া মমতাজ (013034401)	CREATE	{}	2026-05-25 09:27:24.946901+00	\N	\N
+1395	mp	address	341	বর্তমান ঠিকানা — শামছুন্নাহার বেগম	CREATE	{}	2026-05-25 09:27:24.943882+00	\N	\N
+1394	mp	electioninfo	341	শামছুন্নাহার বেগম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.942915+00	\N	\N
+1393	mp	mp	341	শামছুন্নাহার বেগম (013034301)	CREATE	{}	2026-05-25 09:27:24.942+00	\N	\N
+1392	mp	address	340	বর্তমান ঠিকানা — মিসেস সাজেদা সামাদ	CREATE	{}	2026-05-25 09:27:24.938405+00	\N	\N
+1391	mp	electioninfo	340	মিসেস সাজেদা সামাদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.937414+00	\N	\N
+1390	mp	mp	340	মিসেস সাজেদা সামাদ (013034201)	CREATE	{}	2026-05-25 09:27:24.936348+00	\N	\N
+1389	mp	address	339	বর্তমান ঠিকানা — মাহফুজা হান্নান	CREATE	{}	2026-05-25 09:27:24.933278+00	\N	\N
+1388	mp	electioninfo	339	মাহফুজা হান্নান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.932403+00	\N	\N
+1387	mp	mp	339	মাহফুজা হান্নান (013034101)	CREATE	{}	2026-05-25 09:27:24.931375+00	\N	\N
+1386	mp	address	338	বর্তমান ঠিকানা — মোসাঃ নাজমুন নাহার	CREATE	{}	2026-05-25 09:27:24.927887+00	\N	\N
+1385	mp	electioninfo	338	মোসাঃ নাজমুন নাহার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.926893+00	\N	\N
+1384	mp	mp	338	মোসাঃ নাজমুন নাহার (013034001)	CREATE	{}	2026-05-25 09:27:24.925967+00	\N	\N
+1383	mp	address	337	বর্তমান ঠিকানা — সাবিকুন্নাহার	CREATE	{}	2026-05-25 09:27:24.92303+00	\N	\N
+1382	mp	electioninfo	337	সাবিকুন্নাহার — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.922177+00	\N	\N
 1418	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 08:20:38.776643+00:00", "2026-05-25 09:36:20.406842+00:00"]}	2026-05-25 09:36:20.418045+00	\N	\N
 1419	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 09:36:20.406842+00:00", "2026-05-25 09:36:27.131451+00:00"]}	2026-05-25 09:36:27.149658+00	\N	\N
 1420	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 09:36:27.131451+00:00", "2026-05-25 09:45:00.052999+00:00"]}	2026-05-25 09:45:00.064899+00	\N	\N
-1421	mp	mp	1	Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░ (013000101)	UPDATE	{"dob": ["1970-02-03", ""], "updated_at": ["2026-05-25 09:27:23.047168+00:00", "2026-05-25 09:55:03.405773+00:00"], "updated_by": ["", "1"]}	2026-05-25 09:55:03.418618+00	172.23.0.1	1
 1422	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 09:45:00.052999+00:00", "2026-05-25 10:01:24.865868+00:00"]}	2026-05-25 10:01:24.877761+00	\N	\N
-1423	mp	mp	1	Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░ (013000101)	UPDATE	{"dob": ["", "1970-02-03"], "updated_at": ["2026-05-25 09:55:03.405773+00:00", "2026-05-25 10:08:16.853314+00:00"], "blood_group": ["", "3"], "birth_district": ["", "52"], "father_name_bn": ["", "Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª£Óª«Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª©Óª░ÓªòÓª¥Óª░"], "father_name_en": ["", "Muhammad Jamiruddin Sircar"], "mother_name_bn": ["", "Óª¼ÓºçÓªùÓª« Óª¿ÓºéÓª░ ÓªåÓªûÓªñÓª¥Óª░ Óª©Óª░ÓªòÓª¥Óª░"], "mother_name_en": ["", "Begum Noor Akhtar Sircar"]}	2026-05-25 10:08:16.863398+00	172.23.0.1	1
 1424	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 10:01:24.865868+00:00", "2026-05-25 10:18:27.359682+00:00"]}	2026-05-25 10:18:27.371819+00	\N	\N
 1425	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 10:18:27.359682+00:00", "2026-05-25 10:22:53.438555+00:00"]}	2026-05-25 10:22:53.454298+00	\N	\N
-1426	mp	address	1	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░	UPDATE	{"upazila": ["", "5"], "district": ["52", "1"], "division": ["6", "1"], "postal_code": ["", "1209"], "address_detail_bn": ["", "Óª½ÓºìÓª▓ÔÇîÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª¼Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº ÓªÅ ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐"], "address_detail_en": ["", "Flat No. A-602, House No. 64, Basta No. 11, Dhanmondi"]}	2026-05-25 10:51:48.184109+00	172.23.0.1	1
-1427	mp	address	349	Óª©ÓºìÓªÑÓª¥Óª»Óª╝ÓºÇ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░	CREATE	{}	2026-05-25 10:52:38.626624+00	172.23.0.1	1
 1428	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-25 10:22:53.438555+00:00", "2026-05-26 18:02:46.726464+00:00"]}	2026-05-26 18:02:46.745084+00	172.23.0.1	1
-1429	mp	socialservice	1	Óª©Óª«Óª¥Óª£ Óª©ÓºçÓª¼Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░	CREATE	{}	2026-05-26 18:12:41.262093+00	172.23.0.1	1
-1430	mp	address	1	Óª¼Óª░ÓºìÓªñÓª«Óª¥Óª¿ ÓªáÓª┐ÓªòÓª¥Óª¿Óª¥ ÔÇö Óª¼ÓºìÓª»Óª¥Óª░Óª┐Óª©ÓºìÓªƒÓª¥Óª░ Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª¿ÓªôÓªÂÓª¥Óªª Óª£Óª«Óª┐Óª░	UPDATE	{"address_detail_bn": ["Óª½ÓºìÓª▓ÔÇîÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª¼Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº ÓªÅ ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐", "Óª½ÓºìÓª▓ÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª░Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº/ÓªÅ, ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐"], "address_detail_en": ["Flat No. A-602, House No. 64, Basta No. 11, Dhanmondi", "Flat No. A-602, House No. 64, Road No. 11/A, Dhanmondi"]}	2026-05-26 18:24:13.656251+00	172.23.0.1	1
 1431	accounts	role	1	Data Entry	CREATE	{}	2026-05-26 18:32:54.447424+00	172.23.0.1	1
-1432	accounts	customuser	2	ÓªƒÓºçÓª©ÓºìÓªƒ	CREATE	{}	2026-05-26 18:38:29.029598+00	172.23.0.1	1
-1433	accounts	customuser	2	ÓªƒÓºçÓª©ÓºìÓªƒ	UPDATE	{"last_login": ["", "2026-05-26 18:38:46.209736+00:00"]}	2026-05-26 18:38:46.231936+00	172.23.0.1	2
-1434	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"start_date": ["2026-02-17", ""]}	2026-05-26 18:38:57.336266+00	172.23.0.1	2
-1435	parliament	parliament	13	ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"start_date": ["", "2026-02-17"]}	2026-05-26 18:39:11.246806+00	172.23.0.1	2
 1436	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-26 18:02:46.726464+00:00", "2026-05-27 07:32:54.328834+00:00"]}	2026-05-27 07:32:54.354415+00	172.23.0.1	1
-1437	accounts	customuser	2	ÓªƒÓºçÓª©ÓºìÓªƒ	UPDATE	{"last_login": ["2026-05-26 18:38:46.209736+00:00", "2026-05-27 07:37:09.734240+00:00"]}	2026-05-27 07:37:09.74717+00	172.23.0.1	2
+1434	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"start_date": ["2026-02-17", ""]}	2026-05-26 18:38:57.336266+00	172.23.0.1	2
+1433	accounts	customuser	2	টেস্ট	UPDATE	{"last_login": ["", "2026-05-26 18:38:46.209736+00:00"]}	2026-05-26 18:38:46.231936+00	172.23.0.1	2
+1432	accounts	customuser	2	টেস্ট	CREATE	{}	2026-05-26 18:38:29.029598+00	172.23.0.1	1
+1429	mp	socialservice	1	সমাজ সেবা — ব্যারিস্টার মুহম্মদ নওশাদ জমির	CREATE	{}	2026-05-26 18:12:41.262093+00	172.23.0.1	1
+1427	mp	address	349	স্থায়ী ঠিকানা — ব্যারিস্টার মুহম্মদ নওশাদ জমির	CREATE	{}	2026-05-25 10:52:38.626624+00	172.23.0.1	1
+1426	mp	address	1	বর্তমান ঠিকানা — ব্যারিস্টার মুহম্মদ নওশাদ জমির	UPDATE	{"upazila": ["", "5"], "district": ["52", "1"], "division": ["6", "1"], "postal_code": ["", "1209"], "address_detail_bn": ["", "Óª½ÓºìÓª▓ÔÇîÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª¼Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº ÓªÅ ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐"], "address_detail_en": ["", "Flat No. A-602, House No. 64, Basta No. 11, Dhanmondi"]}	2026-05-25 10:51:48.184109+00	172.23.0.1	1
+1423	mp	mp	1	ব্যারিস্টার মুহম্মদ নওশাদ জমির (013000101)	UPDATE	{"dob": ["", "1970-02-03"], "updated_at": ["2026-05-25 09:55:03.405773+00:00", "2026-05-25 10:08:16.853314+00:00"], "blood_group": ["", "3"], "birth_district": ["", "52"], "father_name_bn": ["", "Óª«ÓºüÓª╣Óª«ÓºìÓª«Óªª Óª£Óª«Óª┐Óª░ ÓªëÓªªÓºìÓªªÓª┐Óª¿ Óª©Óª░ÓªòÓª¥Óª░"], "father_name_en": ["", "Muhammad Jamiruddin Sircar"], "mother_name_bn": ["", "Óª¼ÓºçÓªùÓª« Óª¿ÓºéÓª░ ÓªåÓªûÓªñÓª¥Óª░ Óª©Óª░ÓªòÓª¥Óª░"], "mother_name_en": ["", "Begum Noor Akhtar Sircar"]}	2026-05-25 10:08:16.863398+00	172.23.0.1	1
+1421	mp	mp	1	ব্যারিস্টার মুহম্মদ নওশাদ জমির (013000101)	UPDATE	{"dob": ["1970-02-03", ""], "updated_at": ["2026-05-25 09:27:23.047168+00:00", "2026-05-25 09:55:03.405773+00:00"], "updated_by": ["", "1"]}	2026-05-25 09:55:03.418618+00	172.23.0.1	1
+1417	mp	electioninfo	1	ব্যারিস্টার মুহম্মদ নওশাদ জমির — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"party": ["", "1"], "oath_date": ["", "2026-02-17"], "gazette_date": ["", "2026-02-13"], "election_date": ["", "2026-02-12"]}	2026-05-25 09:30:08.172334+00	172.23.0.1	1
+1416	mp	address	348	বর্তমান ঠিকানা — মোছাঃ নুসরাত তাবাসসুম জ্যোতি	CREATE	{}	2026-05-25 09:27:24.979123+00	\N	\N
+1415	mp	electioninfo	348	মোছাঃ নুসরাত তাবাসসুম জ্যোতি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.978257+00	\N	\N
+1414	mp	mp	348	মোছাঃ নুসরাত তাবাসসুম জ্যোতি (013035001)	CREATE	{}	2026-05-25 09:27:24.977385+00	\N	\N
 1438	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-27 07:32:54.328834+00:00", "2026-05-27 08:01:14.647973+00:00"]}	2026-05-27 08:01:14.663552+00	172.23.0.1	1
 1439	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-27 08:01:14.647973+00:00", "2026-05-28 15:55:43.272994+00:00"]}	2026-05-28 15:55:43.290494+00	172.23.0.1	1
-1440	mp	electioninfo	3	Óª«Óª┐Óª░ÓºìÓª£Óª¥ Óª½ÓªûÓª░ÓºüÓª▓ ÓªçÓª©Óª▓Óª¥Óª« ÓªåÓª▓Óª«ÓªùÓºÇÓª░ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"party": ["", "1"]}	2026-05-28 16:36:10.810394+00	172.23.0.1	1
-1441	mp	electioninfo	348	Óª«ÓºïÓªøÓª¥Óªâ Óª¿ÓºüÓª©Óª░Óª¥Óªñ ÓªñÓª¥Óª¼Óª¥Óª©Óª©ÓºüÓª« Óª£ÓºìÓª»ÓºçÓª¥ÓªñÓª┐ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"party": ["", "3"]}	2026-05-28 16:38:43.552236+00	172.23.0.1	1
 1442	accounts	customuser	1	superadmin	UPDATE	{"last_login": ["2026-05-28 15:55:43.272994+00:00", "2026-05-30 17:47:27.025994+00:00"]}	2026-05-30 17:47:27.043392+00	172.23.0.1	1
-1443	mp	electioninfo	176	ÓªùÓºƒÓºçÓªÂÓºìÓª¼Óª░ ÓªÜÓª¿ÓºìÓªªÓºìÓª░ Óª░Óª¥Óºƒ ÔÇö ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª (13th Parliament)	UPDATE	{"party": ["", "1"]}	2026-05-30 18:49:22.770559+00	172.23.0.1	1
 1446	accounts	role	1	Data Entry	UPDATE	{"name_bn": ["ÓªíÓª¥ÓªƒÓª¥ ÓªÅÓª¿ÓºìÓªƒÓºìÓª░Óª┐", "ডাটা এন্ট্রি"], "description_bn": ["ÓªÅÓª«Óª¬Óª┐ÓªªÓºçÓª░ ÓªñÓªÑÓºìÓª» Óª©Óª«ÓºìÓª¬Óª¥ÓªªÓª¿Óª¥", "এমপিদের তথ্য সম্পাদনা"]}	2026-06-02 04:59:14.569624+00	\N	\N
 1447	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"name_bn": ["ÓªñÓºìÓª░Óª»Óª╝ÓºïÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª", "ত্রয়োদশ জাতীয় সংসদ"]}	2026-06-02 04:59:15.775995+00	\N	\N
 1448	parliament	parliament	12	দ্বাদশ জাতীয় সংসদ (12th National Parliament)	UPDATE	{"name_bn": ["ÓªªÓºìÓª¼Óª¥ÓªªÓªÂ Óª£Óª¥ÓªñÓºÇÓª»Óª╝ Óª©ÓªéÓª©Óªª", "দ্বাদশ জাতীয় সংসদ"]}	2026-06-02 04:59:15.779291+00	\N	\N
@@ -7113,6 +7042,9 @@ COPY public.reports_auditlog (id, app_label, model_name, object_id, object_repr,
 1461	parliament	constituency	2	২ পঞ্চগড়-২ (2 Panchagarh-2)	UPDATE	{"display_bn": ["Óº¿ Óª¬Óª×ÓºìÓªÜÓªùÓº£-Óº¿", "২ পঞ্চগড়-২"]}	2026-06-02 04:59:15.827665+00	\N	\N
 1462	parliament	constituency	3	৩ ঠাকুরগাঁও-১ (3 Thakurgaon-1)	UPDATE	{"display_bn": ["Óº® ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óºº", "৩ ঠাকুরগাঁও-১"]}	2026-06-02 04:59:15.831556+00	\N	\N
 1463	parliament	constituency	4	৪ ঠাকুরগাঁও-২ (4 Thakurgaon-2)	UPDATE	{"display_bn": ["Óº¬ ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óº¿", "৪ ঠাকুরগাঁও-২"]}	2026-06-02 04:59:15.834594+00	\N	\N
+1441	mp	electioninfo	348	মোছাঃ নুসরাত তাবাসসুম জ্যোতি — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"party": ["", "3"]}	2026-05-28 16:38:43.552236+00	172.23.0.1	1
+1440	mp	electioninfo	3	মির্জা ফখরুল ইসলাম আলমগীর — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"party": ["", "1"]}	2026-05-28 16:36:10.810394+00	172.23.0.1	1
+1437	accounts	customuser	2	টেস্ট	UPDATE	{"last_login": ["2026-05-26 18:38:46.209736+00:00", "2026-05-27 07:37:09.734240+00:00"]}	2026-05-27 07:37:09.74717+00	172.23.0.1	2
 1464	parliament	constituency	5	৫ ঠাকুরগাঁও-৩ (5 Thakurgaon-3)	UPDATE	{"display_bn": ["Óº½ ÓªáÓª¥ÓªòÓºüÓª░ÓªùÓª¥ÓªüÓªô-Óº®", "৫ ঠাকুরগাঁও-৩"]}	2026-06-02 04:59:15.837656+00	\N	\N
 1465	parliament	constituency	6	৬ দিনাজপুর-১ (6 Dinajpur-1)	UPDATE	{"display_bn": ["Óº¼ ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óºº", "৬ দিনাজপুর-১"]}	2026-06-02 04:59:15.842604+00	\N	\N
 1466	parliament	constituency	7	৭ দিনাজপুর-২ (7 Dinajpur-2)	UPDATE	{"display_bn": ["Óº¡ ÓªªÓª┐Óª¿Óª¥Óª£Óª¬ÓºüÓª░-Óº¿", "৭ দিনাজপুর-২"]}	2026-06-02 04:59:15.845654+00	\N	\N
@@ -8164,6 +8096,50 @@ COPY public.reports_auditlog (id, app_label, model_name, object_id, object_repr,
 2512	mp	mp	346	মাহবুবা হাকিম (013034801)	UPDATE	{"nationality": ["Óª¼Óª¥ÓªéÓª▓Óª¥ÓªªÓºçÓªÂÓºÇ", "বাংলাদেশী"]}	2026-06-16 06:19:24.500367+00	\N	\N
 2513	mp	mp	347	সুলতানা জেসমিন (013034901)	UPDATE	{"nationality": ["Óª¼Óª¥ÓªéÓª▓Óª¥ÓªªÓºçÓªÂÓºÇ", "বাংলাদেশী"]}	2026-06-16 06:19:24.514418+00	\N	\N
 2514	mp	mp	348	মোছাঃ নুসরাত তাবাসসুম জ্যোতি (013035001)	UPDATE	{"nationality": ["Óª¼Óª¥ÓªéÓª▓Óª¥ÓªªÓºçÓªÂÓºÇ", "বাংলাদেশী"]}	2026-06-16 06:19:24.526879+00	\N	\N
+1443	mp	electioninfo	176	গয়েশ্বর চন্দ্র রায় — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"party": ["", "1"]}	2026-05-30 18:49:22.770559+00	172.23.0.1	1
+1435	parliament	parliament	13	ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	UPDATE	{"start_date": ["", "2026-02-17"]}	2026-05-26 18:39:11.246806+00	172.23.0.1	2
+1430	mp	address	1	বর্তমান ঠিকানা — ব্যারিস্টার মুহম্মদ নওশাদ জমির	UPDATE	{"address_detail_bn": ["Óª½ÓºìÓª▓ÔÇîÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª¼Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº ÓªÅ ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐", "Óª½ÓºìÓª▓ÓºìÓª»Óª¥Óªƒ Óª¿Óªé-ÓªÅ-Óº¼ÓºªÓº¿, Óª¼Óª¥Óª©Óª¥ Óª¿Óªé-Óº¼Óº¬, Óª░Óª¥Óª©ÓºìÓªñÓª¥ Óª¿Óªé-ÓººÓºº/ÓªÅ, ÓªºÓª¥Óª¿Óª«Óª¿ÓºìÓªíÓª┐"], "address_detail_en": ["Flat No. A-602, House No. 64, Basta No. 11, Dhanmondi", "Flat No. A-602, House No. 64, Road No. 11/A, Dhanmondi"]}	2026-05-26 18:24:13.656251+00	172.23.0.1	1
+1413	mp	address	347	বর্তমান ঠিকানা — সুলতানা জেসমিন	CREATE	{}	2026-05-25 09:27:24.974322+00	\N	\N
+1381	mp	mp	337	সাবিকুন্নাহার (013033901)	CREATE	{}	2026-05-25 09:27:24.921289+00	\N	\N
+1368	mp	address	332	বর্তমান ঠিকানা — মাধবী মার্মা	CREATE	{}	2026-05-25 09:27:24.89867+00	\N	\N
+1347	mp	address	325	বর্তমান ঠিকানা — জহরত আদিব চৌধুরী	CREATE	{}	2026-05-25 09:27:24.863302+00	\N	\N
+1321	mp	mp	317	আন্না মিন্‌জ (013031901)	CREATE	{}	2026-05-25 09:27:24.816627+00	\N	\N
+1315	mp	mp	315	সুলতানা আহমেদ (013031701)	CREATE	{}	2026-05-25 09:27:24.798705+00	\N	\N
+1314	mp	address	314	বর্তমান ঠিকানা — সানজিদা ইসলাম	CREATE	{}	2026-05-25 09:27:24.791666+00	\N	\N
+1313	mp	electioninfo	314	সানজিদা ইসলাম — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.79077+00	\N	\N
+1312	mp	mp	314	সানজিদা ইসলাম (013031601)	CREATE	{}	2026-05-25 09:27:24.789893+00	\N	\N
+1311	mp	address	313	বর্তমান ঠিকানা — সানসিলা জেবরিন	CREATE	{}	2026-05-25 09:27:24.783169+00	\N	\N
+1310	mp	electioninfo	313	সানসিলা জেবরিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.782246+00	\N	\N
+1219	mp	mp	283	এরশাদ উল্লাহ (013028501)	CREATE	{}	2026-05-25 09:27:24.629984+00	\N	\N
+1218	mp	address	282	বর্তমান ঠিকানা — হুমাম কাদের চৌধুরী	CREATE	{}	2026-05-25 09:27:24.62674+00	\N	\N
+1190	mp	electioninfo	273	আবদুল হান্নান মাসউদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.579631+00	\N	\N
+1159	mp	mp	263	মোঃ আবদুল হান্নান (013026301)	CREATE	{}	2026-05-25 09:27:24.528135+00	\N	\N
+1100	mp	electioninfo	243	এম, এ, হান্নান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.425242+00	\N	\N
+1040	mp	electioninfo	223	মিয়া নুরুদ্দিন আহাম্মেদ অপু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.322713+00	\N	\N
+1010	mp	electioninfo	213	নায়াব ইউসুফ আহমেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.271323+00	\N	\N
+981	mp	address	203	বর্তমান ঠিকানা — মোঃ আশরাফ উদ্দিন	CREATE	{}	2026-05-25 09:27:24.21977+00	\N	\N
+950	mp	electioninfo	193	মোঃ তমিজ উদ্দিন — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:24.160954+00	\N	\N
+859	mp	mp	163	এডভোকেট মোঃ জালাল উদ্দীন (013016301)	CREATE	{}	2026-05-25 09:27:23.96867+00	\N	\N
+830	mp	electioninfo	153	লুৎফুল্লাহেল মাজেদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.90895+00	\N	\N
+801	mp	address	143	বর্তমান ঠিকানা — মোঃ রাশেদুল ইসলাম রাশেদ	CREATE	{}	2026-05-25 09:27:23.856385+00	\N	\N
+773	mp	electioninfo	134	সুলতান সালাউদ্দিন টুকু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.806015+00	\N	\N
+743	mp	electioninfo	124	আবুল হোসেন খান — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.746404+00	\N	\N
+736	mp	mp	122	মোঃ রাজিব আহসান (013012201)	CREATE	{}	2026-05-25 09:27:23.73476+00	\N	\N
+735	mp	address	121	বর্তমান ঠিকানা — জয়নুল আবেদীন	CREATE	{}	2026-05-25 09:27:23.731636+00	\N	\N
+712	mp	mp	114	এ বি এম মোশাররফ হোসেন (013011401)	CREATE	{}	2026-05-25 09:27:23.691161+00	\N	\N
+681	mp	address	103	বর্তমান ঠিকানা — মোহাম্মদ আলি আসগার	CREATE	{}	2026-05-25 09:27:23.635609+00	\N	\N
+560	mp	electioninfo	63	ইকবাল হাসান মাহ্‌মুদ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.421917+00	\N	\N
+530	mp	electioninfo	53	মোঃ মিজানুর রহমান মিনু — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.36767+00	\N	\N
+508	mp	mp	46	মোঃ মোস্তাফিজুর রহমান (013004601)	CREATE	{}	2026-05-25 09:27:23.330108+00	\N	\N
+499	mp	mp	43	মোঃ কেরামত আলী (013004301)	CREATE	{}	2026-05-25 09:27:23.313821+00	\N	\N
+440	mp	electioninfo	23	মোঃ গোলাম রব্বানী — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.20801+00	\N	\N
+418	mp	mp	16	মোঃ হাসান রাজীব প্রধান (013001601)	CREATE	{}	2026-05-25 09:27:23.168226+00	\N	\N
+410	mp	electioninfo	13	আলফারুক আব্দুল লতীফ — ত্রয়োদশ জাতীয় সংসদ (13th Parliament)	CREATE	{}	2026-05-25 09:27:23.154355+00	\N	\N
+306	parliament	constituency	286	২৮৬ চট্টগ্রাম-৯ (286 Chattogram-9)	CREATE	{}	2026-05-24 17:06:26.529852+00	\N	\N
+223	parliament	constituency	203	২০৩ নরসিংদী-৫ (203 Narsingdi-5)	CREATE	{}	2026-05-24 17:06:26.397296+00	\N	\N
+178	parliament	constituency	158	১৫৮ নেত্রকোনা-২ (158 Netrokona-2)	CREATE	{}	2026-05-24 17:06:26.323122+00	\N	\N
+134	parliament	constituency	114	১১৪ পটুয়াখালি-৪ (114 Patuakhali-4)	CREATE	{}	2026-05-24 17:06:26.238552+00	\N	\N
+88	parliament	constituency	68	৬৮ পাবনা-১ (68 Pabna-1)	CREATE	{}	2026-05-24 17:06:26.161477+00	\N	\N
 \.
 
 
@@ -10933,5 +10909,5 @@ ALTER TABLE ONLY public.travel_foreigntourparticipant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict mycVlV8OtIvYfMIVFl2wkxikmbcdPGeiDy68XmchRrFjhQ8hb2yfbjSRRdI7CXU
+\unrestrict CXZdmfZ0AQHXgJ7DktRxoCpf7pqXOdhGdZfQOeDY9ouxZGxi3xC8CDVbrCk2RTr
 
