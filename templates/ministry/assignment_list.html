@@ -24,10 +24,10 @@
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম বা মন্ত্রণালয়…">
-        {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
+        {% if q %}<a href="?parliament={{ parliament_id }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব সংসদ" "All" %}</option>
@@ -36,21 +36,13 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ধরন" "Type" %}</label>
       <select name="minister_type" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব ধরন" "All" %}</option>
         {% for mt in minister_types %}
         <option value="{{ mt.pk }}" {% if mt.pk|stringformat:"s" == minister_type_id %}selected{% endif %}>{{ mt|tr:"name" }}</option>
         {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2">
-      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
-      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
-        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Inactive" %}</option>
-        <option value="all"      {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
       </select>
     </div>
     <div class="col-md-1">
@@ -72,8 +64,8 @@
           <th>{% ui "শুরু" "Start" %}</th>
           <th>{% ui "শেষ" "End" %}</th>
           <th>{% ui "GO নং" "GO No." %}</th>
-          <th style="width:7rem;">{% ui "অবস্থা" "Status" %}</th>
-          <th style="width:8rem;"></th>
+          <th>{% ui "GO ফাইল" "GO File" %}</th>
+          <th style="width:6rem;"></th>
         </tr>
       </thead>
       <tbody>
@@ -94,23 +86,11 @@
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.go_number|default:"—" }}</td>
-          <td>
-            {% if obj.is_active %}
-              <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
-            {% else %}
-              <span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
-            {% endif %}
-          </td>
+          <td>{% include "partials/_go_file.html" with file=obj.go_file %}</td>
           <td class="text-end">
             <a href="{% url 'ministry:assignment_update' obj.pk %}" class="btn btn-outline-secondary btn-sm me-1" title="{% ui "সম্পাদনা" "Edit" %}">
               <i class="bi bi-pencil"></i>
             </a>
-            <form method="post" action="{% url 'ministry:assignment_toggle' obj.pk %}" class="d-inline">
-              {% csrf_token %}
-              <button class="btn btn-outline-warning btn-sm me-1" title="{% ui "স্ট্যাটাস পরিবর্তন" "Toggle Status" %}">
-                <i class="bi bi-arrow-repeat"></i>
-              </button>
-            </form>
             <form method="post" action="{% url 'ministry:assignment_delete' obj.pk %}" class="d-inline"
                   onsubmit="return confirm('{% ui "এই নিয়োগ মুছে ফেলবেন?" "Delete this assignment?" %}')">
               {% csrf_token %}

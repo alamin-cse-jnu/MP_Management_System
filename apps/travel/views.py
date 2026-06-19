@@ -9,8 +9,9 @@ from apps.master.models import TravelType
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from apps.accounts.mixins import perm_required
-from .forms import ForeignTourForm, ParticipantForm, TourCountryForm
-from .models import ForeignTour, ForeignTourCountry, ForeignTourParticipant
+from .forms import (ForeignTourForm, OfficerForm, ParticipantBulkForm, TourCountryForm)
+from .models import (ForeignTour, ForeignTourCountry, ForeignTourOfficer,
+                     ForeignTourParticipant)
 
 
 @perm_required
@@ -19,6 +20,7 @@ def tour_list(request):
         'parliament', 'tour_type', 'purpose'
     ).annotate(
         mp_count=Count('participants', distinct=True),
+        officer_count=Count('officers', distinct=True),
         country_count=Count('countries', distinct=True),
     )
 
@@ -39,7 +41,9 @@ def tour_list(request):
         qs = qs.filter(
             Q(go_number__icontains=q) |
             Q(participants__mp__name_bn__icontains=q) |
-            Q(participants__mp__name_en__icontains=q)
+            Q(participants__mp__name_en__icontains=q) |
+            Q(officers__name__icontains=q) |
+            Q(officers__officer_id__icontains=q)
         ).distinct()
 
     paginator = Paginator(qs, 25)
@@ -59,13 +63,13 @@ def tour_list(request):
 def tour_create(request):
     active_p = Parliament.objects.filter(is_active=True).first()
     initial  = {'parliament': active_p} if active_p else {}
-    form = ForeignTourForm(request.POST or None, initial=initial)
+    form = ForeignTourForm(request.POST or None, request.FILES or None, initial=initial)
     if form.is_valid():
         tour = form.save(commit=False)
         tour.created_by = request.user
         tour.save()
-        messages.success(request, 'বিদেশ ভ্রমণ GO তৈরি হয়েছে। এখন সদস্য ও দেশ যোগ করুন।')
-        return redirect('travel:tour_detail', pk=tour.pk)
+        messages.success(request, 'বিদেশ ভ্রমণ GO তৈরি হয়েছে। এখন দেশ, সদস্য ও কর্মকর্তা যোগ করুন।')
+        return redirect('travel:tour_update', pk=tour.pk)
     return render(request, 'travel/tour_form.html', {
         'form':      form,
         'is_create': True,
@@ -76,34 +80,43 @@ def tour_create(request):
 
 @perm_required
 def tour_detail(request, pk):
-    tour             = get_object_or_404(ForeignTour, pk=pk)
-    participants     = tour.participants.select_related('mp').all()
-    countries        = tour.countries.select_related('country').all()
-    participant_form = ParticipantForm(tour=tour)
-    country_form     = TourCountryForm(tour=tour)
-    return render(request, 'travel/tour_detail.html', {
-        'tour':             tour,
-        'participants':     participants,
-        'countries':        countries,
-        'participant_form': participant_form,
-        'country_form':     country_form,
-    })
+    """Read-only view of a tour. Editing happens on the manage/edit page."""
+    tour         = get_object_or_404(ForeignTour, pk=pk)
+    participants = tour.participants.select_related('mp').all()
+    officers     = tour.officers.select_related('designation').all()
+    countries    = tour.countries.select_related('country').all()
+    ctx = {
+        'tour':         tour,
+        'participants': participants,
+        'officers':     officers,
+        'countries':    countries,
+    }
+    if request.GET.get('format') == 'print':
+        return render(request, 'travel/print/tour_detail.html', ctx)
+    return render(request, 'travel/tour_detail.html', ctx)
 
 
 @perm_required
 def tour_update(request, pk):
+    """Manage page: edit tour fields + add/remove countries, MPs, officers."""
     tour = get_object_or_404(ForeignTour, pk=pk)
-    form = ForeignTourForm(request.POST or None, instance=tour)
-    if form.is_valid():
+    form = ForeignTourForm(request.POST or None, request.FILES or None, instance=tour)
+    if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, 'বিদেশ ভ্রমণ তথ্য আপডেট হয়েছে।')
-        return redirect('travel:tour_detail', pk=tour.pk)
+        return redirect('travel:tour_update', pk=tour.pk)
     return render(request, 'travel/tour_form.html', {
-        'form':      form,
-        'tour':      tour,
-        'is_create': False,
-        'title_bn':  'বিদেশ ভ্রমণ সম্পাদনা',
-        'title_en':  'Edit Foreign Tour',
+        'form':             form,
+        'tour':             tour,
+        'is_create':        False,
+        'participants':     tour.participants.select_related('mp').all(),
+        'officers':         tour.officers.select_related('designation').all(),
+        'countries':        tour.countries.select_related('country').all(),
+        'participant_form': ParticipantBulkForm(tour=tour),
+        'officer_form':     OfficerForm(),
+        'country_form':     TourCountryForm(tour=tour),
+        'title_bn':         'বিদেশ ভ্রমণ সম্পাদনা',
+        'title_en':         'Edit Foreign Tour',
     })
 
 
@@ -119,15 +132,15 @@ def tour_delete(request, pk):
 @require_POST
 def participant_add(request, pk):
     tour = get_object_or_404(ForeignTour, pk=pk)
-    form = ParticipantForm(request.POST, tour=tour)
+    form = ParticipantBulkForm(request.POST, tour=tour)
     if form.is_valid():
-        p = form.save(commit=False)
-        p.tour = tour
-        p.save()
-        messages.success(request, 'সদস্য যোগ করা হয়েছে।')
+        mps = form.cleaned_data['mps']
+        for mp_obj in mps:
+            ForeignTourParticipant.objects.get_or_create(tour=tour, mp=mp_obj)
+        messages.success(request, f'{len(mps)} জন সদস্য যোগ করা হয়েছে।')
     else:
         messages.error(request, 'সদস্য যোগ করা যায়নি। তথ্য পরীক্ষা করুন।')
-    return redirect('travel:tour_detail', pk=pk)
+    return redirect('travel:tour_update', pk=pk)
 
 
 @perm_required
@@ -136,7 +149,31 @@ def participant_remove(request, pk, ppk):
     tour = get_object_or_404(ForeignTour, pk=pk)
     get_object_or_404(ForeignTourParticipant, pk=ppk, tour=tour).delete()
     messages.success(request, 'সদস্য বাদ দেওয়া হয়েছে।')
-    return redirect('travel:tour_detail', pk=pk)
+    return redirect('travel:tour_update', pk=pk)
+
+
+@perm_required
+@require_POST
+def officer_add(request, pk):
+    tour = get_object_or_404(ForeignTour, pk=pk)
+    form = OfficerForm(request.POST)
+    if form.is_valid():
+        officer = form.save(commit=False)
+        officer.tour = tour
+        officer.save()
+        messages.success(request, 'কর্মকর্তা যোগ করা হয়েছে।')
+    else:
+        messages.error(request, 'কর্মকর্তা যোগ করা যায়নি। তথ্য পরীক্ষা করুন।')
+    return redirect('travel:tour_update', pk=pk)
+
+
+@perm_required
+@require_POST
+def officer_remove(request, pk, opk):
+    tour = get_object_or_404(ForeignTour, pk=pk)
+    get_object_or_404(ForeignTourOfficer, pk=opk, tour=tour).delete()
+    messages.success(request, 'কর্মকর্তা বাদ দেওয়া হয়েছে।')
+    return redirect('travel:tour_update', pk=pk)
 
 
 @perm_required
@@ -151,7 +188,7 @@ def country_add(request, pk):
         messages.success(request, 'দেশ যোগ করা হয়েছে।')
     else:
         messages.error(request, 'দেশ যোগ করা যায়নি। তথ্য পরীক্ষা করুন।')
-    return redirect('travel:tour_detail', pk=pk)
+    return redirect('travel:tour_update', pk=pk)
 
 
 @perm_required
@@ -160,4 +197,4 @@ def country_remove(request, pk, cpk):
     tour = get_object_or_404(ForeignTour, pk=pk)
     get_object_or_404(ForeignTourCountry, pk=cpk, tour=tour).delete()
     messages.success(request, 'দেশ বাদ দেওয়া হয়েছে।')
-    return redirect('travel:tour_detail', pk=pk)
+    return redirect('travel:tour_update', pk=pk)

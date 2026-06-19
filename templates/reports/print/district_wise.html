@@ -3,11 +3,14 @@
 {% block title %}জেলা/বিভাগ ভিত্তিক তালিকা{% endblock %}
 {% block content %}
 <h2 style="text-align:center;margin-bottom:4px;">জেলা/বিভাগ ভিত্তিক সংসদ সদস্য তালিকা</h2>
+<p style="text-align:center;font-size:9pt;color:#555;margin-top:0;">
+  {% if basis == 'constituency' %}{% ui "ভিত্তি: নির্বাচনী এলাকা (নির্বাচিত ১–৩০০)" "Basis: Constituency (elected 1–300)" %}{% else %}{% ui "ভিত্তি: নিজ জেলা/বিভাগ" "Basis: Home District/Division" %}{% endif %}
+</p>
 <table>
   <thead><tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>{% ui "নাম (বাংলায়)" "Name (Bangla)" %}</th><th>{% ui "বিভাগ" "Division" %}</th><th>{% ui "জেলা" "District" %}</th><th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th><th>দল</th></tr></thead>
   <tbody>
-    {% for mp in object_list %}{% with ei=mp.election_infos.all.0 dist=mp.home_district %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ mp.mp_id }}</td><td>{{ mp|tr:"name" }}</td><td>{{ dist.division|tr:"name"|default:"—"  }}</td><td>{{ dist|tr:"name"|default:"—"  }}</td><td>{{ ei.constituency|tr:"display"|default:"—"  }}</td><td>{{ ei.party|tr:"name"|default:"—"  }}</td></tr>
+    {% for mp in object_list %}{% with ei=mp.election_infos.all.0 %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ mp.mp_id }}</td><td>{{ mp|tr:"name" }}</td>{% if basis == 'constituency' %}<td>{{ ei.constituency.district.division|tr:"name"|default:"—" }}</td><td>{{ ei.constituency.district|tr:"name"|default:"—" }}</td>{% else %}<td>{{ mp.home_district.division|tr:"name"|default:"—" }}</td><td>{{ mp.home_district|tr:"name"|default:"—" }}</td>{% endif %}<td>{{ ei.constituency|tr:"display"|default:"—"  }}</td><td>{{ ei.party|tr:"name"|default:"—"  }}</td></tr>
     {% endwith %}{% empty %}<tr><td colspan="7" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>{% endfor %}
   </tbody>
 </table>

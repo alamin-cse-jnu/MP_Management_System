@@ -62,7 +62,6 @@
       </thead>
       <tbody>
         {% for tour in page_obj %}
-        {% with first_p=tour.participants.all.0 %}
         <tr>
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ tour.go_number }}</code></td>
@@ -75,11 +74,10 @@
             <div><a href="{% url 'mp:mp_detail' p.mp_id %}" class="text-decoration-none small">{{ p.mp|tr:"name" }}</a></div>
             {% empty %}—{% endfor %}
           </td>
-          <td>{{ first_p.departure_date|date:"d/m/Y"|default:"—" }}</td>
-          <td>{{ first_p.return_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
           <td class="text-end no-print"><a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
         </tr>
-        {% endwith %}
         {% empty %}
         <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}

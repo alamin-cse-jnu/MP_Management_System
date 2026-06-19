@@ -71,7 +71,24 @@
       "Bash(git -C \"E:/projects/MP_Management_System\" checkout --ours mp_data.sql)",
       "Bash(git -C \"E:/projects/MP_Management_System\" add mp_data.sql .claude/settings.local.json)",
       "Bash(git *)",
-      "Bash(GIT_EDITOR=true git *)"
+      "Bash(GIT_EDITOR=true git *)",
+      "Bash(python manage.py makemigrations)",
+      "Bash(python manage.py makemigrations --check --dry-run)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(python -c \"import os,django; os.environ.setdefault\\('DJANGO_SETTINGS_MODULE','config.settings.development'\\); django.setup\\(\\); from apps.committee.forms import CommitteeBulkStep1Form; f=CommitteeBulkStep1Form\\(\\); print\\(str\\(f['mps']\\)\\)\")",
+      "Bash(python -c \"import os,django; os.environ.setdefault\\('DJANGO_SETTINGS_MODULE','config.settings.development'\\); django.setup\\(\\); from apps.committee.forms import CommitteeBulkStep1Form; f=CommitteeBulkStep1Form\\(\\); w=f.fields['mps'].widget; print\\(type\\(w\\).__name__\\); print\\(w.attrs\\)\")",
+      "Bash(python -c \"import os,django; os.environ.setdefault\\('DJANGO_SETTINGS_MODULE','config.settings.development'\\); django.setup\\(\\); from apps.committee.forms import CommitteeBulkStep1Form; f=CommitteeBulkStep1Form\\(\\); w=f.fields['mps'].widget; print\\(sorted\\(w.attrs.keys\\(\\)\\)\\); print\\('class=',w.attrs.get\\('class'\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('playwright/package.json'\\).version\\)\")",
+      "Bash(node -e \"console.log\\(require\\('puppeteer/package.json'\\).version\\)\")",
+      "Bash(npm install *)",
+      "Bash(node run.js)",
+      "Bash(node /d/Development/projects/MP_Management_System/_repro/run2.js)",
+      "Bash(node run3.js)",
+      "Bash(node run4.js)",
+      "Bash(node /d/Development/projects/MP_Management_System/_repro/live.js iyjthn9r39cctz5lwmux0betd3mi19jq)",
+      "Bash(sed -i \"s/waitUntil: 'networkidle'/waitUntil: 'domcontentloaded'/; s/waitForTimeout\\(2500\\)/waitForTimeout\\(4000\\)/\" live.js)",
+      "Bash(node live.js iyjthn9r39cctz5lwmux0betd3mi19jq)",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }

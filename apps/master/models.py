@@ -466,3 +466,18 @@ class PADesignation(models.Model):
 
     def __str__(self):
         return f"{self.name_bn} ({self.name_en})"
+
+
+class OfficerDesignation(models.Model):
+    """Designation for officers accompanying MPs on foreign tours."""
+    name_bn = models.CharField(max_length=200)
+    name_en = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering', 'name_bn']
+        verbose_name = 'Officer Designation'
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"

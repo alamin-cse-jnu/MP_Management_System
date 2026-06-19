@@ -3,6 +3,7 @@ from django.db import models
 from apps.master.models import CommitteePosition, StandingCommittee
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
+from utils.go_files import validate_go_file
 
 
 class CommitteeAssignment(models.Model):
@@ -14,6 +15,8 @@ class CommitteeAssignment(models.Model):
     end_date   = models.DateField(null=True, blank=True)
     go_number  = models.CharField(max_length=100, blank=True)
     go_date    = models.DateField(null=True, blank=True)
+    go_file    = models.FileField(upload_to='go/committee/', blank=True, null=True,
+                                  validators=[validate_go_file])
     is_active  = models.BooleanField(default=True)
     remarks_bn = models.TextField(blank=True)
     remarks_en = models.TextField(blank=True)

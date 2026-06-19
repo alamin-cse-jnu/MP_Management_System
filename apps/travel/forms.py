@@ -1,10 +1,12 @@
 from django import forms
 
 from apps.master.form_fields import BilingualChoiceField
-from apps.master.models import Country, TravelPurpose, TravelType
-from apps.mp.form_fields import MPChoiceField
+from apps.master.models import Country, OfficerDesignation, TravelPurpose, TravelType
+from apps.mp.form_fields import MPChoiceField, MPMultipleChoiceField
 from apps.parliament.models import Parliament
-from .models import ForeignTour, ForeignTourCountry, ForeignTourParticipant
+from utils.go_files import GO_FILE_ACCEPT
+from .models import (ForeignTour, ForeignTourCountry, ForeignTourOfficer,
+                     ForeignTourParticipant)
 
 
 class _BootstrapMixin:
@@ -32,11 +34,12 @@ class ForeignTourForm(_BootstrapMixin, forms.ModelForm):
     class Meta:
         model  = ForeignTour
         fields = [
-            'parliament', 'go_number', 'go_date',
+            'parliament', 'go_number', 'go_date', 'go_file',
             'tour_type', 'purpose', 'purpose_detail_bn', 'purpose_detail_en',
         ]
         widgets = {
             'go_date': forms.DateInput(attrs={'type': 'date'}),
+            'go_file': forms.ClearableFileInput(attrs={'accept': GO_FILE_ACCEPT}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -46,27 +49,30 @@ class ForeignTourForm(_BootstrapMixin, forms.ModelForm):
             is_active=True).order_by('ordering')
         self.fields['purpose'].queryset = TravelPurpose.objects.filter(
             is_active=True).order_by('ordering')
+        self.fields['go_file'].required = False
 
 
-class ParticipantForm(_BootstrapMixin, forms.ModelForm):
-    mp = MPChoiceField(required=True)
-
-    class Meta:
-        model  = ForeignTourParticipant
-        fields = ['mp', 'departure_date', 'return_date', 'remarks_bn', 'remarks_en']
-        widgets = {
-            'departure_date': forms.DateInput(attrs={'type': 'date'}),
-            'return_date':    forms.DateInput(attrs={'type': 'date'}),
-        }
+class ParticipantBulkForm(forms.Form):
+    """Add several MPs to a tour at once (one GO covering multiple MPs)."""
+    mps = MPMultipleChoiceField(required=True, label='সংসদ সদস্যগণ / Members of Parliament')
 
     def __init__(self, *args, tour=None, **kwargs):
         super().__init__(*args, **kwargs)
         exclude_ids = None
         if tour is not None:
             exclude_ids = list(tour.participants.values_list('mp_id', flat=True))
-        self.fields['mp'].queryset = MPChoiceField.annotated_queryset(exclude_pks=exclude_ids)
-        for f in ('departure_date', 'return_date'):
-            self.fields[f].required = False
+        self.fields['mps'].queryset = MPChoiceField.annotated_queryset(exclude_pks=exclude_ids)
+
+
+class OfficerForm(_BootstrapMixin, forms.ModelForm):
+    designation = BilingualChoiceField(
+        queryset=OfficerDesignation.objects.filter(is_active=True).order_by('ordering', 'name_bn'),
+        empty_label='-- পদবী নির্বাচন করুন / Select Designation --',
+    )
+
+    class Meta:
+        model  = ForeignTourOfficer
+        fields = ['officer_id', 'name', 'designation', 'remarks_bn', 'remarks_en']
 
 
 class TourCountryForm(_BootstrapMixin, forms.ModelForm):
@@ -77,10 +83,16 @@ class TourCountryForm(_BootstrapMixin, forms.ModelForm):
 
     class Meta:
         model  = ForeignTourCountry
-        fields = ['country', 'ordering']
+        fields = ['country', 'from_date', 'to_date', 'ordering']
+        widgets = {
+            'from_date': forms.DateInput(attrs={'type': 'date'}),
+            'to_date':   forms.DateInput(attrs={'type': 'date'}),
+        }
 
     def __init__(self, *args, tour=None, **kwargs):
         super().__init__(*args, **kwargs)
+        for f in ('from_date', 'to_date'):
+            self.fields[f].required = False
         if tour is not None:
             existing_ids = list(tour.countries.values_list('country_id', flat=True))
             self.fields['country'].queryset = Country.objects.filter(

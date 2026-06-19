@@ -28,6 +28,11 @@ class Constituency(models.Model):
     """300 directly-elected seats. Admin enters both Bangla and English names."""
     display_bn = models.CharField(max_length=100)   # ১ পঞ্চগড়-১
     display_en = models.CharField(max_length=100)   # 1 Panchagarh-1
+    # Geographic district this constituency belongs to. Enables division/district
+    # reports based on constituency (not just the MP's home district). Division
+    # is reached via district.division.
+    district   = models.ForeignKey('master.District', on_delete=models.PROTECT,
+                                   null=True, blank=True, related_name='constituencies')
     is_active  = models.BooleanField(default=True)
     ordering   = models.IntegerField(default=0)
 

@@ -19,10 +19,19 @@
 <div class="row justify-content-center"><div class="col-lg-8 col-md-10">
   <div class="mp-card">
     <div class="mp-card-header"><i class="bi bi-bank icon"></i> {% ui title_bn title_en %}</div>
-    <form method="post" novalidate>{% csrf_token %}
+    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
       {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
-      {% if not mp %}
+      {% if is_bulk %}
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-medium">{% ui "সংসদ সদস্যগণ (একাধিক নির্বাচন করুন)" "Members of Parliament (select multiple)" %} <span class="text-primary">*</span></label>
+          {{ form.mps }}
+          <div class="form-text">{% ui "একটি GO একাধিক সদস্য কভার করলে এখানে সবাইকে নির্বাচন করুন — প্রতিটির জন্য আলাদা নিয়োগ তৈরি হবে।" "If one GO covers several MPs, select them all here — one assignment is created per MP." %}</div>
+          {% if form.mps.errors %}<div class="text-danger small mt-1">{{ form.mps.errors }}</div>{% endif %}
+        </div>
+      </div>
+      {% elif form.mp %}
       <div class="row">
         <div class="col-md-12 mb-3">
           <label class="form-label fw-medium">{% ui "সংসদ সদস্য" "Members of Parliament" %} <span class="text-primary">*</span></label>
@@ -37,11 +46,13 @@
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "পদবী" "Designation" %} <span class="text-primary">*</span></label>{{ form.role }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শুরুর তারিখ" "Start Date" %} <span class="text-primary">*</span></label>{{ form.start_date }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শেষ তারিখ" "End Date" %}</label>{{ form.end_date }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>{{ form.go_number }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</label>{{ form.nomination_date }}</div>
-        <div class="col-md-3 mb-3 d-flex align-items-end">
-          <div class="form-check mb-2">{{ form.is_active }} <label class="form-check-label">{% ui "সক্রিয়" "Active" %}</label></div>
+        <div class="col-md-4 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>{{ form.go_number }}</div>
+        <div class="col-md-2 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "মনোনয়নকারী" "Nominated By" %}</label>{{ form.nominated_by }}</div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "GO ফাইল (PDF/JPG/PNG)" "GO File (PDF/JPG/PNG)" %}</label>
+          {{ form.go_file }}
+          {% if form.go_file.errors %}<div class="text-danger small mt-1">{{ form.go_file.errors }}</div>{% endif %}
         </div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "মন্তব্য (বাংলায়)" "Remarks (Bangla)" %}</label>{{ form.remarks_bn }}</div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">Remarks (English)</label>{{ form.remarks_en }}</div>

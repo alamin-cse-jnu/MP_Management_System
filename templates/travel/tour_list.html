@@ -22,7 +22,7 @@
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
-        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="GO নং বা সদস্যের নাম…">
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="GO নং / সদস্য / কর্মকর্তা নাম বা আইডি…">
         {% if q %}<a href="?parliament={{ parliament_id }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
@@ -58,10 +58,12 @@
           <th style="width:3rem;">#</th>
           <th>{% ui "GO নম্বর" "GO Number" %}</th>
           <th>{% ui "GO তারিখ" "GO Date" %}</th>
+          <th>{% ui "GO ফাইল" "GO File" %}</th>
           <th>{% ui "ধরন" "Type" %}</th>
           <th>{% ui "উদ্দেশ্য" "Purpose" %}</th>
-          <th style="width:6rem;">{% ui "সদস্য" "Members" %}</th>
-          <th style="width:6rem;">{% ui "দেশ" "Country" %}</th>
+          <th style="width:5rem;">{% ui "সদস্য" "MPs" %}</th>
+          <th style="width:5rem;">{% ui "কর্মকর্তা" "Officers" %}</th>
+          <th style="width:5rem;">{% ui "দেশ" "Country" %}</th>
           <th style="width:7rem;"></th>
         </tr>
       </thead>
@@ -71,9 +73,11 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><a href="{% url 'travel:tour_detail' tour.pk %}" class="text-decoration-none fw-medium">{{ tour.go_number }}</a></td>
           <td>{{ tour.go_date|date:"d/m/Y" }}</td>
+          <td>{% include "partials/_go_file.html" with file=tour.go_file %}</td>
           <td><span class="badge bg-primary-subtle text-primary">{{ tour.tour_type|tr:"name" }}</span></td>
           <td>{{ tour.purpose|tr:"name" }}</td>
           <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">{{ tour.mp_count }}</span></td>
+          <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">{{ tour.officer_count }}</span></td>
           <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">{{ tour.country_count }}</span></td>
           <td class="text-end">
             <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-primary btn-sm me-1" title="{% ui "বিবরণ" "Details" %}">
@@ -89,7 +93,7 @@
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="8" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

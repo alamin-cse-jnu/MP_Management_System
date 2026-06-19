@@ -1,5 +1,7 @@
 from django import forms
 
+from apps.master.form_fields import BilingualChoiceField
+from apps.master.models import District
 from .models import Constituency, Parliament
 
 
@@ -31,6 +33,12 @@ class ParliamentForm(_BootstrapMixin, forms.ModelForm):
 
 
 class ConstituencyForm(_BootstrapMixin, forms.ModelForm):
+    district = BilingualChoiceField(
+        queryset=District.objects.filter(is_active=True).select_related('division').order_by('name_bn'),
+        required=False,
+        empty_label='-- জেলা নির্বাচন করুন / Select District --',
+    )
+
     class Meta:
         model = Constituency
-        fields = ['display_bn', 'display_en', 'ordering']
+        fields = ['display_bn', 'display_en', 'district', 'ordering']

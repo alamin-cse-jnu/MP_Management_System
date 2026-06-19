@@ -14,9 +14,14 @@
 <form method="get">
 <div class="mp-card mb-3 p-3">
   <div class="row g-2 align-items-end">
-    <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
+    <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm"><span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম…"></div></div>
+    <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "ভিত্তি" "Basis" %}</label>
+      <select name="basis" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="home" {% if basis == 'home' %}selected{% endif %}>{% ui "নিজ জেলা/বিভাগ" "Home District/Division" %}</option>
+        <option value="constituency" {% if basis == 'constituency' %}selected{% endif %}>{% ui "নির্বাচনী এলাকা (নির্বাচিত ১–৩০০)" "Constituency (elected 1–300)" %}</option>
+      </select></div>
     <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব সংসদ" "All" %}</option>
@@ -39,19 +44,19 @@
 <div class="d-flex flex-wrap gap-2 mb-2 align-items-center">
   <span class="text-muted" style="font-size:.82rem;"><i class="bi bi-funnel-fill me-1"></i>{% ui "ফিল্টার:" "Filters:" %}</span>
   {% if division_id %}{% for d in divisions %}{% if d.pk|stringformat:"s" == division_id %}
-  <a href="?parliament={{ parliament_id }}&district={{ district_id }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+  <a href="?parliament={{ parliament_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
      style="background:#0d9488;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
     {% ui "বিভাগ:" "Division:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i>
   </a>
   {% endif %}{% endfor %}{% endif %}
   {% if district_id %}{% for d in districts %}{% if d.pk|stringformat:"s" == district_id %}
-  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&basis={{ basis }}&q={{ q }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
      style="background:#3b82f6;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
     {% ui "জেলা:" "District:" %} {{ d|tr:"name" }} <i class="bi bi-x"></i>
   </a>
   {% endif %}{% endfor %}{% endif %}
   {% if q %}
-  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
+  <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}" class="badge text-decoration-none d-inline-flex align-items-center gap-1"
      style="background:#64748b;color:#fff;font-size:.78rem;padding:5px 10px;border-radius:20px;">
     "{{ q }}" <i class="bi bi-x"></i>
   </a>
@@ -65,9 +70,9 @@
   </div>
   <div class="d-flex gap-2">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}</button>
-    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
-    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
-    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
   </div>
 </div>
 </form>
@@ -80,14 +85,19 @@
       </thead>
       <tbody>
         {% for mp in page_obj %}
-        {% with ei=mp.election_infos.all.0 dist=mp.home_district %}
+        {% with ei=mp.election_infos.all.0 %}
         <tr>
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ mp.mp_id }}</code></td>
           <td><a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none fw-medium">{{ mp|tr:"name" }}</a></td>
           <td class="text-muted">{{ mp.name_en }}</td>
-          <td>{{ dist.division|tr:"name"|default:"—"  }}</td>
-          <td>{{ dist|tr:"name"|default:"—"  }}</td>
+          {% if basis == 'constituency' %}
+          <td>{{ ei.constituency.district.division|tr:"name"|default:"—" }}</td>
+          <td>{{ ei.constituency.district|tr:"name"|default:"—" }}</td>
+          {% else %}
+          <td>{{ mp.home_district.division|tr:"name"|default:"—" }}</td>
+          <td>{{ mp.home_district|tr:"name"|default:"—" }}</td>
+          {% endif %}
           <td>{{ ei.constituency|tr:"display"|default:"—"  }}</td>
           <td>{% if ei.party %}<span class="badge bg-primary-subtle text-primary">{{ ei.party|tr:"name" }}</span>{% else %}—{% endif %}</td>
           <td class="text-end no-print"><a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
@@ -103,8 +113,8 @@
   <div class="p-3 border-top d-flex justify-content-between">
     <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
-      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
-      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&division={{ division_id }}&district={{ district_id }}&basis={{ basis }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
     </ul></nav>
   </div>
   {% endif %}

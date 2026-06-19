@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'committee:assignment_list' %}">{% ui "কমিটি নিয়োগ" "Committee Assignment" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "ধাপ ১/২" "Step 1 of 2" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+  </div>
+  <a href="{% url 'committee:assignment_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+  </a>
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-people icon"></i> {% ui "কমিটি ও সদস্য নির্বাচন" "Select committee & members" %}</div>
+    <form method="post" novalidate>{% csrf_token %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="row">
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "কমিটির নাম" "Committee Name" %} <span class="text-primary">*</span></label>{{ form.committee }}</div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "মোট সদস্য সংখ্যা" "Total members" %}</label>
+          {{ form.total_count }}
+          <div class="form-text">{% ui "শুধু নির্দেশিকা" "Guide only" %}</div>
+        </div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শুরুর তারিখ" "Start Date" %} <span class="text-primary">*</span></label>{{ form.start_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শেষ তারিখ" "End Date" %}</label>{{ form.end_date }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>{{ form.go_number }}</div>
+        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-medium">{% ui "সংসদ সদস্যগণ (একাধিক নির্বাচন করুন)" "Members of Parliament (select multiple)" %} <span class="text-primary">*</span></label>
+          {{ form.mps }}
+          <div class="form-text">{% ui "একই কমিটির সকল সদস্যকে এখানে নির্বাচন করুন। পরের ধাপে প্রতিজনের পদবী নির্ধারণ করবেন।" "Select all members of this committee. You'll set each one's position in the next step." %}</div>
+          {% if form.mps.errors %}<div class="text-danger small mt-1">{{ form.mps.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        <a href="{% url 'committee:assignment_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary">{% ui "পরবর্তী ধাপ" "Next: assign positions" %}<i class="bi bi-arrow-right ms-1"></i></button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

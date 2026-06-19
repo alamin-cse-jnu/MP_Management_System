@@ -1,0 +1,48 @@
+{% extends "base_print.html" %}
+{% load lang_tags %}
+{% block title %}{% ui "ভ্রমণ বিবরণ" "Tour Details" %} — {{ tour.go_number }}{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:2px;">{% ui "বিদেশ ভ্রমণ বিবরণ" "Foreign Tour Details" %}</h2>
+<p style="text-align:center;font-size:10pt;color:#555;margin-bottom:10px;">GO: {{ tour.go_number }} | {{ tour.go_date|date:"d/m/Y" }}</p>
+
+<h3>{% ui "ভ্রমণ তথ্য" "Tour Information" %}</h3>
+<table>
+  <tr><th style="width:25%;">{% ui "সংসদ" "Parliament" %}</th><td>{{ tour.parliament|tr:"name" }}</td>
+      <th style="width:20%;">{% ui "ধরন" "Type" %}</th><td>{{ tour.tour_type|tr:"name" }}</td></tr>
+  <tr><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><td>{{ tour.purpose|tr:"name" }}</td>
+      <th>{% ui "সর্বমোট ভ্রমণকাল" "Overall period" %}</th><td>{{ tour.overall_from_date|date:"d/m/Y"|default:"—" }} – {{ tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+  {% if tour.purpose_detail_bn or tour.purpose_detail_en %}
+  <tr><th>{% ui "বিবরণ" "Details" %}</th><td colspan="3">{{ tour.purpose_detail_bn }}{% if tour.purpose_detail_en %} / {{ tour.purpose_detail_en }}{% endif %}</td></tr>
+  {% endif %}
+</table>
+
+<h3>{% ui "গন্তব্য দেশসমূহ ও তারিখ" "Countries & dates" %}</h3>
+<table>
+  <thead><tr><th style="width:3rem;">#</th><th>{% ui "দেশের নাম" "Country" %}</th><th>{% ui "শুরুর তারিখ" "From" %}</th><th>{% ui "শেষ তারিখ" "To" %}</th></tr></thead>
+  <tbody>
+    {% for c in countries %}
+    <tr><td>{{ c.ordering }}</td><td>{{ c.country|tr:"name" }}</td><td>{{ c.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ c.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+    {% empty %}<tr><td colspan="4" style="text-align:center;">—</td></tr>{% endfor %}
+  </tbody>
+</table>
+
+<h3>{% ui "অংশগ্রহণকারী সদস্য" "Participating MPs" %} ({{ participants|length }})</h3>
+<table>
+  <thead><tr><th style="width:3rem;">#</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "এমপি আইডি" "MP ID" %}</th></tr></thead>
+  <tbody>
+    {% for p in participants %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ p.mp|tr:"name" }}</td><td>{{ p.mp.mp_id }}</td></tr>
+    {% empty %}<tr><td colspan="3" style="text-align:center;">—</td></tr>{% endfor %}
+  </tbody>
+</table>
+
+<h3>{% ui "সঙ্গী কর্মকর্তাগণ" "Accompanying Officers" %} ({{ officers|length }})</h3>
+<table>
+  <thead><tr><th style="width:3rem;">#</th><th>{% ui "আইডি" "ID" %}</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "পদবী" "Designation" %}</th></tr></thead>
+  <tbody>
+    {% for o in officers %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ o.officer_id|default:"—" }}</td><td>{{ o.name }}</td><td>{{ o.designation|tr:"name" }}</td></tr>
+    {% empty %}<tr><td colspan="4" style="text-align:center;">—</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

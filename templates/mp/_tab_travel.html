@@ -34,8 +34,8 @@
             {{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}
           {% empty %}—{% endfor %}
         </td>
-        <td>{{ p.departure_date|date:"d/m/Y"|default:"—" }}</td>
-        <td>{{ p.return_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ p.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ p.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
       </tr>
       {% endfor %}
     </tbody>

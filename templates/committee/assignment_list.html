@@ -81,6 +81,7 @@
           <th>{% ui "শুরু" "Start" %}</th>
           <th>{% ui "শেষ" "End" %}</th>
           <th>{% ui "GO নং" "GO No." %}</th>
+          <th>{% ui "GO ফাইল" "GO File" %}</th>
           <th style="width:7rem;">{% ui "অবস্থা" "Status" %}</th>
           <th style="width:8rem;"></th>
         </tr>
@@ -103,6 +104,7 @@
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.go_number|default:"—" }}</td>
+          <td>{% include "partials/_go_file.html" with file=obj.go_file %}</td>
           <td>
             {% if obj.is_active %}
               <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
@@ -130,7 +132,7 @@
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
