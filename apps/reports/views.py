@@ -80,7 +80,9 @@ def _mp_qs_base(parliament_id=None):
         'home_district', 'home_district__division', 'birth_district',
     ).prefetch_related(
         Prefetch('election_infos',
-                 queryset=ElectionInfo.objects.select_related('constituency', 'party', 'parliament')),
+                 queryset=ElectionInfo.objects.select_related(
+                     'constituency', 'constituency__district',
+                     'constituency__district__division', 'party', 'parliament')),
         'professions_current',
         'professional_qualifications',
     ).filter(is_active=True)
@@ -347,24 +349,41 @@ def district_wise(request):
     parliament_id = _active_parliament_id(request)
     district_id   = request.GET.get('district', '')
     division_id   = request.GET.get('division', '')
+    # basis: 'home' = MP's home district | 'constituency' = elected MP's constituency district
+    basis         = request.GET.get('basis', 'home')
+    if basis not in ('home', 'constituency'):
+        basis = 'home'
     q             = request.GET.get('q', '').strip()
 
     qs = _mp_qs_base(parliament_id)
-    if district_id:
-        qs = qs.filter(home_district_id=district_id)
-    if division_id:
-        qs = qs.filter(home_district__division_id=division_id)
+    if basis == 'constituency':
+        # Only directly-elected MPs (1–300) have a constituency.
+        qs = qs.filter(member_type='direct')
+        if district_id:
+            qs = qs.filter(election_infos__constituency__district_id=district_id)
+        if division_id:
+            qs = qs.filter(election_infos__constituency__district__division_id=division_id)
+    else:
+        if district_id:
+            qs = qs.filter(home_district_id=district_id)
+        if division_id:
+            qs = qs.filter(home_district__division_id=division_id)
     if q:
         qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q))
     qs = qs.distinct()
 
     headers = ['ক্রম', 'এমপি আইডি', 'নাম (বাংলায়)', 'Name', 'বিভাগ', 'জেলা', 'নির্বাচনী এলাকা', 'দল']
 
+    def _dist_for(mp, ei):
+        if basis == 'constituency':
+            return ei.constituency.district if ei and ei.constituency else None
+        return mp.home_district
+
     def rows_fn(queryset):
         out = []
         for i, mp in enumerate(queryset):
             ei = next(iter(mp.election_infos.all()), None)
-            dist = mp.home_district
+            dist = _dist_for(mp, ei)
             out.append([
                 i + 1, mp.mp_id, mp.name_bn, mp.name_en,
                 _tr(dist.division) if dist and dist.division else '—',
@@ -383,6 +402,7 @@ def district_wise(request):
         'parliament_id': parliament_id,
         'district_id':   district_id,
         'division_id':   division_id,
+        'basis':         basis,
         'q':             q,
         'parliaments':   _parliament_qs(),
         'districts':     District.objects.filter(is_active=True).select_related('division'),
@@ -742,7 +762,8 @@ def foreign_tours(request):
         for i, tour in enumerate(queryset):
             countries = ', '.join(_tr(tc.country) for tc in tour.countries.all()) or '—'
             mps       = ', '.join(_tr(p.mp) for p in tour.participants.all()) or '—'
-            first_p   = tour.participants.first()
+            from_d    = tour.overall_from_date
+            to_d      = tour.overall_to_date
             out.append([
                 i + 1,
                 tour.go_number,
@@ -751,8 +772,8 @@ def foreign_tours(request):
                 _tr(tour.purpose),
                 countries,
                 mps,
-                first_p.departure_date.strftime('%d/%m/%Y') if first_p and first_p.departure_date else '—',
-                first_p.return_date.strftime('%d/%m/%Y') if first_p and first_p.return_date else '—',
+                from_d.strftime('%d/%m/%Y') if from_d else '—',
+                to_d.strftime('%d/%m/%Y') if to_d else '—',
             ])
         return out
 

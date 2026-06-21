@@ -11,7 +11,7 @@ from .models import (
     GovernmentInstitution, InstitutionRole,
     Country, TravelType, TravelPurpose,
     ForeignLanguage, ProficiencyLevel,
-    VaccineName, SpecialRoleType, PADesignation,
+    VaccineName, SpecialRoleType, PADesignation, OfficerDesignation,
 )
 
 
@@ -69,6 +69,7 @@ ProficiencyLevelForm = _make_form(ProficiencyLevel, ['name_bn', 'name_en', 'orde
 VaccineNameForm = _make_form(VaccineName, ['name_bn', 'name_en', 'ordering'])
 SpecialRoleTypeForm = _make_form(SpecialRoleType, ['name_bn', 'name_en', 'ordering'])
 PADesignationForm = _make_form(PADesignation, ['name_bn', 'name_en', 'ordering'])
+OfficerDesignationForm = _make_form(OfficerDesignation, ['name_bn', 'name_en', 'ordering'])
 
 # ── Forms with FK parents ────────────────────────────────────────────────────
 

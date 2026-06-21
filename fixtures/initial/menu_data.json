@@ -42,6 +42,11 @@
   {"model": "accounts.submenu", "pk": 100, "fields": {"menu": 1, "name_bn": "বিদেশি ভাষা", "name_en": "Foreign Languages", "url_name": "master:foreign_language_list", "ordering": 110, "is_active": true}},
   {"model": "accounts.submenu", "pk": 101, "fields": {"menu": 1, "name_bn": "দক্ষতার মাত্রা", "name_en": "Proficiency Levels", "url_name": "master:proficiency_level_list", "ordering": 111, "is_active": true}},
 
+  {"model": "accounts.submenu", "pk": 102, "fields": {"menu": 1, "name_bn": "বিশেষ পদের ধরন", "name_en": "Special Role Types", "url_name": "master:special_role_type_list", "ordering": 112, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 103, "fields": {"menu": 1, "name_bn": "পিএ/পিএস পদবী", "name_en": "PA/PS Designations", "url_name": "master:pa_designation_list", "ordering": 113, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 104, "fields": {"menu": 1, "name_bn": "কর্মকর্তার পদবী", "name_en": "Officer Designations", "url_name": "master:officer_designation_list", "ordering": 114, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 105, "fields": {"menu": 1, "name_bn": "টিকার নাম", "name_en": "Vaccine Names", "url_name": "master:vaccine_name_list", "ordering": 115, "is_active": true}},
+
   {"model": "accounts.submenu", "pk": 200, "fields": {"menu": 2, "name_bn": "ব্যবহারকারী", "name_en": "Users", "url_name": "accounts:user_list", "ordering": 10, "is_active": true}},
   {"model": "accounts.submenu", "pk": 201, "fields": {"menu": 2, "name_bn": "ভূমিকা", "name_en": "Roles", "url_name": "accounts:role_list", "ordering": 20, "is_active": true}},
   {"model": "accounts.submenu", "pk": 202, "fields": {"menu": 2, "name_bn": "মেনু পরিচালনা", "name_en": "Menus", "url_name": "accounts:menu_list", "ordering": 30, "is_active": true}}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'committee:assignment_list' %}">{% ui "কমিটি নিয়োগ" "Committee Assignment" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "ধাপ ২/২" "Step 2 of 2" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    <small class="text-muted">{{ committee|tr:"name" }} — {{ parliament|tr:"name" }}</small>
+  </div>
+  <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ধাপ ১-এ ফিরুন" "Back to step 1" %}
+  </a>
+</div>
+<div class="row justify-content-center"><div class="col-lg-9 col-md-11">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-person-badge icon"></i> {% ui "প্রতিজন সদস্যের পদবী নির্ধারণ করুন" "Set each member's position" %}</div>
+    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label fw-medium">{% ui "GO ফাইল (PDF/JPG/PNG)" "GO File (PDF/JPG/PNG)" %}</label>
+        <input type="file" name="go_file" accept="{{ go_accept }}" class="form-control">
+        <div class="form-text">{% ui "একই GO ফাইল সকল সদস্যের জন্য সংযুক্ত হবে।" "The same GO file will be attached to every member." %}</div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle" style="font-size:0.92rem;">
+          <thead class="table-light">
+            <tr>
+              <th style="width:3rem;">#</th>
+              <th>{% ui "সংসদ সদস্য" "Member of Parliament" %}</th>
+              <th style="width:16rem;">{% ui "পদবী" "Position" %} <span class="text-primary">*</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ row.label }}</td>
+              <td>
+                <select name="pos_{{ row.mp.pk }}" class="form-select form-select-sm" required>
+                  <option value="">{% ui "-- নির্বাচন করুন --" "-- Select --" %}</option>
+                  {% for p in positions %}
+                  <option value="{{ p.pk }}">{{ p|tr:"name" }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        <a href="{% url 'committee:assignment_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save all" %}</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

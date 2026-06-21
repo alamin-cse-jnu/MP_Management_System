@@ -19,7 +19,7 @@ from .forms import (
     ProfessionForm, ProfessionalQualificationForm, ProficiencyLevelForm,
     ReligionForm, ResultTypeForm, StandingCommitteeForm,
     TravelPurposeForm, TravelTypeForm, UpazilaForm,
-    VaccineNameForm, SpecialRoleTypeForm, PADesignationForm,
+    VaccineNameForm, SpecialRoleTypeForm, PADesignationForm, OfficerDesignationForm,
 )
 from .models import (
     BloodGroup, CommitteePosition, Country,
@@ -31,7 +31,7 @@ from .models import (
     Profession, ProfessionalQualification, ProficiencyLevel,
     Religion, ResultType, StandingCommittee,
     TravelPurpose, TravelType, Upazila,
-    VaccineName, SpecialRoleType, PADesignation,
+    VaccineName, SpecialRoleType, PADesignation, OfficerDesignation,
 )
 
 # ── MASTER_SPECS ─────────────────────────────────────────────────────────────
@@ -301,6 +301,15 @@ MASTER_SPECS = [
         'title_en': 'PA/PS Designations',
         'extra_cols': [],
     },
+    # Foreign Travel — accompanying officer designations
+    {
+        'key': 'officer-designation',
+        'model': OfficerDesignation,
+        'form': OfficerDesignationForm,
+        'title_bn': 'কর্মকর্তার পদবী',
+        'title_en': 'Officer Designations',
+        'extra_cols': [],
+    },
 ]
 
 # Quick lookup by key
@@ -514,6 +523,7 @@ def master_home(request):
             _item('দেশ', 'Countries', 'country_list'),
             _item('ভ্রমণের ধরন', 'Travel Types', 'travel_type_list'),
             _item('ভ্রমণের উদ্দেশ্য', 'Travel Purposes', 'travel_purpose_list'),
+            _item('কর্মকর্তার পদবী', 'Officer Designations', 'officer_designation_list'),
         ]},
         {'title_bn': 'ভাষা', 'title_en': 'Language', 'icon': 'bi-translate', 'items': [
             _item('বিদেশি ভাষা', 'Foreign Languages', 'foreign_language_list'),

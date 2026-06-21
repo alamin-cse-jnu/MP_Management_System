@@ -22,7 +22,6 @@ def assignment_list(request):
     parliament_id   = request.GET.get('parliament', '')
     minister_type_id = request.GET.get('minister_type', '')
     q               = request.GET.get('q', '').strip()
-    status          = request.GET.get('status', 'active')
 
     if not parliament_id:
         active_p = Parliament.objects.filter(is_active=True).first()
@@ -38,10 +37,6 @@ def assignment_list(request):
             Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
             Q(ministry__name_bn__icontains=q) | Q(ministry__name_en__icontains=q)
         )
-    if status == 'inactive':
-        qs = qs.filter(is_active=False)
-    elif status != 'all':
-        qs = qs.filter(is_active=True)
 
     paginator = Paginator(qs, 25)
     page      = paginator.get_page(request.GET.get('page'))
@@ -53,7 +48,6 @@ def assignment_list(request):
         'parliament_id':   parliament_id,
         'minister_type_id': minister_type_id,
         'q':               q,
-        'status':          status,
     })
 
 
@@ -69,7 +63,8 @@ def assignment_create(request):
     elif active_p:
         initial['parliament'] = active_p
 
-    form = MinistryAssignmentForm(request.POST or None, initial=initial, mp_preset=bool(mp))
+    form = MinistryAssignmentForm(request.POST or None, request.FILES or None,
+                                  initial=initial, mp_preset=bool(mp))
     if form.is_valid():
         obj = form.save(commit=False)
         if mp:
@@ -92,7 +87,9 @@ def assignment_create(request):
 @perm_required
 def assignment_update(request, pk):
     obj = get_object_or_404(MinistryAssignment, pk=pk)
-    form = MinistryAssignmentForm(request.POST or None, instance=obj, mp_preset=True)
+    # Edit loads everything including the MP (selectable/searchable), per spec.
+    form = MinistryAssignmentForm(request.POST or None, request.FILES or None,
+                                  instance=obj, mp_preset=False)
     if form.is_valid():
         form.save()
         messages.success(request, 'মন্ত্রণালয়ের তথ্য আপডেট হয়েছে।')
@@ -117,19 +114,6 @@ def assignment_delete(request, pk):
     mp_pk = obj.mp_id
     obj.delete()
     messages.success(request, 'মন্ত্রণালয়ের তথ্য মুছে ফেলা হয়েছে।')
-    if request.POST.get('from_mp'):
-        return redirect(reverse('mp:mp_detail', args=[mp_pk]) + '?active=tab-ministry')
-    return redirect('ministry:assignment_list')
-
-
-@perm_required
-@require_POST
-def assignment_toggle(request, pk):
-    obj = get_object_or_404(MinistryAssignment, pk=pk)
-    mp_pk = obj.mp_id
-    obj.is_active = not obj.is_active
-    obj.save(update_fields=['is_active'])
-    messages.success(request, 'স্ট্যাটাস পরিবর্তন হয়েছে।')
     if request.POST.get('from_mp'):
         return redirect(reverse('mp:mp_detail', args=[mp_pk]) + '?active=tab-ministry')
     return redirect('ministry:assignment_list')

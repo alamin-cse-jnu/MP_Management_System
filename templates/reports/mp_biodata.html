@@ -333,8 +333,8 @@
           <td>{{ forloop.counter }}</td>
           <td>{% for tc in tp.tour.countries.all %}{{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>
           <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
-          <td>{{ tp.departure_date|date:"d/m/Y"|default:"—" }}</td>
-          <td>{{ tp.return_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
         </tr>
         {% endfor %}
       </tbody>

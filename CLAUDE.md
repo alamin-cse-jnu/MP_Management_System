@@ -141,8 +141,31 @@ mp_management/
 | 12 | Excel/CSV exports + Dashboard KPIs | ✅ |
 | 13 | Audit log + activity monitoring | ✅ |
 | 14 | Custom Report Builder (12 filters, column selector, Excel/CSV/Print) | ✅ |
+| 15 | UX improvements round (see below) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
+
+### Phase 15 — improvements (2026-06)
+- **All dropdowns searchable**: Select2 forced on every `.form-select` system-wide
+  (`minimumResultsForSearch:0`); opt out with `data-no-select2`. Custom-report
+  multi-selects (`.filter-select2`) keep their own init.
+- **MP dropdown** (`apps/mp/form_fields.py`): serial order — direct-elected by
+  `constituency.ordering` (1→300) then reserved (301→350) by `mp_id`; label is
+  `Name — Constituency — MP-ID`. New `MPMultipleChoiceField` for multi-select.
+- **GO uploads**: shared `utils/go_files.py` validator (pdf/jpg/jpeg/png, ≤10 MB).
+  `go_file` FileField on Ministry / Committee / Institution assignments + ForeignTour;
+  shown via `partials/_go_file.html` in list/detail.
+- **Ministry**: GO upload; status-toggle removed; edit loads MP (editable).
+- **Institution**: removed `nomination_date`; added `nominated_by` (pm/speaker);
+  multi-MP create → one row per MP; MP filter on list.
+- **Committee**: two-step create — step1 (committee + guide-only total + multi-MP),
+  step2 (position per MP). Single-MP create still works from MP profile.
+- **Constituency**: new `district` FK (→division) for constituency-based reports.
+  District/Division report has a `basis` toggle: home district vs constituency (1–300).
+- **Foreign Travel**: per-country `from_date`/`to_date` (participant dates removed;
+  tour range derived via `ForeignTour.overall_from_date/overall_to_date`);
+  bulk multi-MP add; new `ForeignTourOfficer` (free-text id/name + `OfficerDesignation`
+  master FK, searchable in tour list); GO upload; reorganized detail page.
 
 ---
 

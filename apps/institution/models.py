@@ -3,9 +3,15 @@ from django.db import models
 from apps.master.models import GovernmentInstitution, InstitutionRole
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
+from utils.go_files import validate_go_file
 
 
 class InstitutionAssignment(models.Model):
+    NOMINATED_BY_CHOICES = [
+        ('pm',      'প্রধানমন্ত্রী / Prime Minister'),
+        ('speaker', 'স্পিকার / Speaker'),
+    ]
+
     mp              = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='institution_assignments')
     parliament      = models.ForeignKey(Parliament, on_delete=models.PROTECT, related_name='institution_assignments')
     institution     = models.ForeignKey(GovernmentInstitution, on_delete=models.PROTECT, related_name='assignments')
@@ -14,7 +20,9 @@ class InstitutionAssignment(models.Model):
     end_date        = models.DateField(null=True, blank=True)
     go_number       = models.CharField(max_length=200, blank=True)
     go_date         = models.DateField(null=True, blank=True)
-    nomination_date = models.DateField(null=True, blank=True)
+    go_file         = models.FileField(upload_to='go/institution/', blank=True, null=True,
+                                       validators=[validate_go_file])
+    nominated_by    = models.CharField(max_length=10, choices=NOMINATED_BY_CHOICES, blank=True)
     is_active       = models.BooleanField(default=True)
     remarks_bn      = models.TextField(blank=True)
     remarks_en      = models.TextField(blank=True)

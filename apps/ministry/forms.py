@@ -4,6 +4,7 @@ from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import Ministry, MinisterType
 from apps.mp.form_fields import MPChoiceField
 from apps.parliament.models import Parliament
+from utils.go_files import GO_FILE_ACCEPT
 from .models import MinistryAssignment
 
 
@@ -40,13 +41,14 @@ class MinistryAssignmentForm(_BootstrapMixin, forms.ModelForm):
         fields = [
             'mp',
             'parliament', 'ministry', 'minister_type',
-            'start_date', 'end_date', 'go_number', 'go_date',
-            'is_active', 'remarks_bn', 'remarks_en',
+            'start_date', 'end_date', 'go_number', 'go_date', 'go_file',
+            'remarks_bn', 'remarks_en',
         ]
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date':   forms.DateInput(attrs={'type': 'date'}),
             'go_date':    forms.DateInput(attrs={'type': 'date'}),
+            'go_file':    forms.ClearableFileInput(attrs={'accept': GO_FILE_ACCEPT}),
         }
 
     def __init__(self, *args, mp_preset=False, **kwargs):
@@ -58,3 +60,4 @@ class MinistryAssignmentForm(_BootstrapMixin, forms.ModelForm):
             is_active=True).order_by('ordering')
         self.fields['end_date'].required = False
         self.fields['go_date'].required = False
+        self.fields['go_file'].required = False

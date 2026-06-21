@@ -1,0 +1,14 @@
+{% comment %}
+Reusable GO file link/icon. Usage:
+  {% include "partials/_go_file.html" with file=obj.go_file %}
+Shows a clickable icon that opens the PDF/image in a new tab, or a dash.
+{% endcomment %}
+{% load lang_tags %}
+{% if file %}
+  <a href="{{ file.url }}" target="_blank" rel="noopener"
+     class="text-decoration-none" title="{% ui 'GO দেখুন' 'View GO' %}">
+    <i class="bi bi-paperclip me-1"></i>{% ui "GO" "GO" %}
+  </a>
+{% else %}
+  <span class="text-muted">—</span>
+{% endif %}

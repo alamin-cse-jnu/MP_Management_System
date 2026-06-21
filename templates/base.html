@@ -269,24 +269,48 @@
   }());
 
   // ── Select2 init ──────────────────────────────────────────────────────────
+  // Make EVERY dropdown in the system type-to-filter searchable.
+  // Targets all Bootstrap selects + anything explicitly flagged [data-select2].
+  // Skips: multi-selects (own init, e.g. custom report) and [data-no-select2] opt-outs.
   function initSelect2(root) {
-    $('[data-select2]', root).each(function () {
+    // .filter-select2 = custom report multi-selects with their own init (skip).
+    var sel = 'select.form-select:not([data-no-select2]):not(.filter-select2),'
+            + 'select.form-select-sm:not([data-no-select2]):not(.filter-select2),'
+            + '[data-select2]:not([data-no-select2])';
+    var $root = $(root);
+    var $els  = $(sel, root).add($root.filter(sel));
+    $els.each(function () {
       var $el = $(this);
       // Destroy existing instance before re-init (prevents double-wrap on HTMX swaps)
       if ($el.hasClass('select2-hidden-accessible')) {
         $el.select2('destroy');
       }
+      // Our marker attribute `data-select2` collides with Select2's own internal
+      // jQuery data key 'select2': jQuery reads data-select2="" as .data('select2')==="",
+      // and Select2 4.1.0-rc.0's constructor then calls "".destroy() and throws —
+      // which aborts this whole .each() loop, leaving every dropdown native. Strip it.
+      $el.removeAttr('data-select2').removeData('select2');
       // Placeholder: prefer data-placeholder attr; skip Django's default "-------" filler
       var optText = $el.find('option[value=""]:first').text().trim();
       var usefulOpt = optText && !/^[-\s]+$/.test(optText) ? optText : '';
-      var placeholder = $el.data('placeholder') || usefulOpt || '-- নির্বাচন করুন --';
-      $el.select2({
+      var isMulti = $el.prop('multiple');
+      var placeholder = $el.data('placeholder')
+                        || (isMulti ? 'টাইপ করে খুঁজুন ও নির্বাচন করুন…' : (usefulOpt || '-- নির্বাচন করুন --'));
+      var opts = {
         theme: 'bootstrap-5',
         width: '100%',
         placeholder: placeholder,
-        allowClear: true,
+        minimumResultsForSearch: 0,   // always show the type-to-filter search box
         language: { noResults: function () { return 'কোনো ফলাফল নেই'; } },
-      });
+      };
+      if (isMulti) {
+        // Bucket/tag behaviour: keep the dropdown open while picking several.
+        opts.closeOnSelect = false;
+      } else {
+        // allowClear is only valid for single selects with a placeholder.
+        opts.allowClear = true;
+      }
+      $el.select2(opts);
     });
   }
 

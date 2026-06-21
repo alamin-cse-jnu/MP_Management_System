@@ -18,15 +18,22 @@
 
 <div class="mp-card mb-3 p-3">
   <form method="get" class="row g-2 align-items-end">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম বা প্রতিষ্ঠান…">
-        {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ সদস্য (নাম/আইডি/আসন)" "MP (name/ID/constituency)" %}</label>
+      <select name="mp" class="form-select form-select-sm" data-select2 onchange="this.form.submit()">
+        {% for val, label in mp_filter_field.choices %}
+        <option value="{{ val }}" {% if val|stringformat:"s" == mp_id %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব সংসদ" "All" %}</option>
@@ -35,7 +42,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "প্রতিষ্ঠান" "Institution" %}</label>
       <select name="institution" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব প্রতিষ্ঠান" "All" %}</option>
@@ -52,9 +59,6 @@
         <option value="all"      {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
       </select>
     </div>
-    <div class="col-md-1">
-      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "খুঁজুন" "Search" %}</button>
-    </div>
   </form>
 </div>
 
@@ -70,7 +74,8 @@
           <th>{% ui "শুরু" "Start" %}</th>
           <th>{% ui "শেষ" "End" %}</th>
           <th>{% ui "GO নং" "GO No." %}</th>
-          <th style="width:7rem;">{% ui "অবস্থা" "Status" %}</th>
+          <th>{% ui "GO ফাইল" "GO File" %}</th>
+          <th style="width:6rem;">{% ui "অবস্থা" "Status" %}</th>
           <th style="width:8rem;"></th>
         </tr>
       </thead>
@@ -87,6 +92,7 @@
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.go_number|default:"—" }}</td>
+          <td>{% include "partials/_go_file.html" with file=obj.go_file %}</td>
           <td>
             {% if obj.is_active %}<span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
             {% else %}<span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}
@@ -103,7 +109,7 @@
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

@@ -36,7 +36,7 @@
         <div class="row">
           <div class="col-12 mb-3">
             <label class="form-label fw-medium">বাংলা নাম <span class="text-primary">*</span></label>
-            {{ form|tr:"display" }}
+            {{ form.display_bn }}
             <div class="form-text">যেমন: ঢাকা-১, চট্টগ্রাম-৫</div>
             {% if form.display_bn.errors %}<div class="invalid-feedback d-block">{{ form.display_bn.errors }}</div>{% endif %}
           </div>
@@ -45,6 +45,12 @@
             {{ form.display_en }}
             <div class="form-text">e.g. Dhaka-1, Chittagong-5</div>
             {% if form.display_en.errors %}<div class="invalid-feedback d-block">{{ form.display_en.errors }}</div>{% endif %}
+          </div>
+          <div class="col-12 mb-3">
+            <label class="form-label fw-medium">{% ui "জেলা (ভৌগোলিক)" "District (geographic)" %}</label>
+            {{ form.district }}
+            <div class="form-text">{% ui "নির্বাচনী এলাকা-ভিত্তিক বিভাগ/জেলা রিপোর্টের জন্য। বিভাগ স্বয়ংক্রিয়ভাবে নির্ধারিত হবে।" "Used for constituency-based division/district reports. Division is derived automatically." %}</div>
+            {% if form.district.errors %}<div class="invalid-feedback d-block">{{ form.district.errors }}</div>{% endif %}
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label fw-medium">ক্রম (Ordering)</label>
