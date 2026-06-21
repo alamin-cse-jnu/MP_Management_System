@@ -88,7 +88,15 @@
       "Bash(node /d/Development/projects/MP_Management_System/_repro/live.js iyjthn9r39cctz5lwmux0betd3mi19jq)",
       "Bash(sed -i \"s/waitUntil: 'networkidle'/waitUntil: 'domcontentloaded'/; s/waitForTimeout\\(2500\\)/waitForTimeout\\(4000\\)/\" live.js)",
       "Bash(node live.js iyjthn9r39cctz5lwmux0betd3mi19jq)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(sshpass *)",
+      "PowerShell(Get-Command *)",
+      "Bash(python *)",
+      "PowerShell(python -c \"import paramiko; print\\('paramiko available'\\)\" 2>&1)",
+      "PowerShell(docker exec mp_management-web-1 *)",
+      "PowerShell(netstat *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell($html = Get-Content \"E:\\\\projects\\\\MP_Management_System\\\\templates\\\\travel\\\\tour_form.html\" -Raw; $checks = @\\(\"tf-section-label\",\"tf-icon-wrap\",\"tf-hint-box\",\"tf-divider\",\"tf-data-card\",\"tf-add-strip\",\"tf-count-badge\",\"tf-empty-state\",\"tf-data-header\",\"bi-airplane-fill\",\"mp-table\",\"required-mark\",\"country_add\",\"participant_add\",\"officer_add\"\\); foreach \\($c in $checks\\) { $found = $html -match [regex]::Escape\\($c\\); Write-Host \"$\\(if \\($found\\) {'OK  '} else {'MISS'}\\): $c\" }; Write-Host \"`nFile size: $\\($html.Length\\) chars\")"
     ]
   }
 }
