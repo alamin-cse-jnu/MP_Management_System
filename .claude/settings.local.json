@@ -71,7 +71,10 @@
       "Bash(git -C \"E:/projects/MP_Management_System\" checkout --ours mp_data.sql)",
       "Bash(git -C \"E:/projects/MP_Management_System\" add mp_data.sql .claude/settings.local.json)",
       "Bash(git *)",
-      "Bash(GIT_EDITOR=true git *)"
+      "Bash(GIT_EDITOR=true git *)",
+      "Bash(sshpass *)",
+      "Bash(ssh -V)",
+      "Bash(where plink *)"
     ]
   }
 }
