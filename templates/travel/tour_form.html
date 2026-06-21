@@ -1,178 +1,466 @@
 {% extends "base.html" %}
 {% load static lang_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
+
 {% block content %}
-<div class="d-flex align-items-center justify-content-between mb-4">
+
+{# ── Page header ──────────────────────────────────────────── #}
+<div class="d-flex align-items-start justify-content-between mb-4">
   <div>
-    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
-      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}</a></li>
-      {% if tour %}<li class="breadcrumb-item"><a href="{% url 'travel:tour_detail' tour.pk %}">{{ tour.go_number }}</a></li>{% endif %}
-      <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
-    </ol></nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}</a></li>
+        {% if tour %}<li class="breadcrumb-item"><a href="{% url 'travel:tour_detail' tour.pk %}">{{ tour.go_number }}</a></li>{% endif %}
+        <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
+      </ol>
+    </nav>
     <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    {% if tour %}
+    <p class="text-muted mb-0 mt-1" style="font-size:0.8125rem;">
+      <i class="bi bi-file-earmark-text me-1"></i>GO: <strong>{{ tour.go_number }}</strong>
+      &nbsp;&mdash;&nbsp;{{ tour.go_date|date:"d M Y" }}
+    </p>
+    {% endif %}
   </div>
-  {% if tour %}
-  <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-eye me-1"></i>{% ui "বিবরণ দেখুন" "View" %}
-  </a>
-  {% else %}
-  <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
-  </a>
-  {% endif %}
+  <div>
+    {% if tour %}
+    <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-eye me-1"></i>{% ui "বিবরণ দেখুন" "View Detail" %}
+    </a>
+    {% else %}
+    <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+    </a>
+    {% endif %}
+  </div>
 </div>
 
-<div class="row justify-content-center"><div class="{% if tour %}col-lg-11{% else %}col-lg-8 col-md-10{% endif %}">
+<div class="row justify-content-center">
+<div class="{% if tour %}col-12{% else %}col-xl-7 col-lg-9{% endif %}">
 
-  <!-- Tour fields -->
-  <div class="mp-card mb-3">
-    <div class="mp-card-header"><i class="bi bi-airplane icon"></i> {% ui "ভ্রমণ তথ্য" "Tour Information" %}</div>
-    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
-      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
-      <div class="row">
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %} <span class="text-primary">*</span></label>{{ form.go_number }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %} <span class="text-primary">*</span></label>{{ form.go_date }}</div>
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-medium">{% ui "GO ফাইল (PDF/JPG/PNG)" "GO File (PDF/JPG/PNG)" %}</label>
-          {{ form.go_file }}
-          {% if form.go_file.errors %}<div class="text-danger small mt-1">{{ form.go_file.errors }}</div>{% endif %}
-        </div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "ভ্রমণের ধরন" "Tour Type" %} <span class="text-primary">*</span></label>{{ form.tour_type }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "উদ্দেশ্য" "Purpose" %} <span class="text-primary">*</span></label>{{ form.purpose }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "উদ্দেশ্যের বিবরণ (বাংলায়)" "Purpose Details (Bangla)" %}</label>{{ form.purpose_detail_bn }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">Purpose Details (English)</label>{{ form.purpose_detail_en }}</div>
+{# ── Tour Info Card ───────────────────────────────────────── #}
+<div class="mp-card mb-4">
+  <div class="mp-card-header">
+    <span class="tf-icon-wrap"><i class="bi bi-airplane-fill"></i></span>
+    {% ui "ভ্রমণ তথ্য" "Tour Information" %}
+  </div>
+
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger py-2 mb-3" style="font-size:0.875rem;">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    {# — GO Details — #}
+    <p class="tf-section-label"><i class="bi bi-file-earmark-text me-1"></i>{% ui "GO তথ্য" "GO Details" %}</p>
+    <div class="row g-3 mb-1">
+      <div class="col-md-5">
+        <label class="form-label">{% ui "GO নম্বর" "GO Number" %} <span class="required-mark">*</span></label>
+        {{ form.go_number }}
+        {% if form.go_number.errors %}<div class="text-danger small mt-1">{{ form.go_number.errors }}</div>{% endif %}
       </div>
-      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
-        {% if tour %}
-        <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
-        {% else %}
-        <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
-        {% endif %}
-        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "তথ্য আপডেট করুন" "Update info" %}{% endif %}</button>
+      <div class="col-md-3">
+        <label class="form-label">{% ui "GO তারিখ" "GO Date" %} <span class="required-mark">*</span></label>
+        {{ form.go_date }}
+        {% if form.go_date.errors %}<div class="text-danger small mt-1">{{ form.go_date.errors }}</div>{% endif %}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">{% ui "সংসদ" "Parliament" %} <span class="required-mark">*</span></label>
+        {{ form.parliament }}
+        {% if form.parliament.errors %}<div class="text-danger small mt-1">{{ form.parliament.errors }}</div>{% endif %}
+      </div>
+      <div class="col-12">
+        <label class="form-label">
+          <i class="bi bi-paperclip me-1 text-muted"></i>{% ui "GO ফাইল" "GO File" %}
+          <span class="text-muted fw-normal">{% ui "(PDF/JPG/PNG, সর্বোচ্চ ১০ MB)" "(PDF/JPG/PNG, max 10 MB)" %}</span>
+        </label>
+        {{ form.go_file }}
+        {% if form.go_file.errors %}<div class="text-danger small mt-1">{{ form.go_file.errors }}</div>{% endif %}
+      </div>
+    </div>
+
+    <hr class="tf-divider">
+
+    {# — Purpose — #}
+    <p class="tf-section-label"><i class="bi bi-geo-alt-fill me-1"></i>{% ui "উদ্দেশ্য ও ধরন" "Type & Purpose" %}</p>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">{% ui "ভ্রমণের ধরন" "Tour Type" %} <span class="required-mark">*</span></label>
+        {{ form.tour_type }}
+        {% if form.tour_type.errors %}<div class="text-danger small mt-1">{{ form.tour_type.errors }}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">{% ui "উদ্দেশ্য" "Purpose" %} <span class="required-mark">*</span></label>
+        {{ form.purpose }}
+        {% if form.purpose.errors %}<div class="text-danger small mt-1">{{ form.purpose.errors }}</div>{% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">{% ui "উদ্দেশ্যের বিবরণ" "Purpose Details" %} <span class="text-muted fw-normal">({% ui "বাংলা" "Bangla" %})</span></label>
+        {{ form.purpose_detail_bn }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Purpose Details <span class="text-muted fw-normal">(English)</span></label>
+        {{ form.purpose_detail_en }}
+      </div>
+    </div>
+
+    {# — Actions — #}
+    <div class="d-flex gap-2 justify-content-end mt-4 pt-3 border-top">
+      {% if tour %}
+      <a href="{% url 'travel:tour_detail' tour.pk %}" class="btn btn-outline-secondary">
+        <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
+      </a>
+      {% else %}
+      <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
+      </a>
+      {% endif %}
+      <button type="submit" class="btn btn-primary px-4">
+        <i class="bi bi-check-lg me-1"></i>
+        {% if is_create %}{% ui "সংরক্ষণ করুন" "Save GO" %}{% else %}{% ui "তথ্য আপডেট করুন" "Update" %}{% endif %}
+      </button>
+    </div>
+  </form>
+</div>
+
+{% if not tour %}
+<div class="tf-hint-box">
+  <i class="bi bi-lightbulb-fill text-warning me-2"></i>
+  {% ui "GO সংরক্ষণের পর দেশ, সদস্য ও কর্মকর্তা যোগ করা যাবে।" "Countries, MPs and officers can be added after saving the GO." %}
+</div>
+{% endif %}
+
+{% if tour %}
+
+{# ── Countries ────────────────────────────────────────────── #}
+<div class="mp-card tf-data-card mb-4">
+  <div class="tf-data-header">
+    <span class="tf-icon-wrap"><i class="bi bi-globe"></i></span>
+    <span class="fw-semibold">{% ui "গন্তব্য দেশসমূহ ও তারিখ" "Countries & Dates" %}</span>
+    <span class="ms-auto tf-count-badge">{{ countries|length }}</span>
+  </div>
+
+  <div class="tf-add-strip">
+    <form method="post" action="{% url 'travel:country_add' tour.pk %}">
+      {% csrf_token %}
+      <div class="row g-2 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label">{% ui "দেশ" "Country" %} <span class="required-mark">*</span></label>
+          {{ country_form.country }}
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">{% ui "শুরুর তারিখ" "From Date" %}</label>
+          {{ country_form.from_date }}
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">{% ui "শেষ তারিখ" "To Date" %}</label>
+          {{ country_form.to_date }}
+        </div>
+        <div class="col-md-1">
+          <label class="form-label">{% ui "ক্রম" "#" %}</label>
+          {{ country_form.ordering }}
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary btn-sm w-100">
+            <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
+          </button>
+        </div>
       </div>
     </form>
   </div>
 
-  {% if not tour %}
-  <p class="text-muted text-center">{% ui "GO সংরক্ষণের পর দেশ, সদস্য ও কর্মকর্তা যোগ করা যাবে।" "Countries, MPs and officers can be added after saving the GO." %}</p>
-  {% endif %}
-
-  {% if tour %}
-  <!-- Countries with per-country date ranges -->
-  <div class="mp-card mb-3">
-    <div class="mp-card-header"><i class="bi bi-globe icon"></i> {% ui "গন্তব্য দেশসমূহ ও তারিখ" "Countries & dates" %} ({{ countries|length }})</div>
-    <div class="p-3 border-bottom bg-light">
-      <form method="post" action="{% url 'travel:country_add' tour.pk %}" class="row g-2 align-items-end">
-        {% csrf_token %}
-        <div class="col-md-4">
-          <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "দেশ" "Country" %} <span class="text-primary">*</span></label>
-          {{ country_form.country }}
-        </div>
-        <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "শুরুর তারিখ" "From date" %}</label>{{ country_form.from_date }}</div>
-        <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "শেষ তারিখ" "To date" %}</label>{{ country_form.to_date }}</div>
-        <div class="col-md-1"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "ক্রম" "#" %}</label>{{ country_form.ordering }}</div>
-        <div class="col-md-1"><button type="submit" class="btn btn-primary btn-sm w-100"><i class="bi bi-plus-lg"></i></button></div>
-      </form>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
-        <thead class="table-light"><tr><th style="width:3rem;">{% ui "ক্রম" "#" %}</th><th>{% ui "দেশের নাম" "Country" %}</th><th>{% ui "শুরু" "From" %}</th><th>{% ui "শেষ" "To" %}</th><th style="width:3rem;"></th></tr></thead>
-        <tbody>
-          {% for c in countries %}
-          <tr>
-            <td>{{ c.ordering }}</td>
-            <td>{{ c.country|tr:"name" }} <span class="text-muted">({{ c.country.name_en }})</span></td>
-            <td>{{ c.from_date|date:"d/m/Y"|default:"—" }}</td>
-            <td>{{ c.to_date|date:"d/m/Y"|default:"—" }}</td>
-            <td>
-              <form method="post" action="{% url 'travel:country_remove' tour.pk c.pk %}" class="d-inline" onsubmit="return confirm('এই দেশ বাদ দেবেন?')">
-                {% csrf_token %}<button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
-              </form>
-            </td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="5" class="text-center text-muted py-3">{% ui "কোনো দেশ যোগ করা হয়নি।" "No countries added." %}</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  <div class="table-responsive">
+    <table class="mp-table">
+      <thead>
+        <tr>
+          <th style="width:3.5rem;">{% ui "ক্রম" "#" %}</th>
+          <th>{% ui "দেশের নাম" "Country" %}</th>
+          <th>{% ui "শুরু" "From" %}</th>
+          <th>{% ui "শেষ" "To" %}</th>
+          <th style="width:3rem;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in countries %}
+        <tr>
+          <td><span class="tf-order-badge">{{ c.ordering }}</span></td>
+          <td>
+            <span class="fw-medium">{{ c.country|tr:"name" }}</span>
+            <span class="text-muted ms-1" style="font-size:0.8rem;">({{ c.country.name_en }})</span>
+          </td>
+          <td class="text-muted" style="font-size:0.875rem;">{{ c.from_date|date:"d M Y"|default:"—" }}</td>
+          <td class="text-muted" style="font-size:0.875rem;">{{ c.to_date|date:"d M Y"|default:"—" }}</td>
+          <td>
+            <form method="post" action="{% url 'travel:country_remove' tour.pk c.pk %}" class="d-inline" onsubmit="return confirm('{% ui "এই দেশ বাদ দেবেন?" "Remove this country?" %}')">
+              {% csrf_token %}
+              <button class="btn btn-icon btn-outline-danger" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="tf-empty-state">
+          <i class="bi bi-globe mb-2"></i>
+          <span>{% ui "কোনো দেশ যোগ করা হয়নি।" "No countries added yet." %}</span>
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <div class="row g-3">
-    <!-- Participants -->
-    <div class="col-md-6">
-      <div class="mp-card h-100">
-        <div class="mp-card-header"><i class="bi bi-people icon"></i> {% ui "অংশগ্রহণকারী সদস্য" "Participating MPs" %} ({{ participants|length }})</div>
-        <div class="p-3 border-bottom bg-light">
-          <form method="post" action="{% url 'travel:participant_add' tour.pk %}">
-            {% csrf_token %}
-            <label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "সদস্য নির্বাচন (একাধিক)" "Select MPs (multiple)" %} <span class="text-primary">*</span></label>
-            {{ participant_form.mps }}
-            <div class="text-end mt-2"><button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}</button></div>
-          </form>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
-            <thead class="table-light"><tr><th>{% ui "সদস্যের নাম" "MP Name" %}</th><th style="width:3rem;"></th></tr></thead>
-            <tbody>
-              {% for p in participants %}
-              <tr>
-                <td><a href="{% url 'mp:mp_detail' p.mp_id %}?active=tab-travel" class="text-decoration-none fw-medium">{{ p.mp|tr:"name" }}</a> <span class="text-muted">({{ p.mp.mp_id }})</span></td>
-                <td>
-                  <form method="post" action="{% url 'travel:participant_remove' tour.pk p.pk %}" class="d-inline" onsubmit="return confirm('এই সদস্য বাদ দেবেন?')">
-                    {% csrf_token %}<button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
-                  </form>
-                </td>
-              </tr>
-              {% empty %}
-              <tr><td colspan="2" class="text-center text-muted py-3">{% ui "কোনো সদস্য যোগ করা হয়নি।" "No MPs added." %}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+{# ── MPs + Officers ───────────────────────────────────────── #}
+<div class="row g-4">
+
+  {# Participants #}
+  <div class="col-md-6">
+    <div class="mp-card tf-data-card h-100">
+      <div class="tf-data-header">
+        <span class="tf-icon-wrap"><i class="bi bi-people-fill"></i></span>
+        <span class="fw-semibold">{% ui "অংশগ্রহণকারী সদস্য" "Participating MPs" %}</span>
+        <span class="ms-auto tf-count-badge">{{ participants|length }}</span>
       </div>
-    </div>
 
-    <!-- Officers -->
-    <div class="col-md-6">
-      <div class="mp-card h-100">
-        <div class="mp-card-header"><i class="bi bi-person-badge icon"></i> {% ui "সঙ্গী কর্মকর্তাগণ" "Accompanying Officers" %} ({{ officers|length }})</div>
-        <div class="p-3 border-bottom bg-light">
-          <form method="post" action="{% url 'travel:officer_add' tour.pk %}" class="row g-2 align-items-end">
-            {% csrf_token %}
-            <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "আইডি" "ID" %}</label>{{ officer_form.officer_id }}</div>
-            <div class="col-md-5"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "নাম" "Name" %} <span class="text-primary">*</span></label>{{ officer_form.name }}</div>
-            <div class="col-md-4"><label class="form-label fw-medium mb-1" style="font-size:0.8rem;">{% ui "পদবী" "Designation" %} <span class="text-primary">*</span></label>{{ officer_form.designation }}</div>
-            <div class="col-12 text-end"><button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}</button></div>
-          </form>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-hover mb-0 align-middle" style="font-size:0.875rem;">
-            <thead class="table-light"><tr><th>{% ui "আইডি" "ID" %}</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "পদবী" "Designation" %}</th><th style="width:3rem;"></th></tr></thead>
-            <tbody>
-              {% for o in officers %}
-              <tr>
-                <td>{{ o.officer_id|default:"—" }}</td>
-                <td class="fw-medium">{{ o.name }}</td>
-                <td><span class="badge bg-primary-subtle text-primary">{{ o.designation|tr:"name" }}</span></td>
-                <td>
-                  <form method="post" action="{% url 'travel:officer_remove' tour.pk o.pk %}" class="d-inline" onsubmit="return confirm('এই কর্মকর্তা বাদ দেবেন?')">
-                    {% csrf_token %}<button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
-                  </form>
-                </td>
-              </tr>
-              {% empty %}
-              <tr><td colspan="4" class="text-center text-muted py-3">{% ui "কোনো কর্মকর্তা যোগ করা হয়নি।" "No officers added." %}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+      <div class="tf-add-strip">
+        <form method="post" action="{% url 'travel:participant_add' tour.pk %}">
+          {% csrf_token %}
+          <label class="form-label">{% ui "সদস্য নির্বাচন করুন (একাধিক)" "Select MPs (multiple)" %} <span class="required-mark">*</span></label>
+          {{ participant_form.mps }}
+          <div class="text-end mt-2">
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-responsive">
+        <table class="mp-table">
+          <thead>
+            <tr>
+              <th>{% ui "সদস্যের নাম" "MP Name" %}</th>
+              <th style="width:3rem;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in participants %}
+            <tr>
+              <td>
+                <a href="{% url 'mp:mp_detail' p.mp_id %}?active=tab-travel" class="fw-medium text-primary text-decoration-none">{{ p.mp|tr:"name" }}</a>
+                <span class="d-block text-muted" style="font-size:0.78rem;">{{ p.mp.mp_id }}</span>
+              </td>
+              <td>
+                <form method="post" action="{% url 'travel:participant_remove' tour.pk p.pk %}" class="d-inline" onsubmit="return confirm('{% ui "এই সদস্য বাদ দেবেন?" "Remove this MP?" %}')">
+                  {% csrf_token %}
+                  <button class="btn btn-icon btn-outline-danger" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2" class="tf-empty-state">
+              <i class="bi bi-people mb-2"></i>
+              <span>{% ui "কোনো সদস্য যোগ করা হয়নি।" "No MPs added yet." %}</span>
+            </td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  {% endif %}
 
-</div></div>
+  {# Officers #}
+  <div class="col-md-6">
+    <div class="mp-card tf-data-card h-100">
+      <div class="tf-data-header">
+        <span class="tf-icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
+        <span class="fw-semibold">{% ui "সঙ্গী কর্মকর্তাগণ" "Accompanying Officers" %}</span>
+        <span class="ms-auto tf-count-badge">{{ officers|length }}</span>
+      </div>
+
+      <div class="tf-add-strip">
+        <form method="post" action="{% url 'travel:officer_add' tour.pk %}" class="row g-2">
+          {% csrf_token %}
+          <div class="col-md-3">
+            <label class="form-label">{% ui "আইডি" "ID" %}</label>
+            {{ officer_form.officer_id }}
+          </div>
+          <div class="col-md-5">
+            <label class="form-label">{% ui "নাম" "Name" %} <span class="required-mark">*</span></label>
+            {{ officer_form.name }}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">{% ui "পদবী" "Designation" %} <span class="required-mark">*</span></label>
+            {{ officer_form.designation }}
+          </div>
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-responsive">
+        <table class="mp-table">
+          <thead>
+            <tr>
+              <th>{% ui "আইডি" "ID" %}</th>
+              <th>{% ui "নাম" "Name" %}</th>
+              <th>{% ui "পদবী" "Designation" %}</th>
+              <th style="width:3rem;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for o in officers %}
+            <tr>
+              <td class="text-muted" style="font-size:0.82rem;">{{ o.officer_id|default:"—" }}</td>
+              <td class="fw-medium">{{ o.name }}</td>
+              <td><span class="badge badge-primary">{{ o.designation|tr:"name" }}</span></td>
+              <td>
+                <form method="post" action="{% url 'travel:officer_remove' tour.pk o.pk %}" class="d-inline" onsubmit="return confirm('{% ui "এই কর্মকর্তা বাদ দেবেন?" "Remove this officer?" %}')">
+                  {% csrf_token %}
+                  <button class="btn btn-icon btn-outline-danger" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="tf-empty-state">
+              <i class="bi bi-person-badge mb-2"></i>
+              <span>{% ui "কোনো কর্মকর্তা যোগ করা হয়নি।" "No officers added yet." %}</span>
+            </td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>{# /row g-4 #}
+{% endif %}
+
+</div>{# /col #}
+</div>{# /row #}
+
+<style>
+/* ── Tour Form — page-scoped styles ─────────────── */
+
+/* Section label inside form card */
+.tf-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--mp-primary);
+  margin-bottom: 0.85rem;
+}
+
+/* Hairline divider between form sections */
+.tf-divider {
+  border: none;
+  border-top: 1px solid var(--mp-border);
+  margin: 1.25rem 0 1.1rem;
+}
+
+/* Hint box below create form */
+.tf-hint-box {
+  display: flex;
+  align-items: center;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #92400e;
+  margin-bottom: 1.5rem;
+}
+
+/* Data cards (countries / MPs / officers): flush padding reset */
+.tf-data-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Data card header */
+.tf-data-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--mp-border);
+  font-size: 0.9375rem;
+  color: var(--mp-text);
+}
+
+/* Teal icon badge */
+.tf-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--mp-primary-light);
+  color: var(--mp-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* Count badge on card header */
+.tf-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 20px;
+  background: var(--mp-primary-light);
+  color: var(--mp-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Add-row form strip */
+.tf-add-strip {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--mp-border);
+  padding: 1rem 1.25rem;
+}
+
+/* Ordering badge in country table */
+.tf-order-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--mp-primary-light);
+  color: var(--mp-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Empty state rows */
+.tf-empty-state {
+  text-align: center;
+  padding: 2rem 1rem !important;
+  color: var(--mp-muted);
+  font-size: 0.875rem;
+}
+.tf-empty-state i {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.4rem;
+  opacity: 0.4;
+}
+
+/* mp-table in these cards: column padding matches strip padding */
+.tf-data-card .mp-table thead th,
+.tf-data-card .mp-table tbody td {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+</style>
+
 {% endblock %}

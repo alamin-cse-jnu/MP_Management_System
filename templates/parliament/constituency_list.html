@@ -57,6 +57,7 @@
         <th style="width:50px;">#</th>
         <th>বাংলা নাম</th>
         <th>English Name</th>
+        <th>{% ui "জেলা" "District" %}</th>
         <th style="width:80px; text-align:center;">{% ui "ক্রম" "#" %}</th>
         <th style="width:120px; text-align:center;">{% ui "অবস্থা" "Status" %}</th>
         <th style="width:130px; text-align:center;">অ্যাকশন</th>
@@ -68,6 +69,14 @@
         <td class="text-muted">{{ forloop.counter }}</td>
         <td class="fw-medium">{{ c|tr:"display" }}</td>
         <td class="text-muted">{{ c.display_en }}</td>
+        <td>
+          {% if c.district %}
+          <span class="fw-medium">{{ c.district|tr:"name" }}</span>
+          <span class="text-muted d-block" style="font-size:0.78rem;">{{ c.district.name_en }}</span>
+          {% else %}
+          <span class="text-muted">—</span>
+          {% endif %}
+        </td>
         <td class="text-center text-muted">{{ c.ordering }}</td>
         <td class="text-center">
           {% if c.is_active %}
@@ -95,7 +104,7 @@
       </tr>
       {% empty %}
       <tr>
-        <td colspan="6" class="text-center text-muted py-4">
+        <td colspan="7" class="text-center text-muted py-4">
           <i class="bi bi-inbox fs-3 d-block mb-2"></i>
           {% if q %}
             "<strong>{{ q }}</strong>" এর জন্য কোনো ফলাফল নেই।

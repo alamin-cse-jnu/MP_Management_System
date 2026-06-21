@@ -69,7 +69,7 @@ def parliament_activate(request, pk):
 
 @perm_required
 def constituency_list(request):
-    qs = Constituency.objects.all()
+    qs = Constituency.objects.select_related('district', 'district__division')
     q = request.GET.get('q', '').strip()
     if q:
         qs = qs.filter(
