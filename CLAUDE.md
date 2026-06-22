@@ -34,6 +34,26 @@ Auth          : Django built-in + custom role middleware
 
 ---
 
+## DEPLOYMENT (production)
+
+```
+Server   : 172.16.220.158 (Ubuntu, internal IP, no domain/TLS yet)
+Path     : /opt/mp_management  (plain files, NOT a git checkout)
+Stack    : docker compose → db (postgres16) + web (gunicorn) + nginx
+Serving  : nginx :80  →  proxy →  gunicorn web:8000 (config.settings.production, DEBUG=False)
+           nginx serves /static/ + /media/ from named volumes; web is internal-only.
+Settings : entrypoint.sh exports DJANGO_SETTINGS_MODULE=config.settings.production,
+           runs migrate + collectstatic, then execs gunicorn (3 workers, 120s timeout).
+TLS      : OFF. production.py secure-cookie/HSTS/SSL-redirect are env-driven via
+           USE_TLS (default False) so HTTP login works. Set USE_TLS=True + add a
+           cert/443 server block when a domain/cert exists.
+Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
+           `docker compose up -d` (add --build only when requirements.txt changes).
+           No migration unless models changed. Rollback files: *.prebak on server.
+```
+
+---
+
 ## CRITICAL RULES
 
 ```
