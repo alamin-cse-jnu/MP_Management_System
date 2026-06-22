@@ -1,0 +1,154 @@
+/* ── MP picker: filterable checkbox panel ───────────────────────────────────
+   Replaces the Select2 multi-select for choosing many MPs (committee,
+   institution, foreign-travel participant add). */
+
+.mp-picker {
+  border: 1px solid var(--bs-border-color, #dee2e6);
+  border-radius: .5rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Toolbar: search + live count */
+.mp-picker-bar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .625rem .75rem;
+  border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+}
+.mp-picker-search {
+  position: relative;
+  flex: 1 1 auto;
+}
+.mp-picker-search .bi {
+  position: absolute;
+  left: .625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aa0a6;
+  font-size: .9rem;
+  pointer-events: none;
+}
+.mp-picker-search .mp-picker-q {
+  padding-left: 2rem;
+}
+.mp-picker-count {
+  flex: 0 0 auto;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--bs-primary, #0d6efd);
+  white-space: nowrap;
+}
+.mp-picker-count.over { color: #dc3545; }  /* selected exceeds the stated total */
+
+/* Filter chips */
+.mp-picker-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .375rem;
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+  background: #f8f9fa;
+}
+.mp-chip {
+  border: 1px solid #d3d7db;
+  background: #fff;
+  color: #495057;
+  border-radius: 999px;
+  padding: .15rem .65rem;
+  font-size: .78rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.mp-chip:hover { border-color: var(--bs-primary, #0d6efd); }
+.mp-chip.active {
+  background: var(--bs-primary, #0d6efd);
+  border-color: var(--bs-primary, #0d6efd);
+  color: #fff;
+}
+.mp-picker-sep {
+  width: 1px;
+  align-self: stretch;
+  background: #d3d7db;
+  margin: 0 .25rem;
+}
+
+/* Scrollable option list */
+.mp-picker-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: .25rem 0;
+}
+.mp-picker-item {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  padding: .4rem .85rem;
+  margin: 0;
+  cursor: pointer;
+  font-size: .875rem;
+  border-left: 3px solid transparent;
+}
+.mp-picker-item:hover { background: #f1f6ff; }
+.mp-picker-item.checked {
+  background: #eef5ff;
+  border-left-color: var(--bs-primary, #0d6efd);
+}
+.mp-picker-item input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+.mp-picker-name { line-height: 1.35; }
+.mp-picker-empty { padding: 1rem .85rem; }
+
+/* Actions */
+.mp-picker-actions {
+  display: flex;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border-top: 1px solid var(--bs-border-color, #dee2e6);
+  background: #f8f9fa;
+}
+
+/* Chosen chips */
+.mp-picker-chosen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+  padding: .5rem .75rem 0;
+}
+.mp-picker-chosen:empty { display: none; }
+.mp-chosen-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: #e7f0ff;
+  border: 1px solid #c4dbff;
+  color: #0a58ca;
+  border-radius: 999px;
+  padding: .1rem .25rem .1rem .6rem;
+  font-size: .78rem;
+  max-width: 100%;
+}
+.mp-chosen-chip > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22ch;
+}
+.mp-chosen-x {
+  border: 0;
+  background: transparent;
+  color: #0a58ca;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 .2rem;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.mp-chosen-x:hover { background: rgba(10,88,202,.15); }

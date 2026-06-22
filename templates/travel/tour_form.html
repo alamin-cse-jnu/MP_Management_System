@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static lang_tags %}
+{% load static lang_tags mp_picker_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
 
 {% block content %}
@@ -225,7 +225,7 @@
         <form method="post" action="{% url 'travel:participant_add' tour.pk %}">
           {% csrf_token %}
           <label class="form-label">{% ui "সদস্য নির্বাচন করুন (একাধিক)" "Select MPs (multiple)" %} <span class="required-mark">*</span></label>
-          {{ participant_form.mps }}
+          {% mp_picker participant_form.mps %}
           <div class="text-end mt-2">
             <button type="submit" class="btn btn-primary btn-sm">
               <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static lang_tags %}
+{% load static lang_tags mp_picker_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -34,9 +34,8 @@
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
         <div class="col-md-12 mb-3">
           <label class="form-label fw-medium">{% ui "সংসদ সদস্যগণ (একাধিক নির্বাচন করুন)" "Members of Parliament (select multiple)" %} <span class="text-primary">*</span></label>
-          {{ form.mps }}
+          {% mp_picker form.mps form.total_count %}
           <div class="form-text">{% ui "একই কমিটির সকল সদস্যকে এখানে নির্বাচন করুন। পরের ধাপে প্রতিজনের পদবী নির্ধারণ করবেন।" "Select all members of this committee. You'll set each one's position in the next step." %}</div>
-          {% if form.mps.errors %}<div class="text-danger small mt-1">{{ form.mps.errors }}</div>{% endif %}
         </div>
       </div>
       <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">

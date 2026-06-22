@@ -1,0 +1,47 @@
+{% load lang_tags %}
+<div class="mp-picker" data-name="{{ name }}">
+
+  <div class="mp-picker-bar">
+    <div class="mp-picker-search">
+      <i class="bi bi-search"></i>
+      <input type="text" class="form-control form-control-sm mp-picker-q"
+             placeholder="{% ui 'নাম / MP-ID / এলাকা খুঁজুন...' 'Search name / MP-ID / constituency...' %}"
+             autocomplete="off">
+    </div>
+    <span class="mp-picker-count" data-suffix="{% ui ' নির্বাচিত' ' selected' %}" data-total-input="{{ total_input_id }}">{{ selected_count }}{% ui ' নির্বাচিত' ' selected' %}</span>
+  </div>
+
+  <div class="mp-picker-filters">
+    <button type="button" class="mp-chip active" data-party="">{% ui "সব দল" "All parties" %}</button>
+    {% for p in parties %}
+      <button type="button" class="mp-chip" data-party="{{ p }}">{{ p }}</button>
+    {% endfor %}
+    <span class="mp-picker-sep"></span>
+    <button type="button" class="mp-chip" data-type="direct">{% ui "নির্বাচিত আসন" "Direct" %}</button>
+    <button type="button" class="mp-chip" data-type="reserved">{% ui "সংরক্ষিত" "Reserved" %}</button>
+  </div>
+
+  <div class="mp-picker-list">
+    {% for opt in options %}
+    <label class="mp-picker-item{% if opt.checked %} checked{% endif %}"
+           data-search="{{ opt.search }}" data-party="{{ opt.party }}" data-type="{{ opt.mtype }}">
+      <input type="checkbox" name="{{ name }}" value="{{ opt.value }}"{% if opt.checked %} checked{% endif %}>
+      <span class="mp-picker-name">{{ opt.label }}</span>
+    </label>
+    {% endfor %}
+    <div class="mp-picker-empty text-muted small" hidden>{% ui "কোনো সদস্য মেলেনি।" "No members match your filters." %}</div>
+  </div>
+
+  <div class="mp-picker-actions">
+    <button type="button" class="btn btn-sm btn-outline-primary mp-select-shown">
+      <i class="bi bi-check2-all me-1"></i>{% ui "প্রদর্শিত সব নির্বাচন" "Select all shown" %}
+    </button>
+    <button type="button" class="btn btn-sm btn-outline-secondary mp-clear">
+      <i class="bi bi-x-lg me-1"></i>{% ui "সাফ করুন" "Clear" %}
+    </button>
+  </div>
+
+  <div class="mp-picker-chosen"></div>
+
+  {% if errors %}<div class="text-danger small mt-1">{{ errors }}</div>{% endif %}
+</div>

@@ -166,6 +166,15 @@ mp_management/
   tour range derived via `ForeignTour.overall_from_date/overall_to_date`);
   bulk multi-MP add; new `ForeignTourOfficer` (free-text id/name + `OfficerDesignation`
   master FK, searchable in tour list); GO upload; reorganized detail page.
+- **Multi-MP picker**: the Select2 multi-select for choosing many MPs
+  (committee step1, institution bulk, travel participant-add) is replaced by a
+  **filterable checkbox panel** — search (name/MP-ID/constituency), party +
+  seat-type quick-filter chips, "select all shown", clear, live count, and
+  chosen-chips strip. Rendered via `{% mp_picker form.mps %}`
+  (`apps/mp/templatetags/mp_picker_tags.py` → `partials/_mp_picker.html`);
+  `MPMultipleChoiceField` unchanged (validation identical). Party chips come
+  from new `_party_bn/_party_en` annotations on `MPChoiceField.annotated_queryset`.
+  Assets: `static/css/mp_picker.css`, `static/js/mp_picker.js` (HTMX-swap safe).
 
 ---
 

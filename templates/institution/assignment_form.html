@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static lang_tags %}
+{% load static lang_tags mp_picker_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -26,9 +26,8 @@
       <div class="row">
         <div class="col-md-12 mb-3">
           <label class="form-label fw-medium">{% ui "সংসদ সদস্যগণ (একাধিক নির্বাচন করুন)" "Members of Parliament (select multiple)" %} <span class="text-primary">*</span></label>
-          {{ form.mps }}
+          {% mp_picker form.mps %}
           <div class="form-text">{% ui "একটি GO একাধিক সদস্য কভার করলে এখানে সবাইকে নির্বাচন করুন — প্রতিটির জন্য আলাদা নিয়োগ তৈরি হবে।" "If one GO covers several MPs, select them all here — one assignment is created per MP." %}</div>
-          {% if form.mps.errors %}<div class="text-danger small mt-1">{{ form.mps.errors }}</div>{% endif %}
         </div>
       </div>
       {% elif form.mp %}

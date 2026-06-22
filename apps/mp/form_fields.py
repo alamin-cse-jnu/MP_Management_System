@@ -57,6 +57,20 @@ class MPChoiceField(forms.ModelChoiceField):
                     parliament__in=active_parl,
                 ).values('constituency__ordering')[:1]
             ),
+            # Party (from active-parliament ElectionInfo) — used by the
+            # MP picker panel's party quick-filter chips.
+            _party_bn=Subquery(
+                ElectionInfo.objects.filter(
+                    mp=OuterRef('pk'),
+                    parliament__in=active_parl,
+                ).values('party__name_bn')[:1]
+            ),
+            _party_en=Subquery(
+                ElectionInfo.objects.filter(
+                    mp=OuterRef('pk'),
+                    parliament__in=active_parl,
+                ).values('party__name_en')[:1]
+            ),
         ).order_by(
             # Serial order: direct-elected (1→300) by constituency ordering,
             # then reserved seats (301→350) by mp_id. 'direct' < 'reserved'.
