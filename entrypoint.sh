@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# Production: run under config.settings.production (DEBUG=False) for both the
+# management commands below and the gunicorn worker. Override via .env if needed.
+export DJANGO_SETTINGS_MODULE="${DJANGO_SETTINGS_MODULE:-config.settings.production}"
+
 echo "Waiting for database..."
 until python -c "
 import psycopg2, os, sys
@@ -27,5 +31,10 @@ python manage.py migrate --noinput
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-echo "Starting server..."
-exec python manage.py runserver 0.0.0.0:8000
+echo "Starting gunicorn..."
+exec gunicorn config.wsgi:application \
+    --bind 0.0.0.0:8000 \
+    --workers "${GUNICORN_WORKERS:-3}" \
+    --timeout "${GUNICORN_TIMEOUT:-120}" \
+    --access-logfile - \
+    --error-logfile -

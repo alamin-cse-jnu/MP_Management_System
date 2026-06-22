@@ -5,6 +5,9 @@ python-decouple==3.8
 # Database
 psycopg2-binary==2.9.10
 
+# WSGI server (production)
+gunicorn==23.0.0
+
 # Static files
 whitenoise==6.8.2
 

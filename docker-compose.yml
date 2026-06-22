@@ -27,11 +27,23 @@ services:
       - .:/app
       - static_vol:/app/static_collected
       - media_vol:/app/media
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"          # internal only — reached via the nginx proxy
     depends_on:
       db:
         condition: service_healthy
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - static_vol:/app/static_collected:ro
+      - media_vol:/app/media:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
