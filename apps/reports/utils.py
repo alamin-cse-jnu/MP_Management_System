@@ -1,6 +1,7 @@
 import csv
 import io
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 try:
     import openpyxl
@@ -17,6 +18,46 @@ def export_csv(filename, headers, rows):
     writer.writerow(headers)
     for row in rows:
         writer.writerow([str(v) if v is not None else '' for v in row])
+    return response
+
+
+def render_report_pdf(request, template, ctx, filename, landscape=True):
+    """Render a print template to a downloadable PDF (Phase 17.2 / 17.6).
+
+    Engine cascade: WeasyPrint (correct Bangla shaping — used on the Linux/Docker
+    server) → xhtml2pdf (pure-Python fallback for Windows dev; Bangla shaping is
+    limited but it always produces a valid PDF). Returns the PDF as an
+    ``attachment`` so the browser downloads it instead of opening a print dialog.
+    """
+    from pathlib import Path
+    from django.conf import settings
+
+    ctx = dict(ctx)
+    ctx['pdf_mode']      = True          # suppress the auto window.print() script
+    ctx['pdf_landscape'] = landscape     # A4 landscape @page for wide tables
+
+    # Embed the Bangla font by absolute file URI so WeasyPrint can load it
+    # without depending on collected static files.
+    font_path = Path(settings.BASE_DIR) / 'static' / 'fonts' / 'SolaimanLipi.ttf'
+    ctx['pdf_font_uri'] = font_path.as_uri() if font_path.exists() else ''
+
+    html = render_to_string(template, ctx, request=request)
+
+    pdf_bytes = None
+    try:
+        from weasyprint import HTML as WP_HTML
+        pdf_bytes = WP_HTML(string=html, base_url=str(settings.BASE_DIR)).write_pdf()
+    except Exception:
+        pdf_bytes = None
+
+    if pdf_bytes is None:
+        from xhtml2pdf import pisa
+        buf = io.BytesIO()
+        pisa.pisaDocument(io.BytesIO(html.encode('utf-8')), buf)
+        pdf_bytes = buf.getvalue()
+
+    response = HttpResponse(pdf_bytes, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
 
 

@@ -119,13 +119,13 @@
         </td>
         <td class="text-muted" style="font-size:0.875rem;">
           {% if ei.party %}
-          <span class="badge badge-primary" style="font-size:0.7rem;">{{ ei.party.abbreviation|default:ei.party.name_bn }}</span>
+          <span class="badge badge-primary" style="font-size:0.7rem;">{% if ei.party.abbreviation %}{{ ei.party.abbreviation }}{% else %}{{ ei.party|tr:"name" }}{% endif %}</span>
           {% else %}—{% endif %}
         </td>
         <td class="text-center">
           <span class="badge {% if mp.member_type == 'direct' %}badge-primary{% else %}badge-active{% endif %}"
                 style="font-size:0.7rem;">
-            {{ mp.get_member_type_display }}
+            {% if mp.member_type == 'direct' %}{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}{% else %}{% ui "সংরক্ষিত আসন (মহিলা)" "Reserved (Women)" %}{% endif %}
           </span>
         </td>
         <td class="text-center">

@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
-from apps.master.models import GovernmentInstitution, InstitutionRole
 from apps.mp.form_fields import MPChoiceField
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
@@ -17,14 +16,14 @@ from .models import InstitutionAssignment
 @perm_required
 def assignment_list(request):
     qs = InstitutionAssignment.objects.select_related(
-        'mp', 'parliament', 'institution', 'role'
+        'mp', 'parliament', 'role'
     )
 
-    parliament_id  = request.GET.get('parliament', '')
-    institution_id = request.GET.get('institution', '')
-    mp_id          = request.GET.get('mp', '')
-    q              = request.GET.get('q', '').strip()
-    status         = request.GET.get('status', 'active')
+    parliament_id = request.GET.get('parliament', '')
+    institution   = request.GET.get('institution', '').strip()
+    mp_id         = request.GET.get('mp', '')
+    q             = request.GET.get('q', '').strip()
+    status        = request.GET.get('status', 'active')
 
     if not parliament_id:
         active_p = Parliament.objects.filter(is_active=True).first()
@@ -33,14 +32,16 @@ def assignment_list(request):
 
     if parliament_id:
         qs = qs.filter(parliament_id=parliament_id)
-    if institution_id:
-        qs = qs.filter(institution_id=institution_id)
+    if institution:
+        qs = qs.filter(
+            Q(institution_bn__icontains=institution) | Q(institution_en__icontains=institution)
+        )
     if mp_id:
         qs = qs.filter(mp_id=mp_id)
     if q:
         qs = qs.filter(
             Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
-            Q(institution__name_bn__icontains=q) | Q(institution__name_en__icontains=q)
+            Q(institution_bn__icontains=q) | Q(institution_en__icontains=q)
         )
     if status == 'inactive':
         qs = qs.filter(is_active=False)
@@ -53,10 +54,9 @@ def assignment_list(request):
     return render(request, 'institution/assignment_list.html', {
         'page_obj':      page,
         'parliaments':   Parliament.objects.order_by('-ordinal'),
-        'institutions':  GovernmentInstitution.objects.filter(is_active=True).order_by('name_bn'),
         'mp_filter_field': MPChoiceField(required=False, empty_label='-- সব সদস্য / All MPs --'),
         'parliament_id': parliament_id,
-        'institution_id': institution_id,
+        'institution':   institution,
         'mp_id':         mp_id,
         'q':             q,
         'status':        status,

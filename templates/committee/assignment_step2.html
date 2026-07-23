@@ -20,6 +20,10 @@
   <div class="mp-card">
     <div class="mp-card-header"><i class="bi bi-person-badge icon"></i> {% ui "প্রতিজন সদস্যের পদবী নির্ধারণ করুন" "Set each member's position" %}</div>
     <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+      <div class="alert alert-info d-flex align-items-center gap-2 py-2" style="font-size:.86rem;">
+        <i class="bi bi-info-circle-fill"></i>
+        <span>{% ui "সবাই ডিফল্টভাবে <strong>সদস্য</strong> হিসেবে যুক্ত হবেন — শুধু সভাপতি/চেয়ারম্যানের পদবী পরিবর্তন করুন।" "Everyone defaults to <strong>Member</strong> — just change the Chairperson's position." %}</span>
+      </div>
       <div class="mb-3">
         <label class="form-label fw-medium">{% ui "GO ফাইল (PDF/JPG/PNG)" "GO File (PDF/JPG/PNG)" %}</label>
         <input type="file" name="go_file" accept="{{ go_accept }}" class="form-control">
@@ -31,7 +35,7 @@
             <tr>
               <th style="width:3rem;">#</th>
               <th>{% ui "সংসদ সদস্য" "Member of Parliament" %}</th>
-              <th style="width:16rem;">{% ui "পদবী" "Position" %} <span class="text-primary">*</span></th>
+              <th style="width:16rem;">{% ui "পদবী" "Position" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -40,10 +44,9 @@
               <td>{{ forloop.counter }}</td>
               <td>{{ row.label }}</td>
               <td>
-                <select name="pos_{{ row.mp.pk }}" class="form-select form-select-sm" required>
-                  <option value="">{% ui "-- নির্বাচন করুন --" "-- Select --" %}</option>
+                <select name="pos_{{ row.mp.pk }}" class="form-select form-select-sm">
                   {% for p in positions %}
-                  <option value="{{ p.pk }}">{{ p|tr:"name" }}</option>
+                  <option value="{{ p.pk }}"{% if default_pos and p.pk == default_pos.pk %} selected{% endif %}>{{ p|tr:"name" }}</option>
                   {% endfor %}
                 </select>
               </td>

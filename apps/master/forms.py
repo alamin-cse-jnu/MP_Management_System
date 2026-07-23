@@ -8,10 +8,10 @@ from .models import (
     EducationInstitution, ResultType, DivisionResult,
     PoliticalParty, Ministry, MinisterType,
     StandingCommittee, CommitteePosition,
-    GovernmentInstitution, InstitutionRole,
+    InstitutionRole,
     Country, TravelType, TravelPurpose,
     ForeignLanguage, ProficiencyLevel,
-    VaccineName, SpecialRoleType, PADesignation, OfficerDesignation,
+    VaccineName, SpecialRoleType, PADesignation,
 )
 
 
@@ -59,7 +59,6 @@ MinistryForm = _make_form(Ministry, ['name_bn', 'name_en', 'ordering'])
 MinisterTypeForm = _make_form(MinisterType, ['name_bn', 'name_en', 'ordering'])
 StandingCommitteeForm = _make_form(StandingCommittee, ['name_bn', 'name_en', 'ordering'])
 CommitteePositionForm = _make_form(CommitteePosition, ['name_bn', 'name_en', 'ordering'])
-GovernmentInstitutionForm = _make_form(GovernmentInstitution, ['name_bn', 'name_en', 'ordering'])
 InstitutionRoleForm = _make_form(InstitutionRole, ['name_bn', 'name_en', 'ordering'])
 CountryForm = _make_form(Country, ['name_bn', 'name_en', 'ordering'])
 TravelTypeForm = _make_form(TravelType, ['name_bn', 'name_en', 'ordering'])
@@ -69,7 +68,6 @@ ProficiencyLevelForm = _make_form(ProficiencyLevel, ['name_bn', 'name_en', 'orde
 VaccineNameForm = _make_form(VaccineName, ['name_bn', 'name_en', 'ordering'])
 SpecialRoleTypeForm = _make_form(SpecialRoleType, ['name_bn', 'name_en', 'ordering'])
 PADesignationForm = _make_form(PADesignation, ['name_bn', 'name_en', 'ordering'])
-OfficerDesignationForm = _make_form(OfficerDesignation, ['name_bn', 'name_en', 'ordering'])
 
 # ── Forms with FK parents ────────────────────────────────────────────────────
 

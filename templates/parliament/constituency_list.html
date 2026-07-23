@@ -86,7 +86,7 @@
           {% endif %}
         </td>
         <td class="text-center">
-          <a href="{% url 'parliament:constituency_update' c.pk %}"
+          <a href="{% url 'parliament:constituency_update' c.pk %}?next={{ request.GET.urlencode|urlencode }}"
              class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">
             <i class="bi bi-pencil-square"></i>
           </a>

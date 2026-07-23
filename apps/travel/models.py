@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from apps.master.models import Country, OfficerDesignation, TravelPurpose, TravelType
+from apps.master.models import Country, TravelPurpose, TravelType
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from utils.go_files import validate_go_file
@@ -56,13 +56,12 @@ class ForeignTourParticipant(models.Model):
 
 
 class ForeignTourOfficer(models.Model):
-    """Officer accompanying MPs on a tour. ID & name are free text; designation
-    comes from master data (OfficerDesignation) for reporting."""
+    """Officer accompanying MPs on a tour. ID, name & designation are all free text
+    (the OfficerDesignation master was retired in Phase 17.10)."""
     tour        = models.ForeignKey(ForeignTour, on_delete=models.CASCADE, related_name='officers')
     officer_id  = models.CharField(max_length=50, blank=True)   # free text, searchable
     name        = models.CharField(max_length=200)              # free text, searchable
-    designation = models.ForeignKey(OfficerDesignation, on_delete=models.PROTECT,
-                                    related_name='tour_officers')
+    designation = models.CharField('পদবী / Designation', max_length=200, blank=True)
     remarks_bn  = models.TextField(blank=True)
     remarks_en  = models.TextField(blank=True)
 

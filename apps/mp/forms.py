@@ -1,7 +1,8 @@
 from django import forms
 
 from apps.master.models import (
-    DegreeName, District, EducationGroup, EducationLevel, EducationSubject, Upazila,
+    DegreeName, District, DivisionResult, EducationGroup, EducationInstitution,
+    EducationLevel, EducationSubject, ResultType, Upazila,
 )
 from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
@@ -194,17 +195,84 @@ class EducationForm(_BootstrapMixin, forms.ModelForm):
             'hx-target': '#result-fields-block',
         })
 
+        # Phase 17.11: nothing in education is mandatory.
+        for f in self.fields.values():
+            f.required = False
+
     class Meta:
         model  = Education
         fields = [
             'education_level', 'group', 'degree_title', 'major_subject',
             'institution', 'institution_other_bn', 'institution_other_en',
-            'board_affiliation', 'passing_year',
+            'board_affiliation', 'passing_year', 'roll_no', 'reg_no', 'course_duration',
             'result_type', 'division_result',
             'gpa_value', 'gpa_out_of', 'percentage',
             'class_result', 'result_text',
             'ordering',
         ]
+
+
+class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
+    """One section of the fixed-section education page (Phase 17.11). Bound to a
+    fixed `EducationLevel` (passed as `level`); the Examination (degree) dropdown
+    is scoped to that level. Everything is optional — an untouched section saves
+    nothing, and clearing a filled section deletes its record."""
+
+    # Fields that count as "real" data when deciding whether to save/delete.
+    DATA_FIELDS = (
+        'degree_title', 'group', 'major_subject', 'board_affiliation',
+        'institution', 'institution_other_bn', 'institution_other_en',
+        'roll_no', 'reg_no', 'passing_year', 'course_duration',
+        'result_type', 'division_result', 'gpa_value', 'gpa_out_of',
+        'percentage', 'class_result', 'result_text',
+    )
+
+    class Meta:
+        model  = Education
+        fields = [
+            'degree_title', 'group', 'major_subject', 'board_affiliation',
+            'institution', 'institution_other_bn', 'institution_other_en',
+            'roll_no', 'reg_no', 'passing_year', 'course_duration',
+            'result_type', 'division_result', 'gpa_value', 'gpa_out_of',
+            'percentage', 'class_result', 'result_text',
+        ]
+
+    def __init__(self, *args, level=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.level = level
+
+        for f in self.fields.values():
+            f.required = False
+
+        applicable = _LEVEL_GROUP_MAP.get(level.level_type, ['all']) if level else ['all']
+        if level is not None:
+            self.fields['degree_title'].queryset = DegreeName.objects.filter(
+                education_level=level, is_active=True).order_by('ordering', 'name_bn')
+        self.fields['group'].queryset = (
+            EducationGroup.objects.filter(applicable_to__in=applicable, is_active=True)
+            .order_by('ordering', 'name_bn') if applicable else EducationGroup.objects.none())
+        self.fields['major_subject'].queryset = EducationSubject.objects.filter(
+            is_active=True).order_by('name_bn')
+        insts = EducationInstitution.objects.filter(is_active=True).order_by('name_bn')
+        self.fields['institution'].queryset = insts
+        self.fields['board_affiliation'].queryset = insts
+        self.fields['result_type'].queryset = ResultType.objects.filter(
+            is_active=True).order_by('ordering')
+        self.fields['division_result'].queryset = DivisionResult.objects.filter(
+            is_active=True).order_by('ordering')
+
+        # Result-type drives a JS cascade; keep it a plain <select> so the native
+        # change event fires reliably (Select2 would swallow it). division_result
+        # also stays native so it renders correctly inside a hidden result block.
+        self.fields['result_type'].widget.attrs.update({
+            'data-no-select2': '', 'class': 'form-select edu-result-type',
+        })
+        self.fields['division_result'].widget.attrs.update({'data-no-select2': ''})
+
+    def has_data(self):
+        """True if the user entered anything meaningful in this section."""
+        cd = self.cleaned_data
+        return any(cd.get(f) not in (None, '', []) for f in self.DATA_FIELDS)
 
 
 class AddressForm(_BootstrapMixin, forms.ModelForm):

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load lang_tags %}
+
+{% block title %}{% ui "সিঙ্ক দ্বন্দ্ব" "Sync Conflicts" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "MPs" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "সিঙ্ক দ্বন্দ্ব" "Sync Conflicts" %}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{% ui "PRP API সিঙ্ক দ্বন্দ্ব" "PRP API Sync Conflicts" %}</h4>
+    <small class="text-muted">
+      {% ui "সিস্টেম ও API-এর ভিন্ন মান — আপনি সিদ্ধান্ত নিন" "Where the system and API differ — you decide" %}
+      · {% ui "অমীমাংসিত" "Pending" %}: <strong>{{ pending_count }}</strong>
+    </small>
+  </div>
+  <form method="post" action="{% url 'mp:sync_run' %}"
+        onsubmit="this.querySelector('button').disabled=true;this.querySelector('button').innerHTML='<span class=\'spinner-border spinner-border-sm me-1\'></span>{% ui "সিঙ্ক হচ্ছে…" "Syncing…" %}';return confirm('{% ui "PRP API থেকে সর্বশেষ তথ্য টেনে এনে দ্বন্দ্ব শনাক্ত করা হবে। চালিয়ে যাবেন?" "This will pull the latest data from the PRP API and detect conflicts. Continue?" %}');">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-sm">
+      <i class="bi bi-arrow-repeat me-1"></i>{% ui "PRP API থেকে সিঙ্ক করুন" "Sync from PRP API" %}
+    </button>
+  </form>
+</div>
+
+<!-- Filters -->
+<div class="mp-card mb-3 p-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control"
+               placeholder="{% ui "নাম বা এমপি আইডি…" "Name or MP ID…" %}">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="pending"  {% if status == "pending" %}selected{% endif %}>{% ui "অমীমাংসিত" "Pending" %}</option>
+        <option value="resolved" {% if status == "resolved" %}selected{% endif %}>{% ui "মীমাংসিত" "Resolved" %}</option>
+        <option value="all"      {% if status == "all" %}selected{% endif %}>{% ui "সব" "All" %}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ক্ষেত্র" "Section" %}</label>
+      <select name="target" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সব" "All" %}</option>
+        {% for val, lbl in target_choices %}
+        <option value="{{ val }}" {% if target == val %}selected{% endif %}>{{ lbl }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-sm btn-outline-secondary w-100">{% ui "ফিল্টার" "Filter" %}</button>
+    </div>
+  </form>
+</div>
+
+{% if status == "pending" and groups %}
+<!-- Bulk toolbar (checkboxes elsewhere associate via form="bulkform") -->
+<form id="bulkform" method="post" action="{% url 'mp:sync_conflict_update' %}" class="mp-card mb-3 p-2 d-flex align-items-center gap-2 flex-wrap sticky-top" style="top:0.5rem;z-index:5;">
+  {% csrf_token %}
+  <input type="hidden" name="return_params" value="status={{ status }}&target={{ target }}&q={{ q }}">
+  <div class="form-check mb-0 ms-1">
+    <input type="checkbox" class="form-check-input" id="cb-select-all">
+    <label class="form-check-label fw-medium" for="cb-select-all">{% ui "সব নির্বাচন করুন" "Select all" %}</label>
+  </div>
+  <span class="badge bg-primary-subtle text-primary-emphasis" id="cb-count">0 {% ui "নির্বাচিত" "selected" %}</span>
+  <span class="vr d-none d-sm-block"></span>
+  <span class="small text-muted"><i class="bi bi-check2-square me-1"></i>{% ui "নির্বাচিতগুলোতে প্রয়োগ করুন:" "Apply to selected:" %}</span>
+  <button name="choice" value="api" class="btn btn-sm btn-primary">
+    <i class="bi bi-cloud-download me-1"></i>{% ui "API মান ব্যবহার" "Use API value" %}
+  </button>
+  <button name="choice" value="system" class="btn btn-sm btn-outline-secondary">
+    <i class="bi bi-hdd me-1"></i>{% ui "সিস্টেমের মান রাখুন" "Keep system value" %}
+  </button>
+</form>
+{% endif %}
+
+{% for g in groups %}
+<div class="mp-card mb-3">
+  <div class="p-2 px-3 border-bottom d-flex justify-content-between align-items-center">
+    <div>
+      <a href="{% url 'mp:mp_detail' g.mp.pk %}" class="fw-bold text-decoration-none">{{ g.mp|tr:"name" }}</a>
+      <span class="text-muted small ms-2">{{ g.mp.mp_id }}</span>
+    </div>
+    <span class="badge bg-light text-dark border">{{ g.items|length }} {% ui "দ্বন্দ্ব" "conflict(s)" %}</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm align-middle mb-0" style="font-size:0.875rem;">
+      <thead class="table-light">
+        <tr>
+          {% if status == "pending" %}<th style="width:28px;"></th>{% endif %}
+          <th>{% ui "ক্ষেত্র" "Field" %}</th>
+          <th>{% ui "সিস্টেমের মান" "System value" %}</th>
+          <th>{% ui "API মান" "API value" %}</th>
+          <th class="text-end">{% ui "সিদ্ধান্ত" "Action" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in g.items %}
+        <tr>
+          {% if status == "pending" %}
+          <td><input type="checkbox" class="form-check-input conflict-cb" name="ids" value="{{ c.pk }}" form="bulkform"></td>
+          {% endif %}
+          <td>
+            <div class="fw-medium">{{ c.label }}</div>
+            <span class="badge bg-secondary-subtle text-secondary-emphasis" style="font-size:0.7rem;">{{ c.get_target_display }}</span>
+            {% if c.kind == "remove" %}<span class="badge bg-warning-subtle text-warning-emphasis" style="font-size:0.7rem;">{% ui "শুধু সিস্টেমে" "only here" %}</span>{% endif %}
+          </td>
+          <td>{% if c.system_value %}{{ c.system_value }}{% else %}<span class="text-muted">—</span>{% endif %}</td>
+          <td>{% if c.api_value %}{{ c.api_value }}{% else %}<span class="text-muted">—</span>{% endif %}</td>
+          <td class="text-end">
+            {% if c.status == "pending" %}
+            <form method="post" action="{% url 'mp:sync_conflict_update' %}" class="d-inline-flex gap-1 justify-content-end">
+              {% csrf_token %}
+              <input type="hidden" name="conflict_id" value="{{ c.pk }}">
+              <input type="hidden" name="return_params" value="status={{ status }}&target={{ target }}&q={{ q }}">
+              {% if c.kind == "remove" %}
+              <button name="choice" value="api" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash me-1"></i>{% ui "মুছে ফেলুন" "Delete row" %}</button>
+              <button name="choice" value="system" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-hdd me-1"></i>{% ui "রেখে দিন" "Keep row" %}</button>
+              {% else %}
+              <button name="choice" value="api" class="btn btn-sm btn-primary">
+                <i class="bi bi-cloud-download me-1"></i>{% ui "API মান নিন" "Use API value" %}</button>
+              <button name="choice" value="system" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-hdd me-1"></i>{% ui "সিস্টেম মান রাখুন" "Keep system value" %}</button>
+              {% endif %}
+            </form>
+            {% else %}
+            <span class="badge {% if c.resolution == 'api' %}bg-primary-subtle text-primary-emphasis{% else %}bg-secondary-subtle text-secondary-emphasis{% endif %}">
+              {{ c.get_resolution_display }}
+            </span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% empty %}
+<div class="mp-card p-5 text-center text-muted">
+  <i class="bi bi-check2-circle d-block mb-2" style="font-size:2rem;"></i>
+  {% ui "কোনো দ্বন্দ্ব নেই।" "No conflicts to show." %}
+</div>
+{% endfor %}
+
+{% if status == "pending" and groups %}
+<script>
+(function () {
+  const master = document.getElementById('cb-select-all');
+  const count  = document.getElementById('cb-count');
+  const boxes  = () => Array.from(document.querySelectorAll('.conflict-cb'));
+  const apiBtn = document.querySelector('#bulkform button[value="api"]');
+  const sysBtn = document.querySelector('#bulkform button[value="system"]');
+  if (!master) return;
+
+  function refresh() {
+    const all = boxes();
+    const checked = all.filter(b => b.checked).length;
+    count.textContent = checked + ' {% ui "নির্বাচিত" "selected" %}';
+    master.checked = checked > 0 && checked === all.length;
+    master.indeterminate = checked > 0 && checked < all.length;
+    // Block a submit that would apply to nothing.
+    [apiBtn, sysBtn].forEach(b => { if (b) b.disabled = checked === 0; });
+  }
+
+  // "Select all" toggles every row checkbox; uncheck a few afterwards as needed.
+  master.addEventListener('change', () => {
+    boxes().forEach(b => { b.checked = master.checked; });
+    refresh();
+  });
+  // Keep the master + count in sync when individual rows change.
+  document.addEventListener('change', e => {
+    if (e.target.classList && e.target.classList.contains('conflict-cb')) refresh();
+  });
+  refresh();
+})();
+</script>
+{% endif %}
+{% endblock %}

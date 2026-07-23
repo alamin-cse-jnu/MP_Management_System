@@ -41,8 +41,17 @@
       {% endif %}
       <div class="row">
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "প্রতিষ্ঠান" "Institution" %} <span class="text-primary">*</span></label>{{ form.institution }}</div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "পদবী" "Designation" %} <span class="text-primary">*</span></label>{{ form.role }}</div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "প্রতিষ্ঠান (বাংলা)" "Institution (Bangla)" %} <span class="text-primary">*</span></label>
+          {{ form.institution_bn }}
+          {% if form.institution_bn.errors %}<div class="text-danger small mt-1">{{ form.institution_bn.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "প্রতিষ্ঠান (ইংরেজি)" "Institution (English)" %}</label>
+          {{ form.institution_en }}
+          {% if form.institution_en.errors %}<div class="text-danger small mt-1">{{ form.institution_en.errors }}</div>{% endif %}
+        </div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শুরুর তারিখ" "Start Date" %} <span class="text-primary">*</span></label>{{ form.start_date }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শেষ তারিখ" "End Date" %}</label>{{ form.end_date }}</div>
         <div class="col-md-4 mb-3"><label class="form-label fw-medium">{% ui "GO নম্বর" "GO Number" %}</label>{{ form.go_number }}</div>

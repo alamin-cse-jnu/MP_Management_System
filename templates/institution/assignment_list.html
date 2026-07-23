@@ -44,12 +44,8 @@
     </div>
     <div class="col-md-2">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "প্রতিষ্ঠান" "Institution" %}</label>
-      <select name="institution" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">{% ui "সব প্রতিষ্ঠান" "All" %}</option>
-        {% for inst in institutions %}
-        <option value="{{ inst.pk }}" {% if inst.pk|stringformat:"s" == institution_id %}selected{% endif %}>{{ inst|tr:"name" }}</option>
-        {% endfor %}
-      </select>
+      <input type="text" name="institution" value="{{ institution }}" class="form-control form-control-sm"
+             placeholder="{% ui "প্রতিষ্ঠানের নাম…" "Institution name…" %}">
     </div>
     <div class="col-md-1">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
@@ -87,7 +83,7 @@
             <a href="{% url 'mp:mp_detail' obj.mp_id %}" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a>
             <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
           </td>
-          <td>{{ obj.institution|tr:"name" }}</td>
+          <td>{{ obj|tr:"institution" }}{% if obj.institution_en %}<div class="text-muted" style="font-size:0.8rem;">{{ obj.institution_en }}</div>{% endif %}</td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
@@ -118,8 +114,8 @@
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
     <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
-      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
-      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
     </ul></nav>
   </div>
   {% endif %}

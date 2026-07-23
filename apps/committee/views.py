@@ -116,6 +116,19 @@ def assignment_create(request):
     })
 
 
+def _default_member_position(positions):
+    """The 'regular member' (সদস্য) position — everyone defaults to this so the
+    user only has to change the Chairperson. Falls back to the first position."""
+    positions = list(positions)
+    for p in positions:                                   # exact match first
+        if (p.name_en or '').strip().lower() == 'member' or (p.name_bn or '').strip() == 'সদস্য':
+            return p
+    for p in positions:                                   # then loose match
+        if 'member' in (p.name_en or '').lower() or 'সদস্য' in (p.name_bn or ''):
+            return p
+    return positions[0] if positions else None
+
+
 @perm_required
 def assign_positions(request):
     """Step 2: choose a position (পদবী) for each selected MP, then save N rows."""
@@ -128,19 +141,20 @@ def assign_positions(request):
     parliament = get_object_or_404(Parliament, pk=data['parliament'])
     mps        = list(MPChoiceField.annotated_queryset().filter(pk__in=data['mp_ids']))
     positions  = CommitteePosition.objects.filter(is_active=True).order_by('ordering')
+    default_pos = _default_member_position(positions)
 
     if request.method == 'POST':
-        # Validate every MP has a position selected.
+        # Everyone defaults to the member position; blanks fall back to it.
         chosen = {}
         missing = False
         for m in mps:
-            pos_id = request.POST.get(f'pos_{m.pk}')
+            pos_id = request.POST.get(f'pos_{m.pk}') or (str(default_pos.pk) if default_pos else '')
             if not pos_id:
                 missing = True
                 break
             chosen[m.pk] = pos_id
         if missing:
-            messages.error(request, 'প্রতিটি সদস্যের জন্য পদবী নির্বাচন করুন।')
+            messages.error(request, 'কোনো পদবী নেই — মাস্টার ডেটায় কমিটির পদবী যোগ করুন।')
         else:
             go_file = request.FILES.get('go_file')
             file_name = None
@@ -171,11 +185,12 @@ def assign_positions(request):
         rows.append({'mp': m, 'label': MPChoiceField().label_from_instance(m)})
 
     return render(request, 'committee/assignment_step2.html', {
-        'committee':  committee,
-        'parliament': parliament,
-        'rows':       rows,
-        'positions':  positions,
-        'go_accept':  '.pdf,.jpg,.jpeg,.png',
+        'committee':   committee,
+        'parliament':  parliament,
+        'rows':        rows,
+        'positions':   positions,
+        'default_pos': default_pos,
+        'go_accept':   '.pdf,.jpg,.jpeg,.png',
         'title_bn':   'কমিটি নিয়োগ — পদবী নির্ধারণ (ধাপ ২/২)',
         'title_en':   'Committee Assignment — Positions (Step 2 of 2)',
     })

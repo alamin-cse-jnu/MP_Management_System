@@ -117,6 +117,11 @@ body {
   transition: background .15s, color .15s;
 }
 .mp-nav-sub:hover { background: rgba(255,255,255,.05); color: rgba(255,255,255,.9); }
+.mp-nav-sub.active {
+  background: rgba(13,148,136,.18);
+  color: #2dd4bf;
+  font-weight: 600;
+}
 
 .mp-sidebar-footer {
   padding: 12px 16px;

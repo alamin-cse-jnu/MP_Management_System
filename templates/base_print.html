@@ -7,7 +7,12 @@
   <style>
     @font-face {
       font-family: 'SolaimanLipi';
-      src: url('{% static "fonts/SolaimanLipi.ttf" %}') format('truetype');
+      src: url('{% if pdf_font_uri %}{{ pdf_font_uri }}{% else %}{% static "fonts/SolaimanLipi.ttf" %}{% endif %}') format('truetype');
+    }
+    /* Page size — landscape for wide tabular reports (Phase 17.6 page-fit). */
+    @page {
+      size: A4 {% if pdf_landscape %}landscape{% endif %};
+      margin: {% if pdf_landscape %}10mm 10mm{% else %}15mm 12mm{% endif %};
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -28,13 +33,16 @@
     .print-header h2 { font-size: 12pt; font-weight: bold; margin-top: 4px; }
     .print-header p  { font-size: 10pt; color: #333; margin-top: 2px; }
     .print-meta { font-size: 9pt; color: #555; text-align: right; margin-bottom: 12px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 12px; table-layout: fixed; }
     th { background: #e5e7eb; font-weight: bold; }
-    th, td { border: 1px solid #999; padding: 5px 7px; font-size: 10pt; vertical-align: top; }
+    th, td {
+      border: 1px solid #999; padding: 5px 7px; font-size: 10pt; vertical-align: top;
+      /* Wrap long values so columns never overflow the page (Phase 17.6). */
+      word-wrap: break-word; overflow-wrap: anywhere;
+    }
     h3 { font-size: 11pt; font-weight: bold; margin: 12px 0 6px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
     .no-print { display: none !important; }
     @media print {
-      @page { size: A4; margin: 15mm 12mm; }
       body { font-size: 11pt; }
     }
   </style>
@@ -59,9 +67,11 @@
   Design &amp; Developed by <strong>Md. Al-Amin Hossain</strong>
 </div>
 
+{% if not pdf_mode %}
 <script>
   window.onload = function() { window.print(); };
 </script>
+{% endif %}
 {% block extra_js %}{% endblock %}
 </body>
 </html>

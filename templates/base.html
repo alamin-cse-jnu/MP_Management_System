@@ -54,11 +54,30 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #94a3b8;
     }
     .gs-empty { padding: 14px; text-align: center; color: #94a3b8; font-size: .84rem; }
+
+    /* ── Global print rules: strip chrome + search/filter bars ─────────────── */
+    @media print {
+      .mp-topbar, .mp-sidebar, #topbar, #sidebar,
+      .no-print, .d-print-none { display: none !important; }
+      .mp-main, #mainContent { margin-left: 0 !important; margin-top: 0 !important;
+                               padding: 0 !important; width: 100% !important; }
+      body { background: #fff !important; }
+      a { text-decoration: none !important; color: #000 !important; }
+    }
   </style>
 
   {% block extra_css %}{% endblock %}
 </head>
 <body>
+
+<script>
+  // Restore desktop sidebar collapsed state before paint (avoids a flash).
+  try {
+    if (localStorage.getItem('mpSidebarCollapsed') === '1' && window.innerWidth > 991) {
+      document.body.classList.add('sidebar-collapsed');
+    }
+  } catch (e) {}
+</script>
 
 <!-- ═══════════════════ TOPBAR ═══════════════════ -->
 <nav class="mp-topbar" id="topbar">
@@ -254,6 +273,11 @@
         overlay.classList.toggle('show');
       } else {
         document.body.classList.toggle('sidebar-collapsed');
+        // Persist the desktop collapsed/expanded state across navigation.
+        try {
+          localStorage.setItem('mpSidebarCollapsed',
+            document.body.classList.contains('sidebar-collapsed') ? '1' : '0');
+        } catch (e) {}
       }
     });
 
@@ -267,6 +291,68 @@
         sidebar.classList.remove('show');
         overlay.classList.remove('show');
       }
+    });
+  }());
+
+  // ── Sidebar state persistence (expanded menus + active selection) ──────────
+  // Keeps the sidebar looking stable across page loads: the group containing the
+  // current page stays open + highlighted, and any groups the user opened stay open.
+  (function () {
+    var KEY = 'mpSidebarOpenMenus';
+    var sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+
+    function readOpen() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+    }
+    function writeOpen(ids) {
+      try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch (e) {}
+    }
+
+    // 1) Highlight the active link by matching the current path, and remember
+    //    which group it lives in so we can force that group open.
+    var here = window.location.pathname.replace(/\/+$/, '') || '/';
+    var links = sidebar.querySelectorAll('a[href]');
+    var best = null, bestLen = -1;
+    links.forEach(function (a) {
+      var path;
+      try { path = new URL(a.href, window.location.origin).pathname.replace(/\/+$/, '') || '/'; }
+      catch (e) { return; }
+      if (path === '/' ) { if (here === '/') { if (0 > bestLen) { best = a; bestLen = 0; } } return; }
+      if (here === path || here.indexOf(path + '/') === 0) {
+        if (path.length > bestLen) { best = a; bestLen = path.length; }
+      }
+    });
+    var activeGroupId = null;
+    if (best) {
+      best.classList.add('active');
+      var grp = best.closest('.mp-nav-group');
+      if (grp) {
+        var panel = grp.querySelector('.mp-submenu');
+        if (panel) activeGroupId = panel.id;
+      }
+    }
+
+    // 2) Open the remembered groups + the active group (no animation on load).
+    var open = readOpen();
+    if (activeGroupId && open.indexOf(activeGroupId) === -1) open.push(activeGroupId);
+    open.forEach(function (id) {
+      var panel = document.getElementById(id);
+      if (!panel) return;
+      panel.classList.add('show');
+      var btn = sidebar.querySelector('[data-bs-target="#' + id + '"]');
+      if (btn) btn.classList.remove('collapsed');
+    });
+
+    // 3) Track user open/close so their choices survive the next navigation.
+    sidebar.querySelectorAll('.mp-submenu').forEach(function (panel) {
+      panel.addEventListener('shown.bs.collapse', function () {
+        var ids = readOpen();
+        if (ids.indexOf(panel.id) === -1) { ids.push(panel.id); writeOpen(ids); }
+      });
+      panel.addEventListener('hidden.bs.collapse', function () {
+        writeOpen(readOpen().filter(function (x) { return x !== panel.id; }));
+      });
     });
   }());
 

@@ -78,10 +78,14 @@ class MP(models.Model):
     passport_issue_place = models.CharField(max_length=200, blank=True, verbose_name='ইস্যুর স্থান')
 
     photo            = models.ImageField(upload_to='mp_photos/', null=True, blank=True, verbose_name='ছবি')
+    signature        = models.ImageField(upload_to='mp_signatures/', null=True, blank=True, verbose_name='স্বাক্ষর')
     hobbies_bn       = models.TextField(blank=True, verbose_name='শখ (বাংলায়)')
     hobbies_en       = models.TextField(blank=True, verbose_name='Hobbies (English)')
     other_info_bn    = models.TextField(blank=True, verbose_name='অন্যান্য তথ্য (বাংলায়)')
     other_info_en    = models.TextField(blank=True, verbose_name='Other Info (English)')
+    # Phase 17.11: free-text "self-educated" section of the education page.
+    self_education_bn = models.TextField(blank=True, verbose_name='স্ব-শিক্ষা (বাংলায়)')
+    self_education_en = models.TextField(blank=True, verbose_name='Self-education (English)')
 
     # ── META ────────────────────────────────────────────────────────────────────
     created_at  = models.DateTimeField(auto_now_add=True)
@@ -204,6 +208,60 @@ class Child(models.Model):
         return self.name_bn
 
 
+class MPSyncConflict(models.Model):
+    """A difference detected between the PRP API and this system during --sync.
+
+    Rather than overwrite, the importer records the divergence here and a user
+    resolves it from the UI (keep the system value, or accept the API value).
+    """
+    KIND_CHOICES = [
+        ('field',  'Field value differs'),
+        ('remove', 'Row exists here but not in API'),
+    ]
+    STATUS_CHOICES = [
+        ('pending',  'Pending'),
+        ('resolved', 'Resolved'),
+    ]
+    RESOLUTION_CHOICES = [
+        ('',       '—'),
+        ('system', 'Kept system value'),
+        ('api',    'Applied API value'),
+    ]
+    TARGET_CHOICES = [
+        ('mp', 'MP'), ('election', 'Election'), ('address', 'Contact'),
+        ('bank', 'Bank'), ('spouse', 'Spouse'), ('child', 'Child'),
+    ]
+
+    mp          = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='sync_conflicts')
+    kind        = models.CharField(max_length=10, choices=KIND_CHOICES, default='field')
+    target      = models.CharField(max_length=10, choices=TARGET_CHOICES)
+    attr        = models.CharField(max_length=50, blank=True,
+                                   help_text='Model attribute to set (field kind)')
+    field_key   = models.CharField(max_length=100,
+                                   help_text='Stable key within (mp, target), e.g. name_bn or bank.<acct>')
+    label       = models.CharField(max_length=150)
+    value_type  = models.CharField(max_length=10, blank=True)  # scalar / date / int / fk
+    system_value = models.TextField(blank=True)
+    api_value    = models.TextField(blank=True)
+    api_ref      = models.TextField(blank=True,
+                                    help_text='Apply payload: fk pk / scalar / iso-date / int, '
+                                              'or the row pk to delete (remove kind)')
+    status      = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    resolution  = models.CharField(max_length=10, choices=RESOLUTION_CHOICES, blank=True, default='')
+    detected_at = models.DateTimeField(auto_now=True)
+    resolved_at = models.DateTimeField(null=True, blank=True)
+    resolved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                    null=True, blank=True, related_name='sync_conflicts_resolved')
+
+    class Meta:
+        unique_together = [('mp', 'target', 'field_key')]
+        ordering = ['mp__mp_id', 'target', 'field_key']
+        verbose_name = 'সিঙ্ক দ্বন্দ্ব'
+
+    def __str__(self):
+        return f"{self.mp.mp_id} · {self.label}"
+
+
 class Education(models.Model):
     mp                   = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='educations')
     education_level      = models.ForeignKey(
@@ -235,6 +293,10 @@ class Education(models.Model):
         related_name='affiliated_educations', verbose_name='শিক্ষাবোর্ড/বিশ্ববিদ্যালয়'
     )
     passing_year         = models.IntegerField(null=True, blank=True, verbose_name='পাসের সন')
+    # Phase 17.11: fixed-section education form (SSC/HSC roll+reg, degree duration).
+    roll_no              = models.CharField(max_length=50, blank=True, verbose_name='রোল নম্বর')
+    reg_no               = models.CharField(max_length=50, blank=True, verbose_name='রেজিস্ট্রেশন নম্বর')
+    course_duration      = models.CharField(max_length=50, blank=True, verbose_name='কোর্সের মেয়াদ')
     result_type          = models.ForeignKey(
         'master.ResultType', on_delete=models.SET_NULL, null=True, blank=True,
         verbose_name='ফলাফলের ধরন'
@@ -311,7 +373,8 @@ class Address(models.Model):
     mobile     = models.CharField(max_length=30, blank=True, verbose_name='মোবাইল')
     alt_mobile = models.CharField(max_length=30, blank=True, verbose_name='বিকল্প মোবাইল')
     whatsapp   = models.CharField(max_length=30, blank=True, verbose_name='হোয়াটসঅ্যাপ')
-    email      = models.EmailField(blank=True, verbose_name='ই-মেইল')
+    email      = models.EmailField(blank=True, verbose_name='দাপ্তরিক ই-মেইল')
+    personal_email = models.EmailField(blank=True, verbose_name='ব্যক্তিগত ই-মেইল')
 
     class Meta:
         unique_together = [('mp', 'address_type')]

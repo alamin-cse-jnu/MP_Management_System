@@ -1,7 +1,7 @@
 from django import forms
 
 from apps.master.form_fields import BilingualChoiceField
-from apps.master.models import Country, OfficerDesignation, TravelPurpose, TravelType
+from apps.master.models import Country, TravelPurpose, TravelType
 from apps.mp.form_fields import MPChoiceField, MPMultipleChoiceField
 from apps.parliament.models import Parliament
 from utils.go_files import GO_FILE_ACCEPT
@@ -65,14 +65,12 @@ class ParticipantBulkForm(forms.Form):
 
 
 class OfficerForm(_BootstrapMixin, forms.ModelForm):
-    designation = BilingualChoiceField(
-        queryset=OfficerDesignation.objects.filter(is_active=True).order_by('ordering', 'name_bn'),
-        empty_label='-- পদবী নির্বাচন করুন / Select Designation --',
-    )
-
     class Meta:
         model  = ForeignTourOfficer
         fields = ['officer_id', 'name', 'designation', 'remarks_bn', 'remarks_en']
+        widgets = {
+            'designation': forms.TextInput(attrs={'placeholder': 'যেমন: যুগ্ম সচিব / Joint Secretary'}),
+        }
 
 
 class TourCountryForm(_BootstrapMixin, forms.ModelForm):
@@ -100,3 +98,27 @@ class TourCountryForm(_BootstrapMixin, forms.ModelForm):
         else:
             self.fields['country'].queryset = Country.objects.filter(
                 is_active=True).order_by('name_bn')
+
+
+class TourParticipantsForm(forms.Form):
+    """Participant picker for the single-page tour form. Unlike ParticipantBulkForm
+    it lists ALL MPs (existing ones pre-checked) so the save step can reconcile
+    the participant set (add newly-checked, drop unchecked)."""
+    mps = MPMultipleChoiceField(required=False, label='সংসদ সদস্যগণ / Members of Parliament')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['mps'].queryset = MPChoiceField.annotated_queryset()
+
+
+# ── Inline formsets for the single-submit create/edit page (Phase 17.10) ───────
+# `TourCountryForm`/`OfficerForm` are instantiated by the factory without the
+# `tour` kwarg, so their queryset/init defaults handle the formset case.
+CountryFormSet = forms.inlineformset_factory(
+    ForeignTour, ForeignTourCountry, form=TourCountryForm,
+    extra=1, can_delete=True,
+)
+OfficerFormSet = forms.inlineformset_factory(
+    ForeignTour, ForeignTourOfficer, form=OfficerForm,
+    extra=1, can_delete=True,
+)

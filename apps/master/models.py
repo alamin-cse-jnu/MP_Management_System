@@ -333,18 +333,8 @@ class CommitteePosition(models.Model):
         return f"{self.name_bn} ({self.name_en})"
 
 
-class GovernmentInstitution(models.Model):
-    """Institutions for MP assignments e.g. BUP, BUET, Dhaka University Senate."""
-    name_bn = models.CharField(max_length=300)
-    name_en = models.CharField(max_length=300)
-    is_active = models.BooleanField(default=True)
-    ordering = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ['ordering', 'name_bn']
-
-    def __str__(self):
-        return f"{self.name_bn} ({self.name_en})"
+# GovernmentInstitution master retired (Phase 17.9): institution is now free text
+# on InstitutionAssignment (too many varied organisations for a maintained dropdown).
 
 
 class InstitutionRole(models.Model):
@@ -468,16 +458,5 @@ class PADesignation(models.Model):
         return f"{self.name_bn} ({self.name_en})"
 
 
-class OfficerDesignation(models.Model):
-    """Designation for officers accompanying MPs on foreign tours."""
-    name_bn = models.CharField(max_length=200)
-    name_en = models.CharField(max_length=200)
-    is_active = models.BooleanField(default=True)
-    ordering = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ['ordering', 'name_bn']
-        verbose_name = 'Officer Designation'
-
-    def __str__(self):
-        return f"{self.name_bn} ({self.name_en})"
+# OfficerDesignation master retired (Phase 17.10): the accompanying-officer
+# designation is now free text on travel.ForeignTourOfficer.

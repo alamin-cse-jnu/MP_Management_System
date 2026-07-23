@@ -9,7 +9,7 @@ from apps.committee.models import CommitteeAssignment
 from apps.institution.models import InstitutionAssignment
 from apps.master.models import (
     CommitteePosition, Country, District, Division, Gender,
-    GovernmentInstitution, MinisterType, Ministry, PADesignation, PoliticalParty,
+    MinisterType, Ministry, PADesignation, PoliticalParty,
     ProfessionalQualification, Religion, StandingCommittee, TravelType,
 )
 from apps.ministry.models import MinistryAssignment
@@ -18,7 +18,7 @@ from apps.office.models import MPPAStaff, ParliamentOfficeAddress
 from apps.parliament.models import Parliament
 from apps.travel.models import ForeignTour, ForeignTourParticipant
 
-from .utils import export_csv, export_excel
+from .utils import export_csv, export_excel, render_report_pdf
 
 PAGE_SIZE = 25
 _VALID_PAGE_SIZES = frozenset({25, 50, 100, 350})
@@ -198,8 +198,10 @@ def all_mp(request):
         return _all_mp_excel(qs, selected_cols)
     if fmt == 'csv':
         return _all_mp_csv(qs, selected_cols)
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/all_mp.html', ctx, 'all_mp.pdf')
         return render(request, 'reports/print/all_mp.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -280,8 +282,10 @@ def women_mp(request):
         'q':             q,
         'total_count':   qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/women_mp.html', ctx, 'women_mp.pdf')
         return render(request, 'reports/print/women_mp.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -332,8 +336,10 @@ def party_wise(request):
         'parties':       PoliticalParty.objects.filter(is_active=True),
         'total_count':   qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/party_wise.html', ctx, 'party_wise.pdf')
         return render(request, 'reports/print/party_wise.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -409,8 +415,10 @@ def district_wise(request):
         'divisions':     Division.objects.filter(is_active=True),
         'total_count':   qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/district_wise.html', ctx, 'district_wise.pdf')
         return render(request, 'reports/print/district_wise.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -461,8 +469,10 @@ def qualification_wise(request):
         'qualifications': ProfessionalQualification.objects.filter(is_active=True),
         'total_count':    qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/qualification_wise.html', ctx, 'qualification_wise.pdf')
         return render(request, 'reports/print/qualification_wise.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -529,8 +539,10 @@ def cabinet(request):
         'minister_types':   MinisterType.objects.filter(is_active=True),
         'total_count':      qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/cabinet.html', ctx, 'cabinet.pdf')
         return render(request, 'reports/print/cabinet.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -601,8 +613,10 @@ def committee_members(request):
         'positions':     CommitteePosition.objects.filter(is_active=True),
         'total_count':   qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/committee_members.html', ctx, 'committee_members.pdf')
         return render(request, 'reports/print/committee_members.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -661,19 +675,21 @@ def mp_committee_summary(request):
 
 @perm_required
 def institution_assignments(request):
-    fmt            = request.GET.get('format', '')
-    parliament_id  = _active_parliament_id(request)
-    institution_id = request.GET.get('institution', '')
-    status         = request.GET.get('status', 'active')
-    q              = request.GET.get('q', '').strip()
+    fmt           = request.GET.get('format', '')
+    parliament_id = _active_parliament_id(request)
+    institution   = request.GET.get('institution', '').strip()
+    status        = request.GET.get('status', 'active')
+    q             = request.GET.get('q', '').strip()
 
     qs = InstitutionAssignment.objects.select_related(
-        'mp', 'parliament', 'institution', 'role'
+        'mp', 'parliament', 'role'
     )
     if parliament_id:
         qs = qs.filter(parliament_id=parliament_id)
-    if institution_id:
-        qs = qs.filter(institution_id=institution_id)
+    if institution:
+        qs = qs.filter(
+            Q(institution_bn__icontains=institution) | Q(institution_en__icontains=institution)
+        )
     if status == 'active':
         qs = qs.filter(is_active=True)
     elif status == 'inactive':
@@ -681,7 +697,7 @@ def institution_assignments(request):
     if q:
         qs = qs.filter(
             Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
-            Q(institution__name_bn__icontains=q)
+            Q(institution_bn__icontains=q) | Q(institution_en__icontains=q)
         )
 
     headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'প্রতিষ্ঠান', 'ভূমিকা', 'শুরু', 'শেষ', 'অবস্থা']
@@ -693,7 +709,7 @@ def institution_assignments(request):
                 i + 1,
                 obj.mp.mp_id,
                 _tr(obj.mp),
-                _tr(obj.institution),
+                _tr(obj, 'institution'),
                 _tr(obj.role),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
                 obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
@@ -708,15 +724,16 @@ def institution_assignments(request):
 
     ctx = {
         'parliament_id':  parliament_id,
-        'institution_id': institution_id,
+        'institution':    institution,
         'status':         status,
         'q':              q,
         'parliaments':    _parliament_qs(),
-        'institutions':   GovernmentInstitution.objects.filter(is_active=True),
         'total_count':    qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/institution_assignments.html', ctx, 'institution_assignments.pdf')
         return render(request, 'reports/print/institution_assignments.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -794,8 +811,10 @@ def foreign_tours(request):
         'years':         years,
         'total_count':   qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/foreign_tours.html', ctx, 'foreign_tours.pdf')
         return render(request, 'reports/print/foreign_tours.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -1097,8 +1116,10 @@ def contact_list(request):
         'total_count':   qs.count(),
         'office_map':    office_map,
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/contact_list.html', ctx, 'contact_list.pdf')
         return render(request, 'reports/print/contact_list.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -1467,9 +1488,11 @@ def custom_report(request):
                       for i, mp in enumerate(qs)]
         return export_csv('custom_report', headers, rows)
 
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
         ctx['today']       = today
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/custom_report.html', ctx, 'custom_report.pdf')
         return render(request, 'reports/print/custom_report.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
@@ -1504,6 +1527,7 @@ def family_report(request):
     qs = MP.objects.filter(is_active=True).prefetch_related(
         Prefetch('spouses',  queryset=Spouse.objects.select_related('gender')),
         Prefetch('children', queryset=Child.objects.select_related('gender')),
+        Prefetch('election_infos', queryset=ElectionInfo.objects.select_related('constituency')),
     ).order_by('mp_id')
 
     if sel_mp_ids:
@@ -1521,23 +1545,33 @@ def family_report(request):
         en = getattr(obj, f'{field}_en', '') or ''
         return (en or bn) if lang == 'en' else (bn or en)
 
+    def _constituency(mp):
+        """Display constituency for the MP (reserved seats have none)."""
+        for ei in mp.election_infos.all():
+            if ei.constituency_id:
+                return _n(ei.constituency, 'display')
+        return '—'
+
     rows = []
     for mp in qs:
+        constituency = _constituency(mp)
         for spouse in mp.spouses.all():
             rows.append({
-                'mp':          mp,
-                'member':      spouse,
-                'relation_bn': 'স্বামী/স্ত্রী',
-                'relation_en': 'Spouse',
-                'age':         _age(spouse.dob),
+                'mp':           mp,
+                'constituency': constituency,
+                'member':       spouse,
+                'relation_bn':  'স্বামী/স্ত্রী',
+                'relation_en':  'Spouse',
+                'age':          _age(spouse.dob),
             })
         for child in mp.children.all():
             rows.append({
-                'mp':          mp,
-                'member':      child,
-                'relation_bn': 'সন্তান',
-                'relation_en': 'Child',
-                'age':         _age(child.dob),
+                'mp':           mp,
+                'constituency': constituency,
+                'member':       child,
+                'relation_bn':  'সন্তান',
+                'relation_en':  'Child',
+                'age':          _age(child.dob),
             })
 
     ctx['total_count'] = len(rows)
@@ -1545,16 +1579,18 @@ def family_report(request):
 
     if fmt in ('excel', 'csv'):
         mp_name_h  = 'এমপির নাম' if lang == 'bn' else 'MP Name'
+        const_h    = 'নির্বাচনী এলাকা' if lang == 'bn' else 'Constituency'
         rel_h      = 'সম্পর্ক'   if lang == 'bn' else 'Relation'
         name_h     = 'নাম'        if lang == 'bn' else 'Name'
         gender_h   = 'লিঙ্গ'      if lang == 'bn' else 'Gender'
         age_h      = 'বয়স'       if lang == 'bn' else 'Age'
-        headers = ['ক্রম', mp_name_h, 'এমপি আইডি', rel_h, name_h, 'Name (English)', gender_h, age_h]
+        headers = ['ক্রম', mp_name_h, 'এমপি আইডি', const_h, rel_h, name_h, 'Name (English)', gender_h, age_h]
         data = [
             [
                 i + 1,
                 _n(r['mp']),
                 r['mp'].mp_id,
+                r['constituency'],
                 r['relation_en'] if lang == 'en' else r['relation_bn'],
                 _n(r['member']),
                 r['member'].name_en or '',
@@ -1568,10 +1604,12 @@ def family_report(request):
             return export_excel('family_report', headers, data, title)
         return export_csv('family_report', headers, data)
 
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['rows']  = rows
         ctx['today'] = today
         ctx['lang']  = lang
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/family_report.html', ctx, 'family_report.pdf')
         return render(request, 'reports/print/family_report.html', ctx)
 
     paginator       = Paginator(rows, _page_size(request))
@@ -1650,8 +1688,10 @@ def pa_ps_list(request):
         'designations':   PADesignation.objects.filter(is_active=True),
         'total_count':    qs.count(),
     }
-    if fmt == 'print':
+    if fmt in ('print', 'pdf'):
         ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/pa_ps_list.html', ctx, 'pa_ps_list.pdf')
         return render(request, 'reports/print/pa_ps_list.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))

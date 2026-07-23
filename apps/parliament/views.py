@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from apps.accounts.mixins import perm_required
@@ -109,17 +110,21 @@ def constituency_create(request):
 @perm_required
 def constituency_update(request, pk):
     constituency = get_object_or_404(Constituency, pk=pk)
+    # Preserve the list's page/filter state through the edit round-trip.
+    next_qs = request.POST.get('next') or request.GET.get('next', '')
     form = ConstituencyForm(request.POST or None, instance=constituency)
     if form.is_valid():
         form.save()
         messages.success(request, f'"{constituency}" আপডেট হয়েছে।')
-        return redirect('parliament:constituency_list')
+        list_url = reverse('parliament:constituency_list')
+        return redirect(f'{list_url}?{next_qs}' if next_qs else list_url)
     return render(request, 'parliament/constituency_form.html', {
         'form': form,
         'title_bn': 'নির্বাচনী এলাকা সম্পাদনা',
         'title_en':  'Edit Constituency',
         'is_create': False,
         'object': constituency,
+        'next_qs': next_qs,
     })
 
 

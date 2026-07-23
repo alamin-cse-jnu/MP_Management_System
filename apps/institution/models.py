@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.master.models import GovernmentInstitution, InstitutionRole
+from apps.master.models import InstitutionRole
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from utils.go_files import validate_go_file
@@ -14,7 +14,10 @@ class InstitutionAssignment(models.Model):
 
     mp              = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='institution_assignments')
     parliament      = models.ForeignKey(Parliament, on_delete=models.PROTECT, related_name='institution_assignments')
-    institution     = models.ForeignKey(GovernmentInstitution, on_delete=models.PROTECT, related_name='assignments')
+    # Free-text institution name (the GovernmentInstitution master was retired —
+    # too many varied organisations to maintain a dropdown). Bilingual per convention.
+    institution_bn  = models.CharField('প্রতিষ্ঠান (বাংলা)', max_length=300)
+    institution_en  = models.CharField('Institution (English)', max_length=300, blank=True)
     role            = models.ForeignKey(InstitutionRole, on_delete=models.PROTECT, related_name='assignments')
     start_date      = models.DateField()
     end_date        = models.DateField(null=True, blank=True)
@@ -30,7 +33,7 @@ class InstitutionAssignment(models.Model):
     updated_at      = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['institution__name_bn']
+        ordering = ['institution_bn']
 
     def __str__(self):
-        return f"{self.mp.name_bn} — {self.institution.name_bn}"
+        return f"{self.mp.name_bn} — {self.institution_bn}"

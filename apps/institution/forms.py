@@ -1,7 +1,6 @@
 from django import forms
 
-from apps.master.form_fields import BilingualChoiceField
-from apps.master.models import GovernmentInstitution, InstitutionRole
+from apps.master.models import InstitutionRole
 from apps.mp.form_fields import MPChoiceField, MPMultipleChoiceField
 from apps.parliament.models import Parliament
 from utils.go_files import GO_FILE_ACCEPT
@@ -32,16 +31,12 @@ class _BootstrapMixin:
 class InstitutionAssignmentForm(_BootstrapMixin, forms.ModelForm):
     """Single-MP form — used for edit and create-from-MP-profile."""
     mp = MPChoiceField(required=True)
-    institution = BilingualChoiceField(
-        queryset=GovernmentInstitution.objects.filter(is_active=True).order_by('name_bn'),
-        empty_label='-- প্রতিষ্ঠান নির্বাচন করুন / Select Institution --',
-    )
 
     class Meta:
         model  = InstitutionAssignment
         fields = [
             'mp',
-            'parliament', 'institution', 'role',
+            'parliament', 'institution_bn', 'institution_en', 'role',
             'start_date', 'end_date', 'go_number', 'go_date', 'go_file',
             'nominated_by', 'remarks_bn', 'remarks_en',
         ]
@@ -66,15 +61,11 @@ class InstitutionAssignmentForm(_BootstrapMixin, forms.ModelForm):
 class InstitutionBulkAssignForm(_BootstrapMixin, forms.ModelForm):
     """Multi-MP form — one GO covering several MPs creates one row per MP."""
     mps = MPMultipleChoiceField(required=True, label='সংসদ সদস্যগণ / Members of Parliament')
-    institution = BilingualChoiceField(
-        queryset=GovernmentInstitution.objects.filter(is_active=True).order_by('name_bn'),
-        empty_label='-- প্রতিষ্ঠান নির্বাচন করুন / Select Institution --',
-    )
 
     class Meta:
         model  = InstitutionAssignment
         fields = [
-            'parliament', 'institution', 'role',
+            'parliament', 'institution_bn', 'institution_en', 'role',
             'start_date', 'end_date', 'go_number', 'go_date', 'go_file',
             'nominated_by', 'remarks_bn', 'remarks_en',
         ]
@@ -98,7 +89,9 @@ class InstitutionBulkAssignForm(_BootstrapMixin, forms.ModelForm):
         cd = self.cleaned_data
         mps = list(cd['mps'])
         shared = dict(
-            parliament=cd['parliament'], institution=cd['institution'], role=cd['role'],
+            parliament=cd['parliament'],
+            institution_bn=cd['institution_bn'], institution_en=cd['institution_en'],
+            role=cd['role'],
             start_date=cd['start_date'], end_date=cd['end_date'],
             go_number=cd['go_number'], go_date=cd['go_date'],
             nominated_by=cd['nominated_by'],

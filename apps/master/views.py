@@ -14,24 +14,24 @@ from .forms import (
     DegreeNameForm, DistrictForm, DivisionForm, DivisionResultForm,
     EducationGroupForm, EducationInstitutionForm, EducationLevelForm,
     EducationSubjectForm, ForeignLanguageForm, GenderForm,
-    GovernmentInstitutionForm, InstitutionRoleForm, MaritalStatusForm,
+    InstitutionRoleForm, MaritalStatusForm,
     MinisterTypeForm, MinistryForm, PoliticalPartyForm,
     ProfessionForm, ProfessionalQualificationForm, ProficiencyLevelForm,
     ReligionForm, ResultTypeForm, StandingCommitteeForm,
     TravelPurposeForm, TravelTypeForm, UpazilaForm,
-    VaccineNameForm, SpecialRoleTypeForm, PADesignationForm, OfficerDesignationForm,
+    VaccineNameForm, SpecialRoleTypeForm, PADesignationForm,
 )
 from .models import (
     BloodGroup, CommitteePosition, Country,
     DegreeName, District, Division, DivisionResult,
     EducationGroup, EducationInstitution, EducationLevel,
     EducationSubject, ForeignLanguage, Gender,
-    GovernmentInstitution, InstitutionRole, MaritalStatus,
+    InstitutionRole, MaritalStatus,
     MinisterType, Ministry, PoliticalParty,
     Profession, ProfessionalQualification, ProficiencyLevel,
     Religion, ResultType, StandingCommittee,
     TravelPurpose, TravelType, Upazila,
-    VaccineName, SpecialRoleType, PADesignation, OfficerDesignation,
+    VaccineName, SpecialRoleType, PADesignation,
 )
 
 # ── MASTER_SPECS ─────────────────────────────────────────────────────────────
@@ -217,14 +217,6 @@ MASTER_SPECS = [
     },
     # Institution
     {
-        'key': 'government-institution',
-        'model': GovernmentInstitution,
-        'form': GovernmentInstitutionForm,
-        'title_bn': 'প্রতিষ্ঠান',
-        'title_en': 'Institutions',
-        'extra_cols': [],
-    },
-    {
         'key': 'institution-role',
         'model': InstitutionRole,
         'form': InstitutionRoleForm,
@@ -299,15 +291,6 @@ MASTER_SPECS = [
         'form': PADesignationForm,
         'title_bn': 'পিএ/পিএস পদবী',
         'title_en': 'PA/PS Designations',
-        'extra_cols': [],
-    },
-    # Foreign Travel — accompanying officer designations
-    {
-        'key': 'officer-designation',
-        'model': OfficerDesignation,
-        'form': OfficerDesignationForm,
-        'title_bn': 'কর্মকর্তার পদবী',
-        'title_en': 'Officer Designations',
         'extra_cols': [],
     },
 ]

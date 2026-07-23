@@ -15,7 +15,7 @@
     </nav>
     <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
   </div>
-  <a href="{% url 'parliament:constituency_list' %}" class="btn btn-outline-secondary btn-sm">
+  <a href="{% url 'parliament:constituency_list' %}{% if next_qs %}?{{ next_qs }}{% endif %}" class="btn btn-outline-secondary btn-sm">
     <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
   </a>
 </div>
@@ -29,6 +29,7 @@
 
       <form method="post" novalidate>
         {% csrf_token %}
+        {% if next_qs %}<input type="hidden" name="next" value="{{ next_qs }}">{% endif %}
         {% if form.non_field_errors %}
         <div class="alert alert-danger">{{ form.non_field_errors }}</div>
         {% endif %}
@@ -61,7 +62,7 @@
         </div>
 
         <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
-          <a href="{% url 'parliament:constituency_list' %}" class="btn btn-outline-secondary">
+          <a href="{% url 'parliament:constituency_list' %}{% if next_qs %}?{{ next_qs }}{% endif %}" class="btn btn-outline-secondary">
             <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
           </a>
           <button type="submit" class="btn btn-primary">

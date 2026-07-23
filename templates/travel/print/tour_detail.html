@@ -41,7 +41,7 @@
   <thead><tr><th style="width:3rem;">#</th><th>{% ui "আইডি" "ID" %}</th><th>{% ui "নাম" "Name" %}</th><th>{% ui "পদবী" "Designation" %}</th></tr></thead>
   <tbody>
     {% for o in officers %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ o.officer_id|default:"—" }}</td><td>{{ o.name }}</td><td>{{ o.designation|tr:"name" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ o.officer_id|default:"—" }}</td><td>{{ o.name }}</td><td>{{ o.designation|default:"—" }}</td></tr>
     {% empty %}<tr><td colspan="4" style="text-align:center;">—</td></tr>{% endfor %}
   </tbody>
 </table>

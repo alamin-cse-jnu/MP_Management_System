@@ -8,6 +8,11 @@ urlpatterns = [
     path('',      views.mp_list,   name='mp_list'),
     path('add/',  views.mp_create, name='mp_create'),
 
+    # PRP API sync conflict review
+    path('sync/conflicts/',        views.sync_conflict_list,   name='sync_conflict_list'),
+    path('sync/conflicts/update/', views.sync_conflict_update, name='sync_conflict_update'),
+    path('sync/run/',              views.sync_run,             name='sync_run'),
+
     # Detail (tabbed)
     path('<int:pk>/', views.mp_detail, name='mp_detail'),
 
@@ -26,10 +31,8 @@ urlpatterns = [
     path('<int:pk>/child/<int:ck>/edit/',  views.child_update, name='child_update'),
     path('<int:pk>/child/<int:ck>/delete/',views.child_delete, name='child_delete'),
 
-    # Education CRUD
-    path('<int:pk>/education/add/',            views.education_create, name='education_create'),
-    path('<int:pk>/education/<int:ek>/edit/',  views.education_update, name='education_update'),
-    path('<int:pk>/education/<int:ek>/delete/',views.education_delete, name='education_delete'),
+    # Education — fixed-section single page (Phase 17.11)
+    path('<int:pk>/education/',                views.education_sections, name='education_sections'),
 
     # Foreign Language Skills CRUD
     path('<int:pk>/language/add/',            views.language_create, name='language_create'),

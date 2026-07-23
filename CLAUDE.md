@@ -162,6 +162,8 @@ mp_management/
 | 13 | Audit log + activity monitoring | ✅ |
 | 14 | Custom Report Builder (12 filters, column selector, Excel/CSV/Print) | ✅ |
 | 15 | UX improvements round (see below) | ✅ |
+| 16 | PRP API import + conflict-safe sync (see below) | ✅ |
+| 17 | Observation fixes — prioritized task list (see below) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -216,10 +218,142 @@ python manage.py loaddata fixtures/initial/institution_menu.json
 python manage.py loaddata fixtures/initial/travel_menu.json
 python manage.py loaddata fixtures/initial/reports_menu.json
 python manage.py loaddata fixtures/initial/audit_menu.json
+python manage.py loaddata fixtures/initial/sync_menu.json
 python manage.py createsuperuser
 python manage.py makemessages -l bn && python manage.py compilemessages
 python manage.py test apps/
+
+# PRP API import + sync (Phase 16)
+export PRP_API_USER=... PRP_API_PASS=...
+python manage.py import_mp_api --fetch --dry-run        # report unresolved dropdown values
+python manage.py import_mp_api --fetch                  # initial create (skips existing)
+python manage.py import_mp_api --fetch --sync           # conflict-safe re-sync → review in UI
 ```
+
+### Phase 16 — PRP API import & sync (2026-07)
+- **Command** `apps/mp/management/commands/import_mp_api.py` — pulls MP data from
+  prp.parliament.gov.bd. Sources: `API_Data.txt` (default), `--url`, or live
+  `--fetch` (two-step token auth: POST `…?action=token` → Bearer → GET
+  `…?action=mpdata_list&parliamentNo=13`). Creds via `--username/--password` or
+  env `PRP_API_USER`/`PRP_API_PASS`. Flags: `--dry-run --update --sync
+  --no-images --limit N`.
+- **Mapping**: API sends English-only labels → resolved to existing master FKs
+  via `apps/mp/api_sync.py` (alias dicts shared with `import_mp_excel.py`;
+  districts have 11 old-spelling aliases). Unresolved values are reported, never
+  guessed. Occupation skipped (dirty free-text). Reserved seats (≥301) get a
+  constituency FK by `ordering` (contradicts old rule #2 — code wins).
+- **Sync policy — system is canonical, never blind-overwrite.** `--sync`:
+  empty API → skip; system-empty + API value → auto-fill; both differ →
+  `MPSyncConflict` (pending) for UI review. Collections (bank/spouse/child) are
+  **add-only** (matched by acct-no/NID; system-only rows flagged, not deleted).
+  **Photos**: `--sync` (and the UI Sync button) backfill a **missing** photo/
+  signature from the API (`rec['image']`/`rec['signature']`, public URLs); an
+  existing image is never overwritten. Use `--no-images` to skip, or
+  `--images-only` to (re)download for all MPs.
+- **Review UI**: `MP → Sync Conflicts` (`mp:sync_conflict_list`), grouped by MP,
+  per-row + bulk [Use API]/[Keep system]. Resolution applies one field.
+- **Schema added**: MP `signature`, Address `personal_email`, `MPSyncConflict`
+  model (migrations 0003 + 0004). Contact lands on the MP's `present` Address row.
+
+---
+
+## PHASE 17 — Observation fixes (from `docs/observation.docx`, 2026-07-23) ✅
+## All 12 observations addressed (P1 + P2 + P3/17.11). Pending: live verify + `migrate`.
+
+Prioritized task list from user field observations. Priority = impact ÷ risk:
+**P1** = quick, high-value, low-risk. **P2** = medium rework. **P3** = large /
+structural. Some items reverse Phase 15 decisions — noted inline.
+
+### P1 — quick wins (template / view tweaks)
+- [x] **17.1 Print: hide search bar** — DONE. Added a global `@media print` block
+      in `base.html` (hides `.mp-topbar`/`.mp-sidebar`/`.no-print`/`.d-print-none`,
+      resets `.mp-main` margins). Marked each report's filter `<form>` `no-print`
+      (party/cabinet/committee/contact/district/foreign_tours/institution/
+      qualification/women/pa_ps + mp_committee_summary; all_mp/custom_report/
+      family already were). Data tables sit outside the form, so nothing is lost.
+- [x] **17.2 PDF downloads, not print** — DONE (with 17.6). New `?format=pdf`
+      path serves a real PDF as `attachment` (downloads, no print dialog). See 17.6.
+- [x] **17.3 Travel detail: show GO** — ALREADY IMPLEMENTED in current code
+      (Phase 15 travel rework, which postdates observation.docx). `tour_detail.html`
+      includes `partials/_go_file.html` (line ~64); form has `enctype` + `go_file`,
+      view passes `request.FILES`, model field present. ⏳ needs live re-verify
+      (no local DB) — if a real GO still doesn't show, check media serving.
+- [x] **17.4 Family Report: add Constituency** — DONE. `family_report` view
+      prefetches `election_infos→constituency`, derives per-MP constituency
+      (reserved seats → "—"); added column to screen + print templates + Excel/CSV.
+- [x] **17.5 Constituency list: keep pagination on edit** — DONE. Edit link carries
+      `?next={{ request.GET.urlencode }}`; `constituency_update` reads `next`
+      (POST/GET), renders it as a hidden field + Back/Cancel links, redirects back
+      to the preserved page/filter on save.
+
+### P2 — medium reworks
+- [x] **17.2 + 17.6 PDF download + page-fit** — DONE. New reusable
+      `render_report_pdf()` (`apps/reports/utils.py`): WeasyPrint → xhtml2pdf
+      cascade, embeds SolaimanLipi by file URI, returns `attachment` (downloads).
+      `base_print.html` now emits a conditional `@page` (A4 **landscape** for wide
+      reports via `pdf_landscape`), `table-layout:fixed` + `overflow-wrap:anywhere`
+      so columns never overflow (17.6), and skips the auto-`window.print()` in
+      `pdf_mode`. All 13 report views gained a `fmt=='pdf'` branch; every PDF
+      button repointed from `format=print`→`format=pdf` (family/custom got a new
+      PDF button). Verified: falls back to xhtml2pdf here (no GTK) → valid 4.4 KB
+      PDF; WeasyPrint renders on the Docker/Ubuntu server. ⏳ live-verify Bangla
+      shaping + landscape fit on the server (WeasyPrint path not runnable in dev).
+- [x] **17.7 Sidebar persistence** — DONE. `base.html` JS: persists expanded
+      submenus + desktop collapsed state in `localStorage`, restores on load
+      (pre-paint for collapse), auto-opens + highlights the group matching the
+      current path (longest-prefix match). New `.mp-nav-sub.active` style in
+      `theme.css`.
+- [x] **17.8 Committee create: default role = member** — DONE. Step-2 pre-selects
+      the "member" (সদস্য) position for every MP (`_default_member_position()`
+      resolves it by name, falls back to first); blanks default to member (no more
+      per-MP required validation). Info banner: "only change the Chairperson".
+- [x] **17.9 Institution → free text** — DONE, **fully retired**. `institution` FK
+      → `institution_bn`/`institution_en` text on `InstitutionAssignment`
+      (migration `institution/0003` copies old FK labels first). Removed the
+      `GovernmentInstitution` model (`master/0006` drops the table), its form, CRUD
+      registry, menu fixture row + `accounts/0002` deletes the seeded menu row.
+      Forms/views/list/report templates all use free text + `q`/text filters.
+- [x] **17.10 Travel create rework** — DONE. ✅ Reordered create/edit form
+      (**Tour Type → Purpose → GO info**). ✅ Officer designation → free-text field,
+      **fully retired** `OfficerDesignation` master (travel `designation` FK →
+      CharField, migration `travel/0003` copies labels; `master/0007` drops the
+      table; menu row + `accounts/0002` cleanup). ✅ **Single-submit one page** —
+      `tour_form.html` now saves tour header + countries + officers + participants
+      in one POST via inline formsets (`CountryFormSet`/`OfficerFormSet` in
+      `travel/forms.py`) + the mp_picker (participants reconciled add/drop). Shared
+      `_tour_form()` handles both create & edit; JS adds/removes formset rows
+      (delete = tick `-DELETE`, hidden). Old add/remove sub-endpoints remain but
+      are unused. Verified: POST create persists tour+country+officer (302).
+
+### P3 — structural (17.11 in progress: data layer done, UI pending)
+**Design locked (2026-07-23):** REPLACE the generic add-one-record cascade form
+with a **single page of fixed level-sections** (like the observation screenshot),
+saved in one submit. Sections in order: **SSC · HSC · Diploma/Vocational ·
+Graduation · Masters · PhD**, then a free-text **Self-educated** (bn+en) section.
+Each academic section = one `Education` row bound to a fixed `EducationLevel`
+(mapped by `level_type`: secondary/higher_sec/diploma/bachelor/masters/phd).
+
+- [x] **17.11 MP Education redesign** — DONE.
+  - [x] Nothing mandatory — every field `required=False`.
+  - [x] Model fields — `Education.roll_no/reg_no/course_duration` (`mp/0005`),
+        `MP.self_education_bn/en` (`mp/0006`).
+  - [x] Seeded 6 canonical `EducationLevel` rows (`master/0008`, get_or_create by
+        `level_type`). PhD included.
+  - [x] **UI** — `EducationSectionForm` (`apps/mp/forms.py`): one per level, degree
+        (Examination) list **level-scoped** → solves level-scoped exam types;
+        `has_data()` decides save-vs-delete. `education_sections` view
+        (`apps/mp/views.py`, `_EDU_SECTIONS`) loads/saves all 6 academic sections
+        + MP self-education in ONE POST — filled sections upsert, cleared ones
+        delete. Template `mp/education_sections.html`: fixed sections
+        (SSC·HSC·Diploma·Graduation·Masters·PhD + free-text Self-educated),
+        Institute on SSC/HSC, consistent two-column layout, per-section **result
+        cascade** (JS map ResultType pk→`result_format` shows the matching input;
+        `result_type`+`division_result` kept native to avoid Select2 issues).
+        URL `mp:education_sections` replaces the old add/edit/delete;
+        `_tab_education.html` now read-only summary + "Edit Education" button;
+        old `education_form.html` deleted. Verified: GET renders all sections;
+        POST creates SSC row with GPA result "5.00 / 5.00", saves self-education,
+        and clearing a section deletes its row.
 
 ---
 

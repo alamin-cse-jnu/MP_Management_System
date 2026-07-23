@@ -1,0 +1,14 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 402,
+    "fields": {
+      "menu": 4,
+      "name_bn": "সিঙ্ক দ্বন্দ্ব",
+      "name_en": "Sync Conflicts",
+      "url_name": "mp:sync_conflict_list",
+      "ordering": 30,
+      "is_active": true
+    }
+  }
+]

@@ -11,7 +11,7 @@
   <h4 class="mb-0 fw-bold">প্রতিষ্ঠান নিয়োগ তালিকা</h4>
 </div>
 
-<form method="get">
+<form method="get" class="no-print">
 <div class="mp-card mb-3 p-3">
   <div class="row g-2 align-items-end">
     <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
@@ -23,10 +23,8 @@
         {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>{% endfor %}
       </select></div>
     <div class="col-md-3"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "প্রতিষ্ঠান" "Institution" %}</label>
-      <select name="institution" class="form-select form-select-sm" onchange="this.form.submit()">
-        <option value="">{% ui "সব প্রতিষ্ঠান" "All" %}</option>
-        {% for inst in institutions %}<option value="{{ inst.pk }}" {% if inst.pk|stringformat:"s" == institution_id %}selected{% endif %}>{{ inst|tr:"name" }}</option>{% endfor %}
-      </select></div>
+      <input type="text" name="institution" value="{{ institution }}" class="form-control form-control-sm"
+             placeholder="{% ui "প্রতিষ্ঠানের নাম…" "Institution name…" %}"></div>
     <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অবস্থা" "Status" %}</label>
       <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
@@ -43,9 +41,9 @@
   </div>
   <div class="d-flex gap-2">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}</button>
-    <a href="?parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}&format=print" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
-    <a href="?parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
-    <a href="?parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+    <a href="?parliament={{ parliament_id }}&institution={{ institution }}&status={{ status }}&q={{ q }}&format=pdf" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?parliament={{ parliament_id }}&institution={{ institution }}&status={{ status }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?parliament={{ parliament_id }}&institution={{ institution }}&status={{ status }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
   </div>
 </div>
 </form>
@@ -62,7 +60,7 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ obj.mp.mp_id }}</code></td>
           <td><a href="{% url 'mp:mp_detail' obj.mp_id %}" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a></td>
-          <td>{{ obj.institution|tr:"name" }}</td>
+          <td>{{ obj|tr:"institution" }}</td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
@@ -79,8 +77,8 @@
   <div class="p-3 border-top d-flex justify-content-between">
     <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
-      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
-      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution_id }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
     </ul></nav>
   </div>
   {% endif %}

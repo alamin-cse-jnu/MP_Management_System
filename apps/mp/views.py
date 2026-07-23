@@ -1,4 +1,10 @@
+import os
+from io import StringIO
+
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.core.management import call_command
 from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.http import Http404
@@ -14,17 +20,20 @@ from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
 from .forms import (
     MPCreateForm, MPGeneralForm, ElectionInfoForm,
-    SpouseForm, ChildForm, EducationForm, AddressForm,
+    SpouseForm, ChildForm, EducationForm, EducationSectionForm, AddressForm,
     ForeignLanguageSkillForm, BankAccountForm, CovidVaccinationForm,
     PreviousParliamentaryHistoryForm, OrganizationForm, AwardForm,
     SocialServiceForm, SpecialPositionHistoryForm, PublicationForm,
 )
+from apps.master.models import EducationLevel, ResultType
 from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
     ForeignLanguageSkill, BankAccount, CovidVaccination,
     PreviousParliamentaryHistory, Organization, Award,
     SocialService, SpecialPositionHistory, Publication,
+    MPSyncConflict,
 )
+from . import api_sync
 
 
 # ── SHARED CONTEXT ────────────────────────────────────────────────────────────
@@ -330,47 +339,78 @@ def child_delete(request, pk, ck):
     return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-children')
 
 
-# ── EDUCATION CRUD ────────────────────────────────────────────────────────────
+# ── EDUCATION — fixed-section single page (Phase 17.11) ───────────────────────
 
-@perm_required
-def education_create(request, pk):
-    mp   = get_object_or_404(MP, pk=pk)
-    form = EducationForm(request.POST or None)
-    if form.is_valid():
-        edu = form.save(commit=False)
-        edu.mp = mp
-        edu.save()
-        messages.success(request, 'শিক্ষাগত তথ্য সংরক্ষিত হয়েছে।')
-        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
-    return render(request, 'mp/education_form.html', {
-        'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন শিক্ষাগত তথ্য',
-        'title_en':  'New Education',
-    })
+# (level_type, section kind, title_bn, title_en). Order = display order.
+_EDU_SECTIONS = [
+    ('secondary',  'school', 'এসএসসি বা সমমান',       'SSC or Equivalent'),
+    ('higher_sec', 'school', 'এইচএসসি বা সমমান',      'HSC or Equivalent'),
+    ('diploma',    'school', 'ডিপ্লোমা / ভোকেশনাল',   'Diploma / Vocational'),
+    ('bachelor',   'degree', 'স্নাতক (সম্মান)',        'Graduation'),
+    ('masters',    'degree', 'স্নাতকোত্তর',            'Masters'),
+    ('phd',        'degree', 'পিএইচডি / ডক্টরেট',     'PhD / Doctorate'),
+]
 
 
 @perm_required
-def education_update(request, pk, ek):
-    mp  = get_object_or_404(MP, pk=pk)
-    edu = get_object_or_404(Education, pk=ek, mp=mp)
-    form = EducationForm(request.POST or None, instance=edu)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'শিক্ষাগত তথ্য আপডেট হয়েছে।')
-        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
-    return render(request, 'mp/education_form.html', {
-        'form': form, 'mp': mp, 'edu': edu,
-        'is_create': False, 'title_bn': 'শিক্ষাগত তথ্য সম্পাদনা',
-        'title_en':  'Edit Education',
-    })
-
-
-@perm_required
-@require_POST
-def education_delete(request, pk, ek):
+def education_sections(request, pk):
+    """Single page with a fixed section per education level + a self-educated
+    free-text block. Saves/updates/deletes all sections in one submit."""
     mp = get_object_or_404(MP, pk=pk)
-    get_object_or_404(Education, pk=ek, mp=mp).delete()
-    messages.success(request, 'শিক্ষাগত তথ্য মুছে ফেলা হয়েছে।')
-    return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
+
+    # Resolve the canonical EducationLevel row for each section (seeded in master/0008).
+    levels = {
+        lt: EducationLevel.objects.filter(level_type=lt, is_active=True)
+        .order_by('ordering').first()
+        for lt, _kind, _bn, _en in _EDU_SECTIONS
+    }
+    # Existing record per level_type (first one; sections assume one row per level).
+    existing = {}
+    for edu in mp.educations.select_related('education_level').all():
+        lt = edu.education_level.level_type if edu.education_level else None
+        if lt and lt not in existing:
+            existing[lt] = edu
+
+    sections = []
+    for lt, kind, tbn, ten in _EDU_SECTIONS:
+        sections.append({
+            'key': lt, 'kind': kind, 'title_bn': tbn, 'title_en': ten,
+            'level': levels.get(lt),
+            'form': EducationSectionForm(
+                request.POST or None, prefix=lt,
+                instance=existing.get(lt), level=levels.get(lt)),
+        })
+
+    if request.method == 'POST':
+        if all(s['form'].is_valid() for s in sections):
+            for s in sections:
+                form, level = s['form'], s['level']
+                inst = form.instance
+                if form.has_data():
+                    edu = form.save(commit=False)
+                    edu.mp = mp
+                    if level is not None:
+                        edu.education_level = level
+                        edu.ordering = level.degree_order
+                    edu.save()
+                elif inst and inst.pk:
+                    inst.delete()
+
+            mp.self_education_bn = request.POST.get('self_education_bn', '').strip()
+            mp.self_education_en = request.POST.get('self_education_en', '').strip()
+            mp.save(update_fields=['self_education_bn', 'self_education_en'])
+
+            messages.success(request, 'শিক্ষাগত তথ্য সংরক্ষিত হয়েছে।')
+            return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
+        messages.error(request, 'কিছু তথ্য সঠিক নয় — নিচের ত্রুটিগুলো ঠিক করুন।')
+
+    return render(request, 'mp/education_sections.html', {
+        'mp':            mp,
+        'sections':      sections,
+        'result_types':  ResultType.objects.filter(is_active=True).order_by('ordering'),
+        'self_education_bn': mp.self_education_bn,
+        'self_education_en': mp.self_education_en,
+    })
 
 
 # ── FOREIGN LANGUAGE SKILLS CRUD ─────────────────────────────────────────────
@@ -751,3 +791,130 @@ def mp_toggle(request, pk):
     label = 'সক্রিয়' if mp.is_active else 'নিষ্ক্রিয়'
     messages.success(request, f'"{mp.name_bn}" {label} করা হয়েছে।')
     return redirect('mp:mp_list')
+
+
+# ── SYNC CONFLICT REVIEW ──────────────────────────────────────────────────────
+
+@perm_required
+def sync_conflict_list(request):
+    """Review page for PRP API sync conflicts, grouped by MP."""
+    status = request.GET.get('status', 'pending')
+    target = request.GET.get('target', '')
+    q      = request.GET.get('q', '').strip()
+
+    qs = MPSyncConflict.objects.select_related('mp', 'resolved_by')
+    if status in ('pending', 'resolved'):
+        qs = qs.filter(status=status)
+    if target:
+        qs = qs.filter(target=target)
+    if q:
+        qs = qs.filter(
+            Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q)
+            | Q(mp__mp_id__icontains=q)
+        )
+    qs = qs.order_by('mp__mp_id', 'target', 'field_key')
+
+    # group by MP (preserve order)
+    groups = []
+    current = None
+    for c in qs:
+        if current is None or current['mp'].pk != c.mp.pk:
+            current = {'mp': c.mp, 'items': []}
+            groups.append(current)
+        current['items'].append(c)
+
+    return render(request, 'mp/sync_conflicts.html', {
+        'groups':        groups,
+        'status':        status,
+        'target':        target,
+        'q':             q,
+        'target_choices': MPSyncConflict.TARGET_CHOICES,
+        'pending_count': MPSyncConflict.objects.filter(status='pending').count(),
+    })
+
+
+@perm_required
+@require_POST
+def sync_conflict_update(request):
+    """Apply a resolution to one or many conflicts (choice = system | api)."""
+    choice = request.POST.get('choice')
+    if choice not in ('system', 'api'):
+        messages.error(request, 'অবৈধ সিদ্ধান্ত।')
+        return redirect('mp:sync_conflict_list')
+
+    ids = request.POST.getlist('ids')
+    single = request.POST.get('conflict_id')
+    if single:
+        ids = [single]
+
+    conflicts = MPSyncConflict.objects.filter(pk__in=ids, status='pending')
+    n = 0
+    for c in conflicts:
+        api_sync.apply_conflict(c, request.user, choice)
+        n += 1
+
+    verb = 'API মান প্রয়োগ' if choice == 'api' else 'সিস্টেমের মান রাখা'
+    messages.success(request, f'{n}টি দ্বন্দ্বে {verb} হয়েছে।')
+
+    params = request.POST.get('return_params', '')
+    return redirect(reverse('mp:sync_conflict_list') + (f'?{params}' if params else ''))
+
+
+def _can_run_sync(user):
+    """Trigger sync = superadmin, or can_edit on the Sync Conflicts submenu."""
+    if getattr(user, 'is_superadmin', False):
+        return True
+    from apps.accounts.models import RolePermission, SubMenu
+    if not getattr(user, 'role', None):
+        return False
+    sm = SubMenu.objects.filter(url_name='mp:sync_conflict_list').first()
+    if not sm:
+        return False
+    perm = RolePermission.objects.filter(role=user.role, submenu=sm).first()
+    return bool(perm and perm.can_edit)
+
+
+@login_required
+@require_POST
+def sync_run(request):
+    """Trigger a live PRP API pull in --sync mode (conflict-safe).
+
+    Missing MP photos/signatures are backfilled from the API during the pull
+    (existing images are never overwritten — system stays canonical).
+    """
+    if not _can_run_sync(request.user):
+        raise PermissionDenied
+
+    username = os.environ.get('PRP_API_USER')
+    password = os.environ.get('PRP_API_PASS')
+    if not (username and password):
+        messages.error(
+            request,
+            'PRP API ক্রেডেনশিয়াল কনফিগার করা নেই (সার্ভারে PRP_API_USER / '
+            'PRP_API_PASS পরিবেশ ভেরিয়েবল সেট করুন)।')
+        return redirect('mp:sync_conflict_list')
+
+    buf = StringIO()
+    try:
+        call_command('import_mp_api', fetch=True, sync=True, no_images=False,
+                     username=username, password=password, stdout=buf, stderr=buf)
+    except Exception as exc:  # noqa: BLE001
+        messages.error(request, f'সিঙ্ক ব্যর্থ হয়েছে: {exc}')
+        return redirect('mp:sync_conflict_list')
+
+    pending = MPSyncConflict.objects.filter(status='pending').count()
+    messages.success(
+        request,
+        f'PRP API সিঙ্ক সম্পন্ন হয়েছে। {pending}টি অমীমাংসিত দ্বন্দ্ব পর্যালোচনার জন্য প্রস্তুত।')
+
+    # Photos are downloaded one-by-one; a single web request can time out before
+    # every MP is covered. Report how many still lack a photo so the operator
+    # knows to run Sync again (only the missing ones are fetched next time).
+    no_photo = MP.objects.filter(Q(photo='') | Q(photo__isnull=True)).count()
+    if no_photo:
+        messages.warning(
+            request,
+            f'{no_photo} জন সংসদ সদস্যের ছবি এখনো আসেনি (বড় ব্যাচে সময় শেষ হয়ে '
+            f'যেতে পারে)। সব ছবি একসাথে আনতে সার্ভারে চালান: '
+            f'python manage.py import_mp_api --images-only — অথবা আবার "সিঙ্ক" চাপুন।')
+    return redirect('mp:sync_conflict_list')
