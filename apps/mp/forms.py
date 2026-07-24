@@ -116,100 +116,18 @@ class ChildForm(_BootstrapMixin, forms.ModelForm):
         }
 
 
+# SSC / HSC / Diploma share ONE group pool ('school'); Graduation / Masters / PhD
+# share the 'university' pool. Each level still stores its own value independently.
 _LEVEL_GROUP_MAP = {
     'primary':    [],
-    'secondary':  ['secondary', 'all'],
-    'higher_sec': ['higher_sec', 'all'],
-    'diploma':    ['all'],
+    'secondary':  ['school', 'all'],
+    'higher_sec': ['school', 'all'],
+    'diploma':    ['school', 'all'],
     'bachelor':   ['university', 'all'],
     'masters':    ['university', 'all'],
     'phd':        ['university', 'all'],
     'other':      ['all'],
 }
-
-
-class EducationForm(_BootstrapMixin, forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        instance = self.instance if self.instance and self.instance.pk else None
-
-        # Pre-filter for edit mode
-        if instance:
-            if instance.education_level_id:
-                applicable = _LEVEL_GROUP_MAP.get(
-                    instance.education_level.level_type, ['all'])
-                if applicable:
-                    self.fields['group'].queryset = EducationGroup.objects.filter(
-                        applicable_to__in=applicable, is_active=True
-                    ).order_by('ordering', 'name_bn')
-                else:
-                    self.fields['group'].queryset = EducationGroup.objects.none()
-                self.fields['degree_title'].queryset = DegreeName.objects.filter(
-                    education_level_id=instance.education_level_id, is_active=True
-                ).order_by('ordering', 'name_bn')
-            if instance.group_id:
-                self.fields['major_subject'].queryset = EducationSubject.objects.filter(
-                    group_id=instance.group_id, is_active=True
-                ).order_by('ordering', 'name_bn')
-
-        # Re-filter from POST data so validation passes
-        if args and args[0]:
-            level_id = args[0].get('education_level')
-            group_id = args[0].get('group')
-            if level_id:
-                self.fields['degree_title'].queryset = DegreeName.objects.filter(
-                    education_level_id=level_id, is_active=True
-                ).order_by('ordering', 'name_bn')
-                try:
-                    lvl = EducationLevel.objects.get(pk=level_id)
-                    applicable = _LEVEL_GROUP_MAP.get(lvl.level_type, ['all'])
-                    if applicable:
-                        self.fields['group'].queryset = EducationGroup.objects.filter(
-                            applicable_to__in=applicable, is_active=True
-                        ).order_by('ordering', 'name_bn')
-                    else:
-                        self.fields['group'].queryset = EducationGroup.objects.none()
-                except EducationLevel.DoesNotExist:
-                    pass
-            if group_id:
-                self.fields['major_subject'].queryset = EducationSubject.objects.filter(
-                    group_id=group_id, is_active=True
-                ).order_by('ordering', 'name_bn')
-
-        # HTMX cascade attributes
-        self.fields['education_level'].widget.attrs.update({
-            'hx-get': '/master/htmx/education-level-cascade/',
-            'hx-trigger': 'change',
-            'hx-target': '#edu-cascade-block',
-        })
-        self.fields['group'].widget.attrs.update({
-            'hx-get': '/master/htmx/subject-options/',
-            'hx-trigger': 'change',
-            'hx-target': '#id_major_subject',
-            'hx-swap': 'innerHTML',
-        })
-        self.fields['result_type'].widget.attrs.update({
-            'hx-get': '/master/htmx/result-fields/',
-            'hx-trigger': 'change',
-            'hx-target': '#result-fields-block',
-        })
-
-        # Phase 17.11: nothing in education is mandatory.
-        for f in self.fields.values():
-            f.required = False
-
-    class Meta:
-        model  = Education
-        fields = [
-            'education_level', 'group', 'degree_title', 'major_subject',
-            'institution', 'institution_other_bn', 'institution_other_en',
-            'board_affiliation', 'passing_year', 'roll_no', 'reg_no', 'course_duration',
-            'result_type', 'division_result',
-            'gpa_value', 'gpa_out_of', 'percentage',
-            'class_result', 'result_text',
-            'ordering',
-        ]
 
 
 class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
@@ -222,7 +140,7 @@ class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
     DATA_FIELDS = (
         'degree_title', 'group', 'major_subject', 'board_affiliation',
         'institution', 'institution_other_bn', 'institution_other_en',
-        'roll_no', 'reg_no', 'passing_year', 'course_duration',
+        'passing_year', 'course_duration',
         'result_type', 'division_result', 'gpa_value', 'gpa_out_of',
         'percentage', 'class_result', 'result_text',
     )
@@ -232,7 +150,7 @@ class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
         fields = [
             'degree_title', 'group', 'major_subject', 'board_affiliation',
             'institution', 'institution_other_bn', 'institution_other_en',
-            'roll_no', 'reg_no', 'passing_year', 'course_duration',
+            'passing_year', 'course_duration',
             'result_type', 'division_result', 'gpa_value', 'gpa_out_of',
             'percentage', 'class_result', 'result_text',
         ]
@@ -327,8 +245,14 @@ class AddressForm(_BootstrapMixin, forms.ModelForm):
             'pouroshova_union_bn', 'pouroshova_union_en',
             'address_detail_bn', 'address_detail_en',
             'postal_code',
-            'telephone', 'mobile', 'alt_mobile', 'whatsapp', 'email',
+            'telephone', 'mobile', 'alt_mobile', 'whatsapp',
+            'email', 'personal_email',
         ]
+        # address_detail_* are TextFields — keep them compact (2 rows, not 3).
+        widgets = {
+            'address_detail_bn': forms.Textarea(attrs={'rows': 2}),
+            'address_detail_en': forms.Textarea(attrs={'rows': 2}),
+        }
 
 
 class ForeignLanguageSkillForm(_BootstrapMixin, forms.ModelForm):

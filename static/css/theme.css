@@ -323,3 +323,19 @@ body.sidebar-collapsed .mp-nav-item { justify-content: center; }
   .mp-topbar { padding: 0 10px; }
   .btn-icon { width: 40px; height: 40px; }
 }
+
+/* ── Grouped edit-form section cards (MP detail edit tabs) ─────────── */
+.gi-card {
+  background: #f8fafc; border: 1px solid #e6ebf1; border-radius: 10px;
+  padding: 14px 16px; margin-bottom: 16px;
+}
+.gi-col > .gi-card:last-child { margin-bottom: 0; }
+.gi-card-title {
+  display: flex; align-items: center; gap: .5rem;
+  font-weight: 600; font-size: .78rem; letter-spacing: .02em;
+  text-transform: uppercase; color: #475569;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e6ebf1;
+}
+.gi-card-title i { color: #3b6fd4; font-size: .95rem; }
+.gi-card .form-label { font-size: .8rem; margin-bottom: .2rem; }
+.gi-card .form-text { font-size: .72rem; margin-top: .1rem; }

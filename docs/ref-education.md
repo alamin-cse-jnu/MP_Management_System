@@ -30,14 +30,15 @@ class EducationLevel(Model):
     is_active    = BooleanField(default=True)
 
 class EducationGroup(Model):
-    """SSC/HSC: Science / Business Studies / Arts / Vocational
-       University: Science / Arts / Business / Medicine / Engineering / Law"""
+    """SSC/HSC/Diploma: Science / Business Studies / Arts / Vocational
+       University: Science / Arts / Business / Medicine / Engineering / Law
+       Phase 18: two shared pools — 'school' groups show on SSC/HSC/Diploma,
+       'university' groups on Graduation/Masters/PhD, 'all' everywhere."""
     name_bn       = CharField()   # বিজ্ঞান
     name_en       = CharField()   # Science
     applicable_to = CharField(choices=[
-        ('secondary',  'SSC Level'),
-        ('higher_sec', 'HSC Level'),
-        ('university', 'University Level'),
+        ('school',     'School Level (SSC / HSC / Diploma)'),
+        ('university', 'University Level (Graduation / Masters / PhD)'),
         ('all',        'All Levels'),
     ])
     is_active     = BooleanField(default=True)

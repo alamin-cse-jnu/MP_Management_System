@@ -20,7 +20,7 @@ from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
 from .forms import (
     MPCreateForm, MPGeneralForm, ElectionInfoForm,
-    SpouseForm, ChildForm, EducationForm, EducationSectionForm, AddressForm,
+    SpouseForm, ChildForm, EducationSectionForm, AddressForm,
     ForeignLanguageSkillForm, BankAccountForm, CovidVaccinationForm,
     PreviousParliamentaryHistoryForm, OrganizationForm, AwardForm,
     SocialServiceForm, SpecialPositionHistoryForm, PublicationForm,
@@ -396,9 +396,10 @@ def education_sections(request, pk):
                 elif inst and inst.pk:
                     inst.delete()
 
+            mp.is_self_educated  = bool(request.POST.get('is_self_educated'))
             mp.self_education_bn = request.POST.get('self_education_bn', '').strip()
             mp.self_education_en = request.POST.get('self_education_en', '').strip()
-            mp.save(update_fields=['self_education_bn', 'self_education_en'])
+            mp.save(update_fields=['is_self_educated', 'self_education_bn', 'self_education_en'])
 
             messages.success(request, 'শিক্ষাগত তথ্য সংরক্ষিত হয়েছে।')
             return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-education')
@@ -408,6 +409,7 @@ def education_sections(request, pk):
         'mp':            mp,
         'sections':      sections,
         'result_types':  ResultType.objects.filter(is_active=True).order_by('ordering'),
+        'is_self_educated':  mp.is_self_educated,
         'self_education_bn': mp.self_education_bn,
         'self_education_en': mp.self_education_en,
     })

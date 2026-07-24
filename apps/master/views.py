@@ -4,9 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.accounts.mixins import PermissionMixin
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import (
@@ -115,63 +117,9 @@ MASTER_SPECS = [
         'title_en': 'Professional Qualifications',
         'extra_cols': [],
     },
-    # Education
-    {
-        'key': 'education-level',
-        'model': EducationLevel,
-        'form': EducationLevelForm,
-        'title_bn': 'শিক্ষাগত স্তর',
-        'title_en': 'Education Levels',
-        'extra_cols': [],
-    },
-    {
-        'key': 'education-group',
-        'model': EducationGroup,
-        'form': EducationGroupForm,
-        'title_bn': 'শিক্ষা গ্রুপ',
-        'title_en': 'Education Groups',
-        'extra_cols': [],
-    },
-    {
-        'key': 'education-subject',
-        'model': EducationSubject,
-        'form': EducationSubjectForm,
-        'title_bn': 'বিষয়',
-        'title_en': 'Subjects',
-        'extra_cols': [{'label': 'গ্রুপ', 'attr': 'group'}],
-    },
-    {
-        'key': 'degree-name',
-        'model': DegreeName,
-        'form': DegreeNameForm,
-        'title_bn': 'ডিগ্রির নাম',
-        'title_en': 'Degree Names',
-        'extra_cols': [{'label': 'স্তর', 'attr': 'education_level'}],
-    },
-    {
-        'key': 'education-institution',
-        'model': EducationInstitution,
-        'form': EducationInstitutionForm,
-        'title_bn': 'শিক্ষা প্রতিষ্ঠান',
-        'title_en': 'Education Institutions',
-        'extra_cols': [{'label': 'ধরন', 'attr': 'get_inst_type_display'}],
-    },
-    {
-        'key': 'result-type',
-        'model': ResultType,
-        'form': ResultTypeForm,
-        'title_bn': 'ফলাফলের ধরন',
-        'title_en': 'Result Types',
-        'extra_cols': [],
-    },
-    {
-        'key': 'division-result',
-        'model': DivisionResult,
-        'form': DivisionResultForm,
-        'title_bn': 'বিভাগ ভিত্তিক ফলাফল',
-        'title_en': 'Division Results',
-        'extra_cols': [],
-    },
+    # Education — the 7 education reference tables are NOT registered here.
+    # They are managed together on the single-page Education manager
+    # (`education_master` view + EDU_ENTITIES below), reached at /master/education/.
     # Political
     {
         'key': 'political-party',
@@ -454,13 +402,152 @@ def get_views(key):
     return _VIEWS[key]
 
 
+# ── EDUCATION MASTER — single-page manager ───────────────────────────────────
+# All 7 education reference tables managed on ONE page (/master/education/) with a
+# left tab-rail + inline HTMX add/edit/toggle. Reuses the existing master forms;
+# no dedicated forms/models. `cols` = extra columns shown after name_bn/name_en.
+
+EDU_ENTITIES = [
+    {'key': 'degree-name', 'model': DegreeName, 'form': DegreeNameForm,
+     'title_bn': 'পরীক্ষা / ডিগ্রি', 'title_en': 'Examinations', 'icon': 'bi-mortarboard-fill',
+     'hint_bn': 'স্তর-ভিত্তিক পরীক্ষা/ডিগ্রির নাম (এসএসসি, এইচএসসি, বিএসসি…)।',
+     'hint_en': 'Level-scoped examination / degree names (SSC, HSC, BSc…).',
+     'cols': [{'label_bn': 'স্তর', 'label_en': 'Level', 'attr': 'education_level'},
+              {'label_bn': 'সংক্ষিপ্ত', 'label_en': 'Short', 'attr': 'short_name'}]},
+    {'key': 'education-group', 'model': EducationGroup, 'form': EducationGroupForm,
+     'title_bn': 'গ্রুপ', 'title_en': 'Groups', 'icon': 'bi-diagram-3-fill',
+     'hint_bn': 'বিজ্ঞান/বাণিজ্য/মানবিক — স্কুল বা বিশ্ববিদ্যালয় পুলে প্রযোজ্য।',
+     'hint_en': 'Science/Business/Arts — tagged to the school or university pool.',
+     'cols': [{'label_bn': 'প্রযোজ্য', 'label_en': 'Applies to', 'attr': 'get_applicable_to_display'}]},
+    {'key': 'education-subject', 'model': EducationSubject, 'form': EducationSubjectForm,
+     'title_bn': 'বিষয়', 'title_en': 'Subjects', 'icon': 'bi-book-fill',
+     'hint_bn': 'বিষয়সমূহ — ঐচ্ছিকভাবে গ্রুপের সাথে সংযুক্ত।',
+     'hint_en': 'Subjects — optionally linked to a group.',
+     'cols': [{'label_bn': 'গ্রুপ', 'label_en': 'Group', 'attr': 'group'}]},
+    {'key': 'education-institution', 'model': EducationInstitution, 'form': EducationInstitutionForm,
+     'title_bn': 'প্রতিষ্ঠান', 'title_en': 'Institutions', 'icon': 'bi-bank2',
+     'hint_bn': 'বোর্ড ও বিশ্ববিদ্যালয় — ধরন অনুযায়ী।',
+     'hint_en': 'Boards & universities — grouped by type.',
+     'cols': [{'label_bn': 'ধরন', 'label_en': 'Type', 'attr': 'get_inst_type_display'},
+              {'label_bn': 'জেলা', 'label_en': 'District', 'attr': 'district'}]},
+    {'key': 'result-type', 'model': ResultType, 'form': ResultTypeForm,
+     'title_bn': 'ফলাফলের ধরন', 'title_en': 'Result Types', 'icon': 'bi-percent',
+     'hint_bn': 'জিপিএ/সিজিপিএ/বিভাগ/শতকরা ইত্যাদি।',
+     'hint_en': 'GPA/CGPA/Division/Percentage etc.',
+     'cols': [{'label_bn': 'ফরম্যাট', 'label_en': 'Format', 'attr': 'get_result_format_display'}]},
+    {'key': 'division-result', 'model': DivisionResult, 'form': DivisionResultForm,
+     'title_bn': 'বিভাগ ভিত্তিক ফলাফল', 'title_en': 'Division Results', 'icon': 'bi-list-ol',
+     'hint_bn': 'প্রথম/দ্বিতীয়/তৃতীয় বিভাগ ইত্যাদি।',
+     'hint_en': '1st/2nd/3rd Division etc.',
+     'cols': []},
+    {'key': 'education-level', 'model': EducationLevel, 'form': EducationLevelForm,
+     'title_bn': 'শিক্ষাগত স্তর', 'title_en': 'Levels', 'icon': 'bi-layers-fill', 'advanced': True,
+     'hint_bn': 'পূর্বনির্ধারিত ৬টি স্তর — সাধারণত পরিবর্তনের প্রয়োজন নেই।',
+     'hint_en': 'The 6 seeded levels — rarely need changing.',
+     'cols': [{'label_bn': 'ধরন', 'label_en': 'Type', 'attr': 'get_level_type_display'},
+              {'label_bn': 'ক্রম', 'label_en': 'Order', 'attr': 'degree_order'}]},
+]
+EDU_MAP = {e['key']: e for e in EDU_ENTITIES}
+
+
+def _edu_param(request, name, default=''):
+    """Filter params arrive in GET (filter/tab requests) or POST (save/toggle,
+    carried via hx-include) — check both so the filter survives every action."""
+    return request.POST.get(name, request.GET.get(name, default))
+
+
+def _edu_queryset(spec, request):
+    qs = spec['model'].objects.all()
+    q = _edu_param(request, 'q').strip()
+    if q:
+        qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q))
+    status = _edu_param(request, 'status', 'active')
+    if status == 'active':
+        qs = qs.filter(is_active=True)
+    elif status == 'inactive':
+        qs = qs.filter(is_active=False)
+    return qs
+
+
+def _edu_panel_ctx(request, spec, **extra):
+    ctx = {
+        'spec': spec,
+        'objects': _edu_queryset(spec, request),
+        'q': _edu_param(request, 'q'),
+        'status': _edu_param(request, 'status', 'active'),
+        'form': None, 'open_form': False, 'saved': None, 'editing_pk': None,
+    }
+    ctx.update(extra)
+    return ctx
+
+
+def _render_edu_panel(request, spec, **extra):
+    return render(request, 'master/partials/edu_panel.html',
+                  _edu_panel_ctx(request, spec, **extra))
+
+
+@perm_required
+def education_master(request):
+    """Single page: left tab-rail of the 7 education tables + inline HTMX CRUD."""
+    entities = [{**e, 'count': e['model'].objects.filter(is_active=True).count()}
+                for e in EDU_ENTITIES]
+    spec = EDU_MAP.get(request.GET.get('tab'), EDU_ENTITIES[0])
+    ctx = _edu_panel_ctx(request, spec)
+    ctx.update({'entities': entities, 'active_key': spec['key']})
+    return render(request, 'master/education_master.html', ctx)
+
+
+@perm_required
+def education_panel(request, key):
+    spec = EDU_MAP.get(key)
+    if not spec:
+        raise Http404
+    return _render_edu_panel(request, spec)
+
+
+@perm_required
+def education_form(request, key, pk=None):
+    """GET → open the inline add/edit form; POST → validate + save."""
+    spec = EDU_MAP.get(key)
+    if not spec:
+        raise Http404
+    instance = get_object_or_404(spec['model'], pk=pk) if pk else None
+    if request.method == 'POST':
+        form = spec['form'](request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save()
+            return _render_edu_panel(request, spec, saved=obj)
+        return _render_edu_panel(request, spec, form=form, open_form=True, editing_pk=pk)
+    return _render_edu_panel(request, spec, form=spec['form'](instance=instance),
+                             open_form=True, editing_pk=pk)
+
+
+@perm_required
+@require_POST
+def education_toggle(request, key, pk):
+    spec = EDU_MAP.get(key)
+    if not spec:
+        raise Http404
+    obj = get_object_or_404(spec['model'], pk=pk)
+    obj.is_active = not obj.is_active
+    obj.save(update_fields=['is_active'])
+    return _render_edu_panel(request, spec, saved=obj)
+
+
 # ── HTMX PARTIAL VIEWS ───────────────────────────────────────────────────────
 
 @perm_required
 def master_home(request):
+    from django.urls import reverse, NoReverseMatch
+
     def _item(name_bn, name_en, url_key):
-        from django.urls import reverse
-        return {'name_bn': name_bn, 'name_en': name_en, 'url': reverse(f'master:{url_key}')}
+        # Tolerant: a retired master model (its URL removed) must not 500 the
+        # whole overview — skip any item whose URL no longer resolves.
+        try:
+            url = reverse(f'master:{url_key}')
+        except NoReverseMatch:
+            return None
+        return {'name_bn': name_bn, 'name_en': name_en, 'url': url}
 
     sections = [
         {'title_bn': 'ভূগোল', 'title_en': 'Geography', 'icon': 'bi-geo-alt-fill', 'items': [
@@ -479,13 +566,7 @@ def master_home(request):
             _item('পেশাদার যোগ্যতা', 'Professional Qualifications', 'professional_qualification_list'),
         ]},
         {'title_bn': 'শিক্ষা', 'title_en': 'Education', 'icon': 'bi-mortarboard-fill', 'items': [
-            _item('শিক্ষাগত স্তর', 'Education Levels', 'education_level_list'),
-            _item('শিক্ষা গ্রুপ', 'Education Groups', 'education_group_list'),
-            _item('বিষয়', 'Subjects', 'education_subject_list'),
-            _item('ডিগ্রির নাম', 'Degree Names', 'degree_name_list'),
-            _item('শিক্ষা প্রতিষ্ঠান', 'Education Institutions', 'education_institution_list'),
-            _item('ফলাফলের ধরন', 'Result Types', 'result_type_list'),
-            _item('বিভাগ ভিত্তিক ফলাফল', 'Division Results', 'division_result_list'),
+            _item('শিক্ষা মাস্টার ডেটা (সব একসাথে)', 'Education Master Data (all-in-one)', 'education_master'),
         ]},
         {'title_bn': 'রাজনৈতিক', 'title_en': 'Political', 'icon': 'bi-flag-fill', 'items': [
             _item('রাজনৈতিক দল', 'Political Parties', 'political_party_list'),
@@ -499,14 +580,12 @@ def master_home(request):
             _item('কমিটির পদ', 'Committee Positions', 'committee_position_list'),
         ]},
         {'title_bn': 'প্রতিষ্ঠান', 'title_en': 'Institution', 'icon': 'bi-building', 'items': [
-            _item('প্রতিষ্ঠান', 'Institutions', 'government_institution_list'),
             _item('প্রতিষ্ঠানের ভূমিকা', 'Institution Roles', 'institution_role_list'),
         ]},
         {'title_bn': 'ভ্রমণ', 'title_en': 'Travel', 'icon': 'bi-globe', 'items': [
             _item('দেশ', 'Countries', 'country_list'),
             _item('ভ্রমণের ধরন', 'Travel Types', 'travel_type_list'),
             _item('ভ্রমণের উদ্দেশ্য', 'Travel Purposes', 'travel_purpose_list'),
-            _item('কর্মকর্তার পদবী', 'Officer Designations', 'officer_designation_list'),
         ]},
         {'title_bn': 'ভাষা', 'title_en': 'Language', 'icon': 'bi-translate', 'items': [
             _item('বিদেশি ভাষা', 'Foreign Languages', 'foreign_language_list'),
@@ -516,6 +595,10 @@ def master_home(request):
             _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'pa_designation_list'),
         ]},
     ]
+    # Drop any skipped (None) items and now-empty sections.
+    for sec in sections:
+        sec['items'] = [it for it in sec['items'] if it]
+    sections = [sec for sec in sections if sec['items']]
     return render(request, 'master/home.html', {'sections': sections})
 
 
@@ -541,9 +624,9 @@ def upazila_options(request):
 
 _LEVEL_GROUP_MAP = {
     'primary':    [],
-    'secondary':  ['secondary', 'all'],
-    'higher_sec': ['higher_sec', 'all'],
-    'diploma':    ['all'],
+    'secondary':  ['school', 'all'],
+    'higher_sec': ['school', 'all'],
+    'diploma':    ['school', 'all'],
     'bachelor':   ['university', 'all'],
     'masters':    ['university', 'all'],
     'phd':        ['university', 'all'],

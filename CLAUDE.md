@@ -164,6 +164,9 @@ mp_management/
 | 15 | UX improvements round (see below) | ✅ |
 | 16 | PRP API import + conflict-safe sync (see below) | ✅ |
 | 17 | Observation fixes — prioritized task list (see below) | ✅ |
+| 18 | Education master-data pools (school/university groups) + self-educated tick | ✅ |
+| 19 | Education master data → single-page manager (tab-rail + inline HTMX CRUD) | ✅ |
+| 20 | MP detail edit tabs → two-column grouped composition (General, Election, Address) + dashboard tiny-bar click fix | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -354,6 +357,127 @@ Each academic section = one `Education` row bound to a fixed `EducationLevel`
         old `education_form.html` deleted. Verified: GET renders all sections;
         POST creates SSC row with GPA result "5.00 / 5.00", saves self-education,
         and clearing a section deletes its row.
+
+---
+
+## PHASE 18 — Education master-data pools + self-educated tick (2026-07-24) ✅
+Field-feedback refinement of the Phase 17.11 education page (`/mp/<id>/education/`).
+
+- **Roll No / Reg No removed** — dropped from the SSC/HSC UI *and* the DB
+  (`Education.roll_no`/`reg_no` deleted, migration `mp/0007`). Dead
+  `EducationForm` class (old cascade form, unused since 17.11) removed from
+  `apps/mp/forms.py` + its import.
+- **Two shared master-data pools for groups.** `EducationGroup.applicable_to`
+  choices restructured `secondary/higher_sec/university/all` →
+  **`school` / `university` / `all`** (`master/0009`, with a RunPython that
+  collapses old `secondary`+`higher_sec` rows into `school`). `_LEVEL_GROUP_MAP`
+  (in both `apps/mp/forms.py` and `apps/master/views.py`) now maps
+  SSC/HSC/Diploma → `['school','all']` and Grad/Masters/PhD → `['university','all']`.
+  Effect: the **Board, Group, Result Type** dropdowns show ONE shared list across
+  SSC/HSC/Diploma (each section still stores its own value); **University +
+  Subject** already shared across Grad/Masters/PhD. Examination (DegreeName) stays
+  per-level-scoped. Admin tags each group `school`/`university`/`all` in Master Data.
+- **Self-educated = tick + optional note.** New `MP.is_self_educated` boolean
+  (`mp/0007`); the two `self_education_bn/en` textareas are kept as an OPTIONAL
+  note. Template shows a checkbox first, notes labelled optional; read-only
+  `_tab_education.html` shows a "Self-educated" badge.
+- Verified in the running Docker stack: `migrate` OK, `check` clean, education
+  page GET 200 / POST 302 (tick + note persist), school-level group pools identical.
+
+---
+
+## PHASE 19 — Education master data: single-page manager (2026-07-24) ✅
+The 7 separate education master menus/pages (Levels, Groups, Subjects, Degree
+Names, Institutions, Result Types, Division Results) are consolidated into ONE
+page at **`/master/education/`** — left **tab-rail** + inline **HTMX** add/edit/
+toggle. Reuses the existing master ModelForms (no new forms/models).
+
+- **Config-driven** — `EDU_ENTITIES` (in `apps/master/views.py`) lists the 7
+  tables (model, form, icon, bilingual hint, extra `cols`). Order: Examinations
+  (Degree Names) · Groups · Subjects · Institutions · Result Types · Division
+  Results · Levels (marked `advanced`). `EDU_MAP` = key→spec.
+- **Views** — `education_master` (shell, tab-rail with live counts),
+  `education_panel` (table partial), `education_form` (GET opens inline add/edit
+  form, POST validates+saves), `education_toggle`. All swap a single
+  `#edu-panel` (`hx-swap=outerHTML`); one helper `_render_edu_panel`. Invalid
+  POST re-renders the panel with the form open + errors; success shows an inline
+  "saved" banner + highlights the row. Filter (search + active/inactive/all)
+  posts via `#edu-filter`, carried on every action via `hx-include`.
+- **Templates** — `master/education_master.html` (tab-rail + CSS + client-side
+  active-tab highlight) and `master/partials/edu_panel.html` (filter + inline
+  form + table). Select2 re-inits automatically via the existing
+  `htmx:afterSwap` hook.
+- **Global HTMX CSRF** — added a `htmx:configRequest` handler in `base.html` that
+  attaches `X-CSRFToken` to every HTMX request (needed for POST swaps; benefits
+  all future HTMX POSTs).
+- **Old pages removed entirely** — the 7 education dicts dropped from
+  `MASTER_SPECS` (their `/master/<entity>/` list/add/edit/toggle routes no longer
+  exist → 404). `master_home` Education section is now ONE card. Menu: `menu_data.
+  json` submenu row (pk 40) repointed to `master:education_master`; migration
+  `accounts/0003` deletes the 7 old submenus on existing DBs (CASCADE clears their
+  RolePermissions) after **carrying each role's combined education permissions**
+  onto the new consolidated submenu. Superadmin bypasses permissions.
+- **URLs** — `master:education_master` + `education_panel` / `education_form_add`
+  / `education_form_edit` / `education_toggle` (all `/master/education/<key>/…`).
+- Verified in the running Docker stack: `migrate`+`check` clean; page/panel/
+  add-form GET 200; inline create + toggle 200 (persist); old list URL 404;
+  new submenu present, 7 old submenus gone.
+
+---
+
+## PHASE 20 — MP General Info edit form redesign (2026-07-24) ✅
+The **edit** panel of the MP detail "General Information" tab
+(`templates/mp/_tab_general.html`, `#general-edit`) was a flat, ungrouped form —
+the six name fields (self/father/mother × bn/en) were each full-width and
+stacked, causing heavy vertical scroll. Rebuilt as a **two-column grouped**
+composition (user-chosen).
+
+- **Left column** cards: **Identity** (Name/Father/Mother, bn|en paired) ·
+  **Personal Details** (DOB, NID, Gender, Birthplace, Home District, Marital,
+  Nationality, Religion, Blood, TIN — all 2-up) · **Profession & Qualification**
+  (current/previous multi + professional qualifications).
+- **Right column** cards: **Photo** (thumb + upload) · **Passport** (no,
+  issue/expiry, place) · **Freedom Fighter** (3 checkboxes inline) ·
+  **Additional Info** (Hobbies + Other Info, bn|en paired).
+- **Election tab** (`_tab_election.html`, `#election-edit`) redone the same way:
+  left = **Constituency & Parliament** (+ times elected) · **Party & Membership**
+  (party + read-only member type); right = **Key Dates** (election/oath/gazette) ·
+  **Nomination & GO (System)** (nomination date, GO no/date).
+- **Shared styling** — `.gi-card` / `.gi-card-title` / `.gi-col` live in
+  `static/css/theme.css` (generic, reusable across all edit tabs), not scoped per
+  tab. Columns get `.gi-col` for last-child margin handling. Reapply to any other
+  edit tab by wrapping fields in `.gi-card` + a `.gi-card-title`.
+- **Template/CSS only** — forms, views, URLs, read-only view panels, and the
+  show/cancel-edit JS all unchanged; same field names + error handling
+  (`|striptags` on errors). `collectstatic` runs on container start (entrypoint),
+  so the theme.css change is served by nginx after a restart.
+- **Address tab** (`_tab_address.html` → shared `_address_fields.html`) redone the
+  same way — one partial edit covers all 3 sub-tabs (Present/Permanent/Dhaka):
+  **left column** = **Location** (division/district/upazila cascade + pouroshova
+  bn/en + postal) **+ Address Details** (bn/en); **right column** = **Contact**
+  (present only, via `show_contact`) with **two emails** — Personal
+  (`personal_email`) + Official (`email`). `personal_email` added to
+  `AddressForm.Meta.fields` (model field already existed from Phase 16). No-contact
+  sub-tabs render the left column full-width (`col-12`). Cascade `onchange`
+  handlers are on the widgets (keyed by prefix), so reordering fields is safe.
+- Verified: detail page GET 200 with `.gi-card` markup on all three tabs; invalid
+  POST (blank required name / bad parliament) re-renders 200 with the right edit
+  panel shown so errors are visible; cascade handlers intact; nginx serves updated
+  theme.css.
+
+### Dashboard — tiny-bar click fix (2026-07-24)
+`templates/accounts/dashboard.html` (ApexCharts): a bar with a very low value
+(e.g. Times-Elected "1st Time") renders almost no height, so its bar is nearly
+unclickable (ApexCharts has no `minBarLength`). Fix: `makeColumnsClickable(elId,
+count, onPick)` helper makes the **entire column area clickable** — a single click
+listener on the chart div maps the click's x-position (within the
+`.apexcharts-grid` rect, over full plot height + the label band) to a category
+index, so even a 1px bar is selectable. Wired to the Times-Elected chart's
+`mounted`/`updated` events (bound once, grid re-queried per click so it survives
+resize); still navigates to `all_mp?times_elected=<id>`, and the bar's own
+`dataPointSelection` is kept as a fallback. Reusable for other column charts;
+division bar (horizontal) would need a y-axis variant. NOTE: JS interaction not
+auto-verifiable here (no browser tool) — needs a manual click test in the app.
 
 ---
 

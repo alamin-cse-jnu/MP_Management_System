@@ -463,6 +463,35 @@
     dataLabels: { style: { fontSize: '12px' } },
   };
 
+  /* ── helper: make a column chart's whole column area clickable ────
+     A bar with a very small value renders almost no height, so the bar
+     itself is nearly impossible to click. Instead we map any click inside
+     the plot to its category by x-position (full column height + the axis
+     label band below it), so even a 1px bar is selectable. `onPick(index)`
+     runs with the category index. Bound once per chart; grid is re-queried
+     per click so it survives ApexCharts re-renders (e.g. resize). */
+  function makeColumnsClickable(elId, count, onPick) {
+    const root = document.getElementById(elId);
+    if (!root || !count || root.dataset.colClick) return;
+    root.dataset.colClick = '1';
+    root.style.cursor = 'pointer';
+    root.addEventListener('click', function (ev) {
+      const grid = root.querySelector('.apexcharts-grid')
+                || root.querySelector('.apexcharts-inner')
+                || root.querySelector('svg');
+      if (!grid) return;
+      const rect = grid.getBoundingClientRect();
+      if (!rect.width) return;
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      if (x < 0 || x > rect.width) return;            // outside plot horizontally
+      if (y < -24 || y > rect.height + 44) return;    // allow plot + label band
+      let idx = Math.floor(x / (rect.width / count));
+      idx = Math.max(0, Math.min(count - 1, idx));
+      onPick(idx);
+    });
+  }
+
   /* ── 1. Party distribution donut ────────────────────────────── */
   const partyRaw   = {{ party_chart_data|safe }};
   const partyEmpty = !partyRaw.values || partyRaw.values.length === 0;
@@ -563,15 +592,22 @@
     return n + (suffixes[n] || 'th') + ' {% ui "বার" "Time" %}';
   });
 
+  function timesGoTo(idx) {
+    if (timesEmpty) return;
+    const id = timesRaw.ids[idx];
+    if (id === null || id === undefined) return;
+    window.location.href = URL_ALL_MP + '?times_elected=' + id;
+  }
+
   new ApexCharts(document.getElementById('chart-times'), {
     ...commonOpts,
     chart: { ...commonOpts.chart, type: 'bar', height: 240,
-      events: { dataPointSelection: function(e, ctx, cfg) {
-        if (timesEmpty) return;
-        const id = timesRaw.ids[cfg.dataPointIndex];
-        if (id === null || id === undefined) return;
-        window.location.href = URL_ALL_MP + '?times_elected=' + id;
-      }}
+      events: {
+        dataPointSelection: function(e, ctx, cfg) { timesGoTo(cfg.dataPointIndex); },
+        // Tiny bars are hard to hit — make the whole column area clickable.
+        mounted: function() { makeColumnsClickable('chart-times', timesEmpty ? 0 : timesRaw.values.length, timesGoTo); },
+        updated: function() { makeColumnsClickable('chart-times', timesEmpty ? 0 : timesRaw.values.length, timesGoTo); },
+      }
     },
     series: [{ name: '{% ui "সদস্য সংখ্যা" "No. of MPs" %}',
                data: timesEmpty ? [] : timesRaw.values }],

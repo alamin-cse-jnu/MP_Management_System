@@ -8,6 +8,12 @@ app_name = 'master'
 urlpatterns = [
     # Overview
     path('', views.master_home, name='home'),
+    # Education — single-page manager (replaces the 7 separate education CRUD pages)
+    path('education/', views.education_master, name='education_master'),
+    path('education/<slug:key>/panel/', views.education_panel, name='education_panel'),
+    path('education/<slug:key>/form/', views.education_form, name='education_form_add'),
+    path('education/<slug:key>/form/<int:pk>/', views.education_form, name='education_form_edit'),
+    path('education/<slug:key>/toggle/<int:pk>/', views.education_toggle, name='education_toggle'),
     # HTMX cascade endpoints
     path('htmx/district-options/', views.district_options, name='district_options'),
     path('htmx/upazila-options/', views.upazila_options, name='upazila_options'),

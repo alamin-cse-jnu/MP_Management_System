@@ -83,7 +83,10 @@ class MP(models.Model):
     hobbies_en       = models.TextField(blank=True, verbose_name='Hobbies (English)')
     other_info_bn    = models.TextField(blank=True, verbose_name='অন্যান্য তথ্য (বাংলায়)')
     other_info_en    = models.TextField(blank=True, verbose_name='Other Info (English)')
-    # Phase 17.11: free-text "self-educated" section of the education page.
+    # Phase 17.11: "self-educated" section of the education page. A tick mark
+    # (is_self_educated) for MPs with no SSC–PhD degree; the two note fields are
+    # an optional free-text elaboration.
+    is_self_educated  = models.BooleanField(default=False, verbose_name='স্ব-শিক্ষিত')
     self_education_bn = models.TextField(blank=True, verbose_name='স্ব-শিক্ষা (বাংলায়)')
     self_education_en = models.TextField(blank=True, verbose_name='Self-education (English)')
 
@@ -293,9 +296,7 @@ class Education(models.Model):
         related_name='affiliated_educations', verbose_name='শিক্ষাবোর্ড/বিশ্ববিদ্যালয়'
     )
     passing_year         = models.IntegerField(null=True, blank=True, verbose_name='পাসের সন')
-    # Phase 17.11: fixed-section education form (SSC/HSC roll+reg, degree duration).
-    roll_no              = models.CharField(max_length=50, blank=True, verbose_name='রোল নম্বর')
-    reg_no               = models.CharField(max_length=50, blank=True, verbose_name='রেজিস্ট্রেশন নম্বর')
+    # Phase 17.11: fixed-section education form (degree duration for university levels).
     course_duration      = models.CharField(max_length=50, blank=True, verbose_name='কোর্সের মেয়াদ')
     result_type          = models.ForeignKey(
         'master.ResultType', on_delete=models.SET_NULL, null=True, blank=True,

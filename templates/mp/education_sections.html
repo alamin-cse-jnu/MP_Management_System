@@ -46,22 +46,14 @@
           {{ s.form.board_affiliation }}
         </div>
         <div class="col-md-4">
-          <label class="form-label fw-medium">{% ui "রোল নম্বর" "Roll No" %}</label>
-          {{ s.form.roll_no }}
-        </div>
-        <div class="col-md-4">
-          <label class="form-label fw-medium">{% ui "রেজিস্ট্রেশন নম্বর" "Reg No" %}</label>
-          {{ s.form.reg_no }}
-        </div>
-        <div class="col-md-4">
           <label class="form-label fw-medium">{% ui "গ্রুপ" "Group" %}</label>
           {{ s.form.group }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <label class="form-label fw-medium">{% ui "প্রতিষ্ঠান" "Institute" %}</label>
           {{ s.form.institution }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label fw-medium">{% ui "পাসের সন" "Passing Year" %}</label>
           {{ s.form.passing_year }}
         </div>
@@ -120,19 +112,29 @@
   </div>
   {% endfor %}
 
-  {# ── Self-educated (free text) ─────────────────────────────── #}
+  {# ── Self-educated (tick + optional note) ──────────────────── #}
   <div class="mp-card mb-3">
     <div class="mp-card-header d-flex align-items-center gap-2">
       <i class="bi bi-lightbulb-fill icon"></i>{% ui "স্ব-শিক্ষা" "Self-educated" %}
     </div>
     <div class="p-3">
+      <div class="form-check mb-1">
+        <input type="checkbox" class="form-check-input" id="isSelfEducated"
+               name="is_self_educated" value="1" {% if is_self_educated %}checked{% endif %}>
+        <label class="form-check-label fw-medium" for="isSelfEducated">
+          {% ui "স্ব-শিক্ষিত (কোনো এসএসসি–পিএইচডি ডিগ্রি নেই)" "Self-educated (no SSC–PhD degree)" %}
+        </label>
+      </div>
+      <small class="text-muted d-block mb-3">
+        {% ui "যাদের প্রাতিষ্ঠানিক ডিগ্রি নেই তাদের জন্য টিক দিন। নিচের বিবরণ ঐচ্ছিক।" "Tick this for MPs without a formal degree. The note below is optional." %}
+      </small>
       <div class="row g-3">
         <div class="col-md-6">
-          <label class="form-label fw-medium">{% ui "বিবরণ (বাংলায়)" "Description (Bangla)" %}</label>
+          <label class="form-label fw-medium">{% ui "বিবরণ (বাংলায়) — ঐচ্ছিক" "Note (Bangla) — optional" %}</label>
           <textarea name="self_education_bn" rows="3" class="form-control">{{ self_education_bn }}</textarea>
         </div>
         <div class="col-md-6">
-          <label class="form-label fw-medium">{% ui "বিবরণ (ইংরেজি)" "Description (English)" %}</label>
+          <label class="form-label fw-medium">{% ui "বিবরণ (ইংরেজি) — ঐচ্ছিক" "Note (English) — optional" %}</label>
           <textarea name="self_education_en" rows="3" class="form-control">{{ self_education_en }}</textarea>
         </div>
       </div>

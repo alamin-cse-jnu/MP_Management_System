@@ -16,13 +16,7 @@
   {"model": "accounts.submenu", "pk": 30, "fields": {"menu": 1, "name_bn": "পেশা", "name_en": "Professions", "url_name": "master:profession_list", "ordering": 40, "is_active": true}},
   {"model": "accounts.submenu", "pk": 31, "fields": {"menu": 1, "name_bn": "পেশাদার যোগ্যতা", "name_en": "Professional Qualifications", "url_name": "master:professional_qualification_list", "ordering": 41, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 40, "fields": {"menu": 1, "name_bn": "শিক্ষাগত স্তর", "name_en": "Education Levels", "url_name": "master:education_level_list", "ordering": 50, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 41, "fields": {"menu": 1, "name_bn": "শিক্ষা গ্রুপ", "name_en": "Education Groups", "url_name": "master:education_group_list", "ordering": 51, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 42, "fields": {"menu": 1, "name_bn": "বিষয়", "name_en": "Subjects", "url_name": "master:education_subject_list", "ordering": 52, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 43, "fields": {"menu": 1, "name_bn": "ডিগ্রির নাম", "name_en": "Degree Names", "url_name": "master:degree_name_list", "ordering": 53, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 44, "fields": {"menu": 1, "name_bn": "শিক্ষা প্রতিষ্ঠান", "name_en": "Education Institutions", "url_name": "master:education_institution_list", "ordering": 54, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 45, "fields": {"menu": 1, "name_bn": "ফলাফলের ধরন", "name_en": "Result Types", "url_name": "master:result_type_list", "ordering": 55, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 46, "fields": {"menu": 1, "name_bn": "বিভাগ ভিত্তিক ফলাফল", "name_en": "Division Results", "url_name": "master:division_result_list", "ordering": 56, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 40, "fields": {"menu": 1, "name_bn": "শিক্ষা মাস্টার ডেটা", "name_en": "Education Master Data", "url_name": "master:education_master", "ordering": 50, "is_active": true}},
 
   {"model": "accounts.submenu", "pk": 50, "fields": {"menu": 1, "name_bn": "রাজনৈতিক দল", "name_en": "Political Parties", "url_name": "master:political_party_list", "ordering": 60, "is_active": true}},
 

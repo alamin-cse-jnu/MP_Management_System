@@ -153,10 +153,11 @@ class EducationLevel(models.Model):
 
 
 class EducationGroup(models.Model):
+    # Two shared pools: groups tagged 'school' show on SSC/HSC/Diploma; groups
+    # tagged 'university' show on Graduation/Masters/PhD; 'all' shows everywhere.
     APPLICABLE_CHOICES = [
-        ('secondary', 'Secondary (SSC)'),
-        ('higher_sec', 'Higher Secondary (HSC)'),
-        ('university', 'University'),
+        ('school', 'School Level (SSC / HSC / Diploma)'),
+        ('university', 'University Level (Graduation / Masters / PhD)'),
         ('all', 'All Levels'),
     ]
     name_bn = models.CharField(max_length=100)

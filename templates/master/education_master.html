@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static lang_tags master_tags %}
+
+{% block title %}{% ui "শিক্ষা মাস্টার ডেটা" "Education Master Data" %}{% endblock %}
+
+{% block content %}
+<!-- Page header -->
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'master:home' %}">{% ui "মাস্টার ডেটা" "Master Data" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "শিক্ষা" "Education" %}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{% ui "শিক্ষা মাস্টার ডেটা" "Education Master Data" %}</h4>
+    <small class="text-muted">{% ui "সব শিক্ষা রেফারেন্স তথ্য একই পৃষ্ঠায়" "All education reference tables in one place" %}</small>
+  </div>
+</div>
+
+<div class="row g-3 edu-master">
+  <!-- Left tab-rail -->
+  <div class="col-lg-3 col-md-4">
+    <div class="mp-card p-2 edu-rail">
+      {% for e in entities %}
+      <a href="#" role="tab"
+         class="edu-tab {% if e.key == active_key %}active{% endif %} {% if e.advanced %}edu-tab-adv{% endif %}"
+         data-key="{{ e.key }}"
+         hx-get="{% url 'master:education_panel' e.key %}"
+         hx-target="#edu-panel"
+         hx-swap="outerHTML">
+        <i class="bi {{ e.icon }} edu-tab-icon"></i>
+        <span class="edu-tab-label">{% if request.session.LANGUAGE == 'en' %}{{ e.title_en }}{% else %}{{ e.title_bn }}{% endif %}</span>
+        <span class="edu-tab-count">{{ e.count }}</span>
+      </a>
+      {% endfor %}
+      <div class="text-muted px-2 pt-2 pb-1" style="font-size:.72rem;line-height:1.3;">
+        <i class="bi bi-info-circle me-1"></i>{% ui "স্তর সাধারণত পরিবর্তনের দরকার নেই।" "Levels rarely need editing." %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="col-lg-9 col-md-8">
+    {% include "master/partials/edu_panel.html" %}
+  </div>
+</div>
+
+<style>
+.edu-rail { position: sticky; top: 1rem; }
+.edu-tab {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .75rem; margin-bottom: 2px; border-radius: 8px;
+  color: var(--mp-text, #334155); text-decoration: none; font-size: .9rem;
+  border: 1px solid transparent; transition: background .12s, border-color .12s;
+}
+.edu-tab:hover { background: #f1f5f9; }
+.edu-tab.active { background: #e8f0fe; border-color: #c7dbff; color: #1d4ed8; font-weight: 600; }
+.edu-tab-icon { font-size: 1rem; opacity: .85; }
+.edu-tab-label { flex: 1 1 auto; }
+.edu-tab-count {
+  flex: 0 0 auto; min-width: 1.6rem; text-align: center;
+  background: #eef2f7; color: #64748b; border-radius: 999px;
+  font-size: .72rem; padding: .05rem .45rem;
+}
+.edu-tab.active .edu-tab-count { background: #d3e2ff; color: #1d4ed8; }
+.edu-tab-adv { opacity: .8; }
+.edu-tab-adv .edu-tab-label::after { content: " · adv"; font-size: .7rem; color: #94a3b8; }
+@media (max-width: 767.98px) {
+  .edu-rail { position: static; display: flex; flex-wrap: wrap; gap: 4px; }
+  .edu-tab { flex: 1 1 auto; margin-bottom: 0; }
+  .edu-tab-count { display: none; }
+}
+</style>
+
+<script>
+// Tab highlight is client-side; the panel itself is swapped by HTMX.
+document.addEventListener('click', function (ev) {
+  var tab = ev.target.closest('.edu-tab');
+  if (!tab) return;
+  ev.preventDefault();
+  document.querySelectorAll('.edu-tab').forEach(function (t) { t.classList.remove('active'); });
+  tab.classList.add('active');
+});
+</script>
+{% endblock %}

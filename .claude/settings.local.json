@@ -138,7 +138,18 @@
       "Bash(DJANGO_SETTINGS_MODULE=config.settings.development \"C:/Users/Dell/AppData/Local/Python/bin/python3.exe\" manage.py check)",
       "Bash(DJANGO_SETTINGS_MODULE=config.settings.development C:/Users/Dell/AppData/Local/Python/bin/python3.exe -c ' *)",
       "Bash(sed -i 's|&institution={{ institution_id }}&status|\\\\&institution={{ institution }}\\\\&status|g' templates/reports/institution_assignments.html)",
-      "Bash(sed -i 's|<td>{{ obj.institution|tr:\"name\" }}</td>|XXX|' templates/reports/print/institution_assignments.html)"
+      "Bash(sed -i 's|<td>{{ obj.institution|tr:\"name\" }}</td>|XXX|' templates/reports/print/institution_assignments.html)",
+      "PowerShell(docker compose ps *)",
+      "PowerShell(docker compose up *)",
+      "PowerShell(docker compose exec *)",
+      "PowerShell(docker compose *)",
+      "PowerShell(try { $r=Invoke-WebRequest -Uri http://localhost/mp/1/education/ -UseBasicParsing -MaximumRedirection 0 -TimeoutSec 15 } catch { $r=$_.Exception.Response }; \"status/redirect handled — site reachable\"; \\(Invoke-WebRequest -Uri http://localhost/ -UseBasicParsing -TimeoutSec 10\\).StatusCode)",
+      "PowerShell(docker compose restart *)",
+      "PowerShell(Start-Sleep -Seconds 5; try { $r=Invoke-WebRequest -Uri http://localhost/master/education/ -UseBasicParsing -MaximumRedirection 0 -TimeoutSec 15; \"status: \" + $r.StatusCode } catch { $resp=$_.Exception.Response; if \\($resp\\) { \"status: \" + [int]$resp.StatusCode } else { $_.Exception.Message } }; \"homepage: \" + \\(Invoke-WebRequest -Uri http://localhost/ -UseBasicParsing -TimeoutSec 10\\).StatusCode)",
+      "Bash(awk -F= '{ if \\($0 ~ /=/\\) { print NR\": \"$1\"=***\" } else { print NR\": \"$0 } }' .env)",
+      "Bash(awk -F= '{ printf \"%s : name=[%s] valuelen=%d\\\\n\", NR, $1, length\\($2\\) }')",
+      "Bash(awk -F= '{ if\\($0 ~ /=/\\) print NR\": \"$1\"=***\"; else print NR\": [\"$0\"]\" }' .env)",
+      "Bash(awk -F= '{ if\\($0 ~ /=/\\) print NR\": \"$1\"=***\"; else print NR\": [\"$0\"]\" }' .env.example)"
     ]
   }
 }

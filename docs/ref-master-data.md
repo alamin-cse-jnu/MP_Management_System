@@ -27,13 +27,13 @@ Master Data
 ├── Professional
 │   ├── Professions                  CRUD  ← current/previous occupation
 │   └── Professional Qualifications  CRUD  ← Doctor/Engineer/Lawyer
-├── Education
-│   ├── Education Levels             CRUD  ← PSC/JSC/SSC/HSC/Graduation...
-│   ├── Education Groups             CRUD  ← Science/Arts/Commerce
-│   ├── Degree Names                 CRUD  ← BSc/MBBS/LLB/MA
-│   ├── Subjects                     CRUD
-│   ├── Institutions                 CRUD  ← Boards + Universities
-│   └── Result Types                 CRUD  ← Division/GPA/CGPA/%
+├── Education Master Data            ← SINGLE page (Phase 19): /master/education/
+│       tab-rail + inline HTMX CRUD for all 7 education tables:
+│       Examinations (Degree Names) · Groups · Subjects · Institutions ·
+│       Result Types · Division Results · Levels (advanced). The old 7 separate
+│       list pages/menus were removed (routes 404). Config: EDU_ENTITIES in
+│       apps/master/views.py; templates master/education_master.html +
+│       partials/edu_panel.html.
 ├── Political
 │   └── Political Parties            CRUD
 ├── Ministry
