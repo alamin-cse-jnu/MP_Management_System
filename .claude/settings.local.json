@@ -149,7 +149,16 @@
       "Bash(awk -F= '{ if \\($0 ~ /=/\\) { print NR\": \"$1\"=***\" } else { print NR\": \"$0 } }' .env)",
       "Bash(awk -F= '{ printf \"%s : name=[%s] valuelen=%d\\\\n\", NR, $1, length\\($2\\) }')",
       "Bash(awk -F= '{ if\\($0 ~ /=/\\) print NR\": \"$1\"=***\"; else print NR\": [\"$0\"]\" }' .env)",
-      "Bash(awk -F= '{ if\\($0 ~ /=/\\) print NR\": \"$1\"=***\"; else print NR\": [\"$0\"]\" }' .env.example)"
+      "Bash(awk -F= '{ if\\($0 ~ /=/\\) print NR\": \"$1\"=***\"; else print NR\": [\"$0\"]\" }' .env.example)",
+      "PowerShell($py = Get-Command py,python,python3 -ErrorAction SilentlyContinue | Select-Object -First 1; if\\($py\\){ & $py.Source --version; & $py.Source -c \"import paramiko,sys; print\\('paramiko',paramiko.__version__\\)\" } else { \"no python launcher found\" })",
+      "Bash(grep -vE '^\\\\.claude/|^API_Data\\\\.txt$|^docs/observation\\\\.docx$|^\\\\.env\\\\.example$')",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py manage.py check 2>&1 | Select-Object -First 40)",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py \"C:\\\\Users\\\\Dell\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--projects-MP-Management-System\\\\ba447389-2cbc-4c92-9070-ca5a837d5265\\\\scratchpad\\\\urlcheck.py\" 2>&1)",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py \"C:\\\\Users\\\\Dell\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--projects-MP-Management-System\\\\ba447389-2cbc-4c92-9070-ca5a837d5265\\\\scratchpad\\\\render_test.py\" 2>&1)",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py \"C:\\\\Users\\\\Dell\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--projects-MP-Management-System\\\\ba447389-2cbc-4c92-9070-ca5a837d5265\\\\scratchpad\\\\render_test.py\" 2>&1 | Select-String -Pattern \"OK |FAIL|count|is_active|contains|error/open|DONE\")",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py \"C:\\\\Users\\\\Dell\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--projects-MP-Management-System\\\\ba447389-2cbc-4c92-9070-ca5a837d5265\\\\scratchpad\\\\migration_test.py\" 2>&1)",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py manage.py check 2>&1 | Select-Object -First 5)",
+      "PowerShell($py = \\(Get-Command py\\).Source; & $py \"C:\\\\Users\\\\Dell\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--projects-MP-Management-System\\\\ba447389-2cbc-4c92-9070-ca5a837d5265\\\\scratchpad\\\\test_mincom.py\" 2>&1)"
     ]
   }
 }

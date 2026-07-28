@@ -167,6 +167,7 @@ mp_management/
 | 18 | Education master-data pools (school/university groups) + self-educated tick | ✅ |
 | 19 | Education master data → single-page manager (tab-rail + inline HTMX CRUD) | ✅ |
 | 20 | MP detail edit tabs → two-column grouped composition (General, Election, Address) + dashboard tiny-bar click fix | ✅ |
+| 21 | Master data → grouped single-page managers (Geography, Personal, Professional, Travel, Language, Ministry, Committee) mirroring Education | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -478,6 +479,52 @@ resize); still navigates to `all_mp?times_elected=<id>`, and the bar's own
 `dataPointSelection` is kept as a fallback. Reusable for other column charts;
 division bar (horizontal) would need a y-axis variant. NOTE: JS interaction not
 auto-verifiable here (no browser tool) — needs a manual click test in the app.
+
+---
+
+## PHASE 21 — Master data grouped single-page managers (2026-07-28) ✅
+Extends the Phase 19 Education pattern to **7 more clusters** so related master
+tables are managed together on ONE page each (left tab-rail + inline HTMX add/
+edit/toggle). Groups: **Geography** (Divisions·Districts·Upazilas) · **Personal
+Info** (Religions·Blood Groups·Marital·Genders) · **Professional Info**
+(Professions·Professional Qualifications) · **Travel** (Countries·Travel Types·
+Purposes) · **Language** (Foreign Languages·Proficiency Levels) · **Ministry**
+(Ministries·Minister Types) · **Committee** (Standing Committees·Committee
+Positions). Reaches at `/master/<group>/`. (Ministry + Committee consolidated by
+migration `accounts/0005_consolidate_ministry_committee`; the other 5 by `0004`.)
+
+- **Config-driven, generic** — `MASTER_GROUPS` (in `apps/master/views.py`) lists
+  each group (key, title/icon/subtitle bn+en) + its entity specs (key, model,
+  form, title, icon, hint, `cols`). One generic view set (`_build_group_views`
+  → master/panel/form/toggle) is **bound per-group** and registered with its own
+  named URLs (`master:<group>_master` / `_panel` / `_form_add` / `_form_edit` /
+  `_toggle`), so menu links + `@perm_required` resolve exactly like Education
+  (permission gate is at the `_master` submenu; inline actions pass through).
+  Reuses the existing master ModelForms + the edu queryset/param helpers.
+- **Templates** — `master/group_master.html` (tab-rail shell, `.grp-*` CSS) +
+  `master/partials/group_panel.html` (filter + inline form + table). Both reverse
+  the group's dynamically-named URLs via **`{% url group.panel_url e.key %}`**
+  (precomputed name-strings `master_url/panel_url/form_add_url/form_edit_url/
+  toggle_url` set on each group dict at module load). Select2 re-inits via the
+  existing `htmx:afterSwap` hook; global HTMX CSRF header already in `base.html`.
+- **Consolidation (mirrors Phase 19)** — the 14 per-table entries were **removed
+  from `MASTER_SPECS`** (their `/master/<entity>/` list/add/edit/toggle routes now
+  404). `master_home` shows each cluster as ONE "all-in-one" card; standalone
+  tables (Political, Ministry, Minister Types, Committees, Institution Roles,
+  Special Roles, PA/PS, Vaccines) keep their individual CRUD pages. Menu:
+  `menu_data.json` replaces the 14 submenus (pk 10-12,20-23,30-31,90-92,100-101)
+  with 5 group submenus (pk 10/20/30/90/100 → `master:<group>_master`); migration
+  `accounts/0004_consolidate_master_groups` deletes the old submenus on existing
+  DBs **after carrying each role's unioned permissions** onto the new group
+  submenu (same helper shape as `0003`). Superadmin bypasses permissions.
+- **Not touched** — Education manager, the district/upazila HTMX cascade endpoints
+  (used by the MP address form), and all standalone master models.
+- Verified locally on an isolated SQLite build (Django test client): all 5 group
+  pages + master home render 200; panel/add-form/edit-form (prefilled) render;
+  POST create (incl. FK district form) + toggle persist; invalid POST re-renders
+  the inline form with errors; bad entity key → 404; old per-table URLs removed;
+  migration 0004 creates the 5 submenus, deletes the old ones, and carries unioned
+  role permissions. ⏳ not yet deployed to the live server.
 
 ---
 

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static lang_tags master_tags %}
+
+{% block title %}{% if request.session.LANGUAGE == 'en' %}{{ group.title_en }}{% else %}{{ group.title_bn }}{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page header -->
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'master:home' %}">{% ui "মাস্টার ডেটা" "Master Data" %}</a></li>
+        <li class="breadcrumb-item active">{% if request.session.LANGUAGE == 'en' %}{{ group.title_en }}{% else %}{{ group.title_bn }}{% endif %}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">
+      <i class="bi {{ group.icon }} me-1"></i>{% if request.session.LANGUAGE == 'en' %}{{ group.title_en }}{% else %}{{ group.title_bn }}{% endif %}
+    </h4>
+    <small class="text-muted">{% if request.session.LANGUAGE == 'en' %}{{ group.subtitle_en }}{% else %}{{ group.subtitle_bn }}{% endif %}</small>
+  </div>
+</div>
+
+<div class="row g-3 grp-master">
+  <!-- Left tab-rail -->
+  <div class="col-lg-3 col-md-4">
+    <div class="mp-card p-2 grp-rail">
+      {% for e in entities %}
+      <a href="#" role="tab"
+         class="grp-tab {% if e.key == active_key %}active{% endif %}"
+         data-key="{{ e.key }}"
+         hx-get="{% url group.panel_url e.key %}"
+         hx-target="#grp-panel"
+         hx-swap="outerHTML">
+        <i class="bi {{ e.icon }} grp-tab-icon"></i>
+        <span class="grp-tab-label">{% if request.session.LANGUAGE == 'en' %}{{ e.title_en }}{% else %}{{ e.title_bn }}{% endif %}</span>
+        <span class="grp-tab-count">{{ e.count }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="col-lg-9 col-md-8">
+    {% include "master/partials/group_panel.html" %}
+  </div>
+</div>
+
+<style>
+.grp-rail { position: sticky; top: 1rem; }
+.grp-tab {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .75rem; margin-bottom: 2px; border-radius: 8px;
+  color: var(--mp-text, #334155); text-decoration: none; font-size: .9rem;
+  border: 1px solid transparent; transition: background .12s, border-color .12s;
+}
+.grp-tab:hover { background: #f1f5f9; }
+.grp-tab.active { background: #e8f0fe; border-color: #c7dbff; color: #1d4ed8; font-weight: 600; }
+.grp-tab-icon { font-size: 1rem; opacity: .85; }
+.grp-tab-label { flex: 1 1 auto; }
+.grp-tab-count {
+  flex: 0 0 auto; min-width: 1.6rem; text-align: center;
+  background: #eef2f7; color: #64748b; border-radius: 999px;
+  font-size: .72rem; padding: .05rem .45rem;
+}
+.grp-tab.active .grp-tab-count { background: #d3e2ff; color: #1d4ed8; }
+@media (max-width: 767.98px) {
+  .grp-rail { position: static; display: flex; flex-wrap: wrap; gap: 4px; }
+  .grp-tab { flex: 1 1 auto; margin-bottom: 0; }
+  .grp-tab-count { display: none; }
+}
+</style>
+
+<script>
+// Tab highlight is client-side; the panel itself is swapped by HTMX.
+document.addEventListener('click', function (ev) {
+  var tab = ev.target.closest('.grp-tab');
+  if (!tab) return;
+  ev.preventDefault();
+  document.querySelectorAll('.grp-tab').forEach(function (t) { t.classList.remove('active'); });
+  tab.classList.add('active');
+});
+</script>
+{% endblock %}

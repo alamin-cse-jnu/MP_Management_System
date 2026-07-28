@@ -41,85 +41,13 @@ from .models import (
 # extra_cols: additional columns shown before name_bn in the list table.
 #   Each entry: {'label': 'বিভাগ', 'attr': 'division'}
 
+#   Grouped reference tables (Geography, Personal, Professional, Travel,
+#   Language) are NOT registered here. Like Education, each such cluster is
+#   managed together on a single-page grouped manager (`MASTER_GROUPS` +
+#   generic group views below), reached at /master/<group>/. Only standalone
+#   tables that don't belong to a cluster remain as individual CRUD pages.
+
 MASTER_SPECS = [
-    # Geography
-    {
-        'key': 'division',
-        'model': Division,
-        'form': DivisionForm,
-        'title_bn': 'বিভাগ',
-        'title_en': 'Divisions',
-        'extra_cols': [],
-    },
-    {
-        'key': 'district',
-        'model': District,
-        'form': DistrictForm,
-        'title_bn': 'জেলা',
-        'title_en': 'Districts',
-        'extra_cols': [{'label': 'বিভাগ', 'attr': 'division'}],
-    },
-    {
-        'key': 'upazila',
-        'model': Upazila,
-        'form': UpazilaForm,
-        'title_bn': 'উপজেলা / থানা',
-        'title_en': 'Upazilas',
-        'extra_cols': [{'label': 'জেলা', 'attr': 'district'}],
-    },
-    # Personal
-    {
-        'key': 'religion',
-        'model': Religion,
-        'form': ReligionForm,
-        'title_bn': 'ধর্ম',
-        'title_en': 'Religions',
-        'extra_cols': [],
-    },
-    {
-        'key': 'blood-group',
-        'model': BloodGroup,
-        'form': BloodGroupForm,
-        'title_bn': 'রক্তের গ্রুপ',
-        'title_en': 'Blood Groups',
-        'extra_cols': [],
-    },
-    {
-        'key': 'marital-status',
-        'model': MaritalStatus,
-        'form': MaritalStatusForm,
-        'title_bn': 'বৈবাহিক অবস্থা',
-        'title_en': 'Marital Statuses',
-        'extra_cols': [],
-    },
-    {
-        'key': 'gender',
-        'model': Gender,
-        'form': GenderForm,
-        'title_bn': 'লিঙ্গ',
-        'title_en': 'Genders',
-        'extra_cols': [],
-    },
-    # Professional
-    {
-        'key': 'profession',
-        'model': Profession,
-        'form': ProfessionForm,
-        'title_bn': 'পেশা',
-        'title_en': 'Professions',
-        'extra_cols': [],
-    },
-    {
-        'key': 'professional-qualification',
-        'model': ProfessionalQualification,
-        'form': ProfessionalQualificationForm,
-        'title_bn': 'পেশাদার যোগ্যতা',
-        'title_en': 'Professional Qualifications',
-        'extra_cols': [],
-    },
-    # Education — the 7 education reference tables are NOT registered here.
-    # They are managed together on the single-page Education manager
-    # (`education_master` view + EDU_ENTITIES below), reached at /master/education/.
     # Political
     {
         'key': 'political-party',
@@ -129,40 +57,8 @@ MASTER_SPECS = [
         'title_en': 'Political Parties',
         'extra_cols': [],
     },
-    # Ministry
-    {
-        'key': 'ministry',
-        'model': Ministry,
-        'form': MinistryForm,
-        'title_bn': 'মন্ত্রণালয়',
-        'title_en': 'Ministries',
-        'extra_cols': [],
-    },
-    {
-        'key': 'minister-type',
-        'model': MinisterType,
-        'form': MinisterTypeForm,
-        'title_bn': 'মন্ত্রীর ধরন',
-        'title_en': 'Minister Types',
-        'extra_cols': [],
-    },
-    # Committee
-    {
-        'key': 'standing-committee',
-        'model': StandingCommittee,
-        'form': StandingCommitteeForm,
-        'title_bn': 'স্থায়ী কমিটি',
-        'title_en': 'Standing Committees',
-        'extra_cols': [],
-    },
-    {
-        'key': 'committee-position',
-        'model': CommitteePosition,
-        'form': CommitteePositionForm,
-        'title_bn': 'কমিটির পদ',
-        'title_en': 'Committee Positions',
-        'extra_cols': [],
-    },
+    # Ministry + Committee are managed via grouped single-page managers
+    # (see MASTER_GROUPS below), not as standalone per-table pages.
     # Institution
     {
         'key': 'institution-role',
@@ -170,48 +66,6 @@ MASTER_SPECS = [
         'form': InstitutionRoleForm,
         'title_bn': 'প্রতিষ্ঠানের ভূমিকা',
         'title_en': 'Institution Roles',
-        'extra_cols': [],
-    },
-    # Travel
-    {
-        'key': 'country',
-        'model': Country,
-        'form': CountryForm,
-        'title_bn': 'দেশ',
-        'title_en': 'Countries',
-        'extra_cols': [],
-    },
-    {
-        'key': 'travel-type',
-        'model': TravelType,
-        'form': TravelTypeForm,
-        'title_bn': 'ভ্রমণের ধরন',
-        'title_en': 'Travel Types',
-        'extra_cols': [],
-    },
-    {
-        'key': 'travel-purpose',
-        'model': TravelPurpose,
-        'form': TravelPurposeForm,
-        'title_bn': 'ভ্রমণের উদ্দেশ্য',
-        'title_en': 'Travel Purposes',
-        'extra_cols': [],
-    },
-    # Language
-    {
-        'key': 'foreign-language',
-        'model': ForeignLanguage,
-        'form': ForeignLanguageForm,
-        'title_bn': 'বিদেশি ভাষা',
-        'title_en': 'Foreign Languages',
-        'extra_cols': [],
-    },
-    {
-        'key': 'proficiency-level',
-        'model': ProficiencyLevel,
-        'form': ProficiencyLevelForm,
-        'title_bn': 'দক্ষতার মাত্রা',
-        'title_en': 'Proficiency Levels',
         'extra_cols': [],
     },
     # COVID
@@ -249,6 +103,153 @@ SPEC_MAP = {s['key']: s for s in MASTER_SPECS}
 # URL-safe key → Python identifier (replace hyphens)
 def _url_name(key, suffix):
     return key.replace('-', '_') + '_' + suffix
+
+
+# ── MASTER_GROUPS — grouped single-page managers ─────────────────────────────
+# Each group renders ONE page (left tab-rail + inline HTMX add/edit/toggle) that
+# manages several related reference tables together — mirroring the Education
+# manager. Reuses the existing master ModelForms; no new forms/models.
+#   entity spec: key, model, form, title_bn/en, icon, hint_bn/en, cols
+#   cols  = extra columns shown after name_bn/name_en, each
+#           {'label_bn','label_en','attr'} (attr may be a model attribute or a
+#           get_*_display / method name — rendered via the get_attr filter).
+
+MASTER_GROUPS = [
+    {
+        'key': 'geography', 'title_bn': 'ভূগোল', 'title_en': 'Geography',
+        'icon': 'bi-geo-alt-fill',
+        'subtitle_bn': 'বিভাগ, জেলা ও উপজেলা একই পৃষ্ঠায়',
+        'subtitle_en': 'Divisions, districts & upazilas in one place',
+        'entities': [
+            {'key': 'division', 'model': Division, 'form': DivisionForm,
+             'title_bn': 'বিভাগ', 'title_en': 'Divisions', 'icon': 'bi-map-fill',
+             'hint_bn': 'দেশের বিভাগসমূহ।', 'hint_en': 'Administrative divisions.',
+             'cols': []},
+            {'key': 'district', 'model': District, 'form': DistrictForm,
+             'title_bn': 'জেলা', 'title_en': 'Districts', 'icon': 'bi-geo-fill',
+             'hint_bn': 'জেলা — একটি বিভাগের অধীন।', 'hint_en': 'Districts under a division.',
+             'cols': [{'label_bn': 'বিভাগ', 'label_en': 'Division', 'attr': 'division'}]},
+            {'key': 'upazila', 'model': Upazila, 'form': UpazilaForm,
+             'title_bn': 'উপজেলা / থানা', 'title_en': 'Upazilas', 'icon': 'bi-pin-map-fill',
+             'hint_bn': 'উপজেলা/থানা — একটি জেলার অধীন।', 'hint_en': 'Upazilas/thanas under a district.',
+             'cols': [{'label_bn': 'জেলা', 'label_en': 'District', 'attr': 'district'}]},
+        ],
+    },
+    {
+        'key': 'personal', 'title_bn': 'ব্যক্তিগত তথ্য', 'title_en': 'Personal Info',
+        'icon': 'bi-person-fill',
+        'subtitle_bn': 'ধর্ম, রক্তের গ্রুপ, বৈবাহিক অবস্থা ও লিঙ্গ একই পৃষ্ঠায়',
+        'subtitle_en': 'Religion, blood group, marital status & gender in one place',
+        'entities': [
+            {'key': 'religion', 'model': Religion, 'form': ReligionForm,
+             'title_bn': 'ধর্ম', 'title_en': 'Religions', 'icon': 'bi-moon-stars-fill',
+             'hint_bn': 'ধর্মসমূহ।', 'hint_en': 'Religions.', 'cols': []},
+            {'key': 'blood-group', 'model': BloodGroup, 'form': BloodGroupForm,
+             'title_bn': 'রক্তের গ্রুপ', 'title_en': 'Blood Groups', 'icon': 'bi-droplet-fill',
+             'hint_bn': 'রক্তের গ্রুপসমূহ (A+, B−, …)।', 'hint_en': 'Blood groups (A+, B−, …).', 'cols': []},
+            {'key': 'marital-status', 'model': MaritalStatus, 'form': MaritalStatusForm,
+             'title_bn': 'বৈবাহিক অবস্থা', 'title_en': 'Marital Statuses', 'icon': 'bi-heart-fill',
+             'hint_bn': 'বৈবাহিক অবস্থা।', 'hint_en': 'Marital statuses.', 'cols': []},
+            {'key': 'gender', 'model': Gender, 'form': GenderForm,
+             'title_bn': 'লিঙ্গ', 'title_en': 'Genders', 'icon': 'bi-gender-ambiguous',
+             'hint_bn': 'লিঙ্গ।', 'hint_en': 'Genders.', 'cols': []},
+        ],
+    },
+    {
+        'key': 'professional', 'title_bn': 'পেশাগত তথ্য', 'title_en': 'Professional Info',
+        'icon': 'bi-briefcase-fill',
+        'subtitle_bn': 'পেশা ও পেশাদার যোগ্যতা একই পৃষ্ঠায়',
+        'subtitle_en': 'Professions & professional qualifications in one place',
+        'entities': [
+            {'key': 'profession', 'model': Profession, 'form': ProfessionForm,
+             'title_bn': 'পেশা', 'title_en': 'Professions', 'icon': 'bi-briefcase',
+             'hint_bn': 'পেশাসমূহ।', 'hint_en': 'Professions.',
+             'cols': [{'label_bn': 'শ্রেণি', 'label_en': 'Category', 'attr': 'category_en'}]},
+            {'key': 'professional-qualification', 'model': ProfessionalQualification,
+             'form': ProfessionalQualificationForm,
+             'title_bn': 'পেশাদার যোগ্যতা', 'title_en': 'Professional Qualifications',
+             'icon': 'bi-patch-check-fill',
+             'hint_bn': 'পেশাদার যোগ্যতা (এফসিএ, ব্যারিস্টার, …)।',
+             'hint_en': 'Professional qualifications (FCA, Barrister, …).',
+             'cols': [{'label_bn': 'সংক্ষিপ্ত', 'label_en': 'Short', 'attr': 'short_en'}]},
+        ],
+    },
+    {
+        'key': 'travel', 'title_bn': 'ভ্রমণ', 'title_en': 'Travel',
+        'icon': 'bi-globe',
+        'subtitle_bn': 'দেশ, ভ্রমণের ধরন ও উদ্দেশ্য একই পৃষ্ঠায়',
+        'subtitle_en': 'Countries, travel types & purposes in one place',
+        'entities': [
+            {'key': 'country', 'model': Country, 'form': CountryForm,
+             'title_bn': 'দেশ', 'title_en': 'Countries', 'icon': 'bi-flag-fill',
+             'hint_bn': 'দেশসমূহ।', 'hint_en': 'Countries.', 'cols': []},
+            {'key': 'travel-type', 'model': TravelType, 'form': TravelTypeForm,
+             'title_bn': 'ভ্রমণের ধরন', 'title_en': 'Travel Types', 'icon': 'bi-airplane-fill',
+             'hint_bn': 'ভ্রমণের ধরন (দাপ্তরিক, ব্যক্তিগত, …)।',
+             'hint_en': 'Travel types (official, personal, …).', 'cols': []},
+            {'key': 'travel-purpose', 'model': TravelPurpose, 'form': TravelPurposeForm,
+             'title_bn': 'ভ্রমণের উদ্দেশ্য', 'title_en': 'Travel Purposes', 'icon': 'bi-signpost-split-fill',
+             'hint_bn': 'ভ্রমণের উদ্দেশ্য।', 'hint_en': 'Travel purposes.', 'cols': []},
+        ],
+    },
+    {
+        'key': 'language', 'title_bn': 'ভাষা', 'title_en': 'Language',
+        'icon': 'bi-translate',
+        'subtitle_bn': 'বিদেশি ভাষা ও দক্ষতার মাত্রা একই পৃষ্ঠায়',
+        'subtitle_en': 'Foreign languages & proficiency levels in one place',
+        'entities': [
+            {'key': 'foreign-language', 'model': ForeignLanguage, 'form': ForeignLanguageForm,
+             'title_bn': 'বিদেশি ভাষা', 'title_en': 'Foreign Languages', 'icon': 'bi-chat-left-text-fill',
+             'hint_bn': 'বিদেশি ভাষাসমূহ।', 'hint_en': 'Foreign languages.', 'cols': []},
+            {'key': 'proficiency-level', 'model': ProficiencyLevel, 'form': ProficiencyLevelForm,
+             'title_bn': 'দক্ষতার মাত্রা', 'title_en': 'Proficiency Levels', 'icon': 'bi-bar-chart-fill',
+             'hint_bn': 'দক্ষতার মাত্রা (মৌলিক, সাবলীল, …)।',
+             'hint_en': 'Proficiency levels (basic, fluent, …).', 'cols': []},
+        ],
+    },
+    {
+        'key': 'ministry', 'title_bn': 'মন্ত্রণালয়', 'title_en': 'Ministry',
+        'icon': 'bi-building-fill',
+        'subtitle_bn': 'মন্ত্রণালয় ও মন্ত্রীর ধরন একই পৃষ্ঠায়',
+        'subtitle_en': 'Ministries & minister types in one place',
+        'entities': [
+            {'key': 'ministry', 'model': Ministry, 'form': MinistryForm,
+             'title_bn': 'মন্ত্রণালয়', 'title_en': 'Ministries', 'icon': 'bi-building',
+             'hint_bn': 'মন্ত্রণালয়সমূহ।', 'hint_en': 'Ministries.', 'cols': []},
+            {'key': 'minister-type', 'model': MinisterType, 'form': MinisterTypeForm,
+             'title_bn': 'মন্ত্রীর ধরন', 'title_en': 'Minister Types', 'icon': 'bi-person-badge',
+             'hint_bn': 'মন্ত্রীর ধরন (মন্ত্রী, প্রতিমন্ত্রী, …)।',
+             'hint_en': 'Minister types (Minister, State Minister, …).', 'cols': []},
+        ],
+    },
+    {
+        'key': 'committee', 'title_bn': 'কমিটি', 'title_en': 'Committee',
+        'icon': 'bi-people-fill',
+        'subtitle_bn': 'স্থায়ী কমিটি ও কমিটির পদ একই পৃষ্ঠায়',
+        'subtitle_en': 'Standing committees & committee positions in one place',
+        'entities': [
+            {'key': 'standing-committee', 'model': StandingCommittee, 'form': StandingCommitteeForm,
+             'title_bn': 'স্থায়ী কমিটি', 'title_en': 'Standing Committees', 'icon': 'bi-diagram-2-fill',
+             'hint_bn': 'সংসদীয় স্থায়ী কমিটিসমূহ।', 'hint_en': 'Parliamentary standing committees.', 'cols': []},
+            {'key': 'committee-position', 'model': CommitteePosition, 'form': CommitteePositionForm,
+             'title_bn': 'কমিটির পদ', 'title_en': 'Committee Positions', 'icon': 'bi-person-rolodex',
+             'hint_bn': 'কমিটির পদ (সভাপতি, সদস্য, …)।',
+             'hint_en': 'Committee positions (Chairperson, Member, …).', 'cols': []},
+        ],
+    },
+]
+
+# Post-process: per-group lookup + precomputed URL-name strings (so templates can
+# reverse the group's dynamically-named URLs via `{% url group.panel_url … %}`).
+GROUP_MAP = {}
+for _g in MASTER_GROUPS:
+    _g['entity_map'] = {e['key']: e for e in _g['entities']}
+    _g['master_url'] = f"master:{_g['key']}_master"
+    _g['panel_url'] = f"master:{_g['key']}_panel"
+    _g['form_add_url'] = f"master:{_g['key']}_form_add"
+    _g['form_edit_url'] = f"master:{_g['key']}_form_edit"
+    _g['toggle_url'] = f"master:{_g['key']}_toggle"
+    GROUP_MAP[_g['key']] = _g
 
 
 # ── GENERIC BASE VIEWS ───────────────────────────────────────────────────────
@@ -534,65 +535,150 @@ def education_toggle(request, key, pk):
     return _render_edu_panel(request, spec, saved=obj)
 
 
+# ── GROUPED MASTER MANAGERS — generic single-page views ──────────────────────
+# One set of views drives every group in MASTER_GROUPS. Each group is bound to a
+# concrete set of view callables (per-group named URLs) by _build_group_views,
+# so permission checks + menu links resolve exactly like the Education manager.
+# Reuses _edu_param / _edu_queryset (generic over spec['model']).
+
+def _group_panel_ctx(request, group, spec, **extra):
+    ctx = {
+        'group': group,
+        'spec': spec,
+        'objects': _edu_queryset(spec, request),
+        'q': _edu_param(request, 'q'),
+        'status': _edu_param(request, 'status', 'active'),
+        'form': None, 'open_form': False, 'saved': None, 'editing_pk': None,
+    }
+    ctx.update(extra)
+    return ctx
+
+
+def _render_group_panel(request, group, spec, **extra):
+    return render(request, 'master/partials/group_panel.html',
+                  _group_panel_ctx(request, group, spec, **extra))
+
+
+def _build_group_views(group):
+    """Return (master, panel, form, toggle) view callables bound to `group`."""
+
+    @perm_required
+    def master(request):
+        entities = [{**e, 'count': e['model'].objects.filter(is_active=True).count()}
+                    for e in group['entities']]
+        spec = group['entity_map'].get(request.GET.get('tab'), group['entities'][0])
+        ctx = _group_panel_ctx(request, group, spec)
+        ctx.update({'entities': entities, 'active_key': spec['key']})
+        return render(request, 'master/group_master.html', ctx)
+
+    @perm_required
+    def panel(request, key):
+        spec = group['entity_map'].get(key)
+        if not spec:
+            raise Http404
+        return _render_group_panel(request, group, spec)
+
+    @perm_required
+    def form(request, key, pk=None):
+        """GET → open the inline add/edit form; POST → validate + save."""
+        spec = group['entity_map'].get(key)
+        if not spec:
+            raise Http404
+        instance = get_object_or_404(spec['model'], pk=pk) if pk else None
+        if request.method == 'POST':
+            f = spec['form'](request.POST, instance=instance)
+            if f.is_valid():
+                obj = f.save()
+                return _render_group_panel(request, group, spec, saved=obj)
+            return _render_group_panel(request, group, spec, form=f,
+                                       open_form=True, editing_pk=pk)
+        return _render_group_panel(request, group, spec, form=spec['form'](instance=instance),
+                                   open_form=True, editing_pk=pk)
+
+    @perm_required
+    @require_POST
+    def toggle(request, key, pk):
+        spec = group['entity_map'].get(key)
+        if not spec:
+            raise Http404
+        obj = get_object_or_404(spec['model'], pk=pk)
+        obj.is_active = not obj.is_active
+        obj.save(update_fields=['is_active'])
+        return _render_group_panel(request, group, spec, saved=obj)
+
+    return master, panel, form, toggle
+
+
+# Build views for every group at module load
+_GROUP_VIEWS = {g['key']: _build_group_views(g) for g in MASTER_GROUPS}
+
+
+def get_group_views(key):
+    return _GROUP_VIEWS[key]
+
+
 # ── HTMX PARTIAL VIEWS ───────────────────────────────────────────────────────
 
 @perm_required
 def master_home(request):
     from django.urls import reverse, NoReverseMatch
 
-    def _item(name_bn, name_en, url_key):
+    def _item(name_bn, name_en, url_name):
         # Tolerant: a retired master model (its URL removed) must not 500 the
         # whole overview — skip any item whose URL no longer resolves.
         try:
-            url = reverse(f'master:{url_key}')
+            url = reverse(url_name)
         except NoReverseMatch:
             return None
         return {'name_bn': name_bn, 'name_en': name_en, 'url': url}
 
+    def _group_item(g):
+        # Single "all-in-one" link into a grouped manager page.
+        try:
+            url = reverse(g['master_url'])
+        except NoReverseMatch:
+            return None
+        names = ' · '.join(e['title_bn'] for e in g['entities'])
+        names_en = ' · '.join(e['title_en'] for e in g['entities'])
+        return {'name_bn': f'{names} (একসাথে)',
+                'name_en': f'{names_en} (all-in-one)', 'url': url}
+
+    G = GROUP_MAP
     sections = [
         {'title_bn': 'ভূগোল', 'title_en': 'Geography', 'icon': 'bi-geo-alt-fill', 'items': [
-            _item('বিভাগ', 'Divisions', 'division_list'),
-            _item('জেলা', 'Districts', 'district_list'),
-            _item('উপজেলা', 'Upazilas', 'upazila_list'),
+            _group_item(G['geography']),
         ]},
         {'title_bn': 'ব্যক্তিগত', 'title_en': 'Personal', 'icon': 'bi-person-fill', 'items': [
-            _item('ধর্ম', 'Religions', 'religion_list'),
-            _item('রক্তের গ্রুপ', 'Blood Groups', 'blood_group_list'),
-            _item('বৈবাহিক অবস্থা', 'Marital Status', 'marital_status_list'),
-            _item('লিঙ্গ', 'Genders', 'gender_list'),
+            _group_item(G['personal']),
         ]},
         {'title_bn': 'পেশাদার', 'title_en': 'Professional', 'icon': 'bi-briefcase-fill', 'items': [
-            _item('পেশা', 'Professions', 'profession_list'),
-            _item('পেশাদার যোগ্যতা', 'Professional Qualifications', 'professional_qualification_list'),
+            _group_item(G['professional']),
         ]},
         {'title_bn': 'শিক্ষা', 'title_en': 'Education', 'icon': 'bi-mortarboard-fill', 'items': [
-            _item('শিক্ষা মাস্টার ডেটা (সব একসাথে)', 'Education Master Data (all-in-one)', 'education_master'),
+            _item('শিক্ষা মাস্টার ডেটা (সব একসাথে)', 'Education Master Data (all-in-one)', 'master:education_master'),
         ]},
         {'title_bn': 'রাজনৈতিক', 'title_en': 'Political', 'icon': 'bi-flag-fill', 'items': [
-            _item('রাজনৈতিক দল', 'Political Parties', 'political_party_list'),
+            _item('রাজনৈতিক দল', 'Political Parties', 'master:political_party_list'),
         ]},
         {'title_bn': 'মন্ত্রণালয়', 'title_en': 'Ministry', 'icon': 'bi-building-fill', 'items': [
-            _item('মন্ত্রণালয়', 'Ministries', 'ministry_list'),
-            _item('মন্ত্রীর ধরন', 'Minister Types', 'minister_type_list'),
+            _group_item(G['ministry']),
         ]},
         {'title_bn': 'কমিটি', 'title_en': 'Committee', 'icon': 'bi-people-fill', 'items': [
-            _item('স্থায়ী কমিটি', 'Standing Committees', 'standing_committee_list'),
-            _item('কমিটির পদ', 'Committee Positions', 'committee_position_list'),
+            _group_item(G['committee']),
         ]},
         {'title_bn': 'প্রতিষ্ঠান', 'title_en': 'Institution', 'icon': 'bi-building', 'items': [
-            _item('প্রতিষ্ঠানের ভূমিকা', 'Institution Roles', 'institution_role_list'),
+            _item('প্রতিষ্ঠানের ভূমিকা', 'Institution Roles', 'master:institution_role_list'),
         ]},
         {'title_bn': 'ভ্রমণ', 'title_en': 'Travel', 'icon': 'bi-globe', 'items': [
-            _item('দেশ', 'Countries', 'country_list'),
-            _item('ভ্রমণের ধরন', 'Travel Types', 'travel_type_list'),
-            _item('ভ্রমণের উদ্দেশ্য', 'Travel Purposes', 'travel_purpose_list'),
+            _group_item(G['travel']),
         ]},
         {'title_bn': 'ভাষা', 'title_en': 'Language', 'icon': 'bi-translate', 'items': [
-            _item('বিদেশি ভাষা', 'Foreign Languages', 'foreign_language_list'),
-            _item('দক্ষতার মাত্রা', 'Proficiency Levels', 'proficiency_level_list'),
+            _group_item(G['language']),
         ]},
         {'title_bn': 'অফিস / পিএ-পিএস', 'title_en': 'Office / PA-PS', 'icon': 'bi-person-badge-fill', 'items': [
-            _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'pa_designation_list'),
+            _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'master:pa_designation_list'),
+            _item('বিশেষ পদের ধরন', 'Special Role Types', 'master:special_role_type_list'),
+            _item('টিকার নাম', 'Vaccine Names', 'master:vaccine_name_list'),
         ]},
     ]
     # Drop any skipped (None) items and now-empty sections.

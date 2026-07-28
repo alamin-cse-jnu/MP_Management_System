@@ -1,0 +1,144 @@
+{% load static lang_tags master_tags %}
+<div id="grp-panel" class="mp-card p-0">
+
+  <!-- Panel header -->
+  <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 p-3 border-bottom">
+    <div>
+      <div class="fw-bold d-flex align-items-center gap-2">
+        <i class="bi {{ spec.icon }}"></i>
+        {% if request.session.LANGUAGE == 'en' %}{{ spec.title_en }}{% else %}{{ spec.title_bn }}{% endif %}
+      </div>
+      <small class="text-muted">{% if request.session.LANGUAGE == 'en' %}{{ spec.hint_en }}{% else %}{{ spec.hint_bn }}{% endif %}</small>
+    </div>
+    {% if not open_form %}
+    <button class="btn btn-primary btn-sm"
+            hx-get="{% url group.form_add_url spec.key %}"
+            hx-target="#grp-panel" hx-swap="outerHTML"
+            hx-include="#grp-filter">
+      <i class="bi bi-plus-lg me-1"></i>{% ui "নতুন যোগ করুন" "Add New" %}
+    </button>
+    {% endif %}
+  </div>
+
+  {% if saved %}
+  <div class="alert alert-success d-flex align-items-center py-2 px-3 mb-0 border-0 rounded-0"
+       style="font-size:.85rem;">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <span>“{{ saved|tr:"name" }}” {% ui "সংরক্ষিত হয়েছে।" "saved." %}</span>
+  </div>
+  {% endif %}
+
+  <!-- Inline add / edit form -->
+  {% if open_form %}
+  <form class="p-3 border-bottom grp-form" style="background:#f8fafc;"
+        hx-post="{% if editing_pk %}{% url group.form_edit_url spec.key editing_pk %}{% else %}{% url group.form_add_url spec.key %}{% endif %}"
+        hx-target="#grp-panel" hx-swap="outerHTML"
+        hx-include="#grp-filter">
+    {% csrf_token %}
+    <div class="fw-medium mb-2" style="font-size:.85rem;">
+      {% if editing_pk %}<i class="bi bi-pencil-square me-1"></i>{% ui "সম্পাদনা" "Edit" %}{% else %}<i class="bi bi-plus-circle me-1"></i>{% ui "নতুন" "New" %}{% endif %}
+    </div>
+    {% if form.non_field_errors %}<div class="alert alert-danger py-2">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="row g-2">
+      {% for field in form %}
+      <div class="col-md-6">
+        <label class="form-label fw-medium mb-1" style="font-size:.8rem;">
+          {{ field.label }}{% if field.field.required %} <span class="text-danger">*</span>{% endif %}
+        </label>
+        {{ field }}
+        {% if field.errors %}<div class="text-danger" style="font-size:.75rem;">{{ field.errors|striptags }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex gap-2 mt-3">
+      <button type="submit" class="btn btn-primary btn-sm px-3">
+        <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ" "Save" %}
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm"
+              hx-get="{% url group.panel_url spec.key %}"
+              hx-target="#grp-panel" hx-swap="outerHTML"
+              hx-include="#grp-filter">
+        {% ui "বাতিল" "Cancel" %}
+      </button>
+    </div>
+  </form>
+  {% endif %}
+
+  <!-- Filter bar -->
+  <form id="grp-filter" class="d-flex flex-wrap gap-2 align-items-center p-2 px-3 border-bottom"
+        hx-get="{% url group.panel_url spec.key %}"
+        hx-target="#grp-panel" hx-swap="outerHTML"
+        hx-trigger="submit, keyup changed delay:400ms from:find input[name=q], change from:find select[name=status]">
+    <div class="flex-grow-1" style="min-width:0; max-width:300px;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control border-start-0"
+               placeholder="{% ui "খুঁজুন…" "Search…" %}" data-no-select2>
+      </div>
+    </div>
+    <select name="status" class="form-select form-select-sm" style="max-width:140px;" data-no-select2>
+      <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
+      <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Inactive" %}</option>
+      <option value="all"      {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
+    </select>
+    <span class="text-muted" style="font-size:.78rem;">{{ objects|length }} {% ui "টি" "rows" %}</span>
+  </form>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="mp-table mb-0">
+      <thead>
+        <tr>
+          <th style="width:46px;">#</th>
+          <th>{% ui "বাংলা নাম" "Bengali Name" %}</th>
+          <th>English Name</th>
+          {% for c in spec.cols %}
+          <th>{% if request.session.LANGUAGE == 'en' %}{{ c.label_en }}{% else %}{{ c.label_bn }}{% endif %}</th>
+          {% endfor %}
+          <th style="width:90px;">{% ui "অবস্থা" "Status" %}</th>
+          <th style="width:96px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in objects %}
+        <tr {% if saved and saved.pk == obj.pk %}class="table-success"{% endif %}>
+          <td class="text-muted">{{ forloop.counter }}</td>
+          <td class="fw-medium">{{ obj|tr:"name" }}</td>
+          <td class="text-muted">{{ obj.name_en }}</td>
+          {% for c in spec.cols %}
+          <td class="text-muted" style="font-size:.85rem;">{{ obj|get_attr:c.attr|default:"—" }}</td>
+          {% endfor %}
+          <td>
+            {% if obj.is_active %}
+            <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
+            {% else %}
+            <span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <button class="btn btn-icon btn-outline-primary btn-sm me-1" title="{% ui "সম্পাদনা" "Edit" %}"
+                    hx-get="{% url group.form_edit_url spec.key obj.pk %}"
+                    hx-target="#grp-panel" hx-swap="outerHTML" hx-include="#grp-filter">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-icon btn-sm {% if obj.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
+                    title="{% if obj.is_active %}{% ui "নিষ্ক্রিয় করুন" "Deactivate" %}{% else %}{% ui "সক্রিয় করুন" "Activate" %}{% endif %}"
+                    hx-post="{% url group.toggle_url spec.key obj.pk %}"
+                    hx-target="#grp-panel" hx-swap="outerHTML" hx-include="#grp-filter"
+                    hx-confirm="{% ui "অবস্থা পরিবর্তন করবেন?" "Change status?" %}">
+              <i class="bi {% if obj.is_active %}bi-toggle-on{% else %}bi-toggle-off{% endif %}"></i>
+            </button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="{{ spec.cols|length|add:5 }}" class="text-center text-muted py-4">
+            <i class="bi bi-inbox fs-4 d-block mb-2" style="opacity:.4;"></i>
+            {% ui "কোনো তথ্য নেই।" "No records." %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

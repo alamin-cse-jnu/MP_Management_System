@@ -4,36 +4,25 @@
 
   {"model": "accounts.submenu", "pk": 1, "fields": {"menu": 1, "name_bn": "মাস্টার ডেটা ওভারভিউ", "name_en": "Master Data Overview", "url_name": "master:home", "ordering": 10, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 10, "fields": {"menu": 1, "name_bn": "বিভাগ", "name_en": "Divisions", "url_name": "master:division_list", "ordering": 20, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 11, "fields": {"menu": 1, "name_bn": "জেলা", "name_en": "Districts", "url_name": "master:district_list", "ordering": 21, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 12, "fields": {"menu": 1, "name_bn": "উপজেলা", "name_en": "Upazilas", "url_name": "master:upazila_list", "ordering": 22, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 10, "fields": {"menu": 1, "name_bn": "ভূগোল (বিভাগ/জেলা/উপজেলা)", "name_en": "Geography", "url_name": "master:geography_master", "ordering": 20, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 20, "fields": {"menu": 1, "name_bn": "ধর্ম", "name_en": "Religions", "url_name": "master:religion_list", "ordering": 30, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 21, "fields": {"menu": 1, "name_bn": "রক্তের গ্রুপ", "name_en": "Blood Groups", "url_name": "master:blood_group_list", "ordering": 31, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 22, "fields": {"menu": 1, "name_bn": "বৈবাহিক অবস্থা", "name_en": "Marital Status", "url_name": "master:marital_status_list", "ordering": 32, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 23, "fields": {"menu": 1, "name_bn": "লিঙ্গ", "name_en": "Genders", "url_name": "master:gender_list", "ordering": 33, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 20, "fields": {"menu": 1, "name_bn": "ব্যক্তিগত তথ্য (ধর্ম/রক্ত/বৈবাহিক/লিঙ্গ)", "name_en": "Personal Info", "url_name": "master:personal_master", "ordering": 30, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 30, "fields": {"menu": 1, "name_bn": "পেশা", "name_en": "Professions", "url_name": "master:profession_list", "ordering": 40, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 31, "fields": {"menu": 1, "name_bn": "পেশাদার যোগ্যতা", "name_en": "Professional Qualifications", "url_name": "master:professional_qualification_list", "ordering": 41, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 30, "fields": {"menu": 1, "name_bn": "পেশাগত তথ্য (পেশা/যোগ্যতা)", "name_en": "Professional Info", "url_name": "master:professional_master", "ordering": 40, "is_active": true}},
 
   {"model": "accounts.submenu", "pk": 40, "fields": {"menu": 1, "name_bn": "শিক্ষা মাস্টার ডেটা", "name_en": "Education Master Data", "url_name": "master:education_master", "ordering": 50, "is_active": true}},
 
   {"model": "accounts.submenu", "pk": 50, "fields": {"menu": 1, "name_bn": "রাজনৈতিক দল", "name_en": "Political Parties", "url_name": "master:political_party_list", "ordering": 60, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 60, "fields": {"menu": 1, "name_bn": "মন্ত্রণালয়", "name_en": "Ministries", "url_name": "master:ministry_list", "ordering": 70, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 61, "fields": {"menu": 1, "name_bn": "মন্ত্রীর ধরন", "name_en": "Minister Types", "url_name": "master:minister_type_list", "ordering": 71, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 60, "fields": {"menu": 1, "name_bn": "মন্ত্রণালয় (মন্ত্রণালয়/মন্ত্রীর ধরন)", "name_en": "Ministry", "url_name": "master:ministry_master", "ordering": 70, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 70, "fields": {"menu": 1, "name_bn": "স্থায়ী কমিটি", "name_en": "Standing Committees", "url_name": "master:standing_committee_list", "ordering": 80, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 71, "fields": {"menu": 1, "name_bn": "কমিটির পদ", "name_en": "Committee Positions", "url_name": "master:committee_position_list", "ordering": 81, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 70, "fields": {"menu": 1, "name_bn": "কমিটি (স্থায়ী কমিটি/পদ)", "name_en": "Committee", "url_name": "master:committee_master", "ordering": 80, "is_active": true}},
 
   {"model": "accounts.submenu", "pk": 81, "fields": {"menu": 1, "name_bn": "প্রতিষ্ঠানের ভূমিকা", "name_en": "Institution Roles", "url_name": "master:institution_role_list", "ordering": 91, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 90, "fields": {"menu": 1, "name_bn": "দেশ", "name_en": "Countries", "url_name": "master:country_list", "ordering": 100, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 91, "fields": {"menu": 1, "name_bn": "ভ্রমণের ধরন", "name_en": "Travel Types", "url_name": "master:travel_type_list", "ordering": 101, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 92, "fields": {"menu": 1, "name_bn": "ভ্রমণের উদ্দেশ্য", "name_en": "Travel Purposes", "url_name": "master:travel_purpose_list", "ordering": 102, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 90, "fields": {"menu": 1, "name_bn": "ভ্রমণ (দেশ/ধরন/উদ্দেশ্য)", "name_en": "Travel", "url_name": "master:travel_master", "ordering": 100, "is_active": true}},
 
-  {"model": "accounts.submenu", "pk": 100, "fields": {"menu": 1, "name_bn": "বিদেশি ভাষা", "name_en": "Foreign Languages", "url_name": "master:foreign_language_list", "ordering": 110, "is_active": true}},
-  {"model": "accounts.submenu", "pk": 101, "fields": {"menu": 1, "name_bn": "দক্ষতার মাত্রা", "name_en": "Proficiency Levels", "url_name": "master:proficiency_level_list", "ordering": 111, "is_active": true}},
+  {"model": "accounts.submenu", "pk": 100, "fields": {"menu": 1, "name_bn": "ভাষা (বিদেশি ভাষা/দক্ষতা)", "name_en": "Language", "url_name": "master:language_master", "ordering": 110, "is_active": true}},
 
   {"model": "accounts.submenu", "pk": 102, "fields": {"menu": 1, "name_bn": "বিশেষ পদের ধরন", "name_en": "Special Role Types", "url_name": "master:special_role_type_list", "ordering": 112, "is_active": true}},
   {"model": "accounts.submenu", "pk": 103, "fields": {"menu": 1, "name_bn": "পিএ/পিএস পদবী", "name_en": "PA/PS Designations", "url_name": "master:pa_designation_list", "ordering": 113, "is_active": true}},
