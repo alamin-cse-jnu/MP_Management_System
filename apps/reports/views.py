@@ -12,6 +12,9 @@ from apps.master.models import (
     MinisterType, Ministry, PADesignation, PoliticalParty,
     ProfessionalQualification, Religion, StandingCommittee, TravelType,
 )
+from apps.ministry.grouping import (
+    all_minister_groups, build_minister_groups, minister_group_order,
+)
 from apps.ministry.models import MinistryAssignment
 from apps.mp.models import MP, Address, ElectionInfo
 from apps.office.models import MPPAStaff, ParliamentOfficeAddress
@@ -520,27 +523,37 @@ def cabinet(request):
     headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'সদস্যের ধরন', 'মন্ত্রণালয়', 'মন্ত্রীর ধরন',
                'শুরু', 'শেষ', 'GO নং', 'অবস্থা']
 
-    def rows_fn(queryset):
+    def rows_fn(groups):
+        """Flatten grouped ministers to spreadsheet rows.
+
+        A cell can't span rows in CSV, so exports stay one row per assignment —
+        but ordered by minister, with the serial number counting MINISTERS (it
+        repeats down a minister's ministries) so the file matches the screen.
+        The name is repeated on every row to keep the sheet filterable.
+        """
         out = []
-        for i, obj in enumerate(queryset):
-            out.append([
-                i + 1,
-                obj.mp.mp_id,
-                _tr(obj.mp),
-                obj.mp.get_member_type_display(),
-                _tr(obj.ministry),
-                _tr(obj.minister_type),
-                obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
-                obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                obj.go_number or '—',
-                _active_label(obj.is_active),
-            ])
+        for i, grp in enumerate(groups):
+            mp = grp['mp']
+            for obj in grp['assignments']:
+                out.append([
+                    i + 1,
+                    mp.mp_id,
+                    _tr(mp),
+                    mp.get_member_type_display(),
+                    _tr(obj.ministry),
+                    _tr(obj.minister_type),
+                    obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
+                    obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
+                    obj.go_number or '—',
+                    _active_label(obj.is_active),
+                ])
         return out
 
-    if fmt == 'excel':
-        return export_excel('cabinet', headers, rows_fn(qs), 'মন্ত্রিসভা')
-    if fmt == 'csv':
-        return export_csv('cabinet', headers, rows_fn(qs))
+    if fmt in ('excel', 'csv'):
+        groups = all_minister_groups(qs)
+        if fmt == 'excel':
+            return export_excel('cabinet', headers, rows_fn(groups), 'মন্ত্রিসভা')
+        return export_csv('cabinet', headers, rows_fn(groups))
 
     ctx = {
         'parliament_id':    parliament_id,
@@ -550,16 +563,22 @@ def cabinet(request):
         'q':                q,
         'parliaments':      _parliament_qs(),
         'minister_types':   MinisterType.objects.filter(is_active=True),
+        # total_count = assignments (what the report has always counted);
+        # minister_count = the grouped rows now shown.
         'total_count':      qs.count(),
+        'minister_count':   minister_group_order(qs).count(),
     }
     if fmt in ('print', 'pdf'):
-        ctx['object_list'] = qs
+        ctx['rows'] = all_minister_groups(qs)
         if fmt == 'pdf':
             return render_report_pdf(request, 'reports/print/cabinet.html', ctx, 'cabinet.pdf')
         return render(request, 'reports/print/cabinet.html', ctx)
 
-    paginator = Paginator(qs, _page_size(request))
-    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    # Grouped by minister — see apps/ministry/grouping.py.
+    paginator = Paginator(minister_group_order(qs), _page_size(request))
+    page = paginator.get_page(request.GET.get('page'))
+    ctx['page_obj'] = page
+    ctx['rows']     = build_minister_groups(qs, [g['mp'] for g in page])
     return render(request, 'reports/cabinet.html', ctx)
 
 

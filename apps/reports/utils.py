@@ -12,8 +12,13 @@ except ImportError:
 
 
 def export_csv(filename, headers, rows):
-    response = HttpResponse(content_type='text/csv; charset=utf-8-sig')
+    # charset must be plain utf-8: Django encodes EVERY response.write() with
+    # the declared codec, so 'utf-8-sig' prepended a BOM to every row and
+    # corrupted the first column of every line. Write the BOM once instead —
+    # Excel still needs it to detect UTF-8.
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename="{filename}.csv"'
+    response.write('﻿')
     writer = csv.writer(response)
     writer.writerow(headers)
     for row in rows:

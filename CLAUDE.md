@@ -589,8 +589,22 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   counts (ministers · assignments). Order = cabinet rank, then name.
   Verified on prod: 48 ministers / 64 assignments over 2 pages, each minister once,
   all 64 assignments rendered, all 13 multi-ministry groups on a single page each.
-  **The cabinet report (`/reports/cabinet/`) is deliberately NOT grouped** — it is
-  an export surface (Excel/CSV/PDF) where flat one-row-per-assignment is wanted.
+- **Cabinet report grouped too (2026-08-20)** — the grouping was extracted to
+  **`apps/ministry/grouping.py`** (`minister_group_order` / `build_minister_groups`
+  / `all_minister_groups`) and both pages now share it. `/reports/cabinet/`:
+  screen + print + PDF render one `<tbody>` per minister with `rowspan` on the
+  serial/MP-ID/name/member-type cells; screen paginates ministers. **Excel/CSV stay
+  one row per assignment** (a cell cannot span rows in CSV) but are ordered by
+  minister, the serial column counts MINISTERS (repeating down that minister's
+  ministries, matching the screen), and the name repeats on every row so the sheet
+  stays filterable. Counts shown as "N জন মন্ত্রী · M টি নিয়োগ".
+- **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
+  — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
+  encodes **every** `response.write()` with the declared codec, so the BOM was
+  prepended to **every row**, corrupting the first column of every line
+  (`﻿1,013050101,…`). Now `charset=utf-8` + a single explicit
+  `response.write('﻿')`. Verified across 7 report CSVs: exactly one BOM, at
+  byte 0.
 - **PRP sync is MP-only** (confirmed with the user) — `import_mp_api` roster
   lookups use `parliament_members()`, plus a safety net that SKIPs any record
   whose `mp_id` matches an existing technocrat, so the API can never convert one

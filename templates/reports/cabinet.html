@@ -46,7 +46,7 @@
 </div>
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
   <div class="d-flex align-items-center gap-3 flex-wrap">
-    <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি</small>
+    <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ minister_count }}</strong> {% ui "জন মন্ত্রী" "ministers" %} · <strong>{{ total_count }}</strong> {% ui "টি নিয়োগ" "assignments" %}</small>
     {% include "reports/_per_page_selector.html" %}
   </div>
   <div class="d-flex gap-2">
@@ -58,31 +58,54 @@
 </div>
 </form>
 
+<style>
+  table tbody.min-group + tbody.min-group { border-top: 2px solid #e2e8f0; }
+  table tbody.min-group > tr > td { border-bottom-width: 0; }
+  table tbody.min-group > tr:last-child > td { border-bottom-width: 1px; }
+  table tbody.min-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
+
 <div class="mp-card">
   <div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
       <thead class="table-light">
         <tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "সদস্যের ধরন" "Member Type" %}</th><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>মন্ত্রীর ধরন</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "GO নং" "GO No." %}</th><th>{% ui "অবস্থা" "Status" %}</th><th class="no-print"></th></tr>
       </thead>
-      <tbody>
-        {% for obj in page_obj %}
+      {# One <tbody> per minister: a minister holding several ministries is shown
+         as one grouped block and never split across pages. #}
+      {% for row in rows %}
+      <tbody class="min-group">
+        {% for obj in row.assignments %}
         <tr>
-          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-          <td><code>{{ obj.mp.mp_id }}</code></td>
-          <td><a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a><div class="text-muted" style="font-size:.78rem;">{{ obj.mp.name_en }}</div></td>
-          <td>{% if obj.mp.member_type == 'technocrat' %}<span class="badge badge-warning">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>{% else %}<span class="badge badge-primary">{% ui "সংসদ সদস্য" "MP" %}</span>{% endif %}</td>
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter0|add:page_obj.start_index }}</td>
+          <td rowspan="{{ row.assignments|length }}"><code>{{ row.mp.mp_id }}</code></td>
+          <td rowspan="{{ row.assignments|length }}">
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-ministry" class="text-decoration-none fw-medium">{{ row.mp|tr:"name" }}</a>
+            <div class="text-muted" style="font-size:.78rem;">{{ row.mp.name_en }}</div>
+            {% if row.assignments|length > 1 %}
+            <span class="badge bg-info-subtle text-info-emphasis" style="font-size:.65rem;"><i class="bi bi-layers me-1"></i>{{ row.assignments|length }}{% ui "টি মন্ত্রণালয়" " ministries" %}</span>
+            {% endif %}
+          </td>
+          <td rowspan="{{ row.assignments|length }}">{% if row.mp.member_type == 'technocrat' %}<span class="badge badge-warning">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>{% else %}<span class="badge badge-primary">{% ui "সংসদ সদস্য" "MP" %}</span>{% endif %}</td>
+          {% endif %}
           <td>{{ obj.ministry|tr:"name" }}<div class="text-muted" style="font-size:.78rem;">{{ obj.ministry.name_en }}</div></td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.go_number|default:"—" }}</td>
           <td>{% if obj.is_active %}<span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}</td>
-          <td class="text-end no-print"><a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}" class="text-end no-print"><a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-ministry" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+          {% endif %}
         </tr>
-        {% empty %}
-        <tr><td colspan="11" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
+      {% empty %}
+      <tbody>
+        <tr><td colspan="11" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+      </tbody>
+      {% endfor %}
     </table>
   </div>
   {% if page_obj.has_other_pages %}
