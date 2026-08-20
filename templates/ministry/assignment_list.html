@@ -59,6 +59,15 @@
   </form>
 </div>
 
+<style>
+  /* Each minister is one <tbody>; a divider between groups makes a
+     multi-ministry block read as a single unit. */
+  table tbody.min-group + tbody.min-group { border-top: 2px solid #e2e8f0; }
+  table tbody.min-group > tr > td { border-bottom-width: 0; }
+  table tbody.min-group > tr:last-child > td { border-bottom-width: 1px; }
+  table tbody.min-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
+
 <!-- Table -->
 <div class="mp-card">
   <div class="table-responsive">
@@ -66,29 +75,41 @@
       <thead class="table-light">
         <tr>
           <th style="width:3rem;">#</th>
-          <th>{% ui "সদস্যের নাম" "MP Name" %}</th>
+          <th style="width:18%;">{% ui "সদস্যের নাম" "MP Name" %}</th>
           <th>{% ui "মন্ত্রণালয়" "Ministry" %}</th>
-          <th>{% ui "ধরন" "Type" %}</th>
-          <th>{% ui "শুরু" "Start" %}</th>
-          <th>{% ui "শেষ" "End" %}</th>
-          <th>{% ui "GO নং" "GO No." %}</th>
-          <th>{% ui "GO ফাইল" "GO File" %}</th>
+          <th style="width:9rem;">{% ui "ধরন" "Type" %}</th>
+          <th style="width:6rem;">{% ui "শুরু" "Start" %}</th>
+          <th style="width:6rem;">{% ui "শেষ" "End" %}</th>
+          <th style="width:7rem;">{% ui "GO নং" "GO No." %}</th>
+          <th style="width:5rem;">{% ui "GO ফাইল" "GO File" %}</th>
           <th style="width:6rem;"></th>
         </tr>
       </thead>
-      <tbody>
-        {% for obj in page_obj %}
+      {# One <tbody> per minister: all of their ministries stay together, so a
+         minister holding several ministries can never be split across pages. #}
+      {% for row in rows %}
+      <tbody class="min-group">
+        {% for obj in row.assignments %}
         <tr>
-          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-          <td>
-            <a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="text-decoration-none fw-medium">
-              {{ obj.mp|tr:"name" }}
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter0|add:page_obj.start_index }}</td>
+          <td rowspan="{{ row.assignments|length }}">
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-ministry" class="text-decoration-none fw-medium">
+              {{ row.mp|tr:"name" }}
             </a>
-            <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
-            {% if obj.mp.member_type == 'technocrat' %}
+            <div class="text-muted" style="font-size:0.8rem;">{{ row.mp.name_en }}</div>
+            {% if row.mp.member_type == 'technocrat' %}
             <span class="badge badge-warning" style="font-size:0.65rem;">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>
             {% endif %}
+            {% if row.assignments|length > 1 %}
+            <div class="mt-1">
+              <span class="badge bg-info-subtle text-info-emphasis" style="font-size:0.65rem;">
+                <i class="bi bi-layers me-1"></i>{{ row.assignments|length }}{% ui "টি মন্ত্রণালয়" " ministries" %}
+              </span>
+            </div>
+            {% endif %}
           </td>
+          {% endif %}
           <td>
             {{ obj.ministry|tr:"name" }}
             <div class="text-muted" style="font-size:0.8rem;">{{ obj.ministry.name_en }}</div>
@@ -111,25 +132,36 @@
             </form>
           </td>
         </tr>
-        {% empty %}
-        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
+      {% empty %}
+      <tbody>
+        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+      </tbody>
+      {% endfor %}
     </table>
   </div>
 
-  {% if page_obj.has_other_pages %}
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
-    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    {# The list is paginated by MINISTER, so report both counts — otherwise
+       "মোট 51" next to 64 visible rows looks like a miscount. #}
+    <small class="text-muted">
+      {% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "জন মন্ত্রী" "ministers" %}
+      · {{ assignment_count }} {% ui "টি মন্ত্রণালয় নিয়োগ" "assignments" %}
+      {% if page_obj.has_other_pages %}
+      | {% ui "পৃষ্ঠা" "Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+      {% endif %}
+    </small>
+    {% if page_obj.has_other_pages %}
     <nav><ul class="pagination pagination-sm mb-0">
       {% if page_obj.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>
       {% endif %}
       {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>
       {% endif %}
     </ul></nav>
+    {% endif %}
   </div>
-  {% endif %}
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Min, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
@@ -45,11 +45,42 @@ def assignment_list(request):
             Q(ministry__name_bn__icontains=q) | Q(ministry__name_en__icontains=q)
         )
 
-    paginator = Paginator(qs, 25)
+    # ── One row per MINISTER, not per assignment ─────────────────────────────
+    # 13 ministers hold several ministries (up to 3). Paginating raw assignments
+    # scattered a person's rows across pages — e.g. one minister's 3 ministries
+    # landed on pages 1, 2 and 3 — so the list read as if only one ministry was
+    # recorded. Group by MP and paginate the GROUPS, so a minister's ministries
+    # are always shown together and can never straddle a page boundary.
+    #
+    # order_by() first: the model's Meta.ordering would otherwise be folded into
+    # the GROUP BY and break the grouping.
+    groups = (
+        qs.order_by()
+          .values('mp')
+          .annotate(rank=Min('minister_type__ordering'), sort_name=Min('mp__name_bn'))
+          .order_by('rank', 'sort_name')
+    )
+
+    paginator = Paginator(groups, 25)
     page      = paginator.get_page(request.GET.get('page'))
+
+    # Pull this page's assignments in one query; qs keeps Meta.ordering
+    # (minister_type rank, then ministry name) within each minister.
+    page_mp_ids = [g['mp'] for g in page]
+    by_mp = {}
+    for a in qs.filter(mp_id__in=page_mp_ids):
+        by_mp.setdefault(a.mp_id, []).append(a)
+
+    mps = {m.pk: m for m in MP.objects.filter(pk__in=page_mp_ids)}
+    rows = [
+        {'mp': mps[mp_id], 'assignments': by_mp.get(mp_id, [])}
+        for mp_id in page_mp_ids if mp_id in mps
+    ]
 
     return render(request, 'ministry/assignment_list.html', {
         'page_obj':        page,
+        'rows':            rows,
+        'assignment_count': qs.count(),
         'parliaments':     Parliament.objects.order_by('-ordinal'),
         'minister_types':  MinisterType.objects.filter(is_active=True).order_by('ordering'),
         'parliament_id':   parliament_id,

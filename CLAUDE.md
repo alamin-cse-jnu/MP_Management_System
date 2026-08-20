@@ -573,6 +573,24 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
 - **Cabinet report + ministry list** — new **সদস্যের ধরন** column (screen, print,
   Excel/CSV) and an MP/Technocrat filter carried through export + pagination links.
   Dashboard Ministers tile shows "এর মধ্যে N টেকনোক্র্যাট".
+- **Ministry list grouped by minister (2026-08-20 follow-up)** — field report: "a
+  minister with multiple ministries only shows one". Nothing was missing; the page
+  paginated **assignments** while `MinistryAssignment.Meta.ordering` sorts by
+  minister-type then ministry *name*, scattering one person's rows across pages
+  (শেখ রবিউল আলম's 3 ministries sat on pages 1, 2 AND 3). **13 ministers hold
+  several ministries** (3 hold three). `assignment_list` now groups by MP —
+  `qs.order_by().values('mp').annotate(rank=Min('minister_type__ordering'),
+  sort_name=Min('mp__name_bn')).order_by('rank','sort_name')` (the bare
+  `order_by()` is required or Meta.ordering folds into the GROUP BY) — paginates
+  the **groups** (25 ministers/page), then fetches that page's assignments in one
+  query into `rows=[{'mp','assignments'}]`. Template renders **one `<tbody>` per
+  minister** with `rowspan` on the serial + name cells, a "⧉ Nটি মন্ত্রণালয়" badge
+  when >1, and per-ministry dates/GO/edit/delete unchanged. Footer reports BOTH
+  counts (ministers · assignments). Order = cabinet rank, then name.
+  Verified on prod: 48 ministers / 64 assignments over 2 pages, each minister once,
+  all 64 assignments rendered, all 13 multi-ministry groups on a single page each.
+  **The cabinet report (`/reports/cabinet/`) is deliberately NOT grouped** — it is
+  an export surface (Excel/CSV/PDF) where flat one-row-per-assignment is wanted.
 - **PRP sync is MP-only** (confirmed with the user) — `import_mp_api` roster
   lookups use `parliament_members()`, plus a safety net that SKIPs any record
   whose `mp_id` matches an existing technocrat, so the API can never convert one
