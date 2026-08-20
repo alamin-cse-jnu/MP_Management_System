@@ -1,4 +1,5 @@
 from apps.accounts.mixins import perm_required
+from utils.assignment_grouping import all_mp_groups, build_mp_groups, mp_group_order
 from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse
@@ -11,9 +12,6 @@ from apps.master.models import (
     CommitteePosition, Country, District, Division, Gender,
     MinisterType, Ministry, PADesignation, PoliticalParty,
     ProfessionalQualification, Religion, StandingCommittee, TravelType,
-)
-from apps.ministry.grouping import (
-    all_minister_groups, build_minister_groups, minister_group_order,
 )
 from apps.ministry.models import MinistryAssignment
 from apps.mp.models import MP, Address, ElectionInfo
@@ -550,7 +548,7 @@ def cabinet(request):
         return out
 
     if fmt in ('excel', 'csv'):
-        groups = all_minister_groups(qs)
+        groups = all_mp_groups(qs, 'minister_type__ordering')
         if fmt == 'excel':
             return export_excel('cabinet', headers, rows_fn(groups), 'মন্ত্রিসভা')
         return export_csv('cabinet', headers, rows_fn(groups))
@@ -566,19 +564,19 @@ def cabinet(request):
         # total_count = assignments (what the report has always counted);
         # minister_count = the grouped rows now shown.
         'total_count':      qs.count(),
-        'minister_count':   minister_group_order(qs).count(),
+        'minister_count':   mp_group_order(qs, 'minister_type__ordering').count(),
     }
     if fmt in ('print', 'pdf'):
-        ctx['rows'] = all_minister_groups(qs)
+        ctx['rows'] = all_mp_groups(qs, 'minister_type__ordering')
         if fmt == 'pdf':
             return render_report_pdf(request, 'reports/print/cabinet.html', ctx, 'cabinet.pdf')
         return render(request, 'reports/print/cabinet.html', ctx)
 
-    # Grouped by minister — see apps/ministry/grouping.py.
-    paginator = Paginator(minister_group_order(qs), _page_size(request))
+    # Grouped by minister — see utils/assignment_grouping.py.
+    paginator = Paginator(mp_group_order(qs, 'minister_type__ordering'), _page_size(request))
     page = paginator.get_page(request.GET.get('page'))
     ctx['page_obj'] = page
-    ctx['rows']     = build_minister_groups(qs, [g['mp'] for g in page])
+    ctx['rows']     = build_mp_groups(qs, [g['mp'] for g in page])
     return render(request, 'reports/cabinet.html', ctx)
 
 
@@ -734,25 +732,32 @@ def institution_assignments(request):
 
     headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'প্রতিষ্ঠান', 'ভূমিকা', 'শুরু', 'শেষ', 'অবস্থা']
 
-    def rows_fn(queryset):
+    def rows_fn(groups):
+        # A cell can't span rows in CSV, so exports stay one row per assignment —
+        # ordered by MP, with the serial counting MPs (repeating down that MP's
+        # institutions) and the name repeated so the sheet stays filterable.
         out = []
-        for i, obj in enumerate(queryset):
-            out.append([
-                i + 1,
-                obj.mp.mp_id,
-                _tr(obj.mp),
-                _tr(obj, 'institution'),
-                _tr(obj.role),
-                obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
-                obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                _active_label(obj.is_active),
-            ])
+        for i, grp in enumerate(groups):
+            mp = grp['mp']
+            for obj in grp['assignments']:
+                out.append([
+                    i + 1,
+                    mp.mp_id,
+                    _tr(mp),
+                    _tr(obj, 'institution'),
+                    _tr(obj.role),
+                    obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
+                    obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
+                    _active_label(obj.is_active),
+                ])
         return out
 
-    if fmt == 'excel':
-        return export_excel('institution_assignments', headers, rows_fn(qs), 'প্রতিষ্ঠান নিয়োগ')
-    if fmt == 'csv':
-        return export_csv('institution_assignments', headers, rows_fn(qs))
+    if fmt in ('excel', 'csv'):
+        groups = all_mp_groups(qs, 'role__ordering')
+        if fmt == 'excel':
+            return export_excel('institution_assignments', headers, rows_fn(groups),
+                                'প্রতিষ্ঠান নিয়োগ')
+        return export_csv('institution_assignments', headers, rows_fn(groups))
 
     ctx = {
         'parliament_id':  parliament_id,
@@ -760,16 +765,22 @@ def institution_assignments(request):
         'status':         status,
         'q':              q,
         'parliaments':    _parliament_qs(),
+        # total_count = assignments (what this report has always counted);
+        # mp_count = the grouped rows now shown.
         'total_count':    qs.count(),
+        'mp_count':       mp_group_order(qs, 'role__ordering').count(),
     }
     if fmt in ('print', 'pdf'):
-        ctx['object_list'] = qs
+        ctx['rows'] = all_mp_groups(qs, 'role__ordering')
         if fmt == 'pdf':
             return render_report_pdf(request, 'reports/print/institution_assignments.html', ctx, 'institution_assignments.pdf')
         return render(request, 'reports/print/institution_assignments.html', ctx)
 
-    paginator = Paginator(qs, _page_size(request))
-    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    # Grouped by MP — see utils/assignment_grouping.py.
+    paginator = Paginator(mp_group_order(qs, 'role__ordering'), _page_size(request))
+    page = paginator.get_page(request.GET.get('page'))
+    ctx['page_obj'] = page
+    ctx['rows']     = build_mp_groups(qs, [g['mp'] for g in page])
     return render(request, 'reports/institution_assignments.html', ctx)
 
 
@@ -884,7 +895,11 @@ def mp_biodata(request):
             'ministry_assignments__parliament',
             'committee_assignments__committee', 'committee_assignments__position',
             'committee_assignments__parliament',
-            'institution_assignments__institution', 'institution_assignments__role',
+            # The GovernmentInstitution FK was retired in Phase 17.9 (institution
+            # is free text now) — prefetching it raised AttributeError for any MP
+            # that had institution rows, which only stayed hidden because the
+            # table was empty.
+            'institution_assignments__role', 'institution_assignments__parliament',
             Prefetch('travel_participations',
                      queryset=ForeignTourParticipant.objects.select_related(
                          'tour__tour_type', 'tour__purpose'

@@ -17,6 +17,7 @@ from apps.parliament.models import Parliament
 from apps.ministry.models import MinistryAssignment
 from apps.committee.models import CommitteeAssignment
 from utils.assignment_grouping import group_by_parliament
+from apps.institution.models import InstitutionAssignment
 from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
 from .forms import (
@@ -58,6 +59,7 @@ _TAB_LIST = [
     ('tab-special',      '১৬. বিশেষ পদ'),
     ('tab-publication',  '১৭. প্রকাশনা'),
     ('tab-travel',       '১৮. বিদেশ ভ্রমণ'),
+    ('tab-institution',  '১৯. প্রতিষ্ঠান'),
 ]
 _COMING_SOON = []
 
@@ -79,6 +81,8 @@ def _detail_ctx(mp, **override):
         'parliament', 'ministry', 'minister_type')
     committee_assignments = CommitteeAssignment.objects.filter(mp=mp).select_related(
         'parliament', 'committee', 'position')
+    institution_assignments = InstitutionAssignment.objects.filter(mp=mp).select_related(
+        'parliament', 'role')
     election_info = ElectionInfo.objects.filter(mp=mp, parliament=mp.parliament).first()
     addresses     = {a.address_type: a for a in mp.addresses.all()}
     ei_initial    = {} if election_info else {'parliament': mp.parliament}
@@ -110,7 +114,7 @@ def _detail_ctx(mp, **override):
 
         # Sections 10–11 (ministry/committee modules)
         # *_groups = the same rows grouped by parliament so each tenure's
-        # ministries/committees stay together (utils/assignment_grouping.py).
+        # ministries/committees/institutions stay together (utils/assignment_grouping.py).
         # The flat *_assignments lists stay for the biodata templates.
         'ministry_assignments': ministry_assignments,
         'ministry_groups': group_by_parliament(
@@ -118,6 +122,9 @@ def _detail_ctx(mp, **override):
         'committee_assignments': committee_assignments,
         'committee_groups': group_by_parliament(
             committee_assignments, 'position__ordering', 'committee__name_bn'),
+        'institution_assignments': institution_assignments,
+        'institution_groups': group_by_parliament(
+            institution_assignments, 'role__ordering', 'institution_bn'),
 
         # Section 18 (travel module) + office
         'travel_participations': ForeignTourParticipant.objects.filter(mp=mp).select_related(

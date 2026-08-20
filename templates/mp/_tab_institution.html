@@ -1,0 +1,85 @@
+{% load static lang_tags %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h6 class="fw-bold mb-0">{% ui "প্রতিষ্ঠানে নিয়োগ" "Institution Assignments" %}</h6>
+  <a href="{% url 'institution:assignment_create' %}?mp={{ mp.pk }}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
+  </a>
+</div>
+
+{% if institution_groups %}
+<style>
+  /* One <tbody> per parliament; the Parliament cell spans that tenure's
+     institutions so a member nominated to several reads as one block. */
+  .mp-table tbody.parl-group + tbody.parl-group { border-top: 2px solid #e2e8f0; }
+  .mp-table tbody.parl-group > tr > td { border-bottom-width: 0; }
+  .mp-table tbody.parl-group > tr:last-child > td { border-bottom-width: 1px; }
+  .mp-table tbody.parl-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th>{% ui "সংসদ" "Parliament" %}</th>
+        <th>{% ui "প্রতিষ্ঠান" "Institution" %}</th>
+        <th>{% ui "পদবী" "Designation" %}</th>
+        <th>{% ui "মনোনয়নকারী" "Nominated By" %}</th>
+        <th>{% ui "শুরু" "Start" %}</th>
+        <th>{% ui "শেষ" "End" %}</th>
+        <th>{% ui "GO নং" "GO No." %}</th>
+        <th>{% ui "GO ফাইল" "GO File" %}</th>
+        <th>{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:90px;">{% ui "কার্যক্রম" "Actions" %}</th>
+      </tr>
+    </thead>
+    {% for grp in institution_groups %}
+    <tbody class="parl-group">
+      {% for obj in grp.assignments %}
+      <tr>
+        {% if forloop.first %}
+        <td rowspan="{{ grp.assignments|length }}">
+          {{ grp.parliament|tr:"name" }}
+          {% if grp.assignments|length > 1 %}
+          <div class="mt-1">
+            <span class="badge bg-info-subtle text-info-emphasis" style="font-size:.65rem;">
+              <i class="bi bi-layers me-1"></i>{{ grp.assignments|length }}{% ui "টি প্রতিষ্ঠান" " institutions" %}
+            </span>
+          </div>
+          {% endif %}
+        </td>
+        {% endif %}
+        <td>
+          {{ obj|tr:"institution" }}
+          {% if obj.institution_en %}<div class="text-muted" style="font-size:0.8rem;">{{ obj.institution_en }}</div>{% endif %}
+        </td>
+        <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
+        <td>{{ obj.get_nominated_by_display|default:"—" }}</td>
+        <td>{{ obj.start_date|date:"d/m/Y" }}</td>
+        <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ obj.go_number|default:"—" }}</td>
+        <td>{% include "partials/_go_file.html" with file=obj.go_file %}</td>
+        <td>
+          {% if obj.is_active %}
+            <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
+          {% else %}
+            <span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'institution:assignment_update' obj.pk %}?from_mp=1"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'institution:assignment_delete' obj.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <input type="hidden" name="from_mp" value="1">
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<p class="text-muted text-center py-4">{% ui "কোনো প্রতিষ্ঠানের তথ্য নেই।" "No institution information." %}</p>
+{% endif %}

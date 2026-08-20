@@ -36,7 +36,7 @@
 </div>
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
   <div class="d-flex align-items-center gap-3 flex-wrap">
-    <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong> টি</small>
+    <small class="text-muted">{% ui "মোট:" "Total:" %} <strong>{{ mp_count }}</strong> {% ui "জন সদস্য" "MPs" %} · <strong>{{ total_count }}</strong> {% ui "টি নিয়োগ" "assignments" %}</small>
     {% include "reports/_per_page_selector.html" %}
   </div>
   <div class="d-flex gap-2">
@@ -49,27 +49,45 @@
 </form>
 
 <div class="mp-card">
-  <div class="table-responsive">
+  <style>
+  table tbody.mp-group + tbody.mp-group { border-top: 2px solid #e2e8f0; }
+  table tbody.mp-group > tr > td { border-bottom-width: 0; }
+  table tbody.mp-group > tr:last-child > td { border-bottom-width: 1px; }
+  table tbody.mp-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
+<div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
       <thead class="table-light">
         <tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "প্রতিষ্ঠান" "Institution" %}</th><th>{% ui "ভূমিকা" "Role" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "অবস্থা" "Status" %}</th><th class="no-print"></th></tr>
       </thead>
-      <tbody>
-        {% for obj in page_obj %}
+      {% for row in rows %}
+      <tbody class="mp-group">
+        {% for obj in row.assignments %}
         <tr>
-          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-          <td><code>{{ obj.mp.mp_id }}</code></td>
-          <td><a href="{% url 'mp:mp_detail' obj.mp_id %}" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a></td>
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter0|add:page_obj.start_index }}</td>
+          <td rowspan="{{ row.assignments|length }}"><code>{{ row.mp.mp_id }}</code></td>
+          <td rowspan="{{ row.assignments|length }}">
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-institution" class="text-decoration-none fw-medium">{{ row.mp|tr:"name" }}</a>
+            {% if row.assignments|length > 1 %}<div class="mt-1"><span class="badge bg-info-subtle text-info-emphasis" style="font-size:.65rem;"><i class="bi bi-layers me-1"></i>{{ row.assignments|length }}{% ui "টি প্রতিষ্ঠান" " institutions" %}</span></div>{% endif %}
+          </td>
+          {% endif %}
           <td>{{ obj|tr:"institution" }}</td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{% if obj.is_active %}<span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>{% else %}<span class="badge bg-secondary-subtle text-secondary">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}</td>
-          <td class="text-end no-print"><a href="{% url 'mp:mp_detail' obj.mp_id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}" class="text-end no-print"><a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-institution" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
+          {% endif %}
         </tr>
-        {% empty %}
-        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
+      </tbody>
+      {% empty %}
+      <tbody>
+        <tr><td colspan="9" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+      </tbody>
+      {% endfor %}
       </tbody>
     </table>
   </div>

@@ -9,6 +9,7 @@ from apps.mp.form_fields import MPChoiceField
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from apps.accounts.mixins import perm_required
+from utils.assignment_grouping import build_mp_groups, mp_group_order
 from .forms import InstitutionAssignmentForm, InstitutionBulkAssignForm
 from .models import InstitutionAssignment
 
@@ -48,11 +49,15 @@ def assignment_list(request):
     elif status != 'all':
         qs = qs.filter(is_active=True)
 
-    paginator = Paginator(qs, 25)
+    # One row per MP, not per assignment — see utils/assignment_grouping.py.
+    paginator = Paginator(mp_group_order(qs, 'role__ordering'), 25)
     page      = paginator.get_page(request.GET.get('page'))
+    rows      = build_mp_groups(qs, [g['mp'] for g in page])
 
     return render(request, 'institution/assignment_list.html', {
         'page_obj':      page,
+        'rows':          rows,
+        'assignment_count': qs.count(),
         'parliaments':   Parliament.objects.order_by('-ordinal'),
         'mp_filter_field': MPChoiceField(required=False, empty_label='-- সব সদস্য / All MPs --'),
         'parliament_id': parliament_id,
@@ -84,7 +89,7 @@ def assignment_create(request):
             obj.mp = mp
             obj.save()
             messages.success(request, 'প্রতিষ্ঠান নিয়োগ সংরক্ষিত হয়েছে।')
-            return redirect(reverse('mp:mp_detail', args=[mp.pk]) + '?active=tab-general')
+            return redirect(reverse('mp:mp_detail', args=[mp.pk]) + '?active=tab-institution')
     else:
         form = InstitutionBulkAssignForm(request.POST or None, request.FILES or None, initial=initial)
         if form.is_valid():
@@ -111,6 +116,8 @@ def assignment_update(request, pk):
     if form.is_valid():
         form.save()
         messages.success(request, 'প্রতিষ্ঠান নিয়োগ আপডেট হয়েছে।')
+        if request.GET.get('from_mp'):
+            return redirect(reverse('mp:mp_detail', args=[obj.mp_id]) + '?active=tab-institution')
         return redirect('institution:assignment_list')
     return render(request, 'institution/assignment_form.html', {
         'form':      form,
@@ -118,14 +125,19 @@ def assignment_update(request, pk):
         'is_create': False,
         'title_bn':  'প্রতিষ্ঠান নিয়োগ সম্পাদনা',
         'title_en':  'Edit Institution Assignment',
+        'from_mp':   request.GET.get('from_mp', ''),
     })
 
 
 @perm_required
 @require_POST
 def assignment_delete(request, pk):
-    get_object_or_404(InstitutionAssignment, pk=pk).delete()
+    obj = get_object_or_404(InstitutionAssignment, pk=pk)
+    mp_pk = obj.mp_id
+    obj.delete()
     messages.success(request, 'প্রতিষ্ঠান নিয়োগ মুছে ফেলা হয়েছে।')
+    if request.POST.get('from_mp'):
+        return redirect(reverse('mp:mp_detail', args=[mp_pk]) + '?active=tab-institution')
     return redirect('institution:assignment_list')
 
 

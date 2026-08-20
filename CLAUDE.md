@@ -615,6 +615,29 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   Verified on prod: all 13 multi-ministry MPs and 30 multi-committee MPs, plus
   single/none/empty-state, and every regression surface (both module lists, cabinet
   + committee reports, biodata).
+- **Institution grouped everywhere + NEW MP profile tab 19 (2026-08-20)** — there
+  was **no institution tab** on the MP profile (institution existed only as a module
+  + report), and prod has **0 institution rows** (module never used), so this is
+  groundwork. Three pieces: (1) new **`templates/mp/_tab_institution.html`** as
+  **tab ১৯. প্রতিষ্ঠান** (added to `_TAB_LIST` + a pane in `mp_detail.html`),
+  grouped by parliament; (2) `/institution/` module list grouped **by MP**
+  (paginates MPs); (3) `/reports/institution-assignments/` grouped by MP on
+  screen/print/PDF, flat-but-MP-ordered in Excel/CSV. Institution create/edit/
+  delete launched from a profile now return to `?active=tab-institution` (create
+  previously landed on `tab-general` because no tab existed) and honour `from_mp`.
+- **All grouping consolidated into `utils/assignment_grouping.py`** —
+  `apps/ministry/grouping.py` **deleted**; its helpers are now generic:
+  `mp_group_order(qs, rank_field=None)` / `build_mp_groups` / `all_mp_groups`
+  (rank_field = `minister_type__ordering` for ministry, `role__ordering` for
+  institution) plus `group_by_parliament(qs, *order_within)`. Importers:
+  `apps/ministry/views.py`, `apps/institution/views.py`, `apps/reports/views.py`,
+  `apps/mp/views.py`.
+- **Latent biodata crash fixed** — `mp_biodata` still prefetched
+  `institution_assignments__institution`, but that FK was retired in Phase 17.9
+  (free text since). Any MP with institution rows raised
+  `AttributeError: Cannot find 'institution' on InstitutionAssignment`; it stayed
+  hidden ONLY because the table is empty — entering the first institution record
+  would have 500'd the biodata page. Now prefetches `__role`/`__parliament`.
 - **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
   — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
   encodes **every** `response.write()` with the declared codec, so the BOM was

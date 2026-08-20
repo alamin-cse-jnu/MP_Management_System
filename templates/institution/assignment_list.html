@@ -59,7 +59,13 @@
 </div>
 
 <div class="mp-card">
-  <div class="table-responsive">
+  <style>
+  table tbody.mp-group + tbody.mp-group { border-top: 2px solid #e2e8f0; }
+  table tbody.mp-group > tr > td { border-bottom-width: 0; }
+  table tbody.mp-group > tr:last-child > td { border-bottom-width: 1px; }
+  table tbody.mp-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
+<div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:0.9rem;">
       <thead class="table-light">
         <tr>
@@ -75,14 +81,25 @@
           <th style="width:8rem;"></th>
         </tr>
       </thead>
-      <tbody>
-        {% for obj in page_obj %}
+      {# One <tbody> per MP: an MP nominated to several institutions is shown as
+         one grouped block and never split across pages. #}
+      {% for row in rows %}
+      <tbody class="mp-group">
+        {% for obj in row.assignments %}
         <tr>
-          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-          <td>
-            <a href="{% url 'mp:mp_detail' obj.mp_id %}" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a>
-            <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
+          {% if forloop.first %}
+          <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter0|add:page_obj.start_index }}</td>
+          <td rowspan="{{ row.assignments|length }}">
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-institution" class="text-decoration-none fw-medium">{{ row.mp|tr:"name" }}</a>
+            <div class="text-muted" style="font-size:0.8rem;">{{ row.mp.name_en }}</div>
+            {% if row.mp.member_type == 'technocrat' %}
+            <span class="badge badge-warning" style="font-size:0.65rem;">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>
+            {% endif %}
+            {% if row.assignments|length > 1 %}
+            <div class="mt-1"><span class="badge bg-info-subtle text-info-emphasis" style="font-size:0.65rem;"><i class="bi bi-layers me-1"></i>{{ row.assignments|length }}{% ui "টি প্রতিষ্ঠান" " institutions" %}</span></div>
+            {% endif %}
           </td>
+          {% endif %}
           <td>{{ obj|tr:"institution" }}{% if obj.institution_en %}<div class="text-muted" style="font-size:0.8rem;">{{ obj.institution_en }}</div>{% endif %}</td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
@@ -104,15 +121,18 @@
             </form>
           </td>
         </tr>
-        {% empty %}
-        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
+      {% empty %}
+      <tbody>
+        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+      </tbody>
+      {% endfor %}
     </table>
   </div>
   {% if page_obj.has_other_pages %}
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
-    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "জন সদস্য" "MPs" %} · {{ assignment_count }} {% ui "টি নিয়োগ | পৃষ্ঠা" "assignments | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
       {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
       {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&institution={{ institution }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}

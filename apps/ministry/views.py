@@ -9,8 +9,8 @@ from apps.master.models import Ministry, MinisterType
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from apps.accounts.mixins import perm_required
+from utils.assignment_grouping import build_mp_groups, mp_group_order
 from .forms import MinistryAssignmentForm
-from .grouping import build_minister_groups, minister_group_order
 from .models import MinistryAssignment
 
 
@@ -46,10 +46,10 @@ def assignment_list(request):
             Q(ministry__name_bn__icontains=q) | Q(ministry__name_en__icontains=q)
         )
 
-    # One row per MINISTER, not per assignment — see apps/ministry/grouping.py.
-    paginator = Paginator(minister_group_order(qs), 25)
+    # One row per MINISTER, not per assignment — see utils/assignment_grouping.py.
+    paginator = Paginator(mp_group_order(qs, 'minister_type__ordering'), 25)
     page      = paginator.get_page(request.GET.get('page'))
-    rows      = build_minister_groups(qs, [g['mp'] for g in page])
+    rows      = build_mp_groups(qs, [g['mp'] for g in page])
 
     return render(request, 'ministry/assignment_list.html', {
         'page_obj':        page,
