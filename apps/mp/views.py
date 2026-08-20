@@ -14,9 +14,9 @@ from django.views.decorators.http import require_POST
 
 from apps.accounts.mixins import perm_required
 from apps.parliament.models import Parliament
-from apps.ministry.grouping import group_by_parliament
 from apps.ministry.models import MinistryAssignment
 from apps.committee.models import CommitteeAssignment
+from utils.assignment_grouping import group_by_parliament
 from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
 from .forms import (
@@ -77,6 +77,8 @@ def _detail_ctx(mp, **override):
     """Build context for mp_detail; pass keyword overrides to replace defaults."""
     ministry_assignments = MinistryAssignment.objects.filter(mp=mp).select_related(
         'parliament', 'ministry', 'minister_type')
+    committee_assignments = CommitteeAssignment.objects.filter(mp=mp).select_related(
+        'parliament', 'committee', 'position')
     election_info = ElectionInfo.objects.filter(mp=mp, parliament=mp.parliament).first()
     addresses     = {a.address_type: a for a in mp.addresses.all()}
     ei_initial    = {} if election_info else {'parliament': mp.parliament}
@@ -107,12 +109,15 @@ def _detail_ctx(mp, **override):
         'publications':      mp.publications.all(),
 
         # Sections 10–11 (ministry/committee modules)
-        # ministry_groups = the same rows grouped by parliament so a tenure's
-        # ministries stay together (see apps/ministry/grouping.py).
+        # *_groups = the same rows grouped by parliament so each tenure's
+        # ministries/committees stay together (utils/assignment_grouping.py).
+        # The flat *_assignments lists stay for the biodata templates.
         'ministry_assignments': ministry_assignments,
-        'ministry_groups': group_by_parliament(ministry_assignments),
-        'committee_assignments': CommitteeAssignment.objects.filter(mp=mp).select_related(
-            'parliament', 'committee', 'position'),
+        'ministry_groups': group_by_parliament(
+            ministry_assignments, 'minister_type__ordering', 'ministry__name_bn'),
+        'committee_assignments': committee_assignments,
+        'committee_groups': group_by_parliament(
+            committee_assignments, 'position__ordering', 'committee__name_bn'),
 
         # Section 18 (travel module) + office
         'travel_participations': ForeignTourParticipant.objects.filter(mp=mp).select_related(

@@ -598,17 +598,23 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   minister, the serial column counts MINISTERS (repeating down that minister's
   ministries, matching the screen), and the name repeats on every row so the sheet
   stays filterable. Counts shown as "N জন মন্ত্রী · M টি নিয়োগ".
-- **MP profile ministry tab grouped by PARLIAMENT (2026-08-20)** — the tab shows
-  ONE minister, so the repeating column there is Parliament, not the MP. New
-  `group_by_parliament()` in `apps/ministry/grouping.py`; `_detail_ctx` adds
-  `ministry_groups` (`ministry_assignments` kept — biodata templates still use the
-  plain related manager). Real bug fixed: `MinistryAssignment.Meta.ordering` is
-  `['minister_type__ordering','ministry__name_bn']` and **ignores parliament**, so
-  an MP who held office in two parliaments got INTERLEAVED rows; now ordered
-  `-parliament__ordinal, minister_type__ordering, ministry__name_bn`. Template
-  `_tab_ministry.html` = one `<tbody>` per parliament, `rowspan` on the Parliament
-  cell + "⧉ Nটি মন্ত্রণালয়" badge. Verified on prod for all 13 multi-ministry MPs,
-  plus single-ministry, no-ministry (empty state) and biodata.
+- **MP profile Ministry + Committee tabs grouped by PARLIAMENT (2026-08-20)** —
+  these tabs show ONE person, so the repeating column is Parliament, not the MP.
+  Generic **`utils/assignment_grouping.py` → `group_by_parliament(qs, *order_within)`**
+  (in `utils/` beside `go_files.py` because it is now shared by two modules; the
+  minister-specific helpers stay in `apps/ministry/grouping.py`). `_detail_ctx`
+  adds `ministry_groups` + `committee_groups`; the flat `*_assignments` lists are
+  KEPT because the 4 biodata templates read the plain related manager.
+  Real bug fixed: **neither** `MinistryAssignment.Meta.ordering`
+  (`minister_type__ordering, ministry__name_bn`) **nor** `CommitteeAssignment.Meta.
+  ordering` (`committee__name_bn`) mentions parliament, so an MP who served in two
+  parliaments got INTERLEAVED tenures. Now `-parliament__ordinal` first, then
+  `minister_type__ordering/ministry__name_bn` or `position__ordering/committee__name_bn`.
+  Templates `_tab_ministry.html` / `_tab_committee.html` = one `<tbody>` per
+  parliament, `rowspan` on the Parliament cell + "⧉ Nটি মন্ত্রণালয়/কমিটি" badge.
+  Verified on prod: all 13 multi-ministry MPs and 30 multi-committee MPs, plus
+  single/none/empty-state, and every regression surface (both module lists, cabinet
+  + committee reports, biodata).
 - **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
   — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
   encodes **every** `response.write()` with the declared codec, so the BOM was
