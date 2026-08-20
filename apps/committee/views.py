@@ -139,7 +139,8 @@ def assign_positions(request):
 
     committee  = get_object_or_404(StandingCommittee, pk=data['committee'])
     parliament = get_object_or_404(Parliament, pk=data['parliament'])
-    mps        = list(MPChoiceField.annotated_queryset().filter(pk__in=data['mp_ids']))
+    mps        = list(MPChoiceField.annotated_queryset(
+        include_technocrats=False).filter(pk__in=data['mp_ids']))
     positions  = CommitteePosition.objects.filter(is_active=True).order_by('ordering')
     default_pos = _default_member_position(positions)
 

@@ -75,7 +75,10 @@ def _parliament_qs():
 
 
 def _mp_qs_base(parliament_id=None):
-    qs = MP.objects.select_related(
+    # parliament_members() keeps technocrat ministers out of every MP report;
+    # they hold a ministry but no seat. Cabinet/ministry reports query
+    # MinistryAssignment directly and so still include them.
+    qs = MP.objects.parliament_members().select_related(
         'parliament', 'gender', 'religion', 'blood_group',
         'home_district', 'home_district__division', 'birth_district',
     ).prefetch_related(
@@ -98,7 +101,8 @@ def index(request):
     active_parliament = Parliament.objects.filter(is_active=True).first()
     stats = {}
     if active_parliament:
-        stats['total_mp'] = MP.objects.filter(is_active=True, parliament=active_parliament).count()
+        stats['total_mp'] = MP.objects.parliament_members().filter(
+            is_active=True, parliament=active_parliament).count()
         stats['women_mp'] = MP.objects.filter(
             is_active=True, parliament=active_parliament, member_type='reserved'
         ).count()
@@ -107,7 +111,7 @@ def index(request):
         ).count()
         stats['tours'] = ForeignTour.objects.filter(parliament=active_parliament).count()
     else:
-        stats['total_mp'] = MP.objects.filter(is_active=True).count()
+        stats['total_mp'] = MP.objects.parliament_members().filter(is_active=True).count()
         stats['women_mp'] = MP.objects.filter(is_active=True, member_type='reserved').count()
         stats['cabinet'] = MinistryAssignment.objects.filter(is_active=True).count()
         stats['tours'] = ForeignTour.objects.count()
@@ -487,6 +491,7 @@ def cabinet(request):
     fmt             = request.GET.get('format', '')
     parliament_id   = _active_parliament_id(request)
     minister_type_id = request.GET.get('minister_type', '')
+    member_type     = request.GET.get('member_type', '')
     status          = request.GET.get('status', 'active')
     q               = request.GET.get('q', '').strip()
 
@@ -497,6 +502,11 @@ def cabinet(request):
         qs = qs.filter(parliament_id=parliament_id)
     if minister_type_id:
         qs = qs.filter(minister_type_id=minister_type_id)
+    # The cabinet includes technocrat ministers (no seat); show all by default.
+    if member_type == 'technocrat':
+        qs = qs.filter(mp__member_type='technocrat')
+    elif member_type == 'mp':
+        qs = qs.exclude(mp__member_type='technocrat')
     if status == 'active':
         qs = qs.filter(is_active=True)
     elif status == 'inactive':
@@ -507,7 +517,8 @@ def cabinet(request):
             Q(ministry__name_bn__icontains=q)
         )
 
-    headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'মন্ত্রণালয়', 'মন্ত্রীর ধরন', 'শুরু', 'শেষ', 'GO নং', 'অবস্থা']
+    headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'সদস্যের ধরন', 'মন্ত্রণালয়', 'মন্ত্রীর ধরন',
+               'শুরু', 'শেষ', 'GO নং', 'অবস্থা']
 
     def rows_fn(queryset):
         out = []
@@ -516,6 +527,7 @@ def cabinet(request):
                 i + 1,
                 obj.mp.mp_id,
                 _tr(obj.mp),
+                obj.mp.get_member_type_display(),
                 _tr(obj.ministry),
                 _tr(obj.minister_type),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
@@ -533,6 +545,7 @@ def cabinet(request):
     ctx = {
         'parliament_id':    parliament_id,
         'minister_type_id': minister_type_id,
+        'member_type':      member_type,
         'status':           status,
         'q':                q,
         'parliaments':      _parliament_qs(),
@@ -1049,7 +1062,7 @@ def contact_list(request):
     selected_cols = request.GET.getlist('col') or CONTACT_DEFAULT
     q             = request.GET.get('q', '').strip()
 
-    qs = MP.objects.select_related(
+    qs = MP.objects.parliament_members().select_related(
         'parliament', 'home_district',
     ).prefetch_related(
         Prefetch('election_infos',
@@ -1207,6 +1220,14 @@ CUSTOM_REPORT_COLS = [
 ]
 CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
 
+# English labels for MP.MEMBER_TYPE_CHOICES (the model stores Bangla display
+# strings). Keep in sync with apps/mp/models.py.
+MEMBER_TYPE_EN = {
+    'direct':     'Directly Elected',
+    'reserved':   'Reserved (Women)',
+    'technocrat': 'Technocrat Minister',
+}
+
 
 def _custom_cell(mp, col, today=None):
     import datetime
@@ -1237,9 +1258,11 @@ def _custom_cell(mp, col, today=None):
     if col == 'profession':
         return ', '.join(_tr(p) for p in mp.professions_current.all()) or '—'
     if col == 'member_type':
+        # Three types now (direct / reserved / technocrat) — never assume
+        # "not direct" means reserved.
         if _lang() == 'en':
-            return 'Directly Elected' if mp.member_type == 'direct' else 'Reserved (Women)'
-        return 'সরাসরি নির্বাচিত' if mp.member_type == 'direct' else 'সংরক্ষিত (মহিলা)'
+            return MEMBER_TYPE_EN.get(mp.member_type, mp.get_member_type_display())
+        return mp.get_member_type_display()
     if col in ('highest_edu_level', 'highest_degree', 'highest_subject'):
         edu = next((e for e in mp.educations.all() if e.education_level), None)
         if col == 'highest_edu_level':
@@ -1270,7 +1293,7 @@ def _build_custom_qs(get, parliament_id):
         'education_level', 'degree_title', 'major_subject',
     ).order_by('-education_level__degree_order')
 
-    qs = MP.objects.select_related(
+    qs = MP.objects.parliament_members().select_related(
         'parliament', 'gender', 'religion', 'blood_group',
         'home_district__division',
     ).prefetch_related(
@@ -1422,7 +1445,8 @@ def custom_report(request):
     ministries      = Ministry.objects.filter(is_active=True)
     education_levels = EducationLevel.objects.filter(is_active=True).order_by('degree_order')
     prof_quals      = ProfessionalQualification.objects.filter(is_active=True).order_by('name_bn')
-    mp_list         = MP.objects.filter(is_active=True).order_by('mp_id').values('mp_id', 'name_bn')
+    mp_list         = MP.objects.parliament_members().filter(
+        is_active=True).order_by('mp_id').values('mp_id', 'name_bn')
     constituencies  = Constituency.objects.order_by('ordering', 'display_bn')
 
     # Pre-selected values (restore filter state after search)
@@ -1512,7 +1536,8 @@ def family_report(request):
     sel_mp_ids = request.GET.getlist('mp_id')
     lang       = request.session.get('LANGUAGE', 'bn')
 
-    mp_list = MP.objects.filter(is_active=True).order_by('mp_id').values('mp_id', 'name_bn', 'name_en')
+    mp_list = MP.objects.parliament_members().filter(
+        is_active=True).order_by('mp_id').values('mp_id', 'name_bn', 'name_en')
 
     ctx = {
         'mp_list':    mp_list,
@@ -1524,7 +1549,7 @@ def family_report(request):
     if not searched:
         return render(request, 'reports/family_report.html', ctx)
 
-    qs = MP.objects.filter(is_active=True).prefetch_related(
+    qs = MP.objects.parliament_members().filter(is_active=True).prefetch_related(
         Prefetch('spouses',  queryset=Spouse.objects.select_related('gender')),
         Prefetch('children', queryset=Child.objects.select_related('gender')),
         Prefetch('election_infos', queryset=ElectionInfo.objects.select_related('constituency')),

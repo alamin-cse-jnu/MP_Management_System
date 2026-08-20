@@ -244,6 +244,8 @@ body.sidebar-collapsed .mp-nav-item { justify-content: center; }
 .badge-active   { background: #dcfce7; color: #16a34a; border-radius: 20px; padding: 3px 10px; font-size: .75rem; }
 .badge-inactive { background: #fee2e2; color: #dc2626; border-radius: 20px; padding: 3px 10px; font-size: .75rem; }
 .badge-primary  { background: var(--mp-primary-light); color: var(--mp-primary); border-radius: 20px; padding: 3px 10px; font-size: .75rem; }
+/* Technocrat ministers (cabinet members holding no seat) */
+.badge-warning  { background: #fef3c7; color: #b45309; border-radius: 20px; padding: 3px 10px; font-size: .75rem; }
 
 /* ── Breadcrumb ───────────────────────────────── */
 .breadcrumb { font-size: .8rem; }

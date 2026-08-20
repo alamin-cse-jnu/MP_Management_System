@@ -60,6 +60,17 @@ _TAB_LIST = [
 ]
 _COMING_SOON = []
 
+# Technocrat ministers hold a ministry but no seat: they have no ElectionInfo
+# (no constituency, party, oath or gazette date) and cannot sit on a standing
+# committee, so those two tabs are hidden for them.
+_TECHNOCRAT_HIDDEN_TABS = {'tab-election', 'tab-committee'}
+
+
+def _tabs_for(mp):
+    if mp.member_type == 'technocrat':
+        return [t for t in _TAB_LIST if t[0] not in _TECHNOCRAT_HIDDEN_TABS]
+    return _TAB_LIST
+
 
 def _detail_ctx(mp, **override):
     """Build context for mp_detail; pass keyword overrides to replace defaults."""
@@ -104,7 +115,7 @@ def _detail_ctx(mp, **override):
         'office_address': getattr(mp, 'office_address', None),
 
         'active_tab':       'tab-general',
-        'tab_list':         _TAB_LIST,
+        'tab_list':         _tabs_for(mp),
         'coming_soon_tabs': _COMING_SOON,
 
         'general_form':   MPGeneralForm(instance=mp),
@@ -149,9 +160,13 @@ def mp_list(request):
             qs = qs.filter(parliament=active_p)
             parliament_id = str(active_p.pk)
 
+    # Technocrat ministers share this table but hold no seat, so the default
+    # list shows MPs only; picking "টেকনোক্র্যাট" in the filter reveals them.
     member_type = request.GET.get('member_type', '')
     if member_type:
         qs = qs.filter(member_type=member_type)
+    else:
+        qs = qs.parliament_members()
 
     status = request.GET.get('status', 'active')
     if status == 'inactive':
@@ -184,7 +199,9 @@ def mp_create(request):
         mp.updated_by = request.user
         mp.save()
         messages.success(request, f'"{mp.name_bn}" তৈরি হয়েছে। বাকি তথ্য পূরণ করুন।')
-        return redirect(reverse('mp:mp_detail', args=[mp.pk]) + '?active=tab-election')
+        # A technocrat has no election record — send them straight to Ministry.
+        next_tab = 'tab-ministry' if mp.member_type == 'technocrat' else 'tab-election'
+        return redirect(reverse('mp:mp_detail', args=[mp.pk]) + f'?active={next_tab}')
     return render(request, 'mp/mp_create.html', {'form': form})
 
 
@@ -192,8 +209,11 @@ def mp_create(request):
 
 @perm_required
 def mp_detail(request, pk):
-    mp  = get_object_or_404(MP, pk=pk)
-    ctx = _detail_ctx(mp, active_tab=request.GET.get('active', 'tab-general'))
+    mp     = get_object_or_404(MP, pk=pk)
+    active = request.GET.get('active', 'tab-general')
+    if active not in {t[0] for t in _tabs_for(mp)}:
+        active = 'tab-general'
+    ctx = _detail_ctx(mp, active_tab=active)
     return render(request, 'mp/mp_detail.html', ctx)
 
 
@@ -912,7 +932,8 @@ def sync_run(request):
     # Photos are downloaded one-by-one; a single web request can time out before
     # every MP is covered. Report how many still lack a photo so the operator
     # knows to run Sync again (only the missing ones are fetched next time).
-    no_photo = MP.objects.filter(Q(photo='') | Q(photo__isnull=True)).count()
+    no_photo = MP.objects.parliament_members().filter(
+        Q(photo='') | Q(photo__isnull=True)).count()
     if no_photo:
         messages.warning(
             request,

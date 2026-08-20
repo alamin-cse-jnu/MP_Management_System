@@ -2,10 +2,26 @@ from django.conf import settings
 from django.db import models
 
 
+class MPQuerySet(models.QuerySet):
+    def parliament_members(self):
+        """Actual members of parliament — excludes technocrat ministers.
+
+        Technocrats are cabinet members who never won a seat; they live in this
+        table to reuse the profile/ministry/biodata machinery, but they must
+        never count towards the 350 seats. Every MP-population count, report and
+        chart goes through here.
+        """
+        return self.exclude(member_type='technocrat')
+
+    def technocrats(self):
+        return self.filter(member_type='technocrat')
+
+
 class MP(models.Model):
     MEMBER_TYPE_CHOICES = [
-        ('direct',   'সরাসরি নির্বাচিত'),
-        ('reserved', 'সংরক্ষিত আসন (মহিলা)'),
+        ('direct',     'সরাসরি নির্বাচিত'),
+        ('reserved',   'সংরক্ষিত আসন (মহিলা)'),
+        ('technocrat', 'টেকনোক্র্যাট মন্ত্রী'),
     ]
 
     # ── SYSTEM ──────────────────────────────────────────────────────────────────
@@ -103,12 +119,18 @@ class MP(models.Model):
     )
     is_active   = models.BooleanField(default=True)
 
+    objects = MPQuerySet.as_manager()
+
     class Meta:
         ordering = ['mp_id']
         verbose_name = 'সংসদ সদস্য'
 
     def __str__(self):
         return f"{self.name_bn} ({self.mp_id})"
+
+    @property
+    def is_technocrat(self):
+        return self.member_type == 'technocrat'
 
     @property
     def current_election(self):

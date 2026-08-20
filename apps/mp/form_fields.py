@@ -23,22 +23,34 @@ class MPChoiceField(forms.ModelChoiceField):
     Reusable across all modules that need to pick an MP.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, include_technocrats=True, **kwargs):
         kwargs.setdefault('empty_label', '-- সংসদ সদস্য / Select MP --')
         if 'queryset' not in kwargs:
-            kwargs['queryset'] = MPChoiceField.annotated_queryset()
+            kwargs['queryset'] = MPChoiceField.annotated_queryset(
+                include_technocrats=include_technocrats)
         super().__init__(*args, **kwargs)
         self.widget.attrs.setdefault('data-select2', '')
         self.widget.attrs.setdefault('class', 'form-select')
 
     @staticmethod
-    def annotated_queryset(exclude_pks=None):
+    def annotated_queryset(exclude_pks=None, include_technocrats=True):
+        """Selectable people, in seat order.
+
+        ``include_technocrats=False`` drops technocrat ministers — used by the
+        committee module, where membership requires holding a seat. Ministry,
+        foreign-travel and institution pickers keep them (a technocrat minister
+        can travel on a GO and can be nominated to an institution).
+        """
         from apps.mp.models import MP, ElectionInfo
         from apps.parliament.models import Parliament
 
         active_parl = Parliament.objects.filter(is_active=True).values('pk')[:1]
 
-        qs = MP.objects.filter(is_active=True).annotate(
+        base = MP.objects.filter(is_active=True)
+        if not include_technocrats:
+            base = base.parliament_members()
+
+        qs = base.annotate(
             _con_bn=Subquery(
                 ElectionInfo.objects.filter(
                     mp=OuterRef('pk'),
@@ -73,7 +85,8 @@ class MPChoiceField(forms.ModelChoiceField):
             ),
         ).order_by(
             # Serial order: direct-elected (1→300) by constituency ordering,
-            # then reserved seats (301→350) by mp_id. 'direct' < 'reserved'.
+            # then reserved seats (301→350) by mp_id, then technocrats last.
+            # Alphabetically 'direct' < 'reserved' < 'technocrat'.
             'member_type', '_con_order', 'mp_id',
         )
 
@@ -92,9 +105,13 @@ class MPChoiceField(forms.ModelChoiceField):
 
         if constituency:
             return f"{name} — {constituency} — {obj.mp_id}"
-        if getattr(obj, 'member_type', '') == 'reserved':
+        mtype = getattr(obj, 'member_type', '')
+        if mtype == 'reserved':
             reserved = 'Reserved' if is_en else 'সংরক্ষিত'
             return f"{name} — {reserved} — {obj.mp_id}"
+        if mtype == 'technocrat':
+            tech = 'Technocrat' if is_en else 'টেকনোক্র্যাট'
+            return f"{name} — {tech} — {obj.mp_id}"
         return f"{name} — {obj.mp_id}"
 
 
@@ -105,9 +122,10 @@ class MPMultipleChoiceField(forms.ModelMultipleChoiceField):
     label, same Select2 type-to-filter search.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, include_technocrats=True, **kwargs):
         if 'queryset' not in kwargs:
-            kwargs['queryset'] = MPChoiceField.annotated_queryset()
+            kwargs['queryset'] = MPChoiceField.annotated_queryset(
+                include_technocrats=include_technocrats)
         super().__init__(*args, **kwargs)
         self.widget.attrs.setdefault('data-select2', '')
         self.widget.attrs.setdefault('class', 'form-select')

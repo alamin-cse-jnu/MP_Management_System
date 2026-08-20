@@ -49,6 +49,7 @@
         <option value="">{% ui "সব" "All" %}</option>
         <option value="direct"   {% if member_type == 'direct' %}selected{% endif %}>{% ui "সরাসরি" "Directly Elected" %}</option>
         <option value="reserved" {% if member_type == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত" "Reserved" %}</option>
+        <option value="technocrat" {% if member_type == 'technocrat' %}selected{% endif %}>{% ui "টেকনোক্র্যাট মন্ত্রী" "Technocrat Minister" %}</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -123,9 +124,11 @@
           {% else %}—{% endif %}
         </td>
         <td class="text-center">
-          <span class="badge {% if mp.member_type == 'direct' %}badge-primary{% else %}badge-active{% endif %}"
+          <span class="badge {% if mp.member_type == 'direct' %}badge-primary{% elif mp.member_type == 'technocrat' %}badge-warning{% else %}badge-active{% endif %}"
                 style="font-size:0.7rem;">
-            {% if mp.member_type == 'direct' %}{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}{% else %}{% ui "সংরক্ষিত আসন (মহিলা)" "Reserved (Women)" %}{% endif %}
+            {% if mp.member_type == 'direct' %}{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}
+            {% elif mp.member_type == 'technocrat' %}{% ui "টেকনোক্র্যাট মন্ত্রী" "Technocrat Minister" %}
+            {% else %}{% ui "সংরক্ষিত আসন (মহিলা)" "Reserved (Women)" %}{% endif %}
           </span>
         </td>
         <td class="text-center">

@@ -27,7 +27,7 @@
         {% if q %}<a href="?parliament={{ parliament_id }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সংসদ" "Parliament" %}</label>
       <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব সংসদ" "All" %}</option>
@@ -36,13 +36,21 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ধরন" "Type" %}</label>
       <select name="minister_type" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="">{% ui "সব ধরন" "All" %}</option>
         {% for mt in minister_types %}
         <option value="{{ mt.pk }}" {% if mt.pk|stringformat:"s" == minister_type_id %}selected{% endif %}>{{ mt|tr:"name" }}</option>
         {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "সদস্য" "Member" %}</label>
+      <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সবাই" "All" %}</option>
+        <option value="mp" {% if member_type == 'mp' %}selected{% endif %}>{% ui "সংসদ সদস্য" "MP" %}</option>
+        <option value="technocrat" {% if member_type == 'technocrat' %}selected{% endif %}>{% ui "টেকনোক্র্যাট" "Technocrat" %}</option>
       </select>
     </div>
     <div class="col-md-1">
@@ -77,6 +85,9 @@
               {{ obj.mp|tr:"name" }}
             </a>
             <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
+            {% if obj.mp.member_type == 'technocrat' %}
+            <span class="badge badge-warning" style="font-size:0.65rem;">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>
+            {% endif %}
           </td>
           <td>
             {{ obj.ministry|tr:"name" }}

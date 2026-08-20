@@ -36,7 +36,9 @@ def get_custom_cell(mp, col):
     if col == 'profession':
         return ', '.join(p.name_bn for p in mp.professions_current.all()) or '—'
     if col == 'member_type':
-        return 'সরাসরি নির্বাচিত' if mp.member_type == 'direct' else 'সংরক্ষিত (মহিলা)'
+        # Three types now (direct / reserved / technocrat) — never assume
+        # "not direct" means reserved.
+        return mp.get_member_type_display()
     if col in ('highest_edu_level', 'highest_degree', 'highest_subject'):
         edu = next((e for e in mp.educations.all() if e.education_level), None)
         if col == 'highest_edu_level':

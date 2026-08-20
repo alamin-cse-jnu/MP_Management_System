@@ -21,6 +21,7 @@ def assignment_list(request):
 
     parliament_id   = request.GET.get('parliament', '')
     minister_type_id = request.GET.get('minister_type', '')
+    member_type     = request.GET.get('member_type', '')
     q               = request.GET.get('q', '').strip()
 
     if not parliament_id:
@@ -32,6 +33,12 @@ def assignment_list(request):
         qs = qs.filter(parliament_id=parliament_id)
     if minister_type_id:
         qs = qs.filter(minister_type_id=minister_type_id)
+    # The cabinet contains both seat-holding MPs and technocrat ministers;
+    # show everyone by default, filterable either way.
+    if member_type == 'technocrat':
+        qs = qs.filter(mp__member_type='technocrat')
+    elif member_type == 'mp':
+        qs = qs.exclude(mp__member_type='technocrat')
     if q:
         qs = qs.filter(
             Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
@@ -47,6 +54,7 @@ def assignment_list(request):
         'minister_types':  MinisterType.objects.filter(is_active=True).order_by('ordering'),
         'parliament_id':   parliament_id,
         'minister_type_id': minister_type_id,
+        'member_type':     member_type,
         'q':               q,
     })
 

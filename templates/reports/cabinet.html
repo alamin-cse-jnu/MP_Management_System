@@ -27,6 +27,14 @@
         <option value="">{% ui "সব ধরন" "All" %}</option>
         {% for mt in minister_types %}<option value="{{ mt.pk }}" {% if mt.pk|stringformat:"s" == minister_type_id %}selected{% endif %}>{{ mt|tr:"name" }}</option>{% endfor %}
       </select></div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সদস্য" "Member" %}</label>
+      <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সবাই" "All" %}</option>
+        <option value="mp" {% if member_type == 'mp' %}selected{% endif %}>{% ui "সংসদ সদস্য" "MP" %}</option>
+        <option value="technocrat" {% if member_type == 'technocrat' %}selected{% endif %}>{% ui "টেকনোক্র্যাট" "Technocrat" %}</option>
+      </select>
+    </div>
     <div class="col-md-2"><label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অবস্থা" "Status" %}</label>
       <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="active"   {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
@@ -43,9 +51,9 @@
   </div>
   <div class="d-flex gap-2">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}</button>
-    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&status={{ status }}&q={{ q }}&format=pdf" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
-    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&status={{ status }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
-    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&status={{ status }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
+    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}&format=pdf" class="btn btn-outline-danger btn-sm"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</a>
+    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}&format=excel" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-excel me-1"></i>Excel</a>
+    <a href="?parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}&format=csv" class="btn btn-outline-secondary btn-sm"><i class="bi bi-filetype-csv me-1"></i>CSV</a>
   </div>
 </div>
 </form>
@@ -54,7 +62,7 @@
   <div class="table-responsive">
     <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
       <thead class="table-light">
-        <tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>মন্ত্রীর ধরন</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "GO নং" "GO No." %}</th><th>{% ui "অবস্থা" "Status" %}</th><th class="no-print"></th></tr>
+        <tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "সদস্যের ধরন" "Member Type" %}</th><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>মন্ত্রীর ধরন</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "GO নং" "GO No." %}</th><th>{% ui "অবস্থা" "Status" %}</th><th class="no-print"></th></tr>
       </thead>
       <tbody>
         {% for obj in page_obj %}
@@ -62,6 +70,7 @@
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ obj.mp.mp_id }}</code></td>
           <td><a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a><div class="text-muted" style="font-size:.78rem;">{{ obj.mp.name_en }}</div></td>
+          <td>{% if obj.mp.member_type == 'technocrat' %}<span class="badge badge-warning">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>{% else %}<span class="badge badge-primary">{% ui "সংসদ সদস্য" "MP" %}</span>{% endif %}</td>
           <td>{{ obj.ministry|tr:"name" }}<div class="text-muted" style="font-size:.78rem;">{{ obj.ministry.name_en }}</div></td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y"|default:"—" }}</td>
@@ -71,7 +80,7 @@
           <td class="text-end no-print"><a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-ministry" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a></td>
         </tr>
         {% empty %}
-        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        <tr><td colspan="11" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -80,8 +89,8 @@
   <div class="p-3 border-top d-flex justify-content-between">
     <small class="text-muted">পৃষ্ঠা {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
-      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
-      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&minister_type={{ minister_type_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
     </ul></nav>
   </div>
   {% endif %}

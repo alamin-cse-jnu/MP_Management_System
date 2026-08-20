@@ -60,13 +60,18 @@ def dashboard(request):
 
     active_parliament = Parliament.objects.filter(is_active=True).first()
 
-    mp_qs = MP.objects.filter(is_active=True)
+    # parliament_members() drops technocrat ministers — they hold a ministry
+    # but no seat, so they must never count towards the 350.
+    mp_qs = MP.objects.parliament_members().filter(is_active=True)
+    tech_qs = MP.objects.technocrats().filter(is_active=True)
     if active_parliament:
-        mp_qs = mp_qs.filter(parliament=active_parliament)
+        mp_qs   = mp_qs.filter(parliament=active_parliament)
+        tech_qs = tech_qs.filter(parliament=active_parliament)
 
     total_mps  = mp_qs.count()
     women_mps  = mp_qs.filter(member_type='reserved').count()
     direct_mps = mp_qs.filter(member_type='direct').count()
+    technocrat_mps = tech_qs.count()
 
     min_qs  = MinistryAssignment.objects.filter(is_active=True)
     com_qs  = CommitteeAssignment.objects.filter(is_active=True)
@@ -223,6 +228,7 @@ def dashboard(request):
         'total_mps':           total_mps,
         'women_mps':           women_mps,
         'direct_mps':          direct_mps,
+        'technocrat_mps':      technocrat_mps,
         'total_ministers':     total_ministers,
         'total_com_assigns':   total_com_assigns,
         'total_institutions':  total_institutions,

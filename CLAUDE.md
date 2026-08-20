@@ -140,6 +140,11 @@ mp_management/
 14. Office address = সংসদ অফিস ONLY. OneToOne with MP.
 15. Superadmin bypasses all role permission checks.
 16. Report export requires can_export=True in RolePermission.
+17. Technocrat ministers = cabinet members with NO seat. Stored as MP rows with
+    member_type='technocrat' and NO ElectionInfo (no constituency/party/election).
+    They NEVER count towards the 350 — every MP count/report goes through
+    MP.objects.parliament_members(). Included in ministry/travel/institution
+    pickers, excluded from committee. PRP sync never touches them.
 
 ---
 
@@ -168,6 +173,7 @@ mp_management/
 | 19 | Education master data → single-page manager (tab-rail + inline HTMX CRUD) | ✅ |
 | 20 | MP detail edit tabs → two-column grouped composition (General, Election, Address) + dashboard tiny-bar click fix | ✅ |
 | 21 | Master data → grouped single-page managers (Geography, Personal, Professional, Travel, Language, Ministry, Committee) mirroring Education | ✅ |
+| 22 | Technocrat ministers — cabinet members with no seat (see below) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -528,6 +534,77 @@ migration `accounts/0005_consolidate_ministry_committee`; the other 5 by `0004`.
 
 ---
 
+## PHASE 22 — Technocrat ministers (2026-08-20) ✅
+Cabinet members appointed **without a parliamentary seat** (no constituency, no
+party, no election) were absent from the system, leaving the cabinet report
+incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.md`.
+
+- **Third `member_type`** — `MP.MEMBER_TYPE_CHOICES` gains `'technocrat'`
+  (`টেকনোক্র্যাট মন্ত্রী`), migration `mp/0008` (choices-only, no column change).
+  A technocrat = an `MP` row with **no `ElectionInfo` at all** + one
+  `MinistryAssignment` per ministry. `ElectionInfo.constituency` was already
+  nullable and `MinistryAssignment` already allowed several rows per person, so
+  **no other schema change** was needed. Rejected alternatives: a separate
+  `Technocrat` model (would duplicate the whole ministry/biodata stack) and a
+  nullable `MinistryAssignment.mp` (nullable-FK churn across every template).
+- **"350 means 350"** — `MP.objects.parliament_members()` (a `MPQuerySet` on
+  `apps/mp/models.py`) is the ONE definition of "actual member" =
+  `.exclude(member_type='technocrat')`. Applied at: dashboard `mp_qs`
+  (`accounts/views.py`), `_mp_qs_base()` + report-index stats + contact/custom/
+  family report querysets (`reports/views.py`), `mp_list` default and the PRP
+  "missing photo" count (`mp/views.py`). Ministry/cabinet surfaces deliberately
+  do NOT exclude them. `MP.is_technocrat` property + `MP.objects.technocrats()`.
+- **Three-way labels** — three places assumed "not direct ⇒ reserved" and would
+  mislabel a technocrat as সংরক্ষিত (মহিলা): `reports/templatetags/report_tags.py`,
+  the custom-report formatter (`reports/views.py`, now via new `MEMBER_TYPE_EN`
+  map for English), and the `mp_list.html` badge. All use
+  `get_member_type_display()`. New `.badge-warning` in `theme.css` (amber) marks
+  technocrats.
+- **Pickers** — `MPChoiceField` / `MPMultipleChoiceField` / `annotated_queryset()`
+  gain `include_technocrats` (**default `True`**). Ministry, foreign-travel and
+  institution keep them (a technocrat can travel on a GO / be nominated);
+  **committee passes `False`** (membership requires a seat) — `committee/forms.py`
+  ×2 + `committee/views.py` step-2. Technocrats sort last (`'direct'` <
+  `'reserved'` < `'technocrat'`) and are labelled `Name — টেকনোক্র্যাট — MP-ID`.
+- **MP detail** — `_tabs_for(mp)` hides tab ২ (নির্বাচন) and tab ১১ (কমিটি) for
+  technocrats; `mp_detail` clamps a stale `?active=` to a tab that exists.
+  `mp_create` redirects a new technocrat to `tab-ministry`, not `tab-election`.
+  Create form (`mp_create.html`) gains the third option.
+- **Cabinet report + ministry list** — new **সদস্যের ধরন** column (screen, print,
+  Excel/CSV) and an MP/Technocrat filter carried through export + pagination links.
+  Dashboard Ministers tile shows "এর মধ্যে N টেকনোক্র্যাট".
+- **PRP sync is MP-only** (confirmed with the user) — `import_mp_api` roster
+  lookups use `parliament_members()`, plus a safety net that SKIPs any record
+  whose `mp_id` matches an existing technocrat, so the API can never convert one
+  into an elected member.
+- **Seed** — `python manage.py seed_technocrats [--dry-run] [--parliament N]
+  [--create-masters]`.
+  Idempotent; resolves `Ministry`/`MinisterType` by bn-then-en name and **reports
+  unresolved masters instead of creating them** (api_sync policy); refuses an
+  `mp_id` already held by an elected member. **`--create-masters`** (opt-in) creates
+  exactly the 4 Ministry + 2 MinisterType rows named in the doc — needed on a DB
+  whose ministry masters are still empty, as the local dev DB was. Seeds the
+  3 people / 4 assignments:
+  `013050101` ড. খলিলুর রহমান (পররাষ্ট্র, মন্ত্রী) · `013050201` মোঃ আমিনুল হক
+  (যুব ও ক্রীড়া, প্রতিমন্ত্রী) · `013050301` মোহাম্মদ আমিন উর রশিদ
+  (মৎস্য ও প্রাণিসম্পদ **+** কৃষি, মন্ত্রী), all appointed 2026-02-17.
+- **Biodata PDF** stays available for technocrats (election rows render empty).
+- Verified on an isolated SQLite build (Django test client, 47 checks, all pass):
+  seed dry-run/real/re-run, queryset splits, picker inclusion per module, tab
+  hiding + `?active=` clamping, dashboard/report/ministry counts, cabinet
+  filter + CSV column, create-redirect.
+- **Local Docker stack seeded (2026-08-20)** — `mp/0008` applied, masters created
+  via `--create-masters` (Ministry + MinisterType were 0 rows locally), 3
+  technocrats + 4 assignments written. Live check: MP rows 352, `parliament_members()`
+  349, technocrats 3; dashboard `total_mps=349 technocrat_mps=3`, mp_list 349
+  (technocrat filter → 3), ministry list 4, cabinet 4, all_mp 349.
+  ⏳ **production server not yet deployed** — needs SFTP sync, `docker compose up -d`,
+  `migrate`, then `seed_technocrats --dry-run` there (the server DOES have ministry
+  master data, so it should resolve without `--create-masters`; if any name differs,
+  the dry run names it).
+
+---
+
 ## REFERENCE DOCS
 
 Read these when working on the relevant area:
@@ -541,3 +618,4 @@ Read these when working on the relevant area:
 | `docs/ref-reports.md` | Standard reports table, audit trail model |
 | `docs/ref-design.md` | Color palette, login layout, sidebar/topbar, cards, tables, forms, buttons, print styles |
 | `docs/ref-form-mapping.md` | PDF form → system field mapping; exact field order per section; 3 model fixes from PDF audit |
+| `docs/technocrat-plan.md` | Technocrat ministers — why they reuse the MP model, the "350 means 350" exclusion list, picker/sync scope rules |

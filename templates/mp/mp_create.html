@@ -55,6 +55,7 @@
             <select name="member_type" class="form-select" id="id_member_type">
               <option value="direct"   {% if form.member_type.value == 'direct'   or not form.member_type.value %}selected{% endif %}>{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</option>
               <option value="reserved" {% if form.member_type.value == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত আসন (মহিলা)" "Reserved Seat (Women)" %}</option>
+              <option value="technocrat" {% if form.member_type.value == 'technocrat' %}selected{% endif %}>{% ui "টেকনোক্র্যাট মন্ত্রী (আসনবিহীন)" "Technocrat Minister (no seat)" %}</option>
             </select>
             {% if form.member_type.errors %}<div class="invalid-feedback d-block">{{ form.member_type.errors }}</div>{% endif %}
           </div>

@@ -30,7 +30,9 @@ class _BootstrapMixin:
 
 
 class CommitteeAssignmentForm(_BootstrapMixin, forms.ModelForm):
-    mp = MPChoiceField(required=True)
+    # Committee membership requires holding a seat, so technocrat ministers
+    # are not selectable here (unlike ministry/travel/institution).
+    mp = MPChoiceField(required=True, include_technocrats=False)
     committee = BilingualChoiceField(
         queryset=StandingCommittee.objects.filter(is_active=True).order_by('name_bn'),
         empty_label='-- কমিটি নির্বাচন করুন / Select Committee --',
@@ -81,7 +83,7 @@ class CommitteeBulkStep1Form(_BootstrapMixin, forms.Form):
         label='মোট সদস্য সংখ্যা / Total members',
         help_text='শুধু নির্দেশিকা — সংরক্ষিত হয় না। Guide only, not stored.',
     )
-    mps         = MPMultipleChoiceField(required=True,
+    mps         = MPMultipleChoiceField(required=True, include_technocrats=False,
                                         label='সংসদ সদস্যগণ / Members of Parliament')
     start_date  = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     end_date    = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))

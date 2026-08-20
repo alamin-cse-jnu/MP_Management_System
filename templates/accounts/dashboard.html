@@ -104,6 +104,13 @@
         </div>
         <div class="stat-value" data-countup="{{ total_ministers }}">{{ total_ministers }}</div>
         <div class="stat-label">{% ui "মন্ত্রী/প্রতিমন্ত্রী" "Ministers" %}</div>
+        {% if technocrat_mps %}
+        {# Technocrat ministers hold a ministry but no seat, so they are counted
+           in the cabinet but not in "Total MPs". #}
+        <div class="stat-label" style="font-size:.7rem;opacity:.85;">
+          {% ui "এর মধ্যে" "incl." %} {{ technocrat_mps }} {% ui "টেকনোক্র্যাট" "technocrat" %}
+        </div>
+        {% endif %}
       </div>
     </a>
   </div>

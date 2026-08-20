@@ -183,7 +183,10 @@ class Command(BaseCommand):
 
         # ── images-only backfill: (re)download photo/signature, nothing else ──
         if options['images_only']:
-            existing = {mp.mp_id: mp for mp in MP.objects.all()}
+            # PRP publishes elected members only. Technocrat ministers are
+            # locally entered and have no prpId, so they are never matched,
+            # created or overwritten by the API.
+            existing = {mp.mp_id: mp for mp in MP.objects.parliament_members()}
             done = missing = 0
             for rec in payload:
                 mp_id = _clean(rec.get('prpId'))
@@ -221,7 +224,9 @@ class Command(BaseCommand):
         bloodgroup_map   = maps['bloodgroup']
         party_map        = maps['party']
         constituency_map = maps['constituency']
-        existing         = {mp.mp_id: mp for mp in MP.objects.filter(parliament=parliament)}
+        # Technocrats excluded — the PRP roster covers elected members only.
+        existing         = {mp.mp_id: mp
+                            for mp in MP.objects.parliament_members().filter(parliament=parliament)}
 
         total = skipped = created = updated = errors = 0
         synced = conflicts = autofilled = 0
@@ -363,6 +368,15 @@ class Command(BaseCommand):
                     )
                     if _clean(gi.get('nationality')).lower() == 'bangladeshi':
                         defaults['nationality'] = 'বাংলাদেশী'
+
+                    # Safety net: never let the API convert a locally entered
+                    # technocrat minister into an elected member, even if their
+                    # manually assigned mp_id happens to match a prpId.
+                    if MP.objects.technocrats().filter(mp_id=mp_id).exists():
+                        skipped += 1
+                        self.stdout.write(self.style.WARNING(
+                            f'  SKIP  {mp_id} | {name_en} (technocrat — not synced from PRP)'))
+                        continue
 
                     mp, was_created = MP.objects.update_or_create(
                         mp_id=mp_id, defaults=defaults,
