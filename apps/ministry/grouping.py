@@ -54,3 +54,25 @@ def build_minister_groups(qs, mp_ids):
 def all_minister_groups(qs):
     """Every minister in ``qs``, grouped and ordered. For print/PDF/exports."""
     return build_minister_groups(qs, [g['mp'] for g in minister_group_order(qs)])
+
+
+def group_by_parliament(qs):
+    """Group ONE minister's assignments by parliament, newest parliament first.
+
+    The MP profile's ministry tab shows a single person, so the repeating column
+    there is Parliament, not the minister. MinistryAssignment.Meta.ordering sorts
+    by minister-type then ministry name and ignores parliament entirely, so an MP
+    who held office in two parliaments got interleaved rows. Ordering by
+    parliament first keeps each tenure together.
+
+    Returns ``[{'parliament': Parliament, 'assignments': [...]}, ...]``; within a
+    parliament the Meta.ordering (rank, then ministry name) still applies.
+    """
+    groups, order = {}, []
+    for a in qs.order_by('-parliament__ordinal', 'minister_type__ordering',
+                         'ministry__name_bn'):
+        if a.parliament_id not in groups:
+            groups[a.parliament_id] = {'parliament': a.parliament, 'assignments': []}
+            order.append(a.parliament_id)
+        groups[a.parliament_id]['assignments'].append(a)
+    return [groups[pid] for pid in order]

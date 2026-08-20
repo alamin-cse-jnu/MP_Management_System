@@ -6,7 +6,15 @@
   </a>
 </div>
 
-{% if ministry_assignments %}
+{% if ministry_groups %}
+<style>
+  /* One <tbody> per parliament; the Parliament cell spans that tenure's
+     ministries so a minister holding several reads as one block. */
+  .mp-table tbody.parl-group + tbody.parl-group { border-top: 2px solid #e2e8f0; }
+  .mp-table tbody.parl-group > tr > td { border-bottom-width: 0; }
+  .mp-table tbody.parl-group > tr:last-child > td { border-bottom-width: 1px; }
+  .mp-table tbody.parl-group > tr > td[rowspan] { background: #fbfdff; vertical-align: top; }
+</style>
 <div class="table-responsive">
   <table class="mp-table">
     <thead>
@@ -21,10 +29,22 @@
         <th style="width:90px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
-    <tbody>
-      {% for obj in ministry_assignments %}
+    {% for grp in ministry_groups %}
+    <tbody class="parl-group">
+      {% for obj in grp.assignments %}
       <tr>
-        <td>{{ obj.parliament|tr:"name" }}</td>
+        {% if forloop.first %}
+        <td rowspan="{{ grp.assignments|length }}">
+          {{ grp.parliament|tr:"name" }}
+          {% if grp.assignments|length > 1 %}
+          <div class="mt-1">
+            <span class="badge bg-info-subtle text-info-emphasis" style="font-size:.65rem;">
+              <i class="bi bi-layers me-1"></i>{{ grp.assignments|length }}{% ui "টি মন্ত্রণালয়" " ministries" %}
+            </span>
+          </div>
+          {% endif %}
+        </td>
+        {% endif %}
         <td>{{ obj.ministry|tr:"name" }}</td>
         <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type|tr:"name" }}</span></td>
         <td>{{ obj.start_date|date:"d/m/Y" }}</td>
@@ -50,6 +70,7 @@
       </tr>
       {% endfor %}
     </tbody>
+    {% endfor %}
   </table>
 </div>
 {% else %}

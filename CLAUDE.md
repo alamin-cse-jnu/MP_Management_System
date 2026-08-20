@@ -598,6 +598,17 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   minister, the serial column counts MINISTERS (repeating down that minister's
   ministries, matching the screen), and the name repeats on every row so the sheet
   stays filterable. Counts shown as "N জন মন্ত্রী · M টি নিয়োগ".
+- **MP profile ministry tab grouped by PARLIAMENT (2026-08-20)** — the tab shows
+  ONE minister, so the repeating column there is Parliament, not the MP. New
+  `group_by_parliament()` in `apps/ministry/grouping.py`; `_detail_ctx` adds
+  `ministry_groups` (`ministry_assignments` kept — biodata templates still use the
+  plain related manager). Real bug fixed: `MinistryAssignment.Meta.ordering` is
+  `['minister_type__ordering','ministry__name_bn']` and **ignores parliament**, so
+  an MP who held office in two parliaments got INTERLEAVED rows; now ordered
+  `-parliament__ordinal, minister_type__ordering, ministry__name_bn`. Template
+  `_tab_ministry.html` = one `<tbody>` per parliament, `rowspan` on the Parliament
+  cell + "⧉ Nটি মন্ত্রণালয়" badge. Verified on prod for all 13 multi-ministry MPs,
+  plus single-ministry, no-ministry (empty state) and biodata.
 - **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
   — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
   encodes **every** `response.write()` with the declared codec, so the BOM was
