@@ -71,8 +71,7 @@
       <thead class="table-light">
         <tr><th>#</th><th>{% ui "এমপি আইডি" "MP ID" %}</th><th>নাম</th><th>{% ui "সদস্যের ধরন" "Member Type" %}</th><th>{% ui "মন্ত্রণালয়" "Ministry" %}</th><th>মন্ত্রীর ধরন</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "GO নং" "GO No." %}</th><th>{% ui "অবস্থা" "Status" %}</th><th class="no-print"></th></tr>
       </thead>
-      {# One <tbody> per minister: a minister holding several ministries is shown
-         as one grouped block and never split across pages. #}
+      {# One <tbody> per minister: a minister holding several ministries is shown as one grouped block and never split across pages. #}
       {% for row in rows %}
       <tbody class="min-group">
         {% for obj in row.assignments %}

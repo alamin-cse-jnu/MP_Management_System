@@ -85,8 +85,7 @@
           <th style="width:6rem;"></th>
         </tr>
       </thead>
-      {# One <tbody> per minister: all of their ministries stay together, so a
-         minister holding several ministries can never be split across pages. #}
+      {# One <tbody> per minister: all of their ministries stay together, so a minister holding several ministries can never be split across pages. #}
       {% for row in rows %}
       <tbody class="min-group">
         {% for obj in row.assignments %}
@@ -143,8 +142,7 @@
   </div>
 
   <div class="p-3 border-top d-flex justify-content-between align-items-center">
-    {# The list is paginated by MINISTER, so report both counts — otherwise
-       "মোট 51" next to 64 visible rows looks like a miscount. #}
+    {# The list is paginated by MINISTER, so report both counts — otherwise "মোট 51" next to 64 visible rows looks like a miscount. #}
     <small class="text-muted">
       {% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "জন মন্ত্রী" "ministers" %}
       · {{ assignment_count }} {% ui "টি মন্ত্রণালয় নিয়োগ" "assignments" %}

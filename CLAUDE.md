@@ -638,6 +638,14 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   `AttributeError: Cannot find 'institution' on InstitutionAssignment`; it stayed
   hidden ONLY because the table is empty — entering the first institution record
   would have 500'd the biodata page. Now prefetches `__role`/`__parliament`.
+- **⚠ Django `{# #}` comments are SINGLE-LINE ONLY** — `django.template.base.tag_re`
+  is compiled WITHOUT `re.DOTALL`, so `{#` … newline … `#}` is not a comment at all:
+  it renders as **literal visible text on the page**. Four such comments introduced
+  during this phase leaked onto the dashboard, ministry list, cabinet report and
+  institution list on the live server (caught by the user). All collapsed to one
+  line. **Use `{% comment %}…{% endcomment %}` for anything multi-line.** Guard:
+  `grep -Pzo '\{#(?:(?!#\}).)*?
+' templates/**/*.html` must return nothing.
 - **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
   — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
   encodes **every** `response.write()` with the declared codec, so the BOM was

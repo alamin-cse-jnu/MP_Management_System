@@ -81,8 +81,7 @@
           <th style="width:8rem;"></th>
         </tr>
       </thead>
-      {# One <tbody> per MP: an MP nominated to several institutions is shown as
-         one grouped block and never split across pages. #}
+      {# One <tbody> per MP: an MP nominated to several institutions is shown as one grouped block and never split across pages. #}
       {% for row in rows %}
       <tbody class="mp-group">
         {% for obj in row.assignments %}
