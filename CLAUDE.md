@@ -643,9 +643,9 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
   it renders as **literal visible text on the page**. Four such comments introduced
   during this phase leaked onto the dashboard, ministry list, cabinet report and
   institution list on the live server (caught by the user). All collapsed to one
-  line. **Use `{% comment %}…{% endcomment %}` for anything multi-line.** Guard:
-  `grep -Pzo '\{#(?:(?!#\}).)*?
-' templates/**/*.html` must return nothing.
+  line. **Use `{% comment %}…{% endcomment %}` for anything multi-line.** Guard: a
+  regex scan for `{#` followed by a newline before any `#}` must find nothing
+  across `templates/` (a `{#` surviving into rendered HTML is the same symptom).
 - **CSV BOM bug fixed (found while testing the above, affected ALL 13 report CSVs)**
   — `export_csv` declared `content_type='text/csv; charset=utf-8-sig'`. Django
   encodes **every** `response.write()` with the declared codec, so the BOM was
