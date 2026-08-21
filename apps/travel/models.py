@@ -56,20 +56,49 @@ class ForeignTourParticipant(models.Model):
 
 
 class ForeignTourOfficer(models.Model):
-    """Officer accompanying MPs on a tour. ID, name & designation are all free text
-    (the OfficerDesignation master was retired in Phase 17.10)."""
-    tour        = models.ForeignKey(ForeignTour, on_delete=models.CASCADE, related_name='officers')
-    officer_id  = models.CharField(max_length=50, blank=True)   # free text, searchable
-    name        = models.CharField(max_length=200)              # free text, searchable
-    designation = models.CharField('পদবী / Designation', max_length=200, blank=True)
-    remarks_bn  = models.TextField(blank=True)
-    remarks_en  = models.TextField(blank=True)
+    """An officer accompanying MPs on a tour.
+
+    Normally picked from the PRP-synced roster (``officer`` FK). The name /
+    designation / ID columns are a **frozen snapshot** taken at save time, so a
+    past GO keeps rendering exactly as it was recorded even after the officer's
+    designation changes or he leaves the service. ``is_external`` marks someone
+    typed in by hand because they are outside the Secretariat (e.g. a ministry
+    or embassy officer on the same GO) — sync never touches those rows.
+    """
+    tour           = models.ForeignKey(ForeignTour, on_delete=models.CASCADE, related_name='officers')
+    officer        = models.ForeignKey('officer.Officer', on_delete=models.PROTECT,
+                                       null=True, blank=True, related_name='tour_assignments')
+    is_external    = models.BooleanField(default=False)
+    prp_id         = models.CharField('PRP ID', max_length=50, blank=True)   # snapshot, searchable
+    name_bn        = models.CharField(max_length=200)                        # snapshot, searchable
+    name_en        = models.CharField(max_length=200, blank=True)
+    designation_bn = models.CharField('পদবী / Designation', max_length=200, blank=True)
+    designation_en = models.CharField(max_length=200, blank=True)
+    remarks_bn     = models.TextField(blank=True)
+    remarks_en     = models.TextField(blank=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['name_bn']
 
     def __str__(self):
-        return f"{self.name} — {self.tour.go_number}"
+        return f"{self.name_bn} — {self.tour.go_number}"
+
+    @classmethod
+    def snapshot_fields(cls, officer):
+        """Freeze a roster Officer into this row's own columns."""
+        return {
+            'prp_id':         officer.prp_id,
+            'name_bn':        officer.display_name_bn,
+            'name_en':        officer.display_name_en,
+            'designation_bn': officer.designation_bn,
+            'designation_en': officer.designation_en,
+            'is_external':    False,
+        }
+
+    @property
+    def is_retired(self):
+        """True when this row is linked to an officer who is no longer selectable."""
+        return bool(self.officer_id) and not self.officer.is_active
 
 
 class ForeignTourCountry(models.Model):

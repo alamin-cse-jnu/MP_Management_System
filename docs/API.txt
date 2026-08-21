@@ -1,0 +1,48 @@
+API Name Get Token
+Method POST
+URL {Base-URL}/api/authentication/external?action=token
+Content-Type application/json
+
+
+API Name Get Employee Informations
+Method GET
+URL {Base-URL}/api/secure/external?action=employeeInformations
+Header Authorization: Payload of Get Token API
+Content-Type application/json
+
+
+API Name Get Office Informations
+Method GET
+URL {Base-URL}/api/secure/external?action=offices
+Header Authorization: Payload of Get Token API
+Content-Type application/json
+
+
+response example:
+
+"prpId": "110100234",
+            "nameEn": "Sheikh Estiak Ahmed Shawon",
+            "nameBn": "শেখ ইসতিয়াক আহমেদ শাওন",
+            "mobile": "8801515674123",
+            "status": "Active",
+            "telephone": "02222215677",
+            "gender": "Male",
+            "photo": "https://prp.parliament.gov.bd/api/files?_=MjAyNjAzMjUvcDIyMDE4NjA0XzE3OTg1NzFlYTcxODQ5ODFhNzNkMTc2MGE3Y2UwMjZiLmpwZw==",
+            "officeDetails": {
+                "wingId": 56,
+                "wingNameEn": "B&IT Wing",
+                "wingNameBn": "বিএন্ডআইটি অনুবিভাগ",
+                "branchId": 63,
+                "branchNameEn": "SYSTEM MANAGEMENT BRANCH",
+                "branchNameBn": "সিস্টেম ম্যানেজমেন্ট অধিশাখা",
+                "sectionId": 64,
+                "sectionNameEn": "E-SERVICE MANAGEMENT SECTION",
+                "sectionNameBn": "ই-সার্ভিস ম্যানেজমেন্ট শাখা",
+                "officeId": 64,
+                "officeNameEn": "E-SERVICE MANAGEMENT SECTION",
+                "officeNameBn": "ই-সার্ভিস ম্যানেজমেন্ট শাখা"
+            },
+            "class": 1,
+            "designationEn": "Computer Programmer",
+            "designationBn": "কম্পিউটার প্রোগ্রামার"
+        }

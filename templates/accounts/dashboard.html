@@ -72,6 +72,13 @@
         <div class="stat-icon mx-auto"><i class="bi bi-people-fill"></i></div>
         <div class="stat-value" data-countup="{{ total_mps }}">{{ total_mps }}</div>
         <div class="stat-label">{% ui "মোট সংসদ সদস্য" "Total MPs" %}</div>
+        {% if technocrat_mps %}
+        {% comment %}Technocrat ministers hold a ministry but no seat, so they are NOT part of the 350 — shown alongside, never added in.{% endcomment %}
+        <div class="stat-label" style="font-size:.7rem;opacity:.85;"
+             title="{% ui 'টেকনোক্র্যাট মন্ত্রীদের আসন নেই — তাঁরা ৩৫০ জনের মধ্যে গণনা হয় না।' 'Technocrat ministers hold no seat and are not counted in the 350.' %}">
+          + {{ technocrat_mps }} {% ui "টেকনোক্র্যাট" "technocrat" %}
+        </div>
+        {% endif %}
       </div>
     </a>
   </div>
@@ -120,8 +127,11 @@
         <div class="stat-icon mx-auto" style="background:rgba(59,130,246,.12);color:#2563eb;">
           <i class="bi bi-clipboard2-check-fill"></i>
         </div>
-        <div class="stat-value" data-countup="{{ total_com_assigns }}">{{ total_com_assigns }}</div>
-        <div class="stat-label">{% ui "কমিটি সদস্যপদ" "Committee Memberships" %}</div>
+        <div class="stat-value" data-countup="{{ total_committees }}">{{ total_committees }}</div>
+        <div class="stat-label">{% ui "স্থায়ী কমিটি" "Standing Committees" %}</div>
+        <div class="stat-label" style="font-size:.7rem;opacity:.85;">
+          {{ total_com_assigns }} {% ui "সদস্যপদ" "memberships" %}
+        </div>
       </div>
     </a>
   </div>

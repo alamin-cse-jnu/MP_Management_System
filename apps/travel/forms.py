@@ -3,6 +3,7 @@ from django import forms
 from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import Country, TravelPurpose, TravelType
 from apps.mp.form_fields import MPChoiceField, MPMultipleChoiceField
+from apps.officer.form_fields import OfficerMultipleChoiceField, selectable_queryset
 from apps.parliament.models import Parliament
 from utils.go_files import GO_FILE_ACCEPT
 from .models import (ForeignTour, ForeignTourCountry, ForeignTourOfficer,
@@ -64,13 +65,38 @@ class ParticipantBulkForm(forms.Form):
         self.fields['mps'].queryset = MPChoiceField.annotated_queryset(exclude_pks=exclude_ids)
 
 
+class TourOfficersForm(forms.Form):
+    """Accompanying officers, picked from the PRP-synced roster.
+
+    The queryset is set per-tour so officers already attached stay selectable
+    even after they retire (see officer.form_fields.selectable_queryset).
+    """
+    officers = OfficerMultipleChoiceField(required=False)
+
+    def __init__(self, *args, attached_pks=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['officers'].queryset = selectable_queryset(include_pks=attached_pks)
+
+
 class OfficerForm(_BootstrapMixin, forms.ModelForm):
+    """Manual entry for an officer who is NOT in the PRP roster — e.g. a
+    ministry or embassy officer travelling on the same GO. Rows saved through
+    this form carry `is_external=True` and are never touched by sync."""
+
     class Meta:
         model  = ForeignTourOfficer
-        fields = ['officer_id', 'name', 'designation', 'remarks_bn', 'remarks_en']
+        fields = ['name_bn', 'name_en', 'designation_bn', 'designation_en']
         widgets = {
-            'designation': forms.TextInput(attrs={'placeholder': 'যেমন: যুগ্ম সচিব / Joint Secretary'}),
+            'name_bn':        forms.TextInput(attrs={'placeholder': 'নাম (বাংলা)'}),
+            'name_en':        forms.TextInput(attrs={'placeholder': 'Name (English)'}),
+            'designation_bn': forms.TextInput(attrs={'placeholder': 'যেমন: যুগ্ম সচিব'}),
+            'designation_en': forms.TextInput(attrs={'placeholder': 'e.g. Joint Secretary'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for f in ('name_en', 'designation_bn', 'designation_en'):
+            self.fields[f].required = False
 
 
 class TourCountryForm(_BootstrapMixin, forms.ModelForm):
@@ -118,6 +144,9 @@ CountryFormSet = forms.inlineformset_factory(
     ForeignTour, ForeignTourCountry, form=TourCountryForm,
     extra=1, can_delete=True,
 )
+# External (non-PRP) officers only — the roster-picked rows are reconciled by
+# TourOfficersForm. The two sets are disjoint (officer FK set vs null), so the
+# picker and this formset never fight over the same row.
 OfficerFormSet = forms.inlineformset_factory(
     ForeignTour, ForeignTourOfficer, form=OfficerForm,
     extra=1, can_delete=True,

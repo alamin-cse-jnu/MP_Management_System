@@ -9,8 +9,9 @@ from apps.master.models import TravelType
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
 from apps.accounts.mixins import perm_required
-from .forms import (CountryFormSet, ForeignTourForm, OfficerForm, OfficerFormSet,
-                    ParticipantBulkForm, TourCountryForm, TourParticipantsForm)
+from .forms import (CountryFormSet, ForeignTourForm, OfficerFormSet,
+                    ParticipantBulkForm, TourCountryForm, TourOfficersForm,
+                    TourParticipantsForm)
 from .models import (ForeignTour, ForeignTourCountry, ForeignTourOfficer,
                      ForeignTourParticipant)
 
@@ -23,7 +24,7 @@ def tour_list(request):
         mp_count=Count('participants', distinct=True),
         officer_count=Count('officers', distinct=True),
         country_count=Count('countries', distinct=True),
-    )
+    ).order_by('-go_date')   # annotate() sets group_by, hiding Meta.ordering from the paginator
 
     parliament_id  = request.GET.get('parliament', '')
     tour_type_id   = request.GET.get('tour_type', '')
@@ -43,8 +44,9 @@ def tour_list(request):
             Q(go_number__icontains=q) |
             Q(participants__mp__name_bn__icontains=q) |
             Q(participants__mp__name_en__icontains=q) |
-            Q(officers__name__icontains=q) |
-            Q(officers__officer_id__icontains=q)
+            Q(officers__name_bn__icontains=q) |
+            Q(officers__name_en__icontains=q) |
+            Q(officers__prp_id__icontains=q)
         ).distinct()
 
     paginator = Paginator(qs, 25)
@@ -71,15 +73,25 @@ def _tour_form(request, tour):
     form       = ForeignTourForm(request.POST or None, request.FILES or None,
                                  instance=tour, initial=initial)
     country_fs = CountryFormSet(request.POST or None, instance=tour, prefix='country')
-    officer_fs = OfficerFormSet(request.POST or None, instance=tour, prefix='officer')
+    # The formset covers ONLY hand-entered (non-PRP) officers; roster-picked
+    # rows are reconciled from the picker below.
+    officer_fs = OfficerFormSet(request.POST or None, instance=tour, prefix='officer',
+                                queryset=ForeignTourOfficer.objects.filter(officer__isnull=True))
 
     part_initial = {}
+    attached_officer_pks = []
     if tour is not None:
         part_initial['mps'] = list(tour.participants.values_list('mp_id', flat=True))
+        attached_officer_pks = list(
+            tour.officers.filter(officer__isnull=False).values_list('officer_id', flat=True))
     part_form = TourParticipantsForm(request.POST or None, initial=part_initial)
+    officers_form = TourOfficersForm(request.POST or None,
+                                     initial={'officers': attached_officer_pks},
+                                     attached_pks=attached_officer_pks)
 
     if request.method == 'POST':
-        if form.is_valid() and country_fs.is_valid() and officer_fs.is_valid() and part_form.is_valid():
+        if (form.is_valid() and country_fs.is_valid() and officer_fs.is_valid()
+                and part_form.is_valid() and officers_form.is_valid()):
             tour = form.save(commit=False)
             if is_create:
                 tour.created_by = request.user
@@ -87,8 +99,31 @@ def _tour_form(request, tour):
 
             country_fs.instance = tour
             country_fs.save()
+
+            # External officers (typed by hand) — always flagged, never linked.
             officer_fs.instance = tour
-            officer_fs.save()
+            ext_rows = officer_fs.save(commit=False)
+            for obj in officer_fs.deleted_objects:
+                obj.delete()
+            for row in ext_rows:
+                row.tour = tour
+                row.officer = None
+                row.is_external = True
+                row.save()
+
+            # Roster officers: add newly-checked, drop unchecked. The snapshot is
+            # frozen onto the row so the GO still reads correctly years later.
+            chosen = {o.pk: o for o in officers_form.cleaned_data['officers']}
+            current = {r.officer_id: r for r in
+                       tour.officers.filter(officer__isnull=False)}
+            for pk, officer_obj in chosen.items():
+                if pk not in current:
+                    ForeignTourOfficer.objects.create(
+                        tour=tour, officer=officer_obj,
+                        **ForeignTourOfficer.snapshot_fields(officer_obj))
+            for pk, row in current.items():
+                if pk not in chosen:
+                    row.delete()
 
             # Reconcile participants: add newly-checked MPs, drop unchecked ones.
             selected = {m.pk for m in part_form.cleaned_data['mps']}
@@ -109,6 +144,7 @@ def _tour_form(request, tour):
         'country_fs': country_fs,
         'officer_fs': officer_fs,
         'part_form':  part_form,
+        'officers_form': officers_form,
         'tour':       tour,
         'is_create':  is_create,
         'title_bn':   'নতুন বিদেশ ভ্রমণ GO' if is_create else 'বিদেশ ভ্রমণ সম্পাদনা',
@@ -126,7 +162,7 @@ def tour_detail(request, pk):
     """Read-only view of a tour. Editing happens on the manage/edit page."""
     tour         = get_object_or_404(ForeignTour, pk=pk)
     participants = tour.participants.select_related('mp').all()
-    officers     = tour.officers.all()
+    officers     = tour.officers.select_related('officer').all()
     countries    = tour.countries.select_related('country').all()
     ctx = {
         'tour':         tour,
@@ -175,30 +211,6 @@ def participant_remove(request, pk, ppk):
     tour = get_object_or_404(ForeignTour, pk=pk)
     get_object_or_404(ForeignTourParticipant, pk=ppk, tour=tour).delete()
     messages.success(request, 'সদস্য বাদ দেওয়া হয়েছে।')
-    return redirect('travel:tour_update', pk=pk)
-
-
-@perm_required
-@require_POST
-def officer_add(request, pk):
-    tour = get_object_or_404(ForeignTour, pk=pk)
-    form = OfficerForm(request.POST)
-    if form.is_valid():
-        officer = form.save(commit=False)
-        officer.tour = tour
-        officer.save()
-        messages.success(request, 'কর্মকর্তা যোগ করা হয়েছে।')
-    else:
-        messages.error(request, 'কর্মকর্তা যোগ করা যায়নি। তথ্য পরীক্ষা করুন।')
-    return redirect('travel:tour_update', pk=pk)
-
-
-@perm_required
-@require_POST
-def officer_remove(request, pk, opk):
-    tour = get_object_or_404(ForeignTour, pk=pk)
-    get_object_or_404(ForeignTourOfficer, pk=opk, tour=tour).delete()
-    messages.success(request, 'কর্মকর্তা বাদ দেওয়া হয়েছে।')
     return redirect('travel:tour_update', pk=pk)
 
 

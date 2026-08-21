@@ -58,7 +58,8 @@
                   data-placeholder="{% if is_en == 'en' %}All MPs (leave blank for all)…{% else %}সকল এমপি (ফাঁকা রাখলে সবার তথ্য আসবে)…{% endif %}">
             {% for mp in mp_list %}
             <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel_mp_ids %}selected{% endif %}>
-              {{ mp.mp_id }} — {% if is_en == 'en' %}{{ mp.name_en|default:mp.name_bn }}{% else %}{{ mp|tr:"name" }}{% endif %}
+              {# mp_list rows are .values() dicts — the |tr filter needs attributes, so pick the field directly. #}
+              {{ mp.mp_id }} — {% if is_en == 'en' %}{{ mp.name_en|default:mp.name_bn }}{% else %}{{ mp.name_bn|default:mp.name_en }}{% endif %}
             </option>
             {% endfor %}
           </select>

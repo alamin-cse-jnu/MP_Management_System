@@ -1,0 +1,143 @@
+/* ── Officer picker: type-to-search + chips ─────────────────────────────────
+   Used for Accompanying Officers on the foreign-tour form. Unlike the MP
+   picker there is NO standing list — the roster is hidden until the user
+   types, suggestions drop under the search box, and picks become chips. */
+
+.of-picker {
+  border: 1px solid var(--bs-border-color, #dee2e6);
+  border-radius: .5rem;
+  background: #fff;
+}
+
+/* Toolbar: search + live count + clear */
+.of-picker-bar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .625rem .75rem;
+}
+.of-picker-search {
+  position: relative;
+  flex: 1 1 auto;
+}
+.of-picker-search > .bi {
+  position: absolute;
+  left: .625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aa0a6;
+  font-size: .9rem;
+  pointer-events: none;
+}
+.of-picker-q { padding-left: 2rem; }
+.of-picker-count {
+  flex: 0 0 auto;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--bs-primary, #0d6efd);
+  white-space: nowrap;
+}
+
+/* Suggestion dropdown */
+.of-suggest {
+  position: absolute;
+  z-index: 1060;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--bs-border-color, #dee2e6);
+  border-radius: .5rem;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .12);
+}
+.of-suggest-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: .45rem .75rem;
+  font-size: .875rem;
+  line-height: 1.35;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.of-suggest-item:hover,
+.of-suggest-item.active {
+  background: #f1f6ff;
+  border-left-color: var(--bs-primary, #0d6efd);
+}
+.of-suggest-item .of-sub {
+  display: block;
+  font-size: .75rem;
+  color: #6c757d;
+}
+.of-suggest-empty,
+.of-suggest-more {
+  padding: .5rem .75rem;
+  font-size: .8rem;
+  color: #6c757d;
+}
+.of-suggest-more {
+  border-top: 1px solid var(--bs-border-color, #dee2e6);
+  background: #f8f9fa;
+}
+
+/* Chosen chips */
+.of-picker-chosen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+  padding: 0 .75rem .625rem;
+}
+.of-picker-chosen:empty { display: none; }
+.of-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: #e7f0ff;
+  border: 1px solid #c4dbff;
+  color: #0a58ca;
+  border-radius: 999px;
+  padding: .15rem .3rem .15rem .65rem;
+  font-size: .8rem;
+  max-width: 100%;
+}
+.of-chip.retired {
+  background: #fff4e0;
+  border-color: #ffd8a1;
+  color: #8a5a00;
+}
+.of-chip > .of-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 30ch;
+}
+.of-chip .of-chip-tag {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  opacity: .85;
+}
+.of-chip-x {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 .2rem;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.of-chip-x:hover { background: rgba(10, 88, 202, .15); }
+
+/* Hint line, hidden once something is selected */
+.of-picker-hint {
+  padding: 0 .75rem .625rem;
+  font-size: .75rem;
+  color: #6c757d;
+}

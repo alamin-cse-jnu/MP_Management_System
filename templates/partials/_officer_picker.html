@@ -1,0 +1,59 @@
+{% load lang_tags %}
+{% comment %}
+Officer picker — type-to-search (no standing list).
+
+The full roster still ships as hidden checkboxes so the POSTed field is an
+ordinary `officers` multi-value list and server-side validation is unchanged;
+officer_picker.js only decides what is VISIBLE. Typing filters the roster and
+shows suggestions; picking one turns it into a chip. Selected-on-load officers
+(including retired ones still attached to this tour) render as chips.
+{% endcomment %}
+<div class="of-picker" data-name="{{ name }}">
+
+  {% if options %}
+  <div class="of-picker-bar">
+    <div class="of-picker-search">
+      <i class="bi bi-search"></i>
+      <input type="text" class="form-control form-control-sm of-picker-q"
+             placeholder="{% ui 'নাম / PRP ID / পদবী লিখে খুঁজুন…' 'Type a name / PRP ID / designation…' %}"
+             autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list">
+      <div class="of-suggest" role="listbox" hidden></div>
+    </div>
+    <span class="of-picker-count"
+          data-suffix="{% ui ' নির্বাচিত' ' selected' %}">{{ selected_count }}{% ui ' নির্বাচিত' ' selected' %}</span>
+    <button type="button" class="btn btn-sm btn-outline-secondary of-clear" hidden>
+      <i class="bi bi-x-lg me-1"></i>{% ui "সাফ" "Clear" %}
+    </button>
+  </div>
+
+  <div class="of-picker-chosen"></div>
+  <div class="of-picker-hint">
+    <i class="bi bi-info-circle me-1"></i>{% ui "নাম বা PRP ID লিখুন — তালিকা থেকে বেছে নিন।" "Start typing a name or PRP ID, then pick from the suggestions." %}
+  </div>
+
+  {# The whole roster, hidden: this is what actually gets submitted. #}
+  <div class="of-picker-store" hidden>
+    {% for opt in options %}
+    <input type="checkbox" name="{{ name }}" value="{{ opt.value }}"{% if opt.checked %} checked{% endif %}
+           data-search="{{ opt.search }}" data-label="{{ opt.label }}"
+           data-office="{{ opt.office }}"{% if not opt.active %} data-retired="1"{% endif %}>
+    {% endfor %}
+  </div>
+  <span class="of-i18n d-none"
+        data-no-match="{% ui 'কোনো কর্মকর্তা মেলেনি।' 'No officers match.' %}"
+        data-retired="{% ui 'নিষ্ক্রিয়' 'Retired' %}"
+        data-more="{% ui 'আরও আছে — আরও নির্দিষ্ট করে লিখুন' 'More matches — keep typing to narrow' %}"
+        data-remove="{% ui 'বাদ দিন' 'Remove' %}"></span>
+
+  {% else %}
+  <div class="p-3 text-center text-muted small">
+    <i class="bi bi-people d-block mb-2" style="font-size:1.5rem;"></i>
+    {% ui "কর্মকর্তার তালিকা এখনো সিঙ্ক করা হয়নি।" "The officer roster has not been synced yet." %}<br>
+    <a href="{% url 'officer:officer_list' %}" class="btn btn-outline-primary btn-sm mt-2">
+      <i class="bi bi-arrow-repeat me-1"></i>{% ui "কর্মকর্তা তালিকা সিঙ্ক করুন" "Sync the officer roster" %}
+    </a>
+  </div>
+  {% endif %}
+
+  {% if errors %}<div class="text-danger small mt-1">{{ errors }}</div>{% endif %}
+</div>

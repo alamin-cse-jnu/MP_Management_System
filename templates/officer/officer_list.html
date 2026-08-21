@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load lang_tags %}
+{% block title %}{% ui "কর্মকর্তা তালিকা (PRP)" "Officer Roster (PRP)" %}{% endblock %}
+{% block content %}
+
+<div class="d-flex align-items-start justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'travel:tour_list' %}">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "কর্মকর্তা তালিকা" "Officer Roster" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "কর্মকর্তা তালিকা (PRP)" "Officer Roster (PRP)" %}</h4>
+    <p class="text-muted mb-0 mt-1" style="font-size:0.8125rem;">
+      {% ui "PRP থেকে সিঙ্ককৃত সক্রিয় ১ম শ্রেণির কর্মকর্তাগণ। শুধুমাত্র এই তালিকা থেকেই ভ্রমণ GO-তে সঙ্গী কর্মকর্তা যোগ করা যায়।" "Active Class-1 officers synced from PRP. Only officers on this list can be added to a tour GO." %}
+    </p>
+  </div>
+  {% if can_sync %}
+  <form method="post" action="{% url 'officer:officer_sync_run' %}"
+        onsubmit="return confirm('{% ui "PRP থেকে কর্মকর্তা তালিকা সিঙ্ক করবেন?" "Sync the officer roster from PRP?" %}')">
+    {% csrf_token %}
+    <button class="btn btn-primary btn-sm"><i class="bi bi-arrow-repeat me-1"></i>{% ui "সিঙ্ক করুন" "Sync now" %}</button>
+  </form>
+  {% endif %}
+</div>
+
+<div class="row g-3 mb-3">
+  <div class="col-md-4">
+    <div class="mp-card p-3">
+      <div class="text-muted" style="font-size:0.8rem;">{% ui "সক্রিয় (যোগ করা যাবে)" "Selectable (active)" %}</div>
+      <div class="fs-4 fw-bold text-primary">{{ active_count }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="mp-card p-3">
+      <div class="text-muted" style="font-size:0.8rem;">{% ui "নিষ্ক্রিয় (যোগ করা যাবে না)" "Retired (not selectable)" %}</div>
+      <div class="fs-4 fw-bold text-secondary">{{ retired_count }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="mp-card p-3">
+      <div class="text-muted" style="font-size:0.8rem;">{% ui "সর্বশেষ সিঙ্ক" "Last synced" %}</div>
+      <div class="fw-semibold">{% if last_synced %}{{ last_synced|date:"d/m/Y H:i" }}{% else %}<span class="text-muted">{% ui "কখনো নয়" "Never" %}</span>{% endif %}</div>
+    </div>
+  </div>
+</div>
+
+<div class="mp-card mb-3 p-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control"
+               placeholder="{% ui 'নাম / PRP ID / পদবী…' 'Name / PRP ID / designation…' %}">
+        {% if q %}<a href="?status={{ status }}&wing={{ wing }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুবিভাগ" "Wing" %}</label>
+      <select name="wing" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সব অনুবিভাগ" "All wings" %}</option>
+        {% for w in wings %}<option value="{{ w }}" {% if w == wing %}selected{% endif %}>{{ w }}</option>{% endfor %}
+        {% if has_unwinged %}<option value="__none__" {% if wing == '__none__' %}selected{% endif %}>{% ui "অনুবিভাগ নেই" "No wing" %}</option>{% endif %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="active" {% if status == 'active' %}selected{% endif %}>{% ui "সক্রিয়" "Active" %}</option>
+        <option value="retired" {% if status == 'retired' %}selected{% endif %}>{% ui "নিষ্ক্রিয়" "Retired" %}</option>
+        <option value="all" {% if status == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary btn-sm w-100">{% ui "খুঁজুন" "Search" %}</button>
+    </div>
+  </form>
+</div>
+
+<div class="mp-card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:0.9rem;">
+      <thead class="table-light">
+        <tr>
+          <th style="width:3rem;">#</th>
+          <th style="width:7rem;">{% ui "PRP ID" "PRP ID" %}</th>
+          <th>{% ui "নাম" "Name" %}</th>
+          <th>{% ui "পদবী" "Designation" %}</th>
+          <th>{% ui "দপ্তর" "Office" %}</th>
+          <th style="width:8rem;">{% ui "মোবাইল" "Mobile" %}</th>
+          <th style="width:5rem;" class="text-center">{% ui "ভ্রমণ" "Tours" %}</th>
+          <th style="width:9rem;">{% ui "অবস্থা" "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in page_obj %}
+        <tr {% if not o.is_active %}class="table-light text-muted"{% endif %}>
+          <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td><code>{{ o.prp_id }}</code></td>
+          <td class="fw-medium">{{ o|tr:"name" }}</td>
+          <td>{{ o|tr:"designation" }}</td>
+          <td style="font-size:0.8125rem;">{{ o|tr:"office_line" }}</td>
+          <td>{{ o.mobile|default:"—" }}</td>
+          <td class="text-center">
+            {% if o.tour_count %}<span class="badge bg-secondary-subtle text-secondary">{{ o.tour_count }}</span>{% else %}—{% endif %}
+          </td>
+          <td>
+            {% if o.is_active %}
+              <span class="badge bg-success-subtle text-success">{% ui "সক্রিয়" "Active" %}</span>
+            {% else %}
+              <span class="badge badge-warning">{% ui "নিষ্ক্রিয়" "Retired" %}</span>
+              <small class="d-block text-muted" style="font-size:0.7rem;">{{ o.get_deactivated_reason_display }}</small>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">
+          {% if last_synced %}{% ui "কোনো কর্মকর্তা পাওয়া যায়নি।" "No officers found." %}
+          {% else %}{% ui "তালিকা এখনো সিঙ্ক করা হয়নি — উপরের “সিঙ্ক করুন” বোতামে ক্লিক করুন।" "Roster not synced yet — click “Sync now” above." %}{% endif %}
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between align-items-center">
+    <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "জন | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ q }}&wing={{ wing }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ q }}&wing={{ wing }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

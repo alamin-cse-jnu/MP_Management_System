@@ -1,0 +1,14 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 802,
+    "fields": {
+      "menu": 8,
+      "name_bn": "কর্মকর্তা তালিকা (PRP)",
+      "name_en": "Officer Roster (PRP)",
+      "url_name": "officer:officer_list",
+      "ordering": 30,
+      "is_active": true
+    }
+  }
+]

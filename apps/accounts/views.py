@@ -85,6 +85,9 @@ def dashboard(request):
 
     total_ministers   = min_qs.count()
     total_com_assigns = com_qs.count()
+    # Committees that actually have members this parliament — the dashboard tile
+    # leads with this and shows the membership total underneath.
+    total_committees  = com_qs.values('committee').distinct().count()
     total_institutions = ins_qs.count()
     total_tours       = tour_qs.count()
     with_photo        = mp_qs.exclude(photo='').exclude(photo__isnull=True).count()
@@ -231,6 +234,7 @@ def dashboard(request):
         'technocrat_mps':      technocrat_mps,
         'total_ministers':     total_ministers,
         'total_com_assigns':   total_com_assigns,
+        'total_committees':    total_committees,
         'total_institutions':  total_institutions,
         'total_tours':         total_tours,
         'with_photo':          with_photo,

@@ -13,6 +13,7 @@ urlpatterns = [
     path('committee/', include('apps.committee.urls', namespace='committee')),
     path('institution/', include('apps.institution.urls', namespace='institution')),
     path('travel/', include('apps.travel.urls', namespace='travel')),
+    path('officer/', include('apps.officer.urls', namespace='officer')),
     path('office/', include('apps.office.urls', namespace='office')),
     path('reports/', include('apps.reports.urls', namespace='reports')),
 ]

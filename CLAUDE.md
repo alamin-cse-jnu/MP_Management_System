@@ -174,6 +174,7 @@ mp_management/
 | 20 | MP detail edit tabs → two-column grouped composition (General, Election, Address) + dashboard tiny-bar click fix | ✅ |
 | 21 | Master data → grouped single-page managers (Geography, Personal, Professional, Travel, Language, Ministry, Committee) mirroring Education | ✅ |
 | 22 | Technocrat ministers — cabinet members with no seat (see below) | ✅ |
+| 23 | Accompanying Officers → PRP employee sync (roster + picker, see below) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -238,6 +239,12 @@ export PRP_API_USER=... PRP_API_PASS=...
 python manage.py import_mp_api --fetch --dry-run        # report unresolved dropdown values
 python manage.py import_mp_api --fetch                  # initial create (skips existing)
 python manage.py import_mp_api --fetch --sync           # conflict-safe re-sync → review in UI
+
+# PRP officer roster sync (Phase 23) — same PRP_API_USER / PRP_API_PASS
+python manage.py sync_officers --dry-run                # report keep-set + skips, save nothing
+python manage.py sync_officers                          # upsert + retire (never deletes)
+python manage.py sync_officers --file employees.json    # offline payload (testing)
+python manage.py loaddata fixtures/initial/officer_menu.json
 ```
 
 ### Phase 16 — PRP API import & sync (2026-07)
@@ -685,6 +692,114 @@ incomplete. Source: `docs/technocrat.md`; full design in `docs/technocrat-plan.m
 
 ---
 
+## PHASE 23 — Accompanying Officers from the PRP roster (2026-08-22) ✅
+`/travel/create/` → *Accompanying Officers* was a **free-text** formset (ID /
+name / designation typed by hand). PRP publishes the Secretariat employee
+roster, so officers are now **picked from a synced list**. Full design +
+verification log: `docs/officer-sync-plan.md`.
+
+- **KEEP-RULE (locked with the user)** — an employee enters the system only if
+  `class == 1` **AND** `status == 'Active'` **AND** he has a designation **AND**
+  an office. Live payload: **3,839 employees → 227 kept** (skipped: 3,376 not
+  class-1, 173 inactive, 63 incomplete). The 66 class-1 "Active" people with no
+  designation/office are deliberately excluded — per the user they are stale PRP
+  rows, not genuinely serving officers. The live `Finance Admin Test` account
+  falls outside the keep-set for free.
+- **New app `apps/officer/`** — `Officer` model keyed on `prp_id` (bilingual name
+  + designation, partial office block, contact). `Officer.objects.selectable()`
+  (`is_active=True`) is THE definition of "can be added to a tour", mirroring
+  `MP.objects.parliament_members()`. **Photos are not stored** (user decision).
+- **Rows are never deleted.** An officer who falls out of the keep-set is
+  RETIRED: `is_active=False` + `deactivated_at` + a `deactivated_reason`
+  (`inactive` · `class_changed` · `incomplete` · `absent`). He stays on tours he
+  is already on, but cannot be searched or added to any NEW tour. If he returns
+  to the keep-set the next sync reactivates him automatically.
+- **`ForeignTourOfficer` freezes history** (`travel/0004`) — new `officer` FK
+  (`PROTECT`, nullable) + `is_external`, and the snapshot columns went bilingual:
+  `officer_id`→**`prp_id`** (an FK named `officer` claims the `officer_id`
+  attribute — they would have collided), `name`→`name_bn` + new `name_en`,
+  `designation`→`designation_bn` + new `designation_en` (also fixes a standing
+  CRITICAL RULE #2 violation). The snapshot — not the FK — is what templates
+  render, so a past GO reads exactly as recorded even after the officer's
+  designation changes or he leaves.
+- **`sync_officers` command** — token → `employeeInformations` → upsert by
+  `prp_id` → retire absentees → link legacy free-text rows whose `prp_id`
+  matches. Idempotent (2nd run: `created 0 · unchanged 227`).
+  **Wipe-guard**: refuses to retire the roster if the keep-set is empty or under
+  50 % of the currently-active count (a bad API response must never empty the
+  picker); `--force` overrides. Flags: `--dry-run --file --limit --force`.
+- **Roster page `/officer/`** (submenu under বিদেশ ভ্রমণ, `accounts/0006` seeds it
+  on existing DBs and carries the tour-list role permissions across) — search by
+  name/PRP-ID/designation, wing + status (active/retired/all) filters, tour
+  counts, last-sync stamp, and a **Sync** button gated like `mp:sync_run`.
+  Retired rows stay listed **with their reason** — that is where you find out why
+  someone can no longer be added.
+- **Tour form picker — TYPE-TO-SEARCH** (`{% officer_picker %}`,
+  `apps/officer/templatetags/officer_picker_tags.py` → `partials/_officer_picker.html`).
+  Two rounds of user feedback reshaped this, so do NOT "restore" either dropped
+  piece: (1) the wing filter chips were removed — 22 of 227 officers have no
+  wing, so the label fell back to the office name and the row rendered 25+
+  buttons; (2) the always-visible scrolling list was removed — with 227 officers
+  the user wants to type and pick, not scroll. Final shape: **search box →
+  suggestion dropdown (max 12, ↑/↓/Enter/Esc) → selected officers as chips.**
+  The full roster still ships as **hidden checkboxes** (`.of-picker-store`), so
+  the POSTed `officers` field and its server-side validation are IDENTICAL to a
+  plain multi-select — only visibility is JS-driven. Assets: **new**
+  `static/css/officer_picker.css` + `static/js/officer_picker.js` (class prefix
+  `.of-`, registered in `base.html`); the MP picker's `.mp-picker` CSS/JS is
+  untouched and unaffected. Search index per officer = name bn+en · PRP ID ·
+  designation bn+en · office · wing. The queryset is `selectable()` **plus
+  officers already attached to this tour** — retired ones arrive pre-checked and
+  render as an amber নিষ্ক্রিয় chip, so editing an old tour can never silently
+  drop them; removing the chip + save drops them for good and they cannot be
+  re-added (a new tour's store excludes them entirely: 226 vs 227).
+- **External officers kept as an escape hatch** (user decision) — a collapsed
+  *"PRP তালিকায় নেই এমন কর্মকর্তা"* accordion keeps the old formset for people
+  outside the Secretariat (ministry/embassy), saved with `is_external=True` and
+  never touched by sync. The picker handles rows with an `officer` FK, the
+  formset handles rows without one — **disjoint sets**, so they never fight.
+- **Shared PRP plumbing** — `utils/prp_api.py` (`get_token` / `fetch_json` /
+  `secure_get` / `credentials`); `import_mp_api` now delegates to it
+  (re-verified live: `--fetch --dry-run` still authenticates and reports).
+- **Retired endpoints removed** — `travel:officer_add` / `officer_remove` (dead
+  since the Phase 17.10 single-page form) deleted along with their URLs.
+- **Two fixes found while testing** — (1) the Countries & Dates **ক্রম ("#")**
+  column was 4rem wide but the cell inherits 1.25rem side padding, leaving the
+  number unreadable → `.tf-col-order` trims the padding and floors the input at
+  4.5rem; (2) `tour_list`'s `annotate()` sets `group_by`, which hides
+  `Meta.ordering` from the paginator (`UnorderedObjectListWarning` — pages could
+  repeat/skip tours) → explicit `.order_by('-go_date')`; same fix on the roster.
+
+### Custom Report — MP picker + full EN labels (2026-08-22)
+Field feedback on `/reports/custom-report/`:
+- **"এমপি আইডি" filter → "সংসদ সদস্য / MP".** Options now read
+  `ID — Name — Constituency` in the active language, so Select2's own text search
+  covers all three. Built in the view (`custom_report`) from
+  `MPChoiceField.annotated_queryset()`, because the old `.values('mp_id','name_bn')`
+  rows are **dicts** and `|tr` uses `getattr` — on a dict it silently returned
+  '', so the dropdown had been showing bare IDs with no name at all.
+  The field still POSTs plain `mp_id` values, so `_build_custom_qs` is unchanged.
+  Technocrats stay excluded (the report is MP-only).
+- **Constituency filter removed** — redundant now that the MP picker searches by
+  constituency. Template row, `sel['constituency']`, the `constituencies`
+  queryset and the `enable_constituency` branch in `_build_custom_qs` are all
+  gone; a stale bookmarked URL carrying it still returns 200 (ignored).
+- **English mode was leaking Bangla.** Every hardcoded string on the page is now
+  wrapped in `{% ui %}` (~30 of them: বয়স পরিসীমা, নির্বাচনের সংখ্যা, স্থায়ী কমিটি,
+  all Select2 placeholders, buttons, breadcrumbs, result counts). The **column
+  labels** were the other half: `CUSTOM_REPORT_COLS` is Bangla-only, so the
+  column picker, screen table, print/PDF header and Excel/CSV headers all stayed
+  Bangla. New `CUSTOM_REPORT_COLS_EN` + `_custom_cols()` resolve the pair for the
+  active language (templates keep unpacking the same 2-tuples), and `_ui(bn, en)`
+  is the Python-side `{% ui %}` for export headers. Verified: EN CSV header reads
+  `SL,MP ID,Name (English),Constituency,Times Elected,Standing Committee`; BN
+  unchanged. **`ALL_MP_COLS` / `CONTACT_COLS` have the same Bangla-only shape and
+  were NOT touched** — same fix applies if those pages get the same report.
+- **Same `|tr`-on-a-dict bug fixed in the Family Report** MP dropdown, which had
+  been rendering `013000101 —` with no name in Bangla mode.
+
+---
+
 ## REFERENCE DOCS
 
 Read these when working on the relevant area:
@@ -699,3 +814,5 @@ Read these when working on the relevant area:
 | `docs/ref-design.md` | Color palette, login layout, sidebar/topbar, cards, tables, forms, buttons, print styles |
 | `docs/ref-form-mapping.md` | PDF form → system field mapping; exact field order per section; 3 model fixes from PDF audit |
 | `docs/technocrat-plan.md` | Technocrat ministers — why they reuse the MP model, the "350 means 350" exclusion list, picker/sync scope rules |
+| `docs/officer-sync-plan.md` | PRP officer roster — the keep-rule, retirement semantics, frozen tour snapshot, wipe-guard, verification log |
+| `docs/API.txt` | PRP endpoints (token / employeeInformations / offices) + a sample employee record |

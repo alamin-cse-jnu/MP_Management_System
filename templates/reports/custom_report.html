@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load lang_tags %}
 {% load static report_tags %}
-{% block title %}কাস্টম রিপোর্ট{% endblock %}
+{% block title %}{% ui "কাস্টম রিপোর্ট" "Custom Report" %}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -51,11 +51,11 @@
   <div>
     <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
       <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">রিপোর্ট</a></li>
-      <li class="breadcrumb-item active">কাস্টম রিপোর্ট</li>
+      <li class="breadcrumb-item"><a href="{% url 'reports:index' %}">{% ui "রিপোর্ট" "Reports" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "কাস্টম রিপোর্ট" "Custom Report" %}</li>
     </ol></nav>
-    <h4 class="mb-0 fw-bold">কাস্টম রিপোর্ট তৈরি করুন</h4>
-    <small class="text-muted">Custom Report Builder — শুধুমাত্র সক্রিয় ফিল্টারগুলো প্রয়োগ হবে</small>
+    <h4 class="mb-0 fw-bold">{% ui "কাস্টম রিপোর্ট তৈরি করুন" "Build a Custom Report" %}</h4>
+    <small class="text-muted">{% ui "শুধুমাত্র সক্রিয় ফিল্টারগুলো প্রয়োগ হবে" "Only the filters you switch on are applied" %}</small>
   </div>
 </div>
 
@@ -65,8 +65,8 @@
 <!-- ══ FILTER PANEL ══════════════════════════════════════════════════════════ -->
 <div class="mp-card mb-3 no-print">
   <div class="mp-card-header d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-funnel-fill icon"></i>অনুসন্ধান ফিল্টার</span>
-    <small class="text-muted">চেকবক্স চালু করুন, তারপর মান নির্বাচন করুন</small>
+    <span><i class="bi bi-funnel-fill icon"></i>{% ui "অনুসন্ধান ফিল্টার" "Search Filters" %}</span>
+    <small class="text-muted">{% ui "চেকবক্স চালু করুন, তারপর মান নির্বাচন করুন" "Tick a filter, then choose its values" %}</small>
   </div>
   <div class="p-3">
     <div class="d-flex flex-column gap-2">
@@ -78,39 +78,15 @@
           <div class="form-check mb-0">
             <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
                    {% if enable in GET %}checked{% endif %}>
-            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "এমপি আইডি" "MP ID" %}</label>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "সংসদ সদস্য" "MP" %}</label>
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
-                    data-placeholder="এমপি আইডি নির্বাচন করুন…">
+                    data-placeholder="{% ui 'আইডি / নাম / নির্বাচনী এলাকা দিয়ে খুঁজুন…' 'Search by ID / name / constituency…' %}">
               {% for mp in mp_list %}
-              <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel.mp_id %}selected{% endif %}>{{ mp.mp_id }} — {{ mp|tr:"name" }}</option>
-              {% endfor %}
-            </select>
-            <button type="button" class="btn btn-outline-secondary btn-sm select-all-btn" data-target="{{ key }}">{% ui "সব" "All" %}</button>
-          </div>
-        </div>
-      </div>
-      {% endwith %}
-
-      <!-- Constituency -->
-      {% with key="constituency" enable="enable_constituency" %}
-      <div class="filter-row d-flex align-items-center gap-3 {% if enable in GET %}active{% endif %}" id="row_{{ key }}">
-        <div class="filter-label">
-          <div class="form-check mb-0">
-            <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
-                   {% if enable in GET %}checked{% endif %}>
-            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "নির্বাচনী এলাকা" "Constituency" %}</label>
-          </div>
-        </div>
-        <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
-          <div class="d-flex gap-2 align-items-start">
-            <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
-                    data-placeholder="নির্বাচনী এলাকা নির্বাচন করুন…">
-              {% for c in constituencies %}
-              <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" in sel.constituency %}selected{% endif %}>{{ c|tr:"display" }}</option>
+              <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel.mp_id %}selected{% endif %}>{{ mp.label }}</option>
               {% endfor %}
             </select>
             <button type="button" class="btn btn-outline-secondary btn-sm select-all-btn" data-target="{{ key }}">{% ui "সব" "All" %}</button>
@@ -126,16 +102,16 @@
           <div class="form-check mb-0">
             <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
                    {% if enable in GET %}checked{% endif %}>
-            <label class="form-check-label fw-semibold" for="{{ enable }}">বয়স পরিসীমা</label>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "বয়স পরিসীমা" "Age Range" %}</label>
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex align-items-center gap-2">
             <input type="number" name="age_min" value="{{ GET.age_min }}" min="1" max="120"
-                   class="form-control form-control-sm" placeholder="ন্যূনতম বয়স" style="width:130px;">
-            <span class="text-muted">থেকে</span>
+                   class="form-control form-control-sm" placeholder="{% ui 'ন্যূনতম বয়স' 'Min age' %}" style="width:130px;">
+            <span class="text-muted">{% ui "থেকে" "to" %}</span>
             <input type="number" name="age_max" value="{{ GET.age_max }}" min="1" max="120"
-                   class="form-control form-control-sm" placeholder="সর্বোচ্চ বয়স" style="width:130px;">
+                   class="form-control form-control-sm" placeholder="{% ui 'সর্বোচ্চ বয়স' 'Max age' %}" style="width:130px;">
             <span class="text-muted" style="font-size:.8rem;">{% ui "বছর" "Year" %}</span>
           </div>
         </div>
@@ -155,7 +131,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:400px;"
-                    data-placeholder="রক্তের গ্রুপ নির্বাচন করুন…">
+                    data-placeholder="{% ui 'রক্তের গ্রুপ নির্বাচন করুন…' 'Select blood group…' %}">
               {% for bg in blood_groups %}
               <option value="{{ bg.pk }}" {% if bg.pk|stringformat:"s" in sel.blood_group %}selected{% endif %}>{{ bg|tr:"name" }}</option>
               {% endfor %}
@@ -179,7 +155,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
-                    data-placeholder="রাজনৈতিক দল নির্বাচন করুন…">
+                    data-placeholder="{% ui 'রাজনৈতিক দল নির্বাচন করুন…' 'Select party…' %}">
               {% for p in parties %}
               <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" in sel.party %}selected{% endif %}>{{ p|tr:"name" }}</option>
               {% endfor %}
@@ -251,7 +227,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:320px;"
-                    data-placeholder="লিঙ্গ নির্বাচন করুন…">
+                    data-placeholder="{% ui 'লিঙ্গ নির্বাচন করুন…' 'Select gender…' %}">
               {% for g in genders %}
               <option value="{{ g.pk }}" {% if g.pk|stringformat:"s" in sel.gender %}selected{% endif %}>{{ g|tr:"name" }}</option>
               {% endfor %}
@@ -275,7 +251,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:360px;"
-                    data-placeholder="ধর্ম নির্বাচন করুন…">
+                    data-placeholder="{% ui 'ধর্ম নির্বাচন করুন…' 'Select religion…' %}">
               {% for r in religions %}
               <option value="{{ r.pk }}" {% if r.pk|stringformat:"s" in sel.religion %}selected{% endif %}>{{ r|tr:"name" }}</option>
               {% endfor %}
@@ -293,17 +269,17 @@
           <div class="form-check mb-0">
             <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
                    {% if enable in GET %}checked{% endif %}>
-            <label class="form-check-label fw-semibold" for="{{ enable }}">নির্বাচনের সংখ্যা</label>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "নির্বাচনের সংখ্যা" "Times Elected" %}</label>
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex align-items-center gap-2">
             <input type="number" name="times_min" value="{{ GET.times_min }}" min="1" max="20"
-                   class="form-control form-control-sm" placeholder="ন্যূনতম" style="width:110px;">
-            <span class="text-muted">থেকে</span>
+                   class="form-control form-control-sm" placeholder="{% ui 'ন্যূনতম' 'Min' %}" style="width:110px;">
+            <span class="text-muted">{% ui "থেকে" "to" %}</span>
             <input type="number" name="times_max" value="{{ GET.times_max }}" min="1" max="20"
-                   class="form-control form-control-sm" placeholder="সর্বোচ্চ" style="width:110px;">
-            <span class="text-muted" style="font-size:.8rem;">বার</span>
+                   class="form-control form-control-sm" placeholder="{% ui 'সর্বোচ্চ' 'Max' %}" style="width:110px;">
+            <span class="text-muted" style="font-size:.8rem;">{% ui "বার" "times" %}</span>
           </div>
         </div>
       </div>
@@ -316,13 +292,13 @@
           <div class="form-check mb-0">
             <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
                    {% if enable in GET %}checked{% endif %}>
-            <label class="form-check-label fw-semibold" for="{{ enable }}">স্থায়ী কমিটি</label>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "স্থায়ী কমিটি" "Standing Committee" %}</label>
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
-                    data-placeholder="স্থায়ী কমিটি নির্বাচন করুন…">
+                    data-placeholder="{% ui 'স্থায়ী কমিটি নির্বাচন করুন…' 'Select committee…' %}">
               {% for c in committees %}
               <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" in sel.committee %}selected{% endif %}>{{ c|tr:"name" }}</option>
               {% endfor %}
@@ -346,7 +322,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
-                    data-placeholder="মন্ত্রণালয় নির্বাচন করুন…">
+                    data-placeholder="{% ui 'মন্ত্রণালয় নির্বাচন করুন…' 'Select ministry…' %}">
               {% for m in ministries %}
               <option value="{{ m.pk }}" {% if m.pk|stringformat:"s" in sel.ministry %}selected{% endif %}>{{ m|tr:"name" }}</option>
               {% endfor %}
@@ -370,7 +346,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
-                    data-placeholder="শিক্ষার স্তর নির্বাচন করুন…">
+                    data-placeholder="{% ui 'শিক্ষার স্তর নির্বাচন করুন…' 'Select education level…' %}">
               {% for el in education_levels %}
               <option value="{{ el.pk }}" {% if el.pk|stringformat:"s" in sel.education_level %}selected{% endif %}>{{ el|tr:"name" }}</option>
               {% endfor %}
@@ -394,7 +370,7 @@
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
-                    data-placeholder="পেশাদার যোগ্যতা নির্বাচন করুন…">
+                    data-placeholder="{% ui 'পেশাদার যোগ্যতা নির্বাচন করুন…' 'Select qualification…' %}">
               {% for pq in prof_quals %}
               <option value="{{ pq.pk }}" {% if pq.pk|stringformat:"s" in sel.prof_qual %}selected{% endif %}>{{ pq|tr:"name" }}</option>
               {% endfor %}
@@ -412,10 +388,10 @@
 <!-- ══ COLUMN SELECTOR ══════════════════════════════════════════════════════ -->
 <div class="mp-card mb-3 no-print">
   <div class="mp-card-header d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-table icon"></i>প্রতিবেদনের কলাম নির্বাচন করুন</span>
+    <span><i class="bi bi-table icon"></i>{% ui "প্রতিবেদনের কলাম নির্বাচন করুন" "Choose report columns" %}</span>
     <div class="d-flex gap-2">
       <button type="button" class="btn btn-outline-secondary btn-sm" onclick="selectAllCols()">{% ui "সব নির্বাচন" "Select All" %}</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearAllCols()">সব বাতিল</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearAllCols()">{% ui "সব বাতিল" "Clear all" %}</button>
     </div>
   </div>
   <div class="p-3">
@@ -435,15 +411,15 @@
 <!-- ══ SEARCH BUTTONS ════════════════════════════════════════════════════════ -->
 <div class="d-flex align-items-center gap-3 mb-3 no-print">
   <button type="submit" class="btn btn-primary px-4">
-    <i class="bi bi-search me-1"></i>অনুসন্ধান করুন
+    <i class="bi bi-search me-1"></i>{% ui "অনুসন্ধান করুন" "Search" %}
   </button>
   <a href="{% url 'reports:custom_report' %}" class="btn btn-outline-secondary">
-    <i class="bi bi-x-circle me-1"></i>রিসেট
+    <i class="bi bi-x-circle me-1"></i>{% ui "রিসেট" "Reset" %}
   </a>
   {% if searched and total_count %}
   <div class="ms-auto d-flex gap-2">
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-      <i class="bi bi-printer-fill me-1"></i>প্রিন্ট
+      <i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}
     </button>
     <button type="submit" name="format" value="pdf" class="btn btn-outline-danger btn-sm">
       <i class="bi bi-file-earmark-pdf me-1"></i>PDF
@@ -466,8 +442,8 @@
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
   <div class="d-flex align-items-center gap-3 flex-wrap">
     <span class="text-muted" style="font-size:.875rem;">
-      মোট ফলাফল: <strong>{{ total_count }}</strong> জন সংসদ সদস্য
-      {% if total_count == 0 %}— কোনো ফলাফল পাওয়া যায়নি।{% endif %}
+      {% ui "মোট ফলাফল" "Total results" %}: <strong>{{ total_count }}</strong> {% ui "জন সংসদ সদস্য" "MPs" %}
+      {% if total_count == 0 %}— {% ui "কোনো ফলাফল পাওয়া যায়নি।" "No results found." %}{% endif %}
     </span>
     {% include "reports/_per_page_selector.html" %}
   </div>
@@ -523,7 +499,7 @@
   <!-- Pagination -->
   {% if page_obj.has_other_pages %}
   <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
-    <small class="text-muted">পাতা {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} — মোট {{ total_count }}</small>
+    <small class="text-muted">{% ui "পাতা" "Page" %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} — {% ui "মোট" "Total" %} {{ total_count }}</small>
     <nav>
       <ul class="pagination pagination-sm mb-0">
         {% if page_obj.has_previous %}
@@ -596,7 +572,7 @@ function clearAllCols() {
 // ── Initialise Select2 on all filter selects ──────────────────────────────────
 $(document).ready(function() {
   $('.filter-select2').each(function() {
-    var placeholder = $(this).data('placeholder') || 'নির্বাচন করুন…';
+    var placeholder = $(this).data('placeholder') || '{% ui "নির্বাচন করুন…" "Select…" %}';
     $(this).select2({
       theme: 'bootstrap-5',
       placeholder: placeholder,

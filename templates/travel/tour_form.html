@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static lang_tags mp_picker_tags %}
+{% load static lang_tags mp_picker_tags officer_picker_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
 
 {% block content %}
@@ -138,7 +138,7 @@
             <th>{% ui "দেশ" "Country" %}</th>
             <th style="width:9rem;">{% ui "শুরু" "From" %}</th>
             <th style="width:9rem;">{% ui "শেষ" "To" %}</th>
-            <th style="width:4rem;">{% ui "ক্রম" "#" %}</th>
+            <th style="width:6.5rem;" class="tf-col-order">{% ui "ক্রম" "#" %}</th>
             <th style="width:3rem;"></th>
           </tr>
         </thead>
@@ -149,7 +149,7 @@
             <td>{{ cf.country }}{% if cf.country.errors %}<div class="text-danger small">{{ cf.country.errors }}</div>{% endif %}</td>
             <td>{{ cf.from_date }}</td>
             <td>{{ cf.to_date }}</td>
-            <td>{{ cf.ordering }}</td>
+            <td class="tf-col-order">{{ cf.ordering }}</td>
             <td>
               <span class="d-none">{{ cf.DELETE }}</span>
               <button type="button" class="btn btn-icon btn-outline-danger fs-remove" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
@@ -166,44 +166,71 @@
     </div>
   </div>
 
-  {# ── Officers formset ────────────────────────────────────── #}
+  {# ── Officers — picked from the PRP-synced roster ─────────── #}
   <div class="mp-card tf-data-card mb-4">
     <div class="tf-data-header">
       <span class="tf-icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
       <span class="fw-semibold">{% ui "সঙ্গী কর্মকর্তাগণ" "Accompanying Officers" %}</span>
+      <a href="{% url 'officer:officer_list' %}" class="ms-auto small text-decoration-none" target="_blank"
+         title="{% ui 'কর্মকর্তা তালিকা ও সিঙ্ক' 'Officer roster & sync' %}">
+        <i class="bi bi-people me-1"></i>{% ui "তালিকা" "Roster" %}
+      </a>
     </div>
-    {{ officer_fs.management_form }}
-    {% if officer_fs.non_form_errors %}<div class="alert alert-danger m-3 py-2" style="font-size:.85rem;">{{ officer_fs.non_form_errors }}</div>{% endif %}
-    <div class="table-responsive">
-      <table class="mp-table" id="officer-table">
-        <thead>
-          <tr>
-            <th style="width:8rem;">{% ui "আইডি" "ID" %}</th>
-            <th>{% ui "নাম" "Name" %}</th>
-            <th>{% ui "পদবী" "Designation" %}</th>
-            <th style="width:3rem;"></th>
-          </tr>
-        </thead>
-        <tbody data-formset-body="officer">
-          {% for of in officer_fs %}
-          <tr class="fs-row">
-            {{ of.id }}
-            <td>{{ of.officer_id }}</td>
-            <td>{{ of.name }}{% if of.name.errors %}<div class="text-danger small">{{ of.name.errors }}</div>{% endif %}</td>
-            <td>{{ of.designation }}</td>
-            <td>
-              <span class="d-none">{{ of.DELETE }}</span>
-              <button type="button" class="btn btn-icon btn-outline-danger fs-remove" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="p-3">
+      <p class="text-muted mb-2" style="font-size:0.8125rem;">
+        {% ui "PRP থেকে সিঙ্ককৃত সক্রিয় ১ম শ্রেণির কর্মকর্তাদের তালিকা থেকে নির্বাচন করুন।" "Select from the PRP-synced list of active Class-1 officers." %}
+      </p>
+      {% officer_picker officers_form.officers %}
     </div>
-    <div class="p-3 border-top">
-      <button type="button" class="btn btn-outline-primary btn-sm" data-formset-add="officer">
-        <i class="bi bi-plus-lg me-1"></i>{% ui "কর্মকর্তা যোগ করুন" "Add officer" %}
+
+    {# — External (non-PRP) officers: collapsed by default — #}
+    <div class="border-top">
+      <button class="btn btn-link btn-sm text-decoration-none w-100 text-start py-2 px-3"
+              type="button" data-bs-toggle="collapse" data-bs-target="#external-officers"
+              aria-expanded="{% if officer_fs.forms|length > 1 or officer_fs.initial_forms %}true{% else %}false{% endif %}">
+        <i class="bi bi-plus-circle me-1"></i>{% ui "PRP তালিকায় নেই এমন কর্মকর্তা" "Officer not in the PRP list" %}
+        {% if officer_fs.initial_forms %}<span class="badge bg-secondary-subtle text-secondary ms-1">{{ officer_fs.initial_forms|length }}</span>{% endif %}
       </button>
+      <div class="collapse{% if officer_fs.initial_forms or officer_fs.non_form_errors %} show{% endif %}" id="external-officers">
+        <p class="text-muted px-3 mb-2" style="font-size:0.78rem;">
+          {% ui "শুধুমাত্র সচিবালয়ের বাইরের কর্মকর্তা (যেমন মন্ত্রণালয়/দূতাবাস) হাতে লিখে যোগ করুন — এগুলো সিঙ্কের আওতায় আসে না।" "Only for officers outside the Secretariat (e.g. a ministry or embassy officer) — these rows are never touched by sync." %}
+        </p>
+        {{ officer_fs.management_form }}
+        {% if officer_fs.non_form_errors %}<div class="alert alert-danger mx-3 py-2" style="font-size:.85rem;">{{ officer_fs.non_form_errors }}</div>{% endif %}
+        <div class="table-responsive">
+          <table class="mp-table" id="officer-table">
+            <thead>
+              <tr>
+                <th>{% ui "নাম (বাংলা)" "Name (Bangla)" %}</th>
+                <th>{% ui "নাম (ইংরেজি)" "Name (English)" %}</th>
+                <th>{% ui "পদবী (বাংলা)" "Designation (Bangla)" %}</th>
+                <th>{% ui "পদবী (ইংরেজি)" "Designation (English)" %}</th>
+                <th style="width:3rem;"></th>
+              </tr>
+            </thead>
+            <tbody data-formset-body="officer">
+              {% for of in officer_fs %}
+              <tr class="fs-row">
+                {{ of.id }}
+                <td>{{ of.name_bn }}{% if of.name_bn.errors %}<div class="text-danger small">{{ of.name_bn.errors }}</div>{% endif %}</td>
+                <td>{{ of.name_en }}</td>
+                <td>{{ of.designation_bn }}</td>
+                <td>{{ of.designation_en }}</td>
+                <td>
+                  <span class="d-none">{{ of.DELETE }}</span>
+                  <button type="button" class="btn btn-icon btn-outline-danger fs-remove" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="p-3 border-top">
+          <button type="button" class="btn btn-outline-primary btn-sm" data-formset-add="officer">
+            <i class="bi bi-plus-lg me-1"></i>{% ui "কর্মকর্তা যোগ করুন" "Add officer" %}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -229,7 +256,7 @@
     <td>{{ country_fs.empty_form.country }}</td>
     <td>{{ country_fs.empty_form.from_date }}</td>
     <td>{{ country_fs.empty_form.to_date }}</td>
-    <td>{{ country_fs.empty_form.ordering }}</td>
+    <td class="tf-col-order">{{ country_fs.empty_form.ordering }}</td>
     <td>
       <span class="d-none">{{ country_fs.empty_form.DELETE }}</span>
       <button type="button" class="btn btn-icon btn-outline-danger fs-remove" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
@@ -239,9 +266,10 @@
 <template id="empty-officer">
   <tr class="fs-row">
     {{ officer_fs.empty_form.id }}
-    <td>{{ officer_fs.empty_form.officer_id }}</td>
-    <td>{{ officer_fs.empty_form.name }}</td>
-    <td>{{ officer_fs.empty_form.designation }}</td>
+    <td>{{ officer_fs.empty_form.name_bn }}</td>
+    <td>{{ officer_fs.empty_form.name_en }}</td>
+    <td>{{ officer_fs.empty_form.designation_bn }}</td>
+    <td>{{ officer_fs.empty_form.designation_en }}</td>
     <td>
       <span class="d-none">{{ officer_fs.empty_form.DELETE }}</span>
       <button type="button" class="btn btn-icon btn-outline-danger fs-remove" title="{% ui 'বাদ দিন' 'Remove' %}"><i class="bi bi-trash3"></i></button>
@@ -263,6 +291,11 @@
 .tf-data-card .mp-table thead th, .tf-data-card .mp-table tbody td {
   padding-left: 1.25rem; padding-right: 1.25rem; vertical-align: top; }
 .tf-data-card .mp-table td .select2-container { min-width: 12rem; }
+/* The serial ("ক্রম") cell inherits 1.25rem side padding from .tf-data-card, which
+   left the number input too narrow to read. Trim the padding and floor the width. */
+.tf-data-card .mp-table th.tf-col-order,
+.tf-data-card .mp-table td.tf-col-order { padding-left: 0.5rem; padding-right: 0.5rem; }
+.tf-data-card .mp-table td.tf-col-order input { min-width: 4.5rem; text-align: center; }
 </style>
 
 <script>

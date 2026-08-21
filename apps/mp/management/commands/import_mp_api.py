@@ -20,7 +20,6 @@ Design decisions (see memory/project_api_import.md):
 
 import json
 import os
-import urllib.error
 import urllib.request
 
 from django.contrib.auth import get_user_model
@@ -31,6 +30,7 @@ from django.db import transaction
 from apps.mp.models import MP, Address, BankAccount, Child, ElectionInfo, Spouse
 from apps.parliament.models import Parliament
 from apps.mp import api_sync
+from utils import prp_api
 from apps.mp.api_sync import (
     DISTRICT_ALIASES, MARITAL_ALIASES, PARTY_ALIASES, RELIGION_ALIASES,
     build_maps,
@@ -43,9 +43,8 @@ from apps.mp.api_sync import (
 
 User = get_user_model()
 
-BASE_URL = 'https://prp.parliament.gov.bd'
-TOKEN_PATH = '/api/authentication/external?action=token'
-DATA_PATH  = '/api/secure/external?action=mpdata_list&parliamentNo={pno}'
+BASE_URL = prp_api.BASE_URL
+DATA_PATH = '/api/secure/external?action=mpdata_list&parliamentNo={pno}'
 
 
 class Command(BaseCommand):
@@ -81,40 +80,16 @@ class Command(BaseCommand):
                             help='Only process the first N records (for testing)')
 
     # ── auth + load payload ────────────────────────────────────────────────────
+    # The HTTP plumbing lives in utils/prp_api.py, shared with sync_officers.
     def _fetch_json(self, req, what, timeout=180):
-        """Perform an HTTP request and parse JSON, with informative errors."""
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                status = resp.status
-                raw = resp.read().decode('utf-8', 'replace')
-        except urllib.error.HTTPError as exc:
-            body = exc.read().decode('utf-8', 'replace')[:500]
-            raise CommandError(f'{what}: HTTP {exc.code} {exc.reason}. Body: {body!r}')
-        except urllib.error.URLError as exc:
-            raise CommandError(f'{what}: cannot reach server — {exc.reason}')
-        if not raw.strip():
-            raise CommandError(f'{what}: server returned an EMPTY response '
-                               f'(HTTP {status}). Check the URL/credentials.')
-        try:
-            return json.loads(raw)
-        except json.JSONDecodeError:
-            raise CommandError(f'{what}: response was not JSON (HTTP {status}). '
-                               f'First 500 chars: {raw[:500]!r}')
+        return prp_api.fetch_json(req, what, timeout=timeout)
 
     def _get_token(self, username, password):
+        username, password = prp_api.credentials(username, password)
         if not (username and password):
             raise CommandError('--fetch needs --username/--password (or env '
                                'PRP_API_USER / PRP_API_PASS).')
-        body = json.dumps({'username': username, 'password': password}).encode('utf-8')
-        req = urllib.request.Request(
-            BASE_URL + TOKEN_PATH, data=body, method='POST',
-            headers={'Content-Type': 'application/json', 'Accept': 'application/json'},
-        )
-        data = self._fetch_json(req, 'Token request', timeout=60)
-        token = data.get('payload')
-        if not token:
-            raise CommandError(f'Token request returned no payload: {data}')
-        return token  # already includes the "Bearer " prefix
+        return prp_api.get_token(username, password)
 
     def _load(self, options):
         if options['fetch']:

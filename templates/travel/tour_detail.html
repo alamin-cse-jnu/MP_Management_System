@@ -124,9 +124,13 @@
             {% for o in officers %}
             <tr>
               <td>{{ forloop.counter }}</td>
-              <td>{{ o.officer_id|default:"—" }}</td>
-              <td class="fw-medium">{{ o.name }}</td>
-              <td><span class="badge bg-primary-subtle text-primary">{{ o.designation|default:"—" }}</span></td>
+              <td>{{ o.prp_id|default:"—" }}</td>
+              <td class="fw-medium">
+                {{ o|tr:"name" }}
+                {% if o.is_external %}<span class="badge bg-secondary-subtle text-secondary ms-1">{% ui "বহিরাগত" "External" %}</span>
+                {% elif o.is_retired %}<span class="badge badge-warning ms-1">{% ui "নিষ্ক্রিয়" "Retired" %}</span>{% endif %}
+              </td>
+              <td>{% with d=o|tr:"designation" %}{% if d %}<span class="badge bg-primary-subtle text-primary">{{ d }}</span>{% else %}—{% endif %}{% endwith %}</td>
             </tr>
             {% empty %}
             <tr><td colspan="4" class="text-center text-muted py-3">{% ui "কোনো কর্মকর্তা যোগ করা হয়নি।" "No officers added." %}</td></tr>

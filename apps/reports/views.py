@@ -54,6 +54,11 @@ def _tr(obj, field='name'):
     return bn_val or en_val or ''
 
 
+def _ui(bn_text, en_text):
+    """Static label pair for the active language — the Python-side {% ui %}."""
+    return en_text if (_lang() == 'en' and en_text) else bn_text
+
+
 def _active_label(is_active):
     if _lang() == 'en':
         return 'Active' if is_active else 'Inactive'
@@ -1254,6 +1259,42 @@ CUSTOM_REPORT_COLS = [
 ]
 CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
 
+# English column labels — CUSTOM_REPORT_COLS above carries the Bangla ones.
+# `_custom_cols()` resolves the pair for the active language, so the column
+# picker, the on-screen table, the print/PDF header and the Excel/CSV headers
+# all follow the language toggle instead of staying Bangla in English mode.
+CUSTOM_REPORT_COLS_EN = {
+    'photo':             'Photo',
+    'mp_id':             'MP ID',
+    'name_bn':           'Name (Bangla)',
+    'name_en':           'Name (English)',
+    'constituency':      'Constituency',
+    'party':             'Political Party',
+    'age':               'Age',
+    'blood_group':       'Blood Group',
+    'gender':            'Gender',
+    'religion':          'Religion',
+    'division':          'Division',
+    'district':          'District',
+    'times_elected':     'Times Elected',
+    'committee':         'Standing Committee',
+    'ministry':          'Ministry',
+    'profession':        'Profession',
+    'member_type':       'Member Type',
+    'highest_edu_level': 'Highest Education Level',
+    'highest_degree':    'Highest Degree',
+    'highest_subject':   'Highest Subject',
+    'prof_qual':         'Professional Qualification',
+}
+
+
+def _custom_cols():
+    """[(key, label)] for the active language — same 2-tuple shape the
+    templates already unpack."""
+    if _lang() == 'en':
+        return [(k, CUSTOM_REPORT_COLS_EN.get(k, bn)) for k, bn in CUSTOM_REPORT_COLS]
+    return list(CUSTOM_REPORT_COLS)
+
 # English labels for MP.MEMBER_TYPE_CHOICES (the model stores Bangla display
 # strings). Keep in sync with apps/mp/models.py.
 MEMBER_TYPE_EN = {
@@ -1352,13 +1393,6 @@ def _build_custom_qs(get, parliament_id):
         ids = [v for v in get.getlist('mp_id') if v]
         if ids:
             qs = qs.filter(mp_id__in=ids)
-
-    # ── Constituency ──────────────────────────────────────────────────────────
-    if 'enable_constituency' in get:
-        ids = [v for v in get.getlist('constituency') if v]
-        if ids:
-            qs = qs.filter(election_infos__constituency__in=ids)
-            needs_distinct = True
 
     # ── Age Range ─────────────────────────────────────────────────────────────
     if 'enable_age' in get:
@@ -1460,8 +1494,7 @@ def custom_report(request):
         PoliticalParty, StandingCommittee, Ministry,
         EducationLevel, ProfessionalQualification,
     )
-    from apps.parliament.models import Constituency
-    from apps.mp.models import MP
+    from apps.mp.form_fields import MPChoiceField
 
     fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
@@ -1479,9 +1512,21 @@ def custom_report(request):
     ministries      = Ministry.objects.filter(is_active=True)
     education_levels = EducationLevel.objects.filter(is_active=True).order_by('degree_order')
     prof_quals      = ProfessionalQualification.objects.filter(is_active=True).order_by('name_bn')
-    mp_list         = MP.objects.parliament_members().filter(
-        is_active=True).order_by('mp_id').values('mp_id', 'name_bn')
-    constituencies  = Constituency.objects.order_by('ordering', 'display_bn')
+    # MP picker options: "ID — Name — Constituency" in one string, so Select2's
+    # own text search covers all three (the filter still POSTs plain mp_id
+    # values, so _build_custom_qs is unchanged). `.values()` dicts cannot be fed
+    # to the |tr filter (getattr on a dict returns nothing), so the label is
+    # composed here in the active language.
+    is_en = (_lang() == 'en')
+    mp_list = []
+    for m in MPChoiceField.annotated_queryset().exclude(member_type='technocrat'):
+        name = (m.name_en or m.name_bn) if is_en else (m.name_bn or m.name_en)
+        con  = ((getattr(m, '_con_en', '') or getattr(m, '_con_bn', ''))
+                if is_en else
+                (getattr(m, '_con_bn', '') or getattr(m, '_con_en', '')))
+        if not con:
+            con = m.get_member_type_display()
+        mp_list.append({'mp_id': m.mp_id, 'label': f'{m.mp_id} — {name} — {con}'})
 
     # Pre-selected values (restore filter state after search)
     sel = {
@@ -1494,13 +1539,12 @@ def custom_report(request):
         'committee':       request.GET.getlist('committee'),
         'ministry':        request.GET.getlist('ministry'),
         'mp_id':           request.GET.getlist('mp_id'),
-        'constituency':    request.GET.getlist('constituency'),
         'education_level': request.GET.getlist('education_level'),
         'prof_qual':       request.GET.getlist('prof_qual'),
     }
 
     ctx = {
-        'CUSTOM_REPORT_COLS': CUSTOM_REPORT_COLS,
+        'CUSTOM_REPORT_COLS': _custom_cols(),
         'selected_cols':      selected_cols,
         'parliament_id':      parliament_id,
         'parliaments':        _parliament_qs(),
@@ -1515,7 +1559,6 @@ def custom_report(request):
         'education_levels':   education_levels,
         'prof_quals':         prof_quals,
         'mp_list':            mp_list,
-        'constituencies':     constituencies,
         'sel':                sel,
         'searched':           searched,
         'GET':                request.GET,
@@ -1533,15 +1576,15 @@ def custom_report(request):
     data_cols = [c for c in selected_cols if c != 'photo']
 
     if fmt == 'excel':
-        col_labels = {k: v for k, v in CUSTOM_REPORT_COLS}
-        headers    = ['ক্রম'] + [col_labels.get(c, c) for c in data_cols]
+        col_labels = dict(_custom_cols())
+        headers    = [_ui('ক্রম', 'SL')] + [col_labels.get(c, c) for c in data_cols]
         rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
                       for i, mp in enumerate(qs)]
         return export_excel('custom_report', headers, rows, 'কাস্টম রিপোর্ট')
 
     if fmt == 'csv':
-        col_labels = {k: v for k, v in CUSTOM_REPORT_COLS}
-        headers    = ['ক্রম'] + [col_labels.get(c, c) for c in data_cols]
+        col_labels = dict(_custom_cols())
+        headers    = [_ui('ক্রম', 'SL')] + [col_labels.get(c, c) for c in data_cols]
         rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
                       for i, mp in enumerate(qs)]
         return export_csv('custom_report', headers, rows)
