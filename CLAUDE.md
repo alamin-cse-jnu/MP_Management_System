@@ -728,6 +728,12 @@ verification log: `docs/officer-sync-plan.md`.
   **Wipe-guard**: refuses to retire the roster if the keep-set is empty or under
   50 % of the currently-active count (a bad API response must never empty the
   picker); `--force` overrides. Flags: `--dry-run --file --limit --force`.
+- **Roster page `/officer/` is ordered by PRP ID ascending** (user's call, 2026-08-22
+  — do NOT "restore" the old `-is_active, name_bn` order). Every `prp_id` is a
+  9-digit numeric string, so the plain text sort IS the numeric sort; no Cast
+  needed unless PRP ever issues a shorter/longer id. The tour picker
+  (`form_fields.py`) deliberately KEEPS name order — you type to search there,
+  so alphabetical suggestions read better.
 - **Roster page `/officer/`** (submenu under বিদেশ ভ্রমণ, `accounts/0006` seeds it
   on existing DBs and carries the tour-list role permissions across) — search by
   name/PRP-ID/designation, wing + status (active/retired/all) filters, tour

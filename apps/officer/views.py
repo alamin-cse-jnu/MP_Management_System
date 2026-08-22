@@ -54,10 +54,13 @@ def officer_list(request):
     elif status == 'retired':
         qs = qs.filter(is_active=False)
 
-    # Explicit ordering: annotate() sets group_by, which makes Meta.ordering
-    # invisible to the paginator (UnorderedObjectListWarning).
+    # Roster order is PRP ID ascending (user's call) — every prp_id is a
+    # 9-digit numeric string, so the plain text sort IS the numeric sort.
+    # Explicit ordering is also required because annotate() sets group_by,
+    # which makes Meta.ordering invisible to the paginator
+    # (UnorderedObjectListWarning).
     qs = qs.annotate(tour_count=Count('tour_assignments', distinct=True)
-                     ).order_by('-is_active', 'name_bn', 'prp_id')
+                     ).order_by('prp_id')
 
     wings = sorted({w for w in Officer.objects.exclude(wing_bn='')
                     .values_list('wing_bn', flat=True)})
