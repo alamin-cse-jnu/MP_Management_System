@@ -800,6 +800,35 @@ Field feedback on `/reports/custom-report/`:
 
 ---
 
+## PRODUCTION DEPLOY LOG
+
+**2026-08-22 — Phases 22-follow-ups + 23 deployed to 172.16.220.158** (commit `e6573b6`).
+55 files SFTP-synced (each md5-verified) + `docker compose restart web`; migrations
+`accounts/0006` · `officer/0001` · `travel/0004` applied clean; collectstatic picked
+up `officer_picker.css/js`. Backups `mp_*_backup_20260822_032133`.
+`travel/0004` verified on the one existing free-text officer row: `officer_id`→`prp_id`,
+`name`→`name_bn`, `designation`→`designation_bn`, all values preserved.
+`sync_officers` on prod: **3,839 records → 227 kept** (3,376 not class-1 · 173 inactive
+· 63 incomplete), the legacy free-text row auto-linked to its `Officer`; a second run
+reported `created 0 · unchanged 227` (idempotent).
+
+### ⚠ PRP API TLS — the missing intermediate (fixed 2026-08-22)
+`prp.parliament.gov.bd` serves **only its leaf certificate** and omits the
+`GoGetSSL RSA DV CA` intermediate that chains it to the USERTrust root. Windows
+hides this by fetching the intermediate itself over AIA, so BOTH PRP commands
+worked from a dev box and died inside the Linux container with
+`[SSL: CERTIFICATE_VERIFY_FAILED] unable to get local issuer certificate`.
+This is **unrelated to the system's own lack of TLS** (`USE_TLS=False`, plain
+HTTP on :80) — that governs inbound browser traffic; this is the app acting as an
+outbound *client*, which needs no certificate of its own.
+Fix: the intermediate ships as **`utils/certs/prp_chain.pem`** and
+**`prp_api.ssl_context()`** builds `ssl.create_default_context()` + that cert, used
+by `fetch_json()` and by `import_mp_api._download()` (photo/signature URLs hit the
+same host). It **adds** trust rather than disabling verification, so it keeps working
+if PRP ever fixes their chain. Do NOT "simplify" this to `verify=False`.
+
+---
+
 ## REFERENCE DOCS
 
 Read these when working on the relevant area:

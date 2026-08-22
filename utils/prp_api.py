@@ -13,6 +13,7 @@ Kept here so the token/fetch/credential behaviour stays identical for both.
 
 import json
 import os
+import ssl
 import urllib.error
 import urllib.request
 
@@ -21,6 +22,29 @@ from django.core.management.base import CommandError
 BASE_URL = 'https://prp.parliament.gov.bd'
 TOKEN_PATH = '/api/authentication/external?action=token'
 EMPLOYEE_PATH = '/api/secure/external?action=employeeInformations'
+
+# prp.parliament.gov.bd serves ONLY its leaf certificate — it never sends the
+# `GoGetSSL RSA DV CA` intermediate that links it to the trusted USERTrust root.
+# Windows papers over this by fetching the missing intermediate itself (AIA);
+# OpenSSL does not, so on Linux (i.e. the Docker server) every call died with
+# CERTIFICATE_VERIFY_FAILED. We ship that one intermediate and ADD it to the
+# normal trust store — the roots still have to check out, so this is not a
+# verification bypass, and it keeps working if PRP ever fixes their chain.
+CHAIN_PEM = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         'certs', 'prp_chain.pem')
+
+_ssl_ctx = None
+
+
+def ssl_context():
+    """Default trust store PLUS the intermediate prp.parliament.gov.bd omits."""
+    global _ssl_ctx
+    if _ssl_ctx is None:
+        ctx = ssl.create_default_context()
+        if os.path.exists(CHAIN_PEM):
+            ctx.load_verify_locations(cafile=CHAIN_PEM)
+        _ssl_ctx = ctx
+    return _ssl_ctx
 
 
 def credentials(username=None, password=None):
@@ -32,7 +56,8 @@ def credentials(username=None, password=None):
 def fetch_json(req, what, timeout=180):
     """Perform an HTTP request and parse JSON, with informative errors."""
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with urllib.request.urlopen(req, timeout=timeout,
+                                    context=ssl_context()) as resp:
             status = resp.status
             raw = resp.read().decode('utf-8', 'replace')
     except urllib.error.HTTPError as exc:

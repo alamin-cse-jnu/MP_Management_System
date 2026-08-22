@@ -129,7 +129,8 @@ class Command(BaseCommand):
             headers['Authorization'] = self.token
         req = urllib.request.Request(url, headers=headers)
         try:
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with urllib.request.urlopen(req, timeout=60,
+                                        context=prp_api.ssl_context()) as resp:
                 data = resp.read()
                 ctype = resp.headers.get('Content-Type', '').lower()
         except Exception as exc:  # noqa: BLE001
