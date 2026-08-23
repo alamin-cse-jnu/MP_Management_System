@@ -1,0 +1,26 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 803,
+    "fields": {
+      "menu": 8,
+      "name_bn": "অনাপত্তি সনদ (NOC)",
+      "name_en": "No Objection Certificates",
+      "url_name": "noc:noc_list",
+      "ordering": 40,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 804,
+    "fields": {
+      "menu": 8,
+      "name_bn": "NOC লেটারহেড ও টেমপ্লেট",
+      "name_en": "NOC Letterhead & Templates",
+      "url_name": "noc:noc_settings",
+      "ordering": 50,
+      "is_active": true
+    }
+  }
+]

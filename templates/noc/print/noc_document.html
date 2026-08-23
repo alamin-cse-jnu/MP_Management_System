@@ -1,0 +1,68 @@
+{% load static %}<!DOCTYPE html>
+<html lang="{% if is_bangla %}bn{% else %}en{% endif %}" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ noc.memo_no }} — {{ noc.mp.name_en|default:noc.mp.name_bn }}</title>
+  <style>
+    /* The NOC carries its OWN letterhead inside body_html, so this shell
+       deliberately does NOT extend base_print.html (which stamps the generic
+       report header on every page). */
+    @font-face {
+      font-family: 'SolaimanLipi';
+      src: url('{% if pdf_font_uri %}{{ pdf_font_uri }}{% else %}{% static "fonts/SolaimanLipi.ttf" %}{% endif %}') format('truetype');
+    }
+    @page {
+      size: A4 portrait;
+      /* The Bangla letter has to fit the letter AND the অনুলিপি list on one
+         sheet, as both samples do, so it runs to narrower margins. */
+      margin: {% if is_bangla %}12mm 16mm{% else %}15mm 18mm{% endif %};
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'SolaimanLipi', 'Nirmala UI', 'Noto Serif Bengali', serif;
+      font-size: 12pt;
+      line-height: 1.6;
+      color: #000;
+      background: #fff;
+    }
+    .noc-page { width: 100%; }
+    .noc-page p { margin: 0 0 2px; }
+    .noc-page table { width: 100%; border-collapse: collapse; }
+    .noc-page td, .noc-page th { padding: 0 2px; vertical-align: top; }
+    .noc-page img { max-width: 100%; }
+    .noc-page ol, .noc-page ul { margin: 0 0 6px 0; padding-left: 26px; }
+    .noc-page li { margin-bottom: 4px; text-align: justify; }
+    .noc-page hr { border: none; border-top: 1px solid #000; margin: 10px 0; }
+    .noc-page u { text-decoration: underline; }
+
+    /* The Bangla forwarding letter carries the অনুলিপি distribution list on the
+       SAME page as the letter (see both samples), which is a lot of text for one
+       A4 sheet. It needs tighter leading than the English certificate or the
+       tail spills onto a second page. */
+    .noc-bn .noc-page { font-size: 11.5pt; line-height: 1.38; }
+    .noc-bn .noc-page li { margin-bottom: 1px; }
+
+    /* Screen-only framing so the preview looks like a sheet of paper. */
+    @media screen {
+      body { background: #e9edf2; padding: 24px 12px; }
+      .noc-page {
+        width: 210mm; min-height: 297mm; margin: 0 auto;
+        padding: {% if is_bangla %}12mm 16mm{% else %}15mm 18mm{% endif %}; background: #fff;
+        box-shadow: 0 2px 14px rgba(15, 23, 42, .18);
+      }
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .noc-page { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body class="{% if is_bangla %}noc-bn{% endif %}">
+  <div class="noc-page">{{ body_html|safe }}</div>
+
+  {% if not pdf_mode %}
+  <script>window.onload = function () { window.print(); };</script>
+  {% endif %}
+</body>
+</html>

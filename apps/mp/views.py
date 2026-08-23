@@ -194,14 +194,19 @@ def mp_list(request):
     paginator = Paginator(qs.order_by('mp_id'), 25)
     page      = paginator.get_page(request.GET.get('page'))
 
-    return render(request, 'mp/mp_list.html', {
+    ctx = {
         'page_obj':     page,
         'q':            q,
         'parliament_id': parliament_id,
         'parliaments':  Parliament.objects.order_by('-ordinal'),
         'member_type':  member_type,
         'status':       status,
-    })
+    }
+    # The filter form live-searches over HTMX (a keystroke re-runs this view), so
+    # an HX request gets only the results block that #mp-results swaps in.
+    if request.headers.get('HX-Request'):
+        return render(request, 'mp/_mp_list_results.html', ctx)
+    return render(request, 'mp/mp_list.html', ctx)
 
 
 # ── MP CREATE ─────────────────────────────────────────────────────────────────

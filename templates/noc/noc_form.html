@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{% ui "NOC সম্পাদনা" "Edit NOC" %} — {{ noc.memo_no }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/noc.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'noc:noc_list' %}">{% ui "অনাপত্তি সনদ" "NOC" %}</a></li>
+      {% if noc.tour_id %}
+      <li class="breadcrumb-item"><a href="{% url 'travel:tour_detail' noc.tour_id %}">{{ noc.tour.go_number }}</a></li>
+      {% endif %}
+      <li class="breadcrumb-item active">{{ noc.memo_no }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "অনাপত্তি সনদ সম্পাদনা" "Edit No Objection Certificate" %}</h4>
+    <small class="text-muted">
+      {{ noc.mp|tr:"name" }} — {{ noc.mp.mp_id }} ·
+      <span class="badge {% if noc.is_bangla %}badge-primary{% else %}badge-active{% endif %}"
+            style="font-size:.7rem;">{{ noc.get_language_display }}</span>
+    </small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'noc:noc_detail' noc.pk %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-eye me-1"></i>{% ui "প্রিভিউ" "Preview" %}
+    </a>
+    {% if noc.tour_id %}
+    <a href="{% url 'travel:tour_detail' noc.tour_id %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>{% ui "ভ্রমণে ফিরুন" "Back to Tour" %}
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<form method="post" id="noc-form">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+  <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <div class="row g-3">
+    <!-- ── metadata ─────────────────────────────────────────────── -->
+    <div class="col-lg-3">
+      <div class="mp-card mb-3">
+        <div class="mp-card-header"><i class="bi bi-sliders icon"></i>{% ui "দলিলের তথ্য" "Document Details" %}</div>
+        <div class="p-3">
+          <div class="mb-3">
+            <label class="form-label fw-medium">{% ui "স্মারক নম্বর" "Memo No." %}</label>
+            {{ form.memo_no }}
+            {% if form.memo_no.errors %}<div class="invalid-feedback d-block">{{ form.memo_no.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-medium">{% ui "তারিখ" "Date" %}</label>
+            {{ form.issue_date }}
+            {% if form.issue_date.errors %}<div class="invalid-feedback d-block">{{ form.issue_date.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-medium">{% ui "স্বাক্ষরকারী" "Signatory" %}</label>
+            {{ form.signatory }}
+            {% if noc.signatory_is_retired %}
+            <div class="form-text text-warning" style="font-size:.78rem;">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              {% ui "এই কর্মকর্তা PRP তালিকায় আর সক্রিয় নন।" "This officer is no longer active in PRP." %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-medium">{% ui "সঙ্গী স্বামী/স্ত্রী" "Accompanying Spouse" %}</label>
+            {{ form.spouse }}
+            <div class="form-text" style="font-size:.78rem;">
+              {% ui "নির্বাচন করলে দলিলে সঙ্গীর বাক্যটি যুক্ত হবে (পুনরায় তৈরি করুন)।" "Selecting one adds the spouse sentence — then Regenerate." %}
+            </div>
+          </div>
+          <div class="mb-0">
+            <label class="form-label fw-medium">{% ui "অবস্থা" "Status" %}</label>
+            {{ form.status }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mp-card mb-3">
+        <div class="mp-card-header"><i class="bi bi-arrow-clockwise icon"></i>{% ui "পুনরায় তৈরি" "Regenerate" %}</div>
+        <div class="p-3">
+          <p class="text-muted mb-2" style="font-size:.82rem;">
+            {% ui "টেমপ্লেট ও বর্তমান তথ্য থেকে দলিলটি নতুন করে তৈরি হবে — হাতে করা সব সম্পাদনা মুছে যাবে।" "Rebuilds the document from the template and current data — all manual edits are lost." %}
+          </p>
+          <button type="submit" form="noc-regenerate" class="btn btn-outline-warning btn-sm w-100"
+                  onclick="return confirm('{% ui "হাতে করা সব সম্পাদনা মুছে যাবে। চালিয়ে যাবেন?" "All manual edits will be lost. Continue?" %}');">
+            <i class="bi bi-arrow-clockwise me-1"></i>{% ui "টেমপ্লেট থেকে তৈরি করুন" "Regenerate from template" %}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── the document ─────────────────────────────────────────── -->
+    <div class="col-lg-9">
+      <div class="mp-card">
+        <div class="mp-card-header d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-file-earmark-text icon"></i>{% ui "দলিল" "Document" %}</span>
+          <small class="text-muted fw-normal" style="font-size:.75rem;">
+            {% ui "লেটারহেডসহ পুরো পাতাটি সম্পাদনাযোগ্য" "The whole page, letterhead included, is editable" %}
+          </small>
+        </div>
+        <div class="p-2 noc-editor-wrap">
+          {{ form.body_html }}
+          {% if form.body_html.errors %}<div class="invalid-feedback d-block">{{ form.body_html.errors|striptags }}</div>{% endif %}
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 justify-content-end mt-3 mb-4">
+        <a href="{% url 'noc:noc_detail' noc.pk %}" class="btn btn-outline-secondary">
+          <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
+        </a>
+        <button type="submit" class="btn btn-primary px-4">
+          <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{# Separate form so Regenerate posts nothing but the CSRF token. #}
+<form method="post" id="noc-regenerate" action="{% url 'noc:noc_regenerate' noc.pk %}" class="d-none">
+  {% csrf_token %}
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/ckeditor5/ckeditor.js' %}"></script>
+{% if request.session.LANGUAGE == 'bn' %}
+<script src="{% static 'vendor/ckeditor5/translations/bn.js' %}"></script>
+{% endif %}
+<script src="{% static 'js/noc_editor.js' %}"></script>
+<script>
+  window.initNocEditor('#noc-editor', '#noc-form',
+                       '{% if noc.is_bangla %}bn{% else %}en{% endif %}');
+</script>
+{% endblock %}

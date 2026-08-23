@@ -1,0 +1,77 @@
+/* NOC editor + preview.
+   Prefix `.noc-` so nothing here can reach the MP or officer pickers. */
+
+/* ── CKEditor canvas ─────────────────────────────────────────────────────── */
+.noc-editor-wrap .ck-editor__editable {
+  /* Roughly A4 text-width at screen zoom, so line breaks land where they will
+     on paper. Not exact — the print/PDF page is the authority. */
+  min-height: 620px;
+  padding: 18px 22px !important;
+  background: #fff;
+}
+
+/* Mirror templates/noc/print/noc_document.html so the editor previews truly. */
+.noc-editor-wrap .ck-content {
+  font-family: 'SolaimanLipi', 'Nirmala UI', 'Noto Serif Bengali', serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #000;
+}
+.noc-editor-wrap .ck-content p { margin: 0 0 2px; }
+.noc-editor-wrap .ck-content table { width: 100%; border-collapse: collapse; }
+.noc-editor-wrap .ck-content td,
+.noc-editor-wrap .ck-content th { padding: 0 2px; vertical-align: top; }
+.noc-editor-wrap .ck-content ol,
+.noc-editor-wrap .ck-content ul { padding-left: 26px; }
+.noc-editor-wrap .ck-content li { margin-bottom: 4px; }
+.noc-editor-wrap .ck-content img { max-width: 100%; }
+
+/* A borderless layout table is invisible while editing, which makes the
+   letterhead impossible to click into. Show a faint guide on screen only —
+   `.ck-content` styles never reach the print/PDF/Word output. */
+.noc-editor-wrap .ck-content table td,
+.noc-editor-wrap .ck-content table th {
+  outline: 1px dashed rgba(13, 148, 136, .28);
+  outline-offset: -1px;
+}
+
+.noc-editor-wrap .ck.ck-toolbar { border-radius: 6px 6px 0 0; }
+.noc-editor-wrap .ck.ck-editor__main > .ck-editor__editable { border-radius: 0 0 6px 6px; }
+
+/* ── preview page ────────────────────────────────────────────────────────── */
+.noc-preview-frame {
+  background: #e9edf2;
+  padding: 20px 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.noc-preview-sheet {
+  width: 210mm;
+  min-height: 250mm;
+  margin: 0 auto;
+  padding: 15mm 18mm;
+  background: #fff;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, .18);
+  font-family: 'SolaimanLipi', 'Nirmala UI', 'Noto Serif Bengali', serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #000;
+}
+.noc-preview-sheet p { margin: 0 0 2px; }
+.noc-preview-sheet table { width: 100%; border-collapse: collapse; }
+.noc-preview-sheet td, .noc-preview-sheet th { padding: 0 2px; vertical-align: top; }
+.noc-preview-sheet ol, .noc-preview-sheet ul { padding-left: 26px; margin: 0 0 6px; }
+.noc-preview-sheet li { margin-bottom: 4px; text-align: justify; }
+.noc-preview-sheet img { max-width: 100%; }
+.noc-preview-sheet hr { border: none; border-top: 1px solid #000; margin: 10px 0; }
+
+/* Mirror the print shell: the Bangla letter runs tighter so its copy-list tail
+   stays on the same A4 page. Keep these two in sync with
+   templates/noc/print/noc_document.html. */
+.noc-bn .noc-preview-sheet { font-size: 11.5pt; line-height: 1.38; padding: 12mm 16mm; }
+.noc-bn .noc-preview-sheet li { margin-bottom: 1px; }
+
+@media print {
+  .noc-preview-frame { background: #fff; padding: 0; }
+  .noc-preview-sheet { width: auto; min-height: 0; padding: 0; box-shadow: none; }
+}

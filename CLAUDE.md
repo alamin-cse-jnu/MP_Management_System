@@ -175,6 +175,8 @@ mp_management/
 | 21 | Master data → grouped single-page managers (Geography, Personal, Professional, Travel, Language, Ministry, Committee) mirroring Education | ✅ |
 | 22 | Technocrat ministers — cabinet members with no seat (see below) | ✅ |
 | 23 | Accompanying Officers → PRP employee sync (roster + picker, see below) | ✅ |
+| 24 | Field-feedback fixes — spouse/child mobile, education Result cascade, live MP search | ✅ |
+| 25 | NOC generation — bilingual editable documents (CKEditor) + PDF/Word/print, tour passport capture | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -245,6 +247,9 @@ python manage.py sync_officers --dry-run                # report keep-set + skip
 python manage.py sync_officers                          # upsert + retire (never deletes)
 python manage.py sync_officers --file employees.json    # offline payload (testing)
 python manage.py loaddata fixtures/initial/officer_menu.json
+
+# NOC documents (Phase 25)
+python manage.py loaddata fixtures/initial/noc_menu.json
 ```
 
 ### Phase 16 — PRP API import & sync (2026-07)
@@ -806,6 +811,254 @@ Field feedback on `/reports/custom-report/`:
 
 ---
 
+## PHASE 24 — Field-feedback fixes (2026-08-23) ✅
+Four user observations on the running local stack. Two were real bugs, two were
+missing fields/UX.
+
+- **Spouse + Child মোবাইল নম্বর** — `Spouse.mobile` / `Child.mobile`
+  (CharField 30, blank; migration `mp/0009`). Added to `SpouseForm` (after NID)
+  and `ChildForm` (after NID/birth-reg), to both add/edit templates, and as a
+  column on the read-only `_tab_spouse.html` / `_tab_children.html` tables.
+  Not added to the biodata PDFs (not requested).
+
+- **Education page: picking a Result Type showed NOTHING in Result.** Two
+  independent causes, both fixed:
+  1. **The display toggle was a no-op.** `education_sections.html` styles
+     `.edu-result-field { display: none; }` in CSS but the cascade JS revealed a
+     block with `b.style.display = ''`. Clearing an inline style does not
+     override a stylesheet rule — it hands the element straight back to
+     `display:none`, so the "revealed" input was never visible for ANY result
+     type. Now sets an explicit **`'block'`** (same trap fixed on the
+     `.edu-result-empty` / `.edu-result-warn` rows). **Never toggle visibility
+     with `style.display = ''` when a CSS rule hides the element.**
+  2. **`DivisionResult` master was empty (0 rows) on every DB**, so even once
+     visible, "বিভাগ" revealed a dropdown with no options. Migration
+     `master/0010_seed_result_masters` seeds the 4 canonical division results
+     (প্রথম/দ্বিতীয়/তৃতীয় বিভাগ · উত্তীর্ণ) **and** the missing `ResultType` rows
+     keyed by `result_format` (gpa · cgpa · percentage · pass_fail joined the two
+     that existed) so every format the form supports is reachable. `get_or_create`
+     never touches an admin-created row.
+  - Safety net added: if a revealed block's only control is a dropdown with no
+    options, an amber "no options exist — add them in Master Data" line replaces
+    the silently-empty select, linking to `master:education_master`.
+  - Browser-verified: all 6 result types reveal their matching control, Division
+    lists 4 options, and the warning appears/disappears with the pool.
+
+- **`/mp/` search now filters as you type** (no more type-then-click-Filter).
+  The results table + pagination + count moved to **`templates/mp/_mp_list_results.html`**;
+  `mp_list` returns just that partial when `HX-Request` is set. The filter
+  `<form>` carries `hx-get`/`hx-target="#mp-results"`/`hx-push-url="true"` with
+  `hx-trigger="keyup changed delay:300ms from:#mp-search, search from:#mp-search,
+  filters-changed"`, so search + parliament + type + status always travel
+  together and the URL stays shareable. Spinner via `hx-indicator`; the Filter
+  button remains the no-JS fallback.
+  - **⚠ Select2 fires jQuery events, not native ones.** The dropdowns' old
+    `onchange="this.form.submit()"` worked only because jQuery's `.trigger()`
+    also invokes a matching inline `on*` attribute — it does **not** dispatch a
+    native DOM event, so htmx's native `change` listener never fires. Replacing
+    the inline handler with a plain htmx `change` trigger silently broke the
+    dropdowns (verified: value changed, no request). Fixed with a jQuery bridge in
+    `{% block extra_js %}` that re-emits `htmx.trigger('#mp-filter-form',
+    'filters-changed')`. **Any future htmx-on-change over a Select2 control needs
+    this bridge.**
+  - Browser-verified: 349 → 297 → 40 → 10 → 2 as "Mirza" is typed (Bangla too:
+    144 → 51 → 18 for "আবুল"), Select2 picks on Type/Status re-filter, combined
+    search+dropdown works, empty state renders.
+
+- **⚠ Templates are cached by gunicorn** — production settings compile templates
+  once per worker, so a template edit on the bind-mounted local stack is NOT
+  visible until `docker compose restart web`. The Django test client (fresh
+  process) will show the new markup while the browser still shows the old one;
+  this masked the education display bug for one round of testing.
+
+⏳ **Not deployed to production** — local stack only (migrations `mp/0009` +
+`master/0010` applied locally). Needs the usual SFTP sync + `docker compose up -d`
++ `migrate` on 172.16.220.158.
+
+---
+
+## PHASE 25 — NOC generation for MP foreign travel (2026-08-23) ✅
+`/travel/create/` recorded the tour GO, but the **অনাপত্তি সনদ / No Objection
+Certificate** was still typed by hand in Word. Now generated from the tour + MP
+data, edited in CKEditor, and printed / downloaded as PDF or Word.
+Source scans: `docs/NOC for MP/`.
+
+### ⚠ The samples are TWO DIFFERENT DOCUMENTS, not one translated
+| | `NOC Sample-1/2.pdf` (English) | `NOC Bangla Sample-1/2.png` |
+|---|---|---|
+| What | the certificate itself | the **forwarding letter** that issues it |
+| Letterhead | logo + right-hand contact block | centred text only, no logo |
+| Body | `Sub:` + one "This is to certify that…" paragraph | `বিষয়:` + two numbered paras + `সংযুক্ত: অনাপত্তি সনদ।` |
+| Extra | — | second block on the SAME page: **অনুলিপি** list (7 recipients) + a second signature |
+| Date | `20 August 2026` | dual `০২ ভাদ্র ১৪৩৩` / `১৭ আগস্ট ২০২৬`, Bengali digits |
+
+Each carries its **own memo number**, so a Bangla NOC and an English NOC are two
+independent `NOC` rows. Do not "unify" them into one bilingual document.
+
+### New app `apps/noc/`
+- **`NOCLetterhead`** — one active row (`NOCLetterhead.current()`, self-creating):
+  org/wing/section/website/phone/fax/email/address (bn+en), `memo_prefix`, and
+  **`speaker_title_bn/_en`** — that one flips between Speaker and Acting Speaker
+  with who presides, so it must never be hardcoded. Edited at `/noc/settings/`.
+- **`NOCTemplate`** — `language` + `body_html` carrying `{placeholder}` tokens,
+  seeded by `noc/0002` from the scans. ⏳ **the Bangla wording is transcribed from
+  an image — proofread it at `/noc/settings/`.**
+- **`NOC`** — tour + mp + language + memo_no + serial_no + issue_date + spouse +
+  signatory (+ snapshot) + `body_html` + status. **No unique constraint** on
+  (tour, mp, language): a corrected re-issue is legitimate.
+- **The signatory is snapshotted** from the PRP roster exactly like
+  `ForeignTourOfficer.snapshot_fields()`, so an old NOC still reads correctly
+  after the officer transfers. New `OfficerChoiceField` (single-select sibling of
+  `OfficerMultipleChoiceField`) in `apps/officer/form_fields.py`; both now share
+  `_officer_label()`.
+
+### Generation — `apps/noc/generation.py`
+`build_context()` returns a flat dict; `render_body()` fills it by **regex token
+substitution, never the Django template engine** — a DB-stored template must not
+be able to execute template tags. Unknown tokens are left visible (a template typo
+shows up rather than silently blanking); `unresolved_tokens()` reports them.
+`next_serial()` + `suggest_memo_no()` auto-number from `memo_prefix` + 2-digit
+year + serial; the field stays hand-editable.
+
+### New utilities
+- **`utils/bangla_date.py`** — Gregorian → বঙ্গাব্দ on the **revised Bangladesh
+  calendar** (১ বৈশাখ = 14 April always; six 31-day months, five of 30, চৈত্র 30,
+  ফাল্গুন 29 — 30 in a Gregorian leap year). Verified against both samples, both
+  year boundaries and a full 365-day walk. Also `format_range_en/bn` reproducing
+  the samples' compression (`10 to 28 August 2026`, `২১-২৯ আগস্ট ২০২৬`).
+- **`utils/html_to_docx.py`** — python-docx walker over the editor's HTML (stdlib
+  `html.parser`). **`_set_run_font()` sets `w:cs` (and `w:szCs`), not just
+  `w:ascii`/`w:hAnsi`** — Bengali is a *complex script*, so without `w:cs` Word
+  falls back to Times New Roman and renders boxes. A bounded converter by design:
+  odd pasted markup degrades to plain paragraphs rather than raising.
+- **`utils/html_sanitize.py`** — allowlist run on every save (`body_html` is later
+  rendered `|safe`). Strips `<script>`/`<iframe>` with their content, all `on*`
+  handlers, `javascript:` URLs and `url()` inside CSS; unknown tags lose the tag
+  but keep their text.
+
+### Editor
+CKEditor 5 **super-build 41.4.2, vendored** at `static/vendor/ckeditor5/` (UMD
+global `CKEDITOR`; v41 needs no licence key — v44+ would). Shared init in
+`static/js/noc_editor.js`, used by both the document editor and the template
+editor. Two settings that break it if removed:
+- **`removePlugins: PREMIUM`** — the super-build bundles the commercial plugins;
+  left in, they demand a licence key and the editor never mounts.
+- **`htmlSupport: { allow: [{name: /.*/, attributes: true, classes: true, styles: true}] }`**
+  — without it CKEditor strips the inline column widths, `text-indent` and
+  `font-size` the layout depends on, and the letterhead collapses to one column.
+
+CKEditor writes back to its `<textarea>` only through its own submit handling, so
+the init hooks the form's `submit` event and copies `editor.getData()` across.
+
+### Layout is table-based ON PURPOSE
+WeasyPrint (PDF), the browser (print) and the docx walker all reproduce table
+columns faithfully; float/flex layout survives none of the three.
+
+### Output — one A4 shell, three formats
+`templates/noc/print/noc_document.html` deliberately does **not** extend
+`base_print.html` (which stamps a generic report header on every page).
+`?format=print` · `?format=pdf` through the existing
+`render_report_pdf(..., landscape=False)` · `?format=docx` through
+`utils/html_to_docx.py`. **New dependency `python-docx==1.1.2` → deploying this
+needs `docker compose up -d --build`.**
+
+- **The Bangla letter needs its own page box.** Letter + অনুলিপি list on one sheet
+  overflowed to two pages at the shared settings. Fixed with `body.noc-bn`:
+  `@page` margin `12mm 16mm` (vs `15mm 18mm`), `font-size: 11.5pt`,
+  `line-height: 1.38`, tighter `li`. Mirrored in `static/css/noc.css` for the
+  preview. **Keep those two in sync** — loosening either re-splits the page.
+- pypdf's `extract_text()` renders Bangla as gibberish even when the PDF is
+  perfect: SolaimanLipi is embedded as a CID/Type0 subset and ligature glyphs do
+  not reverse-map. Check `/Producer` and the embedded font list, or look at the
+  page, rather than trusting extracted text.
+
+### Entry points
+`/travel/<pk>/` gains an **অনাপত্তি সনদ (NOC)** card — one row per participant with
+their passport, the NOCs already issued, and two issue buttons (Bangla letter /
+English certificate). `/noc/` lists everything with the same HTMX live-search
+pattern as `/mp/`, **including the Select2 → htmx jQuery bridge** (see Phase 24).
+Submenus under বিদেশ ভ্রমণ via `fixtures/initial/noc_menu.json` +
+`accounts/0007_noc_submenu` (carries `travel:tour_list` role permissions across).
+`('apps.noc', 'NOC')` added to `AUDITED_MODELS`.
+
+### Passport capture on the tour form
+`MP.passport_number` is what the NOC prints, and it is often blank when a tour is
+entered — so `/travel/create/` now shows a **Participant passports** panel: one row
+per ticked MP, prefilled from the profile (tagged প্রোফাইল থেকে / from profile) or
+blank (নতুন / new), written back to the profile on save.
+`static/js/tour_passports.js` only *listens* to the picker's checkboxes —
+**`mp_picker.js` and `partials/_mp_picker.html` are untouched**, because committee
+step-1 and the institution bulk form share them. **An absent or blank input never
+clears a stored passport** (a JS failure must not wipe data); clearing one is a
+profile-level action.
+`Spouse.passport_number` added too (`mp/0010`) — English sample-2 prints the
+accompanying spouse's passport number.
+
+### Field-feedback round 1 (2026-08-23)
+Five fixes from the first real use of the NOC pages.
+
+- **Stray horizontal rules in every generated letter.** CKEditor wraps each table
+  it saves in **`<figure class="table">`**, and `table` is also a *Bootstrap
+  component* class: `.table > :not(caption) > * > *` then paints
+  `border-bottom: 1.1px solid #000` and `padding: 8px` onto every `<tr>`. So a
+  document grew a black rule under each row the moment it was saved — the
+  templates themselves were clean, which is why only *saved* letters showed it
+  (measured with `getComputedStyle`: `1.11111px` inside the figure, `0px`
+  outside). Fixed in `utils/html_sanitize.py`: `TRANSPARENT_TAGS = {'figure'}`
+  unwraps the wrapper (keeping its children), and `DENY_CLASSES = {'table'}`
+  strips that class wherever it appears. This also drops `figure`'s Reboot bottom
+  margin and helps the DOCX/PDF paths. Existing rows were re-sanitised in place.
+  **Any future editor-authored HTML rendered inside the app must not carry
+  Bootstrap component class names.**
+
+- **Changing the Date / Signatory / Memo No did nothing to the letter.** Because
+  the whole page is `body_html`, those values live both as columns and as text
+  inside the HTML. `noc_edit` now keeps them in step:
+  - **is_pristine → re-render.** If the body is still exactly what the template
+    produces, it is re-rendered from the new context. This is what makes a
+    *blank* signatory work: there is no old text to find, so a patch could never
+    insert it.
+  - **hand-edited → `patch_body()`.** Only the old rendered strings are swapped
+    for the new ones (`generation.SYNCED_KEYS`), so manual edits survive.
+    Keys that changed but had nothing to replace are reported and the user is
+    told to press Regenerate.
+
+- **Signatory selection silently did nothing.** `form.is_valid()` runs
+  `construct_instance()`, which writes the posted FK straight onto the instance —
+  so the old guard `officer.pk != noc.signatory_id` compared the new value with
+  itself and was **always False**, and `snapshot_signatory()` never ran: the FK
+  moved while the printed name/designation stayed stale. `noc_edit` now captures
+  the old state **before** binding the form and snapshots unconditionally.
+  **Never read pre-edit state off a ModelForm's instance after `is_valid()`.**
+
+- **Template picker removed** from the editor (user: not their concern). It stays
+  on the model as plumbing for Regenerate; `NOCForm.Meta.fields` no longer lists it.
+
+- **Tour page shows ISSUED documents only.** `/travel/<pk>/` lists **final** NOCs
+  only, at most one per language (latest wins if a correction was re-issued), and
+  offers the issue button only while that language has no final — once both exist
+  the cell reads "উভয়টি জারি হয়েছে". A muted "N টি খসড়া চলমান" link appears when
+  drafts exist, so the same NOC is not started twice. Drafts are managed at
+  `/noc/`, where **drafts are deletable and finals are not** — the list shows a
+  lock instead of a bin, and `noc_delete` refuses a final server-side too, since
+  hiding a control is not a permission check. It honours a local-path `?next` so
+  deleting from the list returns to the list.
+
+### Verified on the local Docker stack
+Bangla calendar against both samples; both documents generate with **zero
+unresolved placeholders**; the spouse clause and signatory block match sample-2's
+wording; PDF is 1 A4 page each from WeasyPrint 69 with SolaimanLipi embedded;
+DOCX is A4 with tables + logo preserved and `w:cs=SolaimanLipi` on runs; CKEditor
+mounts with a full toolbar and a save round-trip preserves the logo, all four
+tables and the `18%` column widths; the sanitiser strips script/onclick/iframe
+while leaving the document intact; passport prefill / back-fill / no-clobber;
+letterhead + template saves; regression sweep over travel, committee,
+institution, mp and reports.
+⏳ **Not deployed to production** — `mp/0010`, `noc/0001`, `noc/0002` and
+`accounts/0007` are local only, and the deploy needs `--build` for `python-docx`.
+
+---
+
 ## PRODUCTION DEPLOY LOG
 
 **2026-08-22 — Phases 22-follow-ups + 23 deployed to 172.16.220.158** (commit `e6573b6`).
@@ -850,4 +1103,5 @@ Read these when working on the relevant area:
 | `docs/ref-form-mapping.md` | PDF form → system field mapping; exact field order per section; 3 model fixes from PDF audit |
 | `docs/technocrat-plan.md` | Technocrat ministers — why they reuse the MP model, the "350 means 350" exclusion list, picker/sync scope rules |
 | `docs/officer-sync-plan.md` | PRP officer roster — the keep-rule, retirement semantics, frozen tour snapshot, wipe-guard, verification log |
+| `docs/NOC for MP/` | NOC source scans — the English certificate and the Bangla forwarding letter are DIFFERENT documents |
 | `docs/API.txt` | PRP endpoints (token / employeeInformations / offices) + a sample employee record |

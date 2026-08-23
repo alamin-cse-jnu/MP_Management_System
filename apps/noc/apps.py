@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class NocConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.noc'
+    verbose_name = 'অনাপত্তি সনদ (NOC)'

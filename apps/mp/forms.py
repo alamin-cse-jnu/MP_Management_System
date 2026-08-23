@@ -95,7 +95,7 @@ class SpouseForm(_BootstrapMixin, forms.ModelForm):
         model  = Spouse
         fields = [
             'name_bn', 'name_en',
-            'dob', 'nid',
+            'dob', 'nid', 'mobile', 'passport_number',
             'marriage_date', 'tin',
             'profession', 'home_district', 'gender',
             'employer_details_bn', 'employer_details_en',
@@ -110,7 +110,7 @@ class ChildForm(_BootstrapMixin, forms.ModelForm):
     class Meta:
         model  = Child
         fields = ['serial', 'name_bn', 'name_en', 'dob', 'gender', 'profession',
-                  'nid_or_birth_reg']
+                  'nid_or_birth_reg', 'mobile']
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }

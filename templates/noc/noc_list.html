@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{% ui "অনাপত্তি সনদ (NOC)" "No Objection Certificates" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "অনাপত্তি সনদ" "NOC" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "অনাপত্তি সনদ (NOC)" "No Objection Certificates" %}</h4>
+    <small class="text-muted">{% ui "বিদেশ ভ্রমণের পাতা থেকে নতুন NOC তৈরি করুন।" "New NOCs are issued from a foreign tour page." %}</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'noc:noc_settings' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-gear me-1"></i>{% ui "লেটারহেড ও টেমপ্লেট" "Letterhead & Templates" %}
+    </a>
+    <a href="{% url 'travel:tour_list' %}" class="btn btn-primary btn-sm">
+      <i class="bi bi-airplane-engines me-1"></i>{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}
+    </a>
+  </div>
+</div>
+
+<style>
+  /* htmx marks the hx-indicator elements with .htmx-request for the duration. */
+  #noc-search-busy { display: none; }
+  #noc-search-busy.htmx-request { display: flex; }
+  #noc-results.htmx-request { opacity: .55; transition: opacity .15s ease; }
+</style>
+
+<div class="mp-card mb-3 p-3">
+  {% comment %}
+    Live filtering, same shape as the MP list: hx-get on the <form> serialises
+    every filter so search + language + status always travel together, and
+    hx-push-url keeps the address bar shareable. The Filter button is the no-JS
+    fallback. Select2 announces picks with a jQuery event that htmx's native
+    listener never sees — the bridge in extra_js re-emits it.
+  {% endcomment %}
+  <form method="get" class="row g-2 align-items-end" id="noc-filter-form"
+        hx-get="{% url 'noc:noc_list' %}"
+        hx-target="#noc-results"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+        hx-indicator="#noc-search-busy, #noc-results"
+        hx-trigger="keyup changed delay:300ms from:#noc-search,
+                    search from:#noc-search,
+                    filters-changed">
+    <div class="col-md-5">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="search" name="q" value="{{ q }}" class="form-control" id="noc-search"
+               autocomplete="off"
+               placeholder="{% ui "স্মারক নম্বর, নাম, এমপি আইডি বা GO…" "Memo no, name, MP ID or GO…" %}">
+        <span class="input-group-text" id="noc-search-busy">
+          <span class="spinner-border spinner-border-sm text-primary" role="status"></span>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "ভাষা" "Language" %}</label>
+      <select name="language" class="form-select form-select-sm">
+        <option value="">{% ui "সব" "All" %}</option>
+        {% for value, label in languages %}
+        <option value="{{ value }}" {% if language == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "অবস্থা" "Status" %}</label>
+      <select name="status" class="form-select form-select-sm">
+        <option value="">{% ui "সব" "All" %}</option>
+        {% for value, label in statuses %}
+        <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-outline-primary btn-sm w-100" title="{% ui "ফিল্টার" "Filter" %}">
+        <i class="bi bi-funnel"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div id="noc-results">
+  {% include "noc/_noc_list_results.html" %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Select2 announces a pick with jQuery's .trigger('change'), which does not
+  // dispatch a native DOM event — htmx would never fire. Re-emit explicitly.
+  jQuery(function ($) {
+    $('#noc-filter-form').on('change', 'select', function () {
+      htmx.trigger('#noc-filter-form', 'filters-changed');
+    });
+  });
+</script>
+{% endblock %}

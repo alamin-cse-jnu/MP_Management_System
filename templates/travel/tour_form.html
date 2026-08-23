@@ -115,6 +115,29 @@
     <div class="p-3">
       {% mp_picker part_form.mps %}
       {% if part_form.mps.errors %}<div class="text-danger small mt-1">{{ part_form.mps.errors }}</div>{% endif %}
+
+      {% comment %}
+        Passport numbers for the chosen MPs. The NOC prints them, and they are
+        often still blank on the profile when a tour is entered — so they are
+        captured here and written back to the MP profile on save. Rows are built
+        by static/js/tour_passports.js from the picker's own checkboxes.
+      {% endcomment %}
+      <div class="tp-panel mt-3" id="tour-passports"
+           data-picker-name="{{ part_form.mps.html_name }}"
+           data-passports="{{ passport_map_json }}"
+           data-label-profile="{% ui 'প্রোফাইল থেকে' 'from profile' %}"
+           data-label-new="{% ui 'নতুন' 'new' %}"
+           data-placeholder="{% ui 'পাসপোর্ট নং' 'Passport No.' %}">
+        <div class="tp-head">
+          <i class="bi bi-passport me-1"></i>
+          <span class="fw-semibold">{% ui "পাসপোর্ট নম্বর" "Passport Numbers" %}</span>
+          <span class="tp-note">{% ui "প্রোফাইলে সংরক্ষিত হবে" "saved to the MP profile" %}</span>
+        </div>
+        <div class="tp-rows"></div>
+        <div class="tp-empty text-muted small">
+          {% ui "উপরে সদস্য নির্বাচন করলে তাঁদের পাসপোর্ট নম্বর এখানে দেখা যাবে।" "Pick members above and their passport numbers appear here." %}
+        </div>
+      </div>
     </div>
   </div>
 
@@ -279,6 +302,26 @@
 
 <style>
 /* ── Tour Form — page-scoped styles ─────────────── */
+/* Participant passport rows (static/js/tour_passports.js). Prefix .tp- so
+   nothing here can reach the shared .mp-picker markup. */
+.tp-panel { border-top: 1px dashed var(--mp-border); padding-top: 0.85rem; }
+.tp-head { display: flex; align-items: center; gap: 0.4rem; font-size: 0.86rem;
+  color: var(--mp-text); margin-bottom: 0.6rem; }
+.tp-note { font-size: 0.72rem; color: var(--mp-text-muted, #64748b); font-weight: 400; }
+.tp-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.3rem 0; }
+.tp-who { flex: 1 1 55%; min-width: 0; font-size: 0.84rem; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.tp-input { flex: 0 0 45%; display: flex; align-items: center; gap: 0.45rem; }
+.tp-input input { flex: 1 1 auto; }
+.tp-tag { flex: 0 0 auto; font-size: 0.66rem; padding: 0.1rem 0.4rem; border-radius: 4px;
+  white-space: nowrap; }
+.tp-tag-profile { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.tp-tag-new { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+@media (max-width: 575.98px) {
+  .tp-row { flex-direction: column; align-items: stretch; gap: 0.25rem; }
+  .tp-input { flex: 1 1 auto; }
+}
+
 .tf-section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.07em; color: var(--mp-primary); margin-bottom: 0.85rem; }
 .tf-divider { border: none; border-top: 1px solid var(--mp-border); margin: 1.25rem 0 1.1rem; }
@@ -333,4 +376,6 @@
   });
 }());
 </script>
+<script src="{% static 'js/tour_passports.js' %}"></script>
+
 {% endblock %}

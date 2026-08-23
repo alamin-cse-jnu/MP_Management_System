@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{% ui "NOC লেটারহেড ও টেমপ্লেট" "NOC Letterhead & Templates" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'noc:noc_list' %}">{% ui "অনাপত্তি সনদ" "NOC" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "লেটারহেড ও টেমপ্লেট" "Letterhead & Templates" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "লেটারহেড ও টেমপ্লেট" "Letterhead & Templates" %}</h4>
+    <small class="text-muted">
+      {% ui "এখানে পরিবর্তন করলে নতুন তৈরি হওয়া সব NOC-তে প্রযোজ্য হবে।" "Changes here apply to every NOC generated from now on." %}
+    </small>
+  </div>
+  <a href="{% url 'noc:noc_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "তালিকায় ফিরুন" "Back to List" %}
+  </a>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <form method="post">
+      {% csrf_token %}
+      <div class="mp-card">
+        <div class="mp-card-header"><i class="bi bi-postcard icon"></i>{% ui "লেটারহেড" "Letterhead" %}</div>
+        <div class="p-3">
+          <div class="row g-3">
+            {% for field in form %}
+            <div class="col-md-6">
+              <label class="form-label fw-medium">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}<div class="invalid-feedback d-block">{{ field.errors|striptags }}</div>{% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="d-flex justify-content-end mt-3 pt-3 border-top">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="mp-card">
+      <div class="mp-card-header"><i class="bi bi-file-earmark-richtext icon"></i>{% ui "টেমপ্লেট" "Templates" %}</div>
+      <div class="p-3">
+        <p class="text-muted" style="font-size:.82rem;">
+          {% ui "নমুনা থেকে হুবহু তোলা হয়েছে — বানান ও শব্দচয়ন যাচাই করে নিন।" "Transcribed from the scanned samples — please proofread the wording." %}
+        </p>
+        <div class="list-group list-group-flush">
+          {% for t in templates %}
+          <a href="{% url 'noc:noc_template_edit' t.pk %}"
+             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-0">
+            <span>
+              <span class="fw-medium">{{ t|tr:"name" }}</span>
+              <span class="d-block text-muted" style="font-size:.78rem;">{{ t.get_language_display }}</span>
+            </span>
+            <span>
+              {% if t.is_default %}<span class="badge badge-primary" style="font-size:.65rem;">{% ui "ডিফল্ট" "default" %}</span>{% endif %}
+              <i class="bi bi-pencil-square ms-2 text-primary"></i>
+            </span>
+          </a>
+          {% empty %}
+          <div class="text-muted">{% ui "কোনো টেমপ্লেট নেই।" "No templates." %}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

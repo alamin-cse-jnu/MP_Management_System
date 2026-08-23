@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
@@ -133,14 +135,37 @@ def _tour_form(request, tour):
             ForeignTourParticipant.objects.filter(tour=tour).exclude(
                 mp_id__in=selected).delete()
 
+            # Passport numbers typed on this page belong to the MP, not the
+            # tour: the NOC prints them from the profile. Only non-empty values
+            # are written — an absent or blank input never clears a profile, so
+            # a JS failure or an untouched row can't silently wipe data.
+            for mp_pk in selected:
+                value = request.POST.get(f'passport_{mp_pk}', '').strip()[:30]
+                if value:
+                    MP.objects.filter(pk=mp_pk).exclude(
+                        passport_number=value).update(passport_number=value)
+
             messages.success(
                 request,
                 'বিদেশ ভ্রমণ GO তৈরি হয়েছে।' if is_create else 'বিদেশ ভ্রমণ তথ্য আপডেট হয়েছে।')
             return redirect('travel:tour_detail', pk=tour.pk)
         messages.error(request, 'তথ্য সংরক্ষণ করা যায়নি — নিচের ত্রুটিগুলো ঠিক করুন।')
 
+    # pk -> {value, from_profile} for every MP the picker can offer, so ticking
+    # one fills its passport row client-side. A POSTed value wins so a failed
+    # submit doesn't lose what was typed.
+    passport_map = {}
+    for mp_obj in part_form.fields['mps'].queryset.only('pk', 'passport_number'):
+        profile_value = (mp_obj.passport_number or '').strip()
+        posted = request.POST.get(f'passport_{mp_obj.pk}') if request.method == 'POST' else None
+        passport_map[str(mp_obj.pk)] = {
+            'value': (posted if posted is not None else profile_value),
+            'from_profile': bool(profile_value),
+        }
+
     return render(request, 'travel/tour_form.html', {
         'form':       form,
+        'passport_map_json': json.dumps(passport_map, ensure_ascii=False),
         'country_fs': country_fs,
         'officer_fs': officer_fs,
         'part_form':  part_form,
@@ -164,11 +189,39 @@ def tour_detail(request, pk):
     participants = tour.participants.select_related('mp').all()
     officers     = tour.officers.select_related('officer').all()
     countries    = tour.countries.select_related('country').all()
+
+    # NOC issuance is per MP per tour. This page shows the ISSUED (final)
+    # documents only — at most one Bangla letter and one English certificate per
+    # MP — and offers the issue button only for a language not yet finalised.
+    # Drafts live at /noc/, where they can also be deleted.
+    # Imported here rather than at module level to keep travel importable alone.
+    from apps.noc.models import NOC
+
+    finals_by_mp, draft_counts = {}, {}
+    for noc in NOC.objects.filter(tour=tour).order_by('issue_date', 'id'):
+        if noc.status == NOC.STATUS_FINAL:
+            # Latest final per language wins if a correction was re-issued.
+            finals_by_mp.setdefault(noc.mp_id, {})[noc.language] = noc
+        else:
+            draft_counts[noc.mp_id] = draft_counts.get(noc.mp_id, 0) + 1
+
+    noc_rows = []
+    for p in participants:
+        finals = finals_by_mp.get(p.mp_id, {})
+        noc_rows.append({
+            'mp': p.mp,
+            'finals': [finals[lang] for lang in ('bn', 'en') if lang in finals],
+            'can_issue_bn': 'bn' not in finals,
+            'can_issue_en': 'en' not in finals,
+            'draft_count': draft_counts.get(p.mp_id, 0),
+        })
+
     ctx = {
         'tour':         tour,
         'participants': participants,
         'officers':     officers,
         'countries':    countries,
+        'noc_rows':     noc_rows,
     }
     if request.GET.get('format') == 'print':
         return render(request, 'travel/print/tour_detail.html', ctx)

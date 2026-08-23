@@ -21,6 +21,7 @@ Pillow==11.2.1
 openpyxl==3.1.5
 WeasyPrint>=68.0         # PDF (preferred on Linux/Docker; needs GTK runtime on Windows)
 xhtml2pdf>=0.2.16        # PDF fallback for Windows dev (pure-Python, no GTK needed)
+python-docx==1.1.2       # true .docx export (NOC letters) via utils/html_to_docx.py
 
 # Local dev only (Python 3.14 — no psycopg2/Pillow wheels):
 # pip install "psycopg[binary]" Pillow  (run manually outside Docker)

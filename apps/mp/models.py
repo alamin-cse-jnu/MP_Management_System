@@ -186,6 +186,10 @@ class Spouse(models.Model):
     name_en          = models.CharField(max_length=200, blank=True, verbose_name='Name (English)')
     dob              = models.DateField(null=True, blank=True, verbose_name='জন্ম তারিখ')
     nid              = models.CharField(max_length=30, blank=True, verbose_name='জাতীয় পরিচয়পত্র নং')
+    mobile           = models.CharField(max_length=30, blank=True, verbose_name='মোবাইল নম্বর')
+    # Printed on the NOC when the spouse accompanies the MP abroad
+    # ("…accompanied by his spouse Mrs. X (Passport No-D00019443)").
+    passport_number  = models.CharField(max_length=30, blank=True, verbose_name='পাসপোর্ট নং')
     marriage_date    = models.DateField(null=True, blank=True, verbose_name='বিবাহের তারিখ')
     tin              = models.CharField(max_length=30, blank=True, verbose_name='টিআইএন')
     profession       = models.ForeignKey(
@@ -218,6 +222,7 @@ class Child(models.Model):
     dob              = models.DateField(null=True, blank=True, verbose_name='জন্ম তারিখ')
     nid_or_birth_reg = models.CharField(max_length=50, blank=True,
                                          verbose_name='এনআইডি / জন্ম নিবন্ধন')
+    mobile           = models.CharField(max_length=30, blank=True, verbose_name='মোবাইল নম্বর')
     profession       = models.ForeignKey(
         'master.Profession', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='পেশা'
     )

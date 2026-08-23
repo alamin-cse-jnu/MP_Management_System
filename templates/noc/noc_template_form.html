@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{% ui "টেমপ্লেট সম্পাদনা" "Edit Template" %} — {{ template_obj|tr:"name" }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/noc.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'noc:noc_list' %}">{% ui "অনাপত্তি সনদ" "NOC" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'noc:noc_settings' %}">{% ui "লেটারহেড ও টেমপ্লেট" "Letterhead & Templates" %}</a></li>
+      <li class="breadcrumb-item active">{{ template_obj|tr:"name" }}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "টেমপ্লেট সম্পাদনা" "Edit Template" %}</h4>
+    <small class="text-muted">{{ template_obj.get_language_display }}</small>
+  </div>
+  <a href="{% url 'noc:noc_settings' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+  </a>
+</div>
+
+<form method="post" id="noc-form">
+  {% csrf_token %}
+  <div class="row g-3">
+    <div class="col-lg-3">
+      <div class="mp-card mb-3">
+        <div class="mp-card-header"><i class="bi bi-sliders icon"></i>{% ui "তথ্য" "Details" %}</div>
+        <div class="p-3">
+          {% for field in form %}{% if field.name != 'body_html' %}
+          <div class="mb-3">
+            <label class="form-label fw-medium">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<div class="invalid-feedback d-block">{{ field.errors|striptags }}</div>{% endif %}
+          </div>
+          {% endif %}{% endfor %}
+        </div>
+      </div>
+
+      <div class="mp-card mb-3">
+        <div class="mp-card-header"><i class="bi bi-braces icon"></i>{% ui "প্লেসহোল্ডার" "Placeholders" %}</div>
+        <div class="p-3">
+          <p class="text-muted" style="font-size:.8rem;">
+            {% ui "দলিল তৈরির সময় নিচের প্রতিটি নাম প্রকৃত তথ্য দিয়ে প্রতিস্থাপিত হবে।" "Each name below is replaced with the real value when a document is generated." %}
+          </p>
+          <div style="max-height:340px; overflow-y:auto; font-family:monospace; font-size:.74rem; line-height:1.9;">
+            {% for name in placeholders %}<span class="badge bg-light text-dark border">{% templatetag openbrace %}{{ name }}{% templatetag closebrace %}</span> {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="mp-card">
+        <div class="mp-card-header"><i class="bi bi-file-earmark-richtext icon"></i>{% ui "টেমপ্লেটের বিন্যাস" "Template Body" %}</div>
+        <div class="p-2 noc-editor-wrap">
+          {{ form.body_html }}
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 mb-4">
+        <a href="{% url 'noc:noc_settings' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}
+        </a>
+        <button type="submit" class="btn btn-primary px-4">
+          <i class="bi bi-check-lg me-1"></i>{% ui "সংরক্ষণ করুন" "Save" %}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/ckeditor5/ckeditor.js' %}"></script>
+{% if request.session.LANGUAGE == 'bn' %}
+<script src="{% static 'vendor/ckeditor5/translations/bn.js' %}"></script>
+{% endif %}
+<script src="{% static 'js/noc_editor.js' %}"></script>
+<script>
+  // Templates carry {placeholder} tokens, so the editor must not "tidy" them —
+  // the shared initialiser keeps full HTML support for exactly that reason.
+  window.initNocEditor('#noc-editor', '#noc-form',
+                       '{% if template_obj.language == "bn" %}bn{% else %}en{% endif %}');
+</script>
+{% endblock %}

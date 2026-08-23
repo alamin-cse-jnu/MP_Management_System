@@ -1,0 +1,132 @@
+{% load static lang_tags %}
+<div class="mp-card p-0">
+  <div class="table-responsive">
+  <table class="mp-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">#</th>
+        <th style="width:270px;">{% ui "স্মারক নম্বর" "Memo No." %}</th>
+        <th>{% ui "সংসদ সদস্য" "Member of Parliament" %}</th>
+        <th style="width:140px;">{% ui "ভ্রমণ GO" "Tour GO" %}</th>
+        <th style="width:110px;">{% ui "তারিখ" "Date" %}</th>
+        <th style="width:110px; text-align:center;">{% ui "ভাষা" "Language" %}</th>
+        <th style="width:95px; text-align:center;">{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:190px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for noc in page_obj %}
+      <tr>
+        <td class="text-muted">{{ forloop.counter }}</td>
+        <td style="font-family:monospace; font-size:0.82rem;">
+          <a href="{% url 'noc:noc_detail' noc.pk %}" class="fw-medium text-decoration-none">{{ noc.memo_no }}</a>
+        </td>
+        <td>
+          <a href="{% url 'mp:mp_detail' noc.mp_id %}" class="text-decoration-none">{{ noc.mp|tr:"name" }}</a>
+          <div class="text-muted" style="font-size:0.78rem;">{{ noc.mp.mp_id }}</div>
+        </td>
+        <td class="text-muted" style="font-size:0.82rem;">
+          {% if noc.tour_id %}
+          <a href="{% url 'travel:tour_detail' noc.tour_id %}" class="text-decoration-none">{{ noc.tour.go_number }}</a>
+          {% else %}—{% endif %}
+        </td>
+        <td class="text-muted" style="font-size:0.85rem;">{{ noc.issue_date|date:"d/m/Y" }}</td>
+        <td class="text-center">
+          <span class="badge {% if noc.is_bangla %}badge-primary{% else %}badge-active{% endif %}"
+                style="font-size:0.7rem;">
+            {% if noc.is_bangla %}{% ui "বাংলা পত্র" "Bangla letter" %}{% else %}{% ui "ইংরেজি সনদ" "English cert." %}{% endif %}
+          </span>
+        </td>
+        <td class="text-center">
+          <span class="badge {% if noc.status == 'final' %}badge-active{% else %}badge-warning{% endif %}"
+                style="font-size:0.7rem;">
+            {% if noc.status == 'final' %}{% ui "চূড়ান্ত" "Final" %}{% else %}{% ui "খসড়া" "Draft" %}{% endif %}
+          </span>
+        </td>
+        <td class="text-center">
+          <a href="{% url 'noc:noc_edit' noc.pk %}"
+             class="btn btn-icon btn-sm btn-outline-primary me-1" title="{% ui "সম্পাদনা" "Edit" %}">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <a href="{% url 'noc:noc_detail' noc.pk %}?format=pdf"
+             class="btn btn-icon btn-sm btn-outline-secondary me-1" title="PDF">
+            <i class="bi bi-file-earmark-pdf"></i>
+          </a>
+          <a href="{% url 'noc:noc_detail' noc.pk %}?format=docx"
+             class="btn btn-icon btn-sm btn-outline-secondary me-1" title="{% ui "ওয়ার্ড" "Word" %}">
+            <i class="bi bi-file-earmark-word"></i>
+          </a>
+          {% comment %}
+            Only drafts are deletable here. A finalised NOC has been issued under
+            a memo number, so removing it is not a list-page action.
+          {% endcomment %}
+          {% if noc.status != 'final' %}
+          <form method="post" action="{% url 'noc:noc_delete' noc.pk %}" class="d-inline"
+                onsubmit="return confirm('{% ui "এই খসড়াটি মুছে ফেলবেন?" "Delete this draft?" %}');">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'noc:noc_list' %}">
+            <button type="submit" class="btn btn-icon btn-sm btn-outline-danger"
+                    title="{% ui "খসড়া মুছুন" "Delete draft" %}">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </form>
+          {% else %}
+          <span class="btn btn-icon btn-sm btn-outline-secondary disabled"
+                title="{% ui "চূড়ান্ত NOC মোছা যায় না" "A final NOC cannot be deleted" %}"
+                style="opacity:.35;"><i class="bi bi-lock"></i></span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="text-center text-muted py-5">
+          <i class="bi bi-file-earmark-text fs-2 d-block mb-2" style="opacity:.4;"></i>
+          {% if q %}
+          "<strong>{{ q }}</strong>" {% ui "এর জন্য কোনো NOC পাওয়া যায়নি।" "— no NOC found." %}
+          {% else %}
+          {% ui "এখনো কোনো NOC তৈরি হয়নি। বিদেশ ভ্রমণের পাতা থেকে NOC তৈরি করুন।" "No NOC issued yet — create one from a foreign tour page." %}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav class="mt-3">
+  <ul class="pagination pagination-sm justify-content-center mb-0">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?q={{ q }}&language={{ language }}&status={{ status }}&page={{ page_obj.previous_page_number }}">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+      <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+      <li class="page-item">
+        <a class="page-link" href="?q={{ q }}&language={{ language }}&status={{ status }}&page={{ num }}">{{ num }}</a>
+      </li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?q={{ q }}&language={{ language }}&status={{ status }}&page={{ page_obj.next_page_number }}">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% if page_obj %}
+<div class="text-muted text-center mt-2" style="font-size:0.8rem;">
+  {% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি NOC" "NOCs" %}
+  ({% ui "পৃষ্ঠা" "Page" %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }})
+</div>
+{% endif %}

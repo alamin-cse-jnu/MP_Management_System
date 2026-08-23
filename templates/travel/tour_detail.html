@@ -68,6 +68,106 @@
   {% endif %}
 </div>
 
+{% comment %}
+  NOC issuance — one document per MP per language. The Bangla forwarding letter
+  and the English certificate are separate documents with their own memo numbers
+  (see apps/noc/models.py).
+
+  This card shows ISSUED (final) documents only, at most one per language, and
+  offers the issue button only while that language has no final yet. Drafts are
+  managed at /noc/, which is also the only place they can be deleted.
+{% endcomment %}
+<div class="mp-card mb-3 no-print">
+  <div class="mp-card-header d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-file-earmark-check icon"></i> {% ui "অনাপত্তি সনদ (NOC)" "No Objection Certificates" %}</span>
+    <a href="{% url 'noc:noc_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-list-ul me-1"></i>{% ui "সব NOC ও খসড়া" "All NOCs & drafts" %}
+    </a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:0.9rem;">
+      <thead class="table-light">
+        <tr>
+          <th style="width:3rem;">#</th>
+          <th>{% ui "সদস্যের নাম" "MP Name" %}</th>
+          <th style="width:11rem;">{% ui "পাসপোর্ট নং" "Passport No." %}</th>
+          <th>{% ui "জারিকৃত NOC" "Issued NOCs" %}</th>
+          <th style="width:19rem; text-align:end;">{% ui "নতুন তৈরি করুন" "Issue new" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in noc_rows %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <a href="{% url 'mp:mp_detail' row.mp.pk %}" class="text-decoration-none fw-medium">{{ row.mp|tr:"name" }}</a>
+            <div class="text-muted" style="font-size:.78rem;">{{ row.mp.mp_id }}</div>
+          </td>
+          <td>
+            {% if row.mp.passport_number %}
+            <span style="font-family:monospace;font-size:.84rem;">{{ row.mp.passport_number }}</span>
+            {% else %}
+            <span class="badge badge-warning" style="font-size:.68rem;">{% ui "নেই" "missing" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% for n in row.finals %}
+            <a href="{% url 'noc:noc_detail' n.pk %}"
+               class="badge {% if n.is_bangla %}badge-primary{% else %}badge-active{% endif %} text-decoration-none me-1"
+               style="font-size:.68rem;" title="{{ n.memo_no }}">
+              {% if n.is_bangla %}{% ui "বাংলা পত্র" "Bangla letter" %}{% else %}{% ui "ইংরেজি সনদ" "English cert." %}{% endif %}
+              · {{ n.issue_date|date:"d/m/y" }}
+            </a>
+            {% empty %}
+            <span class="text-muted">—</span>
+            {% endfor %}
+            {% if row.draft_count %}
+            {% comment %}
+              Drafts are intentionally not listed here, but say they exist so the
+              same NOC is not started twice by accident.
+            {% endcomment %}
+            <a href="{% url 'noc:noc_list' %}?q={{ row.mp.mp_id }}&status=draft"
+               class="d-block text-muted text-decoration-none mt-1" style="font-size:.72rem;">
+              <i class="bi bi-pencil me-1"></i>{{ row.draft_count }} {% ui "টি খসড়া চলমান" "draft(s) in progress" %}
+            </a>
+            {% endif %}
+          </td>
+          <td class="text-end">
+            {% if row.can_issue_bn %}
+            <form method="post" action="{% url 'noc:noc_create' tour.pk row.mp.pk %}" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="language" value="bn">
+              <button type="submit" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-lg me-1"></i>{% ui "বাংলা পত্র" "Bangla letter" %}
+              </button>
+            </form>
+            {% endif %}
+            {% if row.can_issue_en %}
+            <form method="post" action="{% url 'noc:noc_create' tour.pk row.mp.pk %}" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="language" value="en">
+              <button type="submit" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-lg me-1"></i>{% ui "ইংরেজি সনদ" "English cert." %}
+              </button>
+            </form>
+            {% endif %}
+            {% if not row.can_issue_bn and not row.can_issue_en %}
+            <span class="text-muted" style="font-size:.78rem;">
+              <i class="bi bi-check2-circle me-1 text-success"></i>{% ui "উভয়টি জারি হয়েছে" "both issued" %}
+            </span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center text-muted py-3">
+          {% ui "সদস্য যোগ করলে এখান থেকে NOC তৈরি করা যাবে।" "Add participants to issue NOCs from here." %}
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <!-- Countries -->
 <div class="mp-card mb-3">
   <div class="mp-card-header"><i class="bi bi-globe icon"></i> {% ui "গন্তব্য দেশসমূহ ও তারিখ" "Countries & dates" %}</div>

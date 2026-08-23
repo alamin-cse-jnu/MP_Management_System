@@ -19,6 +19,7 @@
         <th>{% ui "লিঙ্গ" "Gender" %}</th>
         <th>{% ui "পেশা" "Profession" %}</th>
         <th>{% ui "এনআইডি/জন্ম নিবন্ধন" "NID/Birth Reg." %}</th>
+        <th style="width:130px;">{% ui "মোবাইল" "Mobile" %}</th>
         <th style="width:110px; text-align:center;">{% ui "অ্যাকশন" "Actions" %}</th>
       </tr>
     </thead>
@@ -32,6 +33,7 @@
         <td class="text-muted">{{ ch.gender|default:"—" }}</td>
         <td class="text-muted">{{ ch.profession|default:"—" }}</td>
         <td class="text-muted" style="font-size:0.85rem;">{{ ch.nid_or_birth_reg|default:"—" }}</td>
+        <td class="text-muted" style="font-size:0.85rem;">{{ ch.mobile|default:"—" }}</td>
         <td class="text-center">
           <a href="{% url 'mp:child_update' mp.pk ch.pk %}"
              class="btn btn-icon btn-sm btn-outline-primary me-1" title="সম্পাদনা">

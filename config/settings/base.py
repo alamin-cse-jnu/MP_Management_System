@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'apps.institution',
     'apps.travel',
     'apps.officer',
+    'apps.noc',
     'apps.office',
     'apps.reports',
 ]

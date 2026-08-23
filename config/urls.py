@@ -14,6 +14,7 @@ urlpatterns = [
     path('institution/', include('apps.institution.urls', namespace='institution')),
     path('travel/', include('apps.travel.urls', namespace='travel')),
     path('officer/', include('apps.officer.urls', namespace='officer')),
+    path('noc/', include('apps.noc.urls', namespace='noc')),
     path('office/', include('apps.office.urls', namespace='office')),
     path('reports/', include('apps.reports.urls', namespace='reports')),
 ]

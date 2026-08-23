@@ -104,6 +104,11 @@
             <div class="edu-result-empty text-muted" style="font-size:.85rem;padding-top:.4rem;">
               {% ui "ধরন নির্বাচন করলে ফলাফলের ঘর দেখা যাবে।" "Pick a result type to enter the result." %}
             </div>
+            <div class="edu-result-warn text-warning" style="display:none;font-size:.8rem;padding-top:.35rem;">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              {% ui "এই ধরনের কোনো অপশন মাস্টার ডেটায় নেই —" "No options exist for this result type —" %}
+              <a href="{% url 'master:education_master' %}" target="_blank">{% ui "মাস্টার ডেটায় যোগ করুন" "add them in Master Data" %}</a>{% ui "।" "." %}
+            </div>
           </div>
         </div>
 
@@ -161,18 +166,33 @@
   // Map ResultType pk → result_format (drives which result input shows).
   var FMT = { {% for rt in result_types %}'{{ rt.pk }}': '{{ rt.result_format }}'{% if not forloop.last %}, {% endif %}{% endfor %} };
 
+  // A revealed block whose only control is a dropdown with no options (its master
+  // table is empty) would look like "nothing appeared" — say so instead.
+  function isEmptyDropdown(block) {
+    var opts = block.querySelectorAll('select option');
+    var sels = block.querySelectorAll('select');
+    var ins  = block.querySelectorAll('input, textarea');
+    return sels.length > 0 && ins.length === 0 && opts.length < 2;
+  }
+
   function updateSection(section) {
     var sel = section.querySelector('.edu-result-type');
     var fmt = (sel && sel.value) ? (FMT[sel.value] || '') : '';
-    var any = false;
+    var any = false, starved = false;
     section.querySelectorAll('.edu-result-field').forEach(function (b) {
       var fmts = (b.getAttribute('data-formats') || '').split(' ');
       var show = fmt && fmts.indexOf(fmt) !== -1;
-      b.style.display = show ? '' : 'none';
-      if (show) any = true;
+      // MUST be an explicit 'block', not '': clearing the inline style just hands
+      // the element back to the `.edu-result-field { display:none }` rule below,
+      // so the "revealed" result input stayed invisible and the Result box looked
+      // empty no matter which type was picked.
+      b.style.display = show ? 'block' : 'none';
+      if (show) { any = true; if (isEmptyDropdown(b)) starved = true; }
     });
     var empty = section.querySelector('.edu-result-empty');
-    if (empty) empty.style.display = any ? 'none' : '';
+    if (empty) empty.style.display = any ? 'none' : 'block';
+    var warn = section.querySelector('.edu-result-warn');
+    if (warn) warn.style.display = starved ? 'block' : 'none';
   }
 
   document.querySelectorAll('.edu-section').forEach(function (section) {

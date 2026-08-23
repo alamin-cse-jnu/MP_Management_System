@@ -57,6 +57,17 @@
             {{ form.nid }}
           </div>
           <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">{% ui "মোবাইল নম্বর" "Mobile Number" %}</label>
+            {{ form.mobile }}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-medium">{% ui "পাসপোর্ট নং" "Passport No." %}</label>
+            {{ form.passport_number }}
+            <div class="form-text" style="font-size:.78rem;">
+              {% ui "সঙ্গে বিদেশ ভ্রমণ করলে NOC-তে ছাপা হয়।" "Printed on the NOC when accompanying the MP abroad." %}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
             <label class="form-label fw-medium">বিবাহের তারিখ</label>
             {{ form.marriage_date }}
           </div>

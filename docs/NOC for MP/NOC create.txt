@@ -1,0 +1,4 @@
+need to create GO and NOC from the system.
+right now we are going to make NOC.
+there are sample NOC in "E:\projects\MP_Management_System\docs\NOC for MP" NOC Sample-1.pdf and  NOC Sample-2.pdf.
+the NOC will create and can be downloaded as pdf/word and print - moreover the noc will generate as the sample but be editable in any editor like ck editor and can be saved and printable
