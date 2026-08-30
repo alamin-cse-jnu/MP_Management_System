@@ -5,9 +5,9 @@ from utils.form_dates import normalize_date_fields
 
 from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import (
-    Country, DegreeName, District, DivisionResult, EducationGroup,
-    EducationInstitution, EducationLevel, EducationSubject, ResultType,
-    TravelPurpose, Upazila,
+    ClassResult, Country, DegreeName, District, DivisionResult,
+    EducationGroup, EducationInstitution, EducationLevel, EducationSubject,
+    ResultType, TravelPurpose, Upazila,
 )
 from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
@@ -214,16 +214,25 @@ class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
             board_qs, self.instance.board_affiliation_id if self.instance else None)
         self.fields['result_type'].queryset = ResultType.objects.filter(
             is_active=True).order_by('ordering')
-        self.fields['division_result'].queryset = DivisionResult.objects.filter(
-            is_active=True).order_by('ordering')
+        # Division and Class results are BOTH master-managed dropdowns — keep the
+        # two in step, or picking one result type reveals a populated list and the
+        # other reveals an empty box.
+        self.fields['division_result'].queryset = _keep_current(
+            DivisionResult.objects.filter(is_active=True).order_by('ordering'),
+            self.instance.division_result_id if self.instance else None)
+        self.fields['class_result'].queryset = _keep_current(
+            ClassResult.objects.filter(is_active=True).order_by('ordering'),
+            self.instance.class_result_id if self.instance else None)
 
         # Result-type drives a JS cascade; keep it a plain <select> so the native
-        # change event fires reliably (Select2 would swallow it). division_result
-        # also stays native so it renders correctly inside a hidden result block.
+        # change event fires reliably (Select2 would swallow it). The two result
+        # dropdowns also stay native so they render correctly inside a hidden
+        # result block.
         self.fields['result_type'].widget.attrs.update({
             'data-no-select2': '', 'class': 'form-select edu-result-type',
         })
-        self.fields['division_result'].widget.attrs.update({'data-no-select2': ''})
+        for f in ('division_result', 'class_result'):
+            self.fields[f].widget.attrs.update({'data-no-select2': '', 'class': 'form-select'})
 
     def has_data(self):
         """True if the user entered anything meaningful in this section."""
@@ -370,11 +379,13 @@ class PersonalForeignTravelForm(_BootstrapMixin, forms.ModelForm):
 
     class Meta:
         model  = PersonalForeignTravel
-        fields = ['country', 'purpose', 'from_date', 'to_date',
+        fields = ['country', 'purpose', 'from_date', 'to_date', 'year',
                   'note_bn', 'note_en', 'ordering']
         widgets = {
             'from_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'to_date':   forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'year':      forms.NumberInput(attrs={'class': 'form-control', 'min': 1900,
+                                                  'max': 2100, 'placeholder': '2024'}),
             'note_bn':   forms.Textarea(attrs={'rows': 2}),
             'note_en':   forms.Textarea(attrs={'rows': 2}),
         }
@@ -392,6 +403,7 @@ class PersonalForeignTravelForm(_BootstrapMixin, forms.ModelForm):
             required=False,
             label='উদ্দেশ্য / Purpose',
         )
-        for name in ('purpose', 'from_date', 'to_date', 'note_bn', 'note_en', 'ordering'):
+        for name in ('purpose', 'from_date', 'to_date', 'year',
+                     'note_bn', 'note_en', 'ordering'):
             self.fields[name].required = False
         normalize_date_fields(self)

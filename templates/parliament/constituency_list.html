@@ -67,11 +67,11 @@
       {% for c in page_obj %}
       <tr>
         <td class="text-muted">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ c|tr:"display" }}</td>
+        <td class="fw-medium">{{ c.display_bn|default:"—" }}</td>
         <td class="text-muted">{{ c.display_en }}</td>
         <td>
           {% if c.district %}
-          <span class="fw-medium">{{ c.district|tr:"name" }}</span>
+          <span class="fw-medium">{{ c.district.name_bn|default:"—" }}</span>
           <span class="text-muted d-block" style="font-size:0.78rem;">{{ c.district.name_en }}</span>
           {% else %}
           <span class="text-muted">—</span>

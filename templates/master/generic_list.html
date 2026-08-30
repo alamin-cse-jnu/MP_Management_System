@@ -85,8 +85,14 @@
           {% for col in extra_cols %}
           <td>{{ obj|get_attr:col.attr }}</td>
           {% endfor %}
-          <td class="fw-medium">{{ obj|tr:"name" }}</td>
-          <td class="text-muted">{{ obj.name_en }}</td>
+          {% comment %}
+          These two columns are a bilingual data view — the header names the
+          language, so each cell must show that language literally. `|tr:"name"`
+          would follow the UI language and make both columns read English in
+          English mode.
+          {% endcomment %}
+          <td class="fw-medium">{{ obj.name_bn|default:"—" }}</td>
+          <td class="text-muted">{{ obj.name_en|default:"—" }}</td>
           <td>
             {% if obj.is_active %}
             <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>

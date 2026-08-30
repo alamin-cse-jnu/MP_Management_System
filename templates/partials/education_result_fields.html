@@ -33,9 +33,13 @@
 </div>
 {% elif result_format == 'class' %}
 <div class="col-md-4 mb-3">
-  <label class="form-label fw-medium">শ্রেণী (Class)</label>
-  <input type="text" name="class_result" id="id_class_result" class="form-control"
-         placeholder="যেমন: 1st Class">
+  <label class="form-label fw-medium">শ্রেণি (Class)</label>
+  <select name="class_result" id="id_class_result" class="form-select" data-no-select2>
+    <option value="">-- নির্বাচন করুন / Select --</option>
+    {% for cr in class_results %}
+    <option value="{{ cr.pk }}">{{ cr.name_bn }} ({{ cr.name_en }})</option>
+    {% endfor %}
+  </select>
 </div>
 {% elif result_format == 'pass_fail' %}
 <div class="col-12 mb-2">

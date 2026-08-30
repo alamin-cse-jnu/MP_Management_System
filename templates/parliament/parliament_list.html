@@ -39,8 +39,8 @@
       {% for p in parliaments %}
       <tr {% if p.is_active %}style="background:#f0fdf4;"{% endif %}>
         <td class="text-muted">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ p|tr:"name" }}</td>
-        <td class="text-muted">{{ p.name_en }}</td>
+        <td class="fw-medium">{{ p.name_bn|default:"—" }}</td>
+        <td class="text-muted">{{ p.name_en|default:"—" }}</td>
         <td class="text-center text-muted">{{ p.ordinal }}</td>
         <td class="text-muted">{{ p.start_date|default:"—" }}</td>
         <td class="text-muted">{% if p.end_date %}{{ p.end_date }}{% else %}{% ui "চলমান" "Ongoing" %}{% endif %}</td>

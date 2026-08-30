@@ -123,6 +123,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 25 | NOC generation — bilingual editable documents (CKEditor) + PDF/Word/print, tour passport capture | ✅ |
 | 26 | Field-feedback round 2 — user designation/photo, address "same as" ticks, DD/MM/YYYY dates, education board-vs-university pools, bank branch + biodata bilingual fixes (see `docs/phase-history.md`) | ✅ |
 | 27 | Personal / pre-tenure foreign travel on the MP profile — travel tab split into official (GO, read-only) + personal (full CRUD) | ✅ |
+| 28 | Master-data completeness — bilingual name columns, Class Results master table, year-only travel | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -157,10 +158,20 @@ silently — full context in `docs/phase-history.md`.
    compiled without `re.DOTALL`, so a `{#` … newline … `#}` block is not a comment
    and renders as **visible text on the page**. Use `{% comment %}…{% endcomment %}`
    for anything multi-line. Guard: no `{#` may be followed by a newline before its `#}`.
-2. **Templates are cached by gunicorn** — production settings compile them once per
-   worker, so a template edit on the bind-mounted stack is invisible until
-   `docker compose restart web`. The Django test client (fresh process) will show
-   the new markup while the browser still shows the old one.
+2. **gunicorn workers cache templates AND Python code** — production settings
+   compile templates once per worker, and every module is imported once at boot,
+   so a template *or* `.py` edit on the bind-mounted stack is invisible until
+   `docker compose restart web`.
+   - Symptom: the Django test client (a fresh process) returns **200** while the
+     browser returns the old markup, or **500**.
+   - Worst case: running `migrate` without restarting leaves the workers holding
+     **pre-migration model code against the post-migration schema** — every page
+     touching the changed table 500s, with no traceback in the log (DEBUG=False
+     sends `django.request` to `mail_admins`, not stdout). This bit `/mp/<pk>/`
+     locally after `mp/0013` turned `class_result` into an FK.
+   - So: **after any migrate on a bind-mounted stack, restart web.** On the
+     server the entrypoint does migrate→collectstatic→gunicorn in one boot, so a
+     deploy is never exposed to this — only local dev is.
 3. Never read pre-edit state off a ModelForm's instance **after** `is_valid()` —
    `construct_instance()` has already written the posted values onto it, so a
    `new != old` guard compares a value with itself and is always False. Capture the
@@ -182,57 +193,64 @@ silently — full context in `docs/phase-history.md`.
 7. `get_..._display()` returns only the Bangla half of a `choices` tuple. For a
    bilingual label, add `<field>_bn` / `<field>_en` **properties** and use the
    existing `{{ obj|tr:"<field>" }}` filter (`MP.MEMBER_TYPE_LABELS`).
+8. **`|tr:` is for a cell that follows the UI language — never for a column whose
+   header names a language.** A "বাংলা নাম | English Name" **pair** must render
+   `{{ obj.name_bn }}` / `{{ obj.name_en }}` literally; `{{ obj|tr:"name" }}` in
+   the first column makes *both* read English in English mode. This was wrong in
+   all three master-data list templates plus parliament / constituency / menu /
+   role. A single name column headed just "Name" is the opposite case — `tr` is
+   correct there (see `user_list.html`).
 
 **Frontend**
-8. Never toggle visibility with `style.display = ''` when a CSS rule hides the
+9. Never toggle visibility with `style.display = ''` when a CSS rule hides the
    element — clearing an inline style hands it straight back to `display:none`.
    Set an explicit value (`'block'`).
-9. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
-   attribute still runs (jQuery's `.trigger()` invokes it), but htmx's native
-   `change` listener never fires. Any htmx-on-change over a Select2 control needs a
-   jQuery bridge that re-emits via `htmx.trigger(...)`.
-10. Editor-authored HTML must not carry **Bootstrap component class names**.
+10. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
+    attribute still runs (jQuery's `.trigger()` invokes it), but htmx's native
+    `change` listener never fires. Any htmx-on-change over a Select2 control needs a
+    jQuery bridge that re-emits via `htmx.trigger(...)`.
+11. Editor-authored HTML must not carry **Bootstrap component class names**.
     CKEditor wraps saved tables in `<figure class="table">`, and `.table > …` then
     paints a border on every row. `utils/html_sanitize.py` unwraps `figure` and
     strips the `table` class — keep that guard if you add another editor surface.
-11. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
+12. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
     commercial plugins otherwise demand a licence key and the editor never mounts)
     and the `htmlSupport` allow-all block (otherwise inline column widths,
     `text-indent` and `font-size` are stripped and the letterhead collapses).
 
 **Exports / Bangla**
-12. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
+13. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
     `utf-8-sig` makes Django encode *every* `response.write()` with it, prepending a
     BOM to every row and corrupting the first column of every line.
-13. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
+14. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
     Bengali is a *complex script*, so without `w:cs` Word falls back to Times New
     Roman and renders boxes. See `utils/html_to_docx.py`.
-14. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
+15. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
     perfect** — SolaimanLipi embeds as a CID/Type0 subset whose ligature glyphs do
     not reverse-map. Verify a PDF by its `/Producer` + embedded font list, or by
     looking at the page. Never trust extracted text.
-15. Keep the `body.noc-bn` `@page` box in sync between
+16. Keep the `body.noc-bn` `@page` box in sync between
     `templates/noc/print/noc_document.html` and `static/css/noc.css` — loosening
     either re-splits the Bangla letter onto a second page.
 
 **Data / production**
-16. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
+17. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
     in code points, so any seeder or importer keyed on `name_bn` silently
     *duplicates* instead of matching. Normalise (`unicodedata.normalize('NFC', …)`)
     or match on `name_en` as well.
-17. The PRP API serves **only its leaf certificate**, omitting the intermediate.
+18. The PRP API serves **only its leaf certificate**, omitting the intermediate.
     Windows hides this via AIA fetch; the Linux container fails with
     `CERTIFICATE_VERIFY_FAILED`. Use `prp_api.ssl_context()` +
     `utils/certs/prp_chain.pem` — it *adds* trust. Do **NOT** "simplify" to
     `verify=False`.
-18. `docker compose` traps: `docker compose images web` exits 1 right after a
+19. `docker compose` traps: `docker compose images web` exits 1 right after a
     rebuild (making a successful build look failed); `docker compose exec` does
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
 
 **Deliberate choices — do not "restore" these**
-19. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+20. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

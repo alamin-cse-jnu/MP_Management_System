@@ -212,7 +212,7 @@ table.dt th { font-weight: bold; }
       <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:""  }}</td>
       <td>{{ edu.major_subject|tr:"name"|default:""  }}</td>
       <td>{{ edu.passing_year|default:"" }}</td>
-      <td>{{ edu.result_display }}</td>
+      <td>{{ edu|tr:"result_display" }}</td>
       <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:""  }}</td>
     </tr>
     {% endfor %}
@@ -380,7 +380,7 @@ table.dt th { font-weight: bold; }
       <td>{{ mp.travel_participations.all|length|add:forloop.counter }}</td>
       <td>{{ t.country|tr:"name" }}</td>
       <td>{{ t.purpose|tr:"name"|default:"" }}</td>
-      <td>{{ t.from_date|date:"d/m/Y"|default:"" }}</td>
+      <td>{% if t.from_date %}{{ t.from_date|date:"d/m/Y" }}{% elif t.year %}{{ t.year }}{% else %}{% endif %}</td>
       <td>{{ t.to_date|date:"d/m/Y"|default:"" }}</td>
       <td>Personal</td>
     </tr>

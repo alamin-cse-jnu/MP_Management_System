@@ -359,7 +359,10 @@ class Education(models.Model):
                                                null=True, blank=True, verbose_name='মোট')
     percentage           = models.DecimalField(max_digits=5, decimal_places=2,
                                                null=True, blank=True, verbose_name='শতকরা (%)')
-    class_result         = models.CharField(max_length=50, blank=True, verbose_name='শ্রেণী')
+    class_result         = models.ForeignKey(
+        'master.ClassResult', on_delete=models.SET_NULL, null=True, blank=True,
+        verbose_name='শ্রেণি'
+    )
     result_text          = models.CharField(max_length=100, blank=True, verbose_name='ফলাফল')
     ordering             = models.IntegerField(default=0)
 
@@ -371,20 +374,39 @@ class Education(models.Model):
         lvl = str(self.degree_title or self.education_level or '—')
         return f"{lvl} — {self.mp.name_bn}"
 
-    @property
-    def result_display(self):
+    def _result_display(self, lang):
+        """Formatted result in `lang` ('bn' | 'en').
+
+        Division and Class both resolve through master tables, so both must pick
+        the right half of the bilingual pair — `result_display` used to hardcode
+        `.name_bn`, which showed Bangla inside the English biodata.
+        """
+        def name(obj):
+            if obj is None:
+                return None
+            return (obj.name_en or obj.name_bn) if lang == 'en' else (obj.name_bn or obj.name_en)
+
         if not self.result_type:
             return self.result_text or '—'
         fmt = self.result_type.result_format
         if fmt == 'division' and self.division_result:
-            return self.division_result.name_bn
+            return name(self.division_result) or '—'
         if fmt in ('gpa', 'cgpa') and self.gpa_value is not None:
             return f"{self.gpa_value} / {self.gpa_out_of or '—'}"
         if fmt == 'percentage' and self.percentage is not None:
             return f"{self.percentage}%"
         if fmt == 'class':
-            return self.class_result or '—'
+            return name(self.class_result) or '—'
         return self.result_text or '—'
+
+    # Bilingual pair for the `tr` filter: {{ edu|tr:"result_display" }}.
+    @property
+    def result_display_bn(self):
+        return self._result_display('bn')
+
+    @property
+    def result_display_en(self):
+        return self._result_display('en')
 
 
 class Address(models.Model):
@@ -650,13 +672,22 @@ class PersonalForeignTravel(models.Model):
                                   related_name='personal_visits', verbose_name='উদ্দেশ্য')
     from_date = models.DateField(null=True, blank=True, verbose_name='যাত্রার তারিখ')
     to_date   = models.DateField(null=True, blank=True, verbose_name='প্রত্যাবর্তনের তারিখ')
+    # Very often the MP remembers only "sometime in 2024". Recording that is far
+    # better than recording nothing, so the year stands on its own when the exact
+    # dates are unknown.
+    year      = models.IntegerField(null=True, blank=True, verbose_name='সন')
     note_bn   = models.TextField(blank=True, verbose_name='মন্তব্য (বাংলায়)')
     note_en   = models.TextField(blank=True, verbose_name='Remarks (English)')
     ordering  = models.IntegerField(default=0, verbose_name='ক্রম')
+    # Denormalised sort key, kept in sync by save(): from_date's year, else the
+    # typed year. Without it a year-only row has no date to sort on and sinks
+    # below every dated row regardless of how recent it is.
+    sort_year = models.IntegerField(null=True, blank=True, editable=False)
 
     class Meta:
-        # Most recent first; undated rows sink to the bottom rather than the top.
-        ordering = [models.F('from_date').desc(nulls_last=True), 'ordering', 'id']
+        # Most recent first; rows with neither a date nor a year sink last.
+        ordering = [models.F('sort_year').desc(nulls_last=True),
+                    models.F('from_date').desc(nulls_last=True), 'ordering', 'id']
         verbose_name = 'ব্যক্তিগত বিদেশ ভ্রমণ'
 
     def __str__(self):
@@ -667,3 +698,44 @@ class PersonalForeignTravel(models.Model):
         if self.from_date and self.to_date and self.to_date < self.from_date:
             raise ValidationError(
                 {'to_date': 'প্রত্যাবর্তনের তারিখ যাত্রার তারিখের আগে হতে পারে না।'})
+        if self.year is not None and not (1900 <= self.year <= 2100):
+            raise ValidationError({'year': 'সন ১৯০০–২১০০ এর মধ্যে হতে হবে।'})
+        # A typed year that contradicts a typed date is a data-entry slip, not a
+        # second fact — refuse it rather than silently keeping both.
+        if self.year is not None and self.from_date and self.from_date.year != self.year:
+            raise ValidationError(
+                {'year': 'সন যাত্রার তারিখের বছরের সাথে মিলছে না।'})
+
+    def save(self, *args, **kwargs):
+        # from_date may still be a string here — Django does not coerce on
+        # assignment, so `objects.create(from_date='2012-07-10')` (an importer,
+        # a data migration) reaches save() with a str. Parse defensively rather
+        # than crash on `.year`.
+        self.sort_year = self._year_of(self.from_date) or self.year
+        super().save(*args, **kwargs)
+
+    @staticmethod
+    def _year_of(value):
+        if value is None or value == '':
+            return None
+        if hasattr(value, 'year'):
+            return value.year
+        try:
+            return int(str(value)[:4])
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def when_display(self):
+        """'01/03/1998 – 20/03/1998', or '1998', or '—'.
+
+        One place for the fallback so the profile tab and all three biodata
+        templates cannot drift apart.
+        """
+        if self.from_date or self.to_date:
+            f = self.from_date.strftime('%d/%m/%Y') if self.from_date else '—'
+            t = self.to_date.strftime('%d/%m/%Y') if self.to_date else '—'
+            return f'{f} – {t}'
+        if self.year:
+            return str(self.year)
+        return '—'

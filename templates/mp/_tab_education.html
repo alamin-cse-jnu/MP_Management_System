@@ -33,7 +33,7 @@
         </td>
         <td class="text-muted">{{ edu.major_subject|default:edu.group|default:"—" }}</td>
         <td class="text-center text-muted">{{ edu.passing_year|default:"—" }}</td>
-        <td class="text-muted">{{ edu.result_display }}</td>
+        <td class="text-muted">{{ edu|tr:"result_display" }}</td>
         <td class="text-muted" style="font-size:0.85rem;">
           {% if edu.institution %}{{ edu.institution|tr:"name" }}
           {% elif edu.institution_other_bn %}{{ edu.institution_other_bn }}

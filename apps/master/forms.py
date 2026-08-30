@@ -7,7 +7,7 @@ from .models import (
     Religion, BloodGroup, MaritalStatus, Gender,
     Profession, ProfessionalQualification,
     EducationLevel, EducationGroup, EducationSubject, DegreeName,
-    EducationInstitution, ResultType, DivisionResult,
+    EducationInstitution, ResultType, DivisionResult, ClassResult,
     PoliticalParty, Ministry, MinisterType,
     StandingCommittee, CommitteePosition,
     InstitutionRole,
@@ -58,6 +58,7 @@ GenderForm = _make_form(Gender, ['name_bn', 'name_en', 'ordering'])
 EducationGroupForm = _make_form(EducationGroup, ['name_bn', 'name_en', 'applicable_to', 'ordering'])
 ResultTypeForm = _make_form(ResultType, ['name_bn', 'name_en', 'result_format', 'ordering'])
 DivisionResultForm = _make_form(DivisionResult, ['name_bn', 'name_en', 'ordering'])
+ClassResultForm = _make_form(ClassResult, ['name_bn', 'name_en', 'ordering'])
 MinistryForm = _make_form(Ministry, ['name_bn', 'name_en', 'ordering'])
 MinisterTypeForm = _make_form(MinisterType, ['name_bn', 'name_en', 'ordering'])
 StandingCommitteeForm = _make_form(StandingCommittee, ['name_bn', 'name_en', 'ordering'])

@@ -13,7 +13,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import (
     BloodGroupForm, CommitteePositionForm, CountryForm,
-    DegreeNameForm, DistrictForm, DivisionForm, DivisionResultForm,
+    ClassResultForm, DegreeNameForm, DistrictForm, DivisionForm, DivisionResultForm,
     EducationGroupForm, EducationInstitutionForm, EducationLevelForm,
     EducationSubjectForm, ForeignLanguageForm, GenderForm,
     InstitutionRoleForm, MaritalStatusForm,
@@ -25,7 +25,7 @@ from .forms import (
 )
 from .models import (
     BloodGroup, CommitteePosition, Country,
-    DegreeName, District, Division, DivisionResult,
+    ClassResult, DegreeName, District, Division, DivisionResult,
     EducationGroup, EducationInstitution, EducationLevel,
     EducationSubject, ForeignLanguage, Gender,
     InstitutionRole, MaritalStatus,
@@ -441,6 +441,11 @@ EDU_ENTITIES = [
      'hint_bn': 'প্রথম/দ্বিতীয়/তৃতীয় বিভাগ ইত্যাদি।',
      'hint_en': '1st/2nd/3rd Division etc.',
      'cols': []},
+    {'key': 'class-result', 'model': ClassResult, 'form': ClassResultForm,
+     'title_bn': 'শ্রেণি ভিত্তিক ফলাফল', 'title_en': 'Class Results', 'icon': 'bi-award-fill',
+     'hint_bn': 'প্রথম/দ্বিতীয়/তৃতীয় শ্রেণি ইত্যাদি — “শ্রেণি” ফলাফলের ধরনে দেখানো হয়।',
+     'hint_en': '1st/2nd/3rd Class etc. — offered when the “Class” result type is picked.',
+     'cols': []},
     {'key': 'education-level', 'model': EducationLevel, 'form': EducationLevelForm,
      'title_bn': 'শিক্ষাগত স্তর', 'title_en': 'Levels', 'icon': 'bi-layers-fill', 'advanced': True,
      'hint_bn': 'পূর্বনির্ধারিত ৬টি স্তর — সাধারণত পরিবর্তনের প্রয়োজন নেই।',
@@ -775,9 +780,8 @@ def result_fields(request):
         except ResultType.DoesNotExist:
             pass
 
-    division_results = DivisionResult.objects.all().order_by('ordering')
-
     return render(request, 'partials/education_result_fields.html', {
         'result_format': result_format,
-        'division_results': division_results,
+        'division_results': DivisionResult.objects.filter(is_active=True).order_by('ordering'),
+        'class_results': ClassResult.objects.filter(is_active=True).order_by('ordering'),
     })

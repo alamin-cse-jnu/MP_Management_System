@@ -112,11 +112,8 @@ Section 18 — this MP's foreign travel, from two deliberately separate sources.
       <tr>
         <td class="fw-medium">{{ t.country|tr:"name" }}</td>
         <td>{{ t.purpose|tr:"name"|default:"—" }}</td>
-        <td>
-          {% if t.from_date or t.to_date %}
-            {{ t.from_date|date:"d/m/Y"|default:"—" }} – {{ t.to_date|date:"d/m/Y"|default:"—" }}
-          {% else %}—{% endif %}
-        </td>
+        {# when_display falls back to the year when exact dates are unknown #}
+        <td>{{ t.when_display }}</td>
         <td>{{ t|tr:"note"|default:"—" }}</td>
         <td>
           <a href="{% url 'mp:personal_travel_update' mp.pk t.pk %}"

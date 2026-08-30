@@ -32,7 +32,7 @@
     <div class="d-flex align-items-center gap-2">
       <i class="bi {{ menu.icon|default:'bi-circle' }} text-primary fs-5"></i>
       <div>
-        <span class="fw-semibold">{{ menu|tr:"name" }}</span>
+        <span class="fw-semibold">{{ menu.name_bn|default:"—" }}</span>
         <small class="text-muted ms-2">{{ menu.name_en }}</small>
         {% if not menu.is_active %}<span class="badge badge-inactive ms-2">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}
       </div>
@@ -78,7 +78,7 @@
       {% for sub in subs %}
       <tr>
         <td class="text-muted" style="padding-left:36px;">{{ forloop.counter }}</td>
-        <td class="fw-medium">{{ sub|tr:"name" }}</td>
+        <td class="fw-medium">{{ sub.name_bn|default:"—" }}</td>
         <td class="text-muted">{{ sub.name_en }}</td>
         <td><code style="font-size:0.8rem;">{{ sub.url_name }}</code></td>
         <td class="text-muted">{{ sub.ordering }}</td>

@@ -999,7 +999,132 @@ plus one full and one country-only personal row.
 
 ---
 
+## PHASE 28 — Master-data completeness (2026-08-30) ✅
+Three user observations, all variations on "this field should come from Master
+Data, and it doesn't".
+
+### 28.1 — Bilingual name columns (deployed separately, see the deploy log)
+Every "বাংলা নাম | English Name" **pair** rendered its first column as
+`{{ obj|tr:"name" }}`. `tr` follows the *UI* language, so in English mode both
+columns showed English. Fixed in the three master templates that cover every
+master-data menu, plus parliament / constituency / menu / role. A single column
+headed just "Name" keeps `tr` — that one *should* follow the UI language.
+Recorded as gotcha 8.
+
+### 28.2 — Class results from Master Data
+Picking result type **বিভাগ / Division** revealed a populated dropdown; picking
+**শ্রেণি / Class** revealed an empty text box. Same field, two behaviours,
+because `Education.class_result` was a free-text CharField while
+`division_result` was an FK.
+
+- **`master.ClassResult`** — sibling of `DivisionResult`, same shape, managed on
+  `/master/education/` as a new **শ্রেণি ভিত্তিক ফলাফল / Class Results** tab.
+  `master/0011` creates it and seeds প্রথম/দ্বিতীয়/তৃতীয় শ্রেণি, matching on the
+  **NFC-normalised** Bangla name *and* the English name so it cannot duplicate
+  prod's existing rows (gotcha 17).
+- **`mp/0013` converts the field, hand-written.** `RenameField` to a legacy
+  column → add the FK → `RunPython` backfill → drop the legacy column. The
+  backfill matches free text against either language, and **creates a master row
+  for any value it does not recognise**, so dropping the old column cannot lose a
+  typed value. Verified by migrating a scratch dataset holding prod's exact case
+  (`First Class`) plus a deliberately unmapped `Grade A`: 3 in, 3 out, 0 nulls,
+  and `Grade A` survived as a new master row.
+- Both dropdowns are now built the same way — `_keep_current()` so a
+  deactivated-but-stored option is never silently wiped, and `data-no-select2`
+  so they render correctly inside the hidden result block.
+- **`result_display` was Bangla-only** (`self.division_result.name_bn`), so the
+  English biodata printed Bangla results. Replaced with
+  `result_display_bn` / `result_display_en` properties + `{{ edu|tr:"result_display" }}`
+  in all five consuming templates.
+- The legacy `partials/education_result_fields.html` + `master:result_fields`
+  view (dead since Phase 17.11 — no template references the URL) was updated to
+  match rather than left contradicting the model.
+
+**Still free text: `result_text`, used by the `pass_fail` result type.** Prod has
+one row (`পাস`). It is the same shape of problem and would be the same fix; left
+alone because only `class` was asked for. Note prod has already worked around it
+by adding `উত্তীর্ণ / Pass` to **DivisionResult**.
+
+### 28.3 — Year-only travel
+An MP often remembers only "sometime in 2024", not exact dates, and recording
+that beats recording nothing.
+
+- `PersonalForeignTravel.year` (optional IntegerField, 1900–2100).
+- **`sort_year`**, a denormalised sort key kept in sync by `save()`
+  (`from_date`'s year if dated, else `year`). Without it a year-only row has no
+  date to sort on and sinks below every dated row no matter how recent — the new
+  `Meta.ordering` leads with `sort_year DESC nulls_last`. `save()` parses a
+  string date as well as a `date`: Django does not coerce on assignment, so an
+  importer or data migration doing `objects.create(from_date='2012-07-10')`
+  would otherwise crash on `.year`. `mp/0015` backfills rows written before the
+  column existed.
+- **`when_display`** property — `'01/05/2019 – 20/05/2019'`, or `'2024'`, or
+  `'—'` — so the profile tab and all three biodata templates cannot drift apart.
+- `clean()` rejects a year that **contradicts** a typed `from_date`: that is a
+  data-entry slip, not a second fact. Out-of-range years are refused too.
+- The form groups departure/return/year into one "কখন / When" block that says in
+  so many words that the year alone is enough.
+
+Verified: 33 assertions — both result dropdowns populated and native, the class
+result saving as an FK and rendering per-language, year-only save, the
+date-range case, ordering (2024 year-only sorts above 2019 dated), both rejection
+paths, the travel tab, all three biodata templates and the PDF, and the new
+Master Data tab in both languages.
+
+---
+
 ## PRODUCTION DEPLOY LOG
+
+**2026-08-30 (c) — Phase 28.2 + 28.3 deployed to 172.16.220.158.**
+Class-result master table + year-only travel. Migrations `master/0011` ·
+`mp/0013` · `mp/0014`.
+
+- **`mp/0013` rewrites a live column**, so it was rehearsed first: a scratch
+  dataset holding prod's exact value (`First Class`) plus a deliberately
+  unrecognised `Grade A` migrated 3-in / 3-out, 0 nulls, with `Grade A` preserved
+  as a newly created master row.
+- Prod pre-state: 16 education rows, **1** with `class_result='First Class'`,
+  5 with a `division_result`, 1 with `result_text='পাস'`.
+- `result_text` (the `pass_fail` type) is deliberately still free text — see
+  Phase 28.2.
+- **Follow-up `mp/0015` (same day).** Post-deploy verification found three
+  user-entered travel rows with `sort_year=NULL` — `0014` added the column but
+  `sort_year` is only maintained by `save()`, so rows written before it existed
+  stayed NULL and, under `sort_year DESC nulls_last`, sank below every later row
+  regardless of date. `0015` backfills from `from_date`/`year`. Prod's three rows
+  now read 2012 / 2006 / 2006.
+- The same check exposed a latent crash: `save()` did `self.from_date.year`, but
+  Django does not coerce on assignment, so `objects.create(from_date='2012-07-10')`
+  (any importer or data migration) reached `save()` with a **str** and raised
+  `AttributeError`. `_year_of()` now parses either form.
+- ⚠ Verification-script lesson: the personal-travel rollback check asserted
+  `count() == 0`, which was only true on an empty table. Real user rows appeared
+  between deploys and it reported a false failure. Assert on *your own* fixture,
+  never on a global count.
+
+**2026-08-30 (b) — bilingual name-column fix deployed to 172.16.220.158.**
+7 templates, md5-verified; no migrations, no static, `docker compose restart web`
+(templates are compiled once per gunicorn worker — gotcha 2 — so a restart is
+mandatory even for a template-only deploy).
+
+- **Bug:** every "বাংলা নাম | English Name" **pair** rendered its first column as
+  `{{ obj|tr:"name" }}`. `tr` follows the *UI* language, so in English mode both
+  columns showed the English name. Correct in Bangla mode, which is why it
+  survived this long.
+- **Fix:** a column whose header names a language renders that language
+  literally — `{{ obj.name_bn }}` / `{{ obj.name_en }}`. Fixed in
+  `master/generic_list.html`, `master/partials/edu_panel.html`,
+  `master/partials/group_panel.html` (these three cover **every** master-data
+  menu, standalone and grouped), and — same bug, found while checking — in
+  `parliament_list`, `constituency_list` (name pair *and* the district bn/en
+  pair), `accounts/menu_list` (menu + submenu rows) and `accounts/role_list`.
+- **Deliberately not changed:** `user_list.html`, whose single name column is
+  headed just "Name" and *should* follow the UI language. Same for
+  `master/home.html`'s tile labels.
+- Verified: 19 pages × 2 languages — every "Bengali Name" cell stays Bangla in
+  English mode, and on populated tables the two columns are confirmed to hold
+  *different* values (e.g. `ঢাকা` / `Dhaka`, `কৃষি মন্ত্রণালয়` /
+  `Ministry of Agriculture`). Recorded as gotcha 8 in CLAUDE.md.
 
 **2026-08-30 — Phases 26 + 27 deployed to 172.16.220.158** (working tree on top of `f0b5fb5`;
 deployed **uncommitted** — commit locally to keep the log anchored).

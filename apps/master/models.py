@@ -264,6 +264,26 @@ class DivisionResult(models.Model):
         return f"{self.name_bn} ({self.name_en})"
 
 
+class ClassResult(models.Model):
+    """Class-based result options e.g. 1st Class, 2nd Class.
+
+    Sibling of DivisionResult. Education.class_result used to be free text, which
+    meant picking the "শ্রেণি" result type revealed an empty box while "বিভাগ"
+    revealed a populated dropdown — the same field, two different behaviours.
+    Now both are master-managed on /master/education/.
+    """
+    name_bn = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering']
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"
+
+
 class PoliticalParty(models.Model):
     name_bn = models.CharField(max_length=300)
     name_en = models.CharField(max_length=300)

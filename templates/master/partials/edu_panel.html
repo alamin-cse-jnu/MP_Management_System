@@ -103,8 +103,10 @@
         {% for obj in objects %}
         <tr {% if saved and saved.pk == obj.pk %}class="table-success"{% endif %}>
           <td class="text-muted">{{ forloop.counter }}</td>
-          <td class="fw-medium">{{ obj|tr:"name" }}</td>
-          <td class="text-muted">{{ obj.name_en }}</td>
+          {% comment %}Bilingual data view — each cell shows the language its
+          header names, so never `|tr:"name"` here (see generic_list.html).{% endcomment %}
+          <td class="fw-medium">{{ obj.name_bn|default:"—" }}</td>
+          <td class="text-muted">{{ obj.name_en|default:"—" }}</td>
           {% for c in spec.cols %}
           <td class="text-muted" style="font-size:.85rem;">{{ obj|get_attr:c.attr|default:"—" }}</td>
           {% endfor %}

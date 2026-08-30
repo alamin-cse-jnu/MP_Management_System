@@ -42,7 +42,7 @@
   <thead><tr><th>#</th><th>ডিগ্রি</th><th>{% ui "প্রতিষ্ঠান" "Institution" %}</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
   <tbody>
     {% for edu in mp.educations.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td><td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td><td>{{ edu.passing_year|default:"—" }}</td><td>{{ edu.result_display }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td><td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td><td>{{ edu.passing_year|default:"—" }}</td><td>{{ edu|tr:"result_display" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>

@@ -55,7 +55,7 @@
       {% for role in page_obj %}
       <tr>
         <td class="text-muted">{{ forloop.counter|add:page_obj.start_index|add:-1 }}</td>
-        <td class="fw-medium">{{ role|tr:"name" }}</td>
+        <td class="fw-medium">{{ role.name_bn|default:"—" }}</td>
         <td class="text-muted">{{ role.name_en }}</td>
         <td class="text-muted" style="font-size:0.85rem;">{{ role.description_bn|truncatewords:8 }}</td>
         <td>

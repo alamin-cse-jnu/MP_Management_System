@@ -39,15 +39,36 @@
           {{ form.purpose }}
           {% if form.purpose.errors %}<div class="invalid-feedback d-block">{{ form.purpose.errors }}</div>{% endif %}
         </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label fw-medium">{% ui "যাত্রার তারিখ" "Departure Date" %}</label>
-          {{ form.from_date }}
-          {% if form.from_date.errors %}<div class="invalid-feedback d-block">{{ form.from_date.errors }}</div>{% endif %}
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="form-label fw-medium">{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</label>
-          {{ form.to_date }}
-          {% if form.to_date.errors %}<div class="invalid-feedback d-block">{{ form.to_date.errors }}</div>{% endif %}
+        <div class="col-12">
+          <div class="border rounded p-3 mb-3" style="background:#f8fafc;">
+            <div class="fw-medium mb-1" style="font-size:.875rem;">
+              <i class="bi bi-calendar-event me-1"></i>{% ui "কখন" "When" %}
+              <span class="text-muted fw-normal">— {% ui "ঐচ্ছিক" "optional" %}</span>
+            </div>
+            <small class="text-muted d-block mb-3">
+              {% ui "সঠিক তারিখ মনে না থাকলে শুধু সন লিখলেই চলবে।" "If the exact dates aren't remembered, just the year is enough." %}
+            </small>
+            <div class="row g-3 align-items-start">
+              <div class="col-md-4">
+                <label class="form-label fw-medium">{% ui "যাত্রার তারিখ" "Departure Date" %}</label>
+                {{ form.from_date }}
+                {% if form.from_date.errors %}<div class="invalid-feedback d-block">{{ form.from_date.errors }}</div>{% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-medium">{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</label>
+                {{ form.to_date }}
+                {% if form.to_date.errors %}<div class="invalid-feedback d-block">{{ form.to_date.errors }}</div>{% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-medium">
+                  {% ui "অথবা শুধু সন" "Or just the year" %}
+                </label>
+                {{ form.year }}
+                {% if form.year.errors %}<div class="invalid-feedback d-block">{{ form.year.errors }}</div>{% endif %}
+                <div class="form-text">{% ui "যেমন: ২০২৪" "e.g. 2024" %}</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-4 mb-3">
           <label class="form-label fw-medium">{% ui "ক্রম" "#" %}</label>
