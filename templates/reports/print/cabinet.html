@@ -14,7 +14,7 @@
       <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter }}</td>
       <td rowspan="{{ row.assignments|length }}">{{ row.mp.mp_id }}</td>
       <td rowspan="{{ row.assignments|length }}">{{ row.mp|tr:"name" }}</td>
-      <td rowspan="{{ row.assignments|length }}">{{ row.mp.get_member_type_display }}</td>
+      <td rowspan="{{ row.assignments|length }}">{{ row.mp|tr:"member_type" }}</td>
       {% endif %}
       <td>{{ obj.ministry|tr:"name" }}</td>
       <td>{{ obj.minister_type|tr:"name" }}</td>

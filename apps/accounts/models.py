@@ -9,6 +9,10 @@ class CustomUser(AbstractUser):
     is_superadmin = models.BooleanField(default=False)
     full_name_bn = models.CharField(max_length=200, blank=True)
     full_name_en = models.CharField(max_length=200, blank=True)
+    designation_bn = models.CharField(max_length=200, blank=True, verbose_name='পদবি (বাংলায়)')
+    designation_en = models.CharField(max_length=200, blank=True, verbose_name='Designation')
+    photo = models.ImageField(upload_to='user_photos/', null=True, blank=True,
+                              verbose_name='ছবি')
     created_by = models.ForeignKey(
         'self', null=True, blank=True, on_delete=models.SET_NULL, related_name='created_users'
     )

@@ -1,14 +1,20 @@
 from django import forms
+from django.db import models
 
+from utils.form_dates import normalize_date_fields
+
+from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import (
-    DegreeName, District, DivisionResult, EducationGroup, EducationInstitution,
-    EducationLevel, EducationSubject, ResultType, Upazila,
+    Country, DegreeName, District, DivisionResult, EducationGroup,
+    EducationInstitution, EducationLevel, EducationSubject, ResultType,
+    TravelPurpose, Upazila,
 )
 from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
     ForeignLanguageSkill, BankAccount, CovidVaccination,
     PreviousParliamentaryHistory, Organization, Award,
     SocialService, SpecialPositionHistory, Publication,
+    PersonalForeignTravel,
 )
 
 
@@ -30,6 +36,7 @@ class _BootstrapMixin:
                 w.attrs.setdefault('class', 'form-check-input')
             elif isinstance(w, forms.SelectMultiple):
                 w.attrs.setdefault('class', 'form-select')
+        normalize_date_fields(self)
 
 
 class MPCreateForm(_BootstrapMixin, forms.ModelForm):
@@ -48,7 +55,7 @@ class MPGeneralForm(_BootstrapMixin, forms.ModelForm):
             'dob', 'nid',
             'birth_district', 'gender',
             'home_district', 'marital_status',
-            'nationality', 'religion',
+            'nationality_bn', 'nationality_en', 'religion',
             'blood_group', 'professions_current',
             'professions_previous', 'tin',
             'professional_qualifications',
@@ -130,6 +137,20 @@ _LEVEL_GROUP_MAP = {
 }
 
 
+# Levels whose awarding body is an education board rather than a university.
+_SCHOOL_LEVEL_TYPES = {'primary', 'secondary', 'higher_sec', 'diploma'}
+
+
+def _keep_current(queryset, pk):
+    """queryset, widened to still contain ``pk`` if it is stored but filtered out."""
+    if pk and not queryset.filter(pk=pk).exists():
+        model = queryset.model
+        return model.objects.filter(
+            models.Q(pk__in=queryset.values('pk')) | models.Q(pk=pk)
+        ).order_by('name_bn')
+    return queryset
+
+
 class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
     """One section of the fixed-section education page (Phase 17.11). Bound to a
     fixed `EducationLevel` (passed as `level`); the Examination (degree) dropdown
@@ -171,9 +192,26 @@ class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
             .order_by('ordering', 'name_bn') if applicable else EducationGroup.objects.none())
         self.fields['major_subject'].queryset = EducationSubject.objects.filter(
             is_active=True).order_by('name_bn')
-        insts = EducationInstitution.objects.filter(is_active=True).order_by('name_bn')
-        self.fields['institution'].queryset = insts
-        self.fields['board_affiliation'].queryset = insts
+
+        # Institution pools are split by level (types come from Master Data):
+        #   SSC / HSC / Diploma — the awarding body is an education *board*, and
+        #     the institute is the school/college, so neither list may offer a
+        #     university.
+        #   Graduation and above — the awarding body is a university, so the
+        #     list must not offer an education board.
+        insts   = EducationInstitution.objects.filter(is_active=True).order_by('name_bn')
+        if (level.level_type if level else 'other') in _SCHOOL_LEVEL_TYPES:
+            board_qs = insts.filter(inst_type='board')
+            inst_qs  = insts.exclude(inst_type__in=('board', 'university', 'foreign'))
+        else:
+            board_qs = insts.filter(inst_type__in=('university', 'foreign'))
+            inst_qs  = board_qs
+        # Never drop a value that is already stored — a mistyped master row would
+        # otherwise be silently wiped the next time the section is saved.
+        self.fields['institution'].queryset = _keep_current(
+            inst_qs, self.instance.institution_id if self.instance else None)
+        self.fields['board_affiliation'].queryset = _keep_current(
+            board_qs, self.instance.board_affiliation_id if self.instance else None)
         self.fields['result_type'].queryset = ResultType.objects.filter(
             is_active=True).order_by('ordering')
         self.fields['division_result'].queryset = DivisionResult.objects.filter(
@@ -325,3 +363,35 @@ class PublicationForm(_BootstrapMixin, forms.ModelForm):
         model  = Publication
         fields = ['title_bn', 'title_en', 'pub_year', 'publisher_bn', 'publisher_en',
                   'pub_type', 'ordering']
+
+
+class PersonalForeignTravelForm(_BootstrapMixin, forms.ModelForm):
+    """Profile-entered travel. Only the country is required — see the model."""
+
+    class Meta:
+        model  = PersonalForeignTravel
+        fields = ['country', 'purpose', 'from_date', 'to_date',
+                  'note_bn', 'note_en', 'ordering']
+        widgets = {
+            'from_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'to_date':   forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'note_bn':   forms.Textarea(attrs={'rows': 2}),
+            'note_en':   forms.Textarea(attrs={'rows': 2}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['country'] = BilingualChoiceField(
+            queryset=Country.objects.filter(is_active=True).order_by('name_bn'),
+            empty_label='-- দেশ নির্বাচন করুন / Select Country --',
+            label='দেশ / Country',
+        )
+        self.fields['purpose'] = BilingualChoiceField(
+            queryset=TravelPurpose.objects.filter(is_active=True).order_by('name_bn'),
+            empty_label='-- উদ্দেশ্য (ঐচ্ছিক) / Purpose (optional) --',
+            required=False,
+            label='উদ্দেশ্য / Purpose',
+        )
+        for name in ('purpose', 'from_date', 'to_date', 'note_bn', 'note_en', 'ordering'):
+            self.fields[name].required = False
+        normalize_date_fields(self)

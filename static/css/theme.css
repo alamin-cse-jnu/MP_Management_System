@@ -171,6 +171,14 @@ body.sidebar-collapsed .mp-nav-item { justify-content: center; }
 }
 .mp-avatar-sm { width: 28px; height: 28px; font-size: .75rem; }
 
+/* Photo variant — same footprint as the initial-letter avatar. */
+.mp-avatar-img {
+  width: 36px; height: 36px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--mp-primary-light);
+}
+.mp-avatar-img-sm { width: 28px; height: 28px; }
+
 /* ── Language toggle ──────────────────────────── */
 .mp-lang-toggle {
   display: flex; align-items: center; gap: 6px;

@@ -1,46 +1,139 @@
 {% load static lang_tags %}
+{% comment %}
+Section 18 — this MP's foreign travel, from two deliberately separate sources.
+
+  1. দাপ্তরিক (GO-ভিত্তিক): administered by the travel module. Read-only here —
+     a GO cannot be invented from a profile. One row per country visited, since
+     ForeignTourCountry carries its own dates.
+  2. ব্যক্তিগত / পূর্ববর্তী: entered on the profile, often predating the tenure.
+     Full CRUD. Only the country is required.
+{% endcomment %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %}</h6>
-  <a href="{% url 'travel:tour_list' %}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-box-arrow-up-right me-1"></i>{% ui "ভ্রমণ মডিউল" "Travel Module" %}
+  <h6 class="fw-bold mb-0">{% ui "বিদেশ ভ্রমণ" "Foreign Travel" %} — {{ mp|tr:"name" }}</h6>
+  <a href="{% url 'mp:personal_travel_create' mp.pk %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>{% ui "ভ্রমণ যোগ করুন" "Add Travel" %}
+  </a>
+</div>
+
+{# ══ 1. দাপ্তরিক ভ্রমণ (GO-ভিত্তিক) ══════════════════════════════════════ #}
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <div class="fw-medium" style="font-size:.9rem;">
+    <i class="bi bi-file-earmark-text me-1 text-primary"></i>
+    {% ui "দাপ্তরিক ভ্রমণ (GO-ভিত্তিক)" "Official Travel (GO-based)" %}
+    <span class="text-muted fw-normal" style="font-size:.78rem;">
+      — {% ui "ভ্রমণ মডিউল থেকে পরিচালিত" "managed by the Travel module" %}
+    </span>
+  </div>
+  <a href="{% url 'travel:tour_list' %}" class="text-decoration-none" style="font-size:.78rem;">
+    {% ui "ভ্রমণ মডিউল খুলুন" "Open Travel module" %} <i class="bi bi-box-arrow-up-right"></i>
   </a>
 </div>
 
 {% if travel_participations %}
-<div class="table-responsive">
+<div class="table-responsive mb-4">
   <table class="mp-table">
     <thead>
       <tr>
-        <th>{% ui "GO নম্বর" "GO Number" %}</th>
-        <th>{% ui "GO তারিখ" "GO Date" %}</th>
-        <th>{% ui "ধরন" "Type" %}</th>
+        <th>{% ui "দেশ" "Country" %}</th>
         <th>{% ui "উদ্দেশ্য" "Purpose" %}</th>
-        <th>{% ui "দেশসমূহ" "Countries" %}</th>
-        <th>{% ui "যাওয়া" "Departure" %}</th>
-        <th>{% ui "ফেরা" "Return" %}</th>
+        <th>{% ui "সময়কাল" "Duration" %}</th>
+        <th>{% ui "ধরন" "Type" %}</th>
+        <th style="width:130px;">{% ui "GO নম্বর" "GO Number" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for p in travel_participations %}
+        {% for tc in p.tour.countries.all %}
+        <tr>
+          <td class="fw-medium">{{ tc.country|tr:"name" }}</td>
+          <td>{{ p.tour.purpose|tr:"name"|default:"—" }}</td>
+          <td>
+            {% if tc.effective_from_date or tc.effective_to_date %}
+              {{ tc.effective_from_date|date:"d/m/Y"|default:"—" }} – {{ tc.effective_to_date|date:"d/m/Y"|default:"—" }}
+            {% else %}—{% endif %}
+          </td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ p.tour.tour_type|tr:"name" }}</span></td>
+          <td>
+            <a href="{% url 'travel:tour_detail' p.tour_id %}" class="text-decoration-none">{{ p.tour.go_number }}</a>
+            <div class="text-muted" style="font-size:.72rem;">{{ p.tour.go_date|date:"d/m/Y" }}</div>
+          </td>
+        </tr>
+        {% empty %}
+        {# A GO with no country rows yet — still worth showing so it is not lost. #}
+        <tr>
+          <td class="text-muted">—</td>
+          <td>{{ p.tour.purpose|tr:"name"|default:"—" }}</td>
+          <td>
+            {% if p.tour.overall_from_date or p.tour.overall_to_date %}
+              {{ p.tour.overall_from_date|date:"d/m/Y"|default:"—" }} – {{ p.tour.overall_to_date|date:"d/m/Y"|default:"—" }}
+            {% else %}—{% endif %}
+          </td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ p.tour.tour_type|tr:"name" }}</span></td>
+          <td>
+            <a href="{% url 'travel:tour_detail' p.tour_id %}" class="text-decoration-none">{{ p.tour.go_number }}</a>
+            <div class="text-muted" style="font-size:.72rem;">{{ p.tour.go_date|date:"d/m/Y" }}</div>
+          </td>
+        </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-muted py-3 mb-4" style="font-size:.875rem;">
+  {% ui "কোনো দাপ্তরিক (GO-ভিত্তিক) ভ্রমণের তথ্য নেই।" "No official (GO-based) travel recorded." %}
+</p>
+{% endif %}
+
+{# ══ 2. ব্যক্তিগত / পূর্ববর্তী ভ্রমণ ════════════════════════════════════ #}
+<div class="fw-medium mb-2 pt-2 border-top" style="font-size:.9rem;">
+  <i class="bi bi-person-walking me-1 text-secondary"></i>
+  {% ui "ব্যক্তিগত / পূর্ববর্তী ভ্রমণ" "Personal / Pre-tenure Travel" %}
+  <span class="text-muted fw-normal" style="font-size:.78rem;">
+    — {% ui "সংসদ সদস্য হওয়ার আগের বা ব্যক্তিগত ভ্রমণ" "trips before the tenure, or private travel" %}
+  </span>
+</div>
+
+{% if personal_travels %}
+<div class="table-responsive">
+  <table class="mp-table">
+    <thead>
       <tr>
+        <th>{% ui "দেশ" "Country" %}</th>
+        <th>{% ui "উদ্দেশ্য" "Purpose" %}</th>
+        <th>{% ui "সময়কাল" "Duration" %}</th>
+        <th>{% ui "মন্তব্য" "Remarks" %}</th>
+        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in personal_travels %}
+      <tr>
+        <td class="fw-medium">{{ t.country|tr:"name" }}</td>
+        <td>{{ t.purpose|tr:"name"|default:"—" }}</td>
         <td>
-          <a href="{% url 'travel:tour_detail' p.tour_id %}" class="text-decoration-none fw-medium">{{ p.tour.go_number }}</a>
+          {% if t.from_date or t.to_date %}
+            {{ t.from_date|date:"d/m/Y"|default:"—" }} – {{ t.to_date|date:"d/m/Y"|default:"—" }}
+          {% else %}—{% endif %}
         </td>
-        <td>{{ p.tour.go_date|date:"d/m/Y" }}</td>
-        <td><span class="badge bg-primary-subtle text-primary">{{ p.tour.tour_type|tr:"name" }}</span></td>
-        <td>{{ p.tour.purpose|tr:"name" }}</td>
+        <td>{{ t|tr:"note"|default:"—" }}</td>
         <td>
-          {% for tc in p.tour.countries.all %}
-            {{ tc.country|tr:"name" }}{% if not forloop.last %}, {% endif %}
-          {% empty %}—{% endfor %}
+          <a href="{% url 'mp:personal_travel_update' mp.pk t.pk %}"
+             class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
+          <form method="post" action="{% url 'mp:personal_travel_delete' mp.pk t.pk %}"
+                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
+          </form>
         </td>
-        <td>{{ p.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
-        <td>{{ p.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">{% ui "কোনো বিদেশ ভ্রমণের তথ্য নেই।" "No foreign travel information." %}</p>
+<p class="text-muted py-3 mb-0" style="font-size:.875rem;">
+  {% ui "কোনো ব্যক্তিগত ভ্রমণের তথ্য নেই।" "No personal travel recorded." %}
+</p>
 {% endif %}

@@ -73,7 +73,7 @@
       </tr>
       <tr>
         <th class="table-light">{% ui "জাতীয়তা" "Nationality" %}</th>
-        <td>{{ mp.nationality|default:"—" }}</td>
+        <td>{{ mp|tr:"nationality"|default:"—" }}</td>
         <th class="table-light">{% ui "ধর্ম" "Religion" %}</th>
         <td>{{ mp.religion|tr:"name"|default:"—" }}</td>
       </tr>
@@ -222,8 +222,12 @@
               {{ general_form.marital_status }}
             </div>
             <div class="col-md-6">
-              <label class="form-label fw-medium">{% ui "জাতীয়তা" "Nationality" %}</label>
-              {{ general_form.nationality }}
+              <label class="form-label fw-medium">{% ui "জাতীয়তা (বাংলায়)" "Nationality (Bangla)" %}</label>
+              {{ general_form.nationality_bn }}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-medium">{% ui "জাতীয়তা (ইংরেজি)" "Nationality (English)" %}</label>
+              {{ general_form.nationality_en }}
             </div>
             <div class="col-md-6">
               <label class="form-label fw-medium">{% ui "ধর্ম" "Religion" %}</label>

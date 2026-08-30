@@ -114,3 +114,14 @@ class ForeignTourCountry(models.Model):
 
     def __str__(self):
         return f"{self.tour.go_number} — {self.country.name_bn}"
+
+    # Per-leg dates are optional; when a leg has none, the tour's overall span
+    # is the best answer. Used by the MP profile's travel tab and the biodata,
+    # which list one row per country.
+    @property
+    def effective_from_date(self):
+        return self.from_date or self.tour.overall_from_date
+
+    @property
+    def effective_to_date(self):
+        return self.to_date or self.tour.overall_to_date

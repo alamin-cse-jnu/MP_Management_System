@@ -176,7 +176,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <tr><td>{% ui "সংসদ:" "Parliament:" %}</td><td>{{ mp.parliament|tr:"name" }}</td></tr>
       {% if ei.constituency %}<tr><td>{% ui "নির্বাচনী এলাকা:" "Constituency:" %}</td><td>{{ ei.constituency|tr:"display" }}</td></tr>{% endif %}
       {% if ei.party %}<tr><td>{% ui "রাজনৈতিক দল:" "Political Party:" %}</td><td>{{ ei.party|tr:"name" }}</td></tr>{% endif %}
-      <tr><td>{% ui "সদস্যের ধরন:" "Member Type:" %}</td><td>{{ mp.get_member_type_display }}</td></tr>
+      <tr><td>{% ui "সদস্যের ধরন:" "Member Type:" %}</td><td>{{ mp|tr:"member_type" }}</td></tr>
     </table>
   </div>
 </div>
@@ -212,7 +212,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>{% ui "বৈবাহিক অবস্থা" "Marital Status" %}</th><td>{{ mp.marital_status|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
-    <th>{% ui "জাতীয়তা" "Nationality" %}</th><td>{{ mp.nationality|default:"—" }}</td>
+    <th>{% ui "জাতীয়তা" "Nationality" %}</th><td>{{ mp|tr:"nationality"|default:"—" }}</td>
     <th>{% ui "ধর্ম" "Religion" %}</th><td>{{ mp.religion|tr:"name"|default:"—" }}</td>
   </tr>
   <tr>
@@ -265,7 +265,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
   </tr>
   <tr>
     <th>{% ui "দলগত পরিচয়" "Political Party" %}</th><td>{{ ei.party|tr:"name"|default:"—" }}</td>
-    <th>{% ui "সদস্যের ধরন" "Member Type" %}</th><td>{{ mp.get_member_type_display }}</td>
+    <th>{% ui "সদস্যের ধরন" "Member Type" %}</th><td>{{ mp|tr:"member_type" }}</td>
   </tr>
 </table>
 {% endif %}{% endwith %}
@@ -681,7 +681,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- SECTION 18: বিদেশ ভ্রমণ                                       -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-{% if mp.travel_participations.all %}
+{% if mp.travel_participations.all or mp.personal_travels.all %}
 <div class="sec nob">{% ui "১৮। বিদেশ ভ্রমণ/বৈদেশিক প্রশিক্ষণ" "18. Foreign Travel/Training" %}</div>
 <table class="dt nob">
   <thead><tr>
@@ -690,6 +690,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>{% ui "ভ্রমণের উদ্দেশ্য" "Purpose" %}</th>
     <th>{% ui "যাত্রার তারিখ" "Departure Date" %}</th>
     <th>{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</th>
+    <th>{% ui "ধরন" "Type" %}</th>
   </tr></thead>
   <tbody>
     {% for tp in mp.travel_participations.all %}
@@ -699,6 +700,18 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <td>{{ tp.tour.purpose|tr:"name"|default:"—" }}</td>
       <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{% ui "দাপ্তরিক" "Official" %}</td>
+    </tr>
+    {% endfor %}
+    {% comment %}Self-declared trips — often before the tenure, so they carry no GO.{% endcomment %}
+    {% for t in mp.personal_travels.all %}
+    <tr>
+      <td>{{ mp.travel_participations.all|length|add:forloop.counter }}</td>
+      <td>{{ t.country|tr:"name" }}</td>
+      <td>{{ t.purpose|tr:"name"|default:"—" }}</td>
+      <td>{{ t.from_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{{ t.to_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{% ui "ব্যক্তিগত" "Personal" %}</td>
     </tr>
     {% endfor %}
   </tbody>

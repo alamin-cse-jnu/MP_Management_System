@@ -343,7 +343,8 @@ class Command(BaseCommand):
                         passport_issue_place = _clean(pp.get('placeOfIssue')),
                     )
                     if _clean(gi.get('nationality')).lower() == 'bangladeshi':
-                        defaults['nationality'] = 'বাংলাদেশী'
+                        defaults['nationality_bn'] = 'বাংলাদেশী'
+                        defaults['nationality_en'] = 'Bangladeshi'
 
                     # Safety net: never let the API convert a locally entered
                     # technocrat minister into an elected member, even if their

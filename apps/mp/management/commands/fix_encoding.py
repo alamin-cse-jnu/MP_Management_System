@@ -56,7 +56,6 @@ class Command(BaseCommand):
                 and (f.name.endswith('_bn') or f.name in (
                     'title_bn', 'description_bn', 'note_bn',
                     'full_name_bn', 'profession_details_bn',
-                    'nationality',
                 ))
             ]
             if not bn_fields:

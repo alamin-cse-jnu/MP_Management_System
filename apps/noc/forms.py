@@ -2,6 +2,8 @@
 
 from django import forms
 
+from utils.form_dates import normalize_date_fields
+
 from apps.mp.models import Spouse
 from apps.officer.form_fields import OfficerChoiceField
 
@@ -20,6 +22,7 @@ class _BootstrapMixin:
             css = 'form-select' if isinstance(widget, forms.Select) else 'form-control'
             existing = widget.attrs.get('class', '')
             widget.attrs['class'] = f'{existing} {css}'.strip()
+        normalize_date_fields(self)
 
 
 class NOCForm(_BootstrapMixin, forms.ModelForm):

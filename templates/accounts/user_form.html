@@ -26,10 +26,18 @@
       <div class="mp-card-header">
         <i class="bi bi-person-fill icon"></i> {% ui title_bn title_en %}
       </div>
-      <form method="post" novalidate>
+      <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {% if form.non_field_errors %}
         <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        {% if object.photo %}
+        <div class="mb-3 d-flex align-items-center gap-3">
+          <img src="{{ object.photo.url }}" alt="{{ object.username }}"
+               style="width:72px;height:72px;object-fit:cover;border-radius:50%;border:2px solid var(--bs-border-color,#dee2e6);">
+          <small class="text-muted">{% ui "বর্তমান ছবি" "Current photo" %}</small>
+        </div>
         {% endif %}
 
         <div class="row">

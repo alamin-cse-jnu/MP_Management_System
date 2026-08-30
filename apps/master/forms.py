@@ -1,5 +1,7 @@
 from django import forms
 
+from utils.form_dates import normalize_date_fields
+
 from .models import (
     Division, District, Upazila,
     Religion, BloodGroup, MaritalStatus, Gender,
@@ -33,6 +35,7 @@ class _BootstrapMixin:
                 w.attrs.setdefault('data-select2', '')
             elif isinstance(w, forms.CheckboxInput):
                 w.attrs.setdefault('class', 'form-check-input')
+        normalize_date_fields(self)
 
 
 def _make_form(model_class, fields):

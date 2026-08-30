@@ -26,6 +26,7 @@ from .forms import (
     ForeignLanguageSkillForm, BankAccountForm, CovidVaccinationForm,
     PreviousParliamentaryHistoryForm, OrganizationForm, AwardForm,
     SocialServiceForm, SpecialPositionHistoryForm, PublicationForm,
+    PersonalForeignTravelForm,
 )
 from apps.master.models import EducationLevel, ResultType
 from .models import (
@@ -33,7 +34,7 @@ from .models import (
     ForeignLanguageSkill, BankAccount, CovidVaccination,
     PreviousParliamentaryHistory, Organization, Award,
     SocialService, SpecialPositionHistory, Publication,
-    MPSyncConflict,
+    PersonalForeignTravel, MPSyncConflict,
 )
 from . import api_sync
 
@@ -73,6 +74,40 @@ def _tabs_for(mp):
     if mp.member_type == 'technocrat':
         return [t for t in _TAB_LIST if t[0] not in _TECHNOCRAT_HIDDEN_TABS]
     return _TAB_LIST
+
+
+# ── ADDRESS COPY ("same as …" ticks) ──────────────────────────────────────────
+# The same street address is routinely reused across the three address types.
+# Each tab offers a tick per *already saved* sibling address; the copy itself is
+# done server-side on save so the browser never has to replay the
+# division→district→upazila cascade.
+
+_ADDRESS_LABELS = {
+    'present':   ('বর্তমান ঠিকানার অনুরূপ', 'Same as Present'),
+    'permanent': ('স্থায়ী ঠিকানার অনুরূপ',  'Same as Permanent'),
+    'dhaka':     ('ঢাকাস্থ ঠিকানার অনুরূপ',  'Same as Dhaka'),
+}
+
+# Location + address text only. Contact details belong to the present address.
+_ADDRESS_COPY_FIELDS = (
+    'division', 'district', 'upazila',
+    'pouroshova_union_bn', 'pouroshova_union_en',
+    'address_detail_bn', 'address_detail_en', 'postal_code',
+)
+
+
+def _address_copy_sources(addresses):
+    """{atype: [{key, label_bn, label_en}, …]} — the saved sibling addresses
+    each tab may be copied from. An unsaved sibling offers nothing to copy."""
+    return {
+        atype: [
+            {'key': other, 'label_bn': _ADDRESS_LABELS[other][0],
+             'label_en': _ADDRESS_LABELS[other][1]}
+            for other in _ADDRESS_LABELS
+            if other != atype and addresses.get(other)
+        ]
+        for atype in _ADDRESS_LABELS
+    }
 
 
 def _detail_ctx(mp, **override):
@@ -126,9 +161,12 @@ def _detail_ctx(mp, **override):
         'institution_groups': group_by_parliament(
             institution_assignments, 'role__ordering', 'institution_bn'),
 
-        # Section 18 (travel module) + office
+        # Section 18 — two independent sources, deliberately kept apart:
+        #   official = the GO process, owned by the travel module, read-only here
+        #   personal = profile-entered trips (often pre-tenure), full CRUD here
         'travel_participations': ForeignTourParticipant.objects.filter(mp=mp).select_related(
             'tour', 'tour__tour_type', 'tour__purpose').prefetch_related('tour__countries__country'),
+        'personal_travels': mp.personal_travels.select_related('country', 'purpose'),
         'office_address': getattr(mp, 'office_address', None),
 
         'active_tab':       'tab-general',
@@ -146,6 +184,7 @@ def _detail_ctx(mp, **override):
         'dhaka_form':     AddressForm(
             instance=addresses.get('dhaka'), prefix='dhaka',
             initial={'address_type': 'dhaka'}),
+        'copy_sources':   _address_copy_sources(addresses),
     }
     ctx.update(override)
     return ctx
@@ -283,10 +322,25 @@ def mp_address_save(request, pk, atype):
         raise Http404
     existing = Address.objects.filter(mp=mp, address_type=atype).first()
     form     = AddressForm(request.POST, instance=existing, prefix=atype)
+
+    # "Same as …" tick — copy the sibling address instead of trusting the posted
+    # (deliberately disabled, therefore empty) location fields.
+    same_as = request.POST.get(f'{atype}-same_as', '').strip()
+    source  = None
+    if same_as and same_as != atype and same_as in _ADDRESS_LABELS:
+        source = Address.objects.filter(mp=mp, address_type=same_as).first()
+        if source is None:
+            messages.error(request, 'যে ঠিকানা কপি করতে চেয়েছেন সেটি এখনো সংরক্ষিত হয়নি।')
+            ctx = _detail_ctx(mp, active_tab='tab-address')
+            return render(request, 'mp/mp_detail.html', ctx)
+
     if form.is_valid():
         addr = form.save(commit=False)
         addr.mp           = mp
         addr.address_type = atype
+        if source is not None:
+            for f in _ADDRESS_COPY_FIELDS:
+                setattr(addr, f, getattr(source, f))
         addr.save()
         messages.success(request, 'ঠিকানা সংরক্ষিত হয়েছে।')
         return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-address')
@@ -822,6 +876,53 @@ def publication_delete(request, pk, pubk):
     get_object_or_404(Publication, pk=pubk, mp=mp).delete()
     messages.success(request, 'প্রকাশনার তথ্য মুছে ফেলা হয়েছে।')
     return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-publication')
+
+
+# ── PERSONAL / PRE-TENURE FOREIGN TRAVEL CRUD ────────────────────────────────
+# Official (GO-based) travel is owned by the travel module and stays read-only
+# on the profile — a GO cannot be invented from here. These views cover only the
+# MP's self-declared trips.
+
+@perm_required
+def personal_travel_create(request, pk):
+    mp   = get_object_or_404(MP, pk=pk)
+    form = PersonalForeignTravelForm(
+        request.POST or None,
+        initial={'ordering': mp.personal_travels.count() + 1})
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.mp = mp
+        obj.save()
+        messages.success(request, 'ভ্রমণের তথ্য সংরক্ষিত হয়েছে।')
+        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-travel')
+    return render(request, 'mp/personal_travel_form.html', {
+        'form': form, 'mp': mp, 'is_create': True,
+        'title_bn': 'নতুন ভ্রমণ', 'title_en': 'New Travel Record',
+    })
+
+
+@perm_required
+def personal_travel_update(request, pk, tk):
+    mp   = get_object_or_404(MP, pk=pk)
+    obj  = get_object_or_404(PersonalForeignTravel, pk=tk, mp=mp)
+    form = PersonalForeignTravelForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'ভ্রমণের তথ্য আপডেট হয়েছে।')
+        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-travel')
+    return render(request, 'mp/personal_travel_form.html', {
+        'form': form, 'mp': mp, 'obj': obj, 'is_create': False,
+        'title_bn': 'ভ্রমণের তথ্য সম্পাদনা', 'title_en': 'Edit Travel Record',
+    })
+
+
+@perm_required
+@require_POST
+def personal_travel_delete(request, pk, tk):
+    mp = get_object_or_404(MP, pk=pk)
+    get_object_or_404(PersonalForeignTravel, pk=tk, mp=mp).delete()
+    messages.success(request, 'ভ্রমণের তথ্য মুছে ফেলা হয়েছে।')
+    return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-travel')
 
 
 # ── TOGGLE ACTIVE ─────────────────────────────────────────────────────────────

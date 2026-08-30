@@ -23,6 +23,14 @@ class MP(models.Model):
         ('reserved',   'সংরক্ষিত আসন (মহিলা)'),
         ('technocrat', 'টেকনোক্র্যাট মন্ত্রী'),
     ]
+    # get_member_type_display() can only ever return the Bangla half of the
+    # choices above, so bilingual surfaces read `{{ mp|tr:"member_type" }}`
+    # instead — see the member_type_bn / member_type_en properties below.
+    MEMBER_TYPE_LABELS = {
+        'direct':     ('সরাসরি নির্বাচিত',      'Directly Elected'),
+        'reserved':   ('সংরক্ষিত আসন (মহিলা)',  'Reserved Seat (Women)'),
+        'technocrat': ('টেকনোক্র্যাট মন্ত্রী',   'Technocrat Minister'),
+    }
 
     # ── SYSTEM ──────────────────────────────────────────────────────────────────
     mp_id       = models.CharField(max_length=20, unique=True, verbose_name='এমপি আইডি')
@@ -51,7 +59,10 @@ class MP(models.Model):
         'master.District', on_delete=models.SET_NULL, null=True, blank=True,
         related_name='home_mps', verbose_name='নিজ জেলা'
     )
-    nationality      = models.CharField(max_length=100, default='বাংলাদেশী', verbose_name='জাতীয়তা')
+    nationality_bn   = models.CharField(max_length=100, default='বাংলাদেশী', blank=True,
+                                        verbose_name='জাতীয়তা (বাংলায়)')
+    nationality_en   = models.CharField(max_length=100, default='Bangladeshi', blank=True,
+                                        verbose_name='Nationality')
     nid              = models.CharField(
         max_length=30, unique=True, null=True, blank=True,
         verbose_name='জাতীয় পরিচয়পত্র নং'
@@ -131,6 +142,15 @@ class MP(models.Model):
     @property
     def is_technocrat(self):
         return self.member_type == 'technocrat'
+
+    # Bilingual pair for the `tr` template filter: {{ mp|tr:"member_type" }}.
+    @property
+    def member_type_bn(self):
+        return self.MEMBER_TYPE_LABELS.get(self.member_type, ('', ''))[0]
+
+    @property
+    def member_type_en(self):
+        return self.MEMBER_TYPE_LABELS.get(self.member_type, ('', ''))[1]
 
     @property
     def current_election(self):
@@ -604,3 +624,46 @@ class Publication(models.Model):
 
     def __str__(self):
         return f"{self.title_bn} — {self.mp.name_bn}"
+
+
+# ── SECTION 18b: PERSONAL / PRE-TENURE FOREIGN TRAVEL ────────────────────────
+
+class PersonalForeignTravel(models.Model):
+    """A trip the MP records themselves, outside the GO process.
+
+    Official travel during the tenure is administered by the travel module
+    (``ForeignTour`` + a GO) and is never editable from the profile. But an MP
+    may have travelled *before* their parliamentary career, or privately, and
+    may wish that on record — hence this parallel, profile-owned table.
+
+    Only ``country`` is required: the MP may well not remember a purpose or the
+    exact dates of a trip from decades ago, and a half-remembered trip is still
+    worth recording. No parliament FK on purpose — predating the tenure is the
+    whole point.
+    """
+    mp        = models.ForeignKey(MP, on_delete=models.CASCADE,
+                                  related_name='personal_travels')
+    country   = models.ForeignKey('master.Country', on_delete=models.PROTECT,
+                                  related_name='personal_visits', verbose_name='দেশ')
+    purpose   = models.ForeignKey('master.TravelPurpose', on_delete=models.SET_NULL,
+                                  null=True, blank=True,
+                                  related_name='personal_visits', verbose_name='উদ্দেশ্য')
+    from_date = models.DateField(null=True, blank=True, verbose_name='যাত্রার তারিখ')
+    to_date   = models.DateField(null=True, blank=True, verbose_name='প্রত্যাবর্তনের তারিখ')
+    note_bn   = models.TextField(blank=True, verbose_name='মন্তব্য (বাংলায়)')
+    note_en   = models.TextField(blank=True, verbose_name='Remarks (English)')
+    ordering  = models.IntegerField(default=0, verbose_name='ক্রম')
+
+    class Meta:
+        # Most recent first; undated rows sink to the bottom rather than the top.
+        ordering = [models.F('from_date').desc(nulls_last=True), 'ordering', 'id']
+        verbose_name = 'ব্যক্তিগত বিদেশ ভ্রমণ'
+
+    def __str__(self):
+        return f"{self.country.name_bn} — {self.mp.name_bn}"
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.from_date and self.to_date and self.to_date < self.from_date:
+            raise ValidationError(
+                {'to_date': 'প্রত্যাবর্তনের তারিখ যাত্রার তারিখের আগে হতে পারে না।'})

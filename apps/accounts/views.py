@@ -411,7 +411,9 @@ def user_list(request):
         qs = qs.filter(
             Q(username__icontains=q) |
             Q(full_name_bn__icontains=q) |
-            Q(full_name_en__icontains=q)
+            Q(full_name_en__icontains=q) |
+            Q(designation_bn__icontains=q) |
+            Q(designation_en__icontains=q)
         )
     status = request.GET.get('status', 'active')
     if status == 'inactive':
@@ -431,7 +433,7 @@ def user_list(request):
 
 @perm_required
 def user_create(request):
-    form = CustomUserCreateForm(request.POST or None)
+    form = CustomUserCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         user = form.save(commit=False)
         user.created_by = request.user
@@ -449,7 +451,8 @@ def user_create(request):
 @perm_required
 def user_update(request, pk):
     user_obj = get_object_or_404(CustomUser, pk=pk)
-    form = CustomUserUpdateForm(request.POST or None, instance=user_obj)
+    form = CustomUserUpdateForm(request.POST or None, request.FILES or None,
+                                instance=user_obj)
     if form.is_valid():
         form.save()
         messages.success(request, f"'{user_obj.username}' আপডেট হয়েছে।")

@@ -5,9 +5,40 @@
 <div class="alert alert-danger">{{ form.non_field_errors }}</div>
 {% endif %}
 
+{% comment %}
+Copy-from ticks: the same street address is very often reused across the three
+address types. Ticking one copies the source address on save (server-side, so
+the division/district/upazila cascade never has to be replayed in the browser).
+Contact fields are never copied — they belong to the present address only.
+{% endcomment %}
+{% if copy_sources %}
+<div class="addr-copy mb-3" data-prefix="{{ prefix }}">
+  <div class="d-flex flex-wrap align-items-center gap-3">
+    <span class="fw-medium" style="font-size:.875rem;">
+      <i class="bi bi-files me-1"></i>{% ui "একই ঠিকানা?" "Same address?" %}
+    </span>
+    {% for src in copy_sources %}
+    <div class="form-check form-check-inline mb-0">
+      <input class="form-check-input addr-copy-tick" type="checkbox"
+             name="{{ prefix }}-same_as" value="{{ src.key }}"
+             id="id_{{ prefix }}-same_as-{{ src.key }}">
+      <label class="form-check-label" for="id_{{ prefix }}-same_as-{{ src.key }}"
+             style="font-size:.875rem;">
+        {% if request.session.LANGUAGE == 'en' %}{{ src.label_en }}{% else %}{{ src.label_bn }}{% endif %}
+      </label>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="addr-copy-note text-muted mt-2 d-none" style="font-size:.8rem;">
+    <i class="bi bi-info-circle me-1"></i>
+    {% ui "সংরক্ষণ করলে নির্বাচিত ঠিকানা হুবহু কপি হবে — নিচের ঘরগুলো পূরণ করার দরকার নেই।" "On save the selected address is copied verbatim — the fields below need not be filled." %}
+  </div>
+</div>
+{% endif %}
+
 <div class="row g-3">
   {# ══ LEFT COLUMN — Location + Address Details ═════════════════════ #}
-  <div class="{% if show_contact %}col-lg-6{% else %}col-12{% endif %} gi-col">
+  <div class="{% if show_contact %}col-lg-6{% else %}col-12{% endif %} gi-col addr-copy-target">
 
     {# Location #}
     <div class="gi-card">

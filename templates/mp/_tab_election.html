@@ -35,7 +35,7 @@
         <th class="table-light">{% ui "দলগত পরিচয়" "Political Party" %}</th>
         <td>{{ election_info.party|tr:"name"|default:"—" }}</td>
         <th class="table-light">{% ui "সদস্যের ধরন" "Member Type" %}</th>
-        <td>{{ mp.get_member_type_display }}</td>
+        <td>{{ mp|tr:"member_type" }}</td>
       </tr>
       <tr>
         <th class="table-light">{% ui "মনোনয়নের তারিখ" "Nomination Date" %}</th>
@@ -107,7 +107,7 @@
             <div class="col-12">
               <label class="form-label fw-medium">{% ui "সংসদ সদস্যের ধরন" "Member Type" %}</label>
               <div class="form-control-plaintext fw-medium" style="padding:.25rem .75rem; background:#fff; border:1px dashed #e2e8f0; border-radius:6px;">
-                {{ mp.get_member_type_display }}
+                {{ mp|tr:"member_type" }}
                 <div class="form-text mb-0">{% ui "পরিবর্তন করতে প্রশাসকের সাথে যোগাযোগ করুন।" "Contact an administrator to change." %}</div>
               </div>
             </div>

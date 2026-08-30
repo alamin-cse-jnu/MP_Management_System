@@ -1,4 +1,6 @@
 from django import forms
+
+from utils.form_dates import normalize_date_fields
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import CustomUser, Menu, Role, SubMenu
@@ -20,6 +22,10 @@ class _BootstrapMixin:
                 w.attrs.setdefault('data-select2', '')
             elif isinstance(w, forms.CheckboxInput):
                 w.attrs.setdefault('class', 'form-check-input')
+            elif isinstance(w, forms.ClearableFileInput):
+                w.attrs.setdefault('class', 'form-control')
+                w.attrs.setdefault('accept', 'image/*')
+        normalize_date_fields(self)
 
 
 class RoleForm(_BootstrapMixin, forms.ModelForm):
@@ -31,8 +37,9 @@ class RoleForm(_BootstrapMixin, forms.ModelForm):
 class CustomUserCreateForm(_BootstrapMixin, UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ['username', 'full_name_bn', 'full_name_en', 'email',
-                  'role', 'is_superadmin', 'is_active']
+        fields = ['username', 'full_name_bn', 'full_name_en',
+                  'designation_bn', 'designation_en', 'email',
+                  'role', 'photo', 'is_superadmin', 'is_active']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,8 +52,9 @@ class CustomUserCreateForm(_BootstrapMixin, UserCreationForm):
 class CustomUserUpdateForm(_BootstrapMixin, forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'full_name_bn', 'full_name_en', 'email',
-                  'role', 'is_superadmin', 'is_active']
+        fields = ['username', 'full_name_bn', 'full_name_en',
+                  'designation_bn', 'designation_en', 'email',
+                  'role', 'photo', 'is_superadmin', 'is_active']
 
 
 class MenuForm(_BootstrapMixin, forms.ModelForm):

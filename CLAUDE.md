@@ -73,6 +73,14 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 11. ALL master data models have full CRUD in the custom system. No Django admin.
 12. Soft delete on master data (is_active=False) to preserve FK integrity.
 13. Foreign tour GO can cover multiple MPs (ForeignTourParticipant).
+13b. Foreign travel has TWO sources, kept apart on purpose. **Official** travel
+    runs through the GO process (`travel.ForeignTour`) and is **read-only on the
+    MP profile** — a GO is never created from a profile. **Personal / pre-tenure**
+    travel (`mp.PersonalForeignTravel`) is entered on the profile, has no GO and
+    no parliament FK, and only `country` is required — purpose and dates are
+    optional because a decades-old trip is worth recording half-remembered.
+    Both appear in biodata section 18, labelled দাপ্তরিক / ব্যক্তিগত. Travel
+    *reports* stay GO-only.
 14. Office address = সংসদ অফিস ONLY. OneToOne with MP.
 15. Superadmin bypasses all role permission checks.
 16. Report export requires can_export=True in RolePermission.
@@ -113,6 +121,8 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 23 | Accompanying Officers → PRP employee sync (roster + picker, see `docs/phase-history.md`) | ✅ |
 | 24 | Field-feedback fixes — spouse/child mobile, education Result cascade, live MP search | ✅ |
 | 25 | NOC generation — bilingual editable documents (CKEditor) + PDF/Word/print, tour passport capture | ✅ |
+| 26 | Field-feedback round 2 — user designation/photo, address "same as" ticks, DD/MM/YYYY dates, education board-vs-university pools, bank branch + biodata bilingual fixes (see `docs/phase-history.md`) | ✅ |
+| 27 | Personal / pre-tenure foreign travel on the MP profile — travel tab split into official (GO, read-only) + personal (full CRUD) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -158,57 +168,71 @@ silently — full context in `docs/phase-history.md`.
 4. `annotate()` sets `group_by`, which hides `Meta.ordering` from the paginator
    (`UnorderedObjectListWarning`; pages can repeat or skip rows). Add an explicit
    `.order_by(...)` on any annotated queryset you paginate.
+5. **Date widgets must be pinned to ISO.** Django renders a bound date with the
+   *active locale's first* `DATE_INPUT_FORMATS` entry — `%d/%m/%Y` under `bn` —
+   and `<input type="date">` silently rejects any non-ISO `value`, so in Bangla
+   mode every saved date renders as an **empty box**. `utils/form_dates.py`
+   (`normalize_date_fields`, called from all ten `_BootstrapMixin.__init__`s)
+   pins `widget.format='%Y-%m-%d'`. Set `widget.input_type`, never
+   `attrs['type']` — a `type` in attrs is rendered *in addition to* the widget's
+   own, giving a duplicate attribute.
+6. `makemigrations` turns a bilingual field split (`x` → `x_bn` + `x_en`) into
+   **RemoveField + AddField, dropping every stored value**. Hand-write it with
+   `RenameField` — see `mp/0011_mp_nationality_bilingual`.
+7. `get_..._display()` returns only the Bangla half of a `choices` tuple. For a
+   bilingual label, add `<field>_bn` / `<field>_en` **properties** and use the
+   existing `{{ obj|tr:"<field>" }}` filter (`MP.MEMBER_TYPE_LABELS`).
 
 **Frontend**
-5. Never toggle visibility with `style.display = ''` when a CSS rule hides the
+8. Never toggle visibility with `style.display = ''` when a CSS rule hides the
    element — clearing an inline style hands it straight back to `display:none`.
    Set an explicit value (`'block'`).
-6. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
+9. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
    attribute still runs (jQuery's `.trigger()` invokes it), but htmx's native
    `change` listener never fires. Any htmx-on-change over a Select2 control needs a
    jQuery bridge that re-emits via `htmx.trigger(...)`.
-7. Editor-authored HTML must not carry **Bootstrap component class names**.
-   CKEditor wraps saved tables in `<figure class="table">`, and `.table > …` then
-   paints a border on every row. `utils/html_sanitize.py` unwraps `figure` and
-   strips the `table` class — keep that guard if you add another editor surface.
-8. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
-   commercial plugins otherwise demand a licence key and the editor never mounts)
-   and the `htmlSupport` allow-all block (otherwise inline column widths,
-   `text-indent` and `font-size` are stripped and the letterhead collapses).
+10. Editor-authored HTML must not carry **Bootstrap component class names**.
+    CKEditor wraps saved tables in `<figure class="table">`, and `.table > …` then
+    paints a border on every row. `utils/html_sanitize.py` unwraps `figure` and
+    strips the `table` class — keep that guard if you add another editor surface.
+11. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
+    commercial plugins otherwise demand a licence key and the editor never mounts)
+    and the `htmlSupport` allow-all block (otherwise inline column widths,
+    `text-indent` and `font-size` are stripped and the letterhead collapses).
 
 **Exports / Bangla**
-9. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
-   `utf-8-sig` makes Django encode *every* `response.write()` with it, prepending a
-   BOM to every row and corrupting the first column of every line.
-10. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
+12. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
+    `utf-8-sig` makes Django encode *every* `response.write()` with it, prepending a
+    BOM to every row and corrupting the first column of every line.
+13. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
     Bengali is a *complex script*, so without `w:cs` Word falls back to Times New
     Roman and renders boxes. See `utils/html_to_docx.py`.
-11. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
+14. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
     perfect** — SolaimanLipi embeds as a CID/Type0 subset whose ligature glyphs do
     not reverse-map. Verify a PDF by its `/Producer` + embedded font list, or by
     looking at the page. Never trust extracted text.
-12. Keep the `body.noc-bn` `@page` box in sync between
+15. Keep the `body.noc-bn` `@page` box in sync between
     `templates/noc/print/noc_document.html` and `static/css/noc.css` — loosening
     either re-splits the Bangla letter onto a second page.
 
 **Data / production**
-13. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
+16. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
     in code points, so any seeder or importer keyed on `name_bn` silently
     *duplicates* instead of matching. Normalise (`unicodedata.normalize('NFC', …)`)
     or match on `name_en` as well.
-14. The PRP API serves **only its leaf certificate**, omitting the intermediate.
+17. The PRP API serves **only its leaf certificate**, omitting the intermediate.
     Windows hides this via AIA fetch; the Linux container fails with
     `CERTIFICATE_VERIFY_FAILED`. Use `prp_api.ssl_context()` +
     `utils/certs/prp_chain.pem` — it *adds* trust. Do **NOT** "simplify" to
     `verify=False`.
-15. `docker compose` traps: `docker compose images web` exits 1 right after a
+18. `docker compose` traps: `docker compose images web` exits 1 right after a
     rebuild (making a successful build look failed); `docker compose exec` does
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
 
 **Deliberate choices — do not "restore" these**
-16. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+19. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

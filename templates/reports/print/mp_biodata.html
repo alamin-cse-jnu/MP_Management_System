@@ -30,7 +30,7 @@
   <tr><th>{% ui "জন্ম তারিখ" "Date of Birth" %}</th><td>{{ mp.dob|date:"d F Y"|default:"—" }}</td><th>জন্মস্থান</th><td>{{ mp.birth_district|tr:"name"|default:"—"  }}</td></tr>
   <tr><th>নিজ জেলা</th><td>{{ mp.home_district|tr:"name"|default:"—"  }}</td><th>{% ui "লিঙ্গ" "Gender" %}</th><td>{{ mp.gender|tr:"name"|default:"—"  }}</td></tr>
   <tr><th>{% ui "ধর্ম" "Religion" %}</th><td>{{ mp.religion|tr:"name"|default:"—"  }}</td><th>{% ui "রক্তের গ্রুপ" "Blood Group" %}</th><td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td></tr>
-  <tr><th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status|tr:"name"|default:"—"  }}</td><th>জাতীয়তা</th><td>{{ mp.nationality|default:"—" }}</td></tr>
+  <tr><th>বৈবাহিক অবস্থা</th><td>{{ mp.marital_status|tr:"name"|default:"—"  }}</td><th>জাতীয়তা</th><td>{{ mp|tr:"nationality"|default:"—" }}</td></tr>
   <tr><th>জাতীয় পরিচয়পত্র নং</th><td>{{ mp.nid|default:"—" }}</td><th>টিআইএন</th><td>{{ mp.tin|default:"—" }}</td></tr>
   <tr><th>পাসপোর্ট নং</th><td>{{ mp.passport_number|default:"—" }}</td><th>পাসপোর্ট মেয়াদ</th><td>{{ mp.passport_expiry_date|date:"d/m/Y"|default:"—" }}</td></tr>
   <tr><th>মুক্তিযোদ্ধা</th><td>{% if mp.is_freedom_fighter %}হ্যাঁ{% else %}না{% endif %}</td><th>মুক্তিযোদ্ধার সন্তান</th><td>{% if mp.is_ff_child %}হ্যাঁ{% else %}না{% endif %}</td></tr>

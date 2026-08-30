@@ -75,7 +75,7 @@
     {% include "reports/_biodata_row.html" with label="বৈবাহিক অবস্থা" value=mp.marital_status.name_bn %}
     {% include "reports/_biodata_row.html" with label="ধর্ম" value=mp.religion.name_bn %}
     {% include "reports/_biodata_row.html" with label="রক্তের গ্রুপ" value=mp.blood_group.name_bn %}
-    {% include "reports/_biodata_row.html" with label="জাতীয়তা" value=mp.nationality %}
+    {% include "reports/_biodata_row.html" with label="জাতীয়তা" value=mp|tr:"nationality" %}
     {% include "reports/_biodata_row.html" with label="জাতীয় পরিচয়পত্র নং" value=mp.nid %}
     {% include "reports/_biodata_row.html" with label="টিআইএন" value=mp.tin %}
     {% include "reports/_biodata_row.html" with label="পাসপোর্ট নং" value=mp.passport_number %}
@@ -219,7 +219,7 @@
       <thead class="table-light"><tr><th>#</th><th>হিসাব নম্বর</th><th>ব্যাংকের নাম</th><th>শাখা</th><th>{% ui "ধরন" "Type" %}</th></tr></thead>
       <tbody>
         {% for ba in mp.bank_accounts.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba.bank_name_bn }}</td><td>{{ ba.branch_name_bn|default:"—" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba|tr:"bank_name" }}</td><td>{{ ba|tr:"branch_name"|default:"—" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -321,12 +321,12 @@
 {% endif %}
 
 <!-- Foreign Travel -->
-{% if mp.travel_participations.all %}
+{% if mp.travel_participations.all or mp.personal_travels.all %}
 <div class="mp-card mb-3">
   <div class="mp-card-header"><i class="bi bi-airplane icon"></i>বিদেশ ভ্রমণ</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>{% ui "দেশ" "Country" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "দেশ" "Country" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th><th>{% ui "ধরন" "Type" %}</th></tr></thead>
       <tbody>
         {% for tp in mp.travel_participations.all %}
         <tr>
@@ -335,6 +335,17 @@
           <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
           <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{% ui "দাপ্তরিক" "Official" %}</td>
+        </tr>
+        {% endfor %}
+        {% for t in mp.personal_travels.all %}
+        <tr>
+          <td>{{ mp.travel_participations.all|length|add:forloop.counter }}</td>
+          <td>{{ t.country|tr:"name" }}</td>
+          <td>{{ t.purpose|tr:"name"|default:"—" }}</td>
+          <td>{{ t.from_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{{ t.to_date|date:"d/m/Y"|default:"—" }}</td>
+          <td>{% ui "ব্যক্তিগত" "Personal" %}</td>
         </tr>
         {% endfor %}
       </tbody>

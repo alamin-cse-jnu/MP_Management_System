@@ -844,7 +844,188 @@ institution, mp and reports.
 
 ---
 
+## PHASE 26 — Field-feedback round 2 (2026-08-30) ✅
+Six user observations from the running stacks (local + 172.16.220.158).
+
+- **Users need পদবি + ছবি.** `CustomUser.designation_bn` / `designation_en`
+  (CharField 200, blank) and `photo` (ImageField → `media/user_photos/`);
+  migration `accounts/0008`. Both create and update forms carry them, the form is
+  now `enctype="multipart/form-data"` and its views pass `request.FILES`, and the
+  `_BootstrapMixin` learned to style a `ClearableFileInput`. The list page gained
+  a photo thumbnail (falling back to the initial-letter `.mp-avatar`) and a
+  Designation column, and `?q=` now searches designation too. The topbar and
+  sidebar footer show the photo when set and prefer designation over role.
+  New CSS: `.mp-avatar-img` / `.mp-avatar-img-sm` — same footprint as the
+  initial-letter avatar so the header does not shift.
+
+- **The same street address is retyped three times.** Each address sub-tab now
+  offers a **"একই ঠিকানা?" tick per already-saved sibling** (present / permanent /
+  ঢাকাস্থ). The tick greys out and disables that tab's location + address-detail
+  card; the copy itself happens **server-side** in `mp_address_save`, which reads
+  the source row and overwrites `_ADDRESS_COPY_FIELDS` on the target.
+  - Server-side on purpose: copying in the browser would mean replaying the
+    division→district→upazila cascade (three fetches) just to make the target's
+    dropdowns contain the source's options. Copying after `form.save(commit=False)`
+    sidesteps queryset validation entirely.
+  - **Contact fields are never copied** — telephone/mobile/whatsapp/e-mail belong
+    to the present address only.
+  - A tick naming an address that is not saved yet is refused with a message
+    rather than writing a blank row; a tick that names its own type is ignored.
+
+- **Every date field showed MM/DD/YYYY.** A native `<input type="date">` renders
+  in the **browser's** locale, so nothing the server sends can change it. Two
+  halves to the fix:
+  1. **`static/js/date_dmy.js` + flatpickr 4.6.13** (CDN, beside the other
+     vendored CDN libs). Attached in `altInput` mode: the visible box is a text
+     input formatted `d/m/Y`, the original input is switched to `type=hidden` and
+     keeps the ISO `Y-m-d` value — and only the original carries the `name`, so
+     that is what posts. `allowInput` lets the user type `25/12/1980` directly.
+     Idempotent and re-run on `htmx:afterSwap`, `shown.bs.modal`, `shown.bs.tab`;
+     `window.enhanceDateFields(root)` is exposed for hand-built rows.
+  2. **`utils/form_dates.normalize_date_fields(form)`**, called at the end of all
+     ten `_BootstrapMixin.__init__`s. Pins `widget.format` to `%Y-%m-%d` and sets
+     `input_formats` to a locale-independent list.
+  - ⚠ **This fixed a live bug, not just cosmetics.** Django renders a bound date
+    with the *active locale's first* `DATE_INPUT_FORMATS` entry — `%d/%m/%Y` under
+    `bn`. `<input type="date">` rejects a non-ISO value attribute, so **in Bangla
+    mode every saved date rendered as an empty box.** Pinning the widget format
+    to ISO is what makes both the input and flatpickr see the stored value.
+  - The normaliser sets `widget.input_type`, not `attrs['type']`: a `type` left in
+    attrs is rendered *in addition to* the widget's own, so every date input was
+    emitting a duplicate `type="date"` attribute.
+
+- **Education: SSC/HSC must not offer a university, degrees must not offer a
+  board.** `EducationSectionForm` now splits the `EducationInstitution` pool by
+  the section's `level_type` (types come from Master Data, as asked):
+  | section | শিক্ষাবোর্ড (`board_affiliation`) | প্রতিষ্ঠান (`institution`) |
+  |---|---|---|
+  | SSC / HSC / Diploma | `inst_type='board'` | everything **except** board/university/foreign |
+  | Graduation / Masters / PhD | university + foreign | university + foreign |
+  - `_keep_current()` widens either queryset to still contain a value that is
+    **already stored** but would now be filtered out — otherwise a mistyped master
+    row would be silently wiped the next time the section was saved.
+
+- **Bank শাখা was not bilingual.** The model always had `branch_name_bn/_en`;
+  three templates just rendered `.bank_name_bn` / `.branch_name_bn` directly.
+  `_tab_bank.html`, `reports/mp_biodata.html` and `reports/pdf/mp_biodata_xhtml.html`
+  now use `|tr:"bank_name"` / `|tr:"branch_name"` (the PDF `mp_biodata_bn.html`
+  already did).
+
+- **Biodata PDF: Member Type + Nationality were Bangla-only.**
+  - `get_member_type_display()` can only ever return the Bangla half of
+    `MEMBER_TYPE_CHOICES`. Added `MP.MEMBER_TYPE_LABELS` plus `member_type_bn` /
+    `member_type_en` properties so the existing `tr` filter works:
+    `{{ mp|tr:"member_type" }}`. Swapped in across mp_detail, `_tab_election`,
+    both biodata PDFs and `print/cabinet.html`. (`reports/views._custom_cell`
+    already had its own `MEMBER_TYPE_EN` map and was left alone; `report_tags._cell`
+    is Bangla-only by design.)
+  - `MP.nationality` was a single CharField, against the bilingual rule. Split into
+    `nationality_bn` / `nationality_en` — migration **`mp/0011_mp_nationality_bilingual`,
+    hand-written**: `makemigrations` proposes RemoveField + AddField, which drops
+    every stored nationality, so it uses **RenameField** and then backfills
+    `nationality_en` from an **NFC-normalised** match on the Bangla value
+    (`বাংলাদেশী` / `বাংলাদেশি` → `Bangladeshi`, anything else left blank for an
+    operator). Verified on all 352 local rows.
+
+Verified: 34 content assertions over both languages (users list/form, address copy
+POST incl. the contact-fields-not-copied case, DD/MM/YYYY round-trip both ways,
+the four education pools, bank branch, biodata HTML+PDF), plus browser checks —
+8 date fields on `/mp/1/` all showing `DD/MM/YYYY` while posting ISO, and the
+Dhaka tab's copy ticks dimming/disabling the right card.
+
+---
+
+## PHASE 27 — Personal / pre-tenure foreign travel (2026-08-30) ✅
+The profile's travel tab listed only GO-based tours and led with a button into
+the system-wide travel module. Two things were wrong: the tab did not read as
+*this MP's* travel, and there was nowhere to record a trip the MP took **before**
+their parliamentary career (or privately), which has no GO and never will.
+
+**Model** — `mp.PersonalForeignTravel`, deliberately in `apps/mp/` rather than
+`apps/travel/`: it is an MP sub-record like Award/Publication, and `travel`
+already imports `mp` (the reverse would be circular).
+
+| field | rule |
+|---|---|
+| `country` FK → `master.Country` | **required — the only one** |
+| `purpose` FK → `master.TravelPurpose` | optional |
+| `from_date` / `to_date` | optional; `clean()` rejects a reversed pair |
+| `note_bn/_en`, `ordering` | optional |
+
+No parliament FK **on purpose** — predating the tenure is the whole point. Only
+country is required because a decades-old trip is still worth recording when the
+MP no longer remembers the purpose or the exact dates. `Meta.ordering` is
+`from_date DESC nulls_last` so undated rows sink rather than float to the top.
+No new master data: Country and TravelPurpose already exist and are admin-managed.
+
+**Tab** — `_tab_travel.html` rebuilt as two sections under a heading that names
+the MP:
+1. **দাপ্তরিক ভ্রমণ (GO-ভিত্তিক)** — read-only, **one row per country visited**
+   (country · purpose · duration · type · GO no.). Per-country rows fit the
+   requested columns better than one row per GO, since `ForeignTourCountry`
+   carries its own dates. A GO whose country rows are not filled in yet still
+   renders one summary row rather than vanishing.
+2. **ব্যক্তিগত / পূর্ববর্তী ভ্রমণ** — full add/edit/delete, following the
+   award/publication CRUD pattern.
+
+The "ভ্রমণ মডিউল" button is demoted to a small text link beside the official
+section; the primary button is now **+ ভ্রমণ যোগ করুন**.
+
+- **`ForeignTourCountry.effective_from_date` / `effective_to_date`** — a leg's
+  own dates, falling back to the tour's overall span. Added because
+  `{% firstof a b as var %}` stores the **rendered string**, not the date object,
+  so `{{ d|date:"d/m/Y" }}` on it silently produces nothing. Model properties
+  keep the fallback out of the template entirely.
+- The view does **not** call `full_clean()` after `form.save(commit=False)` —
+  `ModelForm._post_clean()` already runs `Model.clean()`, so the reversed-date
+  check surfaces as a proper field error instead of an uncaught `ValidationError`.
+
+**Biodata** — section 18 in all three biodata templates now unions both sources
+and gains a **ধরন / Type** column labelling each row দাপ্তরিক / ব্যক্তিগত.
+Travel *reports* stay GO-only: they are administrative documents about the GO
+process, not the MP's life history.
+
+**Not changed:** MP sub-CRUD URLs like `mp:award_create` derive a `mp:award_list`
+submenu that does not exist, so `perm_required` finds no SubMenu and enforces
+login only. The new travel CRUD inherits that same gap. Pre-existing across every
+MP sub-CRUD — closing it would need SubMenu rows for all of them and could lock
+out existing roles, so it was left alone deliberately.
+
+Verified: 27 assertions over both languages — both sections render, country-only
+save works, a missing country is rejected, reversed dates are refused with a
+visible error, rows appear on the tab and in the biodata HTML + PDF, delete works,
+and no other MP's GO leaks onto the tab. Browser-checked with a real 4-country GO
+plus one full and one country-only personal row.
+
+---
+
 ## PRODUCTION DEPLOY LOG
+
+**2026-08-30 — Phases 26 + 27 deployed to 172.16.220.158** (working tree on top of `f0b5fb5`;
+deployed **uncommitted** — commit locally to keep the log anchored).
+42 files SFTP-synced, each md5-verified; no `--build` (`requirements.txt` unchanged), so
+`docker compose restart web`. Backups `mp_code_backup_20260830_042754.tgz` (9.4 M) +
+`mp_db_backup_20260830_042754.sql` (2.0 M).
+Migrations `accounts/0008` · `mp/0011` · `mp/0012` applied clean; collectstatic picked up
+`date_dmy.js` + `theme.css`.
+
+- **`mp/0011` (nationality split) verified against real data.** Pre-flight showed prod holds
+  exactly two values — 350 × `বাংলাদেশী` and 2 × `বাংলাদেশি` (they differ in the final vowel
+  sign, ‌`0x9c0` vs `0x9bf`) — both inside the migration's NFC-normalised match set. After:
+  **352/352 kept `nationality_bn`, 352/352 backfilled `nationality_en='Bangladeshi'`.** The
+  hand-written `RenameField` is what made this non-destructive; the autogenerated
+  RemoveField+AddField would have wiped all 352.
+- Verified: 19 pages × 2 languages all 200, all seven observation items re-checked on prod,
+  biodata PDF renders (WeasyPrint, 141 KB bn / 132 KB en), zero traceback/exception lines
+  since restart, counts unchanged (mp=352 tours=51 officers=227 ministry=64 users=18).
+  The personal-travel write path was exercised inside a transaction that was rolled back, so
+  `mp_personalforeigntravel` is left at 0 rows.
+- **⚠ Operational note — the SSC/HSC "প্রতিষ্ঠান" dropdown is empty on prod.** All 33
+  `EducationInstitution` rows are typed `university` (20) or `board` (13); **none** are `other`,
+  and the new school-level Institute pool excludes board/university/foreign by design (Phase 26).
+  No data is at risk — 0 stored education rows reference an excluded value, and all 7 school-level
+  rows only set the board — but staff cannot pick a school/college until those are added in
+  Master Data with type **Other**.
 
 **2026-08-23 — Phases 24 + 25 deployed to 172.16.220.158** (commit `f0b5fb5`, range `e6573b6..HEAD`
 = `db01557` TLS sync + `2b6ca04` employee order + `f0b5fb5` issues and NOC).

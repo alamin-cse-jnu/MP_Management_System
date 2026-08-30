@@ -1,5 +1,7 @@
 from django import forms
 
+from utils.form_dates import normalize_date_fields
+
 from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import Country, TravelPurpose, TravelType
 from apps.mp.form_fields import MPChoiceField, MPMultipleChoiceField
@@ -29,6 +31,7 @@ class _BootstrapMixin:
             elif isinstance(w, forms.DateInput):
                 w.attrs.setdefault('class', 'form-control')
                 w.attrs.setdefault('type', 'date')
+        normalize_date_fields(self)
 
 
 class ForeignTourForm(_BootstrapMixin, forms.ModelForm):

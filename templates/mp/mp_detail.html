@@ -53,7 +53,7 @@
           <i class="bi bi-building me-1"></i>{{ mp.parliament|tr:"name" }}
         </span>
         <span class="badge badge-primary" style="font-size:0.75rem;">
-          {{ mp.get_member_type_display }}
+          {{ mp|tr:"member_type" }}
         </span>
         {% if election_info %}
         {% if election_info.constituency %}
@@ -220,6 +220,32 @@ function cascadeDistricts(divId, prefix) {
       if (upaz) upaz.innerHTML = '<option value="">' + _upazLabel + '</option>';
     });
 }
+
+// ── Address "same as …" ticks ───────────────────────────────────────────────
+// Ticking one greys out (and disables) the location + address-detail fields for
+// that tab; the actual copy is done server-side on save. Only one source can be
+// ticked at a time.
+document.addEventListener('change', function (e) {
+  const tick = e.target.closest('.addr-copy-tick');
+  if (!tick) return;
+  const block = tick.closest('.addr-copy');
+  if (!block) return;
+
+  if (tick.checked) {
+    block.querySelectorAll('.addr-copy-tick').forEach(function (other) {
+      if (other !== tick) other.checked = false;
+    });
+  }
+  const on = block.querySelector('.addr-copy-tick:checked') !== null;
+
+  block.querySelector('.addr-copy-note').classList.toggle('d-none', !on);
+  const target = block.closest('form').querySelector('.addr-copy-target');
+  if (!target) return;
+  target.style.opacity = on ? '.45' : '';
+  target.querySelectorAll('input, select, textarea').forEach(function (el) {
+    el.disabled = on;
+  });
+});
 
 function cascadeUpazilas(distId, prefix) {
   const upaz = document.getElementById('id_' + prefix + '-upazila');

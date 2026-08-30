@@ -126,7 +126,7 @@ table.dt th { font-weight: bold; }
     <th>Marital Status</th><td>{{ mp.marital_status|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
-    <th>Nationality</th><td>{{ mp.nationality|default:"" }}</td>
+    <th>Nationality</th><td>{{ mp|tr:"nationality"|default:"" }}</td>
     <th>Religion</th><td>{{ mp.religion|tr:"name"|default:""  }}</td>
   </tr>
   <tr>
@@ -265,7 +265,7 @@ table.dt th { font-weight: bold; }
   <thead><tr><th>#</th><th>Account No.</th><th>Bank Name</th><th>Branch</th><th>Type</th></tr></thead>
   <tbody>
     {% for ba in mp.bank_accounts.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba.bank_name_bn }}</td><td>{{ ba.branch_name_bn|default:"" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ ba.account_number }}</td><td>{{ ba|tr:"bank_name" }}</td><td>{{ ba|tr:"branch_name"|default:"" }}</td><td>{{ ba.get_account_type_display }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -360,10 +360,10 @@ table.dt th { font-weight: bold; }
 </table>
 {% endif %}
 
-{% if mp.travel_participations.all %}
+{% if mp.travel_participations.all or mp.personal_travels.all %}
 <div class="sec">18. Foreign Travel</div>
 <table class="dt">
-  <thead><tr><th>#</th><th>Countries</th><th>Purpose</th><th>Departure</th><th>Return</th></tr></thead>
+  <thead><tr><th>#</th><th>Countries</th><th>Purpose</th><th>Departure</th><th>Return</th><th>Type</th></tr></thead>
   <tbody>
     {% for tp in mp.travel_participations.all %}
     <tr>
@@ -372,6 +372,17 @@ table.dt th { font-weight: bold; }
       <td>{{ tp.tour.purpose|tr:"name"|default:""  }}</td>
       <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"" }}</td>
       <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"" }}</td>
+      <td>Official</td>
+    </tr>
+    {% endfor %}
+    {% for t in mp.personal_travels.all %}
+    <tr>
+      <td>{{ mp.travel_participations.all|length|add:forloop.counter }}</td>
+      <td>{{ t.country|tr:"name" }}</td>
+      <td>{{ t.purpose|tr:"name"|default:"" }}</td>
+      <td>{{ t.from_date|date:"d/m/Y"|default:"" }}</td>
+      <td>{{ t.to_date|date:"d/m/Y"|default:"" }}</td>
+      <td>Personal</td>
     </tr>
     {% endfor %}
   </tbody>

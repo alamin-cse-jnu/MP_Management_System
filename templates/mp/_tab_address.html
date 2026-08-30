@@ -93,7 +93,7 @@
       </div>
       <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'present' %}" novalidate>
         {% csrf_token %}
-        {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True %}
+        {% include "mp/_address_fields.html" with form=present_form prefix="present" show_contact=True copy_sources=copy_sources.present %}
         <div class="d-flex justify-content-between mt-3 pt-3 border-top">
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-present')">
             <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
@@ -163,7 +163,7 @@
       </div>
       <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'permanent' %}" novalidate>
         {% csrf_token %}
-        {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False %}
+        {% include "mp/_address_fields.html" with form=permanent_form prefix="permanent" show_contact=False copy_sources=copy_sources.permanent %}
         <div class="d-flex justify-content-between mt-3 pt-3 border-top">
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-permanent')">
             <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}
@@ -233,7 +233,7 @@
       </div>
       <form method="post" action="{% url 'mp:mp_address_save' mp.pk 'dhaka' %}" novalidate>
         {% csrf_token %}
-        {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False %}
+        {% include "mp/_address_fields.html" with form=dhaka_form prefix="dhaka" show_contact=False copy_sources=copy_sources.dhaka %}
         <div class="d-flex justify-content-between mt-3 pt-3 border-top">
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="cancelEdit('addr-dhaka')">
             <i class="bi bi-x me-1"></i>{% ui "বাতিল" "Cancel" %}

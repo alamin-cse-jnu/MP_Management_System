@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "Members of Parliament" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-travel">{{ mp|tr:"name" }}</a></li>
+      <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    <small class="text-muted">{{ mp|tr:"name" }}</small>
+  </div>
+  <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-travel" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+  </a>
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-airplane icon"></i> {% ui title_bn title_en %}</div>
+
+    <div class="alert alert-info mb-3" style="font-size:0.8125rem;">
+      <i class="bi bi-info-circle me-1"></i>
+      {% ui "এটি ব্যক্তিগত/পূর্ববর্তী ভ্রমণের জন্য — GO-ভিত্তিক দাপ্তরিক ভ্রমণ ভ্রমণ মডিউল থেকেই পরিচালিত হয়। শুধু দেশের নাম আবশ্যক; উদ্দেশ্য ও তারিখ ঐচ্ছিক।" "For personal or pre-tenure travel — GO-based official travel stays managed by the Travel module. Only the country is required; purpose and dates are optional." %}
+    </div>
+
+    <form method="post" novalidate>{% csrf_token %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "দেশ" "Country" %} <span class="text-primary">*</span></label>
+          {{ form.country }}
+          {% if form.country.errors %}<div class="invalid-feedback d-block">{{ form.country.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "উদ্দেশ্য" "Purpose" %}</label>
+          {{ form.purpose }}
+          {% if form.purpose.errors %}<div class="invalid-feedback d-block">{{ form.purpose.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label fw-medium">{% ui "যাত্রার তারিখ" "Departure Date" %}</label>
+          {{ form.from_date }}
+          {% if form.from_date.errors %}<div class="invalid-feedback d-block">{{ form.from_date.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label fw-medium">{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</label>
+          {{ form.to_date }}
+          {% if form.to_date.errors %}<div class="invalid-feedback d-block">{{ form.to_date.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label fw-medium">{% ui "ক্রম" "#" %}</label>
+          {{ form.ordering }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "মন্তব্য (বাংলায়)" "Remarks (Bangla)" %}</label>
+          {{ form.note_bn }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "মন্তব্য (ইংরেজি)" "Remarks (English)" %}</label>
+          {{ form.note_en }}
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-travel" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "আপডেট করুন" "Update" %}{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

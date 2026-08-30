@@ -77,6 +77,11 @@ urlpatterns = [
     path('<int:pk>/publication/<int:pubk>/edit/',   views.publication_update, name='publication_update'),
     path('<int:pk>/publication/<int:pubk>/delete/', views.publication_delete, name='publication_delete'),
 
+    # Personal / pre-tenure travel (official GO travel lives in the travel module)
+    path('<int:pk>/travel/add/',                  views.personal_travel_create, name='personal_travel_create'),
+    path('<int:pk>/travel/<int:tk>/edit/',        views.personal_travel_update, name='personal_travel_update'),
+    path('<int:pk>/travel/<int:tk>/delete/',      views.personal_travel_delete, name='personal_travel_delete'),
+
     # Toggle active/inactive
     path('<int:pk>/toggle/', views.mp_toggle, name='mp_toggle'),
 ]
