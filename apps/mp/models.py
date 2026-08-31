@@ -1,5 +1,11 @@
+from collections import namedtuple
+
 from django.conf import settings
 from django.db import models
+
+
+#: One line of the MP profile-completeness score (see MP.profile_score_items).
+ScoreItem = namedtuple('ScoreItem', 'key label_bn label_en points filled applicable')
 
 
 class MPQuerySet(models.QuerySet):
@@ -156,21 +162,120 @@ class MP(models.Model):
     def current_election(self):
         return self.election_infos.filter(parliament=self.parliament).first()
 
+    # ── PROFILE COMPLETENESS ──────────────────────────────────────
+    # The % bar on the MP list is a *weighted* 100-point score, not a plain
+    # field count: the Secretariat scored the 26 fields it actually chases
+    # (4 points each for the identity/address core, 2 for the softer ones).
+    # Every item below carries its own weight and the weights sum to 100.
+    #
+    # Technocrat ministers have no ElectionInfo by design (rule 19), so
+    # gazette/oath are marked not-applicable for them and drop out of *their*
+    # denominator — otherwise a fully entered technocrat would cap at 94%.
+    #
+    # Related rows are read through `.all()` only, so a caller that prefetches
+    # (see mp_list) pays no extra query per row.
+
+    def profile_score_items(self):
+        """Return the per-field score breakdown as a list of ScoreItem."""
+        addresses = {a.address_type: a for a in self.addresses.all()}
+
+        def addr_filled(kind):
+            a = addresses.get(kind)
+            if a is None:
+                return False
+            return any([
+                a.division_id, a.district_id, a.upazila_id,
+                a.address_detail_bn.strip(), a.address_detail_en.strip(),
+                a.pouroshova_union_bn.strip(), a.pouroshova_union_en.strip(),
+                a.post_office_bn.strip(), a.post_office_en.strip(),
+            ])
+
+        # The official e-mail lives on the address row (present address, by
+        # convention) — accept it wherever it was actually typed.
+        official_email = any(a.email.strip() for a in addresses.values())
+
+        # Never `election_infos.filter(...)` here: on a prefetched queryset a
+        # filter re-queries the database once per row.
+        election = None
+        for ei in self.election_infos.all():
+            if ei.parliament_id == self.parliament_id:
+                election = ei
+                break
+
+        has_seat = not self.is_technocrat
+
+        rows = [
+            ('name_en', 'নাম (ইংরেজি)', 'Name (English)', 4,
+             bool(self.name_en.strip()), True),
+            ('name_bn', 'নাম (বাংলা)', 'Name (Bangla)', 4,
+             bool(self.name_bn.strip()), True),
+            ('father_name', 'পিতার নাম', "Father's Name", 4,
+             bool(self.father_name_bn.strip() or self.father_name_en.strip()), True),
+            ('mother_name', 'মাতার নাম', "Mother's Name", 4,
+             bool(self.mother_name_bn.strip() or self.mother_name_en.strip()), True),
+            ('dob', 'জন্ম তারিখ', 'Date of Birth', 4,
+             self.dob is not None, True),
+            ('nid', 'জাতীয় পরিচয়পত্র নং', 'NID No.', 4,
+             bool(self.nid and self.nid.strip()), True),
+            ('birth_district', 'জন্মস্থান (জেলা)', 'Birth District', 4,
+             self.birth_district_id is not None, True),
+            ('gender', 'লিঙ্গ', 'Gender', 4,
+             self.gender_id is not None, True),
+            ('home_district', 'নিজ জেলা', 'Home District', 4,
+             self.home_district_id is not None, True),
+            ('nationality', 'জাতীয়তা', 'Nationality', 4,
+             bool(self.nationality_bn.strip() or self.nationality_en.strip()), True),
+            ('official_email', 'দাপ্তরিক ই-মেইল', 'Official E-mail', 2,
+             official_email, True),
+            ('religion', 'ধর্ম', 'Religion', 4,
+             self.religion_id is not None, True),
+            ('blood_group', 'রক্তের গ্রুপ', 'Blood Group', 4,
+             self.blood_group_id is not None, True),
+            ('profession_current', 'পেশা (বর্তমান)', 'Present Profession', 4,
+             bool(self.professions_current.all()), True),
+            ('profession_previous', 'পেশা (পূর্বের)', 'Previous Profession', 4,
+             bool(self.professions_previous.all()), True),
+            ('tin', 'টিআইএন', 'TIN', 4,
+             bool(self.tin.strip()), True),
+            ('passport', 'পাসপোর্ট নং', 'Passport No.', 4,
+             bool(self.passport_number.strip()), True),
+            ('gazette_date', 'গেজেটের তারিখ', 'Gazette Date', 4,
+             bool(election and election.gazette_date), has_seat),
+            ('oath_date', 'শপথের তারিখ', 'Oath Date', 2,
+             bool(election and election.oath_date), has_seat),
+            ('spouse', 'স্বামী/স্ত্রীর নাম', "Spouse's Name", 4,
+             any(s.name_bn.strip() or s.name_en.strip() for s in self.spouses.all()), True),
+            ('child', 'সন্তানের নাম', "Child's Name", 4,
+             any(c.name_bn.strip() or c.name_en.strip() for c in self.children.all()), True),
+            ('education', 'শিক্ষাগত যোগ্যতা', 'Education', 4,
+             bool(self.educations.all()), True),
+            ('present_address', 'বর্তমান ঠিকানা', 'Present Address', 4,
+             addr_filled('present'), True),
+            ('permanent_address', 'স্থায়ী ঠিকানা', 'Permanent Address', 4,
+             addr_filled('permanent'), True),
+            ('dhaka_address', 'ঢাকাস্থ ঠিকানা', 'Dhaka Address', 4,
+             addr_filled('dhaka'), True),
+            ('bank', 'ব্যাংক তথ্য', 'Bank Info', 2,
+             bool(self.bank_accounts.all()), True),
+            ('committee', 'স্থায়ী কমিটির তথ্য', 'Standing Committee', 2,
+             bool(self.committee_assignments.all()), True),
+        ]
+        return [ScoreItem(*row) for row in rows]
+
     @property
     def profile_score(self):
-        checks = [
-            bool(self.photo),
-            bool(self.dob),
-            bool(self.gender_id),
-            bool(self.religion_id),
-            bool(self.home_district_id),
-            bool(self.nid),
-            bool(self.father_name_bn),
-            bool(self.mother_name_bn),
-            bool(self.blood_group_id),
-            bool(self.marital_status_id),
-        ]
-        return round(sum(checks) / len(checks) * 100)
+        """Weighted completeness percentage (0–100) — the bar on the MP list."""
+        items    = self.profile_score_items()
+        possible = sum(i.points for i in items if i.applicable)
+        earned   = sum(i.points for i in items if i.applicable and i.filled)
+        if not possible:
+            return 0
+        return round(earned / possible * 100)
+
+    @property
+    def profile_score_missing(self):
+        """The still-empty scored fields — used for the bar's tooltip."""
+        return [i for i in self.profile_score_items() if i.applicable and not i.filled]
 
 
 class ElectionInfo(models.Model):

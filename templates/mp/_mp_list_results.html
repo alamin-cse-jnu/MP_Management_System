@@ -36,8 +36,9 @@
             {{ mp|tr:"name" }}
           </a>
           <div class="text-muted" style="font-size:0.8rem;">{{ mp.name_en }}</div>
-          {% with score=mp.profile_score %}
-          <div style="display:flex;align-items:center;gap:5px;margin-top:4px;">
+          {% with score=mp.profile_score missing=mp.profile_score_missing %}
+          <div style="display:flex;align-items:center;gap:5px;margin-top:4px;"
+               title="{% if missing %}{% ui "অপূর্ণ" "Missing" %} ({{ missing|length }}): {% for item in missing %}{{ item|tr:"label" }}{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}{% ui "সব তথ্য পূরণ করা হয়েছে" "All scored fields complete" %}{% endif %}">
             <div style="width:56px;height:3px;border-radius:2px;background:#e2e8f0;overflow:hidden;">
               <div style="height:3px;width:{{ score }}%;border-radius:2px;background:{% if score >= 80 %}#10b981{% elif score >= 50 %}#f59e0b{% else %}#ef4444{% endif %};"></div>
             </div>

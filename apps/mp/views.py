@@ -200,7 +200,11 @@ def mp_list(request):
         Prefetch(
             'election_infos',
             queryset=ElectionInfo.objects.select_related('constituency', 'party'),
-        )
+        ),
+        # Everything MP.profile_score walks — without these the weighted % bar
+        # would fire eight extra queries per row.
+        'addresses', 'spouses', 'children', 'educations', 'bank_accounts',
+        'committee_assignments', 'professions_current', 'professions_previous',
     )
 
     q = request.GET.get('q', '').strip()

@@ -125,6 +125,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 27 | Personal / pre-tenure foreign travel on the MP profile — travel tab split into official (GO, read-only) + personal (full CRUD) | ✅ |
 | 28 | Master-data completeness — bilingual name columns, Class Results master table, year-only travel | ✅ |
 | 29 | Field-feedback round 3 — COVID dose form bilingual + vaccine master pool seeded/discoverable, Post Office field on MP address, master-search keystroke loss, Bangla-numeral search | ✅ |
+| 30 | MP list completeness bar → weighted 100-point score (27 scored fields, 4/2 points each) + missing-field tooltip | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
