@@ -234,6 +234,10 @@ table.dt th { font-weight: bold; }
     <th>Pouroshova/Union</th><td>{{ addr.pouroshova_union_bn|default:"" }}</td>
   </tr>
   <tr><th>Address Detail</th><td colspan="3">{{ addr.address_detail_bn|default:"" }}</td></tr>
+  <tr>
+    <th>Post Office</th><td>{{ addr.post_office_en|default:addr.post_office_bn|default:"" }}</td>
+    <th>Postal Code</th><td>{{ addr.postal_code|default:"" }}</td>
+  </tr>
   {% if addr.address_type == 'present' %}
   <tr>
     <th>Mobile</th><td>{{ addr.mobile|default:"" }}</td>

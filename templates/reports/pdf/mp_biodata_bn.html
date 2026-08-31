@@ -380,6 +380,10 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
   <tr>
     <th>{% ui "বাড়ি/রাস্তা/গ্রাম/ডাকঘর" "House/Road/Village/P.O." %}</th><td colspan="3">{{ addr|tr:"address_detail"|default:"—" }}</td>
   </tr>
+  <tr>
+    <th>{% ui "ডাকঘর" "Post Office" %}</th><td>{{ addr|tr:"post_office"|default:"—" }}</td>
+    <th>{% ui "পোস্টাল কোড" "Postal Code" %}</th><td>{{ addr.postal_code|default:"—" }}</td>
+  </tr>
   {% if addr.address_type == 'present' %}
   <tr>
     <th>{% ui "টেলিফোন" "Telephone" %}</th><td>{{ addr.telephone|default:"—" }}</td>

@@ -31,7 +31,8 @@
         <li class="d-flex align-items-center justify-content-between py-1"
             style="border-bottom:1px solid #f1f5f9;">
           <span>
-            {{ item|tr:"name" }}
+            {% comment %}Name pair: `tr` cannot read a dict, and the English half prints beside it anyway — render both literally.{% endcomment %}
+            {{ item.name_bn }}
             <small class="text-muted">/ {{ item.name_en }}</small>
           </span>
           <a href="{{ item.url }}" class="btn btn-sm btn-outline-primary py-0 px-2"

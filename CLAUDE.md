@@ -71,8 +71,8 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 9. Previous Parliamentary History = free text only. No FK to Constituency.
 10. Ministry/Committee entry works from BOTH the module AND the MP profile.
 11. ALL master data models have full CRUD in the custom system. No Django admin.
-12. Soft delete on master data (is_active=False) to preserve FK integrity.
-13. Foreign tour GO can cover multiple MPs (ForeignTourParticipant).
+14. Soft delete on master data (is_active=False) to preserve FK integrity.
+15. Foreign tour GO can cover multiple MPs (ForeignTourParticipant).
 13b. Foreign travel has TWO sources, kept apart on purpose. **Official** travel
     runs through the GO process (`travel.ForeignTour`) and is **read-only on the
     MP profile** — a GO is never created from a profile. **Personal / pre-tenure**
@@ -81,10 +81,10 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
     optional because a decades-old trip is worth recording half-remembered.
     Both appear in biodata section 18, labelled দাপ্তরিক / ব্যক্তিগত. Travel
     *reports* stay GO-only.
-14. Office address = সংসদ অফিস ONLY. OneToOne with MP.
-15. Superadmin bypasses all role permission checks.
-16. Report export requires can_export=True in RolePermission.
-17. Technocrat ministers = cabinet members with NO seat. Stored as MP rows with
+16. Office address = সংসদ অফিস ONLY. OneToOne with MP.
+17. Superadmin bypasses all role permission checks.
+18. Report export requires can_export=True in RolePermission.
+19. Technocrat ministers = cabinet members with NO seat. Stored as MP rows with
     member_type='technocrat' and NO ElectionInfo (no constituency/party/election).
     They NEVER count towards the 350 — every MP count/report goes through
     MP.objects.parliament_members(). Included in ministry/travel/institution
@@ -124,6 +124,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 26 | Field-feedback round 2 — user designation/photo, address "same as" ticks, DD/MM/YYYY dates, education board-vs-university pools, bank branch + biodata bilingual fixes (see `docs/phase-history.md`) | ✅ |
 | 27 | Personal / pre-tenure foreign travel on the MP profile — travel tab split into official (GO, read-only) + personal (full CRUD) | ✅ |
 | 28 | Master-data completeness — bilingual name columns, Class Results master table, year-only travel | ✅ |
+| 29 | Field-feedback round 3 — COVID dose form bilingual + vaccine master pool seeded/discoverable, Post Office field on MP address, master-search keystroke loss, Bangla-numeral search | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -209,48 +210,60 @@ silently — full context in `docs/phase-history.md`.
     attribute still runs (jQuery's `.trigger()` invokes it), but htmx's native
     `change` listener never fires. Any htmx-on-change over a Select2 control needs a
     jQuery bridge that re-emits via `htmx.trigger(...)`.
-11. Editor-authored HTML must not carry **Bootstrap component class names**.
+11. **Never let a live-search request swap the search box itself.** htmx replaces
+    the target node, so an `hx-target` that contains the focused `input` destroys
+    it mid-typing: the caret is lost and every character typed while the request
+    was in flight is dropped — the box "misses keystrokes". Search triggers must
+    swap only the results region (`hx-target="#…-rows"` + `hx-select="#…-rows"`,
+    row count via `hx-select-oob`, plus `hx-sync="this:replace"`); full-panel
+    swaps are fine for add/edit/toggle, which are clicks, not typing. Was wrong
+    in both master-data managers (`group_panel.html`, `edu_panel.html`).
+12. Numbers are **stored ASCII, displayed Bangla**, so an operator reads ১৫২ off
+    the screen and types it back into a search box that only matches `152`. Every
+    search over an MP ID / memo / GO number goes through `utils/bn_digits.search_q`,
+    which ORs each field against both digit spellings.
+13. Editor-authored HTML must not carry **Bootstrap component class names**.
     CKEditor wraps saved tables in `<figure class="table">`, and `.table > …` then
     paints a border on every row. `utils/html_sanitize.py` unwraps `figure` and
     strips the `table` class — keep that guard if you add another editor surface.
-12. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
+14. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
     commercial plugins otherwise demand a licence key and the editor never mounts)
     and the `htmlSupport` allow-all block (otherwise inline column widths,
     `text-indent` and `font-size` are stripped and the letterhead collapses).
 
 **Exports / Bangla**
-13. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
+15. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
     `utf-8-sig` makes Django encode *every* `response.write()` with it, prepending a
     BOM to every row and corrupting the first column of every line.
-14. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
+16. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
     Bengali is a *complex script*, so without `w:cs` Word falls back to Times New
     Roman and renders boxes. See `utils/html_to_docx.py`.
-15. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
+17. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
     perfect** — SolaimanLipi embeds as a CID/Type0 subset whose ligature glyphs do
     not reverse-map. Verify a PDF by its `/Producer` + embedded font list, or by
     looking at the page. Never trust extracted text.
-16. Keep the `body.noc-bn` `@page` box in sync between
+18. Keep the `body.noc-bn` `@page` box in sync between
     `templates/noc/print/noc_document.html` and `static/css/noc.css` — loosening
     either re-splits the Bangla letter onto a second page.
 
 **Data / production**
-17. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
+19. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
     in code points, so any seeder or importer keyed on `name_bn` silently
     *duplicates* instead of matching. Normalise (`unicodedata.normalize('NFC', …)`)
     or match on `name_en` as well.
-18. The PRP API serves **only its leaf certificate**, omitting the intermediate.
+20. The PRP API serves **only its leaf certificate**, omitting the intermediate.
     Windows hides this via AIA fetch; the Linux container fails with
     `CERTIFICATE_VERIFY_FAILED`. Use `prp_api.ssl_context()` +
     `utils/certs/prp_chain.pem` — it *adds* trust. Do **NOT** "simplify" to
     `verify=False`.
-19. `docker compose` traps: `docker compose images web` exits 1 right after a
+21. `docker compose` traps: `docker compose images web` exits 1 right after a
     rebuild (making a successful build look failed); `docker compose exec` does
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
 
 **Deliberate choices — do not "restore" these**
-20. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+22. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

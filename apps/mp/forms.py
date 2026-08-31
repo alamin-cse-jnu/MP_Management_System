@@ -7,7 +7,7 @@ from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import (
     ClassResult, Country, DegreeName, District, DivisionResult,
     EducationGroup, EducationInstitution, EducationLevel, EducationSubject,
-    ResultType, TravelPurpose, Upazila,
+    ResultType, TravelPurpose, Upazila, VaccineName,
 )
 from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
@@ -291,7 +291,7 @@ class AddressForm(_BootstrapMixin, forms.ModelForm):
             'division', 'district', 'upazila',
             'pouroshova_union_bn', 'pouroshova_union_en',
             'address_detail_bn', 'address_detail_en',
-            'postal_code',
+            'post_office_bn', 'post_office_en', 'postal_code',
             'telephone', 'mobile', 'alt_mobile', 'whatsapp',
             'email', 'personal_email',
         ]
@@ -322,6 +322,19 @@ class CovidVaccinationForm(_BootstrapMixin, forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Vaccine name follows the UI language like every other master dropdown.
+        # A soft-deleted vaccine already stored on this dose stays selectable.
+        qs = VaccineName.objects.filter(is_active=True).order_by('ordering', 'name_bn')
+        qs = _keep_current(qs, self.instance.vaccine_name_id if self.instance else None)
+        self.fields['vaccine_name'] = BilingualChoiceField(
+            queryset=qs,
+            empty_label='-- টিকা নির্বাচন করুন / Select Vaccine --',
+            required=False,
+            label='টিকার নাম / Vaccine Name',
+        )
 
 
 class PreviousParliamentaryHistoryForm(_BootstrapMixin, forms.ModelForm):

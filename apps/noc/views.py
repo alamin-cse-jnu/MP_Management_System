@@ -7,7 +7,6 @@ from datetime import date
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -17,6 +16,7 @@ from apps.accounts.mixins import perm_required
 from apps.mp.models import MP
 from apps.reports.utils import render_report_pdf
 from apps.travel.models import ForeignTour
+from utils.bn_digits import search_q
 from utils.html_sanitize import sanitize_html
 from utils.html_to_docx import html_to_docx
 
@@ -68,11 +68,9 @@ def noc_list(request):
 
     q = request.GET.get('q', '').strip()
     if q:
-        qs = qs.filter(
-            Q(memo_no__icontains=q) | Q(mp__name_bn__icontains=q)
-            | Q(mp__name_en__icontains=q) | Q(mp__mp_id__icontains=q)
-            | Q(tour__go_number__icontains=q)
-        )
+        qs = qs.filter(search_q(q, [
+            'memo_no', 'mp__name_bn', 'mp__name_en', 'mp__mp_id', 'tour__go_number',
+        ]))
 
     language = request.GET.get('language', '')
     if language:

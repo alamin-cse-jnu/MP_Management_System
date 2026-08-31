@@ -1,5 +1,6 @@
 from apps.accounts.mixins import perm_required
 from utils.assignment_grouping import all_mp_groups, build_mp_groups, mp_group_order
+from utils.bn_digits import search_q
 from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse
@@ -180,7 +181,7 @@ def all_mp(request):
         except ValueError:
             pass
     if q:
-        qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q))
+        qs = qs.filter(search_q(q, ['name_bn', 'name_en', 'mp_id']))
     qs = qs.distinct()
 
     ctx = {
@@ -261,7 +262,7 @@ def women_mp(request):
 
     qs = _mp_qs_base(parliament_id).filter(member_type='reserved')
     if q:
-        qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q))
+        qs = qs.filter(search_q(q, ['name_bn', 'name_en', 'mp_id']))
     qs = qs.distinct()
 
     headers = ['ক্রম', 'এমপি আইডি', 'নাম (বাংলায়)', 'Name (English)', 'রাজনৈতিক দল', 'জেলা', 'জন্ম তারিখ']
@@ -1116,7 +1117,7 @@ def contact_list(request):
     if district_id:
         qs = qs.filter(home_district_id=district_id)
     if q:
-        qs = qs.filter(Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q))
+        qs = qs.filter(search_q(q, ['name_bn', 'name_en', 'mp_id']))
     qs = qs.distinct()
 
     # Attach office addresses in one query

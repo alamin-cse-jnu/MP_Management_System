@@ -16,6 +16,7 @@ from .forms import (
     CustomUserCreateForm, CustomUserUpdateForm,
     MenuForm, RoleForm, SubMenuForm,
 )
+from utils.bn_digits import search_q
 from .models import CustomUser, Menu, Role, RolePermission, SubMenu
 
 
@@ -260,7 +261,7 @@ def mp_search(request):
         return JsonResponse({'results': []})
     from apps.mp.models import MP, ElectionInfo as EI
     qs = MP.objects.filter(
-        Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q),
+        search_q(q, ['name_bn', 'name_en', 'mp_id']),
         is_active=True,
     ).prefetch_related(
         Prefetch('election_infos', queryset=EI.objects.select_related('party', 'constituency'))

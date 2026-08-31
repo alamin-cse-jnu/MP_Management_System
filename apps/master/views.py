@@ -683,6 +683,8 @@ def master_home(request):
         {'title_bn': 'অফিস / পিএ-পিএস', 'title_en': 'Office / PA-PS', 'icon': 'bi-person-badge-fill', 'items': [
             _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'master:pa_designation_list'),
             _item('বিশেষ পদের ধরন', 'Special Role Types', 'master:special_role_type_list'),
+        ]},
+        {'title_bn': 'কোভিড-১৯', 'title_en': 'COVID-19', 'icon': 'bi-capsule', 'items': [
             _item('টিকার নাম', 'Vaccine Names', 'master:vaccine_name_list'),
         ]},
     ]

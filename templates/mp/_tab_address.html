@@ -54,9 +54,10 @@
             <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
           </tr>
           <tr>
+            <th class="table-light">{% ui "ডাকঘর" "Post Office" %}</th>
+            <td>{{ addr|tr:"post_office"|default:"—" }}</td>
             <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
             <td>{{ addr.postal_code|default:"—" }}</td>
-            <td colspan="2"></td>
           </tr>
           <tr>
             <th class="table-light">{% ui "মোবাইল" "Mobile" %}</th>
@@ -140,9 +141,10 @@
             <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
           </tr>
           <tr>
+            <th class="table-light">{% ui "ডাকঘর" "Post Office" %}</th>
+            <td>{{ addr|tr:"post_office"|default:"—" }}</td>
             <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
             <td>{{ addr.postal_code|default:"—" }}</td>
-            <td colspan="2"></td>
           </tr>
         </tbody>
       </table>
@@ -210,9 +212,10 @@
             <td colspan="3">{{ addr.address_detail_bn|default:addr.address_detail_en|default:"—" }}</td>
           </tr>
           <tr>
+            <th class="table-light">{% ui "ডাকঘর" "Post Office" %}</th>
+            <td>{{ addr|tr:"post_office"|default:"—" }}</td>
             <th class="table-light">{% ui "পোস্টাল কোড" "Postal Code" %}</th>
             <td>{{ addr.postal_code|default:"—" }}</td>
-            <td colspan="2"></td>
           </tr>
         </tbody>
       </table>

@@ -23,11 +23,36 @@
     <form method="post" novalidate>{% csrf_token %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
       <div class="row">
-        <div class="col-md-3 mb-3"><label class="form-label fw-medium">ডোজ নম্বর <span class="text-primary">*</span></label>{{ form.dose_number }}</div>
-        <div class="col-md-4 mb-3"><label class="form-label fw-medium">তারিখ</label>{{ form.date }}</div>
-        <div class="col-md-5 mb-3"><label class="form-label fw-medium">টিকার নাম</label>{{ form.vaccine_name }}</div>
-        <div class="col-md-8 mb-3"><label class="form-label fw-medium">টিকা কেন্দ্র</label>{{ form.center_name }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">সার্টিফিকেট নম্বর</label>{{ form.certificate_number }}</div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "ডোজ নম্বর" "Dose No." %} <span class="text-primary">*</span></label>
+          {{ form.dose_number }}
+          {% if form.dose_number.errors %}<div class="invalid-feedback d-block">{{ form.dose_number.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label fw-medium">{% ui "তারিখ" "Date" %}</label>
+          {{ form.date }}
+          {% if form.date.errors %}<div class="invalid-feedback d-block">{{ form.date.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="col-md-5 mb-3">
+          <label class="form-label fw-medium">{% ui "টিকার নাম" "Vaccine Name" %}</label>
+          {{ form.vaccine_name }}
+          {% if not form.fields.vaccine_name.queryset.exists %}
+          <div class="form-text text-warning">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+            {% ui "মাস্টার ডেটায় কোনো টিকার নাম নেই —" "No vaccine names exist in Master Data —" %}
+            <a href="{% url 'master:vaccine_name_list' %}" target="_blank">{% ui "এখানে যোগ করুন" "add them here" %}</a>{% ui "।" "." %}
+          </div>
+          {% endif %}
+          {% if form.vaccine_name.errors %}<div class="invalid-feedback d-block">{{ form.vaccine_name.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="col-md-8 mb-3">
+          <label class="form-label fw-medium">{% ui "টিকা কেন্দ্র" "Vaccination Center" %}</label>
+          {{ form.center_name }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "সার্টিফিকেট নম্বর" "Certificate No." %}</label>
+          {{ form.certificate_number }}
+        </div>
       </div>
       <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
         <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-covid" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Clear" %}</a>

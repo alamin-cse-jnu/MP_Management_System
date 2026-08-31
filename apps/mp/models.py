@@ -436,6 +436,9 @@ class Address(models.Model):
     address_detail_bn   = models.TextField(blank=True,
                                             verbose_name='বাড়ি/রাস্তা/গ্রাম/ডাকঘর (বাংলায়)')
     address_detail_en   = models.TextField(blank=True, verbose_name='Address Details')
+    post_office_bn      = models.CharField(max_length=200, blank=True,
+                                            verbose_name='ডাকঘর (বাংলায়)')
+    post_office_en      = models.CharField(max_length=200, blank=True, verbose_name='Post Office')
     postal_code         = models.CharField(max_length=20, blank=True, verbose_name='পোস্টাল কোড')
 
     # Contact — present address only

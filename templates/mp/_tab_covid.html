@@ -23,15 +23,15 @@
       {% for dose in covid_vaccinations %}
       <tr>
         <td>{{ dose.dose_number }}</td>
-        <td>{{ dose.date|default:"—" }}</td>
-        <td>{{ dose.vaccine_name|default:"—" }}</td>
+        <td>{{ dose.date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ dose.vaccine_name|tr:"name"|default:"—" }}</td>
         <td>{{ dose.center_name|default:"—" }}</td>
         <td>{{ dose.certificate_number|default:"—" }}</td>
         <td>
           <a href="{% url 'mp:covid_update' mp.pk dose.pk %}"
              class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
           <form method="post" action="{% url 'mp:covid_delete' mp.pk dose.pk %}"
-                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
+                class="d-inline" onsubmit="return confirm('{% ui "মুছে ফেলবেন?" "Delete this entry?" %}')">
             {% csrf_token %}
             <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
           </form>
@@ -42,5 +42,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">কোনো টিকার তথ্য নেই।</p>
+<p class="text-muted text-center py-4">{% ui "কোনো টিকার তথ্য নেই।" "No vaccination records yet." %}</p>
 {% endif %}

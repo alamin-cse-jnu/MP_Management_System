@@ -65,6 +65,14 @@ Contact fields are never copied — they belong to the present address only.
           {{ form.pouroshova_union_en }}
         </div>
         <div class="col-md-6">
+          <label class="form-label fw-medium">{% ui "ডাকঘর (বাংলায়)" "Post Office (Bangla)" %}</label>
+          {{ form.post_office_bn }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-medium">{% ui "ডাকঘর (ইংরেজি)" "Post Office (English)" %}</label>
+          {{ form.post_office_en }}
+        </div>
+        <div class="col-md-6">
           <label class="form-label fw-medium">{% ui "পোস্টাল কোড" "Postal Code" %}</label>
           {{ form.postal_code }}
         </div>

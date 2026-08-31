@@ -17,6 +17,7 @@ from apps.parliament.models import Parliament
 from apps.ministry.models import MinistryAssignment
 from apps.committee.models import CommitteeAssignment
 from utils.assignment_grouping import group_by_parliament
+from utils.bn_digits import search_q
 from apps.institution.models import InstitutionAssignment
 from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
@@ -92,7 +93,8 @@ _ADDRESS_LABELS = {
 _ADDRESS_COPY_FIELDS = (
     'division', 'district', 'upazila',
     'pouroshova_union_bn', 'pouroshova_union_en',
-    'address_detail_bn', 'address_detail_en', 'postal_code',
+    'address_detail_bn', 'address_detail_en',
+    'post_office_bn', 'post_office_en', 'postal_code',
 )
 
 
@@ -203,9 +205,8 @@ def mp_list(request):
 
     q = request.GET.get('q', '').strip()
     if q:
-        qs = qs.filter(
-            Q(name_bn__icontains=q) | Q(name_en__icontains=q) | Q(mp_id__icontains=q)
-        )
+        # Bangla numerals too: the list shows ১৫২, so typing it must work.
+        qs = qs.filter(search_q(q, ['name_bn', 'name_en', 'mp_id']))
 
     parliament_id = request.GET.get('parliament', '')
     if parliament_id:
@@ -953,10 +954,7 @@ def sync_conflict_list(request):
     if target:
         qs = qs.filter(target=target)
     if q:
-        qs = qs.filter(
-            Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q)
-            | Q(mp__mp_id__icontains=q)
-        )
+        qs = qs.filter(search_q(q, ['mp__name_bn', 'mp__name_en', 'mp__mp_id']))
     qs = qs.order_by('mp__mp_id', 'target', 'field_key')
 
     # group by MP (preserve order)
