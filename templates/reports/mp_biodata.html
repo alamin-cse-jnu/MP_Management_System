@@ -289,13 +289,13 @@
 <!-- Special Positions -->
 {% if mp.special_positions.all %}
 <div class="mp-card mb-3">
-  <div class="mp-card-header"><i class="bi bi-star-fill icon"></i>বিশেষ পদের দায়িত্ব</div>
+  <div class="mp-card-header"><i class="bi bi-star-fill icon"></i>{% ui "সংসদীয় পদের দায়িত্ব" "Parliamentary Positions" %}</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>{% ui "সংসদ" "Parliament" %}</th><th>পদের নাম</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "সংসদ" "Parliament" %}</th><th>{% ui "পদের নাম" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th><th>{% ui "অবস্থা" "Status" %}</th></tr></thead>
       <tbody>
         {% for sp in mp.special_positions.all %}
-        <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td></tr>
+        <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td><td>{% if sp.is_active %}{% ui "বহাল" "Sitting" %}{% else %}{% ui "সাবেক" "Past" %}{% endif %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

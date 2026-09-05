@@ -27,6 +27,7 @@
       {% if "blood_group" in selected_cols %}<td>{{ mp.blood_group|tr:"name"|default:"—"  }}</td>{% endif %}
       {% if "district" in selected_cols %}<td>{{ mp.home_district|tr:"name"|default:"—"  }}</td>{% endif %}
       {% if "professions" in selected_cols %}<td>{% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>{% endif %}
+      {% if "special_position" in selected_cols %}<td>{% for sp in mp.special_positions.all %}{{ sp.role|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</td>{% endif %}
     </tr>
     {% endwith %}
     {% empty %}

@@ -40,6 +40,30 @@
   #chart-party, #chart-division, #chart-gender, #chart-religion, #chart-times {
     cursor: pointer;
   }
+  /* Division basis switch — the two divisions in this system mean different
+     things, so the chart always says which one it is showing. */
+  .div-basis-toggle .btn {
+    flex: 1;
+    font-size: .74rem;
+    padding: 3px 6px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+  }
+  .div-basis-toggle .btn.active {
+    background: #0d9488;
+    border-color: #0d9488;
+    color: #fff;
+    font-weight: 600;
+  }
+  .div-basis-note {
+    font-size: .7rem;
+    color: #64748b;
+    line-height: 1.35;
+    margin-top: 6px;
+    min-height: 3.2em;
+  }
+  .div-basis-note.has-gap { color: #b45309; }
 </style>
 {% endblock %}
 
@@ -168,17 +192,31 @@
     </div>
   </div>
 
-  <!-- Division horizontal bar -->
+  <!-- Division horizontal bar — two bases, never mixed (see div-basis note) -->
   <div class="col-12 col-md-6 col-lg-4">
     <div class="chart-card">
       <div class="chart-card-header">
         <span><i class="bi bi-geo-alt-fill icon"></i>{% ui "বিভাগ ভিত্তিক বিতরণ" "Division-wise Distribution" %}</span>
-        <a href="{% url 'reports:district_wise' %}" class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
+        <a href="{% url 'reports:district_wise' %}?basis=constituency" id="div-details-link"
+           class="btn btn-outline-primary btn-xs" style="font-size:.75rem;padding:2px 8px;">
           {% ui "বিস্তারিত" "Details" %} <i class="bi bi-arrow-right"></i>
         </a>
       </div>
+      <div class="px-3 pt-2">
+        <div class="btn-group div-basis-toggle w-100" role="group">
+          <button type="button" class="btn btn-sm active" data-basis="constituency"
+                  title="{% ui 'আসন যে বিভাগে — নির্বাচনী এলাকা → জেলা → বিভাগ' 'Division of the seat — constituency → district → division' %}">
+            {% ui "নির্বাচনী এলাকা" "Constituency" %}
+          </button>
+          <button type="button" class="btn btn-sm" data-basis="home"
+                  title="{% ui 'সদস্যের নিজ জেলার বিভাগ — আসনের বিভাগ থেকে ভিন্ন হতে পারে' 'Division of the member’s own home district — may differ from the seat' %}">
+            {% ui "নিজ জেলা" "Home District" %}
+          </button>
+        </div>
+        <div id="div-basis-note" class="div-basis-note"></div>
+      </div>
       <div class="chart-card-body">
-        <div id="chart-division" style="min-height:300px;"></div>
+        <div id="chart-division" style="min-height:270px;"></div>
       </div>
     </div>
   </div>
@@ -353,7 +391,8 @@
               <th>{% ui "নাম" "Name" %}</th>
               <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
               <th>{% ui "দল" "Party" %}</th>
-              <th>{% ui "বিভাগ" "Division" %}</th>
+              {% comment %}Named explicitly: this is the member’s HOME division, not the division of the constituency in the column to the left.{% endcomment %}
+              <th>{% ui "নিজ জেলার বিভাগ" "Home Division" %}</th>
               <th></th>
             </tr>
           </thead>
@@ -381,8 +420,11 @@
                 {% else %}—{% endif %}
               </td>
               <td>
+                {% if mp.home_district %}
+                <span class="text-muted" style="font-size:.82rem;">{{ mp.home_district|tr:"name" }}</span>
                 {% if mp.home_district.division %}
-                <span class="text-muted" style="font-size:.82rem;">{{ mp.home_district.division|tr:"name" }}</span>
+                <div class="text-muted" style="font-size:.72rem;">{{ mp.home_district.division|tr:"name" }}</div>
+                {% endif %}
                 {% else %}—{% endif %}
               </td>
               <td class="text-end">
@@ -539,23 +581,55 @@
     tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
   }).render();
 
-  /* ── 2. Division horizontal bar ─────────────────────────────── */
-  const divRaw   = {{ division_chart_data|safe }};
-  const divEmpty = !divRaw.values || divRaw.values.length === 0;
+  /* ── 2. Division horizontal bar — constituency vs home district ──
+     Two unrelated divisions live in the data. The seat division (constituency
+     → district → division) is what "Dhaka Division MP" normally means; the
+     home division is where the member personally comes from. The chart shows
+     one at a time and says which, and the drill-through carries the same
+     basis so the report matches the bar that was clicked. */
+  const divSets  = {{ division_chart_data|safe }};
+  {% comment %}Counts are concatenated, not written inside {% ui %} — a tag argument is a literal string and would print the {{ }} braces verbatim.{% endcomment %}
+  const DIV_NOTES = {
+    constituency: '{% ui "আসনের অবস্থান অনুযায়ী (নির্বাচনী এলাকা → জেলা → বিভাগ)। শুধু সরাসরি নির্বাচিত আসন — " "By where the seat is (constituency → district → division). Directly-elected seats only — " %}'
+                + '{{ division_const_covered }}/{{ direct_mps }}'
+                + '{% ui " জন। সংরক্ষিত মহিলা আসনের নির্বাচনী এলাকা নেই।" " members. Reserved women’s seats have no constituency." %}',
+    home:         '{% ui "সদস্যের নিজ জেলার বিভাগ অনুযায়ী — আসনের বিভাগ থেকে ভিন্ন হতে পারে। " "By the member’s own home district — this can differ from the seat’s division. " %}'
+                + '{{ division_home_covered }}/{{ total_mps }}'
+                + '{% ui " জন।" " members." %}'
+  };
+  {% comment %}Constituency.district is admin-entered and starts empty, which would otherwise look like a broken chart rather than missing data.{% endcomment %}
+  const DIV_GAPS = {
+    constituency: {{ division_const_missing }},
+    home:         {{ division_home_missing }}
+  };
+  const DIV_GAP_TEXT = {
+    constituency: '{% ui " — বাকি " " — " %}',
+    home:         '{% ui " — বাকি " " — " %}'
+  };
+  const DIV_GAP_TAIL = {
+    constituency: '{% ui " জন আসনের জেলা নির্ধারণ করা নেই।" " seats have no district set on the constituency." %}',
+    home:         '{% ui " জন সদস্যের নিজ জেলা নেই।" " members have no home district recorded." %}'
+  };
 
-  new ApexCharts(document.getElementById('chart-division'), {
+  let divBasis = 'constituency';
+  const divNoteEl = document.getElementById('div-basis-note');
+  const divLinkEl = document.getElementById('div-details-link');
+
+  function divData() { return divSets[divBasis] || { labels: [], values: [], ids: [] }; }
+  function divIsEmpty() { const d = divData(); return !d.values || d.values.length === 0; }
+
+  const divisionChart = new ApexCharts(document.getElementById('chart-division'), {
     ...commonOpts,
-    chart: { ...commonOpts.chart, type: 'bar', height: 300,
+    chart: { ...commonOpts.chart, type: 'bar', height: 270,
       events: { dataPointSelection: function(e, ctx, cfg) {
-        if (divEmpty) return;
-        const id = divRaw.ids[cfg.dataPointIndex];
+        if (divIsEmpty()) return;
+        const id = divData().ids[cfg.dataPointIndex];
         if (!id) return;
-        window.location.href = URL_DIST_WISE + '?division=' + id;
+        window.location.href = URL_DIST_WISE + '?basis=' + divBasis + '&division=' + id;
       }}
     },
-    series: [{ name: '{% ui "সদস্য" "MPs" %}',
-               data: divEmpty ? [] : divRaw.values }],
-    xaxis: { categories: divEmpty ? [] : divRaw.labels,
+    series: [{ name: '{% ui "সদস্য" "MPs" %}', data: divData().values }],
+    xaxis: { categories: divData().labels,
              labels: { style: { fontSize: '12px' } } },
     yaxis: { labels: { style: { fontSize: '12px' } } },
     plotOptions: { bar: { horizontal: true, borderRadius: 4,
@@ -566,7 +640,32 @@
     grid: { borderColor: '#f1f5f9' },
     tooltip: { y: { formatter: v => v + ' {% ui "জন" "MPs" %}' } },
     noData: { text: '{% ui "তথ্য নেই" "No data" %}' },
-  }).render();
+  });
+  divisionChart.render();
+
+  function applyDivBasis(basis) {
+    divBasis = (basis === 'home') ? 'home' : 'constituency';
+    const d = divData();
+    divisionChart.updateOptions({
+      xaxis: { categories: d.labels, labels: { style: { fontSize: '12px' } } },
+      series: [{ name: '{% ui "সদস্য" "MPs" %}', data: d.values }],
+    }, false, false);
+    let note = DIV_NOTES[divBasis];
+    if (DIV_GAPS[divBasis] > 0) {
+      note += DIV_GAP_TEXT[divBasis] + DIV_GAPS[divBasis] + DIV_GAP_TAIL[divBasis];
+    }
+    divNoteEl.textContent = note;
+    divNoteEl.classList.toggle('has-gap', DIV_GAPS[divBasis] > 0);
+    divLinkEl.href = URL_DIST_WISE + '?basis=' + divBasis;
+    document.querySelectorAll('.div-basis-toggle .btn').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.basis === divBasis);
+    });
+  }
+
+  document.querySelectorAll('.div-basis-toggle .btn').forEach(function (b) {
+    b.addEventListener('click', function () { applyDivBasis(b.dataset.basis); });
+  });
+  applyDivBasis('constituency');
 
   /* ── 3. Gender donut ─────────────────────────────────────────── */
   const genRaw   = {{ gender_chart_data|safe }};

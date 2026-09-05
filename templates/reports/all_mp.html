@@ -233,6 +233,14 @@
             {% for p in mp.professions_current.all %}{{ p|tr:"name" }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}
           </td>
           {% endif %}
+          {% comment %}Offices of the House — the prefetch is already limited to sitting terms.{% endcomment %}
+          {% if "special_position" in selected_cols %}
+          <td data-col="special_position">
+            {% for sp in mp.special_positions.all %}
+            <span class="badge bg-primary-subtle text-primary">{{ sp.role|tr:"name" }}</span>
+            {% empty %}—{% endfor %}
+          </td>
+          {% endif %}
           <td class="text-end no-print">
             <a href="{% url 'mp:mp_detail' mp.pk %}" class="btn btn-outline-secondary btn-sm" title="বিস্তারিত">
               <i class="bi bi-eye"></i>

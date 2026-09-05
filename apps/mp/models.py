@@ -713,6 +713,18 @@ class SocialService(models.Model):
 # ── SECTION 16: SPECIAL POSITION HISTORY ─────────────────────────────────────
 
 class SpecialPositionHistory(models.Model):
+    """A parliamentary office a member holds on top of the seat — Speaker,
+    Deputy Speaker, Leader of the House, Chief Whip, Whip, …
+
+    This is deliberately NOT the same thing as a ministry (`MinistryAssignment`)
+    or a committee chair (`CommitteeAssignment.position`): those name what the
+    member runs, this names where they sit in the House itself. All three can be
+    true of one member at once.
+
+    `is_active` marks the *sitting* holder. History is kept — an office that
+    changed hands leaves the old row inactive rather than deleted, which is why
+    the single-holder guard in `clean()` only looks at active rows.
+    """
     mp         = models.ForeignKey(MP, on_delete=models.CASCADE, related_name='special_positions')
     parliament = models.ForeignKey(
         'parliament.Parliament', on_delete=models.PROTECT, verbose_name='সংসদ')
@@ -720,10 +732,46 @@ class SpecialPositionHistory(models.Model):
         'master.SpecialRoleType', on_delete=models.PROTECT, verbose_name='পদের নাম')
     from_date  = models.DateField(null=True, blank=True, verbose_name='শুরুর তারিখ')
     to_date    = models.DateField(null=True, blank=True, verbose_name='শেষ তারিখ')
+    go_number  = models.CharField(max_length=100, blank=True, verbose_name='GO/প্রজ্ঞাপন নং')
+    go_date    = models.DateField(null=True, blank=True, verbose_name='GO/প্রজ্ঞাপনের তারিখ')
+    is_active  = models.BooleanField(default=True, verbose_name='বর্তমানে বহাল')
+    remarks_bn = models.TextField(blank=True, verbose_name='মন্তব্য (বাংলায়)')
+    remarks_en = models.TextField(blank=True, verbose_name='Remarks (English)')
 
     class Meta:
-        ordering = ['from_date']
-        verbose_name = 'বিশেষ পদ'
+        # role__ordering is protocol precedence, so a list of holders reads
+        # Speaker-first the way the Secretariat expects it.
+        ordering = ['role__ordering', 'role__name_bn', '-from_date']
+        verbose_name = 'সংসদীয় পদ'
+
+    def current_holder_conflict(self):
+        """The active row already holding this single-holder office, if any.
+
+        Returns None when the office allows several holders (Whip), when this
+        row is not active, or when nobody else holds it. Used by the form so the
+        error can name the sitting holder instead of just refusing.
+        """
+        if not self.is_active or not self.role_id or not self.parliament_id:
+            return None
+        if not self.role.is_unique_per_parliament:
+            return None
+        clash = SpecialPositionHistory.objects.filter(
+            parliament_id=self.parliament_id, role_id=self.role_id, is_active=True,
+        ).exclude(pk=self.pk).select_related('mp').first()
+        return clash
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.from_date and self.to_date and self.to_date < self.from_date:
+            raise ValidationError({'to_date': 'শেষ তারিখ শুরুর তারিখের আগে হতে পারে না।'})
+        clash = self.current_holder_conflict()
+        if clash:
+            raise ValidationError({'role': (
+                f'এই সংসদে "{self.role.name_bn}" পদে ইতিমধ্যে {clash.mp.name_bn} বহাল আছেন। '
+                f'আগে ওই দায়িত্বটি নিষ্ক্রিয় করুন। / '
+                f'{clash.mp.name_en or clash.mp.name_bn} already holds '
+                f'{self.role.name_en} in this parliament — end that term first.'
+            )})
 
     def __str__(self):
         return f"{self.role} — {self.mp.name_bn}"

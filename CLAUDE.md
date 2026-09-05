@@ -84,6 +84,18 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 16. Office address = সংসদ অফিস ONLY. OneToOne with MP.
 17. Superadmin bypasses all role permission checks.
 18. Report export requires can_export=True in RolePermission.
+19b. An MP can hold THREE unrelated kinds of office at once and they are stored
+    separately on purpose: `MinistryAssignment` = what they run,
+    `CommitteeAssignment.position` = what they chair, `SpecialPositionHistory`
+    = where they sit in the House (Speaker, Deputy Speaker, Chief Whip, Whip,
+    Leader of the House / Opposition). Offices flagged
+    `SpecialRoleType.is_unique_per_parliament` allow only ONE *sitting* holder
+    per parliament — enforced in `SpecialPositionHistory.clean()`, which
+    deliberately ignores inactive rows so history survives. Ending a term
+    un-ticks `is_active`; nothing is deleted. Entry runs through
+    `parliament:position_*` from BOTH the module and the MP profile tab — there
+    is no second write path, and adding one would bypass the guard.
+
 19. Technocrat ministers = cabinet members with NO seat. Stored as MP rows with
     member_type='technocrat' and NO ElectionInfo (no constituency/party/election).
     They NEVER count towards the 350 — every MP count/report goes through
@@ -127,6 +139,8 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 29 | Field-feedback round 3 — COVID dose form bilingual + vaccine master pool seeded/discoverable, Post Office field on MP address, master-search keystroke loss, Bangla-numeral search | ✅ |
 | 30 | MP list completeness bar → weighted 100-point score (27 scored fields, 4/2 points each) + missing-field tooltip | ✅ |
 | 31 | Education page → repeatable degrees (double graduation / masters / PhD / diploma) via per-row prefixes + pk binding (see `docs/phase-history.md`) | ✅ |
+| 32 | Two divisions told apart — dashboard chart + custom-report filters/columns get a constituency vs home-district basis, `Constituency.district` backfill | ✅ |
+| 33 | Parliamentary positions (Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House …) — seeded master, single-holder guard, `/parliament/positions/` module, holders report + report columns | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -147,6 +161,15 @@ python manage.py loaddata fixtures/initial/officer_menu.json
 
 # NOC documents (Phase 25)
 python manage.py loaddata fixtures/initial/noc_menu.json
+
+# Parliamentary positions (Phase 33) — menu for /parliament/positions/ and the
+# holders report. The offices themselves are seeded by master/0014.
+python manage.py loaddata fixtures/initial/position_menu.json
+
+# Constituency → District backfill (Phase 32) — the constituency-basis division
+# chart and district_wise?basis=constituency both need this FK populated.
+python manage.py backfill_constituency_district --dry-run   # print matches + unresolved
+python manage.py backfill_constituency_district             # fill empty rows only
 ```
 
 ---
@@ -157,10 +180,19 @@ Traps that cost real debugging time here. Each one looks correct and fails
 silently — full context in `docs/phase-history.md`.
 
 **Django / templates**
-1. `{# … #}` comments are **SINGLE-LINE ONLY** — `django.template.base.tag_re` is
-   compiled without `re.DOTALL`, so a `{#` … newline … `#}` block is not a comment
-   and renders as **visible text on the page**. Use `{% comment %}…{% endcomment %}`
-   for anything multi-line. Guard: no `{#` may be followed by a newline before its `#}`.
+1. **EVERY template construct is SINGLE-LINE ONLY** — `django.template.base.tag_re`
+   (`({%.*?%}|{{.*?}}|{#.*?#})`) is compiled without `re.DOTALL`, so `.` never
+   matches a newline and an opener whose closer sits on the next line is not
+   recognised as a tag at all. Django raises nothing; the construct renders as
+   **visible literal text on the page**.
+   - This bites `{% … %}` and `{{ … }}` exactly as hard as `{# … #}`. Wrapping a
+     long `{% ui "বাংলা" "English" %}` onto two lines — the obvious thing to do
+     with a bilingual label — prints the tag source to the user. Six of those
+     shipped in Phase 33 before a user reported it.
+   - Use `{% comment %}…{% endcomment %}` for multi-line comments; keep every
+     other tag on one line however long it gets.
+   - Guard: `python utils/check_template_tags.py` (exit 1 + file:line on any
+     hit). Run it after touching templates.
 2. **gunicorn workers cache templates AND Python code** — production settings
    compile templates once per worker, and every module is imported once at boot,
    so a template *or* `.py` edit on the bind-mounted stack is invisible until
@@ -275,8 +307,24 @@ silently — full context in `docs/phase-history.md`.
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
 
+**Two divisions — never one "Division"**
+24. An MP has **two** divisions and they disagree (Dhaka: 70 seats vs 94 home
+    districts on live data). The *seat* division is
+    `ElectionInfo → constituency → district → division`; the *home* division is
+    `home_district → division`. "MP of Dhaka Division" normally means the seat, so
+    that is the default everywhere, but any chart, column or report that shows one
+    must **say which** — the dashboard card has a basis toggle and a caption, the
+    district-wise report has `?basis=home|constituency`, and the custom report
+    builder has `division_basis` / `district_basis` plus a `con_division` /
+    `con_district` column pair beside the home pair. `Constituency.district` is
+    admin-entered and nullable: when it is empty the constituency basis silently
+    collapses to a near-empty chart, so run
+    `manage.py backfill_constituency_district` before trusting it. Reserved seats
+    (301–350) can never appear on the constituency basis — they have no
+    constituency by rule.
+
 **Deliberate choices — do not "restore" these**
-24. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+25. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

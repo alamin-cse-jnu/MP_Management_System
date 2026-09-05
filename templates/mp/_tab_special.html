@@ -1,7 +1,19 @@
 {% load static lang_tags %}
+{% comment %}
+Section 16 — the offices this member holds in the House itself (Speaker, Deputy
+Speaker, Chief Whip, Whip, Leader of the House …). Distinct from the ministry and
+committee tabs: a member can hold an office here AND run a ministry AND chair a
+committee at the same time. Add/edit go through the parliament:position_* module
+views so the single-holder rule is enforced on both routes (business rule 10).
+{% endcomment %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h6 class="fw-bold mb-0">{% ui "বিশেষ পদের দায়িত্ব" "Special Position Responsibilities" %}</h6>
-  <a href="{% url 'mp:special_position_create' mp.pk %}" class="btn btn-primary btn-sm">
+  <div>
+    <h6 class="fw-bold mb-0">{% ui "সংসদীয় পদের দায়িত্ব" "Parliamentary Positions" %}</h6>
+    <small class="text-muted" style="font-size:.75rem;">
+      {% ui "স্পিকার, ডেপুটি স্পিকার, সংসদ নেতা, চিফ হুইপ, হুইপ ইত্যাদি" "Speaker, Deputy Speaker, Leader of the House, Chief Whip, Whip, …" %}
+    </small>
+  </div>
+  <a href="{% url 'parliament:position_create' %}?mp={{ mp.pk }}" class="btn btn-primary btn-sm">
     <i class="bi bi-plus-lg me-1"></i>{% ui "যোগ করুন" "Add" %}
   </a>
 </div>
@@ -12,25 +24,40 @@
     <thead>
       <tr>
         <th>{% ui "সংসদ" "Parliament" %}</th>
-        <th>{% ui "পদের নাম" "Position Name" %}</th>
-        <th>{% ui "শুরুর তারিখ" "Start Date" %}</th>
-        <th>{% ui "শেষ তারিখ" "End Date" %}</th>
-        <th style="width:100px;">{% ui "কার্যক্রম" "Actions" %}</th>
+        <th>{% ui "পদের নাম" "Position" %}</th>
+        <th>{% ui "শুরুর তারিখ" "From" %}</th>
+        <th>{% ui "শেষ তারিখ" "To" %}</th>
+        <th>{% ui "GO নং" "GO No." %}</th>
+        <th>{% ui "অবস্থা" "Status" %}</th>
+        <th style="width:110px;">{% ui "কার্যক্রম" "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for sp in special_positions %}
       <tr>
         <td>{{ sp.parliament|tr:"name" }}</td>
-        <td>{{ sp.role }}</td>
-        <td>{{ sp.from_date|default:"—" }}</td>
-        <td>{{ sp.to_date|default:"—" }}</td>
+        <td><span class="badge bg-primary-subtle text-primary">{{ sp.role|tr:"name" }}</span></td>
+        <td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td>
+        <td>{{ sp.go_number|default:"—" }}</td>
         <td>
-          <a href="{% url 'mp:special_position_update' mp.pk sp.pk %}"
+          {% if sp.is_active %}
+          <span class="badge bg-success-subtle text-success">{% ui "বহাল" "Sitting" %}</span>
+          {% else %}
+          <span class="badge bg-secondary-subtle text-secondary">{% ui "সাবেক" "Past" %}</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'parliament:position_update' sp.pk %}?from_mp=1"
              class="btn btn-outline-secondary btn-xs"><i class="bi bi-pencil"></i></a>
-          <form method="post" action="{% url 'mp:special_position_delete' mp.pk sp.pk %}"
-                class="d-inline" onsubmit="return confirm('মুছে ফেলবেন?')">
-            {% csrf_token %}
+          <form method="post" action="{% url 'parliament:position_toggle' sp.pk %}" class="d-inline">
+            {% csrf_token %}<input type="hidden" name="from_mp" value="1">
+            <button class="btn btn-outline-warning btn-xs"
+                    title="{% ui 'দায়িত্ব শেষ / পুনর্বহাল' 'End / restore term' %}"><i class="bi bi-arrow-repeat"></i></button>
+          </form>
+          <form method="post" action="{% url 'parliament:position_delete' sp.pk %}"
+                class="d-inline" onsubmit="return confirm('{% ui "মুছে ফেলবেন?" "Delete?" %}')">
+            {% csrf_token %}<input type="hidden" name="from_mp" value="1">
             <button class="btn btn-outline-danger btn-xs"><i class="bi bi-trash"></i></button>
           </form>
         </td>
@@ -40,5 +67,5 @@
   </table>
 </div>
 {% else %}
-<p class="text-muted text-center py-4">{% ui "কোনো বিশেষ পদের তথ্য নেই।" "No special position information." %}</p>
+<p class="text-muted text-center py-4">{% ui "কোনো সংসদীয় পদের তথ্য নেই।" "No parliamentary position recorded." %}</p>
 {% endif %}

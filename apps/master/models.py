@@ -452,13 +452,33 @@ class VaccineName(models.Model):
 
 
 class SpecialRoleType(models.Model):
+    """A parliamentary office held by a member on top of the seat itself —
+    Speaker, Deputy Speaker, Leader of the House, Chief Whip, Whip, …
+
+    `ordering` doubles as protocol precedence, so a list of holders comes out in
+    the order the Secretariat reads it (Speaker first).
+
+    `is_unique_per_parliament` marks the offices there can only be ONE of at a
+    time. It is what lets the form refuse a second sitting Speaker while still
+    allowing many Whips; historical (inactive) rows are never blocked, because a
+    tenure that ended has to coexist with the one that replaced it.
+    """
     name_bn = models.CharField(max_length=200)
     name_en = models.CharField(max_length=200)
+    is_unique_per_parliament = models.BooleanField(
+        default=False, verbose_name='এক সংসদে একজন',
+        help_text='স্পিকার, ডেপুটি স্পিকার, চিফ হুইপ ইত্যাদির মতো একক পদ হলে টিক দিন। '
+                  'Tick for single-holder offices (Speaker, Chief Whip, …).')
     is_active = models.BooleanField(default=True)
     ordering = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['ordering', 'name_bn']
+
+    @property
+    def unique_holder_label(self):
+        """Tick/dash for the master list column (get_attr can't call methods)."""
+        return '✔' if self.is_unique_per_parliament else '—'
 
     def __str__(self):
         return f"{self.name_bn} ({self.name_en})"

@@ -82,9 +82,12 @@ MASTER_SPECS = [
         'key': 'special-role-type',
         'model': SpecialRoleType,
         'form': SpecialRoleTypeForm,
-        'title_bn': 'বিশেষ পদের ধরন',
-        'title_en': 'Special Role Types',
-        'extra_cols': [],
+        'title_bn': 'সংসদীয় পদের ধরন',
+        'title_en': 'Parliamentary Position Types',
+        # Whether an office can have only one sitting holder is the whole point
+        # of this table, so it is visible in the list, not just the edit form.
+        'extra_cols': [{'label': 'এক সংসদে একজন / Single holder',
+                        'attr': 'unique_holder_label'}],
     },
     # Office / PA-PS
     {

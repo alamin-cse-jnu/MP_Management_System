@@ -341,12 +341,12 @@ table.dt th { font-weight: bold; }
 {% endif %}
 
 {% if mp.special_positions.all %}
-<div class="sec">16. Special Positions</div>
+<div class="sec">16. Parliamentary Positions</div>
 <table class="dt">
-  <thead><tr><th>#</th><th>Parliament</th><th>Position</th><th>From</th><th>To</th></tr></thead>
+  <thead><tr><th>#</th><th>Parliament</th><th>Position</th><th>From</th><th>To</th><th>Status</th></tr></thead>
   <tbody>
     {% for sp in mp.special_positions.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ sp.parliament|tr:"name" }}</td><td>{{ sp.role|tr:"name" }}</td><td>{{ sp.from_date|date:"d/m/Y"|default:"" }}</td><td>{{ sp.to_date|date:"d/m/Y"|default:"" }}</td><td>{% if sp.is_active %}Sitting{% else %}Past{% endif %}</td></tr>
     {% endfor %}
   </tbody>
 </table>

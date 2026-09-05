@@ -68,9 +68,6 @@ urlpatterns = [
     path('<int:pk>/social-service/', views.social_service_save, name='social_service_save'),
 
     # Special Positions CRUD
-    path('<int:pk>/special-position/add/',              views.special_position_create, name='special_position_create'),
-    path('<int:pk>/special-position/<int:spk>/edit/',   views.special_position_update, name='special_position_update'),
-    path('<int:pk>/special-position/<int:spk>/delete/', views.special_position_delete, name='special_position_delete'),
 
     # Publications CRUD
     path('<int:pk>/publication/add/',               views.publication_create, name='publication_create'),

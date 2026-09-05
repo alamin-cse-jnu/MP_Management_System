@@ -12,6 +12,7 @@ urlpatterns = [
     path('qualification-wise/',     views.qualification_wise,     name='qualification_wise'),
     path('cabinet/',                views.cabinet,                name='cabinet'),
     path('committee-members/',      views.committee_members,      name='committee_members'),
+    path('position-holders/',       views.position_holders,       name='position_holders'),
     path('mp-committee-summary/',   views.mp_committee_summary,   name='mp_committee_summary'),
     path('institution-assignments/',views.institution_assignments,name='institution_assignments'),
     path('foreign-tours/',          views.foreign_tours,          name='foreign_tours'),

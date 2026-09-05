@@ -26,7 +26,7 @@ from .forms import (
     SpouseForm, ChildForm, EducationSectionForm, AddressForm,
     ForeignLanguageSkillForm, BankAccountForm, CovidVaccinationForm,
     PreviousParliamentaryHistoryForm, OrganizationForm, AwardForm,
-    SocialServiceForm, SpecialPositionHistoryForm, PublicationForm,
+    SocialServiceForm, PublicationForm,
     PersonalForeignTravelForm,
 )
 from apps.master.models import EducationLevel, ResultType
@@ -851,48 +851,10 @@ def social_service_save(request, pk):
     })
 
 
-# ── SPECIAL POSITIONS CRUD ────────────────────────────────────────────────────
-
-@perm_required
-def special_position_create(request, pk):
-    mp   = get_object_or_404(MP, pk=pk)
-    form = SpecialPositionHistoryForm(request.POST or None,
-                                      initial={'parliament': mp.parliament})
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.mp = mp
-        obj.save()
-        messages.success(request, 'বিশেষ পদের তথ্য সংরক্ষিত হয়েছে।')
-        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-special')
-    return render(request, 'mp/special_position_form.html', {
-        'form': form, 'mp': mp, 'is_create': True, 'title_bn': 'নতুন বিশেষ পদ',
-        'title_en':  'New Special Position',
-    })
-
-
-@perm_required
-def special_position_update(request, pk, spk):
-    mp  = get_object_or_404(MP, pk=pk)
-    obj = get_object_or_404(SpecialPositionHistory, pk=spk, mp=mp)
-    form = SpecialPositionHistoryForm(request.POST or None, instance=obj)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'বিশেষ পদের তথ্য আপডেট হয়েছে।')
-        return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-special')
-    return render(request, 'mp/special_position_form.html', {
-        'form': form, 'mp': mp, 'obj': obj,
-        'is_create': False, 'title_bn': 'বিশেষ পদ সম্পাদনা',
-        'title_en':  'Edit Special Position',
-    })
-
-
-@perm_required
-@require_POST
-def special_position_delete(request, pk, spk):
-    mp = get_object_or_404(MP, pk=pk)
-    get_object_or_404(SpecialPositionHistory, pk=spk, mp=mp).delete()
-    messages.success(request, 'বিশেষ পদের তথ্য মুছে ফেলা হয়েছে।')
-    return redirect(reverse('mp:mp_detail', args=[pk]) + '?active=tab-special')
+# Special positions (Speaker / Whip / Leader of the House …) are edited through
+# parliament:position_* — one code path for the module page and the profile tab,
+# so the "only one sitting Speaker" guard cannot be walked around by using the
+# profile route. The read-only list still renders in _tab_special.html.
 
 
 # ── PUBLICATIONS CRUD ─────────────────────────────────────────────────────────

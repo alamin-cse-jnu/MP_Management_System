@@ -20,6 +20,28 @@ from utils.bn_digits import search_q
 from .models import CustomUser, Menu, Role, RolePermission, SubMenu
 
 
+def _chart_lang():
+    """'en' or 'bn' for chart labels — mirrors lang_tags._active_lang(), which
+    templates use, so a chart never disagrees with the text around it."""
+    try:
+        from django.utils.translation import get_language
+        current = get_language()
+        if current and current.startswith('en'):
+            return 'en'
+    except Exception:
+        pass
+    return 'bn'
+
+
+def _div_label(row, prefix):
+    """Bilingual division name out of a .values() row keyed by `prefix`."""
+    bn = row.get(f'{prefix}__name_bn')
+    en = row.get(f'{prefix}__name_en')
+    if _chart_lang() == 'en':
+        return en or bn or 'Unknown'
+    return bn or en or 'অজ্ঞাত'
+
+
 # ── ERROR HANDLERS ───────────────────────────────────────────────────────────
 
 def permission_denied_view(request, exception=None):
@@ -104,14 +126,43 @@ def dashboard(request):
             .order_by('-count')[:12]
         )
 
-    # Division distribution
-    division_stats = list(
+    # ── Division distribution — TWO different divisions, kept apart ──────────
+    # Operators conflate them: "Dhaka Division MP" normally means the *seat*
+    # (constituency → district → division), but the MP model also stores a
+    # personal home district whose division is often a different one. A single
+    # chart labelled just "Division" was therefore misleading, so both bases are
+    # computed and the dashboard card toggles between them.
+    #   • constituency basis — directly-elected seats only (1–300); reserved
+    #     women's seats have no constituency by rule, so they can never appear.
+    #   • home basis — every member who has a home district recorded.
+    const_ei_qs = ElectionInfo.objects.filter(
+        mp__in=mp_qs, constituency__district__division__isnull=False,
+    )
+    if active_parliament:
+        const_ei_qs = const_ei_qs.filter(parliament=active_parliament)
+    division_const_stats = list(
+        const_ei_qs
+        .values('constituency__district__division__id',
+                'constituency__district__division__name_bn',
+                'constituency__district__division__name_en')
+        .annotate(count=Count('mp', distinct=True))
+        .order_by('-count')
+    )
+    division_home_stats = list(
         mp_qs
         .filter(home_district__division__isnull=False)
-        .values('home_district__division__id', 'home_district__division__name_bn')
+        .values('home_district__division__id',
+                'home_district__division__name_bn',
+                'home_district__division__name_en')
         .annotate(count=Count('id'))
         .order_by('-count')
     )
+    # How many members each basis actually accounts for — printed under the
+    # chart so a total that does not reach 350 reads as missing data, not a bug.
+    division_const_covered = sum(r['count'] for r in division_const_stats)
+    division_home_covered  = sum(r['count'] for r in division_home_stats)
+    division_const_missing = max(direct_mps - division_const_covered, 0)
+    division_home_missing  = max(total_mps - division_home_covered, 0)
 
     # Gender distribution
     gender_stats = list(
@@ -151,11 +202,19 @@ def dashboard(request):
         p_values.append(sum(r['count'] for r in party_stats[9:]))
     party_chart_data = json.dumps({'labels': p_labels, 'values': p_values, 'ids': p_ids}, ensure_ascii=False)
 
-    # Division chart
+    # Division charts — one payload per basis; the card switches between them.
+    def _div_payload(stats, prefix):
+        return {
+            'labels': [_div_label(r, prefix) for r in stats],
+            'values': [r['count'] for r in stats],
+            'ids':    [r[f'{prefix}__id'] for r in stats],
+        }
+
     division_chart_data = json.dumps({
-        'labels': [r['home_district__division__name_bn'] or 'অজ্ঞাত' for r in division_stats],
-        'values': [r['count'] for r in division_stats],
-        'ids':    [r['home_district__division__id'] for r in division_stats],
+        'constituency': _div_payload(division_const_stats,
+                                     'constituency__district__division'),
+        'home':         _div_payload(division_home_stats,
+                                     'home_district__division'),
     }, ensure_ascii=False)
 
     # Gender chart
@@ -240,7 +299,12 @@ def dashboard(request):
         'total_tours':         total_tours,
         'with_photo':          with_photo,
         'party_stats':         party_stats,
-        'division_stats':      division_stats,
+        'division_const_stats': division_const_stats,
+        'division_home_stats':  division_home_stats,
+        'division_const_covered': division_const_covered,
+        'division_home_covered':  division_home_covered,
+        'division_const_missing': division_const_missing,
+        'division_home_missing':  division_home_missing,
         'party_chart_data':    party_chart_data,
         'division_chart_data': division_chart_data,
         'gender_chart_data':   gender_chart_data,

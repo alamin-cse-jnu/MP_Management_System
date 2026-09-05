@@ -29,6 +29,23 @@
   pointer-events: none;
   user-select: none;
 }
+/* Division / District basis switch — a geography filter must say whether it
+   means the seat or the member's own home district. */
+.basis-group { margin-bottom: 6px; }
+.basis-group .btn {
+  font-size: .72rem;
+  padding: 2px 10px;
+  --bs-btn-color: #64748b;
+  --bs-btn-border-color: #cbd5e1;
+  --bs-btn-active-bg: #0d9488;
+  --bs-btn-active-border-color: #0d9488;
+}
+.basis-hint {
+  font-size: .7rem;
+  color: #64748b;
+  margin-bottom: 6px;
+  min-height: 1.1em;
+}
 .col-chip {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 10px; border-radius: 4px; cursor: pointer;
@@ -177,6 +194,16 @@
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
+          {% comment %}Two different divisions exist: the seat's and the member's own. The filter must say which one it is asking about.{% endcomment %}
+          <div class="basis-group btn-group btn-group-sm" role="group">
+            <input type="radio" class="btn-check" name="division_basis" id="division_basis_con"
+                   value="constituency" {% if sel.division_basis != 'home' %}checked{% endif %}>
+            <label class="btn btn-outline-secondary" for="division_basis_con">{% ui "নির্বাচনী এলাকার বিভাগ" "Constituency Division" %}</label>
+            <input type="radio" class="btn-check" name="division_basis" id="division_basis_home"
+                   value="home" {% if sel.division_basis == 'home' %}checked{% endif %}>
+            <label class="btn btn-outline-secondary" for="division_basis_home">{% ui "নিজ জেলার বিভাগ" "Home Division" %}</label>
+          </div>
+          <div class="basis-hint" data-basis-hint="division"></div>
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:380px;"
                     data-placeholder="{% ui 'বিভাগ নির্বাচন করুন…' 'Select Division…' %}">
@@ -201,6 +228,15 @@
           </div>
         </div>
         <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
+          <div class="basis-group btn-group btn-group-sm" role="group">
+            <input type="radio" class="btn-check" name="district_basis" id="district_basis_con"
+                   value="constituency" {% if sel.district_basis != 'home' %}checked{% endif %}>
+            <label class="btn btn-outline-secondary" for="district_basis_con">{% ui "নির্বাচনী এলাকার জেলা" "Constituency District" %}</label>
+            <input type="radio" class="btn-check" name="district_basis" id="district_basis_home"
+                   value="home" {% if sel.district_basis == 'home' %}checked{% endif %}>
+            <label class="btn btn-outline-secondary" for="district_basis_home">{% ui "নিজ জেলা" "Home District" %}</label>
+          </div>
+          <div class="basis-hint" data-basis-hint="district"></div>
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'জেলা নির্বাচন করুন…' 'Select District…' %}">
@@ -373,6 +409,33 @@
                     data-placeholder="{% ui 'পেশাদার যোগ্যতা নির্বাচন করুন…' 'Select qualification…' %}">
               {% for pq in prof_quals %}
               <option value="{{ pq.pk }}" {% if pq.pk|stringformat:"s" in sel.prof_qual %}selected{% endif %}>{{ pq|tr:"name" }}</option>
+              {% endfor %}
+            </select>
+            <button type="button" class="btn btn-outline-secondary btn-sm select-all-btn" data-target="{{ key }}">{% ui "সব" "All" %}</button>
+          </div>
+        </div>
+      </div>
+      {% endwith %}
+
+      <!-- Parliamentary Position (Speaker / Chief Whip / Whip / …) -->
+      {% with key="special_position" enable="enable_special_position" %}
+      <div class="filter-row d-flex align-items-center gap-3 {% if enable in GET %}active{% endif %}" id="row_{{ key }}">
+        <div class="filter-label">
+          <div class="form-check mb-0">
+            <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
+                   {% if enable in GET %}checked{% endif %}>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "সংসদীয় পদ" "Parliamentary Position" %}</label>
+          </div>
+        </div>
+        <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
+          <div class="basis-hint">
+            {% ui "স্পিকার, ডেপুটি স্পিকার, সংসদ নেতা, বিরোধীদলীয় নেতা, চিফ হুইপ, হুইপ — বর্তমানে বহাল দায়িত্ব।" "Speaker, Deputy Speaker, Leader of the House, Leader of the Opposition, Chief Whip, Whip — currently sitting terms only." %}
+          </div>
+          <div class="d-flex gap-2 align-items-start">
+            <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
+                    data-placeholder="{% ui 'সংসদীয় পদ নির্বাচন করুন…' 'Select position…' %}">
+              {% for r in special_roles %}
+              <option value="{{ r.pk }}" {% if r.pk|stringformat:"s" in sel.special_position %}selected{% endif %}>{{ r|tr:"name" }}</option>
               {% endfor %}
             </select>
             <button type="button" class="btn btn-outline-secondary btn-sm select-all-btn" data-target="{{ key }}">{% ui "সব" "All" %}</button>
@@ -568,6 +631,32 @@ function selectAllCols() {
 function clearAllCols() {
   document.querySelectorAll('input[name="col"]').forEach(function(cb) { cb.checked = false; });
 }
+
+// ── Division / District basis hint ────────────────────────────────────────────
+// The constituency basis can only ever match directly-elected seats, so the
+// filter says so rather than letting a short result look like a data problem.
+var BASIS_HINTS = {
+  division: {
+    constituency: '{% ui "আসনের অবস্থান অনুযায়ী (নির্বাচনী এলাকা → জেলা → বিভাগ)। সংরক্ষিত মহিলা আসনের সদস্যরা এই ফিল্টারে আসবেন না — তাঁদের নির্বাচনী এলাকা নেই।" "By where the seat is (constituency → district → division). Reserved women’s seats can never match — they have no constituency." %}',
+    home:         '{% ui "সদস্যের নিজ জেলার বিভাগ — আসনের বিভাগ থেকে ভিন্ন হতে পারে।" "By the member’s own home district — this can differ from the seat’s division." %}'
+  },
+  district: {
+    constituency: '{% ui "নির্বাচনী এলাকা যে জেলার। সংরক্ষিত মহিলা আসনের সদস্যরা এই ফিল্টারে আসবেন না — তাঁদের নির্বাচনী এলাকা নেই।" "The district the constituency sits in. Reserved women’s seats can never match — they have no constituency." %}',
+    home:         '{% ui "সদস্যের নিজ জেলা — আসনের জেলা থেকে ভিন্ন হতে পারে।" "The member’s own home district — this can differ from the seat’s district." %}'
+  }
+};
+function paintBasisHint(name) {
+  var picked = document.querySelector('input[name="' + name + '_basis"]:checked');
+  var box    = document.querySelector('[data-basis-hint="' + name + '"]');
+  if (!picked || !box) return;
+  box.textContent = BASIS_HINTS[name][picked.value] || '';
+}
+['division', 'district'].forEach(function(name) {
+  document.querySelectorAll('input[name="' + name + '_basis"]').forEach(function(r) {
+    r.addEventListener('change', function() { paintBasisHint(name); });
+  });
+  paintBasisHint(name);
+});
 
 // ── Initialise Select2 on all filter selects ──────────────────────────────────
 $(document).ready(function() {

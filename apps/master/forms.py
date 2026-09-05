@@ -70,7 +70,10 @@ TravelPurposeForm = _make_form(TravelPurpose, ['name_bn', 'name_en', 'ordering']
 ForeignLanguageForm = _make_form(ForeignLanguage, ['name_bn', 'name_en', 'ordering'])
 ProficiencyLevelForm = _make_form(ProficiencyLevel, ['name_bn', 'name_en', 'ordering'])
 VaccineNameForm = _make_form(VaccineName, ['name_bn', 'name_en', 'ordering'])
-SpecialRoleTypeForm = _make_form(SpecialRoleType, ['name_bn', 'name_en', 'ordering'])
+# The unique flag is what stops a second sitting Speaker, so it has to be
+# editable — a hand-added office defaults to "many holders allowed".
+SpecialRoleTypeForm = _make_form(
+    SpecialRoleType, ['name_bn', 'name_en', 'is_unique_per_parliament', 'ordering'])
 PADesignationForm = _make_form(PADesignation, ['name_bn', 'name_en', 'ordering'])
 
 # ── Forms with FK parents ────────────────────────────────────────────────────

@@ -580,6 +580,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>{% ui "ভূমিকা" "Role" %}</th>
     <th>{% ui "শুরুর তারিখ" "From Date" %}</th>
     <th>{% ui "শেষ তারিখ" "To Date" %}</th>
+    <th>{% ui "অবস্থা" "Status" %}</th>
   </tr></thead>
   <tbody>
     {% for org in mp.organizations.all %}
@@ -629,10 +630,10 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
 {% endif %}
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- SECTION 16: বিশেষ পদের দায়িত্ব                               -->
+<!-- SECTION 16: সংসদীয় পদের দায়িত্ব                              -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 {% if mp.special_positions.all %}
-<div class="sec nob">{% ui "১৬। বিশেষ পদের দায়িত্ব" "16. Special Positions" %}</div>
+<div class="sec nob">{% ui "১৬। সংসদীয় পদের দায়িত্ব" "16. Parliamentary Positions" %}</div>
 <table class="dt nob">
   <thead><tr>
     <th>#</th>
@@ -640,6 +641,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>{% ui "পদের নাম" "Position" %}</th>
     <th>{% ui "শুরুর তারিখ" "From Date" %}</th>
     <th>{% ui "শেষ তারিখ" "To Date" %}</th>
+    <th>{% ui "অবস্থা" "Status" %}</th>
   </tr></thead>
   <tbody>
     {% for sp in mp.special_positions.all %}
@@ -649,6 +651,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <td>{{ sp.role|tr:"name" }}</td>
       <td>{{ sp.from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ sp.to_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{% if sp.is_active %}{% ui "বহাল" "Sitting" %}{% else %}{% ui "সাবেক" "Past" %}{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>

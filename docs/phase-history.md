@@ -1135,6 +1135,182 @@ HTMX fetch of a blank row.
 
 ---
 
+## PHASE 32 — Two divisions, told apart (2026-09-05) ✅
+
+Dashboard (32.1) and custom report builder (32.2).
+
+**Reported:** "in dashboard there is a division wise distribution. but it is
+confusing — in this system there is two type divisions. one is MPs home district
+associated division, and other is constituency related division. suppose MP of
+Dhaka Division usually refers to the constituency. so make this clear and
+incorporate both."
+
+**Cause.** The dashboard chart was labelled just "বিভাগ ভিত্তিক বিতরণ" and was
+computed from `home_district__division` only. Both divisions exist in the data and
+they genuinely disagree — on the live 13th-parliament rows, Dhaka is **70 seats but
+94 home districts**. A reader could not tell which number they were looking at, and
+the "Details" link dropped them on the district-wise report with its own default
+basis (`home`), so the report contradicted the bar they had just clicked.
+
+**Fix — dashboard.**
+- The view computes **both** distributions. Constituency basis walks
+  `ElectionInfo → constituency → district → division` (`Count('mp', distinct=True)`,
+  restricted to the active parliament); home basis is the old `home_district`
+  query. Both start from `mp_qs`, so technocrats stay excluded.
+- One chart card, a two-button basis toggle, **constituency is the default** — that
+  is what "Dhaka Division MP" means to an operator.
+- A caption under the toggle states the basis in words *and* its coverage
+  (`299/299`, `347/349`). When a basis cannot account for everyone the caption turns
+  amber and names the reason — reserved seats have no constituency, or a member has
+  no home district recorded — so a total short of 350 reads as missing data, not a
+  broken chart.
+- Clicking a bar carries `?basis=…&division=…`, and the "Details" link carries the
+  current basis. The district-wise report already understood `basis`; nothing there
+  changed. Verified the drill-through row counts equal the bar heights (70 / 94).
+- Chart labels now follow the UI language (`_chart_lang()` mirrors
+  `lang_tags._active_lang()`); the other dashboard charts still hard-code `name_bn`.
+- The "Recently Added MPs" table had the same ambiguity — a "বিভাগ" column showing
+  the *home* division right beside the Constituency column. Renamed to
+  "নিজ জেলার বিভাগ / Home Division" and it now shows the district with the division
+  under it.
+
+**Fix — the data that made it possible.** `Constituency.district` is admin-entered
+and nullable, and only **5 of 350** rows had it set, so the constituency basis would
+have drawn one bar. New `parliament/backfill_constituency_district.py` derives it
+from the seat name (`৬ দিনাজপুর-১` / `6 Dinajpur-1` → strip the serial and the
+trailing `-n`), matching District on normalised English first, NFC-normalised Bangla
+second. **295 of 295 resolved**, 50 reserved seats correctly skipped (rule 2), 0
+unresolved. Nothing is guessed: an unresolved seat is printed and left for manual
+entry.
+
+**Gotchas hit.**
+- Counts cannot go **inside** `{% ui "…" "…" %}` — a tag argument is a literal
+  string, so the `{{ }}` braces printed verbatim on the page. They are concatenated
+  onto the tag's output in JS instead.
+- The first spelling-alias map was **one-way** (`netrokona → netrakona`) and turned
+  Netrokona — spelled that way in *both* tables — from a hit into a miss. Aliases
+  are now equivalence groups: whichever spelling the master table actually uses
+  wins, and an exact master name is never overwritten.
+
+**Fix — custom report builder (32.2).** The report builder had the same single
+"বিভাগ / জেলা" pair, home-district-only in both the filter and the column.
+
+- Both filters grew a **basis radio pair** (`division_basis` / `district_basis`,
+  default `constituency`) with a hint line under it stating what the basis means
+  and that reserved seats can never match the constituency basis. The constituency
+  branch puts both conditions in **one `filter()` call** so they land on the same
+  joined `ElectionInfo` row, and sets `needs_distinct`.
+- Two new columns, `con_division` / `con_district` ("আসনের বিভাগ / আসনের জেলা"),
+  sit beside the existing pair — which is now labelled
+  "নিজ জেলার বিভাগ / নিজ জেলা" (Home Division / Home District) rather than the
+  bare "বিভাগ / জেলা". Keys were kept, so saved column URLs still resolve.
+  `ei_qs` now selects `constituency__district__division` so the columns cost no
+  extra query.
+- Verified against the dashboard: Dhaka division = **70 by seat, 94 by home**;
+  Dhaka district = 20 vs 37. Exporting both column pairs shows **71 of 349 members
+  whose seat division differs from their home division** — the ambiguity was real,
+  not theoretical.
+- Behaviour change worth knowing: an old bookmarked builder URL carrying
+  `enable_division&division=…` and no basis now filters on the **constituency**,
+  where it used to filter on the home district.
+
+**To deploy:** sync the files, `docker compose up -d`, then run
+`python manage.py backfill_constituency_district --dry-run` on the server and read
+the unresolved list before running it for real. No migration.
+
+---
+
+## PHASE 33 — Parliamentary positions (Speaker / Whip / Leader of the House) (2026-09-05) ✅
+
+**Reported:** "from 350 MPs some are whips, some one is Speaker, Deputy Speaker,
+chief Whip, Leader of the House, Opposition Leader … ministers already have a
+ministry, chairman of standing committee also can be inputted — but Speaker,
+Deputy Speaker, chief Whip … can not be entered as their Position/Designation.
+Need a system to keep these data, and make that column available in reports."
+
+**What was already there.** `mp.SpecialPositionHistory` (section 16) +
+`master.SpecialRoleType` — the right shape, but **unused and unreachable in
+practice**: the master table held exactly one unrelated row ("গভর্নিং বডি
+মেম্বার"), the table had **0 rows**, editing existed only as a per-MP tab, and
+nothing in any report ever read it. So the answer was not a new table; it was
+seeding the offices, enforcing the rule that makes them meaningful, and putting
+them where the Secretariat actually looks.
+
+**Why it is not a ministry or a committee field.** They are three different
+statements about one member and can all be true at once: a ministry says what
+they *run*, `CommitteeAssignment.position` says what they *chair*, and this says
+where they sit *in the House*. Folding any of them together would make "the
+Chief Whip" unanswerable without knowing which ministry they hold.
+
+**Master (`SpecialRoleType`).** New `is_unique_per_parliament`, and `ordering` is
+now protocol precedence. Ten offices seeded by `master/0014` — Speaker, Deputy
+Speaker, Leader/Deputy Leader of the House, Leader/Deputy Leader of the
+Opposition, Chief Whip (single-holder) and Whip, Panel of Chairmen,
+Parliamentary Party Leader (many). Matched on `name_en`, not `name_bn`
+(gotcha 21). The flag is editable in the master CRUD form and shown as a column
+in the list, because a hand-added office otherwise silently defaults to "many
+holders allowed".
+
+**Record (`SpecialPositionHistory`).** Gained `is_active`, `go_number`,
+`go_date`, `remarks_bn/en`; ordering is `role__ordering` so any list reads
+Speaker-first. `clean()` refuses a second **sitting** holder of a single-holder
+office and names who currently holds it. It deliberately only looks at active
+rows: history has to coexist with the term that replaced it. Ending a term
+un-ticks `is_active` — nothing is deleted.
+
+**Module.** `/parliament/positions/` — list (parliament / office / status /
+bilingual-digit search), add, edit, end-or-restore term, delete. Menu entry under
+Parliament; report entry under Reports (`fixtures/initial/position_menu.json`).
+The list banners the single-holder offices **nobody is sitting in**, since an
+empty table cannot say "vacant".
+
+**One code path.** The MP profile tab now posts to the same
+`parliament:position_*` views (`?mp=<pk>`, `from_mp=1`), and the old
+`mp:special_position_*` trio + `SpecialPositionHistoryForm` + its template were
+**removed**. They had neither the new fields nor the guard, so leaving them in
+place would have left a route that could seat a second Speaker. Verified: the
+guard blocks on both routes, allows many Whips, allows a new Speaker once the
+previous term is ended, and refuses to *restore* an ended term while someone else
+sits.
+
+**Reports.**
+- New `reports:position_holders` — precedence-ordered holders with constituency,
+  party, dates, GO, status; screen + print + PDF + Excel + CSV, plus the same
+  vacant-office banner.
+- `custom_report`: `special_position` column **and** a multi-select filter
+  (sitting terms only, scoped to the selected parliament).
+- `all_mp`: `special_position` column (screen, print, Excel, CSV) — the prefetch
+  lives in `_mp_qs_base`, so women/party/district/qualification reports get it
+  for free if they ever want it.
+- Biodata section 16 relabelled "সংসদীয় পদের দায়িত্ব / Parliamentary Positions"
+  with a status column, in all three biodata templates.
+
+**Bug fixed along the way.** `report_tags.get_custom_cell` was a hand-copied
+**Bangla-only twin** of `_custom_cell`, so the on-screen custom report showed
+Bangla cells while the Excel/CSV/PDF of the same report followed the language
+toggle. It now delegates to `_custom_cell` (imported inside the function — a
+module-level import would load views while the template library registers).
+
+**33.1 — six broken tags, reported from the page (2026-09-05).** The new labels
+rendered as literal `{% ui "…" "…" %}` source under the page headings. Cause: a
+bilingual label is long, so it got wrapped onto two lines — and
+`django.template.base.tag_re` has no `re.DOTALL`, so a tag whose closer is on the
+next line is **not a tag**; the whole construct is emitted as text. The `{# … #}`
+half of this was already gotcha 1; the `{% … %}` half was not, and is the same
+bug. Six occurrences across `_tab_special.html`, `position_form.html` (×2),
+`position_list.html`, `custom_report.html` and `position_holders.html` — all
+joined onto one line. Gotcha 1 now covers all three constructs, and
+`utils/check_template_tags.py` reports `file:line` for any of them and exits 1,
+so this is checkable instead of eyeball-only. Verified: no page in either
+language emits `{%`, `{{` or `{#` any more.
+
+**To deploy:** sync the files, `docker compose up -d`, `migrate` (master 0013 +
+0014, mp 0017), then
+`python manage.py loaddata fixtures/initial/position_menu.json`. Grant the two
+new submenus in Roles for non-superadmin users.
+
+---
+
 ## PRODUCTION DEPLOY LOG
 
 **2026-08-30 (c) — Phase 28.2 + 28.3 deployed to 172.16.220.158.**

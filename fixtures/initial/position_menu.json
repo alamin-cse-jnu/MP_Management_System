@@ -1,0 +1,26 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 302,
+    "fields": {
+      "menu": 3,
+      "name_bn": "সংসদীয় পদ",
+      "name_en": "Parliamentary Positions",
+      "url_name": "parliament:position_list",
+      "ordering": 30,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 926,
+    "fields": {
+      "menu": 9,
+      "name_bn": "সংসদীয় পদধারী তালিকা",
+      "name_en": "Parliamentary Position Holders",
+      "url_name": "reports:position_holders",
+      "ordering": 75,
+      "is_active": true
+    }
+  }
+]

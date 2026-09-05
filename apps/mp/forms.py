@@ -13,7 +13,7 @@ from .models import (
     MP, ElectionInfo, Spouse, Child, Education, Address,
     ForeignLanguageSkill, BankAccount, CovidVaccination,
     PreviousParliamentaryHistory, Organization, Award,
-    SocialService, SpecialPositionHistory, Publication,
+    SocialService, Publication,
     PersonalForeignTravel,
 )
 
@@ -368,16 +368,6 @@ class SocialServiceForm(_BootstrapMixin, forms.ModelForm):
     class Meta:
         model  = SocialService
         fields = ['description_bn', 'description_en']
-
-
-class SpecialPositionHistoryForm(_BootstrapMixin, forms.ModelForm):
-    class Meta:
-        model   = SpecialPositionHistory
-        fields  = ['parliament', 'role', 'from_date', 'to_date']
-        widgets = {
-            'from_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'to_date':   forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-        }
 
 
 class PublicationForm(_BootstrapMixin, forms.ModelForm):

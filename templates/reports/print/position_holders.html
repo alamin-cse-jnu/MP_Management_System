@@ -1,0 +1,41 @@
+{% extends "base_print.html" %}
+{% load lang_tags %}
+{% block title %}{% ui "সংসদীয় পদধারী তালিকা" "Parliamentary Position Holders" %}{% endblock %}
+{% block content %}
+<h2 style="text-align:center;margin-bottom:4px;">{% ui "সংসদীয় পদধারী তালিকা" "Parliamentary Position Holders" %}</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>{% ui "পদ" "Position" %}</th>
+      <th>{% ui "এমপি আইডি" "MP ID" %}</th>
+      <th>{% ui "নাম" "Name" %}</th>
+      <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+      <th>{% ui "দল" "Party" %}</th>
+      <th>{% ui "শুরু" "From" %}</th>
+      <th>{% ui "শেষ" "To" %}</th>
+      <th>{% ui "অবস্থা" "Status" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for obj in object_list %}
+    {% with ei=obj.mp.election_infos.all.0 %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ obj.role|tr:"name" }}</td>
+      <td>{{ obj.mp.mp_id }}</td>
+      <td>{{ obj.mp|tr:"name" }}</td>
+      <td>{{ ei.constituency|tr:"display"|default:"—" }}</td>
+      <td>{{ ei.party|tr:"name"|default:"—" }}</td>
+      <td>{{ obj.from_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{{ obj.to_date|date:"d/m/Y"|default:"—" }}</td>
+      <td>{% if obj.is_active %}{% ui "বহাল" "Sitting" %}{% else %}{% ui "সাবেক" "Past" %}{% endif %}</td>
+    </tr>
+    {% endwith %}
+    {% empty %}
+    <tr><td colspan="9" style="text-align:center;">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p style="font-size:9pt;color:#777;margin-top:8px;">{% ui "মোট:" "Total:" %} {{ total_count }}</p>
+{% endblock %}

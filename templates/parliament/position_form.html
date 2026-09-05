@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% ui title_bn title_en %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      {% if mp %}
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "Members of Parliament" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-special">{{ mp|tr:"name" }}</a></li>
+      {% else %}
+      <li class="breadcrumb-item"><a href="{% url 'parliament:position_list' %}">{% ui "সংসদীয় পদ" "Parliamentary Positions" %}</a></li>
+      {% endif %}
+      <li class="breadcrumb-item active">{% ui title_bn title_en %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
+    {% if mp %}<small class="text-muted">{{ mp|tr:"name" }}</small>{% endif %}
+  </div>
+  {% if mp %}
+  <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-special" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+  </a>
+  {% else %}
+  <a href="{% url 'parliament:position_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>{% ui "ফিরে যান" "Back" %}
+  </a>
+  {% endif %}
+</div>
+<div class="row justify-content-center"><div class="col-lg-8 col-md-10">
+  <div class="mp-card">
+    <div class="mp-card-header"><i class="bi bi-person-badge icon"></i> {% ui title_bn title_en %}</div>
+    <form method="post" novalidate>{% csrf_token %}
+      {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
+      {% if not is_create %}<input type="hidden" name="from_mp" value="{{ from_mp }}">{% endif %}
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      {% if form.mp %}
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-medium">{% ui "সংসদ সদস্য" "Member of Parliament" %} <span class="text-primary">*</span></label>
+          {{ form.mp }}
+          {% if form.mp.errors %}<div class="text-danger small mt-1">{{ form.mp.errors }}</div>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>
+          {{ form.parliament }}
+          {% if form.parliament.errors %}<div class="text-danger small mt-1">{{ form.parliament.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "পদ" "Position" %} <span class="text-primary">*</span></label>
+          {{ form.role }}
+          {% if form.role.errors %}<div class="text-danger small mt-1">{{ form.role.errors }}</div>{% endif %}
+          <div class="form-text" style="font-size:.75rem;">
+            {% ui "তালিকায় পদ না থাকলে মাস্টার ডেটা → সংসদীয় পদের ধরন-এ যোগ করুন।" "Missing a position? Add it under Master Data → Parliamentary Position Types." %}
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "শুরুর তারিখ" "From Date" %}</label>{{ form.from_date }}
+          {% if form.from_date.errors %}<div class="text-danger small mt-1">{{ form.from_date.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "শেষ তারিখ" "To Date" %}</label>{{ form.to_date }}
+          {% if form.to_date.errors %}<div class="text-danger small mt-1">{{ form.to_date.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "GO/প্রজ্ঞাপন নং" "GO / Notification No." %}</label>{{ form.go_number }}
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}
+        </div>
+        <div class="col-md-12 mb-3">
+          <div class="form-check">
+            {{ form.is_active }}
+            <label class="form-check-label fw-medium" for="{{ form.is_active.id_for_label }}">
+              {% ui "বর্তমানে এই পদে বহাল" "Currently sitting in this position" %}
+            </label>
+          </div>
+          <div class="form-text" style="font-size:.75rem;">
+            {% ui "দায়িত্ব শেষ হলে টিক তুলে দিন — তথ্য ইতিহাস হিসেবে থেকে যাবে, মুছে যাবে না।" "Untick when the term ends — the record is kept as history, not deleted." %}
+          </div>
+        </div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "মন্তব্য (বাংলায়)" "Remarks (Bangla)" %}</label>{{ form.remarks_bn }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">Remarks (English)</label>{{ form.remarks_en }}</div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
+        {% if mp %}
+        <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-special" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+        {% else %}
+        <a href="{% url 'parliament:position_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-1"></i>{% ui "বাতিল" "Cancel" %}</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{% if is_create %}{% ui "সংরক্ষণ করুন" "Save" %}{% else %}{% ui "আপডেট করুন" "Update" %}{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

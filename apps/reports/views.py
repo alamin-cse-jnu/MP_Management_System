@@ -81,6 +81,12 @@ def _parliament_qs():
     return Parliament.objects.order_by('-ordinal')
 
 
+def _sitting_positions_qs():
+    """Currently-held parliamentary offices, in precedence order."""
+    from apps.mp.models import SpecialPositionHistory
+    return SpecialPositionHistory.objects.select_related('role').filter(is_active=True)
+
+
 def _mp_qs_base(parliament_id=None):
     # parliament_members() keeps technocrat ministers out of every MP report;
     # they hold a ministry but no seat. Cabinet/ministry reports query
@@ -95,6 +101,10 @@ def _mp_qs_base(parliament_id=None):
                      'constituency__district__division', 'party', 'parliament')),
         'professions_current',
         'professional_qualifications',
+        # Offices of the House (Speaker / Chief Whip / Whip …) — sitting terms
+        # only, so a past holder never reads as the current one.
+        Prefetch('special_positions',
+                 queryset=_sitting_positions_qs()),
     ).filter(is_active=True)
     if parliament_id:
         qs = qs.filter(parliament_id=parliament_id)
@@ -143,6 +153,7 @@ ALL_MP_COLS = [
     ('blood_group',   'রক্তের গ্রুপ'),
     ('district',      'জেলা'),
     ('professions',   'পেশা'),
+    ('special_position', 'সংসদীয় পদ'),
 ]
 ALL_MP_DEFAULT = ['mp_id', 'name_bn', 'name_en', 'constituency', 'party', 'district']
 
@@ -233,6 +244,8 @@ def _all_mp_get_cell(mp, col):
     if col == 'blood_group':  return (_tr(mp.blood_group) if mp.blood_group else '—')
     if col == 'district':     return (_tr(mp.home_district) if mp.home_district else '—')
     if col == 'professions':  return ', '.join(_tr(p) for p in mp.professions_current.all()) or '—'
+    if col == 'special_position':
+        return ', '.join(_tr(sp.role) for sp in mp.special_positions.all()) or '—'
     return '—'
 
 
@@ -658,6 +671,102 @@ def committee_members(request):
     paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/committee_members.html', ctx)
+
+
+# ── Report: সংসদীয় পদধারী তালিকা ─────────────────────────────────────────────
+# Who holds which office of the House — Speaker, Deputy Speaker, Leader of the
+# House, Chief Whip, Whip … Ordered by protocol precedence (SpecialRoleType.
+# ordering), not alphabetically, so the list reads the way the Secretariat
+# writes it. Past holders are available through the status filter, since "who
+# was Chief Whip in the 11th" is as real a question as "who is now".
+
+@perm_required
+def position_holders(request):
+    from apps.master.models import SpecialRoleType
+    from apps.mp.models import SpecialPositionHistory
+
+    fmt           = request.GET.get('format', '')
+    parliament_id = _active_parliament_id(request)
+    role_id       = request.GET.get('role', '')
+    status        = request.GET.get('status', 'active')
+    q             = request.GET.get('q', '').strip()
+
+    qs = SpecialPositionHistory.objects.select_related(
+        'mp', 'parliament', 'role'
+    ).prefetch_related(
+        Prefetch('mp__election_infos',
+                 queryset=ElectionInfo.objects.select_related('constituency', 'party'))
+    )
+    if parliament_id:
+        qs = qs.filter(parliament_id=parliament_id)
+    if role_id:
+        qs = qs.filter(role_id=role_id)
+    if status == 'active':
+        qs = qs.filter(is_active=True)
+    elif status == 'inactive':
+        qs = qs.filter(is_active=False)
+    if q:
+        qs = qs.filter(search_q(q, ['mp__name_bn', 'mp__name_en', 'mp__mp_id',
+                                    'role__name_bn', 'role__name_en']))
+
+    headers = [_ui('ক্রম', 'SL'), _ui('পদ', 'Position'), _ui('এমপি আইডি', 'MP ID'),
+               _ui('নাম', 'Name'), _ui('নির্বাচনী এলাকা', 'Constituency'),
+               _ui('দল', 'Party'), _ui('শুরু', 'From'), _ui('শেষ', 'To'),
+               _ui('GO নং', 'GO No.'), _ui('অবস্থা', 'Status')]
+
+    def rows_fn(queryset):
+        out = []
+        for i, obj in enumerate(queryset):
+            ei = next(iter(obj.mp.election_infos.all()), None)
+            out.append([
+                i + 1,
+                _tr(obj.role),
+                obj.mp.mp_id,
+                _tr(obj.mp),
+                _tr(ei.constituency, 'display') if ei and ei.constituency else '—',
+                _tr(ei.party) if ei and ei.party else '—',
+                obj.from_date.strftime('%d/%m/%Y') if obj.from_date else '—',
+                obj.to_date.strftime('%d/%m/%Y') if obj.to_date else '—',
+                obj.go_number or '—',
+                _ui('বহাল', 'Sitting') if obj.is_active else _ui('সাবেক', 'Past'),
+            ])
+        return out
+
+    if fmt == 'excel':
+        return export_excel('position_holders', headers, rows_fn(qs), 'সংসদীয় পদ')
+    if fmt == 'csv':
+        return export_csv('position_holders', headers, rows_fn(qs))
+
+    # Single-holder offices with nobody sitting in them. An empty table row
+    # cannot say "vacant", so the gap is reported explicitly.
+    vacant = []
+    if parliament_id and status == 'active':
+        filled = set(SpecialPositionHistory.objects.filter(
+            parliament_id=parliament_id, is_active=True).values_list('role_id', flat=True))
+        vacant = [r for r in SpecialRoleType.objects.filter(
+            is_active=True, is_unique_per_parliament=True).order_by('ordering')
+            if r.pk not in filled]
+
+    ctx = {
+        'parliament_id': parliament_id,
+        'role_id':       role_id,
+        'status':        status,
+        'q':             q,
+        'parliaments':   _parliament_qs(),
+        'roles':         SpecialRoleType.objects.filter(is_active=True).order_by('ordering'),
+        'vacant':        vacant,
+        'total_count':   qs.count(),
+    }
+    if fmt in ('print', 'pdf'):
+        ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/position_holders.html',
+                                     ctx, 'position_holders.pdf')
+        return render(request, 'reports/print/position_holders.html', ctx)
+
+    paginator = Paginator(qs, _page_size(request))
+    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    return render(request, 'reports/position_holders.html', ctx)
 
 
 # ── Report 8: এমপি কমিটি সারসংক্ষেপ ──────────────────────────────────────────
@@ -1246,13 +1355,16 @@ CUSTOM_REPORT_COLS = [
     ('blood_group',       'রক্তের গ্রুপ'),
     ('gender',            'লিঙ্গ'),
     ('religion',          'ধর্ম'),
-    ('division',          'বিভাগ'),
-    ('district',          'জেলা'),
+    ('con_division',      'আসনের বিভাগ'),
+    ('con_district',      'আসনের জেলা'),
+    ('division',          'নিজ জেলার বিভাগ'),
+    ('district',          'নিজ জেলা'),
     ('times_elected',     'নির্বাচনের সংখ্যা'),
     ('committee',         'স্থায়ী কমিটি'),
     ('ministry',          'মন্ত্রণালয়'),
     ('profession',        'পেশা'),
     ('member_type',       'সদস্যের ধরন'),
+    ('special_position',  'সংসদীয় পদ'),
     ('highest_edu_level', 'সর্বোচ্চ শিক্ষার স্তর'),
     ('highest_degree',    'সর্বোচ্চ ডিগ্রির নাম'),
     ('highest_subject',   'সর্বোচ্চ বিষয়'),
@@ -1275,13 +1387,16 @@ CUSTOM_REPORT_COLS_EN = {
     'blood_group':       'Blood Group',
     'gender':            'Gender',
     'religion':          'Religion',
-    'division':          'Division',
-    'district':          'District',
+    'con_division':      'Constituency Division',
+    'con_district':      'Constituency District',
+    'division':          'Home Division',
+    'district':          'Home District',
     'times_elected':     'Times Elected',
     'committee':         'Standing Committee',
     'ministry':          'Ministry',
     'profession':        'Profession',
     'member_type':       'Member Type',
+    'special_position':  'Parliamentary Position',
     'highest_edu_level': 'Highest Education Level',
     'highest_degree':    'Highest Degree',
     'highest_subject':   'Highest Subject',
@@ -1323,6 +1438,14 @@ def _custom_cell(mp, col, today=None):
     if col == 'blood_group':   return _tr(mp.blood_group) if mp.blood_group else '—'
     if col == 'gender':        return _tr(mp.gender) if mp.gender else '—'
     if col == 'religion':      return _tr(mp.religion) if mp.religion else '—'
+    # Two different divisions live in this system — the seat's and the member's
+    # own. Both are offered as columns so a report can show where they diverge.
+    if col == 'con_division':
+        con = ei.constituency if ei else None
+        return _tr(con.district.division) if con and con.district and con.district.division else '—'
+    if col == 'con_district':
+        con = ei.constituency if ei else None
+        return _tr(con.district) if con and con.district else '—'
     if col == 'division':
         return _tr(mp.home_district.division) if mp.home_district and mp.home_district.division else '—'
     if col == 'district':      return _tr(mp.home_district) if mp.home_district else '—'
@@ -1347,6 +1470,11 @@ def _custom_cell(mp, col, today=None):
             return _tr(edu.degree_title) if edu and edu.degree_title else '—'
         if col == 'highest_subject':
             return _tr(edu.major_subject) if edu and edu.major_subject else '—'
+    if col == 'special_position':
+        # Offices of the House (Speaker / Chief Whip / Whip …). Only the sitting
+        # ones — a member who WAS Deputy Speaker is not the Deputy Speaker, and
+        # the prefetch is already filtered to is_active.
+        return ', '.join(_tr(sp.role) for sp in mp.special_positions.all()) or '—'
     if col == 'prof_qual':
         return ', '.join(_tr(pq) for pq in mp.professional_qualifications.all()) or '—'
     return '—'
@@ -1359,9 +1487,10 @@ def _build_custom_qs(get, parliament_id):
     from django.db.models import Prefetch
     from apps.committee.models import CommitteeAssignment
     from apps.ministry.models import MinistryAssignment
-    from apps.mp.models import MP, ElectionInfo, Education
+    from apps.mp.models import MP, ElectionInfo, Education, SpecialPositionHistory
 
-    ei_qs = ElectionInfo.objects.select_related('constituency', 'party')
+    ei_qs = ElectionInfo.objects.select_related(
+        'party', 'constituency', 'constituency__district__division')
     if parliament_id:
         ei_qs = ei_qs.filter(parliament_id=parliament_id)
 
@@ -1381,6 +1510,8 @@ def _build_custom_qs(get, parliament_id):
                  queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
         Prefetch('ministry_assignments',
                  queryset=MinistryAssignment.objects.select_related('ministry').filter(is_active=True)),
+        Prefetch('special_positions',
+                 queryset=SpecialPositionHistory.objects.select_related('role').filter(is_active=True)),
     ).filter(is_active=True)
 
     if parliament_id:
@@ -1419,17 +1550,40 @@ def _build_custom_qs(get, parliament_id):
             qs = qs.filter(election_infos__party__in=ids)
             needs_distinct = True
 
-    # ── Division ──────────────────────────────────────────────────────────────
+    # ── Division / District ───────────────────────────────────────────────────
+    # Each takes a basis: the *seat* (constituency → district → division) or the
+    # member's own home district. They are different questions and give
+    # different answers, so the filter says which one it is asking. Constituency
+    # basis reaches only directly-elected seats — reserved seats (301–350) have
+    # no constituency by rule, so they can never match it.
+    def _basis(name):
+        return 'home' if get.get(f'{name}_basis') == 'home' else 'constituency'
+
     if 'enable_division' in get:
         ids = [v for v in get.getlist('division') if v]
         if ids:
-            qs = qs.filter(home_district__division__in=ids)
+            if _basis('division') == 'home':
+                qs = qs.filter(home_district__division__in=ids)
+            else:
+                # One filter() call, so both conditions land on the SAME joined
+                # ElectionInfo row rather than on any two of them.
+                cond = {'election_infos__constituency__district__division__in': ids}
+                if parliament_id:
+                    cond['election_infos__parliament_id'] = parliament_id
+                qs = qs.filter(**cond)
+                needs_distinct = True
 
-    # ── District ──────────────────────────────────────────────────────────────
     if 'enable_district' in get:
         ids = [v for v in get.getlist('district') if v]
         if ids:
-            qs = qs.filter(home_district__in=ids)
+            if _basis('district') == 'home':
+                qs = qs.filter(home_district__in=ids)
+            else:
+                cond = {'election_infos__constituency__district__in': ids}
+                if parliament_id:
+                    cond['election_infos__parliament_id'] = parliament_id
+                qs = qs.filter(**cond)
+                needs_distinct = True
 
     # ── Gender ────────────────────────────────────────────────────────────────
     if 'enable_gender' in get:
@@ -1475,6 +1629,19 @@ def _build_custom_qs(get, parliament_id):
             qs = qs.filter(educations__education_level__in=ids)
             needs_distinct = True
 
+    # ── Parliamentary Position ────────────────────────────────────────────────
+    # Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House. Only
+    # sitting terms match: a past Deputy Speaker is not the Deputy Speaker.
+    if 'enable_special_position' in get:
+        ids = [v for v in get.getlist('special_position') if v]
+        if ids:
+            cond = {'special_positions__role__in': ids,
+                    'special_positions__is_active': True}
+            if parliament_id:
+                cond['special_positions__parliament_id'] = parliament_id
+            qs = qs.filter(**cond)
+            needs_distinct = True
+
     # ── Professional Qualifications ───────────────────────────────────────────
     if 'enable_prof_qual' in get:
         ids = [v for v in get.getlist('prof_qual') if v]
@@ -1493,7 +1660,7 @@ def custom_report(request):
     from apps.master.models import (
         BloodGroup, Gender, Religion, Division, District,
         PoliticalParty, StandingCommittee, Ministry,
-        EducationLevel, ProfessionalQualification,
+        EducationLevel, ProfessionalQualification, SpecialRoleType,
     )
     from apps.mp.form_fields import MPChoiceField
 
@@ -1513,6 +1680,7 @@ def custom_report(request):
     ministries      = Ministry.objects.filter(is_active=True)
     education_levels = EducationLevel.objects.filter(is_active=True).order_by('degree_order')
     prof_quals      = ProfessionalQualification.objects.filter(is_active=True).order_by('name_bn')
+    special_roles   = SpecialRoleType.objects.filter(is_active=True).order_by('ordering', 'name_bn')
     # MP picker options: "ID — Name — Constituency" in one string, so Select2's
     # own text search covers all three (the filter still POSTs plain mp_id
     # values, so _build_custom_qs is unchanged). `.values()` dicts cannot be fed
@@ -1536,12 +1704,16 @@ def custom_report(request):
         'religion':        request.GET.getlist('religion'),
         'division':        request.GET.getlist('division'),
         'district':        request.GET.getlist('district'),
+        # basis is single-valued; 'constituency' is the default everywhere
+        'division_basis':  request.GET.get('division_basis') or 'constituency',
+        'district_basis':  request.GET.get('district_basis') or 'constituency',
         'party':           request.GET.getlist('party'),
         'committee':       request.GET.getlist('committee'),
         'ministry':        request.GET.getlist('ministry'),
         'mp_id':           request.GET.getlist('mp_id'),
         'education_level': request.GET.getlist('education_level'),
         'prof_qual':       request.GET.getlist('prof_qual'),
+        'special_position': request.GET.getlist('special_position'),
     }
 
     ctx = {
@@ -1559,6 +1731,7 @@ def custom_report(request):
         'ministries':         ministries,
         'education_levels':   education_levels,
         'prof_quals':         prof_quals,
+        'special_roles':      special_roles,
         'mp_list':            mp_list,
         'sel':                sel,
         'searched':           searched,
