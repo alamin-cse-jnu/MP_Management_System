@@ -87,9 +87,15 @@
         <div class="mp-card-header"><i class="bi bi-arrow-clockwise icon"></i>{% ui "পুনরায় তৈরি" "Regenerate" %}</div>
         <div class="p-3">
           <p class="text-muted mb-2" style="font-size:.82rem;">
-            {% ui "টেমপ্লেট ও বর্তমান তথ্য থেকে দলিলটি নতুন করে তৈরি হবে — হাতে করা সব সম্পাদনা মুছে যাবে।" "Rebuilds the document from the template and current data — all manual edits are lost." %}
+            {% ui "পাশের তারিখ, স্বাক্ষরকারী ও অন্যান্য তথ্য সংরক্ষণ করে টেমপ্লেট থেকে দলিলটি নতুন করে তৈরি হবে — হাতে করা সব সম্পাদনা মুছে যাবে।" "Saves the date, signatory and the other fields beside it, then rebuilds the document from the template — all manual edits are lost." %}
           </p>
-          <button type="submit" form="noc-regenerate" class="btn btn-outline-warning btn-sm w-100"
+          {% comment %}
+            Submits the EDITOR form, not a bare one: the date/signatory typed
+            above must reach the rebuild, or they appear to do nothing.
+          {% endcomment %}
+          <button type="submit" form="noc-form"
+                  formaction="{% url 'noc:noc_regenerate' noc.pk %}"
+                  class="btn btn-outline-warning btn-sm w-100"
                   onclick="return confirm('{% ui "হাতে করা সব সম্পাদনা মুছে যাবে। চালিয়ে যাবেন?" "All manual edits will be lost. Continue?" %}');">
             <i class="bi bi-arrow-clockwise me-1"></i>{% ui "টেমপ্লেট থেকে তৈরি করুন" "Regenerate from template" %}
           </button>
@@ -124,10 +130,6 @@
   </div>
 </form>
 
-{# Separate form so Regenerate posts nothing but the CSRF token. #}
-<form method="post" id="noc-regenerate" action="{% url 'noc:noc_regenerate' noc.pk %}" class="d-none">
-  {% csrf_token %}
-</form>
 {% endblock %}
 
 {% block extra_js %}

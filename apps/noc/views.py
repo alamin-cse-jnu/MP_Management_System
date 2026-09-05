@@ -200,11 +200,46 @@ def noc_edit(request, pk):
 @perm_required
 @require_POST
 def noc_regenerate(request, pk):
-    """Rebuild the body from the template, discarding manual edits."""
-    noc = get_object_or_404(NOC, pk=pk)
-    if _regenerate_body(noc):
-        noc.updated_by = request.user
-        noc.save(update_fields=['body_html', 'template', 'updated_by', 'updated_at'])
+    """Rebuild the body from the template, discarding manual edits.
+
+    The button submits the *editor* form, so the metadata typed beside the
+    document (date, signatory, spouse, memo, status) is applied FIRST and the
+    rebuilt body carries it. Regenerating off the stored row instead — what the
+    old CSRF-only form did — silently rebuilt with the previous values, so a
+    freshly typed date or signatory looked like it had no effect at all.
+    """
+    noc = get_object_or_404(
+        NOC.objects.select_related('mp', 'tour', 'signatory'), pk=pk)
+    # Read before binding: `is_valid()` runs construct_instance() and writes the
+    # posted values straight onto the instance (CLAUDE.md gotcha 3).
+    old_signatory_id = noc.signatory_id
+
+    # A page cached before this change posts nothing but the CSRF token; then
+    # the stored values are all there is to rebuild from.
+    if 'issue_date' in request.POST:
+        form = NOCForm(request.POST, instance=noc, mp=noc.mp)
+        if not form.is_valid():
+            messages.error(request, 'সংরক্ষণ করা যায়নি — নিচের ত্রুটিগুলো ঠিক করুন।')
+            return render(request, 'noc/noc_form.html', {
+                'noc': noc, 'form': form,
+                'letterhead': NOCLetterhead.current(),
+                'old_signatory_id': old_signatory_id,
+            })
+        noc = form.save(commit=False)
+        # Same rule as the editor: re-freeze the signature block every time, so
+        # the snapshot columns the document prints are never stale.
+        officer = form.cleaned_data.get('signatory')
+        noc.snapshot_signatory(officer)
+        if officer is not None:
+            noc.signatory_email = NOCLetterhead.current().email
+
+    rebuilt = _regenerate_body(noc)
+    noc.updated_by = request.user
+    # Saved either way — the metadata just typed must not be thrown away only
+    # because the language has no template to rebuild the body from.
+    noc.save()
+
+    if rebuilt:
         messages.success(request, 'টেমপ্লেট থেকে দলিলটি পুনরায় তৈরি করা হয়েছে।')
     else:
         messages.error(request, f'"{noc.get_language_display()}" ভাষার কোনো সক্রিয় টেমপ্লেট নেই।')
