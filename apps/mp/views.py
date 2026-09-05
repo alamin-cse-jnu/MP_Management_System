@@ -442,60 +442,116 @@ def child_delete(request, pk, ck):
 
 # ── EDUCATION — fixed-section single page (Phase 17.11) ───────────────────────
 
-# (level_type, section kind, title_bn, title_en). Order = display order.
+# (level_type, section kind, title_bn, title_en, repeatable). Order = display order.
+# `repeatable`: a real MP can hold two graduations, two masters, two doctorates —
+# or two diplomas — so those sections take any number of rows. SSC/HSC are sat
+# once and stay single.
 _EDU_SECTIONS = [
-    ('secondary',  'school', 'এসএসসি বা সমমান',       'SSC or Equivalent'),
-    ('higher_sec', 'school', 'এইচএসসি বা সমমান',      'HSC or Equivalent'),
-    ('diploma',    'school', 'ডিপ্লোমা / ভোকেশনাল',   'Diploma / Vocational'),
-    ('bachelor',   'degree', 'স্নাতক (সম্মান)',        'Graduation'),
-    ('masters',    'degree', 'স্নাতকোত্তর',            'Masters'),
-    ('phd',        'degree', 'পিএইচডি / ডক্টরেট',     'PhD / Doctorate'),
+    ('secondary',  'school', 'এসএসসি বা সমমান',       'SSC or Equivalent',    False),
+    ('higher_sec', 'school', 'এইচএসসি বা সমমান',      'HSC or Equivalent',    False),
+    ('diploma',    'school', 'ডিপ্লোমা / ভোকেশনাল',   'Diploma / Vocational', True),
+    ('bachelor',   'degree', 'স্নাতক (সম্মান)',        'Graduation',           True),
+    ('masters',    'degree', 'স্নাতকোত্তর',            'Masters',              True),
+    ('phd',        'degree', 'পিএইচডি / ডক্টরেট',     'PhD / Doctorate',      True),
 ]
+
+# Sanity bound on rows accepted per section from one POST. Only guards against a
+# forged/garbage COUNT — it is never allowed to fall below what is already
+# stored, or a saved row outside the window would be treated as removed.
+_EDU_ROW_HARD_MAX = 50
+
+
+def _posted_pk(post, key):
+    try:
+        return int(post.get(key) or 0) or None
+    except (TypeError, ValueError):
+        return None
 
 
 @perm_required
 def education_sections(request, pk):
     """Single page with a fixed section per education level + a self-educated
-    free-text block. Saves/updates/deletes all sections in one submit."""
+    free-text block. Degree sections hold any number of rows. Saves/updates/
+    deletes every section in one submit."""
     mp = get_object_or_404(MP, pk=pk)
 
     # Resolve the canonical EducationLevel row for each section (seeded in master/0008).
     levels = {
         lt: EducationLevel.objects.filter(level_type=lt, is_active=True)
         .order_by('ordering').first()
-        for lt, _kind, _bn, _en in _EDU_SECTIONS
+        for lt, _kind, _bn, _en, _rep in _EDU_SECTIONS
     }
-    # Existing record per level_type (first one; sections assume one row per level).
-    existing = {}
+    # EVERY stored row per level_type — keeping only the first is what hid an
+    # MP's second graduation / masters / PhD from the editor.
+    existing = {lt: [] for lt, _k, _b, _e, _r in _EDU_SECTIONS}
     for edu in mp.educations.select_related('education_level').all():
         lt = edu.education_level.level_type if edu.education_level else None
-        if lt and lt not in existing:
-            existing[lt] = edu
+        if lt in existing:
+            existing[lt].append(edu)
 
+    posting  = request.method == 'POST'
     sections = []
-    for lt, kind, tbn, ten in _EDU_SECTIONS:
+    for lt, kind, tbn, ten, repeatable in _EDU_SECTIONS:
+        level     = levels.get(lt)
+        rows      = existing[lt]
+        rows_by_pk = {e.pk: e for e in rows}
+
+        if not repeatable:
+            count = 1
+        elif posting:
+            try:
+                count = int(request.POST.get(f'{lt}-COUNT', ''))
+            except (TypeError, ValueError):
+                count = len(rows)
+            count = max(1, len(rows), min(count, max(_EDU_ROW_HARD_MAX, len(rows))))
+        else:
+            count = max(len(rows), 1)
+
+        forms = []
+        for i in range(count):
+            prefix = f'{lt}-{i}'
+            if posting:
+                # Bind by the row's own pk, not by position: a row removed from
+                # the middle of the page must not re-point the forms after it at
+                # the wrong record. Only this MP's rows for this level are in the
+                # map, so a forged pk resolves to None (a new row), never to
+                # somebody else's education.
+                inst = rows_by_pk.get(_posted_pk(request.POST, f'{prefix}-id'))
+            else:
+                inst = rows[i] if i < len(rows) else None
+            forms.append(EducationSectionForm(
+                request.POST or None, prefix=prefix, instance=inst, level=level))
+
         sections.append({
             'key': lt, 'kind': kind, 'title_bn': tbn, 'title_en': ten,
-            'level': levels.get(lt),
-            'form': EducationSectionForm(
-                request.POST or None, prefix=lt,
-                instance=existing.get(lt), level=levels.get(lt)),
+            'level': level, 'repeatable': repeatable,
+            'forms': forms, 'count': count,
+            'empty_form': (EducationSectionForm(prefix=f'{lt}-__INDEX__', level=level)
+                           if repeatable else None),
         })
 
-    if request.method == 'POST':
-        if all(s['form'].is_valid() for s in sections):
+    if posting:
+        # Materialise — `all(... for ...)` short-circuits, so the forms after the
+        # first invalid one would never be cleaned and would render no errors.
+        results = [f.is_valid() for s in sections for f in s['forms']]
+        if all(results):
             for s in sections:
-                form, level = s['form'], s['level']
-                inst = form.instance
-                if form.has_data():
+                level, keep = s['level'], set()
+                for form in s['forms']:
+                    if not form.has_data():
+                        continue
                     edu = form.save(commit=False)
                     edu.mp = mp
                     if level is not None:
                         edu.education_level = level
                         edu.ordering = level.degree_order
                     edu.save()
-                elif inst and inst.pk:
-                    inst.delete()
+                    keep.add(edu.pk)
+                # Anything stored that came back empty — or was removed from the
+                # page — is gone.
+                for row in existing[s['key']]:
+                    if row.pk not in keep:
+                        row.delete()
 
             mp.is_self_educated  = bool(request.POST.get('is_self_educated'))
             mp.self_education_bn = request.POST.get('self_education_bn', '').strip()

@@ -126,6 +126,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 28 | Master-data completeness — bilingual name columns, Class Results master table, year-only travel | ✅ |
 | 29 | Field-feedback round 3 — COVID dose form bilingual + vaccine master pool seeded/discoverable, Post Office field on MP address, master-search keystroke loss, Bangla-numeral search | ✅ |
 | 30 | MP list completeness bar → weighted 100-point score (27 scored fields, 4/2 points each) + missing-field tooltip | ✅ |
+| 31 | Education page → repeatable degrees (double graduation / masters / PhD / diploma) via per-row prefixes + pk binding (see `docs/phase-history.md`) | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -203,15 +204,26 @@ silently — full context in `docs/phase-history.md`.
    role. A single name column headed just "Name" is the opposite case — `tr` is
    correct there (see `user_list.html`).
 
+9. A **fixed section per category is a display choice, not a data rule.** The
+   education page kept `existing[lt] = edu` for the *first* row per level, so an
+   MP's second graduation / masters / PhD was invisible and unreachable in the
+   editor while rendering fine in every biodata and report (they all iterate
+   `mp.educations.all()`). Repeated rows bind **by posted pk, not by position** —
+   index binding re-points every form after a removed row at the wrong record.
+   Build the pk map from that MP's rows only, so a forged id falls through to a
+   new row instead of another MP's data.
+10. `all(f.is_valid() for f in forms)` **short-circuits** — forms after the first
+    invalid one are never cleaned and render no errors. Materialise the list.
+
 **Frontend**
-9. Never toggle visibility with `style.display = ''` when a CSS rule hides the
-   element — clearing an inline style hands it straight back to `display:none`.
-   Set an explicit value (`'block'`).
-10. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
+11. Never toggle visibility with `style.display = ''` when a CSS rule hides the
+    element — clearing an inline style hands it straight back to `display:none`.
+    Set an explicit value (`'block'`).
+12. **Select2 fires jQuery events, not native DOM events.** An inline `onchange=`
     attribute still runs (jQuery's `.trigger()` invokes it), but htmx's native
     `change` listener never fires. Any htmx-on-change over a Select2 control needs a
     jQuery bridge that re-emits via `htmx.trigger(...)`.
-11. **Never let a live-search request swap the search box itself.** htmx replaces
+13. **Never let a live-search request swap the search box itself.** htmx replaces
     the target node, so an `hx-target` that contains the focused `input` destroys
     it mid-typing: the caret is lost and every character typed while the request
     was in flight is dropped — the box "misses keystrokes". Search triggers must
@@ -219,52 +231,52 @@ silently — full context in `docs/phase-history.md`.
     row count via `hx-select-oob`, plus `hx-sync="this:replace"`); full-panel
     swaps are fine for add/edit/toggle, which are clicks, not typing. Was wrong
     in both master-data managers (`group_panel.html`, `edu_panel.html`).
-12. Numbers are **stored ASCII, displayed Bangla**, so an operator reads ১৫২ off
+14. Numbers are **stored ASCII, displayed Bangla**, so an operator reads ১৫২ off
     the screen and types it back into a search box that only matches `152`. Every
     search over an MP ID / memo / GO number goes through `utils/bn_digits.search_q`,
     which ORs each field against both digit spellings.
-13. Editor-authored HTML must not carry **Bootstrap component class names**.
+15. Editor-authored HTML must not carry **Bootstrap component class names**.
     CKEditor wraps saved tables in `<figure class="table">`, and `.table > …` then
     paints a border on every row. `utils/html_sanitize.py` unwraps `figure` and
     strips the `table` class — keep that guard if you add another editor surface.
-14. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
+16. CKEditor 5 super-build needs **both** `removePlugins: PREMIUM` (bundled
     commercial plugins otherwise demand a licence key and the editor never mounts)
     and the `htmlSupport` allow-all block (otherwise inline column widths,
     `text-indent` and `font-size` are stripped and the letterhead collapses).
 
 **Exports / Bangla**
-15. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
+17. CSV: declare `charset=utf-8` and write the BOM **once** explicitly. Declaring
     `utf-8-sig` makes Django encode *every* `response.write()` with it, prepending a
     BOM to every row and corrupting the first column of every line.
-16. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
+18. DOCX Bengali runs need `w:cs` (and `w:szCs`) set, not just `w:ascii`/`w:hAnsi` —
     Bengali is a *complex script*, so without `w:cs` Word falls back to Times New
     Roman and renders boxes. See `utils/html_to_docx.py`.
-17. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
+19. `pypdf.extract_text()` renders Bangla as gibberish **even when the PDF is
     perfect** — SolaimanLipi embeds as a CID/Type0 subset whose ligature glyphs do
     not reverse-map. Verify a PDF by its `/Producer` + embedded font list, or by
     looking at the page. Never trust extracted text.
-18. Keep the `body.noc-bn` `@page` box in sync between
+20. Keep the `body.noc-bn` `@page` box in sync between
     `templates/noc/print/noc_document.html` and `static/css/noc.css` — loosening
     either re-splits the Bangla letter onto a second page.
 
 **Data / production**
-19. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
+21. **Bangla on prod is not byte-normalised.** Visually identical strings can differ
     in code points, so any seeder or importer keyed on `name_bn` silently
     *duplicates* instead of matching. Normalise (`unicodedata.normalize('NFC', …)`)
     or match on `name_en` as well.
-20. The PRP API serves **only its leaf certificate**, omitting the intermediate.
+22. The PRP API serves **only its leaf certificate**, omitting the intermediate.
     Windows hides this via AIA fetch; the Linux container fails with
     `CERTIFICATE_VERIFY_FAILED`. Use `prp_api.ssl_context()` +
     `utils/certs/prp_chain.pem` — it *adds* trust. Do **NOT** "simplify" to
     `verify=False`.
-21. `docker compose` traps: `docker compose images web` exits 1 right after a
+23. `docker compose` traps: `docker compose images web` exits 1 right after a
     rebuild (making a successful build look failed); `docker compose exec` does
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
 
 **Deliberate choices — do not "restore" these**
-22. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+24. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

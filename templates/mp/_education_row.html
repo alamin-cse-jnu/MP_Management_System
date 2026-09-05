@@ -1,0 +1,103 @@
+{% load lang_tags %}
+{% comment %}
+One education record inside a level section. Rendered both for the stored rows
+and (with prefix __INDEX__) inside the <template> the "add another" button
+clones, so the two can never drift apart.
+Context: form, kind ('school' | 'degree'), repeatable.
+{% endcomment %}
+<div class="edu-row">
+  <input type="hidden" name="{{ form.prefix }}-id"
+         value="{% if form.instance.pk %}{{ form.instance.pk }}{% endif %}">
+
+  {% if repeatable %}
+  <div class="edu-row-bar">
+    <span class="edu-row-no"></span>
+    <button type="button" class="btn btn-sm btn-link text-danger p-0 edu-row-remove">
+      <i class="bi bi-x-circle me-1"></i>{% ui "এই ডিগ্রিটি সরান" "Remove this degree" %}
+    </button>
+  </div>
+  {% endif %}
+
+  {% if form.non_field_errors %}<div class="alert alert-danger py-2">{{ form.non_field_errors }}</div>{% endif %}
+
+  <div class="row g-3">
+
+    {% if kind == 'school' %}
+    {% comment %} SSC / HSC / Diploma {% endcomment %}
+    <div class="col-md-6">
+      <label class="form-label fw-medium">{% ui "পরীক্ষা" "Examination" %}</label>
+      {{ form.degree_title }}
+    </div>
+    <div class="col-md-6">
+      <label class="form-label fw-medium">{% ui "শিক্ষাবোর্ড" "Board" %}</label>
+      {{ form.board_affiliation }}
+    </div>
+    <div class="col-md-4">
+      <label class="form-label fw-medium">{% ui "গ্রুপ" "Group" %}</label>
+      {{ form.group }}
+    </div>
+    <div class="col-md-5">
+      <label class="form-label fw-medium">{% ui "প্রতিষ্ঠান" "Institute" %}</label>
+      {{ form.institution }}
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium">{% ui "পাসের সন" "Passing Year" %}</label>
+      {{ form.passing_year }}
+    </div>
+
+    {% else %}
+    {% comment %} Graduation / Masters / PhD {% endcomment %}
+    <div class="col-md-6">
+      <label class="form-label fw-medium">{% ui "পরীক্ষা / ডিগ্রি" "Examination / Degree" %}</label>
+      {{ form.degree_title }}
+    </div>
+    <div class="col-md-6">
+      <label class="form-label fw-medium">{% ui "বিষয়" "Subject" %}</label>
+      {{ form.major_subject }}
+    </div>
+    <div class="col-md-6">
+      <label class="form-label fw-medium">{% ui "বিশ্ববিদ্যালয় / প্রতিষ্ঠান" "University / Institute" %}</label>
+      {{ form.institution }}
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium">{% ui "কোর্সের মেয়াদ" "Course Duration" %}</label>
+      {{ form.course_duration }}
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium">{% ui "পাসের সন" "Passing Year" %}</label>
+      {{ form.passing_year }}
+    </div>
+    {% endif %}
+
+    {% comment %} Result cascade (type → matching input) {% endcomment %}
+    <div class="col-md-4">
+      <label class="form-label fw-medium">{% ui "ফলাফলের ধরন" "Result Type" %}</label>
+      {{ form.result_type }}
+    </div>
+    <div class="col-md-8">
+      <label class="form-label fw-medium">{% ui "ফলাফল" "Result" %}</label>
+      <div class="edu-result-fields">
+        <div class="edu-result-field" data-formats="division">{{ form.division_result }}</div>
+        <div class="edu-result-field" data-formats="gpa cgpa">
+          <div class="input-group">
+            {{ form.gpa_value }}
+            <span class="input-group-text">/</span>
+            {{ form.gpa_out_of }}
+          </div>
+        </div>
+        <div class="edu-result-field" data-formats="percentage">{{ form.percentage }}</div>
+        <div class="edu-result-field" data-formats="class">{{ form.class_result }}</div>
+        <div class="edu-result-field" data-formats="pass_fail other">{{ form.result_text }}</div>
+        <div class="edu-result-empty text-muted" style="font-size:.85rem;padding-top:.4rem;">
+          {% ui "ধরন নির্বাচন করলে ফলাফলের ঘর দেখা যাবে।" "Pick a result type to enter the result." %}
+        </div>
+        <div class="edu-result-warn text-warning" style="display:none;font-size:.8rem;padding-top:.35rem;">
+          <i class="bi bi-exclamation-triangle-fill me-1"></i>
+          {% ui "এই ধরনের কোনো অপশন মাস্টার ডেটায় নেই —" "No options exist for this result type —" %}
+          <a href="{% url 'master:education_master' %}" target="_blank">{% ui "মাস্টার ডেটায় যোগ করুন" "add them in Master Data" %}</a>{% ui "।" "." %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

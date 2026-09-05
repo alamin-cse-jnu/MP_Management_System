@@ -1021,7 +1021,7 @@ because `Education.class_result` was a free-text CharField while
   `/master/education/` as a new **শ্রেণি ভিত্তিক ফলাফল / Class Results** tab.
   `master/0011` creates it and seeds প্রথম/দ্বিতীয়/তৃতীয় শ্রেণি, matching on the
   **NFC-normalised** Bangla name *and* the English name so it cannot duplicate
-  prod's existing rows (gotcha 17).
+  prod's existing rows (gotcha 21).
 - **`mp/0013` converts the field, hand-written.** `RenameField` to a legacy
   column → add the FK → `RunPython` backfill → drop the legacy column. The
   backfill matches free text against either language, and **creates a master row
@@ -1070,6 +1070,68 @@ result saving as an FK and rendering per-language, year-only save, the
 date-range case, ordering (2024 year-only sorts above 2019 dated), both rejection
 paths, the travel tab, all three biodata templates and the PDF, and the new
 Master Data tab in both languages.
+
+---
+
+## PHASE 31 — Repeatable degrees on the education page (2026-09-05) ✅
+
+**Reported:** "in education — in some cases an MP has double graduation and double
+post-graduation — or double PhD — this is not considered in system."
+
+**Cause.** Only the *editor* was capped, not the data. `Education` has always been a
+plain FK-to-MP with no uniqueness constraint, and every read path
+(`_tab_education.html`, all four biodata templates, the report queries) already
+iterates `mp.educations.all()`. But the Phase 17.11 fixed-section page assumed
+exactly one row per level:
+
+```python
+for edu in mp.educations...:
+    if lt and lt not in existing:       # ← keeps the FIRST row, drops the rest
+        existing[lt] = edu
+```
+
+So a second graduation was **invisible in the editor and unreachable** — and any
+row created outside the page (PRP import) would stay orphaned there forever.
+
+**Fix.** `_EDU_SECTIONS` grew a fifth member, `repeatable`. Diploma / Graduation /
+Masters / PhD take any number of rows; SSC and HSC are sat once and stay single.
+
+- `existing[lt]` is now a **list**, and each section builds N forms with prefixes
+  `{level}-{i}` plus a `{level}-COUNT` hidden input (formset `TOTAL_FORMS` in
+  spirit, hand-rolled because the per-row `level=` kwarg and `has_data()`
+  delete-on-empty semantics don't fit `modelformset_factory`).
+- Each row posts its own **`{prefix}-id`**. Rows bind **by pk, not by position** —
+  otherwise removing a row from the middle of the page re-points every form after
+  it at the wrong record. The pk map is built only from *this* MP's rows at *this*
+  level, so a forged id resolves to `None` (a new row) and can never reach another
+  MP's education. Verified.
+- Save keeps a `keep` set of saved pks; anything stored that came back empty or
+  was removed from the page is deleted. Same delete-on-empty rule as before, now
+  per row.
+- `all(f.is_valid() for …)` → a materialised list. The generator short-circuits, so
+  every form after the first invalid one was never cleaned and rendered **no
+  errors** (pre-existing bug, inherited from the single-form version).
+
+**Template.** The row markup moved to `mp/_education_row.html`, included both for
+the live rows and — with prefix `__INDEX__` — inside a `<template class="edu-row-template">`
+that the "Add another" button clones. `<template>` content is inert, so Select2
+never touched those selects and the clone comes out pristine; the clone rewrites
+`name`/`id`/`for`, appends, bumps COUNT, then calls the global `initSelect2(row)`.
+One definition, so live rows and the blank row cannot drift apart.
+
+**Gotchas hit / avoided.**
+- The result-type cascade JS was scoped to `.edu-section`; a section now holds
+  several degrees, each with an independent result type, so it is scoped to
+  `.edu-row`. The `display:'block'` (never `''`) rule from gotcha 11 is preserved.
+- The extracted partial uses `{% comment %}`, not `{# … #}` — gotcha 1.
+- Row indices only ever grow; a removed row leaves a gap, which is harmless
+  because binding is by pk. COUNT is never decremented.
+- The last row's Remove button is hidden: clearing its fields is how a level is
+  emptied, and a section with zero rows could never be filled again.
+
+**Cost:** 4 hidden blank rows on the page. Institution/subject dropdowns are small
+today; if those master tables grow into the thousands, swap the `<template>` for an
+HTMX fetch of a blank row.
 
 ---
 
