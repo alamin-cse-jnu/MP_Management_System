@@ -668,6 +668,9 @@ def master_home(request):
         {'title_bn': 'রাজনৈতিক', 'title_en': 'Political', 'icon': 'bi-flag-fill', 'items': [
             _item('রাজনৈতিক দল', 'Political Parties', 'master:political_party_list'),
         ]},
+        {'title_bn': 'সংসদীয় পদ', 'title_en': 'Parliamentary Positions', 'icon': 'bi-award-fill', 'items': [
+            _item('সংসদীয় পদের ধরন', 'Parliamentary Position Types', 'master:special_role_type_list'),
+        ]},
         {'title_bn': 'মন্ত্রণালয়', 'title_en': 'Ministry', 'icon': 'bi-building-fill', 'items': [
             _group_item(G['ministry']),
         ]},
@@ -685,7 +688,6 @@ def master_home(request):
         ]},
         {'title_bn': 'অফিস / পিএ-পিএস', 'title_en': 'Office / PA-PS', 'icon': 'bi-person-badge-fill', 'items': [
             _item('পিএ/পিএস পদবী', 'PA/PS Designations', 'master:pa_designation_list'),
-            _item('বিশেষ পদের ধরন', 'Special Role Types', 'master:special_role_type_list'),
         ]},
         {'title_bn': 'কোভিড-১৯', 'title_en': 'COVID-19', 'icon': 'bi-capsule', 'items': [
             _item('টিকার নাম', 'Vaccine Names', 'master:vaccine_name_list'),
