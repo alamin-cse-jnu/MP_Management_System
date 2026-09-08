@@ -151,7 +151,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
   <div class="lh-title-bn">বাংলাদেশ জাতীয় সংসদ সচিবালয়</div>
   <div class="lh-title-en">Bangladesh Parliament Secretariat</div>
   <hr class="lh-divider">
-  <div class="lh-dept">{% ui "বিএন্ডআইটি অনুবিভাগ, আইটি অধিশাখা" "B&IT Wing, IT Branch" %}</div>
+  <div class="lh-dept">{% ui "বিএন্ডআইটি অনুবিভাগ, আইটি অধিশাখা, সফটওয়্যার ডেভেলপমেন্ট শাখা" "B&amp;IT Wing, IT Branch, Software Development Section" %}</div>
 </div>
 
 <div class="doc-title">{% ui "মাননীয় সংসদ সদস্যের ব্যক্তিগত তথ্যের ফরম" "Personal Information Form of the Honourable Member of Parliament" %}</div>
@@ -341,20 +341,23 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
   <thead><tr>
     <th>#</th>
     <th>{% ui "পরীক্ষা/ডিগ্রির নাম" "Exam/Degree" %}</th>
-    <th>{% ui "বিষয়" "Subject" %}</th>
-    <th>{% ui "পাসের সন" "Passing Year" %}</th>
-    <th>{% ui "সিজিপিএ/বিভাগ" "CGPA/Division" %}</th>
+    <th>{% ui "বিষয়/গ্রুপ" "Subject/Group" %}</th>
+    <th>{% ui "প্রতিষ্ঠান" "Institute" %}</th>
     <th>{% ui "শিক্ষাবোর্ড/বিশ্ববিদ্যালয়" "Board/University" %}</th>
+    <th>{% ui "পাসের সন" "Passing Year" %}</th>
+    <th>{% ui "ফলাফল" "Result" %}</th>
   </tr></thead>
   <tbody>
+    {% comment %}School levels carry a group where a degree carries a subject, and the awarding body (board / university) is a SEPARATE field from the institute attended — showing only major_subject and only institution left both blank on every SSC/HSC row.{% endcomment %}
     {% for edu in mp.educations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—" }}</td>
-      <td>{{ edu.major_subject|tr:"name"|default:"—" }}</td>
+      <td>{% if edu.major_subject %}{{ edu.major_subject|tr:"name" }}{% elif edu.group %}{{ edu.group|tr:"name" }}{% else %}—{% endif %}</td>
+      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:edu.institution_other_en|default:"—" }}</td>
+      <td>{{ edu.board_affiliation|tr:"name"|default:"—" }}</td>
       <td>{{ edu.passing_year|default:"—" }}</td>
       <td>{{ edu|tr:"result_display" }}</td>
-      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:edu.institution_other_en|default:"—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -698,8 +701,10 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>{% ui "যাত্রার তারিখ" "Departure Date" %}</th>
     <th>{% ui "প্রত্যাবর্তনের তারিখ" "Return Date" %}</th>
     <th>{% ui "ধরন" "Type" %}</th>
+    <th>{% ui "উৎস" "Source" %}</th>
   </tr></thead>
   <tbody>
+    {% comment %}The Type column is the tour's OWN TravelType (the same value the profile travel tab shows) — it was hardcoded "দাপ্তরিক", which mislabelled a GO tour the operator had classified as ব্যক্তিগত. Which of the two tables a row came from is a separate fact, so it gets its own Source column: a GO number for travel administered by the travel module, "প্রোফাইল" for a self-declared trip.{% endcomment %}
     {% for tp in mp.travel_participations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
@@ -707,7 +712,8 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <td>{{ tp.tour.purpose|tr:"name"|default:"—" }}</td>
       <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
-      <td>{% ui "দাপ্তরিক" "Official" %}</td>
+      <td>{% if tp.tour.tour_type %}{{ tp.tour.tour_type|tr:"name" }}{% else %}{% ui "দাপ্তরিক" "Official" %}{% endif %}</td>
+      <td>{% ui "জিও নং" "GO No." %} {{ tp.tour.go_number|default:"—" }}</td>
     </tr>
     {% endfor %}
     {% comment %}Self-declared trips — often before the tenure, so they carry no GO.{% endcomment %}
@@ -719,6 +725,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <td>{% if t.from_date %}{{ t.from_date|date:"d/m/Y" }}{% elif t.year %}{{ t.year }}{% else %}—{% endif %}</td>
       <td>{{ t.to_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{% ui "ব্যক্তিগত" "Personal" %}</td>
+      <td>{% ui "প্রোফাইল" "Profile" %}</td>
     </tr>
     {% endfor %}
   </tbody>

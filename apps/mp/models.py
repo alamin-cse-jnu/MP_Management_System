@@ -497,7 +497,12 @@ class Education(models.Model):
         if fmt == 'division' and self.division_result:
             return name(self.division_result) or '—'
         if fmt in ('gpa', 'cgpa') and self.gpa_value is not None:
-            return f"{self.gpa_value} / {self.gpa_out_of or '—'}"
+            # Always earned-first, scale-second — and say WHICH scale, because
+            # the same column also carries divisions, classes and percentages,
+            # so a bare "4.75 / 5.00" leaves the reader guessing.
+            scale = f"{self.gpa_value} / {self.gpa_out_of}" if self.gpa_out_of is not None                 else str(self.gpa_value)
+            label = name(self.result_type)
+            return f"{label} {scale}" if label else scale
         if fmt == 'percentage' and self.percentage is not None:
             return f"{self.percentage}%"
         if fmt == 'class':

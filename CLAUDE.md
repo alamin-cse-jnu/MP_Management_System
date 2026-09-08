@@ -79,7 +79,12 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
     travel (`mp.PersonalForeignTravel`) is entered on the profile, has no GO and
     no parliament FK, and only `country` is required — purpose and dates are
     optional because a decades-old trip is worth recording half-remembered.
-    Both appear in biodata section 18, labelled দাপ্তরিক / ব্যক্তিগত. Travel
+    Both appear in biodata section 18, but **source and type are two columns,
+    not one**: `ধরন/Type` is the row's own classification (a GO tour's
+    `TravelType`, which an operator may well set to ব্যক্তিগত; `ব্যক্তিগত` for a
+    profile row) and `উৎস/Source` says where it came from (GO number vs
+    প্রোফাইল). The Type cell used to be the literal string দাপ্তরিক on every GO
+    row, which relabelled a personally-classified tour as official. Travel
     *reports* stay GO-only.
 16. Office address = সংসদ অফিস ONLY. OneToOne with MP.
 17. Superadmin bypasses all role permission checks.
@@ -142,6 +147,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 32 | Two divisions told apart — dashboard chart + custom-report filters/columns get a constituency vs home-district basis, `Constituency.district` backfill | ✅ |
 | 33 | Parliamentary positions (Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House …) — seeded master, single-holder guard, `/parliament/positions/` module, holders report + report columns | ✅ |
 | 34 | Custom report — ALL chip instead of 348, pagination removed (whole report on one page), print fixed, PDF made 5–10× faster (column widths, parallel layout, result cache), static-asset cache fixed | ✅ |
+| 35 | Field-feedback round 4 — GPA pair labelled earned/scale + swap guard, biodata education gains Subject/Group + Board-University columns, biodata travel Type reads the real TravelType, letterhead gains Software Development Section | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -166,6 +172,12 @@ python manage.py loaddata fixtures/initial/noc_menu.json
 # Parliamentary positions (Phase 33) — menu for /parliament/positions/ and the
 # holders report. The offices themselves are seeded by master/0014.
 python manage.py loaddata fixtures/initial/position_menu.json
+
+# Reversed GPA repair (Phase 35) — rows entered before the form labelled the
+# earned/scale pair, so they are stored scale-first. Only pairs where BOTH
+# halves exist and earned > scale are touched.
+python manage.py fix_reversed_gpa --dry-run
+python manage.py fix_reversed_gpa
 
 # Constituency → District backfill (Phase 32) — the constituency-basis division
 # chart and district_wise?basis=constituency both need this FK populated.
@@ -363,6 +375,34 @@ silently — full context in `docs/phase-history.md`.
     — a 304 on a LAN). Turning the manifest storage back on needs the vendored
     `ckeditor.js.map` to exist first, and a collectstatic failure stops the
     container booting (`entrypoint.sh` runs it under `set -e`).
+
+**Entry forms that leave the operator guessing**
+23e. **A pair of bare number boxes gets entered in whichever order the operator
+    guesses.** Education's GPA/CGPA pair was `gpa_value` `/` `gpa_out_of` under a
+    single "ফলাফল / Result" label, so MP 013014301's graduation row is stored
+    `5.00 / 4.75` — the scale first. Nothing was wrong in the display code:
+    `Education._result_display` has always printed earned-then-scale, so the
+    reversed pair propagates identically to the profile tab, every biodata and
+    every report. Two guards now: each box carries its own sub-label plus a
+    numeric placeholder (digits mean the same in both languages, so the example
+    doubles as the label), and `EducationSectionForm.clean()` refuses
+    `earned > scale`. `manage.py fix_reversed_gpa` repairs rows entered before
+    the guard — it swaps **only** when both halves exist and earned > scale,
+    which is impossible on any real scale, so the swap is a fact not a guess.
+23f. **A biodata column that hardcodes a label is a lie waiting to happen, and a
+    column reading one of two parallel fields shows blanks.** Both bit biodata
+    section 5/18 at once:
+    - `বিষয়` read only `major_subject`, but a school row carries a `group`
+      instead — so Subject was empty on every SSC/HSC line while the profile tab
+      (`major_subject|default:group`) showed it.
+    - The column headed `শিক্ষাবোর্ড/বিশ্ববিদ্যালয়` rendered `institution`.
+      `board_affiliation` is a **separate** field, so the board never appeared
+      anywhere in the PDF. Both are columns now, in all four biodata templates
+      (`pdf/mp_biodata_bn`, `pdf/mp_biodata_xhtml`, `mp_biodata`,
+      `print/mp_biodata`) — they drift apart silently, so change all four.
+    - Section 18's Type cell was the literal দাপ্তরিক (see rule 13b).
+    Whenever you add a biodata column, add its FK to the `mp_biodata`
+    `prefetch_related` list too, or the new cell is one query per row.
 
 **Two divisions — never one "Division"**
 24. An MP has **two** divisions and they disagree (Dhaka: 70 seats vs 94 home

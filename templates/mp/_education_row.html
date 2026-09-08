@@ -79,11 +79,17 @@ Context: form, kind ('school' | 'degree'), repeatable.
       <div class="edu-result-fields">
         <div class="edu-result-field" data-formats="division">{{ form.division_result }}</div>
         <div class="edu-result-field" data-formats="gpa cgpa">
-          <div class="input-group">
-            {{ form.gpa_value }}
-            <span class="input-group-text">/</span>
-            {{ form.gpa_out_of }}
+          <div class="row g-2 gpa-pair">
+            <div class="col-6">
+              <label class="gpa-sub">{% ui "প্রাপ্ত ফলাফল" "Obtained result" %}</label>
+              {{ form.gpa_value }}
+            </div>
+            <div class="col-6">
+              <label class="gpa-sub">{% ui "সর্বমোট (স্কেল)" "Out of (scale)" %}</label>
+              {{ form.gpa_out_of }}
+            </div>
           </div>
+          <div class="gpa-hint">{% ui "যেমন: প্রাপ্ত ৪.৭৫, সর্বমোট ৫.০০ — উল্টো করে লিখবেন না।" "e.g. obtained 4.75, out of 5.00 — do not enter these the other way round." %}</div>
         </div>
         <div class="edu-result-field" data-formats="percentage">{{ form.percentage }}</div>
         <div class="edu-result-field" data-formats="class">{{ form.class_result }}</div>

@@ -102,13 +102,15 @@
   <div class="mp-card-header"><i class="bi bi-mortarboard-fill icon"></i>শিক্ষাগত যোগ্যতা</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>ডিগ্রি</th><th>{% ui "প্রতিষ্ঠান" "Institution" %}</th><th>পাসের সন</th><th>ফলাফল</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "ডিগ্রি" "Degree" %}</th><th>{% ui "বিষয়/গ্রুপ" "Subject/Group" %}</th><th>{% ui "প্রতিষ্ঠান" "Institute" %}</th><th>{% ui "শিক্ষাবোর্ড/বিশ্ববিদ্যালয়" "Board/University" %}</th><th>{% ui "পাসের সন" "Passing Year" %}</th><th>{% ui "ফলাফল" "Result" %}</th></tr></thead>
       <tbody>
         {% for edu in mp.educations.all %}
         <tr>
           <td>{{ forloop.counter }}</td>
           <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:"—"  }}</td>
+          <td>{% if edu.major_subject %}{{ edu.major_subject|tr:"name" }}{% elif edu.group %}{{ edu.group|tr:"name" }}{% else %}—{% endif %}</td>
           <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:"—"  }}</td>
+          <td>{{ edu.board_affiliation|tr:"name"|default:"—" }}</td>
           <td>{{ edu.passing_year|default:"—" }}</td>
           <td>{{ edu|tr:"result_display" }}</td>
         </tr>
@@ -326,7 +328,7 @@
   <div class="mp-card-header"><i class="bi bi-airplane icon"></i>বিদেশ ভ্রমণ</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>#</th><th>{% ui "দেশ" "Country" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th><th>{% ui "ধরন" "Type" %}</th></tr></thead>
+      <thead class="table-light"><tr><th>#</th><th>{% ui "দেশ" "Country" %}</th><th>{% ui "উদ্দেশ্য" "Purpose" %}</th><th>{% ui "যাত্রা" "Departure" %}</th><th>{% ui "প্রত্যাবর্তন" "Return" %}</th><th>{% ui "ধরন" "Type" %}</th><th>{% ui "উৎস" "Source" %}</th></tr></thead>
       <tbody>
         {% for tp in mp.travel_participations.all %}
         <tr>
@@ -335,7 +337,8 @@
           <td>{{ tp.tour.purpose|tr:"name"|default:"—"  }}</td>
           <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"—" }}</td>
-          <td>{% ui "দাপ্তরিক" "Official" %}</td>
+          <td>{% if tp.tour.tour_type %}{{ tp.tour.tour_type|tr:"name" }}{% else %}{% ui "দাপ্তরিক" "Official" %}{% endif %}</td>
+          <td>{% ui "জিও নং" "GO No." %} {{ tp.tour.go_number|default:"—" }}</td>
         </tr>
         {% endfor %}
         {% for t in mp.personal_travels.all %}
@@ -346,6 +349,7 @@
           <td>{% if t.from_date %}{{ t.from_date|date:"d/m/Y" }}{% elif t.year %}{{ t.year }}{% else %}—{% endif %}</td>
           <td>{{ t.to_date|date:"d/m/Y"|default:"—" }}</td>
           <td>{% ui "ব্যক্তিগত" "Personal" %}</td>
+          <td>{% ui "প্রোফাইল" "Profile" %}</td>
         </tr>
         {% endfor %}
       </tbody>

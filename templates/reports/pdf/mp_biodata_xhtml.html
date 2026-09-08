@@ -204,16 +204,17 @@ table.dt th { font-weight: bold; }
 {% if mp.educations.all %}
 <div class="sec">5. Education</div>
 <table class="dt">
-  <thead><tr><th>#</th><th>Degree</th><th>Subject</th><th>Year</th><th>Result</th><th>Institution</th></tr></thead>
+  <thead><tr><th>#</th><th>Degree</th><th>Subject/Group</th><th>Institute</th><th>Board/University</th><th>Year</th><th>Result</th></tr></thead>
   <tbody>
     {% for edu in mp.educations.all %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ edu.degree_title|tr:"name"|default:edu.education_level.name_bn|default:""  }}</td>
-      <td>{{ edu.major_subject|tr:"name"|default:""  }}</td>
+      <td>{% if edu.major_subject %}{{ edu.major_subject|tr:"name" }}{% elif edu.group %}{{ edu.group|tr:"name" }}{% endif %}</td>
+      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:""  }}</td>
+      <td>{{ edu.board_affiliation|tr:"name"|default:"" }}</td>
       <td>{{ edu.passing_year|default:"" }}</td>
       <td>{{ edu|tr:"result_display" }}</td>
-      <td>{{ edu.institution|tr:"name"|default:edu.institution_other_bn|default:""  }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -367,7 +368,7 @@ table.dt th { font-weight: bold; }
 {% if mp.travel_participations.all or mp.personal_travels.all %}
 <div class="sec">18. Foreign Travel</div>
 <table class="dt">
-  <thead><tr><th>#</th><th>Countries</th><th>Purpose</th><th>Departure</th><th>Return</th><th>Type</th></tr></thead>
+  <thead><tr><th>#</th><th>Countries</th><th>Purpose</th><th>Departure</th><th>Return</th><th>Type</th><th>Source</th></tr></thead>
   <tbody>
     {% for tp in mp.travel_participations.all %}
     <tr>
@@ -376,7 +377,8 @@ table.dt th { font-weight: bold; }
       <td>{{ tp.tour.purpose|tr:"name"|default:""  }}</td>
       <td>{{ tp.tour.overall_from_date|date:"d/m/Y"|default:"" }}</td>
       <td>{{ tp.tour.overall_to_date|date:"d/m/Y"|default:"" }}</td>
-      <td>Official</td>
+      <td>{% if tp.tour.tour_type %}{{ tp.tour.tour_type|tr:"name" }}{% else %}Official{% endif %}</td>
+      <td>GO No. {{ tp.tour.go_number|default:"" }}</td>
     </tr>
     {% endfor %}
     {% for t in mp.personal_travels.all %}
@@ -387,6 +389,7 @@ table.dt th { font-weight: bold; }
       <td>{% if t.from_date %}{{ t.from_date|date:"d/m/Y" }}{% elif t.year %}{{ t.year }}{% else %}{% endif %}</td>
       <td>{{ t.to_date|date:"d/m/Y"|default:"" }}</td>
       <td>Personal</td>
+      <td>Profile</td>
     </tr>
     {% endfor %}
   </tbody>

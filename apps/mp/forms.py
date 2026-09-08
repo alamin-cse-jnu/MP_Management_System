@@ -234,6 +234,35 @@ class EducationSectionForm(_BootstrapMixin, forms.ModelForm):
         for f in ('division_result', 'class_result'):
             self.fields[f].widget.attrs.update({'data-no-select2': '', 'class': 'form-select'})
 
+        # The GPA pair used to be two bare boxes either side of a "/", so which
+        # one was the earned point and which the scale was a coin flip — MP
+        # 013014301 has a graduation row stored as 5.00 / 4.75. Digits carry the
+        # same meaning in both languages, so the example values double as the
+        # label; `clean()` below refuses the reversed pair outright.
+        self.fields['gpa_value'].widget.attrs.update({
+            'placeholder': '4.75', 'step': '0.01', 'min': '0',
+            'aria-label': 'প্রাপ্ত জিপিএ/সিজিপিএ — obtained',
+        })
+        self.fields['gpa_out_of'].widget.attrs.update({
+            'placeholder': '5.00', 'step': '0.01', 'min': '0',
+            'aria-label': 'সর্বমোট স্কেল — out of',
+        })
+
+    def clean(self):
+        cd = super().clean()
+        earned, scale = cd.get('gpa_value'), cd.get('gpa_out_of')
+        # Only a filled pair can be judged: either half alone is legitimate
+        # (an operator may know the GPA but not the scale), and an untouched
+        # section must stay silently empty.
+        if earned is not None and scale is not None and earned > scale:
+            raise forms.ValidationError(
+                'প্রাপ্ত জিপিএ/সিজিপিএ ({earned}) সর্বমোট স্কেলের ({scale}) চেয়ে বেশি হতে পারে না — '
+                'ঘর দুটি সম্ভবত উল্টে গেছে। '
+                'Obtained GPA/CGPA ({earned}) cannot exceed the scale ({scale}) — '
+                'the two boxes are probably swapped.'.format(earned=earned, scale=scale)
+            )
+        return cd
+
     def has_data(self):
         """True if the user entered anything meaningful in this section."""
         cd = self.cleaned_data
