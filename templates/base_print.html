@@ -50,6 +50,8 @@
 </head>
 <body>
 
+{% comment %}A long PDF is laid out in parallel chunks and merged (see _render_split_pdf); the letterhead belongs on the first chunk only, so the seam is invisible in the merged file.{% endcomment %}
+{% if not hide_print_header %}
 <div class="print-header">
   <img src="{% static 'img/parliament-logo.png' %}" alt="Parliament Logo"
        onerror="this.style.display='none'">
@@ -60,12 +62,15 @@
 <div class="print-meta">
   মুদ্রণের তারিখ: {% now "j F Y" %}
 </div>
+{% endif %}
 
 {% block content %}{% endblock %}
 
+{% if not hide_report_footer %}
 <div style="text-align:center;font-size:8pt;color:#555;margin-top:24px;border-top:1px solid #ccc;padding-top:8px;">
   Design &amp; Developed by <strong>Md. Al-Amin Hossain</strong>
 </div>
+{% endif %}
 
 {% if not pdf_mode %}
 <script>

@@ -102,6 +102,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
                     data-placeholder="{% ui 'আইডি / নাম / নির্বাচনী এলাকা দিয়ে খুঁজুন…' 'Search by ID / name / constituency…' %}">
+              <option value="__all__" {% if "__all__" in sel.mp_id %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for mp in mp_list %}
               <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel.mp_id %}selected{% endif %}>{{ mp.label }}</option>
               {% endfor %}
@@ -149,6 +150,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:400px;"
                     data-placeholder="{% ui 'রক্তের গ্রুপ নির্বাচন করুন…' 'Select blood group…' %}">
+              <option value="__all__" {% if "__all__" in sel.blood_group %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for bg in blood_groups %}
               <option value="{{ bg.pk }}" {% if bg.pk|stringformat:"s" in sel.blood_group %}selected{% endif %}>{{ bg|tr:"name" }}</option>
               {% endfor %}
@@ -173,6 +175,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'রাজনৈতিক দল নির্বাচন করুন…' 'Select party…' %}">
+              <option value="__all__" {% if "__all__" in sel.party %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for p in parties %}
               <option value="{{ p.pk }}" {% if p.pk|stringformat:"s" in sel.party %}selected{% endif %}>{{ p|tr:"name" }}</option>
               {% endfor %}
@@ -207,6 +210,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:380px;"
                     data-placeholder="{% ui 'বিভাগ নির্বাচন করুন…' 'Select Division…' %}">
+              <option value="__all__" {% if "__all__" in sel.division %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for d in divisions %}
               <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" in sel.division %}selected{% endif %}>{{ d|tr:"name" }}</option>
               {% endfor %}
@@ -240,6 +244,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'জেলা নির্বাচন করুন…' 'Select District…' %}">
+              <option value="__all__" {% if "__all__" in sel.district %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for d in districts %}
               <option value="{{ d.pk }}" {% if d.pk|stringformat:"s" in sel.district %}selected{% endif %}>{{ d|tr:"name" }} ({{ d.division|tr:"name" }})</option>
               {% endfor %}
@@ -264,6 +269,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:320px;"
                     data-placeholder="{% ui 'লিঙ্গ নির্বাচন করুন…' 'Select gender…' %}">
+              <option value="__all__" {% if "__all__" in sel.gender %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for g in genders %}
               <option value="{{ g.pk }}" {% if g.pk|stringformat:"s" in sel.gender %}selected{% endif %}>{{ g|tr:"name" }}</option>
               {% endfor %}
@@ -288,6 +294,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:360px;"
                     data-placeholder="{% ui 'ধর্ম নির্বাচন করুন…' 'Select religion…' %}">
+              <option value="__all__" {% if "__all__" in sel.religion %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for r in religions %}
               <option value="{{ r.pk }}" {% if r.pk|stringformat:"s" in sel.religion %}selected{% endif %}>{{ r|tr:"name" }}</option>
               {% endfor %}
@@ -335,6 +342,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
                     data-placeholder="{% ui 'স্থায়ী কমিটি নির্বাচন করুন…' 'Select committee…' %}">
+              <option value="__all__" {% if "__all__" in sel.committee %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for c in committees %}
               <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" in sel.committee %}selected{% endif %}>{{ c|tr:"name" }}</option>
               {% endfor %}
@@ -359,6 +367,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
                     data-placeholder="{% ui 'মন্ত্রণালয় নির্বাচন করুন…' 'Select ministry…' %}">
+              <option value="__all__" {% if "__all__" in sel.ministry %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for m in ministries %}
               <option value="{{ m.pk }}" {% if m.pk|stringformat:"s" in sel.ministry %}selected{% endif %}>{{ m|tr:"name" }}</option>
               {% endfor %}
@@ -383,6 +392,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'শিক্ষার স্তর নির্বাচন করুন…' 'Select education level…' %}">
+              <option value="__all__" {% if "__all__" in sel.education_level %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for el in education_levels %}
               <option value="{{ el.pk }}" {% if el.pk|stringformat:"s" in sel.education_level %}selected{% endif %}>{{ el|tr:"name" }}</option>
               {% endfor %}
@@ -407,6 +417,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'পেশাদার যোগ্যতা নির্বাচন করুন…' 'Select qualification…' %}">
+              <option value="__all__" {% if "__all__" in sel.prof_qual %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for pq in prof_quals %}
               <option value="{{ pq.pk }}" {% if pq.pk|stringformat:"s" in sel.prof_qual %}selected{% endif %}>{{ pq|tr:"name" }}</option>
               {% endfor %}
@@ -434,6 +445,7 @@
           <div class="d-flex gap-2 align-items-start">
             <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:450px;"
                     data-placeholder="{% ui 'সংসদীয় পদ নির্বাচন করুন…' 'Select position…' %}">
+              <option value="__all__" {% if "__all__" in sel.special_position %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
               {% for r in special_roles %}
               <option value="{{ r.pk }}" {% if r.pk|stringformat:"s" in sel.special_position %}selected{% endif %}>{{ r|tr:"name" }}</option>
               {% endfor %}
@@ -481,7 +493,7 @@
   </a>
   {% if searched and total_count %}
   <div class="ms-auto d-flex gap-2">
-    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
+    <button type="submit" name="format" value="print" formtarget="_blank" class="btn btn-outline-secondary btn-sm">
       <i class="bi bi-printer-fill me-1"></i>{% ui "প্রিন্ট" "Print" %}
     </button>
     <button type="submit" name="format" value="pdf" class="btn btn-outline-danger btn-sm">
@@ -500,87 +512,45 @@
 </form><!-- end main form -->
 
 <!-- ══ RESULTS TABLE ═════════════════════════════════════════════════════════ -->
+{% comment %}No pagination: a report is read, printed and exported whole, so every matching row is on this one page. The cells were computed once in the view (see _custom_rows) — the template only prints them.{% endcomment %}
 {% if searched %}
 
 <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
-  <div class="d-flex align-items-center gap-3 flex-wrap">
-    <span class="text-muted" style="font-size:.875rem;">
-      {% ui "মোট ফলাফল" "Total results" %}: <strong>{{ total_count }}</strong> {% ui "জন সংসদ সদস্য" "MPs" %}
-      {% if total_count == 0 %}— {% ui "কোনো ফলাফল পাওয়া যায়নি।" "No results found." %}{% endif %}
-    </span>
-    {% include "reports/_per_page_selector.html" %}
-  </div>
+  <span class="text-muted" style="font-size:.875rem;">
+    {% ui "মোট ফলাফল" "Total results" %}: <strong>{{ total_count }}</strong> {% ui "জন সংসদ সদস্য" "MPs" %}
+    {% if total_count == 0 %}— {% ui "কোনো ফলাফল পাওয়া যায়নি।" "No results found." %}{% endif %}
+  </span>
+  {% if total_count %}<small class="text-muted">{% ui "সব ফলাফল এই পাতাতেই — প্রিন্ট ও পিডিএফে সম্পূর্ণ তালিকা আসবে।" "Every row is on this page — print and PDF carry the full list." %}</small>{% endif %}
 </div>
 
-{% if page_obj %}
+{% if rows %}
 <div class="mp-card">
   <div class="table-responsive">
     <table class="table table-hover table-sm mb-0 align-middle" style="font-size:.84rem;">
-      <thead class="table-dark">
+      <thead class="table-dark" style="position:sticky;top:0;z-index:2;">
         <tr>
           <th style="width:40px;">{% ui "ক্রম" "#" %}</th>
-          {% for key, label in CUSTOM_REPORT_COLS %}
-            {% if key in selected_cols %}
-              <th>{{ label }}</th>
-            {% endif %}
-          {% endfor %}
+          {% for key, label in columns %}<th>{{ label }}</th>{% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for mp in page_obj %}
+        {% for row in rows %}
         <tr>
-          <td class="text-center text-muted">{{ forloop.counter0|add:page_obj.start_index }}</td>
-          {% for key, label in CUSTOM_REPORT_COLS %}
-            {% if key in selected_cols %}
-              <td>
-                {% if key == 'photo' %}
-                  {% if mp.photo %}
-                  <img src="{{ mp.photo.url }}" style="width:28px;height:36px;object-fit:cover;border-radius:3px;">
-                  {% else %}
-                  <div style="width:28px;height:36px;border-radius:3px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">
-                    <i class="bi bi-person-fill text-muted" style="font-size:.8rem;"></i>
-                  </div>
-                  {% endif %}
-                {% elif key == 'mp_id' %}
-                  <a href="{% url 'mp:mp_detail' mp.pk %}" class="fw-medium text-decoration-none">{{ mp.mp_id }}</a>
-                {% elif key == 'name_bn' %}
-                  <a href="{% url 'mp:mp_detail' mp.pk %}" class="text-decoration-none">{{ mp|tr:"name" }}</a>
-                {% else %}
-                  {{ mp|get_custom_cell:key }}
-                {% endif %}
-              </td>
-            {% endif %}
+          <td class="text-center text-muted">{{ forloop.counter }}</td>
+          {% for key, value in row.cells %}
+          <td>
+            {% if key == 'photo' %}
+              {% if value %}<img src="{{ value }}" loading="lazy" style="width:28px;height:36px;object-fit:cover;border-radius:3px;">{% else %}<div style="width:28px;height:36px;border-radius:3px;background:#f1f5f9;"></div>{% endif %}
+            {% elif key == 'mp_id' or key == 'name_bn' or key == 'name_en' %}
+              <a href="{% url 'mp:mp_detail' row.mp.pk %}" class="text-decoration-none fw-medium">{{ value }}</a>
+            {% else %}{{ value }}{% endif %}
+          </td>
           {% endfor %}
         </tr>
-        {% empty %}
-        <tr><td colspan="20" class="text-center text-muted py-5">{% ui "কোনো ফলাফল পাওয়া যায়নি।" "No results found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-
-  <!-- Pagination -->
-  {% if page_obj.has_other_pages %}
-  <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
-    <small class="text-muted">{% ui "পাতা" "Page" %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} — {% ui "মোট" "Total" %} {{ total_count }}</small>
-    <nav>
-      <ul class="pagination pagination-sm mb-0">
-        {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">&laquo;</a>
-        </li>
-        {% endif %}
-        <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
-        {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">&raquo;</a>
-        </li>
-        {% endif %}
-      </ul>
-    </nav>
-  </div>
-  {% endif %}
-
 </div>
 {% endif %}
 {% endif %}
@@ -614,16 +584,7 @@ document.querySelectorAll('.filter-toggle').forEach(function(cb) {
   cb.addEventListener('change', applyState.bind(cb));
 });
 
-// ── Select All button ─────────────────────────────────────────────────────────
-document.querySelectorAll('.select-all-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var name = this.dataset.target;
-    var sel = document.querySelector('select[name="' + name + '"]');
-    $(sel).find('option').prop('selected', true);
-    $(sel).trigger('change');
-  });
-});
-
+{% comment %}The "সব / All" buttons are wired in static/js/filter_all_option.js: they pick the single ALL value rather than ticking every option, so the field shows one chip and the URL carries one value.{% endcomment %}
 // ── Column chip select/clear all ──────────────────────────────────────────────
 function selectAllCols() {
   document.querySelectorAll('input[name="col"]').forEach(function(cb) { cb.checked = true; });

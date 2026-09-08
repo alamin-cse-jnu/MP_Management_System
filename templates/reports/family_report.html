@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static lang_tags %}
+{% load static lang_tags report_tags %}
 {% block title %}{% if request.session.LANGUAGE == 'en' %}Family Members Report{% else %}পরিবার সদস্য রিপোর্ট{% endif %}{% endblock %}
 
 {% block extra_css %}
@@ -56,6 +56,7 @@
           <select name="mp_id" multiple id="mp_id_select"
                   class="form-select form-select-sm" style="flex:1;max-width:560px;"
                   data-placeholder="{% if is_en == 'en' %}All MPs (leave blank for all)…{% else %}সকল এমপি (ফাঁকা রাখলে সবার তথ্য আসবে)…{% endif %}">
+            <option value="__all__" {% if "__all__" in sel_mp_ids %}selected{% endif %}>{% if is_en == 'en' %}ALL{% else %}সব (ALL){% endif %}</option>
             {% for mp in mp_list %}
             <option value="{{ mp.mp_id }}" {% if mp.mp_id in sel_mp_ids %}selected{% endif %}>
               {# mp_list rows are .values() dicts — the |tr filter needs attributes, so pick the field directly. #}
@@ -181,13 +182,13 @@
       <ul class="pagination pagination-sm mb-0">
         {% if page_obj.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">&laquo;</a>
+          <a class="page-link" href="?{% qs_page page_obj.previous_page_number %}">&laquo;</a>
         </li>
         {% endif %}
         <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
         {% if page_obj.has_next %}
         <li class="page-item">
-          <a class="page-link" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">&raquo;</a>
+          <a class="page-link" href="?{% qs_page page_obj.next_page_number %}">&raquo;</a>
         </li>
         {% endif %}
       </ul>
@@ -209,9 +210,10 @@ $(document).ready(function() {
     allowClear: true,
     width: '100%',
   });
+  // "সব / All" is wired in static/js/filter_all_option.js — it picks the one
+  // ALL value, so the field shows a single chip and the URL stays short.
   $('#selectAllMp').on('click', function() {
-    $('#mp_id_select option').prop('selected', true);
-    $('#mp_id_select').trigger('change');
+    $('#mp_id_select').val(['__all__']).trigger('change');
   });
   $('#clearAllMp').on('click', function() {
     $('#mp_id_select').val(null).trigger('change');

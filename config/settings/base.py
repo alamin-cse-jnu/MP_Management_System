@@ -1,4 +1,6 @@
+import tempfile
 from pathlib import Path
+
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -111,7 +113,16 @@ LOCALE_PATHS = [BASE_DIR / 'locale']
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'static_collected'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Django 5.1 removed STATICFILES_STORAGE in favour of STORAGES, so this setting
+# has been silently ignored since the upgrade: collectstatic writes plain
+# filenames, not content-hashed ones. Switching it on breaks collectstatic —
+# the vendored CKEditor bundle points at a `ckeditor.js.map` that is not in the
+# package — and a collectstatic failure stops the container from booting
+# (entrypoint.sh runs it under `set -e`). So the cache is fixed at the other
+# end instead: nginx serves /static/ with `Cache-Control: no-cache`, i.e. keep
+# the copy but revalidate, which is a 304 on a LAN and makes a deploy visible
+# immediately. Restore hashing only with a fix for that missing source map.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # noqa: F811 (ignored by Django 5.2)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -122,3 +133,28 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ── SESSIONS ──────────────────────────────────────────────────────────────────
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 28800  # 8 hours
+
+# ── CACHES ────────────────────────────────────────────────────────────────────
+# `reports` holds rendered PDFs. It is file-based on purpose: gunicorn runs
+# several worker processes and the default LocMemCache is private to each one,
+# so a report cached by worker 1 would still cost a full render on worker 2.
+# The directory lives in the system temp dir, NOT under MEDIA_ROOT — nginx
+# serves /media/ straight off disk, and a cached report must not become a
+# public URL. Losing it on restart is fine; it is only a cache.
+REPORT_CACHE_DIR = config(
+    'REPORT_CACHE_DIR',
+    default=str(Path(tempfile.gettempdir()) / 'mp_report_cache'),
+)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'mp-default',
+    },
+    'reports': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': REPORT_CACHE_DIR,
+        'TIMEOUT': 900,                       # 15 minutes
+        'OPTIONS': {'MAX_ENTRIES': 100},      # ~700 KB each worst case
+    },
+}

@@ -45,9 +45,15 @@ def _lang():
         return 'bn'
 
 
-def _tr(obj, field='name'):
-    """Return bn or en field value based on Django's active language."""
-    lang   = _lang()
+def _tr(obj, field='name', lang=None):
+    """Return bn or en field value based on Django's active language.
+
+    `lang` is threaded through from the report row builder: resolving the
+    active language once per report instead of once per cell saves ~8 000
+    `get_language()` calls on a 348-row x 24-column custom report.
+    """
+    if lang is None:
+        lang = _lang()
     bn_val = getattr(obj, f'{field}_bn', None)
     en_val = getattr(obj, f'{field}_en', None)
     if lang == 'en':
@@ -1372,6 +1378,52 @@ CUSTOM_REPORT_COLS = [
 ]
 CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
 
+# Relative print widths. A printed table gets `table-layout: fixed`, which
+# without this splits the page into equal columns — pick all 24 and every column
+# is ~11 mm wide, so a name breaks into "Muham / mad / Nawsh / ad" and two rows
+# fill an A4 page. These weights give each column a share of the page that
+# suits what it holds; the actual percentages are worked out per report from
+# whichever columns were chosen.
+COL_WIDTH = {
+    'mp_id':             2.7,
+    'name_bn':           3.4,
+    'name_en':           3.4,
+    'constituency':      3.0,
+    'party':             3.0,
+    'age':               1.0,
+    'blood_group':       1.6,
+    'gender':            1.3,
+    'religion':          1.5,
+    'con_division':      1.8,
+    'con_district':      1.8,
+    'division':          1.8,
+    'district':          1.8,
+    'times_elected':     1.1,
+    'committee':         3.6,
+    'ministry':          3.6,
+    'profession':        2.4,
+    'member_type':       2.0,
+    'special_position':  2.4,
+    'highest_edu_level': 2.2,
+    'highest_degree':    2.4,
+    'highest_subject':   2.4,
+    'prof_qual':         2.6,
+}
+# Type size by column count — 24 columns cannot be read at the 10pt a 6-column
+# report is set in, and every avoided line wrap is layout work WeasyPrint does
+# not do.
+PRINT_FONT_PT = [(8, '9.5pt'), (12, '8.5pt'), (16, '7.5pt'), (20, '6.8pt')]
+
+
+def _print_columns(pairs):
+    """[(key, label, width%)] for the print/PDF table, plus its type size."""
+    total = sum(COL_WIDTH.get(k, 2.0) for k, _ in pairs) or 1
+    body  = 96.0                      # the SL column takes the other 4%
+    cols  = [(k, label, round(COL_WIDTH.get(k, 2.0) / total * body, 2))
+             for k, label in pairs]
+    size  = next((pt for limit, pt in PRINT_FONT_PT if len(pairs) <= limit), '6.2pt')
+    return cols, size
+
 # English column labels — CUSTOM_REPORT_COLS above carries the Bangla ones.
 # `_custom_cols()` resolves the pair for the active language, so the column
 # picker, the on-screen table, the print/PDF header and the Excel/CSV headers
@@ -1420,68 +1472,167 @@ MEMBER_TYPE_EN = {
 }
 
 
-def _custom_cell(mp, col, today=None):
+def _custom_cell(mp, col, today=None, lang=None):
+    """One report cell as a display string. `lang` avoids a per-cell
+    `get_language()`; `today` avoids a per-cell `date.today()`."""
     import datetime
     if today is None:
         today = datetime.date.today()
+    if lang is None:
+        lang = _lang()
     ei = next(iter(mp.election_infos.all()), None)
     if col == 'mp_id':        return mp.mp_id
     if col == 'name_bn':      return mp.name_bn
     if col == 'name_en':      return mp.name_en
-    if col == 'constituency': return _tr(ei.constituency, 'display') if ei and ei.constituency else '—'
-    if col == 'party':        return _tr(ei.party) if ei and ei.party else '—'
+    if col == 'constituency': return _tr(ei.constituency, 'display', lang) if ei and ei.constituency else '—'
+    if col == 'party':        return _tr(ei.party, lang=lang) if ei and ei.party else '—'
     if col == 'age':
         if mp.dob:
             age = today.year - mp.dob.year - ((today.month, today.day) < (mp.dob.month, mp.dob.day))
             return str(age)
         return '—'
-    if col == 'blood_group':   return _tr(mp.blood_group) if mp.blood_group else '—'
-    if col == 'gender':        return _tr(mp.gender) if mp.gender else '—'
-    if col == 'religion':      return _tr(mp.religion) if mp.religion else '—'
+    if col == 'blood_group':   return _tr(mp.blood_group, lang=lang) if mp.blood_group else '—'
+    if col == 'gender':        return _tr(mp.gender, lang=lang) if mp.gender else '—'
+    if col == 'religion':      return _tr(mp.religion, lang=lang) if mp.religion else '—'
     # Two different divisions live in this system — the seat's and the member's
     # own. Both are offered as columns so a report can show where they diverge.
     if col == 'con_division':
         con = ei.constituency if ei else None
-        return _tr(con.district.division) if con and con.district and con.district.division else '—'
+        return _tr(con.district.division, lang=lang) if con and con.district and con.district.division else '—'
     if col == 'con_district':
         con = ei.constituency if ei else None
-        return _tr(con.district) if con and con.district else '—'
+        return _tr(con.district, lang=lang) if con and con.district else '—'
     if col == 'division':
-        return _tr(mp.home_district.division) if mp.home_district and mp.home_district.division else '—'
-    if col == 'district':      return _tr(mp.home_district) if mp.home_district else '—'
+        return _tr(mp.home_district.division, lang=lang) if mp.home_district and mp.home_district.division else '—'
+    if col == 'district':      return _tr(mp.home_district, lang=lang) if mp.home_district else '—'
     if col == 'times_elected': return str(ei.times_elected) if ei else '—'
     if col == 'committee':
-        return ', '.join(_tr(ca.committee) for ca in mp.committee_assignments.all()) or '—'
+        return ', '.join(_tr(ca.committee, lang=lang) for ca in mp.committee_assignments.all()) or '—'
     if col == 'ministry':
-        return ', '.join(_tr(ma.ministry) for ma in mp.ministry_assignments.all()) or '—'
+        return ', '.join(_tr(ma.ministry, lang=lang) for ma in mp.ministry_assignments.all()) or '—'
     if col == 'profession':
-        return ', '.join(_tr(p) for p in mp.professions_current.all()) or '—'
+        return ', '.join(_tr(p, lang=lang) for p in mp.professions_current.all()) or '—'
     if col == 'member_type':
         # Three types now (direct / reserved / technocrat) — never assume
         # "not direct" means reserved.
-        if _lang() == 'en':
+        if lang == 'en':
             return MEMBER_TYPE_EN.get(mp.member_type, mp.get_member_type_display())
         return mp.get_member_type_display()
     if col in ('highest_edu_level', 'highest_degree', 'highest_subject'):
         edu = next((e for e in mp.educations.all() if e.education_level), None)
         if col == 'highest_edu_level':
-            return _tr(edu.education_level) if edu else '—'
+            return _tr(edu.education_level, lang=lang) if edu else '—'
         if col == 'highest_degree':
-            return _tr(edu.degree_title) if edu and edu.degree_title else '—'
+            return _tr(edu.degree_title, lang=lang) if edu and edu.degree_title else '—'
         if col == 'highest_subject':
-            return _tr(edu.major_subject) if edu and edu.major_subject else '—'
+            return _tr(edu.major_subject, lang=lang) if edu and edu.major_subject else '—'
     if col == 'special_position':
         # Offices of the House (Speaker / Chief Whip / Whip …). Only the sitting
         # ones — a member who WAS Deputy Speaker is not the Deputy Speaker, and
         # the prefetch is already filtered to is_active.
-        return ', '.join(_tr(sp.role) for sp in mp.special_positions.all()) or '—'
+        return ', '.join(_tr(sp.role, lang=lang) for sp in mp.special_positions.all()) or '—'
     if col == 'prof_qual':
-        return ', '.join(_tr(pq) for pq in mp.professional_qualifications.all()) or '—'
+        return ', '.join(_tr(pq, lang=lang) for pq in mp.professional_qualifications.all()) or '—'
     return '—'
 
 
-def _build_custom_qs(get, parliament_id):
-    """Dynamically build queryset from enabled filters."""
+# ── MP picker "All" collapse ──────────────────────────────────────────────────
+# The report filter forms submit by GET, so a fully-ticked MP picker used to put
+# all 348 `mp_id=…` pairs on the request line — ~5.8 KB, which gunicorn refuses
+# outright ("Request Line is too large (5798 > 4094)") before Django ever sees
+# it: the user got a bare 400 page instead of a report. The picker now collapses
+# a fully-selected list to this one sentinel on submit
+# (static/js/filter_all_option.js), which reads back here as "no restriction"
+# — the same thing every MP selected already meant — and the view re-expands it
+# to the full id list when re-rendering the form so the box still looks ticked.
+ALL_SENTINEL = '__all__'
+
+
+# Every master-data filter and the model whose active rows fill its dropdown.
+# ALL on a filter means "every option in that dropdown", so this is also the
+# expansion of the ALL sentinel.
+FILTER_MODELS = {
+    'blood_group':      ('master', 'BloodGroup'),
+    'gender':           ('master', 'Gender'),
+    'religion':         ('master', 'Religion'),
+    'division':         ('master', 'Division'),
+    'district':         ('master', 'District'),
+    'party':            ('master', 'PoliticalParty'),
+    'committee':        ('master', 'StandingCommittee'),
+    'ministry':         ('master', 'Ministry'),
+    'education_level':  ('master', 'EducationLevel'),
+    'prof_qual':        ('master', 'ProfessionalQualification'),
+    'special_position': ('master', 'SpecialRoleType'),
+}
+
+
+def _filter_option_ids(name):
+    """Every pk that filter's dropdown offers — what ALL expands to."""
+    from django.apps import apps as django_apps
+    app_label, model_name = FILTER_MODELS[name]
+    model = django_apps.get_model(app_label, model_name)
+    return list(model.objects.filter(is_active=True).values_list('pk', flat=True))
+
+
+def _ids(get, name):
+    """Master-data pks for a multi-select filter, junk dropped.
+
+    ALL is stored as one sentinel value and expanded to the dropdown's full id
+    list here, so the filter asks exactly what ticking every option asked —
+    it is NOT turned into "no filter", which would mean something else: these
+    filters cross a relation, so "every district" still excludes an MP with no
+    constituency while "no district filter" keeps them.
+
+    Everything else must be an integer pk, so a non-numeric value can only come
+    from a hand-edited URL — passing it through raises ValueError ("Field 'id'
+    expected a number") for a 500 where an empty filter is the honest answer.
+    """
+    vals = get.getlist(name)
+    if ALL_SENTINEL in vals:
+        return _filter_option_ids(name)
+    return [v for v in vals if v.isdigit()]
+
+
+def _multi(get, name):
+    """Values of an MP picker; [] when it means "all of them".
+
+    Only the MP picker collapses. For the master-data filters below, "every
+    option ticked" is *not* the same as "no filter" — they cross a relation, so
+    ticking all 64 districts on the constituency basis still drops every MP
+    without a constituency. The MP picker lists exactly the rows the report can
+    return, so there the two really are the same question.
+    """
+    vals = [v for v in get.getlist(name) if v]
+    return [] if ALL_SENTINEL in vals else vals
+
+
+# Which prefetch each column needs. A report that does not show committees has
+# no reason to load 348 members' committee assignments — with all seven loaded
+# unconditionally a six-column report ran nine queries and built thousands of
+# unused related objects. Columns not listed here need no prefetch.
+COL_PREFETCH = {
+    'constituency':      'election_infos',
+    'party':             'election_infos',
+    'times_elected':     'election_infos',
+    'con_division':      'election_infos',
+    'con_district':      'election_infos',
+    'committee':         'committee_assignments',
+    'ministry':          'ministry_assignments',
+    'profession':        'professions_current',
+    'prof_qual':         'professional_qualifications',
+    'special_position':  'special_positions',
+    'highest_edu_level': 'educations',
+    'highest_degree':    'educations',
+    'highest_subject':   'educations',
+}
+
+
+def _build_custom_qs(get, parliament_id, cols=None):
+    """Dynamically build queryset from enabled filters.
+
+    `cols` is the chosen column list; only the prefetches those columns read are
+    attached. Pass None to attach them all (what every other caller wants).
+    """
     import datetime
 
     from django.db.models import Prefetch
@@ -1498,20 +1649,31 @@ def _build_custom_qs(get, parliament_id):
         'education_level', 'degree_title', 'major_subject',
     ).order_by('-education_level__degree_order')
 
+    available = {
+        'election_infos':             Prefetch('election_infos', queryset=ei_qs),
+        'educations':                 Prefetch('educations', queryset=edu_qs),
+        'professional_qualifications': 'professional_qualifications',
+        'professions_current':        'professions_current',
+        'committee_assignments':      Prefetch(
+            'committee_assignments',
+            queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
+        'ministry_assignments':       Prefetch(
+            'ministry_assignments',
+            queryset=MinistryAssignment.objects.select_related('ministry').filter(is_active=True)),
+        'special_positions':          Prefetch(
+            'special_positions',
+            queryset=SpecialPositionHistory.objects.select_related('role').filter(is_active=True)),
+    }
+    if cols is None:
+        wanted = list(available)
+    else:
+        wanted = {COL_PREFETCH[c] for c in cols if c in COL_PREFETCH}
+
     qs = MP.objects.parliament_members().select_related(
         'parliament', 'gender', 'religion', 'blood_group',
         'home_district__division',
     ).prefetch_related(
-        Prefetch('election_infos', queryset=ei_qs),
-        Prefetch('educations', queryset=edu_qs),
-        'professional_qualifications',
-        'professions_current',
-        Prefetch('committee_assignments',
-                 queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
-        Prefetch('ministry_assignments',
-                 queryset=MinistryAssignment.objects.select_related('ministry').filter(is_active=True)),
-        Prefetch('special_positions',
-                 queryset=SpecialPositionHistory.objects.select_related('role').filter(is_active=True)),
+        *[available[name] for name in available if name in wanted]
     ).filter(is_active=True)
 
     if parliament_id:
@@ -1522,7 +1684,7 @@ def _build_custom_qs(get, parliament_id):
 
     # ── MP ID ─────────────────────────────────────────────────────────────────
     if 'enable_mp_id' in get:
-        ids = [v for v in get.getlist('mp_id') if v]
+        ids = _multi(get, 'mp_id')
         if ids:
             qs = qs.filter(mp_id__in=ids)
 
@@ -1539,13 +1701,13 @@ def _build_custom_qs(get, parliament_id):
 
     # ── Blood Group ───────────────────────────────────────────────────────────
     if 'enable_blood_group' in get:
-        ids = [v for v in get.getlist('blood_group') if v]
+        ids = _ids(get, 'blood_group')
         if ids:
             qs = qs.filter(blood_group__in=ids)
 
     # ── Political Party ───────────────────────────────────────────────────────
     if 'enable_party' in get:
-        ids = [v for v in get.getlist('party') if v]
+        ids = _ids(get, 'party')
         if ids:
             qs = qs.filter(election_infos__party__in=ids)
             needs_distinct = True
@@ -1560,7 +1722,7 @@ def _build_custom_qs(get, parliament_id):
         return 'home' if get.get(f'{name}_basis') == 'home' else 'constituency'
 
     if 'enable_division' in get:
-        ids = [v for v in get.getlist('division') if v]
+        ids = _ids(get, 'division')
         if ids:
             if _basis('division') == 'home':
                 qs = qs.filter(home_district__division__in=ids)
@@ -1574,7 +1736,7 @@ def _build_custom_qs(get, parliament_id):
                 needs_distinct = True
 
     if 'enable_district' in get:
-        ids = [v for v in get.getlist('district') if v]
+        ids = _ids(get, 'district')
         if ids:
             if _basis('district') == 'home':
                 qs = qs.filter(home_district__in=ids)
@@ -1587,13 +1749,13 @@ def _build_custom_qs(get, parliament_id):
 
     # ── Gender ────────────────────────────────────────────────────────────────
     if 'enable_gender' in get:
-        ids = [v for v in get.getlist('gender') if v]
+        ids = _ids(get, 'gender')
         if ids:
             qs = qs.filter(gender__in=ids)
 
     # ── Religion ──────────────────────────────────────────────────────────────
     if 'enable_religion' in get:
-        ids = [v for v in get.getlist('religion') if v]
+        ids = _ids(get, 'religion')
         if ids:
             qs = qs.filter(religion__in=ids)
 
@@ -1610,21 +1772,21 @@ def _build_custom_qs(get, parliament_id):
 
     # ── Standing Committee ────────────────────────────────────────────────────
     if 'enable_committee' in get:
-        ids = [v for v in get.getlist('committee') if v]
+        ids = _ids(get, 'committee')
         if ids:
             qs = qs.filter(committee_assignments__committee__in=ids)
             needs_distinct = True
 
     # ── Ministry ──────────────────────────────────────────────────────────────
     if 'enable_ministry' in get:
-        ids = [v for v in get.getlist('ministry') if v]
+        ids = _ids(get, 'ministry')
         if ids:
             qs = qs.filter(ministry_assignments__ministry__in=ids)
             needs_distinct = True
 
     # ── Education Level ───────────────────────────────────────────────────────
     if 'enable_education_level' in get:
-        ids = [v for v in get.getlist('education_level') if v]
+        ids = _ids(get, 'education_level')
         if ids:
             qs = qs.filter(educations__education_level__in=ids)
             needs_distinct = True
@@ -1633,7 +1795,7 @@ def _build_custom_qs(get, parliament_id):
     # Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House. Only
     # sitting terms match: a past Deputy Speaker is not the Deputy Speaker.
     if 'enable_special_position' in get:
-        ids = [v for v in get.getlist('special_position') if v]
+        ids = _ids(get, 'special_position')
         if ids:
             cond = {'special_positions__role__in': ids,
                     'special_positions__is_active': True}
@@ -1644,7 +1806,7 @@ def _build_custom_qs(get, parliament_id):
 
     # ── Professional Qualifications ───────────────────────────────────────────
     if 'enable_prof_qual' in get:
-        ids = [v for v in get.getlist('prof_qual') if v]
+        ids = _ids(get, 'prof_qual')
         if ids:
             qs = qs.filter(professional_qualifications__in=ids)
             needs_distinct = True
@@ -1654,6 +1816,82 @@ def _build_custom_qs(get, parliament_id):
 
     return qs
 
+
+
+def _report_data_version():
+    """A stamp that changes whenever MP data changes.
+
+    Every write to the MP tables and their sub-models goes through the audit
+    signals (apps/reports/audit.py), so the newest audit row id is a whole-data
+    version for the price of one indexed MAX on a primary key. Master-data
+    renames are not audited, so a cached report can carry a stale party or
+    committee label for at most the cache timeout — that is the trade that buys
+    an instant repeat of an otherwise multi-second render.
+    """
+    from django.db.models import Max
+    from apps.reports.models import AuditLog
+    return AuditLog.objects.aggregate(v=Max('id'))['v'] or 0
+
+
+def _pdf_cache_key(request, lang):
+    """One key per (filters, columns, language, data version).
+
+    Report generation is a shared workload — ten people asking for the same
+    standard report should pay for one render, not ten. The data version in the
+    key means an edit invalidates every cached report immediately rather than
+    leaving stale ones to expire.
+    """
+    import hashlib
+    parts = sorted((k, v) for k, vs in request.GET.lists()
+                   for v in vs if k != 'format')
+    raw = repr((parts, lang, _report_data_version()))
+    return 'custom_pdf:' + hashlib.sha256(raw.encode('utf-8')).hexdigest()
+
+
+def _cached_pdf(request, ctx, template, filename, lang, split_key='rows'):
+    """Serve a report PDF, rendering it only if this exact one is not cached."""
+    from django.core.cache import caches
+    try:
+        cache = caches['reports']
+    except Exception:                      # no cache configured — just render
+        cache = None
+
+    key = _pdf_cache_key(request, lang) if cache else None
+    if cache:
+        hit = cache.get(key)
+        if hit is not None:
+            response = HttpResponse(hit, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+
+    response = render_report_pdf(request, template, ctx, filename,
+                                 split_key=split_key)
+    if cache:
+        try:
+            cache.set(key, response.content)
+        except Exception:
+            pass                            # a cache failure must not fail a report
+    return response
+
+def _custom_rows(mps, cols, today, lang):
+    """[{'mp': mp, 'cells': [(col, value), …]}, …] — every cell computed once.
+
+    The screen table, the print page, the PDF and the Excel/CSV export all used
+    to walk the full 24-column list per row and call `_custom_cell` through a
+    template filter, so a 348-member report evaluated ~8 400 filter calls per
+    surface — and the print and PDF paths did it twice over the same data. One
+    pass here feeds all four.
+    """
+    rows = []
+    for mp in mps:
+        cells = []
+        for col in cols:
+            if col == 'photo':
+                cells.append((col, mp.photo.url if mp.photo else ''))
+            else:
+                cells.append((col, _custom_cell(mp, col, today, lang)))
+        rows.append({'mp': mp, 'cells': cells})
+    return rows
 
 @perm_required
 def custom_report(request):
@@ -1697,7 +1935,9 @@ def custom_report(request):
             con = m.get_member_type_display()
         mp_list.append({'mp_id': m.mp_id, 'label': f'{m.mp_id} — {name} — {con}'})
 
-    # Pre-selected values (restore filter state after search)
+    # Pre-selected values (restore filter state after search). A filter the user
+    # set to ALL comes back as the single ALL_SENTINEL and is re-rendered as one
+    # "ALL" chip, not as 348 individual ones — see the picker in the template.
     sel = {
         'blood_group':     request.GET.getlist('blood_group'),
         'gender':          request.GET.getlist('gender'),
@@ -1716,8 +1956,9 @@ def custom_report(request):
         'special_position': request.GET.getlist('special_position'),
     }
 
+    all_cols = _custom_cols()
     ctx = {
-        'CUSTOM_REPORT_COLS': _custom_cols(),
+        'CUSTOM_REPORT_COLS': all_cols,
         'selected_cols':      selected_cols,
         'parliament_id':      parliament_id,
         'parliaments':        _parliament_qs(),
@@ -1741,38 +1982,44 @@ def custom_report(request):
     if not searched:
         return render(request, 'reports/custom_report.html', ctx)
 
-    qs = _build_custom_qs(request.GET, parliament_id)
-    total_count = qs.count()
-    ctx['total_count'] = total_count
-
     import datetime
     today = datetime.date.today()
-    data_cols = [c for c in selected_cols if c != 'photo']
+    lang  = _lang()
 
-    if fmt == 'excel':
-        col_labels = dict(_custom_cols())
-        headers    = [_ui('ক্রম', 'SL')] + [col_labels.get(c, c) for c in data_cols]
-        rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
-                      for i, mp in enumerate(qs)]
-        return export_excel('custom_report', headers, rows, 'কাস্টম রিপোর্ট')
+    # Columns in canonical order, and the same list without the photo — the
+    # print, PDF and spreadsheet surfaces have no use for an <img>.
+    columns        = [(k, label) for k, label in all_cols if k in selected_cols]
+    data_columns   = [(k, label) for k, label in columns if k != 'photo']
+    data_cols      = [k for k, _ in data_columns]
 
-    if fmt == 'csv':
-        col_labels = dict(_custom_cols())
-        headers    = [_ui('ক্রম', 'SL')] + [col_labels.get(c, c) for c in data_cols]
-        rows       = [[i + 1] + [_custom_cell(mp, c, today) for c in data_cols]
-                      for i, mp in enumerate(qs)]
+    # The report is never paginated: it is fetched, rendered, printed and
+    # exported whole, so the result set is materialised once here and every
+    # surface below reads that one list. `len()` on it also replaces the
+    # separate COUNT query the paginator used to need.
+    mps = list(_build_custom_qs(request.GET, parliament_id, cols=selected_cols))
+    ctx['total_count'] = len(mps)
+
+    if fmt in ('excel', 'csv'):
+        headers = [_ui('ক্রম', 'SL')] + [label for _k, label in data_columns]
+        rows    = [[i + 1] + [v for _k, v in r['cells']]
+                   for i, r in enumerate(_custom_rows(mps, data_cols, today, lang))]
+        if fmt == 'excel':
+            return export_excel('custom_report', headers, rows, 'কাস্টম রিপোর্ট')
         return export_csv('custom_report', headers, rows)
 
     if fmt in ('print', 'pdf'):
-        ctx['object_list'] = qs
+        ctx['columns'], ctx['table_font'] = _print_columns(data_columns)
+        ctx['rows']        = _custom_rows(mps, data_cols, today, lang)
         ctx['today']       = today
+        ctx['start_index'] = 0        # row numbers continue across PDF chunks
         if fmt == 'pdf':
-            return render_report_pdf(request, 'reports/print/custom_report.html', ctx, 'custom_report.pdf')
+            return _cached_pdf(request, ctx, 'reports/print/custom_report.html',
+                               'custom_report.pdf', lang)
         return render(request, 'reports/print/custom_report.html', ctx)
 
-    paginator = Paginator(qs, _page_size(request))
-    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
-    ctx['today']    = today
+    ctx['columns'] = columns
+    ctx['rows']    = _custom_rows(mps, [k for k, _ in columns], today, lang)
+    ctx['today']   = today
     return render(request, 'reports/custom_report.html', ctx)
 
 
@@ -1784,15 +2031,18 @@ def family_report(request):
 
     fmt        = request.GET.get('format', '')
     searched   = 'search' in request.GET
-    sel_mp_ids = request.GET.getlist('mp_id')
+    sel_mp_ids = _multi(request.GET, 'mp_id')
     lang       = request.session.get('LANGUAGE', 'bn')
 
     mp_list = MP.objects.parliament_members().filter(
         is_active=True).order_by('mp_id').values('mp_id', 'name_bn', 'name_en')
 
+    # ALL comes back as the single sentinel and re-renders as one "ALL" chip.
+    sel_display = request.GET.getlist('mp_id')
+
     ctx = {
         'mp_list':    mp_list,
-        'sel_mp_ids': sel_mp_ids,
+        'sel_mp_ids': sel_display,
         'searched':   searched,
         'GET':        request.GET,
     }

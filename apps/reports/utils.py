@@ -26,13 +26,83 @@ def export_csv(filename, headers, rows):
     return response
 
 
-def render_report_pdf(request, template, ctx, filename, landscape=True):
+def _html_to_pdf(html, base_url):
+    """HTML string → PDF bytes.
+
+    Engine cascade: WeasyPrint (correct Bangla shaping — used on the
+    Linux/Docker server) → xhtml2pdf (pure-Python fallback for Windows dev;
+    Bangla shaping is limited but it always produces a valid PDF).
+    """
+    try:
+        from weasyprint import HTML as WP_HTML
+        return WP_HTML(string=html, base_url=base_url).write_pdf()
+    except Exception:
+        pass
+    from xhtml2pdf import pisa
+    buf = io.BytesIO()
+    pisa.pisaDocument(io.BytesIO(html.encode('utf-8')), buf)
+    return buf.getvalue()
+
+
+def _pdf_chunk(args):
+    """Process-pool worker: one HTML chunk → PDF bytes.
+
+    Must stay a module-level function (picklable) and must never touch the ORM:
+    it runs in a fork of a gunicorn worker and shares that worker's database
+    socket, so a query — or a `connection.close()` — here would corrupt the
+    parent's connection. It only lays out an HTML string that was rendered in
+    the parent.
+    """
+    html, base_url = args
+    return _html_to_pdf(html, base_url)
+
+
+def _split_workers(n_rows, split_size):
+    """How many processes to lay this report out with (1 = render inline).
+
+    WeasyPrint costs ~40 ms per row of a wide Bangla table and is single
+    threaded, so a 348-row report is ~15 s of one core. Splitting it into a few
+    chunks and merging the PDFs cuts the wait roughly by the number of chunks.
+
+    The cap is deliberate. Report generation is a shared, concurrent workload:
+    one user's PDF must not take the whole box. So this never asks for more than
+    3 processes, never more than the rows justify, and returns 1 outright when
+    the load average says the other cores are already busy — under load, serial
+    rendering keeps total throughput higher than everyone forking at once.
+    """
+    import os
+    if os.name != 'posix':
+        return 1                       # spawn (Windows) would re-import Django
+    if n_rows <= split_size:
+        return 1
+    cpu = os.cpu_count() or 1
+    if cpu < 2:
+        return 1
+    try:
+        load = os.getloadavg()[0]
+    except (OSError, AttributeError):
+        load = 0.0
+    headroom = cpu - load
+    if headroom < 1.5:
+        return 1
+    # Never more than half the cores: on the 4-core server that means a report
+    # splits in two, leaving the other half for everyone else's page loads.
+    return max(1, min(3, cpu // 2, int(headroom), -(-n_rows // split_size)))
+
+
+def render_report_pdf(request, template, ctx, filename, landscape=True,
+                      split_key=None, split_size=120):
     """Render a print template to a downloadable PDF (Phase 17.2 / 17.6).
 
-    Engine cascade: WeasyPrint (correct Bangla shaping — used on the Linux/Docker
-    server) → xhtml2pdf (pure-Python fallback for Windows dev; Bangla shaping is
-    limited but it always produces a valid PDF). Returns the PDF as an
-    ``attachment`` so the browser downloads it instead of opening a print dialog.
+    `split_key` names a list in `ctx` (the report's rows). When it is long
+    enough — and the server is not already busy — the rows are cut into chunks,
+    each chunk is laid out in its own process, and the PDFs are merged. The
+    template is handed `start_index` (so row numbers continue across chunks),
+    `hide_print_header` (the letterhead belongs on the first chunk only) and
+    `hide_report_footer` (the totals line belongs on the last).
+
+    Returns the PDF as an ``attachment`` so the browser downloads it instead of
+    opening a print dialog.
     """
     from pathlib import Path
     from django.conf import settings
@@ -45,25 +115,65 @@ def render_report_pdf(request, template, ctx, filename, landscape=True):
     # without depending on collected static files.
     font_path = Path(settings.BASE_DIR) / 'static' / 'fonts' / 'SolaimanLipi.ttf'
     ctx['pdf_font_uri'] = font_path.as_uri() if font_path.exists() else ''
+    base_url = str(settings.BASE_DIR)
 
-    html = render_to_string(template, ctx, request=request)
+    rows    = ctx.get(split_key) if split_key else None
+    workers = _split_workers(len(rows), split_size) if rows else 1
 
-    pdf_bytes = None
-    try:
-        from weasyprint import HTML as WP_HTML
-        pdf_bytes = WP_HTML(string=html, base_url=str(settings.BASE_DIR)).write_pdf()
-    except Exception:
-        pdf_bytes = None
-
-    if pdf_bytes is None:
-        from xhtml2pdf import pisa
-        buf = io.BytesIO()
-        pisa.pisaDocument(io.BytesIO(html.encode('utf-8')), buf)
-        pdf_bytes = buf.getvalue()
+    if workers > 1:
+        pdf_bytes = _render_split_pdf(request, template, ctx, base_url,
+                                      split_key, rows, workers)
+    else:
+        pdf_bytes = _html_to_pdf(render_to_string(template, ctx, request=request),
+                                 base_url)
 
     response = HttpResponse(pdf_bytes, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
+
+
+def _render_split_pdf(request, template, ctx, base_url, split_key, rows, workers):
+    """Lay the report out in `workers` processes and merge the pieces."""
+    import concurrent.futures
+    import multiprocessing
+
+    size   = -(-len(rows) // workers)
+    chunks = [rows[i:i + size] for i in range(0, len(rows), size)]
+    htmls  = []
+    offset = 0
+    for i, chunk in enumerate(chunks):
+        cctx = dict(ctx)
+        cctx[split_key]           = chunk
+        cctx['start_index']       = offset
+        cctx['hide_print_header'] = i > 0
+        cctx['hide_report_footer'] = i < len(chunks) - 1
+        htmls.append((render_to_string(template, cctx, request=request), base_url))
+        offset += len(chunk)
+
+    try:
+        from pypdf import PdfWriter
+    except ImportError:
+        # No merger available — fall back to one document, still correct.
+        return _html_to_pdf(render_to_string(template, ctx, request=request), base_url)
+
+    ctxm = multiprocessing.get_context('fork')
+    parts = None
+    try:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=len(htmls),
+                                                    mp_context=ctxm) as pool:
+            parts = list(pool.map(_pdf_chunk, htmls, timeout=300))
+    except Exception:
+        parts = None
+    if not parts:
+        return _html_to_pdf(render_to_string(template, ctx, request=request), base_url)
+
+    writer = PdfWriter()
+    for part in parts:
+        writer.append(io.BytesIO(part))
+    out = io.BytesIO()
+    writer.write(out)
+    writer.close()
+    return out.getvalue()
 
 
 def export_excel(filename, headers, rows, sheet_title='রিপোর্ট'):

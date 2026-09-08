@@ -19,3 +19,18 @@ def get_custom_cell(mp, col):
     """
     from apps.reports.views import _custom_cell
     return _custom_cell(mp, col)
+
+
+@register.simple_tag(takes_context=True)
+def qs_page(context, page):
+    """The current query string with `page` set to `page`, every value kept.
+
+    Pagination links used to rebuild the query string with
+    `{% for k,v in request.GET.items %}`, and a QueryDict's `.items()` yields
+    only the LAST value of a repeated key — so paging a report filtered on
+    several MPs quietly dropped every id but one, and nothing was URL-encoded
+    either. `urlencode()` keeps every value and escapes them.
+    """
+    get = context['request'].GET.copy()
+    get.setlist('page', [str(page)])
+    return get.urlencode()

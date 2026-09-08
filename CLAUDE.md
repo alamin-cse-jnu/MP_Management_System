@@ -141,6 +141,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 31 | Education page → repeatable degrees (double graduation / masters / PhD / diploma) via per-row prefixes + pk binding (see `docs/phase-history.md`) | ✅ |
 | 32 | Two divisions told apart — dashboard chart + custom-report filters/columns get a constituency vs home-district basis, `Constituency.district` backfill | ✅ |
 | 33 | Parliamentary positions (Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House …) — seeded master, single-holder guard, `/parliament/positions/` module, holders report + report columns | ✅ |
+| 34 | Custom report — ALL chip instead of 348, pagination removed (whole report on one page), print fixed, PDF made 5–10× faster (column widths, parallel layout, result cache), static-asset cache fixed | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -306,6 +307,62 @@ silently — full context in `docs/phase-history.md`.
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
     `-e DJANGO_SETTINGS_MODULE=config.settings.production`; `static_collected` is a
     named **volume**, so `ls` it inside the container, not on the host.
+
+23b. **A GET filter form has a request-line budget.** Ticking all 348 MPs in a
+    report picker put every `mp_id=…` pair on the URL — ~5.8 KB — and gunicorn
+    rejected it before Django saw anything: a bare `Bad Request / Request Line
+    is too large (5798 > 4094)`, no traceback, no log line in the app. Two
+    guards now: the MP picker collapses a *complete* selection to the single
+    value `__all__` (`static/js/filter_all_option.js` → `ALL_SENTINEL` /
+    `_multi()` in `apps/reports/views.py`, re-expanded when the form is
+    re-rendered so the chips still show), and gunicorn runs with
+    `--limit-request-line 8190` (its maximum) with nginx's
+    `large_client_header_buffers` kept wider. The sentinel is opt-in per
+    `<select>` via `data-all-sentinel` and is **only** safe on the MP picker:
+    the master-data filters cross a relation, so "all 64 districts" still drops
+    every MP without a constituency, which "no filter" does not.
+    Also: pagination links must not rebuild the query with
+    `{% for k,v in request.GET.items %}` — a QueryDict's `.items()` yields only
+    the LAST value of a repeated key, so paging a report filtered on several MPs
+    silently dropped all but one. Use `{% qs_page n %}` (`report_tags`).
+
+23c. **Report generation is the heavy, shared workload — treat it as one.**
+    A 348-row x 24-column custom report cost 33 s of PDF on prod, and every
+    surface (screen / print / PDF / Excel) recomputed the same cells. What was
+    wrong and what fixed it, in order of size:
+    - **Column widths.** `table-layout: fixed` with no widths splits an A4
+      landscape page into 24 equal 11 mm columns, so a name breaks into
+      "Muham / mad / Nawsh / ad" and **two rows fill a page — 97 pages**.
+      `COL_WIDTH` + a `<colgroup>` gives 23 pages, and WeasyPrint's cost tracks
+      the number of *lines*, so the layout fix is also the biggest speed fix.
+    - **`overflow-wrap: anywhere`** (set on th/td in `base_print.html`) costs
+      ~30% of layout time on a big Bangla table — every grapheme becomes a
+      break candidate. The custom report overrides it with `break-word`.
+    - **Inline `style=` per cell.** 8 700 one-off declaration blocks for
+      WeasyPrint to parse. Class-based CSS instead; ~8% and a 5x smaller HTML.
+    - **Parallel layout.** `render_report_pdf(split_key=...)` cuts the rows into
+      chunks, lays each out in a forked process and merges with pypdf. Capped at
+      `cpu // 2` and skipped when `getloadavg()` says the box is busy — under
+      concurrency, serial rendering keeps total throughput higher. Workers must
+      never touch the ORM: they share the parent's DB socket.
+    - **Result cache.** `caches['reports']` (file-based, so it is shared across
+      gunicorn workers — LocMemCache is per process) keyed on filters + columns
+      + language + `AuditLog` max id. An edit invalidates instantly; master-data
+      renames are not audited, so a label can be stale for the 15-minute TTL.
+    - **Prefetch only what the chosen columns read** (`COL_PREFETCH`): a
+      six-column report went from 27 queries to 19.
+    Never paginate this report: it is read, printed and exported whole, and the
+    old Print button printed only the visible page.
+
+23d. **Static assets were served with `expires 30d` and no content hash** —
+    Django 5.1 removed `STATICFILES_STORAGE`, which this project still set, so
+    collectstatic silently stopped hashing filenames. A returning browser then
+    kept a month-old copy of any edited CSS/JS and never revalidated: **a deploy
+    was invisible until a hard refresh**. nginx now sends
+    `Cache-Control: public, no-cache` for `/static/` (keep the copy, revalidate
+    — a 304 on a LAN). Turning the manifest storage back on needs the vendored
+    `ckeditor.js.map` to exist first, and a collectstatic failure stops the
+    container booting (`entrypoint.sh` runs it under `set -e`).
 
 **Two divisions — never one "Division"**
 24. An MP has **two** divisions and they disagree (Dhaka: 70 seats vs 94 home

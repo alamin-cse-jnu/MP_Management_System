@@ -1,47 +1,61 @@
 {% extends "base_print.html" %}
 {% load lang_tags %}
-{% load static report_tags %}
 {% block title %}কাস্টম রিপোর্ট{% endblock %}
 
+{% comment %}Every cell here was computed once in the view (_custom_rows) and arrives as a (key, value) pair — the template does no lookups. Styling is class-based on purpose: this table used to carry an inline style= on every <tr> and <td>, which meant WeasyPrint parsed ~8 700 one-off declaration blocks before it could lay a 348-row report out.{% endcomment %}
+{% block extra_css %}
+<style>
+  /* Column widths come from the view (COL_WIDTH), so a 24-column report does
+     not get 24 equal 11 mm columns that break every name into single letters.
+     `table-layout: fixed` + a colgroup is also the cheapest thing WeasyPrint
+     can lay out: it never has to measure content to size a column. */
+  table.report { table-layout: fixed; margin-bottom: 8px; }
+  table.report th, table.report td { font-size: {{ table_font|default:"9.5pt" }}; padding: 2px 3px; }
+  table.report thead th { background: #0d9488; color: #fff; }
+  table.report tbody tr:nth-child(even) { background: #f0fdfa; }
+  table.report td.sl { text-align: center; }
+  /* No `overflow-wrap: anywhere` here (base_print.html sets it for other
+     reports): letting the line-breaker consider a break inside every Bengali
+     cluster costs ~30% of the layout time on a table this size, and these
+     columns are short values that wrap fine on word boundaries. */
+  table.report th, table.report td { overflow-wrap: break-word; }
+</style>
+{% endblock %}
+
 {% block content %}
+{% if not hide_print_header %}
 <div style="text-align:center;margin-bottom:12px;">
   <div style="font-size:1.1rem;font-weight:bold;">কাস্টম রিপোর্ট</div>
   <div style="font-size:.85rem;color:#666;">Custom Report</div>
 </div>
+{% endif %}
 
-<table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+<table class="report">
+  <colgroup>
+    <col style="width:4%">
+    {% for key, label, width in columns %}<col style="width:{{ width }}%">{% endfor %}
+  </colgroup>
   <thead>
-    <tr style="background:#0d9488;color:#fff;">
-      <th style="padding:5px 8px;border:1px solid #999;">{% ui "ক্রম" "#" %}</th>
-      {% for key, label in CUSTOM_REPORT_COLS %}
-        {% if key in selected_cols and key != 'photo' %}
-          <th style="padding:5px 8px;border:1px solid #999;">{{ label }}</th>
-        {% endif %}
-      {% endfor %}
+    <tr>
+      <th>{% ui "ক্রম" "#" %}</th>
+      {% for key, label, width in columns %}<th>{{ label }}</th>{% endfor %}
     </tr>
   </thead>
   <tbody>
-    {% for mp in object_list %}
-    <tr style="{% cycle 'background:#fff;' 'background:#f0fdfa;' %}">
-      <td style="padding:4px 8px;border:1px solid #ddd;text-align:center;">{{ forloop.counter }}</td>
-      {% for key, label in CUSTOM_REPORT_COLS %}
-        {% if key in selected_cols and key != 'photo' %}
-          <td style="padding:4px 8px;border:1px solid #ddd;">
-            {% if key == 'mp_id' %}{{ mp.mp_id }}
-            {% elif key == 'name_bn' %}{{ mp|tr:"name" }}
-            {% else %}{{ mp|get_custom_cell:key }}
-            {% endif %}
-          </td>
-        {% endif %}
-      {% endfor %}
+    {% for row in rows %}
+    <tr>
+      <td class="sl">{{ forloop.counter|add:start_index }}</td>
+      {% for key, value in row.cells %}<td>{{ value }}</td>{% endfor %}
     </tr>
     {% empty %}
-    <tr><td colspan="20" style="padding:12px;text-align:center;">কোনো ফলাফল নেই।</td></tr>
+    <tr><td colspan="25" style="text-align:center;">কোনো ফলাফল নেই।</td></tr>
     {% endfor %}
   </tbody>
 </table>
 
-<div style="margin-top:16px;font-size:.78rem;color:#666;text-align:right;">
-  মোট: {{ object_list|length }} জন | মুদ্রণের তারিখ: {% now "d M Y" %}
+{% if not hide_report_footer %}
+<div style="margin-top:10px;font-size:.78rem;color:#666;text-align:right;">
+  মোট: {{ total_count }} জন | মুদ্রণের তারিখ: {% now "d M Y" %}
 </div>
+{% endif %}
 {% endblock %}
