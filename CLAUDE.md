@@ -148,6 +148,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 33 | Parliamentary positions (Speaker / Deputy Speaker / Chief Whip / Whip / Leader of the House …) — seeded master, single-holder guard, `/parliament/positions/` module, holders report + report columns | ✅ |
 | 34 | Custom report — ALL chip instead of 348, pagination removed (whole report on one page), print fixed, PDF made 5–10× faster (column widths, parallel layout, result cache), static-asset cache fixed | ✅ |
 | 35 | Field-feedback round 4 — GPA pair labelled earned/scale + swap guard, biodata education gains Subject/Group + Board-University columns, biodata travel Type reads the real TravelType, letterhead gains Software Development Section | ✅ |
+| 36 | Master-data duplicates — `/master/duplicates/` finder + merge (repoints MP data, then removes the duplicate), form-level duplicate refusal + live similar-name warning, `master_duplicates` command | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -178,6 +179,16 @@ python manage.py loaddata fixtures/initial/position_menu.json
 # halves exist and earned > scale are touched.
 python manage.py fix_reversed_gpa --dry-run
 python manage.py fix_reversed_gpa
+
+# Master-data duplicates (Phase 36) — report, then merge. Merging repoints
+# every MP reference onto the row you keep, so nothing is stranded.
+python manage.py master_duplicates                          # report every table
+python manage.py master_duplicates --model EducationSubject # one table
+python manage.py master_duplicates --auto-merge             # only the sets where at most one row holds data
+python manage.py master_duplicates --model Ministry --merge 21:26   # explicit KEEP:DROP
+# 2026-09-09 on prod: 40 sets found, 25 auto-merged (identical spellings),
+# 15 left on /master/duplicates/ because the two spellings disagree.
+python manage.py loaddata fixtures/initial/duplicates_menu.json
 
 # Constituency → District backfill (Phase 32) — the constituency-basis division
 # chart and district_wise?basis=constituency both need this FK populated.
@@ -420,8 +431,43 @@ silently — full context in `docs/phase-history.md`.
     (301–350) can never appear on the constituency basis — they have no
     constituency by rule.
 
+**Master data duplicates**
+25. **Deactivating a duplicate does not unlink anything.** `is_active=False`
+    hides the row from every picker, but the MP records still point at it — so
+    the same fact reads one way on the profile and another in a report, and a
+    filter on the surviving row silently drops those MPs. Prod proved it: three
+    inactive rows still carried live data (`EducationInstitution` "ঢাকা  বোর্ড"
+    → 1 education row, `EducationSubject` "সমাজবিজ্ঞান" → 3, `TravelPurpose`
+    "অন্যান্য" → **35 foreign tours**). The only correct fix is to *repoint* and
+    then remove: `/master/duplicates/` or `manage.py master_duplicates`.
+    `utils/master_merge.py` does the repointing — reverse FKs via `update()`,
+    reverse M2M via remove/add (`update()` cannot touch a through table), then
+    it re-counts and refuses to delete if anything survived.
+    `/master/duplicates/` also lists **inactive-but-still-referenced** rows in
+    their own red panel (`find_stranded`), with a Reactivate button — a
+    deactivated row with no duplicate to merge into has no other way out.
+26. `suggest_keeper` ranks **active before most-used**. Usage alone once
+    elected a deactivated survivor on prod, leaving "সমাজবিজ্ঞান" holding four
+    MP records while hidden from every dropdown. Moving a few extra references
+    is free; a survivor nobody can pick defeats the merge.
+27. **A repeated name is only a duplicate within its parent.** কালীগঞ্জ is a
+    real upazila in four districts and শিবগঞ্জ in two — comparing upazila names
+    country-wide reports 14 "duplicates" of which exactly 1 is real. `NAME_SCOPE`
+    in `utils/master_merge.py` holds the scoping FKs (Upazila→district,
+    District→division); add to it, never widen the comparison.
+28. Duplicates are refused at the form (`_DedupeMixin` in `apps/master/forms.py`,
+    on every master ModelForm) and warned about live while typing
+    (`master:name_check`). The form blocks only **exact** matches after
+    normalisation (NFC, trimmed, single-spaced, punctuation-insensitive); near
+    matches are advisory, because no string metric can know `মেডিসিন` and
+    `চিকিৎসাবিজ্ঞান` are the same subject. An edit that does **not** worsen an
+    already-existing duplicate still goes through — prod carries duplicates and
+    locking their rows would be a new way of being stuck.
+29. Importers, seeders and data migrations bypass the form, so they still need
+    their own NFC-normalised matching (see #21).
+
 **Deliberate choices — do not "restore" these**
-25. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
+30. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
     `-is_active, name_bn`); the tour officer picker is **type-to-search only** — its
     wing filter chips and always-visible scrolling list were removed on user
     feedback, not lost.

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+
+{% block title %}{% ui "ডুপ্লিকেট মাস্টার ডেটা" "Duplicate Master Data" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1" style="font-size:0.8125rem;">
+        <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'master:home' %}">{% ui "মাস্টার ডেটা" "Master Data" %}</a></li>
+        <li class="breadcrumb-item active">{% ui "ডুপ্লিকেট" "Duplicates" %}</li>
+      </ol>
+    </nav>
+    <h4 class="mb-0 fw-bold">{% ui "ডুপ্লিকেট মাস্টার ডেটা" "Duplicate Master Data" %}</h4>
+    <small class="text-muted">{% ui "একই জিনিস দুইবার আছে এমন সারি — মার্জ করলে এমপি ডেটা রাখা সারিতে সরে যায়" "Rows naming the same thing twice — merging moves the MP data onto the row you keep" %}</small>
+  </div>
+  <span class="badge bg-secondary">{{ set_count|to_bn }} {% ui "টি সেট" "sets" %}</span>
+</div>
+
+<div class="alert alert-info d-flex align-items-start gap-2 py-2 px-3" style="font-size:.85rem;">
+  <i class="bi bi-info-circle-fill mt-1"></i>
+  <div>
+    {% ui "নিষ্ক্রিয় করলে ডুপ্লিকেট শুধু তালিকা থেকে লুকায় — এমপি রেকর্ড তখনও সেটির দিকেই নির্দেশ করে থাকে, তাই একই তথ্য দুই রিপোর্টে দুই রকম দেখায়। মার্জ করলে সব রেফারেন্স রাখা সারিতে সরে যায়, তারপর ডুপ্লিকেটটি বাদ যায়।" "Deactivating a duplicate only hides it from the list — the MP records still point at it, so the same fact reads two different ways in two reports. Merging repoints every reference onto the row you keep, then removes the duplicate." %}
+    <div class="mt-1">{% ui "সবুজ সারিটি প্রস্তাবিত — যেটি সবচেয়ে বেশি ব্যবহৃত। চাইলে অন্যটি বেছে নিন।" "The green row is the suggestion — the one most data already uses. Pick another if you prefer." %}</div>
+  </div>
+</div>
+
+<form class="mp-card p-2 px-3 mb-3 d-flex flex-wrap align-items-center gap-2"
+      hx-get="{% url 'master:duplicates_panel' %}"
+      hx-target="#dupe-panel" hx-swap="outerHTML"
+      hx-trigger="change from:find select[name=model]">
+  <label class="form-label mb-0 fw-medium" style="font-size:.85rem;">{% ui "টেবিল" "Table" %}</label>
+  <select name="model" class="form-select form-select-sm" style="max-width:320px;" data-no-select2>
+    <option value="">{% ui "সব মাস্টার টেবিল" "All master tables" %}</option>
+    {% for m in all_models %}
+    <option value="{{ m.label }}" {% if m.label == model_filter %}selected{% endif %}>{{ m.title_bn }} ({{ m.name }})</option>
+    {% endfor %}
+  </select>
+  <small class="text-muted">{% ui "স্ক্যানে কয়েক সেকেন্ড লাগতে পারে।" "The scan can take a few seconds." %}</small>
+</form>
+
+{% include "master/partials/duplicates_panel.html" %}
+{% endblock %}

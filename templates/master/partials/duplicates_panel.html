@@ -1,0 +1,157 @@
+{% load lang_tags %}
+<div id="dupe-panel">
+
+  {% if merged %}
+    {% if merged.ok %}
+    <div class="alert alert-success d-flex align-items-start gap-2 py-2 px-3" style="font-size:.85rem;">
+      <i class="bi bi-check-circle-fill mt-1"></i>
+      <div>
+        {% if merged.reactivated %}
+        <div class="fw-medium">“{{ merged.kept.name_bn }}” {% ui "আবার সক্রিয় করা হয়েছে — এখন ড্রপডাউনে দেখা যাবে।" "is active again — it will show in the dropdowns." %}</div>
+        {% else %}
+        <div class="fw-medium">“{{ merged.kept.name_bn }}” {% ui "রাখা হয়েছে।" "kept." %}</div>
+        <div class="text-muted">{{ merged.moved|to_bn }} {% ui "টি রেকর্ড এই সারিতে সরানো হয়েছে; ডুপ্লিকেট" "record(s) moved onto it;" %} {{ merged.dropped|to_bn }} {% ui "টি সরানো হয়েছে।" "duplicate(s) removed." %}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger py-2 px-3" style="font-size:.85rem;">
+      <i class="bi bi-exclamation-triangle-fill me-1"></i>{{ merged.error }}
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {% if stranded %}
+  <div class="mp-card mb-3" style="border-left:3px solid #dc2626;">
+    <div class="mp-card-header">
+      <i class="bi bi-eye-slash-fill icon"></i>
+      {% ui "নিষ্ক্রিয় করা হয়েছে, কিন্তু এখনও ব্যবহৃত" "Deactivated, but still in use" %}
+      <span class="badge bg-danger ms-auto">{{ stranded|length|to_bn }}</span>
+    </div>
+    <p class="text-muted mb-2" style="font-size:.82rem;">{% ui "এই সারিগুলো কোনো ড্রপডাউনে দেখা যায় না, অথচ এমপি রেকর্ড এখনও এগুলোর দিকেই নির্দেশ করে। হয় সারিটি আবার সক্রিয় করুন, নয়তো নিচের ডুপ্লিকেট তালিকা থেকে সঠিক সারিতে মার্জ করুন।" "These rows appear in no dropdown, yet MP records still point at them. Either put the row back in the list, or merge it onto the correct row using the duplicate list below." %}</p>
+    <div class="table-responsive">
+      <table class="mp-table mb-0" style="font-size:.85rem;">
+        <thead>
+          <tr>
+            <th>{% ui "টেবিল" "Table" %}</th>
+            <th>{% ui "বাংলা নাম" "Bengali Name" %}</th>
+            <th>English Name</th>
+            <th>{% ui "ব্যবহৃত" "Used by" %}</th>
+            <th style="width:120px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in stranded %}
+          <tr>
+            <td class="text-muted">{{ row.title_bn }}</td>
+            <td class="fw-medium">{{ row.obj.name_bn|default:"—" }}</td>
+            <td class="text-muted">{{ row.obj.name_en|default:"—" }}</td>
+            <td>
+              <span class="fw-medium">{{ row.used|to_bn }}</span>
+              <small class="text-muted d-block">{% for d in row.detail %}{{ d.label }} · {{ d.field }} ({{ d.count|to_bn }}){% if not forloop.last %}, {% endif %}{% endfor %}</small>
+            </td>
+            <td>
+              <form hx-post="{% url 'master:duplicates_reactivate' %}" hx-target="#dupe-panel" hx-swap="outerHTML">
+                {% csrf_token %}
+                <input type="hidden" name="model" value="{{ row.model }}">
+                <input type="hidden" name="pk" value="{{ row.obj.pk }}">
+                <input type="hidden" name="model_filter" value="{{ model_filter }}">
+                <button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-toggle-on me-1"></i>{% ui "সক্রিয় করুন" "Reactivate" %}</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if not groups %}
+  <div class="mp-card text-center py-5">
+    <i class="bi bi-patch-check-fill d-block mb-2" style="font-size:2.2rem; color:#16a34a;"></i>
+    <div class="fw-medium">{% ui "কোনো ডুপ্লিকেট পাওয়া যায়নি।" "No duplicates found." %}</div>
+    <small class="text-muted">{% ui "মাস্টার ডেটা পরিষ্কার আছে।" "Master data is clean." %}</small>
+  </div>
+  {% endif %}
+
+  {% for group in groups %}
+  <div class="mp-card mb-3">
+    <div class="mp-card-header">
+      <i class="bi bi-files icon"></i>
+      {{ group.title_bn }}
+      <small class="text-muted ms-2 fw-normal">{{ group.title_en }}</small>
+      <span class="badge bg-warning text-dark ms-auto">{{ group.sets|length|to_bn }} {% ui "সেট" "sets" %}</span>
+    </div>
+
+    {% for dset in group.sets %}
+    <form class="border rounded p-2 mb-2" style="background:#fcfcfd;"
+          hx-post="{% url 'master:duplicates_merge' %}"
+          hx-target="#dupe-panel" hx-swap="outerHTML"
+          hx-confirm="{% ui "নির্বাচিত সারিটি রেখে বাকিগুলো মার্জ করা হবে। সব এমপি রেকর্ড রাখা সারিতে সরে যাবে। চালিয়ে যাবেন?" "The selected row will be kept and the others merged into it. All MP records move onto the kept row. Continue?" %}">
+      {% csrf_token %}
+      <input type="hidden" name="model" value="{{ group.label }}">
+      <input type="hidden" name="model_filter" value="{{ model_filter }}">
+
+      <div class="table-responsive">
+        <table class="mp-table mb-0" style="font-size:.85rem;">
+          <thead>
+            <tr>
+              <th style="width:70px;">{% ui "রাখুন" "Keep" %}</th>
+              <th style="width:60px;">{% ui "আইডি" "ID" %}</th>
+              <th>{% ui "বাংলা নাম" "Bengali Name" %}</th>
+              <th>English Name</th>
+              <th style="width:90px;">{% ui "অবস্থা" "Status" %}</th>
+              <th>{% ui "ব্যবহৃত" "Used by" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in dset.rows %}
+            <tr {% if row.suggested %}style="background:#f0fdf4;"{% endif %}>
+              <td class="text-center">
+                <input class="form-check-input" type="radio" name="keep" value="{{ row.obj.pk }}" {% if row.suggested %}checked{% endif %}>
+                <input type="hidden" name="drop" value="{{ row.obj.pk }}">
+              </td>
+              <td class="text-muted">{{ row.obj.pk }}</td>
+              {% comment %}Bilingual data view — each cell shows the language its header names, so never `|tr:"name"` here.{% endcomment %}
+              <td class="fw-medium">{{ row.obj.name_bn|default:"—" }}</td>
+              <td class="text-muted">{{ row.obj.name_en|default:"—" }}</td>
+              <td>
+                {% if row.obj.is_active %}
+                <span class="badge badge-active">{% ui "সক্রিয়" "Active" %}</span>
+                {% else %}
+                <span class="badge badge-inactive">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if row.used %}
+                <span class="fw-medium">{{ row.used|to_bn }}</span>
+                <small class="text-muted d-block">{% for d in row.detail %}{{ d.label }} · {{ d.field }} ({{ d.count|to_bn }}){% if not forloop.last %}, {% endif %}{% endfor %}</small>
+                {% else %}
+                <span class="text-muted">{% ui "কোথাও নয়" "nowhere" %}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap mt-2">
+        {% if dset.contested %}
+        <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle-fill me-1"></i>{% ui "একাধিক সারিতে ডেটা আছে — দেখে নিন" "Two rows hold data — check before merging" %}</span>
+        {% endif %}
+        <select name="mode" class="form-select form-select-sm" style="max-width:230px;" data-no-select2>
+          <option value="delete">{% ui "ডুপ্লিকেট মুছে ফেলুন" "Delete the duplicate" %}</option>
+          <option value="deactivate">{% ui "ডুপ্লিকেট নিষ্ক্রিয় রাখুন" "Keep it, but inactive" %}</option>
+        </select>
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-union me-1"></i>{% ui "মার্জ করুন" "Merge" %}
+        </button>
+        <small class="text-muted">{% ui "মোট" "Total" %} {{ dset.total_used|to_bn }} {% ui "টি রেকর্ড জড়িত।" "record(s) involved." %}</small>
+      </div>
+    </form>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>

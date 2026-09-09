@@ -1,6 +1,7 @@
 from django import forms
 
 from utils.form_dates import normalize_date_fields
+from utils.master_merge import NAME_SCOPE, clean_name, find_similar
 
 from .models import (
     Division, District, Upazila,
@@ -38,12 +39,93 @@ class _BootstrapMixin:
         normalize_date_fields(self)
 
 
+# Text fields that name the thing and therefore have to be canonical before
+# they are stored or compared. `ঢাকা  বোর্ড` reached prod with two spaces and
+# never matched `ঢাকা বোর্ড` again.
+_NAME_FIELDS = ('name_bn', 'name_en', 'short_name', 'short_bn', 'short_en',
+                'abbreviation', 'category_bn', 'category_en')
+
+
+class _DedupeMixin:
+    """Normalise the name fields and refuse a row that already exists.
+
+    Every master table is written through exactly one ModelForm, so this is the
+    one place that can stop a duplicate being created at all — cleaning up
+    afterwards means repointing MP records, which is far more expensive than
+    refusing the save. Near-misses are not blocked here (no string metric can
+    tell `মেডিসিন` from `চিকিৎসাবিজ্ঞান`); they are surfaced as a live warning
+    while the operator types — see `master:name_check`.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Captured before binding: `construct_instance()` overwrites the
+        # instance with the posted values, so after `is_valid()` a
+        # new-vs-old comparison would compare a value with itself.
+        self._original_names = (
+            (self.instance.name_bn, getattr(self.instance, 'name_en', ''))
+            if self.instance.pk else None)
+
+    def _prior_collisions(self):
+        """Rows this instance ALREADY collided with before the edit."""
+        if not self._original_names:
+            return set()
+        model = self._meta.model
+        scope_field = NAME_SCOPE.get(model._meta.label)
+        scope = getattr(self.instance, scope_field) if scope_field else None
+        exact, _ = find_similar(model, name_bn=self._original_names[0],
+                                name_en=self._original_names[1],
+                                exclude_pk=self.instance.pk, scope=scope)
+        return {r.pk for r in exact}
+
+    def clean(self):
+        cleaned = super().clean()
+        for name in _NAME_FIELDS:
+            if name in cleaned and isinstance(cleaned.get(name), str):
+                cleaned[name] = clean_name(cleaned[name])
+
+        model = self._meta.model
+        scope_field = NAME_SCOPE.get(model._meta.label)
+        scope = cleaned.get(scope_field[:-3]) if scope_field else None
+        exact, _near = find_similar(
+            model,
+            name_bn=cleaned.get('name_bn', ''),
+            name_en=cleaned.get('name_en', ''),
+            exclude_pk=self.instance.pk,
+            scope=scope,
+        )
+        # An edit that does not make things worse must still go through. Prod
+        # already carries duplicates, and refusing to let anyone fix the
+        # ordering or the English half of one until it is merged would be a
+        # new way of being stuck.
+        if exact and {r.pk for r in exact} <= self._prior_collisions():
+            return cleaned
+
+        if exact:
+            hit = exact[0]
+            # An inactive match is the trap worth naming: the row is invisible
+            # in the list, so the operator adds it again and the table now has
+            # two, one of which still holds MP data.
+            state_bn = 'সক্রিয়' if hit.is_active else 'নিষ্ক্রিয় (তালিকায় দেখা যাচ্ছে না)'
+            state_en = 'active' if hit.is_active else 'inactive — hidden from the list'
+            advice_bn = ('' if hit.is_active
+                         else ' নতুন না করে সেটিকেই আবার সক্রিয় করুন।')
+            advice_en = ('' if hit.is_active
+                         else ' Reactivate that row instead of adding a new one.')
+            raise forms.ValidationError(
+                f'এটি ইতিমধ্যে আছে — "{hit.name_bn}" (আইডি {hit.pk}, {state_bn})।'
+                f'{advice_bn} / Already exists as "{hit.name_en or hit.name_bn}" '
+                f'(id {hit.pk}, {state_en}).{advice_en}'
+            )
+        return cleaned
+
+
 def _make_form(model_class, fields):
     """Factory: returns a ModelForm subclass with Bootstrap widgets."""
     Meta = type('Meta', (), {'model': model_class, 'fields': fields})
     return type(
         f'{model_class.__name__}Form',
-        (_BootstrapMixin, forms.ModelForm),
+        (_DedupeMixin, _BootstrapMixin, forms.ModelForm),
         {'Meta': Meta},
     )
 

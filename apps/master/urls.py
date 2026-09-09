@@ -14,7 +14,14 @@ urlpatterns = [
     path('education/<slug:key>/form/', views.education_form, name='education_form_add'),
     path('education/<slug:key>/form/<int:pk>/', views.education_form, name='education_form_edit'),
     path('education/<slug:key>/toggle/<int:pk>/', views.education_toggle, name='education_toggle'),
+    # Duplicate finder + merge — the one place a duplicate can be undone
+    # without leaving MP records pointing at a row nobody can see.
+    path('duplicates/', views.duplicates_home, name='duplicates_list'),
+    path('duplicates/scan/', views.duplicates_panel, name='duplicates_panel'),
+    path('duplicates/merge/', views.duplicates_merge, name='duplicates_merge'),
+    path('duplicates/reactivate/', views.duplicates_reactivate, name='duplicates_reactivate'),
     # HTMX cascade endpoints
+    path('htmx/name-check/', views.name_check, name='name_check'),
     path('htmx/district-options/', views.district_options, name='district_options'),
     path('htmx/upazila-options/', views.upazila_options, name='upazila_options'),
     path('htmx/education-level-cascade/', views.education_level_cascade, name='education_level_cascade'),

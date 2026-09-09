@@ -1,0 +1,24 @@
+{% load lang_tags %}
+{% comment %}Live duplicate warning under a master add/edit form. It re-renders itself on every keystroke, so it carries no focusable control — swapping the node the operator is typing in would drop the caret (see the search-box gotcha in CLAUDE.md). The hx attributes must stay on the root element: this same template is both the initial render and every reply, and a reply without them would silently stop watching.{% endcomment %}
+<div id="name-check" class="mt-2"
+     hx-get="{% url 'master:name_check' %}?model={{ model_label }}{% if editing_pk %}&pk={{ editing_pk }}{% endif %}"
+     hx-trigger="keyup changed delay:450ms from:closest form, change from:closest form"
+     hx-include="closest form"
+     hx-target="this" hx-swap="outerHTML" hx-sync="this:replace">
+  {% if exact %}
+  <div class="alert alert-danger py-2 px-3 mb-0" style="font-size:.8rem;">
+    <i class="bi bi-x-octagon-fill me-1"></i><strong>{% ui "এটি ইতিমধ্যে আছে —" "This already exists —" %}</strong>
+    {% for obj in exact %}
+    <div class="mt-1">{{ obj.name_bn }} <span class="text-muted">/ {{ obj.name_en }}</span> <span class="badge {% if obj.is_active %}badge-active{% else %}badge-inactive{% endif %} ms-1">{% if obj.is_active %}{% ui "সক্রিয়" "Active" %}{% else %}{% ui "নিষ্ক্রিয়" "Inactive" %}{% endif %}</span>{% if not obj.is_active %} <span class="text-muted">{% ui "— নতুন না করে এটিকেই সক্রিয় করুন" "— reactivate this one instead of adding a new row" %}</span>{% endif %}</div>
+    {% endfor %}
+  </div>
+  {% elif near %}
+  <div class="alert alert-warning py-2 px-3 mb-0" style="font-size:.8rem;">
+    <i class="bi bi-exclamation-triangle-fill me-1"></i><strong>{% ui "কাছাকাছি নাম আগে থেকেই আছে —" "A similar name already exists —" %}</strong>
+    <span class="text-muted">{% ui "একই জিনিস হলে নতুন সারি যোগ করবেন না।" "Do not add a new row if it is the same thing." %}</span>
+    {% for obj in near %}
+    <div class="mt-1">{{ obj.name_bn }} <span class="text-muted">/ {{ obj.name_en }}</span>{% if not obj.is_active %} <span class="badge badge-inactive ms-1">{% ui "নিষ্ক্রিয়" "Inactive" %}</span>{% endif %}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

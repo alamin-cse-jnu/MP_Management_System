@@ -1,5 +1,6 @@
 from django.contrib import messages
-from apps.accounts.mixins import perm_required
+from django.conf import settings
+from apps.accounts.mixins import perm_required, _run_permission_check
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.accounts.mixins import PermissionMixin
@@ -10,6 +11,12 @@ from django.urls import reverse
 from django.views import View
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, UpdateView
+
+from apps.accounts.middleware import get_client_ip
+from utils.master_merge import (
+    MergeError, NAME_SCOPE, find_duplicate_sets, find_similar, find_stranded,
+    master_models, merge, suggest_keeper, usage,
+)
 
 from .forms import (
     BloodGroupForm, CommitteePositionForm, CountryForm,
@@ -317,6 +324,7 @@ class _MasterCreateView(PermissionMixin, LoginRequiredMixin, CreateView):
             'title_en': f'Add {spec["title_en"]}',
             'list_url': reverse('master:' + _url_name(spec['key'], 'list')),
             'is_create': True,
+            'model_label': spec['model']._meta.label,
         })
         return ctx
 
@@ -346,6 +354,8 @@ class _MasterUpdateView(PermissionMixin, LoginRequiredMixin, UpdateView):
             'title_en': f'Edit {spec["title_en"]}',
             'list_url': reverse('master:' + _url_name(spec['key'], 'list')),
             'is_create': False,
+            'model_label': spec['model']._meta.label,
+            'editing_pk': self.object.pk,
         })
         return ctx
 
@@ -485,6 +495,7 @@ def _edu_panel_ctx(request, spec, **extra):
         'q': _edu_param(request, 'q'),
         'status': _edu_param(request, 'status', 'active'),
         'form': None, 'open_form': False, 'saved': None, 'editing_pk': None,
+        'model_label': spec['model']._meta.label,
     }
     ctx.update(extra)
     return ctx
@@ -557,6 +568,7 @@ def _group_panel_ctx(request, group, spec, **extra):
         'q': _edu_param(request, 'q'),
         'status': _edu_param(request, 'status', 'active'),
         'form': None, 'open_form': False, 'saved': None, 'editing_pk': None,
+        'model_label': spec['model']._meta.label,
     }
     ctx.update(extra)
     return ctx
@@ -692,6 +704,10 @@ def master_home(request):
         {'title_bn': 'কোভিড-১৯', 'title_en': 'COVID-19', 'icon': 'bi-capsule', 'items': [
             _item('টিকার নাম', 'Vaccine Names', 'master:vaccine_name_list'),
         ]},
+        {'title_bn': 'রক্ষণাবেক্ষণ', 'title_en': 'Maintenance', 'icon': 'bi-tools', 'items': [
+            _item('ডুপ্লিকেট খুঁজুন ও মার্জ করুন', 'Find & Merge Duplicates',
+                  'master:duplicates_list'),
+        ]},
     ]
     # Drop any skipped (None) items and now-empty sections.
     for sec in sections:
@@ -791,4 +807,187 @@ def result_fields(request):
         'result_format': result_format,
         'division_results': DivisionResult.objects.filter(is_active=True).order_by('ordering'),
         'class_results': ClassResult.objects.filter(is_active=True).order_by('ordering'),
+    })
+
+
+# ── DUPLICATE MANAGER ────────────────────────────────────────────────────────
+# Master data is typed by hand, so the same thing lands twice under two
+# spellings and both then collect MP records. Deactivating one does NOT unlink
+# anything — the MP rows keep pointing at the hidden row. This page finds those
+# pairs and merges them: the references move onto the row you keep, then the
+# duplicate is removed. See utils/master_merge.py.
+
+def _dupe_model_map():
+    return {m._meta.label: m for m in master_models()}
+
+
+def _dupe_titles():
+    """model label → the bilingual title the rest of the master UI already uses.
+
+    `Meta.verbose_name` is Django's English default ("education group") on most
+    of these models, which would make this the one master screen that names its
+    own tables differently from every other one.
+    """
+    titles = {}
+    registries = [MASTER_SPECS, EDU_ENTITIES]
+    registries += [g['entities'] for g in MASTER_GROUPS]
+    for entries in registries:
+        for e in entries:
+            titles[e['model']._meta.label] = (e['title_bn'], e['title_en'])
+    return titles
+
+
+def _dupe_scan(models):
+    """Duplicate sets across `models`, each row carrying its reference count."""
+    titles = _dupe_titles()
+    out = []
+    for model in models:
+        sets = []
+        for rows in find_duplicate_sets(model):
+            keeper = suggest_keeper(rows)
+            entries = []
+            for row in rows:
+                total, detail = usage(row)
+                entries.append({'obj': row, 'used': total, 'detail': detail,
+                                'suggested': row.pk == keeper.pk})
+            sets.append({'rows': entries,
+                         'total_used': sum(e['used'] for e in entries),
+                         # Two rows both holding data is the case a human has to
+                         # look at; everything else is a typo nobody ever used.
+                         'contested': sum(1 for e in entries if e['used']) > 1})
+        if sets:
+            title_bn, title_en = titles.get(
+                model._meta.label, (model._meta.verbose_name, model.__name__))
+            out.append({'label': model._meta.label,
+                        'name': model.__name__,
+                        'title_bn': title_bn,
+                        'title_en': title_en,
+                        'sets': sets})
+    return out
+
+
+def _dupe_ctx(request, **extra):
+    models = master_models()
+    only = request.GET.get('model') or request.POST.get('model_filter') or ''
+    if only:
+        models = [m for m in models if m._meta.label == only]
+    groups = _dupe_scan(models)
+    titles = _dupe_titles()
+    stranded = find_stranded(models)
+    for row in stranded:
+        row['title_bn'] = titles.get(row['model'],
+                                     (row['obj']._meta.verbose_name, ''))[0]
+    ctx = {
+        'groups': groups,
+        'stranded': stranded,
+        'set_count': sum(len(g['sets']) for g in groups),
+        'all_models': [{'label': m._meta.label, 'name': m.__name__,
+                        'title_bn': titles.get(m._meta.label,
+                                               (m._meta.verbose_name, ''))[0]}
+                       for m in master_models()],
+        'model_filter': only,
+        'merged': None,
+    }
+    ctx.update(extra)
+    return ctx
+
+
+def _dupe_guard(request, action):
+    """Gate the duplicate tool on the /master/duplicates/ submenu.
+
+    `perm_required` derives the action from the URL name it resolves, and
+    "merge" matches none of its suffixes — so it would fall through to a bare
+    view check. Merging removes a master row, so it is gated on can_delete of
+    the same submenu, via the name the resolver already understands."""
+    if not request.user.is_authenticated:
+        return redirect(f'{settings.LOGIN_URL}?next={request.path}')
+    _run_permission_check(request, f'master:duplicates_{action}')
+    return None
+
+
+def duplicates_home(request):
+    denied = _dupe_guard(request, 'list')
+    if denied:
+        return denied
+    return render(request, 'master/duplicates.html', _dupe_ctx(request))
+
+
+def duplicates_panel(request):
+    denied = _dupe_guard(request, 'list')
+    if denied:
+        return denied
+    return render(request, 'master/partials/duplicates_panel.html', _dupe_ctx(request))
+
+
+@require_POST
+def duplicates_merge(request):
+    """Repoint every reference onto the chosen row, then drop the duplicates."""
+    denied = _dupe_guard(request, 'delete')
+    if denied:
+        return denied
+    model = _dupe_model_map().get(request.POST.get('model', ''))
+    if not model:
+        raise Http404
+    try:
+        keeper = model._default_manager.get(pk=request.POST.get('keep'))
+        losers = list(model._default_manager.filter(
+            pk__in=request.POST.getlist('drop')).exclude(pk=keeper.pk))
+    except (model.DoesNotExist, ValueError, TypeError):
+        raise Http404
+
+    try:
+        summary = merge(losers, keeper, user=request.user,
+                        delete=request.POST.get('mode') != 'deactivate',
+                        ip=get_client_ip())
+        note = {'ok': True, 'kept': keeper,
+                'dropped': len(summary['removed']),
+                'moved': sum(summary['moved'].values())}
+    except MergeError as exc:
+        note = {'ok': False, 'error': str(exc)}
+    return render(request, 'master/partials/duplicates_panel.html',
+                  _dupe_ctx(request, merged=note))
+
+
+@require_POST
+def duplicates_reactivate(request):
+    """Put a deactivated-but-still-referenced row back in the pickers."""
+    denied = _dupe_guard(request, 'edit')
+    if denied:
+        return denied
+    model = _dupe_model_map().get(request.POST.get('model', ''))
+    if not model:
+        raise Http404
+    obj = get_object_or_404(model, pk=request.POST.get('pk'))
+    obj.is_active = True
+    obj.save(update_fields=['is_active'])
+    return render(request, 'master/partials/duplicates_panel.html',
+                  _dupe_ctx(request, merged={'ok': True, 'kept': obj,
+                                             'reactivated': True}))
+
+
+@perm_required
+def name_check(request):
+    """Live warning while a master name is typed — HTMX, fired from the form.
+
+    Catches what the form's own duplicate check cannot: a spelling that differs
+    but means the same thing. Advisory only, because no string metric can be
+    sure `মেডিসিন` and `চিকিৎসাবিজ্ঞান` are one subject — the operator decides.
+    """
+    model = _dupe_model_map().get(request.GET.get('model', ''))
+    if not model:
+        raise Http404
+    scope_field = NAME_SCOPE.get(model._meta.label)
+    scope = request.GET.get(scope_field[:-3]) if scope_field else None
+    exact, near = find_similar(
+        model,
+        name_bn=request.GET.get('name_bn', ''),
+        name_en=request.GET.get('name_en', ''),
+        exclude_pk=request.GET.get('pk') or None,
+        scope=scope,
+    )
+    return render(request, 'master/partials/name_check.html', {
+        'model_label': model._meta.label,
+        'editing_pk': request.GET.get('pk') or '',
+        'exact': exact,
+        'near': near,
     })

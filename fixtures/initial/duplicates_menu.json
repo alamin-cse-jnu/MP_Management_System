@@ -1,0 +1,14 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 106,
+    "fields": {
+      "menu": 1,
+      "name_bn": "ডুপ্লিকেট খুঁজুন ও মার্জ করুন",
+      "name_en": "Find & Merge Duplicates",
+      "url_name": "master:duplicates_list",
+      "ordering": 120,
+      "is_active": true
+    }
+  }
+]
