@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 
 from utils.form_dates import normalize_date_fields
+from utils.prp_files import PRP_FILE_ACCEPT
 
 from apps.master.form_fields import BilingualChoiceField
 from apps.master.models import (
@@ -439,3 +440,32 @@ class PersonalForeignTravelForm(_BootstrapMixin, forms.ModelForm):
                      'note_bn', 'note_en', 'ordering'):
             self.fields[name].required = False
         normalize_date_fields(self)
+
+
+class PRPFormUploadForm(_BootstrapMixin, forms.ModelForm):
+    """The PRP form tab / upload modal — a tick and a file, nothing else.
+
+    Both fields are optional so the tick can be set before the scan exists
+    (that combination *is* the backlog the report is for). The view, not this
+    form, decides what an empty file means: on the tab it leaves the stored
+    file alone, so saving the tick never silently drops the attachment.
+    """
+
+    class Meta:
+        model  = MP
+        fields = ['prp_form_submitted', 'prp_form_file']
+        widgets = {
+            # FileInput, not ClearableFileInput: its "Clear" tick would give a
+            # second, quieter way to drop the scan that skips the delete view's
+            # confirmation and its storage cleanup.
+            'prp_form_file': forms.FileInput(
+                attrs={'class': 'form-control', 'accept': PRP_FILE_ACCEPT}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['prp_form_file'].required = False
+        self.fields['prp_form_file'].label = 'PRP ফরম স্ক্যান / PRP form scan'
+        self.fields['prp_form_submitted'].label = (
+            'হার্ডকপি জমা পড়েছে / Hardcopy received'
+        )

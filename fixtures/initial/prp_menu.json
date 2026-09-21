@@ -1,0 +1,26 @@
+[
+  {
+    "model": "accounts.submenu",
+    "pk": 403,
+    "fields": {
+      "menu": 4,
+      "name_bn": "PRP ফরম ট্র্যাকিং",
+      "name_en": "PRP Form Tracking",
+      "url_name": "mp:prp_form_list",
+      "ordering": 15,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.submenu",
+    "pk": 927,
+    "fields": {
+      "menu": 9,
+      "name_bn": "PRP ফরম জমা ও আপলোড অবস্থা",
+      "name_en": "PRP Form Status",
+      "url_name": "reports:prp_form_status",
+      "ordering": 76,
+      "is_active": true
+    }
+  }
+]

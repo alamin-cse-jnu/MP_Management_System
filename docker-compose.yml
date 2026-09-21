@@ -27,6 +27,10 @@ services:
       - .:/app
       - static_vol:/app/static_collected
       - media_vol:/app/media
+      # Scanned PRP forms. Mounted into `web` ONLY — never into nginx — so the
+      # web server cannot serve these bytes even by misconfiguration. They are
+      # readable solely through mp:prp_form_file, which checks login + role.
+      - private_vol:/app/private_media
     expose:
       - "8000"          # internal only — reached via the nginx proxy
     depends_on:
@@ -49,3 +53,4 @@ volumes:
   postgres_data:
   static_vol:
   media_vol:
+  private_vol:

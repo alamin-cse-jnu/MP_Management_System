@@ -26,6 +26,8 @@ Path     : /opt/mp_management  (plain files, NOT a git checkout)
 Stack    : docker compose → db (postgres16) + web (gunicorn) + nginx
 Serving  : nginx :80  →  proxy →  gunicorn web:8000 (config.settings.production, DEBUG=False)
            nginx serves /static/ + /media/ from named volumes; web is internal-only.
+           private_vol (PRP form scans) is mounted into web ONLY — nginx must
+           never be given it; those files go out through Django or not at all.
 Settings : entrypoint.sh exports DJANGO_SETTINGS_MODULE=config.settings.production,
            runs migrate + collectstatic, then execs gunicorn (3 workers, 120s timeout).
 TLS      : OFF. production.py secure-cookie/HSTS/SSL-redirect are env-driven via
@@ -101,6 +103,28 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
     `parliament:position_*` from BOTH the module and the MP profile tab — there
     is no second write path, and adding one would bypass the guard.
 
+20. **The PRP form is tracked as TWO facts, never one status.** `MP.prp_form_submitted`
+    (the office has the hardcopy — a human tick, nobody else can know it) and
+    `MP.prp_form_file` (a scan is in the system — derived from the file, never
+    typed). That is the only way to name the state the Secretariat actually
+    chases: **form received but not yet scanned**. The four combinations are
+    `MP.prp_status` → complete / awaiting_upload / not_submitted / unticked;
+    `unticked` (a scan with the tick cleared) is a data slip, surfaced rather
+    than folded into "complete" so it gets corrected. Buckets live on
+    `MPQuerySet` (`prp_complete` / `prp_awaiting_upload` / `prp_not_submitted`
+    / `prp_unticked` / `prp_counts`) and are shared by the tracking page and
+    the report — never re-derive them in a view. Uploading a scan **auto-ticks**
+    submitted: you cannot scan a form you never received, and a forgotten
+    second click is a false entry on the chase list.
+
+20b. **A PRP scan is NOT stored under MEDIA_ROOT.** nginx serves `/media/` with
+    no authentication, and one page of a PRP form carries the MP's NID,
+    passport and bank account numbers together. Scans live in
+    `settings.PRIVATE_MEDIA_ROOT` (its own docker volume, mounted into `web`
+    and deliberately **not** into `nginx`) and are readable only through
+    `mp:prp_form_file`, which re-checks login + role. `utils/prp_files.py`
+    holds the storage, validator and limits (PDF/JPG/PNG, 20 MB).
+
 19. Technocrat ministers = cabinet members with NO seat. Stored as MP rows with
     member_type='technocrat' and NO ElectionInfo (no constituency/party/election).
     They NEVER count towards the 350 — every MP count/report goes through
@@ -149,6 +173,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 34 | Custom report — ALL chip instead of 348, pagination removed (whole report on one page), print fixed, PDF made 5–10× faster (column widths, parallel layout, result cache), static-asset cache fixed | ✅ |
 | 35 | Field-feedback round 4 — GPA pair labelled earned/scale + swap guard, biodata education gains Subject/Group + Board-University columns, biodata travel Type reads the real TravelType, letterhead gains Software Development Section | ✅ |
 | 36 | Master-data duplicates — `/master/duplicates/` finder + merge (repoints MP data, then removes the duplicate), form-level duplicate refusal + live similar-name warning, `master_duplicates` command | ✅ |
+| 37 | PRP form tracking — upload/view the scanned form (private storage), MP profile tab 20, `/mp/prp-forms/` tracking page, PRP form status report | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -189,6 +214,11 @@ python manage.py master_duplicates --model Ministry --merge 21:26   # explicit K
 # 2026-09-09 on prod: 40 sets found, 25 auto-merged (identical spellings),
 # 15 left on /master/duplicates/ because the two spellings disagree.
 python manage.py loaddata fixtures/initial/duplicates_menu.json
+
+# PRP form tracking (Phase 37) — menu for /mp/prp-forms/ and the status report.
+# Needs mp/0018 applied, and `docker compose up -d` to create the private_vol
+# volume that holds the scans (a plain `restart` will not create it).
+python manage.py loaddata fixtures/initial/prp_menu.json
 
 # Constituency → District backfill (Phase 32) — the constituency-basis division
 # chart and district_wise?basis=constituency both need this FK populated.
@@ -325,6 +355,26 @@ silently — full context in `docs/phase-history.md`.
     `CERTIFICATE_VERIFY_FAILED`. Use `prp_api.ssl_context()` +
     `utils/certs/prp_chain.pem` — it *adds* trust. Do **NOT** "simplify" to
     `verify=False`.
+23z. **nginx caches the upstream IP at startup — a recreated `web` 502s the
+    whole site.** nginx resolves a hostname in `proxy_pass`/`upstream` exactly
+    once, at boot, and holds that address for the life of the process. Any
+    `docker compose up -d` that *recreates* web (changed image, env or
+    **volumes**) can renumber the containers, and nginx keeps dialling the old
+    address. It is worse than a dead end: the freed address gets reused, so on
+    2026-09-21 nginx was proxying HTTP straight at **Postgres**, which refuses
+    the connection — `502`, with a perfectly healthy gunicorn logging *nothing*
+    (the request never reached it). Diagnose by comparing
+    `docker inspect …-web-1 --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'`
+    with the IP in the nginx error log.
+    Fixed for good in `nginx/nginx.conf`: a `resolver 127.0.0.11 valid=10s`
+    (Docker's embedded DNS) plus a **variable** in proxy_pass
+    (`set $web_upstream web; proxy_pass http://$web_upstream:8000;`), which
+    defers resolution to request time. The literal `upstream django {}` block
+    was removed — with a variable it is bypassed anyway. Verified by parking a
+    decoy container on web's old address, forcing web to a new IP and
+    confirming the site stayed up with nginx untouched. Keep the variable: a
+    bare `proxy_pass http://web:8000;` silently restores the old behaviour.
+
 23. `docker compose` traps: `docker compose images web` exits 1 right after a
     rebuild (making a successful build look failed); `docker compose exec` does
     **not** inherit the entrypoint's `DJANGO_SETTINGS_MODULE`, so pass
@@ -465,6 +515,24 @@ silently — full context in `docs/phase-history.md`.
     locking their rows would be a new way of being stuck.
 29. Importers, seeders and data migrations bypass the form, so they still need
     their own NFC-normalised matching (see #21).
+
+**Private uploads**
+31. `FileSystemStorage(location=…)` with no `base_url` does **not** make `.url`
+    raise — `base_url` falls back to `settings.MEDIA_URL`, so a private file
+    would happily hand out `/media/prp_forms/…`, a path nginx serves from the
+    *public* volume where the bytes are not. That is a dead link that looks
+    like a working one. `utils/prp_files.PrivateFileSystemStorage` overrides
+    `url()` to raise instead, so a stray `{{ …file.url }}` fails in review.
+    Also: pass the storage as a **callable** (`storage=prp_storage`), never an
+    instance — Django serialises an instance into the migration with its
+    `location` baked in, shipping the developer's Windows path to the server.
+32. Deleting a superseded upload is housekeeping and must never fail the
+    request that replaced it. The new file is already saved and the row already
+    points at it; if the old one cannot be removed (a reader still holds the
+    handle — routine on Windows) the operator would get a 500 for an upload
+    that in fact succeeded. Both `prp_form_edit` and `prp_form_delete` swallow
+    `OSError` around the storage delete. An orphan in a directory nothing
+    serves is harmless.
 
 **Deliberate choices — do not "restore" these**
 30. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not

@@ -1,0 +1,109 @@
+{% load static lang_tags %}
+{% comment %}
+Section 20 — the submitted PRP form itself.
+The scan is NEVER linked by {{ mp.prp_form_file.url }}: it is stored outside
+MEDIA_ROOT and is only readable through mp:prp_form_file, which re-checks the
+user's role. The storage has no base_url, so a stray .url would raise.
+{% endcomment %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+  <h6 class="fw-bold mb-0">{% ui "PRP ফরম" "PRP Form" %}</h6>
+  <div class="d-flex gap-2 flex-wrap">
+    {% if mp.has_prp_file %}
+    <a href="{% url 'mp:prp_form_file' mp.pk %}" target="_blank" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-box-arrow-up-right me-1"></i>{% ui "নতুন ট্যাবে" "Open in new tab" %}
+    </a>
+    <a href="{% url 'mp:prp_form_file' mp.pk %}?download=1" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-download me-1"></i>{% ui "ডাউনলোড" "Download" %}
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ── STATUS STRIP ────────────────────────────────────────────────────────── -->
+<div class="mb-3 p-3 rounded" style="background:#f8fafc;border:1px solid #e2e8f0;">
+  <div class="row g-3 align-items-center">
+    <div class="col-md-5">
+      <div class="text-muted mb-1" style="font-size:.78rem;">{% ui "বর্তমান অবস্থা" "Current status" %}</div>
+      {% if mp.prp_status == 'complete' %}
+      <span class="badge bg-success-subtle text-success" style="font-size:.85rem;"><i class="bi bi-check-circle-fill me-1"></i>{{ mp|tr:"prp_status_label" }}</span>
+      {% elif mp.prp_status == 'awaiting_upload' %}
+      <span class="badge bg-warning-subtle text-warning-emphasis" style="font-size:.85rem;"><i class="bi bi-hourglass-split me-1"></i>{{ mp|tr:"prp_status_label" }}</span>
+      {% elif mp.prp_status == 'unticked' %}
+      <span class="badge bg-info-subtle text-info-emphasis" style="font-size:.85rem;"><i class="bi bi-exclamation-circle-fill me-1"></i>{{ mp|tr:"prp_status_label" }}</span>
+      {% else %}
+      <span class="badge bg-danger-subtle text-danger" style="font-size:.85rem;"><i class="bi bi-x-circle-fill me-1"></i>{{ mp|tr:"prp_status_label" }}</span>
+      {% endif %}
+    </div>
+    <div class="col-md-7">
+      {% if mp.has_prp_file %}
+      <div class="text-muted" style="font-size:.78rem;">{% ui "আপলোড" "Uploaded" %}</div>
+      <div style="font-size:.85rem;">
+        {{ mp.prp_form_uploaded_at|date:"d/m/Y H:i"|default:"—" }}
+        {% if mp.prp_form_uploaded_by %}— {{ mp.prp_form_uploaded_by.full_name_bn|default:mp.prp_form_uploaded_by.username }}{% endif %}
+        {% if mp.prp_form_original_name %}<div class="text-muted" style="font-size:.76rem;"><i class="bi bi-paperclip me-1"></i>{{ mp.prp_form_original_name }}</div>{% endif %}
+      </div>
+      {% else %}
+      <div class="text-muted" style="font-size:.82rem;">{% ui "কোনো স্ক্যান কপি আপলোড করা হয়নি।" "No scanned copy uploaded yet." %}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- ── ENTRY FORM ──────────────────────────────────────────────────────────── -->
+<form method="post" action="{% url 'mp:prp_form_edit' mp.pk %}" enctype="multipart/form-data" class="mb-4">
+  {% csrf_token %}
+  <div class="row g-3 align-items-end">
+    <div class="col-md-5">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">
+        {% ui "স্ক্যান কপি আপলোড করুন" "Upload scanned copy" %}
+      </label>
+      <input type="file" name="prp_form_file" accept="{{ prp_accept }}" class="form-control form-control-sm">
+      <div class="form-text" style="font-size:.74rem;">
+        {% ui "PDF, JPG বা PNG — সর্বোচ্চ" "PDF, JPG or PNG — max" %} {{ prp_max_mb }} MB.
+        {% if mp.has_prp_file %}{% ui "নতুন ফাইল দিলে আগেরটি প্রতিস্থাপিত হবে।" "A new file replaces the current one." %}{% endif %}
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-check">
+        <input type="checkbox" name="prp_form_submitted" id="prp-submitted-tick"
+               class="form-check-input" {% if mp.prp_form_submitted %}checked{% endif %}>
+        <label class="form-check-label" for="prp-submitted-tick" style="font-size:.85rem;">
+          {% ui "হার্ডকপি জমা পড়েছে" "Hardcopy received" %}
+        </label>
+      </div>
+      <div class="form-text" style="font-size:.74rem;">{% ui "ফাইল আপলোড করলে এটি নিজে থেকেই টিক হয়ে যাবে।" "Uploading a file ticks this automatically." %}</div>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+      <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i>{% ui "সংরক্ষণ" "Save" %}</button>
+      {% if mp.has_prp_file %}
+      <button type="submit" form="prp-delete-form" class="btn btn-outline-danger btn-sm"
+              onclick="return confirm('{% ui "স্ক্যান কপিটি মুছে ফেলা হবে। নিশ্চিত?" "The scanned copy will be deleted. Are you sure?" %}');">
+        <i class="bi bi-trash me-1"></i>{% ui "ফাইল মুছুন" "Delete file" %}
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</form>
+
+{% if mp.has_prp_file %}
+<form method="post" action="{% url 'mp:prp_form_delete' mp.pk %}" id="prp-delete-form" class="d-none">{% csrf_token %}</form>
+
+<!-- ── VIEWER ──────────────────────────────────────────────────────────────── -->
+<div class="border rounded overflow-hidden" style="background:#f1f5f9;">
+  {% if mp.prp_file_is_pdf %}
+  <iframe src="{% url 'mp:prp_form_file' mp.pk %}" title="{% ui "PRP ফরম" "PRP Form" %}"
+          style="width:100%;height:760px;border:0;display:block;"></iframe>
+  {% else %}
+  <div class="text-center p-3">
+    <img src="{% url 'mp:prp_form_file' mp.pk %}" alt="{% ui "PRP ফরম" "PRP Form" %}"
+         style="max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.12);">
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<p class="text-muted text-center py-4 mb-0">
+  <i class="bi bi-file-earmark-arrow-up d-block mb-2" style="font-size:2rem;opacity:.4;"></i>
+  {% ui "PRP ফরমের স্ক্যান কপি আপলোড করলে এখানে দেখা যাবে।" "Upload the scanned PRP form and it will be shown here." %}
+</p>
+{% endif %}

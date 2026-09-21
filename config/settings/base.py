@@ -127,6 +127,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ── PRIVATE MEDIA ─────────────────────────────────────────────────────────────
+# nginx serves MEDIA_ROOT straight off disk with no authentication, which is
+# fine for GO documents and MP photos but not for a scanned PRP form: one page
+# of it carries the MP's NID, passport and bank account numbers. Anything
+# stored here is served ONLY through a Django view that checks login + role
+# (mp:prp_form_file), so a URL is worthless to someone who is not signed in.
+# It is a separate docker volume, mounted into `web` and deliberately NOT into
+# `nginx` — the web server cannot reach these bytes even by misconfiguration.
+PRIVATE_MEDIA_ROOT = Path(config('PRIVATE_MEDIA_ROOT', default=str(BASE_DIR / 'private_media')))
+
 # ── DEFAULT PK ────────────────────────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

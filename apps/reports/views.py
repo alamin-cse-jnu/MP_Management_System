@@ -2226,3 +2226,112 @@ def pa_ps_list(request):
     paginator = Paginator(qs, _page_size(request))
     ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
     return render(request, 'reports/pa_ps_list.html', ctx)
+
+
+# ── Report 19: PRP ফরম জমা ও আপলোড অবস্থা ─────────────────────────────────────
+# Reports on two independent facts (hardcopy received / scan uploaded), so the
+# office can chase the right people: the MPs who never sent a form, and the MPs
+# whose form is sitting in a drawer unscanned. The bucket definitions live on
+# MPQuerySet and are shared with the tracking page (apps/mp/prp_views.py) —
+# duplicating them here is how the two surfaces start disagreeing.
+
+def _prp_status_label(status):
+    """Heading for the printed sheet — says which slice was exported.
+
+    Resolved per call, not as a module constant: _ui reads the *active*
+    language, which is not known at import time.
+    """
+    return {
+        'complete':        _ui('জমা ও আপলোড সম্পন্ন', 'Submitted & uploaded'),
+        'awaiting_upload': _ui('জমা হয়েছে, আপলোড হয়নি', 'Submitted, not uploaded'),
+        'not_submitted':   _ui('ফরম জমা হয়নি', 'Form not submitted'),
+        'unticked':        _ui('আপলোড আছে, টিক নেই', 'Uploaded, tick missing'),
+        'uploaded':        _ui('স্ক্যান আপলোড হয়েছে', 'Scan uploaded'),
+    }.get(status, _ui('সকল সদস্য', 'All members'))
+
+
+@perm_required
+def prp_form_status(request):
+    from apps.mp.prp_views import PRP_STATUS_FILTERS
+
+    fmt           = request.GET.get('format', '')
+    parliament_id = _active_parliament_id(request)
+    status        = request.GET.get('status', '')
+    member_type   = request.GET.get('member_type', '')
+    q             = request.GET.get('q', '').strip()
+
+    qs = MP.objects.select_related(
+        'parliament', 'prp_form_uploaded_by',
+    ).prefetch_related(
+        Prefetch('election_infos',
+                 queryset=ElectionInfo.objects.select_related('constituency', 'party'))
+    ).filter(is_active=True)
+
+    if parliament_id:
+        qs = qs.filter(parliament_id=parliament_id)
+    # Technocrats hold no seat and never count towards the 350 (rule 23).
+    if member_type:
+        qs = qs.filter(member_type=member_type)
+    else:
+        qs = qs.parliament_members()
+
+    counts = qs.prp_counts()
+
+    if status in PRP_STATUS_FILTERS:
+        qs = PRP_STATUS_FILTERS[status](qs)
+    if q:
+        qs = qs.filter(search_q(q, ['name_bn', 'name_en', 'mp_id']))
+    qs = qs.order_by('mp_id')
+
+    headers = [_ui('ক্রম', 'SL'), _ui('এমপি আইডি', 'MP ID'), _ui('নাম', 'Name'),
+               _ui('নির্বাচনী এলাকা', 'Constituency'), _ui('দল', 'Party'),
+               _ui('হার্ডকপি জমা', 'Hardcopy received'),
+               _ui('স্ক্যান আপলোড', 'Scan uploaded'),
+               _ui('আপলোডের তারিখ', 'Uploaded on'),
+               _ui('অবস্থা', 'Status')]
+
+    yes, no = _ui('হ্যাঁ', 'Yes'), _ui('না', 'No')
+
+    def rows_fn(queryset):
+        lang = _lang()
+        out  = []
+        for i, mp in enumerate(queryset):
+            ei = next(iter(mp.election_infos.all()), None)
+            out.append([
+                i + 1,
+                mp.mp_id,
+                _tr(mp, 'name', lang),
+                _tr(ei.constituency, 'display', lang) if ei and ei.constituency else '—',
+                _tr(ei.party, 'name', lang) if ei and ei.party else '—',
+                yes if mp.prp_form_submitted else no,
+                yes if mp.has_prp_file else no,
+                mp.prp_form_uploaded_at.strftime('%d/%m/%Y') if mp.prp_form_uploaded_at else '—',
+                _tr(mp, 'prp_status_label', lang),
+            ])
+        return out
+
+    if fmt == 'excel':
+        return export_excel('prp_form_status', headers, rows_fn(qs), 'PRP ফরম')
+    if fmt == 'csv':
+        return export_csv('prp_form_status', headers, rows_fn(qs))
+
+    ctx = {
+        'parliament_id': parliament_id,
+        'status':        status,
+        'member_type':   member_type,
+        'q':             q,
+        'parliaments':   _parliament_qs(),
+        'counts':        counts,
+        'total_count':   qs.count(),
+        'status_label':  _prp_status_label(status),
+    }
+    if fmt in ('print', 'pdf'):
+        ctx['object_list'] = qs
+        if fmt == 'pdf':
+            return render_report_pdf(request, 'reports/print/prp_form_status.html',
+                                     ctx, 'prp_form_status.pdf')
+        return render(request, 'reports/print/prp_form_status.html', ctx)
+
+    paginator = Paginator(qs, _page_size(request))
+    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    return render(request, 'reports/prp_form_status.html', ctx)

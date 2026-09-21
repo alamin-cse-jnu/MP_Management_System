@@ -3,6 +3,10 @@ from collections import namedtuple
 from django.conf import settings
 from django.db import models
 
+from utils.prp_files import (
+    prp_form_upload_to, prp_is_pdf, prp_storage, validate_prp_file,
+)
+
 
 #: One line of the MP profile-completeness score (see MP.profile_score_items).
 ScoreItem = namedtuple('ScoreItem', 'key label_bn label_en points filled applicable')
@@ -21,6 +25,54 @@ class MPQuerySet(models.QuerySet):
 
     def technocrats(self):
         return self.filter(member_type='technocrat')
+
+    # ── PRP FORM TRACKING ───────────────────────────────────────────────────
+    # Two independent facts, never one status field (see MP.prp_status):
+    #   prp_form_submitted — the hardcopy reached the office. Only a human
+    #                        knows this, so it is a tick.
+    #   prp_form_file      — a scan exists in the system. Derived from the
+    #                        file, never typed.
+    # `prp_form_file` is declared blank-but-not-null so "no file" is always the
+    # empty string; a nullable FileField would need every filter below to test
+    # both '' and NULL, and one forgotten branch silently drops MPs from the
+    # backlog list.
+
+    def prp_uploaded(self):
+        """A scan is in the system (whether or not the tick was set)."""
+        return self.exclude(prp_form_file='')
+
+    def prp_complete(self):
+        """Hardcopy received AND scanned — nothing left to chase."""
+        return self.filter(prp_form_submitted=True).exclude(prp_form_file='')
+
+    def prp_awaiting_upload(self):
+        """Hardcopy received but never scanned — the scanning backlog."""
+        return self.filter(prp_form_submitted=True, prp_form_file='')
+
+    def prp_not_submitted(self):
+        """No form from this MP at all — the chase list."""
+        return self.filter(prp_form_submitted=False, prp_form_file='')
+
+    def prp_unticked(self):
+        """A scan exists but the tick was cleared — a data slip, not a state."""
+        return self.filter(prp_form_submitted=False).exclude(prp_form_file='')
+
+    def prp_counts(self):
+        """The four buckets in ONE query, so a 350-row page costs one count.
+
+        Shared by the tracking page tiles and the report summary — computing
+        them twice is how the two surfaces start disagreeing.
+        """
+        has_file = ~models.Q(prp_form_file='')
+        ticked   = models.Q(prp_form_submitted=True)
+        return self.aggregate(
+            total=models.Count('pk'),
+            complete=models.Count('pk', filter=ticked & has_file),
+            awaiting_upload=models.Count('pk', filter=ticked & ~has_file),
+            not_submitted=models.Count('pk', filter=~ticked & ~has_file),
+            unticked=models.Count('pk', filter=~ticked & has_file),
+            uploaded=models.Count('pk', filter=has_file),
+        )
 
 
 class MP(models.Model):
@@ -123,6 +175,30 @@ class MP(models.Model):
     self_education_bn = models.TextField(blank=True, verbose_name='স্ব-শিক্ষা (বাংলায়)')
     self_education_en = models.TextField(blank=True, verbose_name='Self-education (English)')
 
+    # ── PRP FORM (the submitted data-collection form) ───────────────────────────
+    # The paper form an MP fills in, from which every record above is typed.
+    # Tracked as TWO facts because the office needs to tell three situations
+    # apart: form never came, form came but is not scanned yet, form scanned.
+    # The scan lives outside MEDIA_ROOT — see utils/prp_files.py.
+    prp_form_submitted = models.BooleanField(
+        default=False, verbose_name='PRP ফরম জমা দিয়েছেন (হার্ডকপি)'
+    )
+    prp_form_file = models.FileField(
+        upload_to=prp_form_upload_to, storage=prp_storage, blank=True,
+        validators=[validate_prp_file], max_length=255,
+        verbose_name='PRP ফরম (স্ক্যান কপি)'
+    )
+    prp_form_original_name = models.CharField(
+        max_length=255, blank=True, verbose_name='আপলোডকৃত ফাইলের নাম'
+    )
+    prp_form_uploaded_at = models.DateTimeField(
+        null=True, blank=True, verbose_name='আপলোডের সময়'
+    )
+    prp_form_uploaded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='prp_forms_uploaded', verbose_name='আপলোডকারী'
+    )
+
     # ── META ────────────────────────────────────────────────────────────────────
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
@@ -161,6 +237,42 @@ class MP(models.Model):
     @property
     def current_election(self):
         return self.election_infos.filter(parliament=self.parliament).first()
+
+    # ── PRP FORM STATUS ───────────────────────────────────────────
+    # Four states out of two booleans. `unticked` is not a workflow stage but a
+    # data slip — a scan was uploaded and the tick later cleared — and it is
+    # surfaced rather than folded into "complete" so it gets corrected instead
+    # of quietly inflating the done column.
+    PRP_STATUS_LABELS = {
+        'complete':        ('জমা ও আপলোড সম্পন্ন',      'Submitted & uploaded'),
+        'awaiting_upload': ('জমা হয়েছে, আপলোড হয়নি',   'Submitted, not uploaded'),
+        'not_submitted':   ('ফরম জমা হয়নি',             'Form not submitted'),
+        'unticked':        ('আপলোড আছে, টিক নেই',       'Uploaded, tick missing'),
+    }
+
+    @property
+    def has_prp_file(self):
+        return bool(self.prp_form_file)
+
+    @property
+    def prp_file_is_pdf(self):
+        """True → embed it in an <iframe>; False → it is a photo of the form."""
+        return prp_is_pdf(self.prp_form_file.name if self.prp_form_file else '')
+
+    @property
+    def prp_status(self):
+        if self.prp_form_submitted:
+            return 'complete' if self.has_prp_file else 'awaiting_upload'
+        return 'unticked' if self.has_prp_file else 'not_submitted'
+
+    # Bilingual pair for the `tr` filter: {{ mp|tr:"prp_status_label" }}.
+    @property
+    def prp_status_label_bn(self):
+        return self.PRP_STATUS_LABELS[self.prp_status][0]
+
+    @property
+    def prp_status_label_en(self):
+        return self.PRP_STATUS_LABELS[self.prp_status][1]
 
     # ── PROFILE COMPLETENESS ──────────────────────────────────────
     # The % bar on the MP list is a *weighted* 100-point score, not a plain

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import prp_views, views
 
 app_name = 'mp'
 
@@ -7,6 +7,11 @@ urlpatterns = [
     # List + Create
     path('',      views.mp_list,   name='mp_list'),
     path('add/',  views.mp_create, name='mp_create'),
+
+    # PRP form tracking. The action names end in _edit/_delete/_toggle on
+    # purpose: apps.accounts.mixins resolves those suffixes back to the
+    # `_list` submenu, so can_edit / can_delete are actually enforced.
+    path('prp-forms/', prp_views.prp_form_list, name='prp_form_list'),
 
     # PRP API sync conflict review
     path('sync/conflicts/',        views.sync_conflict_list,   name='sync_conflict_list'),
@@ -78,6 +83,11 @@ urlpatterns = [
     path('<int:pk>/travel/add/',                  views.personal_travel_create, name='personal_travel_create'),
     path('<int:pk>/travel/<int:tk>/edit/',        views.personal_travel_update, name='personal_travel_update'),
     path('<int:pk>/travel/<int:tk>/delete/',      views.personal_travel_delete, name='personal_travel_delete'),
+
+    # PRP form — per-MP actions (tab + tracking page share these)
+    path('<int:pk>/prp-form/save/',   prp_views.prp_form_edit,   name='prp_form_edit'),
+    path('<int:pk>/prp-form/remove/', prp_views.prp_form_delete, name='prp_form_delete'),
+    path('<int:pk>/prp-form/file/',   prp_views.prp_form_file,   name='prp_form_file'),
 
     # Toggle active/inactive
     path('<int:pk>/toggle/', views.mp_toggle, name='mp_toggle'),

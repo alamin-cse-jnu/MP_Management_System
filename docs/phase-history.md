@@ -1,4 +1,4 @@
-# Phase history — MP Information Management System
+﻿# Phase history — MP Information Management System
 
 Build log for Phases 15–25 plus the production deploy log. Split out of
 `CLAUDE.md` so it no longer loads into every session. Read it when you need the
@@ -1308,6 +1308,147 @@ language emits `{%`, `{{` or `{#` any more.
 0014, mp 0017), then
 `python manage.py loaddata fixtures/initial/position_menu.json`. Grant the two
 new submenus in Roles for non-superadmin users.
+
+---
+
+## PHASE 37 — PRP form upload, tracking and status report (2026-09-21) ✅
+
+The MP submits a **PRP form** — the paper data-collection form from which every
+record in this system is typed. Until now the system held the *contents* of that
+form and no trace of the form itself, so nobody could answer three questions the
+Secretariat asks constantly: who has actually submitted one, whose scan is in
+the system, and — the one that costs the most time — **whose form is sitting in
+a drawer waiting to be scanned**.
+
+### Two facts, not one status
+
+The whole design turns on refusing a single `prp_status` column:
+
+| field | what it means | who sets it |
+|---|---|---|
+| `MP.prp_form_submitted` | the office has the hardcopy | a human tick — nobody else can know this |
+| `MP.prp_form_file` | a scan is in the system | derived from the file, never typed |
+
+Those two booleans give four states (`MP.prp_status`):
+
+* `complete` — ticked + scanned, nothing to chase
+* `awaiting_upload` — **ticked, no scan**: the scanning backlog, the list this
+  phase exists to produce
+* `not_submitted` — neither: the chase list
+* `unticked` — a scan with the tick cleared. Not a workflow stage but a *data
+  slip*, surfaced in its own blue strip rather than folded into `complete`, so
+  it gets corrected instead of quietly inflating the done column.
+
+A single status column could express three of those four and would have made
+"submitted but not uploaded" unrepresentable — which is precisely the row the
+user asked for. The bucket definitions live once, on `MPQuerySet`
+(`prp_complete` / `prp_awaiting_upload` / `prp_not_submitted` / `prp_unticked`
+/ `prp_counts`), and the tracking page and the report both import them;
+re-deriving them in a view is how two surfaces start disagreeing about the same
+number. `prp_counts()` returns all four buckets in **one** aggregate query.
+
+**Uploading a scan auto-ticks `prp_form_submitted`.** You cannot scan a form you
+never received, and requiring a second click meant every forgotten click became
+a false entry on the backlog list.
+
+### The scan is not public media
+
+`nginx` serves `/media/` straight off disk with no authentication. That is fine
+for a GO document; it is not fine for a PRP form, which carries the MP's **NID,
+passport number and bank account numbers on one page**. So:
+
+* scans are written to `settings.PRIVATE_MEDIA_ROOT`, its own docker volume
+  (`private_vol`) mounted into `web` and **deliberately not into `nginx`** — the
+  web server cannot serve these bytes even by misconfiguration;
+* the only route to them is `mp:prp_form_file`, which re-runs the role check
+  (explicitly, against the `mp:prp_form_list` submenu — `@perm_required` cannot
+  resolve a submenu for a file URL and would have waved it through);
+* stored names carry a random suffix (`013000102_8995149c.pdf`), so the on-disk
+  name is not derivable from the MP ID;
+* `?download=1` switches the same view from `inline` to `attachment`.
+
+Two traps found while building this, both now in CLAUDE.md gotchas 31–32:
+
+1. **`FileSystemStorage` with no `base_url` does not make `.url` raise.**
+   `base_url` falls back to `settings.MEDIA_URL`, so the "private" field would
+   have handed out `/media/prp_forms/…` — a path nginx serves from the *public*
+   volume, where the file is not. A dead link that looks like a working one.
+   `PrivateFileSystemStorage.url()` raises instead, so a stray
+   `{{ mp.prp_form_file.url }}` fails in review rather than in production.
+   Related: the storage is passed as a **callable**, never an instance —
+   Django bakes an instance's `location` into the migration, which would have
+   shipped a Windows dev path to the server.
+2. **Cleaning up a replaced file must not fail the request that replaced it.**
+   The first run 500'd on `PermissionError: file in use` *after* the new upload
+   had already been saved: the operator would have seen an error for an upload
+   that succeeded. Both write views now swallow `OSError` around the storage
+   delete — the row is what matters, and an orphan in a directory nothing
+   serves is harmless.
+
+### Three surfaces
+
+* **MP profile → tab `২০. PRP ফরম`** (`templates/mp/_tab_prp.html`): status
+  badge, who uploaded and when, the tick, an upload/replace input, and the PDF
+  **embedded in an iframe** (an `<img>` when the scan is a photo of the form).
+* **`/mp/prp-forms/`** — the working surface. Four clickable count tiles, live
+  search, status/parliament/member-type filters, a one-click tick per row and a
+  shared upload modal (one modal, not 350 file inputs). The tiles count the
+  whole filtered parliament and deliberately **do not** follow the search box: a
+  tile that moved while you typed would be reporting the search, not the
+  backlog. Live search swaps only `#prp-rows` (gotcha 13).
+* **`/reports/prp-form-status/`** — the read-and-export surface: same four
+  buckets as a summary, the same filters, Print / PDF / Excel / CSV.
+
+The row tick posts to the same save view as the tab rather than getting its own
+endpoint: a `_toggle` URL name resolves to **`can_delete`** in
+`apps/accounts/mixins.py`, and ticking a box is an edit. An unchecked checkbox
+posts nothing, which is exactly "untick", so one view covers both directions.
+
+Technocrat ministers are excluded from the default list and counts via
+`parliament_members()` (rule 23) and reachable through the member-type filter.
+The tab is shown for them — a technocrat fills in a form like anyone else.
+
+Changes to any PRP field land in the audit log automatically: `MP` is already in
+`AUDITED_MODELS`, and a `FileField` serialises to its stored name. Verified.
+
+**To deploy:** sync the files, then `docker compose up -d` (**not** `restart` —
+`up -d` is what creates the new `private_vol`), `migrate` (mp 0018), then
+`python manage.py loaddata fixtures/initial/prp_menu.json`. Grant the two new
+submenus (403 MP tracking, 927 report) in Roles for non-superadmin users.
+`client_max_body_size` is already 25M, above the 20 MB upload cap.
+**`nginx/nginx.conf` must be synced too** — this deploy recreates the web
+container, and without the resolver fix below nginx keeps the old IP and 502s
+the site. Sync it first, or `docker compose restart nginx` after.
+
+### 502 on first boot — nginx's cached upstream IP (fixed the same day)
+
+Bringing the stack up with the new volume produced a **502 Bad Gateway** while
+`web` was perfectly healthy: migration applied, six workers listening, and
+**not one request line in its log** — nginx had never reached it.
+
+Adding `private_vol` changed the web service, so `docker compose up -d`
+**recreated** that container, and the containers were renumbered. nginx resolves
+an upstream hostname once at startup and caches the address for the life of the
+process, so it kept dialling `172.23.0.2` while web had moved to `172.23.0.4`.
+The freed address had been handed to **Postgres**, so nginx was proxying HTTP at
+the database, which simply refuses the connection.
+
+The tell: gunicorn's log is silent (the request never arrives), and the IP in
+nginx's error log does not match
+`docker inspect …-web-1 --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'`.
+
+`docker compose restart nginx` clears it, but that is a landmine under every
+future deploy that touches the web service. `nginx/nginx.conf` now defers
+resolution to request time — `resolver 127.0.0.11 valid=10s` (Docker's embedded
+DNS) plus a **variable** in proxy_pass, since a literal hostname is what gets
+cached. The `upstream django {}` block was removed as it is bypassed by the
+variable form. Verified properly: a decoy container was parked on web's old
+address to force web onto a new IP, and the site kept serving 200 with nginx
+never restarted. See CLAUDE.md gotcha 23z.
+
+**Known gap, unchanged by this phase:** `RolePermission.can_export` is stored
+and editable in the Roles UI but enforced in **no** report view — all 19,
+including this one. Worth closing system-wide rather than in one report.
 
 ---
 

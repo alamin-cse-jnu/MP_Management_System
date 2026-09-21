@@ -1,0 +1,60 @@
+{% load lang_tags %}
+{% comment %}
+The four buckets, as clickable filters. Counts are for the whole selected
+parliament, not the current search — a tile that moved while you typed would be
+reporting the search box, not the backlog.
+{% endcomment %}
+<div class="row g-3 mb-3">
+  <div class="col-6 col-lg-3">
+    <a href="?parliament={{ parliament_id }}&member_type={{ member_type }}&status=complete" class="text-decoration-none">
+      <div class="stat-card flex-row align-items-center gap-3 h-100" style="{% if status == 'complete' %}outline:2px solid #16a34a;{% endif %}">
+        <div class="stat-icon" style="background:#dcfce7;color:#16a34a;"><i class="bi bi-check-circle-fill"></i></div>
+        <div>
+          <div class="stat-value">{{ counts.complete }}</div>
+          <div class="stat-label">{% ui "জমা ও আপলোড সম্পন্ন" "Submitted & uploaded" %}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="?parliament={{ parliament_id }}&member_type={{ member_type }}&status=awaiting_upload" class="text-decoration-none">
+      <div class="stat-card flex-row align-items-center gap-3 h-100" style="{% if status == 'awaiting_upload' %}outline:2px solid #d97706;{% endif %}">
+        <div class="stat-icon" style="background:#fef3c7;color:#d97706;"><i class="bi bi-hourglass-split"></i></div>
+        <div>
+          <div class="stat-value">{{ counts.awaiting_upload }}</div>
+          <div class="stat-label">{% ui "জমা হয়েছে, আপলোড হয়নি" "Submitted, not uploaded" %}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="?parliament={{ parliament_id }}&member_type={{ member_type }}&status=not_submitted" class="text-decoration-none">
+      <div class="stat-card flex-row align-items-center gap-3 h-100" style="{% if status == 'not_submitted' %}outline:2px solid #dc2626;{% endif %}">
+        <div class="stat-icon" style="background:#fee2e2;color:#dc2626;"><i class="bi bi-x-circle-fill"></i></div>
+        <div>
+          <div class="stat-value">{{ counts.not_submitted }}</div>
+          <div class="stat-label">{% ui "ফরম জমা হয়নি" "Form not submitted" %}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="?parliament={{ parliament_id }}&member_type={{ member_type }}" class="text-decoration-none">
+      <div class="stat-card flex-row align-items-center gap-3 h-100" style="{% if not status %}outline:2px solid #0d9488;{% endif %}">
+        <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+        <div>
+          <div class="stat-value">{{ counts.total }}</div>
+          <div class="stat-label">{% ui "মোট সদস্য" "Total members" %}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+{% if counts.unticked %}
+<div class="alert alert-info py-2 px-3 mb-3" style="font-size:.82rem;">
+  <i class="bi bi-info-circle me-1"></i>
+  {% ui "স্ক্যান কপি আছে কিন্তু হার্ডকপি জমার টিক নেই এমন সদস্য:" "Members whose scan is uploaded but the hardcopy tick is missing:" %}
+  <a href="?parliament={{ parliament_id }}&member_type={{ member_type }}&status=unticked" class="fw-bold">{{ counts.unticked }}</a>
+</div>
+{% endif %}

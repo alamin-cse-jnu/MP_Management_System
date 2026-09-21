@@ -23,4 +23,5 @@ urlpatterns = [
     path('audit-log/',              views.audit_log_list,         name='audit_log_list'),
     path('audit-log/<int:pk>/',     views.audit_log_detail,       name='audit_log_detail'),
     path('pa-ps-list/',             views.pa_ps_list,             name='pa_ps_list'),
+    path('prp-form-status/',        views.prp_form_status,        name='prp_form_status'),
 ]

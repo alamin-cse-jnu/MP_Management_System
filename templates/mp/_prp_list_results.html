@@ -1,0 +1,101 @@
+{% load static lang_tags %}
+{% comment %}
+Swapped alone by the live search (hx-target="#prp-rows"). It must NOT contain
+the search input — htmx replaces the target node, and replacing the focused
+input drops every keystroke typed while the request was in flight (gotcha 13).
+{% endcomment %}
+<div id="prp-rows">
+  <div class="d-flex align-items-center justify-content-between px-3 pt-3 pb-2">
+    <small class="text-muted" id="prp-count">{% ui "মোট:" "Total:" %} <strong>{{ total_count }}</strong></small>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle" style="font-size:.88rem;">
+      <thead class="table-light">
+        <tr>
+          <th style="width:48px;">#</th>
+          <th>{% ui "এমপি আইডি" "MP ID" %}</th>
+          <th>{% ui "নাম" "Name" %}</th>
+          <th>{% ui "নির্বাচনী এলাকা" "Constituency" %}</th>
+          <th class="text-center">{% ui "হার্ডকপি জমা" "Hardcopy" %}</th>
+          <th class="text-center">{% ui "স্ক্যান কপি" "Scan" %}</th>
+          <th>{% ui "অবস্থা" "Status" %}</th>
+          <th class="text-end">{% ui "কার্যক্রম" "Action" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mp in page_obj %}
+        {% with ei=mp.election_infos.all.0 %}
+        <tr>
+          <td class="text-muted">{{ forloop.counter0|add:page_obj.start_index }}</td>
+          <td><code>{{ mp.mp_id }}</code></td>
+          <td>
+            <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-prp" class="text-decoration-none fw-medium">{{ mp|tr:"name" }}</a>
+            <div class="text-muted" style="font-size:.76rem;">{{ mp.name_en }}</div>
+          </td>
+          <td>{% if ei.constituency %}{{ ei.constituency|tr:"display" }}{% else %}<span class="text-muted">—</span>{% endif %}</td>
+
+          <td class="text-center">
+            {% comment %}The tick posts to the same save view as the tab; an unchecked box posts nothing, which is exactly "untick".{% endcomment %}
+            <form method="post" action="{% url 'mp:prp_form_edit' mp.pk %}" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              {% if not mp.prp_form_submitted %}<input type="hidden" name="prp_form_submitted" value="on">{% endif %}
+              <button type="submit" class="btn btn-sm border-0 p-1" style="background:none;"
+                      title="{% ui 'হার্ডকপি জমার টিক বদলান' 'Toggle hardcopy received' %}">
+                {% if mp.prp_form_submitted %}
+                <i class="bi bi-check-square-fill text-success" style="font-size:1.15rem;"></i>
+                {% else %}
+                <i class="bi bi-square text-muted" style="font-size:1.15rem;"></i>
+                {% endif %}
+              </button>
+            </form>
+          </td>
+
+          <td class="text-center">
+            {% if mp.has_prp_file %}
+            <a href="{% url 'mp:prp_form_file' mp.pk %}" target="_blank" class="btn btn-sm btn-outline-danger py-0 px-2"
+               title="{% ui 'PDF দেখুন' 'View PDF' %}"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+            {% else %}
+            <span class="text-muted">—</span>
+            {% endif %}
+          </td>
+
+          <td>
+            {% if mp.prp_status == 'complete' %}
+            <span class="badge bg-success-subtle text-success">{{ mp|tr:"prp_status_label" }}</span>
+            {% elif mp.prp_status == 'awaiting_upload' %}
+            <span class="badge bg-warning-subtle text-warning-emphasis">{{ mp|tr:"prp_status_label" }}</span>
+            {% elif mp.prp_status == 'unticked' %}
+            <span class="badge bg-info-subtle text-info-emphasis">{{ mp|tr:"prp_status_label" }}</span>
+            {% else %}
+            <span class="badge bg-danger-subtle text-danger">{{ mp|tr:"prp_status_label" }}</span>
+            {% endif %}
+          </td>
+
+          <td class="text-end">
+            <button type="button" class="btn btn-sm btn-outline-primary prp-upload-btn"
+                    data-bs-toggle="modal" data-bs-target="#prpUploadModal"
+                    data-action="{% url 'mp:prp_form_edit' mp.pk %}"
+                    data-name="{{ mp.name_bn }} ({{ mp.mp_id }})">
+              <i class="bi bi-upload me-1"></i>{% if mp.has_prp_file %}{% ui "প্রতিস্থাপন" "Replace" %}{% else %}{% ui "আপলোড" "Upload" %}{% endif %}
+            </button>
+          </td>
+        </tr>
+        {% endwith %}
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if page_obj.has_other_pages %}
+  <div class="p-3 border-top d-flex justify-content-between align-items-center">
+    <small class="text-muted">{% ui "পৃষ্ঠা" "Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
+    <nav><ul class="pagination pagination-sm mb-0">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-left"></i></a></li>{% endif %}
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&member_type={{ member_type }}&status={{ status }}&q={{ q }}"><i class="bi bi-chevron-right"></i></a></li>{% endif %}
+    </ul></nav>
+  </div>
+  {% endif %}
+</div>

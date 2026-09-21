@@ -18,6 +18,7 @@ from apps.ministry.models import MinistryAssignment
 from apps.committee.models import CommitteeAssignment
 from utils.assignment_grouping import group_by_parliament
 from utils.bn_digits import search_q
+from utils.prp_files import PRP_FILE_ACCEPT, PRP_FILE_MAX_MB
 from apps.institution.models import InstitutionAssignment
 from apps.travel.models import ForeignTourParticipant
 from apps.office.models import ParliamentOfficeAddress
@@ -62,6 +63,7 @@ _TAB_LIST = [
     ('tab-publication',  '১৭. প্রকাশনা'),
     ('tab-travel',       '১৮. বিদেশ ভ্রমণ'),
     ('tab-institution',  '১৯. প্রতিষ্ঠান'),
+    ('tab-prp',          '২০. PRP ফরম'),
 ]
 _COMING_SOON = []
 
@@ -187,6 +189,12 @@ def _detail_ctx(mp, **override):
             instance=addresses.get('dhaka'), prefix='dhaka',
             initial={'address_type': 'dhaka'}),
         'copy_sources':   _address_copy_sources(addresses),
+
+        # Section 20 — the submitted PRP form itself (tab-prp). The scan is
+        # never linked by .url: it lives outside MEDIA_ROOT and is only
+        # readable through mp:prp_form_file.
+        'prp_accept':     PRP_FILE_ACCEPT,
+        'prp_max_mb':     PRP_FILE_MAX_MB,
     }
     ctx.update(override)
     return ctx

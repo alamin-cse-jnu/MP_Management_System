@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static lang_tags %}
+{% block title %}{% ui "PRP ফরম ট্র্যাকিং" "PRP Form Tracking" %}{% endblock %}
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+  <div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-1" style="font-size:.8125rem;">
+      <li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">{% ui "হোম" "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'mp:mp_list' %}">{% ui "সংসদ সদস্য" "MP List" %}</a></li>
+      <li class="breadcrumb-item active">{% ui "PRP ফরম" "PRP Form" %}</li>
+    </ol></nav>
+    <h4 class="mb-0 fw-bold">{% ui "PRP ফরম ট্র্যাকিং" "PRP Form Tracking" %}</h4>
+    <small class="text-muted">{% ui "কে ফরম জমা দিয়েছেন, কার স্ক্যান কপি আপলোড হয়েছে" "Who has submitted the form, and whose scan is uploaded" %}</small>
+  </div>
+  <a href="{% url 'reports:prp_form_status' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-file-earmark-bar-graph me-1"></i>{% ui "রিপোর্ট ও এক্সপোর্ট" "Report & export" %}
+  </a>
+</div>
+
+<!-- ── STATUS TILES (click to filter) ──────────────────────────────────────── -->
+{% include "mp/_prp_tiles.html" %}
+
+<!-- ── FILTERS ─────────────────────────────────────────────────────────────── -->
+<form method="get" id="prp-filter-form">
+<div class="mp-card mb-3 p-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অনুসন্ধান" "Search" %}</label>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ q }}" class="form-control"
+               placeholder="{% ui 'নাম বা এমপি আইডি…' 'Name or MP ID…' %}"
+               hx-get="{% url 'mp:prp_form_list' %}" hx-trigger="keyup changed delay:300ms"
+               hx-include="#prp-filter-form" hx-target="#prp-rows" hx-select="#prp-rows"
+               hx-sync="this:replace" hx-push-url="true">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সংসদ" "Parliament" %}</label>
+      <select name="parliament" class="form-select form-select-sm" onchange="this.form.submit()">
+        {% for p in parliaments %}<option value="{{ p.pk }}" {% if p.pk|stringformat:"s" == parliament_id %}selected{% endif %}>{{ p|tr:"name" }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "অবস্থা" "Status" %}</label>
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সব" "All" %}</option>
+        <option value="complete"        {% if status == 'complete' %}selected{% endif %}>{% ui "জমা ও আপলোড সম্পন্ন" "Submitted & uploaded" %}</option>
+        <option value="awaiting_upload" {% if status == 'awaiting_upload' %}selected{% endif %}>{% ui "জমা হয়েছে, আপলোড হয়নি" "Submitted, not uploaded" %}</option>
+        <option value="not_submitted"   {% if status == 'not_submitted' %}selected{% endif %}>{% ui "ফরম জমা হয়নি" "Form not submitted" %}</option>
+        <option value="unticked"        {% if status == 'unticked' %}selected{% endif %}>{% ui "আপলোড আছে, টিক নেই" "Uploaded, tick missing" %}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:.85rem;">{% ui "সদস্যের ধরন" "Member type" %}</label>
+      <select name="member_type" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সংসদ সদস্য (৩৫০)" "MPs (350)" %}</option>
+        <option value="direct"     {% if member_type == 'direct' %}selected{% endif %}>{% ui "সরাসরি নির্বাচিত" "Directly Elected" %}</option>
+        <option value="reserved"   {% if member_type == 'reserved' %}selected{% endif %}>{% ui "সংরক্ষিত আসন" "Reserved Seat" %}</option>
+        <option value="technocrat" {% if member_type == 'technocrat' %}selected{% endif %}>{% ui "টেকনোক্র্যাট" "Technocrat" %}</option>
+      </select>
+    </div>
+  </div>
+</div>
+</form>
+
+<div class="mp-card">
+  {% include "mp/_prp_list_results.html" %}
+</div>
+
+<!-- ── UPLOAD MODAL ────────────────────────────────────────────────────────── -->
+{% comment %}One shared modal, not one per row: 350 rows would otherwise put 350 file inputs in the DOM. The row's Upload button fills in the action and the MP name.{% endcomment %}
+<div class="modal fade" id="prpUploadModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form method="post" enctype="multipart/form-data" id="prp-upload-form">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <div class="modal-content">
+        <div class="modal-header py-2">
+          <h6 class="modal-title fw-bold mb-0">{% ui "PRP ফরম আপলোড" "Upload PRP Form" %}</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2 fw-medium" id="prp-upload-name" style="font-size:.9rem;"></div>
+          <input type="file" name="prp_form_file" accept="{{ accept }}" class="form-control form-control-sm" required>
+          <div class="form-text" style="font-size:.76rem;">
+            {% ui "PDF, JPG বা PNG — সর্বোচ্চ" "PDF, JPG or PNG — max" %} {{ max_mb }} MB.
+            {% ui "আপলোড করলে হার্ডকপি জমা টিকও হয়ে যাবে।" "Uploading also ticks hardcopy received." %}
+          </div>
+          <input type="hidden" name="prp_form_submitted" value="on">
+        </div>
+        <div class="modal-footer py-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">{% ui "বাতিল" "Cancel" %}</button>
+          <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload me-1"></i>{% ui "আপলোড" "Upload" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Fill the shared upload modal from whichever row opened it.
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.prp-upload-btn');
+  if (!btn) return;
+  document.getElementById('prp-upload-form').action = btn.dataset.action;
+  document.getElementById('prp-upload-name').textContent = btn.dataset.name;
+});
+</script>
+{% endblock %}
