@@ -92,8 +92,15 @@ user's role. The storage has no base_url, so a stray .url would raise.
 <!-- ── VIEWER ──────────────────────────────────────────────────────────────── -->
 <div class="border rounded overflow-hidden" style="background:#f1f5f9;">
   {% if mp.prp_file_is_pdf %}
-  <iframe src="{% url 'mp:prp_form_file' mp.pk %}" title="{% ui "PRP ফরম" "PRP Form" %}"
-          style="width:100%;height:760px;border:0;display:block;"></iframe>
+  {% comment %}The <object> fallback covers a browser with no built-in PDF viewer: an <iframe> alone would just sit there blank with no way for the operator to tell that the file is fine.{% endcomment %}
+  <object data="{% url 'mp:prp_form_file' mp.pk %}" type="application/pdf"
+          style="width:100%;height:760px;border:0;display:block;">
+    <div class="text-center p-4">
+      <i class="bi bi-file-earmark-pdf d-block mb-2" style="font-size:2rem;opacity:.4;"></i>
+      <p class="text-muted mb-2" style="font-size:.85rem;">{% ui "এই ব্রাউজারে PDF সরাসরি দেখানো যাচ্ছে না।" "This browser cannot display the PDF inline." %}</p>
+      <a href="{% url 'mp:prp_form_file' mp.pk %}" target="_blank" class="btn btn-sm btn-outline-primary">{% ui "নতুন ট্যাবে খুলুন" "Open in new tab" %}</a>
+    </div>
+  </object>
   {% else %}
   <div class="text-center p-3">
     <img src="{% url 'mp:prp_form_file' mp.pk %}" alt="{% ui "PRP ফরম" "PRP Form" %}"

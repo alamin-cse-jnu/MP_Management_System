@@ -28,6 +28,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_POST
 
 from apps.accounts.mixins import _run_permission_check, perm_required
@@ -155,6 +156,7 @@ def prp_form_delete(request, pk):
 # ── READ ──────────────────────────────────────────────────────────────────────
 
 @perm_required
+@xframe_options_sameorigin
 def prp_form_file(request, pk):
     """Stream the scan for in-browser viewing (or download with ?download=1).
 
@@ -162,6 +164,13 @@ def prp_form_file(request, pk):
     precisely so nginx cannot hand them to an anonymous request. @perm_required
     cannot resolve a submenu for this URL — there is none — so the module's
     view permission is checked explicitly against the tracking page.
+
+    `xframe_options_sameorigin` is what makes the profile tab's <iframe> work.
+    Settings ship X_FRAME_OPTIONS = 'DENY' (Django's default is DENY too), so
+    without it the browser refuses to render this response in a frame and the
+    viewer is a silent blank box — nothing on screen, nothing in the server
+    log, because the bytes were served perfectly and the browser threw them
+    away. The exemption is scoped to this one view; every other page stays DENY.
     """
     _run_permission_check(request, 'mp:prp_form_list')
     mp = get_object_or_404(MP, pk=pk)

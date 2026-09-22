@@ -533,6 +533,16 @@ silently — full context in `docs/phase-history.md`.
     that in fact succeeded. Both `prp_form_edit` and `prp_form_delete` swallow
     `OSError` around the storage delete. An orphan in a directory nothing
     serves is harmless.
+33. **`X_FRAME_OPTIONS = 'DENY'` blocks your own `<iframe>` viewer.** production.py
+    sets DENY (Django's default is DENY too), so the PRP tab's inline PDF frame
+    rendered as a silent blank box: the bytes were served perfectly — 200,
+    `application/pdf`, `Content-Disposition: inline` — and the browser threw them
+    away. Nothing appears in the gunicorn log, nothing in the Django error mail,
+    because nothing failed server-side. Any view whose response is meant to be
+    framed needs `@xframe_options_sameorigin` on that view only (`mp:prp_form_file`
+    has it); never relax the global setting. The viewer is an `<object>` with a
+    visible "open in new tab" fallback so a browser with no PDF plugin says so
+    instead of showing nothing.
 
 **Deliberate choices — do not "restore" these**
 30. The officer roster page `/officer/` is ordered by **PRP ID ascending** (not
