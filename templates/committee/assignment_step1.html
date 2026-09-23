@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static lang_tags mp_picker_tags %}
 {% block title %}{% ui title_bn title_en %}{% endblock %}
+
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
@@ -18,11 +19,19 @@
 <div class="row justify-content-center"><div class="col-lg-8 col-md-10">
   <div class="mp-card">
     <div class="mp-card-header"><i class="bi bi-people icon"></i> {% ui "কমিটি ও সদস্য নির্বাচন" "Select committee & members" %}</div>
-    <form method="post" novalidate>{% csrf_token %}
+    <form method="post" novalidate id="committee-step1-form"
+          hx-get="{% url 'committee:member_picker' %}" hx-trigger="members-changed"
+          hx-target="#mps-picker" hx-swap="outerHTML" hx-include="#committee-step1-form">{% csrf_token %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
       <div class="row">
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "কমিটির নাম" "Committee Name" %} <span class="text-primary">*</span></label>{{ form.committee }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "কমিটির নাম" "Committee Name" %} <span class="text-primary">*</span></label>{{ form.committee }}{% if form.committee.errors %}<div class="text-danger small mt-1">{{ form.committee.errors }}</div>{% endif %}</div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "উপ-কমিটি" "Sub-Committee" %}</label>
+          {{ form.sub_committee }}
+          <div class="form-text">{% ui "ফাঁকা রাখলে নিয়োগটি মূল কমিটির।" "Leave empty for a seat on the main committee." %}</div>
+          {% if form.sub_committee.errors %}<div class="text-danger small mt-1">{{ form.sub_committee.errors }}</div>{% endif %}
+        </div>
         <div class="col-md-3 mb-3">
           <label class="form-label fw-medium">{% ui "মোট সদস্য সংখ্যা" "Total members" %}</label>
           {{ form.total_count }}
@@ -34,8 +43,7 @@
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "GO তারিখ" "GO Date" %}</label>{{ form.go_date }}</div>
         <div class="col-md-12 mb-3">
           <label class="form-label fw-medium">{% ui "সংসদ সদস্যগণ (একাধিক নির্বাচন করুন)" "Members of Parliament (select multiple)" %} <span class="text-primary">*</span></label>
-          {% mp_picker form.mps form.total_count %}
-          <div class="form-text">{% ui "একই কমিটির সকল সদস্যকে এখানে নির্বাচন করুন। পরের ধাপে প্রতিজনের পদবী নির্ধারণ করবেন।" "Select all members of this committee. You'll set each one's position in the next step." %}</div>
+          {% include "committee/partials/_member_picker.html" with narrowed=False %}
         </div>
       </div>
       <div class="d-flex gap-2 justify-content-end mt-3 pt-3 border-top">
@@ -46,3 +54,5 @@
   </div>
 </div></div>
 {% endblock %}
+
+{% block extra_js %}{% include "committee/partials/_cascade_js.html" with cascade_form_id="committee-step1-form" %}{% endblock %}

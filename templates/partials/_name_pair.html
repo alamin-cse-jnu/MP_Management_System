@@ -1,0 +1,13 @@
+{% comment %}
+A bilingual name cell: বাংলা নাম on top, English name beneath. Usage:
+  {% include "partials/_name_pair.html" with obj=obj.mp href=mp_url %}
+  {% include "partials/_name_pair.html" with obj=obj.committee %}
+
+This is a NAME PAIR, not a language-following cell — never `{{ obj|tr:"name" }}`
+here. `tr` returns name_en in English mode, so a `tr` line with a hardcoded
+name_en line beneath printed the SAME text twice in English (gotcha 8). The
+English line is dropped when it is empty or identical, so a row carrying one
+spelling reads once.
+{% endcomment %}
+{% if href %}<a href="{{ href }}" class="text-decoration-none fw-medium">{% if obj.name_bn %}{{ obj.name_bn }}{% else %}{{ obj.name_en }}{% endif %}</a>{% else %}{% if obj.name_bn %}{{ obj.name_bn }}{% else %}{{ obj.name_en }}{% endif %}{% endif %}
+{% if obj.name_bn and obj.name_en and obj.name_bn != obj.name_en %}<div class="name-pair-en">{{ obj.name_en }}</div>{% endif %}

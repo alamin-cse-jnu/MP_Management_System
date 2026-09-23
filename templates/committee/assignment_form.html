@@ -30,7 +30,7 @@
 <div class="row justify-content-center"><div class="col-lg-8 col-md-10">
   <div class="mp-card">
     <div class="mp-card-header"><i class="bi bi-people icon"></i> {% ui title_bn title_en %}</div>
-    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+    <form method="post" enctype="multipart/form-data" novalidate id="committee-assignment-form">{% csrf_token %}
       {% if mp %}<input type="hidden" name="_mp_pk" value="{{ mp.pk }}">{% endif %}
       {% if not is_create %}<input type="hidden" name="from_mp" value="{{ from_mp }}">{% endif %}
       {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
@@ -45,7 +45,13 @@
       {% endif %}
       <div class="row">
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "সংসদ" "Parliament" %} <span class="text-primary">*</span></label>{{ form.parliament }}</div>
-        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "কমিটির নাম" "Committee Name" %} <span class="text-primary">*</span></label>{{ form.committee }}</div>
+        <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "কমিটির নাম" "Committee Name" %} <span class="text-primary">*</span></label>{{ form.committee }}{% if form.committee.errors %}<div class="text-danger small mt-1">{{ form.committee.errors }}</div>{% endif %}</div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-medium">{% ui "উপ-কমিটি" "Sub-Committee" %}</label>
+          {{ form.sub_committee }}
+          <div class="form-text">{% ui "ফাঁকা রাখলে নিয়োগটি মূল কমিটির। উপ-কমিটির সদস্য হতে আগে মূল কমিটিতে নিয়োগ থাকতে হবে।" "Leave empty for a seat on the main committee. A sub-committee seat requires an existing main-committee seat." %}</div>
+          {% if form.sub_committee.errors %}<div class="text-danger small mt-1">{{ form.sub_committee.errors }}</div>{% endif %}
+        </div>
         <div class="col-md-6 mb-3"><label class="form-label fw-medium">{% ui "পদবী" "Designation" %} <span class="text-primary">*</span></label>{{ form.position }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শুরুর তারিখ" "Start Date" %} <span class="text-primary">*</span></label>{{ form.start_date }}</div>
         <div class="col-md-3 mb-3"><label class="form-label fw-medium">{% ui "শেষ তারিখ" "End Date" %}</label>{{ form.end_date }}</div>
@@ -71,3 +77,5 @@
   </div>
 </div></div>
 {% endblock %}
+
+{% block extra_js %}{% include "committee/partials/_cascade_js.html" with cascade_form_id="committee-assignment-form" %}{% endblock %}

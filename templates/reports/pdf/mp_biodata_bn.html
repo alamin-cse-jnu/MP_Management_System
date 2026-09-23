@@ -523,6 +523,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
     <th>#</th>
     <th>{% ui "সংসদ নম্বর" "Parliament" %}</th>
     <th>{% ui "স্থায়ী কমিটির নাম" "Committee Name" %}</th>
+    <th>{% ui "উপ-কমিটি" "Sub-Committee" %}</th>
     <th>{% ui "পদবী" "Designation" %}</th>
     <th>{% ui "শুরুর তারিখ" "Start Date" %}</th>
     <th>{% ui "শেষ তারিখ" "End Date" %}</th>
@@ -533,6 +534,7 @@ table.dt tbody tr:nth-child(odd)  { background: #fff; }
       <td>{{ forloop.counter }}</td>
       <td>{{ ca.parliament|tr:"name" }}</td>
       <td>{{ ca.committee|tr:"name" }}</td>
+      <td>{% if ca.sub_committee %}{{ ca.sub_committee|tr:"name" }}{% else %}—{% endif %}</td>
       <td>{{ ca.position|tr:"name" }}</td>
       <td>{{ ca.start_date|date:"d/m/Y"|default:"—" }}</td>
       <td>{% if ca.end_date %}{{ ca.end_date|date:"d/m/Y" }}{% else %}{% ui "চলমান" "Ongoing" %}{% endif %}</td>

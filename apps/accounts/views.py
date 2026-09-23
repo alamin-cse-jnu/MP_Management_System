@@ -107,9 +107,14 @@ def dashboard(request):
         tour_qs = tour_qs.filter(parliament=active_parliament)
 
     total_ministers   = min_qs.count()
-    total_com_assigns = com_qs.count()
+    # MAIN-committee seats only. A sub-committee seat is a row on the same
+    # table (rule 19c), so counting every row would silently inflate this tile
+    # the day sub-committees are entered and change what a number the office
+    # already reads means. Sub-committee membership has its own report.
+    total_com_assigns = com_qs.filter(sub_committee__isnull=True).count()
     # Committees that actually have members this parliament — the dashboard tile
-    # leads with this and shows the membership total underneath.
+    # leads with this and shows the membership total underneath. Sub rows carry
+    # their parent committee, so they cannot add a committee that has no members.
     total_committees  = com_qs.values('committee').distinct().count()
     total_institutions = ins_qs.count()
     total_tours       = tour_qs.count()

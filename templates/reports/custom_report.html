@@ -353,6 +353,31 @@
       </div>
       {% endwith %}
 
+      <!-- Sub-Committee -->
+      {% with key="sub_committee" enable="enable_sub_committee" %}
+      <div class="filter-row d-flex align-items-center gap-3 {% if enable in GET %}active{% endif %}" id="row_{{ key }}">
+        <div class="filter-label">
+          <div class="form-check mb-0">
+            <input class="form-check-input filter-toggle" type="checkbox" name="{{ enable }}" id="{{ enable }}"
+                   {% if enable in GET %}checked{% endif %}>
+            <label class="form-check-label fw-semibold" for="{{ enable }}">{% ui "উপ-কমিটি" "Sub-Committee" %}</label>
+          </div>
+        </div>
+        <div class="filter-input-area {% if enable not in GET %}disabled-filter{% endif %}" id="input_{{ key }}">
+          <div class="d-flex gap-2 align-items-start">
+            <select name="{{ key }}" multiple class="form-select form-select-sm filter-select2" style="flex:1;max-width:500px;"
+                    data-placeholder="{% ui 'উপ-কমিটি নির্বাচন করুন…' 'Select sub-committee…' %}">
+              <option value="__all__" {% if "__all__" in sel.sub_committee %}selected{% endif %}>{% ui "সব (ALL)" "ALL" %}</option>
+              {% for sc in sub_committees %}
+              <option value="{{ sc.pk }}" {% if sc.pk|stringformat:"s" in sel.sub_committee %}selected{% endif %}>{{ sc.committee|tr:"name" }} › {{ sc|tr:"name" }}</option>
+              {% endfor %}
+            </select>
+            <button type="button" class="btn btn-outline-secondary btn-sm select-all-btn" data-target="{{ key }}">{% ui "সব" "All" %}</button>
+          </div>
+        </div>
+      </div>
+      {% endwith %}
+
       <!-- Ministry -->
       {% with key="ministry" enable="enable_ministry" %}
       <div class="filter-row d-flex align-items-center gap-3 {% if enable in GET %}active{% endif %}" id="row_{{ key }}">

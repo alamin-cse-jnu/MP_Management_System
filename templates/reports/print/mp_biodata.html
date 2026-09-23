@@ -67,8 +67,8 @@
 {% if mp.committee_assignments.all %}
 <h3>কমিটি সদস্যপদ</h3>
 <table>
-  <thead><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
-  <tbody>{% for ca in mp.committee_assignments.all %}<tr><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
+  <thead><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "উপ-কমিটি" "Sub-Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
+  <tbody>{% for ca in mp.committee_assignments.all %}<tr><td>{{ ca.committee|tr:"name" }}</td><td>{% if ca.sub_committee %}{{ ca.sub_committee|tr:"name" }}{% else %}—{% endif %}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>{% endfor %}</tbody>
 </table>
 {% endif %}
 

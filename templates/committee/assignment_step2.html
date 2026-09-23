@@ -10,7 +10,7 @@
       <li class="breadcrumb-item active">{% ui "ধাপ ২/২" "Step 2 of 2" %}</li>
     </ol></nav>
     <h4 class="mb-0 fw-bold">{% ui title_bn title_en %}</h4>
-    <small class="text-muted">{{ committee|tr:"name" }} — {{ parliament|tr:"name" }}</small>
+    <small class="text-muted">{{ committee|tr:"name" }}{% if sub_committee %} › {{ sub_committee|tr:"name" }}{% endif %} — {{ parliament|tr:"name" }}</small>
   </div>
   <a href="{% url 'committee:assignment_create' %}" class="btn btn-outline-secondary btn-sm">
     <i class="bi bi-arrow-left me-1"></i>{% ui "ধাপ ১-এ ফিরুন" "Back to step 1" %}

@@ -679,6 +679,30 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.get_address_type_display()} — {self.mp.name_bn}"
 
+    def one_line(self, lang='bn'):
+        """The whole address as one comma-separated string.
+
+        Reports and exports need an address in a single cell; the profile and
+        biodata pages lay the same parts out as a block. Each part falls back to
+        the other language on its own, because an operator may have typed the
+        village in Bangla and nothing in English — a whole-address fallback
+        would then drop the parts that WERE filled.
+        """
+        def pick(bn, en):
+            bn, en = (bn or '').strip(), (en or '').strip()
+            return (en or bn) if lang == 'en' else (bn or en)
+
+        parts = [
+            pick(self.address_detail_bn, self.address_detail_en),
+            pick(self.pouroshova_union_bn, self.pouroshova_union_en),
+            pick(self.post_office_bn, self.post_office_en),
+            pick(getattr(self.upazila, 'name_bn', ''), getattr(self.upazila, 'name_en', '')),
+            pick(getattr(self.district, 'name_bn', ''), getattr(self.district, 'name_en', '')),
+            pick(getattr(self.division, 'name_bn', ''), getattr(self.division, 'name_en', '')),
+            (self.postal_code or '').strip(),
+        ]
+        return ', '.join(p for p in parts if p)
+
 
 # ── SECTION 7: FOREIGN LANGUAGE SKILLS ───────────────────────────────────────
 

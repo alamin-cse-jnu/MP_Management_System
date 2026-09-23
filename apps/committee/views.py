@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
-from apps.master.models import CommitteePosition, StandingCommittee
+from apps.master.models import CommitteePosition, StandingCommittee, SubCommittee
 from apps.mp.form_fields import MPChoiceField
 from apps.mp.models import MP
 from apps.parliament.models import Parliament
@@ -19,11 +20,15 @@ _SESSION_KEY = 'committee_bulk'
 @perm_required
 def assignment_list(request):
     qs = CommitteeAssignment.objects.select_related(
-        'mp', 'parliament', 'committee', 'position'
+        'mp', 'parliament', 'committee', 'sub_committee', 'position'
     )
 
     parliament_id = request.GET.get('parliament', '')
     committee_id  = request.GET.get('committee', '')
+    sub_id        = request.GET.get('sub_committee', '')
+    # Main seats and sub-committee seats are the same row type, so the list says
+    # which it is showing rather than mixing them silently.
+    level         = request.GET.get('level', 'all')
     position_id   = request.GET.get('position', '')
     q             = request.GET.get('q', '').strip()
     status        = request.GET.get('status', 'active')
@@ -37,12 +42,19 @@ def assignment_list(request):
         qs = qs.filter(parliament_id=parliament_id)
     if committee_id:
         qs = qs.filter(committee_id=committee_id)
+    if sub_id:
+        qs = qs.filter(sub_committee_id=sub_id)
+    elif level == 'main':
+        qs = qs.filter(sub_committee__isnull=True)
+    elif level == 'sub':
+        qs = qs.filter(sub_committee__isnull=False)
     if position_id:
         qs = qs.filter(position_id=position_id)
     if q:
         qs = qs.filter(
             Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
-            Q(committee__name_bn__icontains=q) | Q(committee__name_en__icontains=q)
+            Q(committee__name_bn__icontains=q) | Q(committee__name_en__icontains=q) |
+            Q(sub_committee__name_bn__icontains=q) | Q(sub_committee__name_en__icontains=q)
         )
     if status == 'inactive':
         qs = qs.filter(is_active=False)
@@ -56,9 +68,12 @@ def assignment_list(request):
         'page_obj':     page,
         'parliaments':  Parliament.objects.order_by('-ordinal'),
         'committees':   StandingCommittee.objects.filter(is_active=True).order_by('name_bn'),
+        'sub_committees': SubCommittee.objects.filter(is_active=True).select_related('committee'),
         'positions':    CommitteePosition.objects.filter(is_active=True).order_by('ordering'),
         'parliament_id': parliament_id,
         'committee_id': committee_id,
+        'sub_id':       sub_id,
+        'level':        level,
         'position_id':  position_id,
         'q':            q,
         'status':       status,
@@ -77,7 +92,7 @@ def assignment_create(request):
     if mp:
         initial = {'parliament': mp.parliament}
         form = CommitteeAssignmentForm(request.POST or None, request.FILES or None,
-                                       initial=initial, mp_preset=True)
+                                       initial=initial, mp_preset=True, mp_instance=mp)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.mp = mp
@@ -100,6 +115,7 @@ def assignment_create(request):
         request.session[_SESSION_KEY] = {
             'parliament': cd['parliament'].pk,
             'committee':  cd['committee'].pk,
+            'sub_committee': cd['sub_committee'].pk if cd.get('sub_committee') else None,
             'mp_ids':     [m.pk for m in cd['mps']],
             'start_date': cd['start_date'].isoformat(),
             'end_date':   cd['end_date'].isoformat() if cd['end_date'] else '',
@@ -139,6 +155,8 @@ def assign_positions(request):
 
     committee  = get_object_or_404(StandingCommittee, pk=data['committee'])
     parliament = get_object_or_404(Parliament, pk=data['parliament'])
+    sub_committee = (get_object_or_404(SubCommittee, pk=data['sub_committee'])
+                     if data.get('sub_committee') else None)
     mps        = list(MPChoiceField.annotated_queryset(
         include_technocrats=False).filter(pk__in=data['mp_ids']))
     positions  = CommitteePosition.objects.filter(is_active=True).order_by('ordering')
@@ -159,15 +177,36 @@ def assign_positions(request):
         else:
             go_file = request.FILES.get('go_file')
             file_name = None
-            for i, m in enumerate(mps):
-                obj = CommitteeAssignment(
+            pending = [
+                CommitteeAssignment(
                     mp=m, parliament=parliament, committee=committee,
+                    sub_committee=sub_committee,
                     position_id=chosen[m.pk],
                     start_date=data['start_date'] or None,
                     end_date=data['end_date'] or None,
                     go_number=data['go_number'],
                     go_date=data['go_date'] or None,
                 )
+                for m in mps
+            ]
+            # The model guards run on this path too. Step 1 already checked the
+            # sub-committee rules, but the selection sits in the session between
+            # the two steps and the main-committee seat it relied on can be gone
+            # by now — saving N rows straight from session data would write past
+            # a rule the single-MP form enforces.
+            problems = []
+            for obj in pending:
+                try:
+                    obj.full_clean(exclude=['go_file'])
+                except ValidationError as exc:
+                    label = obj.mp.name_bn or obj.mp.name_en
+                    for msg in exc.messages:
+                        problems.append(f'{label}: {msg}')
+            if problems:
+                for msg in problems[:5]:
+                    messages.error(request, msg)
+                return redirect('committee:assignment_create')
+            for i, obj in enumerate(pending):
                 if i == 0:
                     obj.go_file = go_file
                     obj.save()
@@ -187,6 +226,7 @@ def assign_positions(request):
 
     return render(request, 'committee/assignment_step2.html', {
         'committee':   committee,
+        'sub_committee': sub_committee,
         'parliament':  parliament,
         'rows':        rows,
         'positions':   positions,
@@ -242,3 +282,60 @@ def assignment_toggle(request, pk):
     if request.POST.get('from_mp'):
         return redirect(reverse('mp:mp_detail', args=[mp_pk]) + '?active=tab-committee')
     return redirect('committee:assignment_list')
+
+
+# ── HTMX cascades ─────────────────────────────────────────────────────────────
+# A standing committee runs its own sub-committees, and a sub-committee is
+# staffed from that committee's sitting members. Both selects below are narrowed
+# from the committee the operator picked. They are a convenience only: the same
+# two rules are enforced in CommitteeBulkStep1Form.clean() and in
+# CommitteeAssignment.clean(), because a POST can carry anything.
+
+
+@perm_required
+def subcommittee_options(request):
+    """Options for the sub-committee <select> under the chosen committee."""
+    committee_id = request.GET.get('committee', '').strip()
+    items = SubCommittee.objects.none()
+    if committee_id.isdigit():
+        items = SubCommittee.objects.filter(
+            committee_id=committee_id, is_active=True).order_by('ordering', 'name_bn')
+    return render(request, 'committee/partials/_subcommittee_options.html', {
+        'items':    items,
+        'selected': request.GET.get('selected', ''),
+    })
+
+
+@perm_required
+def member_picker(request):
+    """Re-render the bulk MP picker, narrowed to the parent committee's members.
+
+    A full-panel swap is right here: this fires on a dropdown pick, not on
+    typing, so it cannot eat keystrokes the way a swap over a live-search box
+    would (gotcha 13). The panel's own JS re-initialises itself after an htmx
+    swap, so nothing else has to be replayed.
+    """
+    committee_id  = request.GET.get('committee', '').strip()
+    sub_id        = request.GET.get('sub_committee', '').strip()
+    parliament_id = request.GET.get('parliament', '').strip()
+    selected      = [v for v in request.GET.getlist('mps') if v.isdigit()]
+
+    form = CommitteeBulkStep1Form(initial={
+        'mps': selected,
+        'total_count': request.GET.get('total_count') or None,
+    })
+
+    narrowed = False
+    if sub_id.isdigit() and committee_id.isdigit():
+        cond = {'committee_id': committee_id, 'sub_committee__isnull': True, 'is_active': True}
+        if parliament_id.isdigit():
+            cond['parliament_id'] = parliament_id
+        member_ids = list(CommitteeAssignment.objects.filter(**cond)
+                          .values_list('mp_id', flat=True))
+        form.fields['mps'].queryset = form.fields['mps'].queryset.filter(pk__in=member_ids)
+        narrowed = True
+
+    return render(request, 'committee/partials/_member_picker.html', {
+        'form':     form,
+        'narrowed': narrowed,
+    })

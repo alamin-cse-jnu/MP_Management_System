@@ -1,0 +1,10 @@
+{% comment %}The bulk MP picker, re-rendered when the sub-committee choice changes. Swapped whole (outerHTML) — it fires on a dropdown pick, not on typing.{% endcomment %}
+{% load lang_tags mp_picker_tags %}
+<div id="mps-picker">
+  {% mp_picker form.mps form.total_count %}
+  {% if narrowed %}
+  <div class="form-text text-primary"><i class="bi bi-diagram-3 me-1"></i>{% ui "উপ-কমিটির জন্য তালিকা মূল কমিটির বর্তমান সদস্যদের মধ্যে সীমিত।" "Limited to the parent committee's sitting members, because a sub-committee is selected." %}</div>
+  {% else %}
+  <div class="form-text">{% ui "একই কমিটির সকল সদস্যকে এখানে নির্বাচন করুন। পরের ধাপে প্রতিজনের পদবী নির্ধারণ করবেন।" "Select all members of this committee. You'll set each one's position in the next step." %}</div>
+  {% endif %}
+</div>

@@ -24,7 +24,7 @@
       <div class="input-group input-group-sm">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
         <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="নাম বা কমিটি…">
-        {% if q %}<a href="?parliament={{ parliament_id }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
+        {% if q %}<a href="?parliament={{ parliament_id }}&committee={{ committee_id }}&sub_committee={{ sub_id }}&level={{ level }}&status={{ status }}" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>{% endif %}
       </div>
     </div>
     <div class="col-md-2">
@@ -43,6 +43,23 @@
         {% for c in committees %}
         <option value="{{ c.pk }}" {% if c.pk|stringformat:"s" == committee_id %}selected{% endif %}>{{ c|tr:"name" }}</option>
         {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "উপ-কমিটি" "Sub-Committee" %}</label>
+      <select name="sub_committee" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">{% ui "সব" "All" %}</option>
+        {% for sc in sub_committees %}
+        <option value="{{ sc.pk }}" {% if sc.pk|stringformat:"s" == sub_id %}selected{% endif %}>{{ sc.committee|tr:"name" }} › {{ sc|tr:"name" }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label fw-medium mb-1" style="font-size:0.85rem;">{% ui "স্তর" "Level" %}</label>
+      <select name="level" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="all"  {% if level == 'all' %}selected{% endif %}>{% ui "সব" "All" %}</option>
+        <option value="main" {% if level == 'main' %}selected{% endif %}>{% ui "মূল কমিটি" "Main committee" %}</option>
+        <option value="sub"  {% if level == 'sub' %}selected{% endif %}>{% ui "উপ-কমিটি" "Sub-committee" %}</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -77,6 +94,7 @@
           <th style="width:3rem;">#</th>
           <th>{% ui "সদস্যের নাম" "MP Name" %}</th>
           <th>{% ui "কমিটির নাম" "Committee Name" %}</th>
+          <th>{% ui "উপ-কমিটি" "Sub-Committee" %}</th>
           <th>{% ui "পদবী" "Designation" %}</th>
           <th>{% ui "শুরু" "Start" %}</th>
           <th>{% ui "শেষ" "End" %}</th>
@@ -91,14 +109,14 @@
         <tr>
           <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td>
-            <a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-committee" class="text-decoration-none fw-medium">
-              {{ obj.mp|tr:"name" }}
-            </a>
-            <div class="text-muted" style="font-size:0.8rem;">{{ obj.mp.name_en }}</div>
+            {% url 'mp:mp_detail' obj.mp_id as mp_url %}
+            {% include "partials/_name_pair.html" with obj=obj.mp href=mp_url|add:"?active=tab-committee" %}
           </td>
           <td>
-            {{ obj.committee|tr:"name" }}
-            <div class="text-muted" style="font-size:0.8rem;">{{ obj.committee.name_en }}</div>
+            {% include "partials/_name_pair.html" with obj=obj.committee href="" %}
+          </td>
+          <td>
+            {% if obj.sub_committee %}{% include "partials/_name_pair.html" with obj=obj.sub_committee href="" %}{% else %}<span class="text-muted">—</span>{% endif %}
           </td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.position|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>
@@ -132,7 +150,7 @@
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="10" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
+        <tr><td colspan="11" class="text-center text-muted py-4">{% ui "কোনো তথ্য পাওয়া যায়নি।" "No records found." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -143,10 +161,10 @@
     <small class="text-muted">{% ui "মোট" "Total" %} {{ page_obj.paginator.count }} {% ui "টি | পৃষ্ঠা" "records | Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</small>
     <nav><ul class="pagination pagination-sm mb-0">
       {% if page_obj.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&committee={{ committee_id }}&position={{ position_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&parliament={{ parliament_id }}&committee={{ committee_id }}&sub_committee={{ sub_id }}&level={{ level }}&position={{ position_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-left"></i></a></li>
       {% endif %}
       {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&committee={{ committee_id }}&position={{ position_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&parliament={{ parliament_id }}&committee={{ committee_id }}&sub_committee={{ sub_id }}&level={{ level }}&position={{ position_id }}&q={{ q }}&status={{ status }}"><i class="bi bi-chevron-right"></i></a></li>
       {% endif %}
     </ul></nav>
   </div>

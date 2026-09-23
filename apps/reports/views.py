@@ -607,22 +607,107 @@ def cabinet(request):
 
 # ── Report 7: কমিটি সদস্য তালিকা ─────────────────────────────────────────────
 
+COMMITTEE_MEMBER_COLS = [
+    ('mp_id',         ('এমপি আইডি', 'MP ID')),
+    ('name_bn',       ('নাম (বাংলায়)', 'Name (Bangla)')),
+    ('name_en',       ('Name (English)', 'Name (English)')),
+    ('constituency',  ('নির্বাচনী এলাকা', 'Constituency')),
+    ('party',         ('রাজনৈতিক দল', 'Political Party')),
+    ('committee',     ('কমিটি', 'Committee')),
+    ('sub_committee', ('উপ-কমিটি', 'Sub-Committee')),
+    ('position',      ('পদ', 'Position')),
+    ('parliament',    ('সংসদ', 'Parliament')),
+    ('start_date',    ('শুরু', 'Start')),
+    ('end_date',      ('শেষ', 'End')),
+    ('go_number',     ('GO নং', 'GO No.')),
+    ('go_date',       ('GO তারিখ', 'GO Date')),
+    ('status',        ('অবস্থা', 'Status')),
+]
+COMMITTEE_MEMBER_DEFAULT = ['mp_id', 'name_bn', 'committee', 'sub_committee',
+                            'position', 'start_date', 'end_date', 'go_number', 'status']
+
+# Only the columns actually chosen pull their relation — a member list without
+# the constituency column has no reason to join every member's election record.
+COMMITTEE_MEMBER_RELATED = {
+    'constituency': 'election_infos',
+    'party':        'election_infos',
+}
+
+
+def _committee_member_cols():
+    """[(key, label)] in the active language."""
+    en = (_lang() == 'en')
+    return [(k, (pair[1] if en else pair[0])) for k, pair in COMMITTEE_MEMBER_COLS]
+
+
+def _committee_member_cell(obj, col, lang=None):
+    """One cell of the committee-member report, as a display string."""
+    if lang is None:
+        lang = _lang()
+    if col == 'mp_id':        return obj.mp.mp_id
+    if col == 'name_bn':      return obj.mp.name_bn
+    if col == 'name_en':      return obj.mp.name_en
+    if col in ('constituency', 'party'):
+        ei = next(iter(obj.mp.election_infos.all()), None)
+        if col == 'constituency':
+            return _tr(ei.constituency, 'display', lang) if ei and ei.constituency else '—'
+        return _tr(ei.party, lang=lang) if ei and ei.party else '—'
+    if col == 'committee':    return _tr(obj.committee, lang=lang)
+    # A main-committee seat stores no sub-committee; the dash says "main seat",
+    # it is not missing data.
+    if col == 'sub_committee':
+        return _tr(obj.sub_committee, lang=lang) if obj.sub_committee_id else '—'
+    if col == 'position':     return _tr(obj.position, lang=lang)
+    if col == 'parliament':   return _tr(obj.parliament, lang=lang)
+    if col == 'start_date':   return obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—'
+    if col == 'end_date':     return obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—'
+    if col == 'go_number':    return obj.go_number or '—'
+    if col == 'go_date':      return obj.go_date.strftime('%d/%m/%Y') if obj.go_date else '—'
+    if col == 'status':       return _active_label(obj.is_active)
+    return '—'
+
+
 @perm_required
 def committee_members(request):
-    fmt          = request.GET.get('format', '')
+    from apps.master.models import SubCommittee
+
+    fmt           = request.GET.get('format', '')
     parliament_id = _active_parliament_id(request)
-    committee_id = request.GET.get('committee', '')
-    position_id  = request.GET.get('position', '')
-    status       = request.GET.get('status', 'active')
-    q            = request.GET.get('q', '').strip()
+    committee_id  = request.GET.get('committee', '')
+    sub_id        = request.GET.get('sub_committee', '')
+    # Main seats and sub-committee seats are the same row type. The report shows
+    # BOTH by default — a "committee members" list that silently left out the
+    # sub-committee work was the gap — and `level` narrows it to one or other.
+    level         = request.GET.get('level', 'all')
+    position_id   = request.GET.get('position', '')
+    status        = request.GET.get('status', 'active')
+    q             = request.GET.get('q', '').strip()
+    selected_cols = request.GET.getlist('col') or COMMITTEE_MEMBER_DEFAULT
+
+    all_cols = _committee_member_cols()
+    columns  = [(k, label) for k, label in all_cols if k in selected_cols]
+    col_keys = [k for k, _ in columns]
 
     qs = CommitteeAssignment.objects.select_related(
-        'mp', 'parliament', 'committee', 'position'
+        'mp', 'parliament', 'committee', 'sub_committee', 'position'
     )
+    wanted = {COMMITTEE_MEMBER_RELATED[c] for c in col_keys if c in COMMITTEE_MEMBER_RELATED}
+    if 'election_infos' in wanted:
+        ei_qs = ElectionInfo.objects.select_related('constituency', 'party')
+        if parliament_id:
+            ei_qs = ei_qs.filter(parliament_id=parliament_id)
+        qs = qs.prefetch_related(Prefetch('mp__election_infos', queryset=ei_qs))
+
     if parliament_id:
         qs = qs.filter(parliament_id=parliament_id)
     if committee_id:
         qs = qs.filter(committee_id=committee_id)
+    if sub_id:
+        qs = qs.filter(sub_committee_id=sub_id)
+    elif level == 'main':
+        qs = qs.filter(sub_committee__isnull=True)
+    elif level == 'sub':
+        qs = qs.filter(sub_committee__isnull=False)
     if position_id:
         qs = qs.filter(position_id=position_id)
     if status == 'active':
@@ -630,27 +715,16 @@ def committee_members(request):
     elif status == 'inactive':
         qs = qs.filter(is_active=False)
     if q:
-        qs = qs.filter(
-            Q(mp__name_bn__icontains=q) | Q(mp__name_en__icontains=q) |
-            Q(committee__name_bn__icontains=q)
-        )
+        qs = qs.filter(search_q(q, ['mp__name_bn', 'mp__name_en', 'mp__mp_id',
+                                    'committee__name_bn', 'committee__name_en',
+                                    'sub_committee__name_bn', 'sub_committee__name_en']))
 
-    headers = ['ক্রম', 'এমপি আইডি', 'নাম', 'কমিটি', 'পদ', 'শুরু', 'শেষ', 'অবস্থা']
+    headers = [_ui('ক্রম', 'SL')] + [label for _k, label in columns]
 
     def rows_fn(queryset):
-        out = []
-        for i, obj in enumerate(queryset):
-            out.append([
-                i + 1,
-                obj.mp.mp_id,
-                _tr(obj.mp),
-                _tr(obj.committee),
-                _tr(obj.position),
-                obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
-                obj.end_date.strftime('%d/%m/%Y') if obj.end_date else '—',
-                _active_label(obj.is_active),
-            ])
-        return out
+        lang = _lang()
+        return [[i + 1] + [_committee_member_cell(obj, c, lang) for c in col_keys]
+                for i, obj in enumerate(queryset)]
 
     if fmt == 'excel':
         return export_excel('committee_members', headers, rows_fn(qs), 'কমিটি সদস্য')
@@ -658,24 +732,42 @@ def committee_members(request):
         return export_csv('committee_members', headers, rows_fn(qs))
 
     ctx = {
-        'parliament_id': parliament_id,
-        'committee_id':  committee_id,
-        'position_id':   position_id,
-        'status':        status,
-        'q':             q,
-        'parliaments':   _parliament_qs(),
-        'committees':    StandingCommittee.objects.filter(is_active=True),
-        'positions':     CommitteePosition.objects.filter(is_active=True),
-        'total_count':   qs.count(),
+        'COMMITTEE_MEMBER_COLS': all_cols,
+        'selected_cols':  selected_cols,
+        'columns':        columns,
+        'parliament_id':  parliament_id,
+        'committee_id':   committee_id,
+        'sub_id':         sub_id,
+        'level':          level,
+        'position_id':    position_id,
+        'status':         status,
+        'q':              q,
+        'parliaments':    _parliament_qs(),
+        'committees':     StandingCommittee.objects.filter(is_active=True),
+        'sub_committees': SubCommittee.objects.filter(is_active=True).select_related('committee'),
+        'positions':      CommitteePosition.objects.filter(is_active=True),
+        'total_count':    qs.count(),
     }
+
+    # One pass over the rows feeds every surface, the way the custom report
+    # does it — the templates render prepared cells instead of calling a
+    # filter per cell.
+    lang = _lang()
     if fmt in ('print', 'pdf'):
-        ctx['object_list'] = qs
+        ctx['rows'] = [{'obj': obj, 'index': i + 1,
+                        'cells': [_committee_member_cell(obj, c, lang) for c in col_keys]}
+                       for i, obj in enumerate(qs)]
         if fmt == 'pdf':
-            return render_report_pdf(request, 'reports/print/committee_members.html', ctx, 'committee_members.pdf')
+            return render_report_pdf(request, 'reports/print/committee_members.html',
+                                     ctx, 'committee_members.pdf')
         return render(request, 'reports/print/committee_members.html', ctx)
 
     paginator = Paginator(qs, _page_size(request))
-    ctx['page_obj'] = paginator.get_page(request.GET.get('page'))
+    page = paginator.get_page(request.GET.get('page'))
+    ctx['page_obj'] = page
+    ctx['rows'] = [{'obj': obj, 'index': i + page.start_index(),
+                    'cells': [_committee_member_cell(obj, c, lang) for c in col_keys]}
+                   for i, obj in enumerate(page)]
     return render(request, 'reports/committee_members.html', ctx)
 
 
@@ -788,10 +880,13 @@ def mp_committee_summary(request):
         mp = MP.objects.filter(mp_id=mp_id).first()
         if mp:
             qs = CommitteeAssignment.objects.filter(mp=mp).select_related(
-                'committee', 'position', 'parliament'
+                'committee', 'sub_committee', 'position', 'parliament'
             ).order_by('-start_date')
 
-    headers = ['ক্রম', 'কমিটি', 'পদ', 'সংসদ', 'শুরু', 'শেষ', 'অবস্থা']
+    headers = [_ui('ক্রম', 'SL'), _ui('কমিটি', 'Committee'),
+               _ui('উপ-কমিটি', 'Sub-Committee'), _ui('পদ', 'Position'),
+               _ui('সংসদ', 'Parliament'), _ui('শুরু', 'Start'),
+               _ui('শেষ', 'End'), _ui('অবস্থা', 'Status')]
 
     def rows_fn(queryset):
         out = []
@@ -799,6 +894,7 @@ def mp_committee_summary(request):
             out.append([
                 i + 1,
                 _tr(obj.committee),
+                _tr(obj.sub_committee) if obj.sub_committee_id else '—',
                 _tr(obj.position),
                 _tr(obj.parliament),
                 obj.start_date.strftime('%d/%m/%Y') if obj.start_date else '—',
@@ -1017,7 +1113,8 @@ def mp_biodata(request):
             'covid_vaccinations__vaccine_name',
             'ministry_assignments__ministry', 'ministry_assignments__minister_type',
             'ministry_assignments__parliament',
-            'committee_assignments__committee', 'committee_assignments__position',
+            'committee_assignments__committee', 'committee_assignments__sub_committee',
+            'committee_assignments__position',
             'committee_assignments__parliament',
             # The GovernmentInstitution FK was retired in Phase 17.9 (institution
             # is free text now) — prefetching it raised AttributeError for any MP
@@ -1370,6 +1467,7 @@ CUSTOM_REPORT_COLS = [
     ('district',          'নিজ জেলা'),
     ('times_elected',     'নির্বাচনের সংখ্যা'),
     ('committee',         'স্থায়ী কমিটি'),
+    ('sub_committee',     'উপ-কমিটি'),
     ('ministry',          'মন্ত্রণালয়'),
     ('profession',        'পেশা'),
     ('member_type',       'সদস্যের ধরন'),
@@ -1378,6 +1476,10 @@ CUSTOM_REPORT_COLS = [
     ('highest_degree',    'সর্বোচ্চ ডিগ্রির নাম'),
     ('highest_subject',   'সর্বোচ্চ বিষয়'),
     ('prof_qual',         'পেশাদার যোগ্যতা'),
+    ('present_address',   'বর্তমান ঠিকানা'),
+    ('permanent_address', 'স্থায়ী ঠিকানা'),
+    ('mobile',            'মোবাইল'),
+    ('whatsapp',          'হোয়াটসঅ্যাপ'),
 ]
 CUSTOM_REPORT_DEFAULT = ['mp_id', 'name_bn', 'constituency', 'party', 'gender', 'district']
 
@@ -1403,6 +1505,7 @@ COL_WIDTH = {
     'district':          1.8,
     'times_elected':     1.1,
     'committee':         3.6,
+    'sub_committee':     3.4,
     'ministry':          3.6,
     'profession':        2.4,
     'member_type':       2.0,
@@ -1411,6 +1514,13 @@ COL_WIDTH = {
     'highest_degree':    2.4,
     'highest_subject':   2.4,
     'prof_qual':         2.6,
+    # An address is a sentence, not a word: given a narrow share it wraps to
+    # five lines and every extra line is layout work WeasyPrint actually does
+    # (gotcha 23c).
+    'present_address':   6.0,
+    'permanent_address': 6.0,
+    'mobile':            2.2,
+    'whatsapp':          2.2,
 }
 # Type size by column count — 24 columns cannot be read at the 10pt a 6-column
 # report is set in, and every avoided line wrap is layout work WeasyPrint does
@@ -1448,6 +1558,7 @@ CUSTOM_REPORT_COLS_EN = {
     'district':          'Home District',
     'times_elected':     'Times Elected',
     'committee':         'Standing Committee',
+    'sub_committee':     'Sub-Committee',
     'ministry':          'Ministry',
     'profession':        'Profession',
     'member_type':       'Member Type',
@@ -1456,6 +1567,10 @@ CUSTOM_REPORT_COLS_EN = {
     'highest_degree':    'Highest Degree',
     'highest_subject':   'Highest Subject',
     'prof_qual':         'Professional Qualification',
+    'present_address':   'Present Address',
+    'permanent_address': 'Permanent Address',
+    'mobile':            'Mobile',
+    'whatsapp':          'WhatsApp',
 }
 
 
@@ -1483,12 +1598,24 @@ def _custom_cell(mp, col, today=None, lang=None):
         today = datetime.date.today()
     if lang is None:
         lang = _lang()
-    ei = next(iter(mp.election_infos.all()), None)
+
+    # Resolved only by the five columns that read it. Reading it up front cost
+    # one query PER CELL on any report with no election column — `election_infos`
+    # is prefetched only when such a column is chosen (COL_PREFETCH), so
+    # `.all()` on a row that did not prefetch it goes back to the database, and
+    # a 348-row x 8-column report paid ~2 800 of them.
+    def election():
+        return next(iter(mp.election_infos.all()), None)
+
     if col == 'mp_id':        return mp.mp_id
     if col == 'name_bn':      return mp.name_bn
     if col == 'name_en':      return mp.name_en
-    if col == 'constituency': return _tr(ei.constituency, 'display', lang) if ei and ei.constituency else '—'
-    if col == 'party':        return _tr(ei.party, lang=lang) if ei and ei.party else '—'
+    if col == 'constituency':
+        ei = election()
+        return _tr(ei.constituency, 'display', lang) if ei and ei.constituency else '—'
+    if col == 'party':
+        ei = election()
+        return _tr(ei.party, lang=lang) if ei and ei.party else '—'
     if col == 'age':
         if mp.dob:
             age = today.year - mp.dob.year - ((today.month, today.day) < (mp.dob.month, mp.dob.day))
@@ -1500,17 +1627,41 @@ def _custom_cell(mp, col, today=None, lang=None):
     # Two different divisions live in this system — the seat's and the member's
     # own. Both are offered as columns so a report can show where they diverge.
     if col == 'con_division':
+        ei  = election()
         con = ei.constituency if ei else None
         return _tr(con.district.division, lang=lang) if con and con.district and con.district.division else '—'
     if col == 'con_district':
+        ei  = election()
         con = ei.constituency if ei else None
         return _tr(con.district, lang=lang) if con and con.district else '—'
     if col == 'division':
         return _tr(mp.home_district.division, lang=lang) if mp.home_district and mp.home_district.division else '—'
     if col == 'district':      return _tr(mp.home_district, lang=lang) if mp.home_district else '—'
-    if col == 'times_elected': return str(ei.times_elected) if ei else '—'
+    if col == 'times_elected':
+        ei = election()
+        return str(ei.times_elected) if ei else '—'
+    # Main-committee seats and sub-committee seats are the same rows, told
+    # apart by `sub_committee`. Without the split, a member on two
+    # sub-committees of one standing committee printed that committee's name
+    # three times in the Committee column.
     if col == 'committee':
-        return ', '.join(_tr(ca.committee, lang=lang) for ca in mp.committee_assignments.all()) or '—'
+        names = []
+        for ca in mp.committee_assignments.all():
+            if ca.sub_committee_id:
+                continue
+            name = _tr(ca.committee, lang=lang)
+            if name not in names:
+                names.append(name)
+        return ', '.join(names) or '—'
+    if col == 'sub_committee':
+        names = []
+        for ca in mp.committee_assignments.all():
+            if not ca.sub_committee_id:
+                continue
+            name = f'{_tr(ca.committee, lang=lang)} › {_tr(ca.sub_committee, lang=lang)}'
+            if name not in names:
+                names.append(name)
+        return ', '.join(names) or '—'
     if col == 'ministry':
         return ', '.join(_tr(ma.ministry, lang=lang) for ma in mp.ministry_assignments.all()) or '—'
     if col == 'profession':
@@ -1536,6 +1687,35 @@ def _custom_cell(mp, col, today=None, lang=None):
         return ', '.join(_tr(sp.role, lang=lang) for sp in mp.special_positions.all()) or '—'
     if col == 'prof_qual':
         return ', '.join(_tr(pq, lang=lang) for pq in mp.professional_qualifications.all()) or '—'
+    if col in ('present_address', 'permanent_address', 'mobile', 'whatsapp'):
+        return _address_cell(mp, col, lang)
+    return '—'
+
+
+def _address_cell(mp, col, lang):
+    """Address and contact columns, read off the prefetched address rows.
+
+    Mobile and WhatsApp live on the PRESENT address row by convention (the
+    model says so), but an operator can type them on any of the three. Read the
+    present row first and fall back to whichever row actually holds a value —
+    a number entered on the permanent address is still the member's number,
+    and a blank cell would be a lie.
+    """
+    rows = list(mp.addresses.all())
+    by_type = {a.address_type: a for a in rows}
+    if col == 'present_address':
+        addr = by_type.get('present')
+        return (addr.one_line(lang) if addr else '') or '—'
+    if col == 'permanent_address':
+        addr = by_type.get('permanent')
+        return (addr.one_line(lang) if addr else '') or '—'
+    field = 'mobile' if col == 'mobile' else 'whatsapp'
+    present = by_type.get('present')
+    ordered = ([present] if present else []) + [a for a in rows if a is not present]
+    for addr in ordered:
+        value = (getattr(addr, field, '') or '').strip()
+        if value:
+            return value
     return '—'
 
 
@@ -1562,6 +1742,7 @@ FILTER_MODELS = {
     'district':         ('master', 'District'),
     'party':            ('master', 'PoliticalParty'),
     'committee':        ('master', 'StandingCommittee'),
+    'sub_committee':    ('master', 'SubCommittee'),
     'ministry':         ('master', 'Ministry'),
     'education_level':  ('master', 'EducationLevel'),
     'prof_qual':        ('master', 'ProfessionalQualification'),
@@ -1620,6 +1801,7 @@ COL_PREFETCH = {
     'con_division':      'election_infos',
     'con_district':      'election_infos',
     'committee':         'committee_assignments',
+    'sub_committee':     'committee_assignments',
     'ministry':          'ministry_assignments',
     'profession':        'professions_current',
     'prof_qual':         'professional_qualifications',
@@ -1627,6 +1809,10 @@ COL_PREFETCH = {
     'highest_edu_level': 'educations',
     'highest_degree':    'educations',
     'highest_subject':   'educations',
+    'present_address':   'addresses',
+    'permanent_address': 'addresses',
+    'mobile':            'addresses',
+    'whatsapp':          'addresses',
 }
 
 
@@ -1641,7 +1827,8 @@ def _build_custom_qs(get, parliament_id, cols=None):
     from django.db.models import Prefetch
     from apps.committee.models import CommitteeAssignment
     from apps.ministry.models import MinistryAssignment
-    from apps.mp.models import MP, ElectionInfo, Education, SpecialPositionHistory
+    from apps.mp.models import (
+        MP, Address, ElectionInfo, Education, SpecialPositionHistory)
 
     ei_qs = ElectionInfo.objects.select_related(
         'party', 'constituency', 'constituency__district__division')
@@ -1659,13 +1846,20 @@ def _build_custom_qs(get, parliament_id, cols=None):
         'professions_current':        'professions_current',
         'committee_assignments':      Prefetch(
             'committee_assignments',
-            queryset=CommitteeAssignment.objects.select_related('committee').filter(is_active=True)),
+            queryset=CommitteeAssignment.objects.select_related(
+                'committee', 'sub_committee').filter(is_active=True)),
         'ministry_assignments':       Prefetch(
             'ministry_assignments',
             queryset=MinistryAssignment.objects.select_related('ministry').filter(is_active=True)),
         'special_positions':          Prefetch(
             'special_positions',
             queryset=SpecialPositionHistory.objects.select_related('role').filter(is_active=True)),
+        # Only the two address types any column reads. The Dhaka address is a
+        # third row per member that nothing here shows.
+        'addresses':                  Prefetch(
+            'addresses',
+            queryset=Address.objects.filter(address_type__in=('present', 'permanent'))
+                                    .select_related('division', 'district', 'upazila')),
     }
     if cols is None:
         wanted = list(available)
@@ -1778,6 +1972,16 @@ def _build_custom_qs(get, parliament_id, cols=None):
         ids = _ids(get, 'committee')
         if ids:
             qs = qs.filter(committee_assignments__committee__in=ids)
+            needs_distinct = True
+
+    # ── Sub-Committee ─────────────────────────────────────────────────────────
+    # Narrower than the committee filter above, not a replacement for it: the
+    # committee filter matches sub-committee seats too, because every seat
+    # carries its parent committee.
+    if 'enable_sub_committee' in get:
+        ids = _ids(get, 'sub_committee')
+        if ids:
+            qs = qs.filter(committee_assignments__sub_committee__in=ids)
             needs_distinct = True
 
     # ── Ministry ──────────────────────────────────────────────────────────────
@@ -1900,7 +2104,7 @@ def _custom_rows(mps, cols, today, lang):
 def custom_report(request):
     from apps.master.models import (
         BloodGroup, Gender, Religion, Division, District,
-        PoliticalParty, StandingCommittee, Ministry,
+        PoliticalParty, StandingCommittee, SubCommittee, Ministry,
         EducationLevel, ProfessionalQualification, SpecialRoleType,
     )
     from apps.mp.form_fields import MPChoiceField
@@ -1918,6 +2122,7 @@ def custom_report(request):
     districts       = District.objects.filter(is_active=True).select_related('division')
     parties         = PoliticalParty.objects.filter(is_active=True)
     committees      = StandingCommittee.objects.filter(is_active=True)
+    sub_committees  = SubCommittee.objects.filter(is_active=True).select_related('committee')
     ministries      = Ministry.objects.filter(is_active=True)
     education_levels = EducationLevel.objects.filter(is_active=True).order_by('degree_order')
     prof_quals      = ProfessionalQualification.objects.filter(is_active=True).order_by('name_bn')
@@ -1952,6 +2157,7 @@ def custom_report(request):
         'district_basis':  request.GET.get('district_basis') or 'constituency',
         'party':           request.GET.getlist('party'),
         'committee':       request.GET.getlist('committee'),
+        'sub_committee':   request.GET.getlist('sub_committee'),
         'ministry':        request.GET.getlist('ministry'),
         'mp_id':           request.GET.getlist('mp_id'),
         'education_level': request.GET.getlist('education_level'),
@@ -1972,6 +2178,7 @@ def custom_report(request):
         'districts':          districts,
         'parties':            parties,
         'committees':         committees,
+        'sub_committees':     sub_committees,
         'ministries':         ministries,
         'education_levels':   education_levels,
         'prof_quals':         prof_quals,

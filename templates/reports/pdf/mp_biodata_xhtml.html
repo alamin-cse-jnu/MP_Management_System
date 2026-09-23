@@ -291,10 +291,10 @@ table.dt th { font-weight: bold; }
 {% if mp.committee_assignments.all %}
 <div class="sec">11. Committee Assignments</div>
 <table class="dt">
-  <thead><tr><th>#</th><th>Parliament</th><th>Committee</th><th>Position</th><th>Start</th><th>End</th></tr></thead>
+  <thead><tr><th>#</th><th>Parliament</th><th>Committee</th><th>Sub-Committee</th><th>Position</th><th>Start</th><th>End</th></tr></thead>
   <tbody>
     {% for ca in mp.committee_assignments.all %}
-    <tr><td>{{ forloop.counter }}</td><td>{{ ca.parliament|tr:"name" }}</td><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"Ongoing" }}</td></tr>
+    <tr><td>{{ forloop.counter }}</td><td>{{ ca.parliament|tr:"name" }}</td><td>{{ ca.committee|tr:"name" }}</td><td>{% if ca.sub_committee %}{{ ca.sub_committee|tr:"name" }}{% else %}—{% endif %}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y"|default:"" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"Ongoing" }}</td></tr>
     {% endfor %}
   </tbody>
 </table>

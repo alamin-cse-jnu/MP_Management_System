@@ -341,6 +341,30 @@ class StandingCommittee(models.Model):
         return f"{self.name_bn} ({self.name_en})"
 
 
+class SubCommittee(models.Model):
+    """A sub-committee sitting under one standing committee.
+
+    Sub-committees are named per parent (উপ-কমিটি–১ exists under several
+    standing committees and each is a different body), so the name is unique
+    only within `committee` — see NAME_SCOPE in utils/master_merge.py, which
+    keeps the duplicate finder from reporting every parent's first
+    sub-committee as a duplicate of the others.
+    """
+    committee = models.ForeignKey(StandingCommittee, on_delete=models.PROTECT,
+                                  related_name='sub_committees',
+                                  verbose_name='স্থায়ী কমিটি')
+    name_bn = models.CharField(max_length=300)
+    name_en = models.CharField(max_length=300)
+    is_active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['committee__ordering', 'committee__name_bn', 'ordering', 'name_bn']
+
+    def __str__(self):
+        return f"{self.name_bn} ({self.name_en})"
+
+
 class CommitteePosition(models.Model):
     name_bn = models.CharField(max_length=100)
     name_en = models.CharField(max_length=100)

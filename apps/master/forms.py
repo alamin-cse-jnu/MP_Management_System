@@ -10,7 +10,7 @@ from .models import (
     EducationLevel, EducationGroup, EducationSubject, DegreeName,
     EducationInstitution, ResultType, DivisionResult, ClassResult,
     PoliticalParty, Ministry, MinisterType,
-    StandingCommittee, CommitteePosition,
+    StandingCommittee, SubCommittee, CommitteePosition,
     InstitutionRole,
     Country, TravelType, TravelPurpose,
     ForeignLanguage, ProficiencyLevel,
@@ -162,6 +162,7 @@ PADesignationForm = _make_form(PADesignation, ['name_bn', 'name_en', 'ordering']
 
 DistrictForm = _make_form(District, ['division', 'name_bn', 'name_en', 'ordering'])
 UpazilaForm = _make_form(Upazila, ['district', 'name_bn', 'name_en', 'ordering'])
+SubCommitteeForm = _make_form(SubCommittee, ['committee', 'name_bn', 'name_en', 'ordering'])
 EducationSubjectForm = _make_form(EducationSubject, ['name_bn', 'name_en', 'group', 'ordering'])
 DegreeNameForm = _make_form(DegreeName, ['name_bn', 'name_en', 'short_name', 'education_level', 'ordering'])
 EducationInstitutionForm = _make_form(

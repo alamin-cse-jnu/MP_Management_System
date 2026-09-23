@@ -349,3 +349,8 @@ body.sidebar-collapsed .mp-nav-item { justify-content: center; }
 .gi-card-title i { color: #3b6fd4; font-size: .95rem; }
 .gi-card .form-label { font-size: .8rem; margin-bottom: .2rem; }
 .gi-card .form-text { font-size: .72rem; margin-top: .1rem; }
+
+/* ── Bilingual name cell (partials/_name_pair.html) ─────────── */
+/* The English line under a Bangla name. One size everywhere, so a list does
+   not change its own type scale from screen to screen. */
+.name-pair-en { color: #64748b; font-size: .78rem; }

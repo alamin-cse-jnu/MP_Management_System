@@ -87,8 +87,8 @@
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.role|tr:"name" }}</span></td>
           <td><code>{{ obj.mp.mp_id }}</code></td>
           <td>
-            <a href="{% url 'mp:mp_detail' obj.mp_id %}?active=tab-special" class="text-decoration-none fw-medium">{{ obj.mp|tr:"name" }}</a>
-            <div class="text-muted" style="font-size:.78rem;">{{ obj.mp.name_en }}</div>
+            {% url 'mp:mp_detail' obj.mp_id as mp_url %}
+            {% include "partials/_name_pair.html" with obj=obj.mp href=mp_url|add:"?active=tab-special" %}
           </td>
           <td>{% if ei.constituency %}{{ ei.constituency|tr:"display" }}{% else %}—{% endif %}</td>
           <td>{% if ei.party %}{{ ei.party|tr:"name" }}{% else %}—{% endif %}</td>

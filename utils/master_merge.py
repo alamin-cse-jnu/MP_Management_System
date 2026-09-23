@@ -29,6 +29,7 @@ from django.db import transaction
 NAME_SCOPE = {
     'master.Upazila': 'district_id',
     'master.District': 'division_id',
+    'master.SubCommittee': 'committee_id',
 }
 
 # Everything the loose key throws away before comparing. Catches the spacing and

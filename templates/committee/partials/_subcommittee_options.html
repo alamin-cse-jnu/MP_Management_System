@@ -1,0 +1,6 @@
+{% comment %}HTMX: options for the sub-committee <select>, scoped to one standing committee.{% endcomment %}
+{% load lang_tags %}
+<option value="">{% ui "-- মূল কমিটি (উপ-কমিটি নয়) --" "-- Main committee (no sub-committee) --" %}</option>
+{% for s in items %}
+<option value="{{ s.pk }}" {% if s.pk|stringformat:"s" == selected %}selected{% endif %}>{{ s|tr:"name" }}</option>
+{% endfor %}

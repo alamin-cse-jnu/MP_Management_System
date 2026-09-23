@@ -1,0 +1,30 @@
+{% comment %}
+Select2 → htmx bridge for the committee ▸ sub-committee cascade. Shared by the
+bulk step-1 page and the single-assignment form.
+
+Select2 announces a pick with jQuery's .trigger('change'). An inline onchange=
+still runs, but htmx's NATIVE change listener never fires (gotcha 12), so every
+htmx-on-change over a Select2 control needs this re-emit. Both selects therefore
+listen for a custom event that this script fires.
+{% endcomment %}
+<script>
+  (function () {
+    if (!window.jQuery || !window.htmx) return;
+    jQuery(function ($) {
+      var root = '{{ cascade_form_id }}';
+      var $form = $('#' + root);
+      if (!$form.length) return;
+      // Changing the committee invalidates whatever sub-committee was chosen,
+      // so clear it before anything re-reads the form — otherwise the member
+      // panel narrows on a sub-committee that belongs to the old parent.
+      $form.on('change', '#id_committee, #id_parliament', function () {
+        $('#id_sub_committee').val('').trigger('change.select2');
+        if (document.getElementById('id_committee')) { htmx.trigger('#id_committee', 'committee-changed'); }
+        if (document.getElementById('mps-picker')) { htmx.trigger('#' + root, 'members-changed'); }
+      });
+      $form.on('change', '#id_sub_committee', function () {
+        if (document.getElementById('mps-picker')) { htmx.trigger('#' + root, 'members-changed'); }
+      });
+    });
+  })();
+</script>

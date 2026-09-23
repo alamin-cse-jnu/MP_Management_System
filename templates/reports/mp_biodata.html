@@ -159,10 +159,10 @@
   <div class="mp-card-header"><i class="bi bi-people-fill icon"></i>কমিটি সদস্যপদ</div>
   <div class="table-responsive">
     <table class="table table-sm mb-0" style="font-size:.88rem;">
-      <thead class="table-light"><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
+      <thead class="table-light"><tr><th>{% ui "কমিটি" "Committee" %}</th><th>{% ui "উপ-কমিটি" "Sub-Committee" %}</th><th>{% ui "পদ" "Position" %}</th><th>{% ui "শুরু" "Start" %}</th><th>{% ui "শেষ" "End" %}</th></tr></thead>
       <tbody>
         {% for ca in mp.committee_assignments.all %}
-        <tr><td>{{ ca.committee|tr:"name" }}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
+        <tr><td>{{ ca.committee|tr:"name" }}</td><td>{% if ca.sub_committee %}{{ ca.sub_committee|tr:"name" }}{% else %}—{% endif %}</td><td>{{ ca.position|tr:"name" }}</td><td>{{ ca.start_date|date:"d/m/Y" }}</td><td>{{ ca.end_date|date:"d/m/Y"|default:"চলমান" }}</td></tr>
         {% endfor %}
       </tbody>
     </table>

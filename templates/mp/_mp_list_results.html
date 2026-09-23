@@ -33,9 +33,9 @@
         </td>
         <td>
           <a href="{% url 'mp:mp_detail' mp.pk %}" class="fw-medium text-decoration-none">
-            {{ mp|tr:"name" }}
+            {{ mp.name_bn|default:mp.name_en }}
           </a>
-          <div class="text-muted" style="font-size:0.8rem;">{{ mp.name_en }}</div>
+          {% if mp.name_bn and mp.name_en and mp.name_bn != mp.name_en %}<div class="name-pair-en">{{ mp.name_en }}</div>{% endif %}
           {% with score=mp.profile_score missing=mp.profile_score_missing %}
           <div style="display:flex;align-items:center;gap:5px;margin-top:4px;"
                title="{% if missing %}{% ui "অপূর্ণ" "Missing" %} ({{ missing|length }}): {% for item in missing %}{{ item|tr:"label" }}{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}{% ui "সব তথ্য পূরণ করা হয়েছে" "All scored fields complete" %}{% endif %}">

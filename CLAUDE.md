@@ -103,6 +103,27 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
     `parliament:position_*` from BOTH the module and the MP profile tab — there
     is no second write path, and adding one would bypass the guard.
 
+19c. **A sub-committee is a seat on the same row type, not a second model.**
+    `CommitteeAssignment.sub_committee` empty = a seat on the main committee;
+    set = a seat on that sub-committee, with `committee` still holding the
+    parent. So every existing filter, count and report over `committee` keeps
+    meaning what it meant and simply also reaches the sub rows — but anything
+    LISTING committee names must skip the sub rows
+    (`_custom_cell('committee')` does), or a member on two sub-committees
+    prints the parent three times. `master.SubCommittee` is scoped to one
+    `StandingCommittee`, so the same sub-committee name under two parents is
+    NOT a duplicate (`NAME_SCOPE`, rule 27). A sub-committee is staffed from
+    its parent's sitting members: `CommitteeAssignment.clean()` refuses a sub
+    seat for an MP with no active main seat on that committee in that
+    parliament, and refuses a sub-committee belonging to another parent. The
+    bulk path validates too — `assign_positions` calls `full_clean()` on every
+    pending row, because the selection sits in the session between the two
+    steps and the main seat it relied on can be gone by then. Entry runs from
+    BOTH the module and the MP profile, as with every other assignment.
+    The dashboard's "সদস্যপদ / memberships" tile counts **main seats only**
+    (`sub_committee__isnull=True`) — counting every row would silently inflate
+    a number the office already reads the day sub-committees are entered.
+
 20. **The PRP form is tracked as TWO facts, never one status.** `MP.prp_form_submitted`
     (the office has the hardcopy — a human tick, nobody else can know it) and
     `MP.prp_form_file` (a scan is in the system — derived from the file, never
@@ -174,6 +195,7 @@ Deploy   : no CI. Sync changed files over SFTP to /opt/mp_management, then
 | 35 | Field-feedback round 4 — GPA pair labelled earned/scale + swap guard, biodata education gains Subject/Group + Board-University columns, biodata travel Type reads the real TravelType, letterhead gains Software Development Section | ✅ |
 | 36 | Master-data duplicates — `/master/duplicates/` finder + merge (repoints MP data, then removes the duplicate), form-level duplicate refusal + live similar-name warning, `master_duplicates` command | ✅ |
 | 37 | PRP form tracking — upload/view the scanned form (private storage), MP profile tab 20, `/mp/prp-forms/` tracking page, PRP form status report | ✅ |
+| 38 | Sub-committees under standing committees (master + assignment + reports), committee report column picker, custom report gains address/mobile/WhatsApp/sub-committee columns, bilingual name cell fixed in 8 list screens | ✅ |
 
 ⬜ Not started | 🔄 In progress | ✅ Done
 
@@ -219,6 +241,12 @@ python manage.py loaddata fixtures/initial/duplicates_menu.json
 # Needs mp/0018 applied, and `docker compose up -d` to create the private_vol
 # volume that holds the scans (a plain `restart` will not create it).
 python manage.py loaddata fixtures/initial/prp_menu.json
+
+# Sub-committees (Phase 38) — no seeder and no menu fixture: sub-committees are
+# entered by hand on the existing /master/committee/ page (third tab), and both
+# entry paths and every report already carry the column. Needs master/0015 and
+# committee/0003 applied; no data migration, existing rows keep sub_committee
+# NULL, which reads as "a seat on the main committee".
 
 # Constituency → District backfill (Phase 32) — the constituency-basis division
 # chart and district_wise?basis=constituency both need this FK populated.
@@ -289,6 +317,11 @@ silently — full context in `docs/phase-history.md`.
    all three master-data list templates plus parliament / constituency / menu /
    role. A single name column headed just "Name" is the opposite case — `tr` is
    correct there (see `user_list.html`).
+   - The same bug in a **stacked** cell is easier to miss and shipped in ELEVEN
+     places: `{{ obj|tr:"name" }}` on the first line with a hardcoded
+     `{{ obj.name_en }}` beneath prints the identical text twice in English
+     mode. Use `{% include "partials/_name_pair.html" with obj=… href=… %}`,
+     which renders `name_bn` then `name_en` only when it differs.
 
 9. A **fixed section per category is a display choice, not a data rule.** The
    education page kept `existing[lt] = edu` for the *first* row per level, so an
@@ -424,6 +457,16 @@ silently — full context in `docs/phase-history.md`.
       renames are not audited, so a label can be stale for the 15-minute TTL.
     - **Prefetch only what the chosen columns read** (`COL_PREFETCH`): a
       six-column report went from 27 queries to 19.
+    - **A relation read at the TOP of a cell function defeats `COL_PREFETCH`.**
+      `_custom_cell` opened with `ei = next(iter(mp.election_infos.all()), None)`
+      for every column, but `election_infos` is prefetched only when an election
+      column is chosen — so a report without one went back to the database once
+      **per cell** (~2 800 queries on 348 rows x 8 columns). Resolve a relation
+      inside the branch that reads it, never before the `col` check.
+    - Every export/pagination link is built with `{% qs_page %}` / `{% qs_export %}`
+      (`report_tags`), never a hand-written `?a={{ a }}&b={{ b }}` — those go
+      stale as filters are added and keep only the LAST value of a repeated key,
+      which silently drops all but one chosen column.
     Never paginate this report: it is read, printed and exported whole, and the
     old Print button printed only the visible page.
 

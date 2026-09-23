@@ -34,3 +34,19 @@ def qs_page(context, page):
     get = context['request'].GET.copy()
     get.setlist('page', [str(page)])
     return get.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def qs_export(context, *drop):
+    """The current query string with `page` and `format` removed.
+
+    The export buttons hang the format on the end of the filters that produced
+    the page on screen, so a PDF is the same report the operator is looking at.
+    Hand-built `?a={{ a }}&b={{ b }}` strings went stale every time a filter was
+    added and, like the pagination links before them, kept only the last value
+    of a repeated key — which silently dropped all but one chosen column.
+    """
+    get = context['request'].GET.copy()
+    for key in ('page', 'format') + drop:
+        get.pop(key, None)
+    return get.urlencode()

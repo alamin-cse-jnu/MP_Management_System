@@ -21,6 +21,7 @@
       <tr>
         <th>{% ui "সংসদ" "Parliament" %}</th>
         <th>{% ui "কমিটির নাম" "Committee Name" %}</th>
+        <th>{% ui "উপ-কমিটি" "Sub-Committee" %}</th>
         <th>{% ui "পদবী" "Designation" %}</th>
         <th>{% ui "শুরু" "Start" %}</th>
         <th>{% ui "শেষ" "End" %}</th>
@@ -46,6 +47,7 @@
         </td>
         {% endif %}
         <td>{{ obj.committee|tr:"name" }}</td>
+        <td>{% if obj.sub_committee %}{{ obj.sub_committee|tr:"name" }}{% else %}<span class="text-muted">—</span>{% endif %}</td>
         <td><span class="badge bg-primary-subtle text-primary">{{ obj.position|tr:"name" }}</span></td>
         <td>{{ obj.start_date|date:"d/m/Y" }}</td>
         <td>{{ obj.end_date|date:"d/m/Y"|default:"—" }}</td>

@@ -29,8 +29,8 @@ input drops every keystroke typed while the request was in flight (gotcha 13).
           <td class="text-muted">{{ forloop.counter0|add:page_obj.start_index }}</td>
           <td><code>{{ mp.mp_id }}</code></td>
           <td>
-            <a href="{% url 'mp:mp_detail' mp.pk %}?active=tab-prp" class="text-decoration-none fw-medium">{{ mp|tr:"name" }}</a>
-            <div class="text-muted" style="font-size:.76rem;">{{ mp.name_en }}</div>
+            {% url 'mp:mp_detail' mp.pk as mp_url %}
+            {% include "partials/_name_pair.html" with obj=mp href=mp_url|add:"?active=tab-prp" %}
           </td>
           <td>{% if ei.constituency %}{{ ei.constituency|tr:"display" }}{% else %}<span class="text-muted">—</span>{% endif %}</td>
 

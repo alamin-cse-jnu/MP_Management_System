@@ -93,10 +93,8 @@
           {% if forloop.first %}
           <td rowspan="{{ row.assignments|length }}">{{ forloop.parentloop.counter0|add:page_obj.start_index }}</td>
           <td rowspan="{{ row.assignments|length }}">
-            <a href="{% url 'mp:mp_detail' row.mp.pk %}?active=tab-ministry" class="text-decoration-none fw-medium">
-              {{ row.mp|tr:"name" }}
-            </a>
-            <div class="text-muted" style="font-size:0.8rem;">{{ row.mp.name_en }}</div>
+            {% url 'mp:mp_detail' row.mp.pk as mp_url %}
+            {% include "partials/_name_pair.html" with obj=row.mp href=mp_url|add:"?active=tab-ministry" %}
             {% if row.mp.member_type == 'technocrat' %}
             <span class="badge badge-warning" style="font-size:0.65rem;">{% ui "টেকনোক্র্যাট" "Technocrat" %}</span>
             {% endif %}
@@ -110,8 +108,7 @@
           </td>
           {% endif %}
           <td>
-            {{ obj.ministry|tr:"name" }}
-            <div class="text-muted" style="font-size:0.8rem;">{{ obj.ministry.name_en }}</div>
+            {% include "partials/_name_pair.html" with obj=obj.ministry href="" %}
           </td>
           <td><span class="badge bg-primary-subtle text-primary">{{ obj.minister_type|tr:"name" }}</span></td>
           <td>{{ obj.start_date|date:"d/m/Y" }}</td>

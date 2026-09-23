@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.management import call_command
 from django.core.paginator import Paginator
-from django.db.models import Prefetch, Q
+from django.db.models import F, Prefetch, Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -119,7 +119,7 @@ def _detail_ctx(mp, **override):
     ministry_assignments = MinistryAssignment.objects.filter(mp=mp).select_related(
         'parliament', 'ministry', 'minister_type')
     committee_assignments = CommitteeAssignment.objects.filter(mp=mp).select_related(
-        'parliament', 'committee', 'position')
+        'parliament', 'committee', 'sub_committee', 'position')
     institution_assignments = InstitutionAssignment.objects.filter(mp=mp).select_related(
         'parliament', 'role')
     election_info = ElectionInfo.objects.filter(mp=mp, parliament=mp.parliament).first()
@@ -159,8 +159,16 @@ def _detail_ctx(mp, **override):
         'ministry_groups': group_by_parliament(
             ministry_assignments, 'minister_type__ordering', 'ministry__name_bn'),
         'committee_assignments': committee_assignments,
+        # Sub-committee seats sort under their parent, so a member's
+        # sub-committee work reads as part of that committee, not as a
+        # separate committee of its own.
+        # nulls_first is not cosmetic: a main-committee seat stores NULL here,
+        # and Postgres sorts NULLs LAST while SQLite sorts them first — without
+        # it the parent committee's own seat would print below its
+        # sub-committees on the server and above them locally.
         'committee_groups': group_by_parliament(
-            committee_assignments, 'position__ordering', 'committee__name_bn'),
+            committee_assignments, 'committee__name_bn',
+            F('sub_committee__name_bn').asc(nulls_first=True), 'position__ordering'),
         'institution_assignments': institution_assignments,
         'institution_groups': group_by_parliament(
             institution_assignments, 'role__ordering', 'institution_bn'),
